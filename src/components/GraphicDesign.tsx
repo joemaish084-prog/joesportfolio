@@ -1,3 +1,7 @@
+import { useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import waterPurifiers from "@/assets/design-water-purifiers.png";
 import waterJourney from "@/assets/design-water-journey.png";
 import tecno1 from "@/assets/design-tecno-1.png";
@@ -69,6 +73,36 @@ const designs = [
 ];
 
 export function GraphicDesign() {
+  const [selectedDesign, setSelectedDesign] = useState<typeof designs[0] | null>(null);
+  
+  // Split designs into two rows
+  const firstRow = designs.slice(0, Math.ceil(designs.length / 2));
+  const secondRow = designs.slice(Math.ceil(designs.length / 2));
+  
+  // Create infinite loop by tripling the designs
+  const infiniteFirstRow = [...firstRow, ...firstRow, ...firstRow];
+  const infiniteSecondRow = [...secondRow, ...secondRow, ...secondRow];
+
+  const [emblaRef1] = useEmblaCarousel(
+    { 
+      loop: true,
+      dragFree: true,
+      containScroll: false,
+      startIndex: firstRow.length,
+    },
+    [Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })]
+  );
+
+  const [emblaRef2] = useEmblaCarousel(
+    { 
+      loop: true,
+      dragFree: true,
+      containScroll: false,
+      startIndex: secondRow.length,
+    },
+    [Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })]
+  );
+
   return (
     <section id="graphic-design" className="py-20 sm:py-32 bg-muted/30 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,62 +116,98 @@ export function GraphicDesign() {
           </p>
         </div>
 
-        {/* Infinite Loop Carousel */}
-        <div className="relative">
-          <div className="flex animate-infinite-scroll pause-animation">
-            {/* First set of designs */}
-            {designs.map((design, index) => (
-              <div
-                key={`first-${index}`}
-                className="flex-shrink-0 w-[300px] sm:w-[400px] lg:w-[500px] mx-4"
-              >
-                <div className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant">
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    <img
-                      src={design.image}
-                      alt={design.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                      <h3 className="text-xl font-display font-bold text-white mb-2">
-                        {design.title}
-                      </h3>
-                      <p className="text-white/90 text-sm">{design.description}</p>
+        <div className="space-y-6">
+          {/* First Row Carousel */}
+          <div className="overflow-hidden" ref={emblaRef1}>
+            <div className="flex">
+              {infiniteFirstRow.map((design, index) => (
+                <div
+                  key={`row1-${index}`}
+                  className="flex-[0_0_300px] sm:flex-[0_0_400px] lg:flex-[0_0_500px] min-w-0 px-4"
+                >
+                  <button
+                    onClick={() => setSelectedDesign(design)}
+                    className="w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden">
+                      <img
+                        src={design.image}
+                        alt={design.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 className="text-xl font-display font-bold text-white mb-2">
+                          {design.title}
+                        </h3>
+                        <p className="text-white/90 text-sm">{design.description}</p>
+                      </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
-              </div>
-            ))}
-            {/* Duplicate set for seamless loop */}
-            {designs.map((design, index) => (
-              <div
-                key={`second-${index}`}
-                className="flex-shrink-0 w-[300px] sm:w-[400px] lg:w-[500px] mx-4"
-              >
-                <div className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant">
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    <img
-                      src={design.image}
-                      alt={design.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                      <h3 className="text-xl font-display font-bold text-white mb-2">
-                        {design.title}
-                      </h3>
-                      <p className="text-white/90 text-sm">{design.description}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* Second Row Carousel */}
+          <div className="overflow-hidden" ref={emblaRef2}>
+            <div className="flex">
+              {infiniteSecondRow.map((design, index) => (
+                <div
+                  key={`row2-${index}`}
+                  className="flex-[0_0_300px] sm:flex-[0_0_400px] lg:flex-[0_0_500px] min-w-0 px-4"
+                >
+                  <button
+                    onClick={() => setSelectedDesign(design)}
+                    className="w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden">
+                      <img
+                        src={design.image}
+                        alt={design.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 className="text-xl font-display font-bold text-white mb-2">
+                          {design.title}
+                        </h3>
+                        <p className="text-white/90 text-sm">{design.description}</p>
+                      </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-8">
-          Hover over designs to pause • Scroll automatically
+          Swipe to browse • Click to view • Auto-scrolls when idle
         </p>
       </div>
+
+      {/* Lightbox Dialog */}
+      <Dialog open={!!selectedDesign} onOpenChange={(open) => !open && setSelectedDesign(null)}>
+        <DialogContent className="max-w-4xl w-full p-0 overflow-hidden">
+          <DialogTitle className="sr-only">
+            {selectedDesign?.title}
+          </DialogTitle>
+          {selectedDesign && (
+            <div className="relative">
+              <img
+                src={selectedDesign.image}
+                alt={selectedDesign.title}
+                className="w-full h-auto"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6">
+                <h3 className="text-2xl font-display font-bold text-white mb-2">
+                  {selectedDesign.title}
+                </h3>
+                <p className="text-white/90">{selectedDesign.description}</p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
