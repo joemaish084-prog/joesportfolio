@@ -4,6 +4,11 @@ import tecno1 from "@/assets/design-tecno-1.png";
 import tecno2 from "@/assets/design-tecno-2.png";
 import tecno3 from "@/assets/design-tecno-3.png";
 import podcastCover from "@/assets/design-podcast-cover.png";
+import iclearFacebook from "@/assets/design-iclear-facebook.png";
+import mkush from "@/assets/design-mkush.png";
+import iclearNewMonth from "@/assets/design-iclear-new-month.png";
+import iclearOct from "@/assets/design-iclear-oct.png";
+import iclearMonday from "@/assets/design-iclear-monday.png";
 
 const designs = [
   {
@@ -35,6 +40,31 @@ const designs = [
     title: "Convey with Caroline Podcast",
     image: podcastCover,
     description: "Podcast branding and cover art",
+  },
+  {
+    title: "iClear Water Facebook Campaign",
+    image: iclearFacebook,
+    description: "Social media header design for brand awareness",
+  },
+  {
+    title: "MKUSH Music Album Cover",
+    image: mkush,
+    description: "Hip-hop album artwork and branding",
+  },
+  {
+    title: "iClear New Month Campaign",
+    image: iclearNewMonth,
+    description: "Monthly engagement post design",
+  },
+  {
+    title: "iClear October Campaign",
+    image: iclearOct,
+    description: "Seasonal social media content",
+  },
+  {
+    title: "iClear Monday Motivation",
+    image: iclearMonday,
+    description: "Weekly engagement post series",
   },
 ];
 

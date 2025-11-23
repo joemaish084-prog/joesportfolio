@@ -3,6 +3,34 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const managedAccounts = [
   {
+    name: "iClear Well Life Service",
+    role: "Social Media Management, Content Creation, Strategy, Growth",
+    platforms: [
+      { name: "Instagram", url: "https://www.instagram.com/iclear_water/", icon: "instagram" },
+      { name: "Facebook", url: "https://www.facebook.com/iclearwater", icon: "facebook" },
+      { name: "TikTok", url: "https://www.tiktok.com/@iclear_water", icon: "tiktok" },
+    ],
+    description: "Water purification company",
+  },
+  {
+    name: "Convey Communications",
+    role: "Digital Content, Client Management, Brand Strategy",
+    platforms: [
+      { name: "Instagram", url: "https://www.instagram.com/conveycommunications/", icon: "instagram" },
+      { name: "Facebook", url: "https://www.facebook.com/conveycommunications", icon: "facebook" },
+    ],
+    description: "PR agency",
+  },
+  {
+    name: "Convey With Caroline",
+    role: "Podcast Production, Visual Design, Social Strategy",
+    platforms: [
+      { name: "YouTube", url: "https://www.youtube.com/@CarolineNjiruConveys", icon: "youtube" },
+      { name: "Instagram", url: "https://www.instagram.com/carolinenjiruconveys/", icon: "instagram" },
+    ],
+    description: "Podcast",
+  },
+  {
     name: "Joan Mbesya",
     role: "Content Creation, Strategy, Design, Growth",
     platforms: [
@@ -10,29 +38,7 @@ const managedAccounts = [
       { name: "Facebook", url: "https://www.facebook.com/joan.mbesya.7", icon: "facebook" },
       { name: "Instagram", url: "https://www.instagram.com/joanmbesya/", icon: "instagram" },
     ],
-  },
-  {
-    name: "TechMindset Africa",
-    role: "Content Creation, Strategy, Design",
-    platforms: [
-      { name: "Instagram", url: "https://www.instagram.com/techmindsetafrica/", icon: "instagram" },
-    ],
-  },
-  {
-    name: "Caroline Njiru",
-    role: "Content Strategy, Design, Growth",
-    platforms: [
-      { name: "Instagram", url: "https://www.instagram.com/carolinenjiruconveys/", icon: "instagram" },
-    ],
-  },
-  {
-    name: "iClear Water",
-    role: "Content Creation, Strategy, Design, Growth",
-    platforms: [
-      { name: "Instagram", url: "https://www.instagram.com/iclear_water/", icon: "instagram" },
-      { name: "Facebook", url: "https://www.facebook.com/iclearwater", icon: "facebook" },
-      { name: "TikTok", url: "https://www.tiktok.com/@iclear_water", icon: "tiktok" },
-    ],
+    description: "Personal brand",
   },
 ];
 
@@ -91,6 +97,11 @@ export function ManagedAccounts() {
             >
               <CardHeader className="space-y-3 pb-4">
                 <CardTitle className="text-xl font-display">{account.name}</CardTitle>
+                {account.description && (
+                  <p className="text-xs text-muted-foreground/80 font-medium">
+                    {account.description}
+                  </p>
+                )}
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {account.role}
                 </p>
