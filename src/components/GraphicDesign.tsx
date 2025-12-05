@@ -13,6 +13,10 @@ import mkush from "@/assets/design-mkush.png";
 import iclearNewMonth from "@/assets/design-iclear-new-month.png";
 import iclearOct from "@/assets/design-iclear-oct.png";
 import iclearMonday from "@/assets/design-iclear-monday.png";
+import iclearHomes from "@/assets/design-iclear-homes.png";
+import iclearDecember from "@/assets/design-iclear-december.png";
+import iclearParachute from "@/assets/design-iclear-parachute.png";
+import iclearFilter from "@/assets/design-iclear-filter.png";
 
 const designs = [
   {
@@ -69,6 +73,26 @@ const designs = [
     title: "iClear Monday Motivation",
     image: iclearMonday,
     description: "Weekly engagement post series",
+  },
+  {
+    title: "iClear Built for Homes",
+    image: iclearHomes,
+    description: "Christmas promotional campaign",
+  },
+  {
+    title: "iClear Happy December",
+    image: iclearDecember,
+    description: "Festive new month celebration design",
+  },
+  {
+    title: "iClear Filter Delivery",
+    image: iclearParachute,
+    description: "Creative product visualization",
+  },
+  {
+    title: "iClear December Promo",
+    image: iclearFilter,
+    description: "Free filter promotional campaign",
   },
 ];
 
