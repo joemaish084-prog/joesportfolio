@@ -1,12 +1,16 @@
-import { TrendingUp, Users, Target, Building2 } from "lucide-react";
+import { TrendingUp, Users, Target } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+import logoConvey from "@/assets/logo-convey.png";
+import logoTechmindset from "@/assets/logo-techmindset.png";
+import logoJoan from "@/assets/logo-joan.png";
+
 const brandsManagedData = [
-  { name: "iClear Wellife Service", industry: "Healthcare" },
-  { name: "Convey Communications", industry: "Media" },
-  { name: "Brand Name 3", industry: "Technology" },
-  { name: "Brand Name 4", industry: "Retail" },
+  { name: "iClear Wellife Service", industry: "Water Purification Company", logo: null },
+  { name: "Convey Communications", industry: "PR Firm", logo: logoConvey },
+  { name: "Joan Mbesya", industry: "Personal Brand", logo: logoJoan },
+  { name: "TechMindset Africa", industry: "AI Company", logo: logoTechmindset },
 ];
 
 const socialProjects = [
@@ -78,7 +82,13 @@ export function SocialMediaManagement() {
                 className="border-2 hover:border-primary/30 transition-all duration-300 hover:shadow-soft"
               >
                 <CardContent className="p-6 flex flex-col items-center text-center space-y-3">
-                  <Building2 className="h-12 w-12 text-primary" />
+                  {brand.logo ? (
+                    <img src={brand.logo} alt={brand.name} className="h-16 w-auto object-contain" />
+                  ) : (
+                    <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                      <span className="text-2xl font-bold text-primary">{brand.name.charAt(0)}</span>
+                    </div>
+                  )}
                   <div>
                     <h4 className="font-semibold text-foreground">{brand.name}</h4>
                     <p className="text-sm text-muted-foreground">{brand.industry}</p>
