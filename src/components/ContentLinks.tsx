@@ -1,14 +1,15 @@
 import { ExternalLink } from "lucide-react";
+import podcastThumbnail from "@/assets/convey-podcast-thumbnail.png";
 import youtubeThumbnail from "@/assets/content-youtube-thumbnail.jpg";
 import tiktokThumbnail from "@/assets/content-tiktok-thumbnail.jpg";
 
 const contentLinks = [
   {
     title: "Convey with Caroline - Podcast",
-    url: "https://youtu.be/lulDBOcFiCw?si=7gb3-YzCmkaZQApt",
-    platform: "YouTube Video",
-    thumbnail: youtubeThumbnail,
-    description: "Full podcast episode featuring engaging conversations",
+    url: "https://open.spotify.com/show/60e2Uhy5tyYb4Xj4VINVKS?si=48da04b7aca84374",
+    platform: "Spotify Podcast",
+    thumbnail: podcastThumbnail,
+    description: "Full podcast episodes featuring engaging conversations",
   },
   {
     title: "Caroline Njiru Conveys Channel",
