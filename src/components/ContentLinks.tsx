@@ -2,6 +2,7 @@ import { ExternalLink } from "lucide-react";
 import podcastThumbnail from "@/assets/convey-podcast-thumbnail.png";
 import youtubeThumbnail from "@/assets/content-youtube-thumbnail.jpg";
 import tiktokThumbnail from "@/assets/content-tiktok-thumbnail.jpg";
+import asdspThumbnail from "@/assets/content-asdsp-thumbnail.png";
 
 const contentLinks = [
   {
@@ -24,6 +25,13 @@ const contentLinks = [
     platform: "TikTok",
     thumbnail: tiktokThumbnail,
     description: "Short-form video content and creative campaigns",
+  },
+  {
+    title: "ASDSP Programme – A Game Changer for Nyeri Farmers",
+    url: "https://youtu.be/7jCqcsyXGC8?si=qhxuqCsP1xOCc53W",
+    platform: "Documentary",
+    thumbnail: asdspThumbnail,
+    description: "Full documentary collaboration with County Government of Nyeri - shooting & photography",
   },
 ];
 
