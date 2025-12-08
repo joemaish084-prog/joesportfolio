@@ -1,26 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import { 
-  Palette, 
-  Video, 
-  Film, 
-  Clapperboard, 
-  MessageSquare, 
-  Sparkles, 
-  Bot, 
-  Brain,
-  BarChart3
-} from "lucide-react";
+import { Sparkles } from "lucide-react";
+
+// Import brand icons
+import iconMeta from "@/assets/icon-meta.png";
+import iconGemini from "@/assets/icon-gemini.png";
+import iconChatgpt from "@/assets/icon-chatgpt.png";
+import iconDavinci from "@/assets/icon-davinci.png";
+import iconPremiere from "@/assets/icon-premiere.png";
+import iconCanva from "@/assets/icon-canva.png";
+import iconClaude from "@/assets/icon-claude.png";
+import iconCapcut from "@/assets/icon-capcut.png";
 
 const tools = [
-  { name: "Canva", proficiency: 95, icon: Palette },
-  { name: "CapCut", proficiency: 90, icon: Video },
-  { name: "DaVinci Resolve", proficiency: 85, icon: Film },
-  { name: "Premiere Pro", proficiency: 88, icon: Clapperboard },
-  { name: "ChatGPT", proficiency: 98, icon: MessageSquare },
-  { name: "Midjourney", proficiency: 92, icon: Sparkles },
-  { name: "Gemini", proficiency: 94, icon: Bot },
-  { name: "Claude", proficiency: 93, icon: Brain },
-  { name: "Meta Business Suite", proficiency: 94, icon: BarChart3 },
+  { name: "Canva", proficiency: 95, icon: iconCanva },
+  { name: "CapCut", proficiency: 90, icon: iconCapcut },
+  { name: "DaVinci Resolve", proficiency: 85, icon: iconDavinci },
+  { name: "Premiere Pro", proficiency: 88, icon: iconPremiere },
+  { name: "ChatGPT", proficiency: 98, icon: iconChatgpt },
+  { name: "Midjourney", proficiency: 92, icon: null }, // No icon provided
+  { name: "Gemini", proficiency: 94, icon: iconGemini },
+  { name: "Claude", proficiency: 93, icon: iconClaude },
+  { name: "Meta Business Suite", proficiency: 94, icon: iconMeta },
 ];
 
 export const ToolsWorkflow = () => {
@@ -113,35 +113,40 @@ export const ToolsWorkflow = () => {
           onTouchEnd={() => setIsDragging(false)}
           onTouchMove={handleTouchMove}
         >
-          {duplicatedTools.map((tool, index) => {
-            const Icon = tool.icon;
-            return (
-              <div
-                key={`${tool.name}-${index}`}
-                className="flex-shrink-0 w-44 bg-card rounded-2xl p-6 shadow-soft hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 border border-border/50"
-              >
-                <div className="flex flex-col items-center text-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Icon className="w-7 h-7 text-primary" />
+          {duplicatedTools.map((tool, index) => (
+            <div
+              key={`${tool.name}-${index}`}
+              className="flex-shrink-0 w-44 bg-card rounded-2xl p-6 shadow-soft hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 border border-border/50"
+            >
+              <div className="flex flex-col items-center text-center gap-4">
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+                  {tool.icon ? (
+                    <img 
+                      src={tool.icon} 
+                      alt={tool.name} 
+                      className="w-8 h-8 object-contain"
+                    />
+                  ) : (
+                    <Sparkles className="w-7 h-7 text-primary" />
+                  )}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground text-sm mb-2">
+                    {tool.name}
+                  </h3>
+                  <div className="relative w-full h-2 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-gradient-to-r from-primary to-orange-400 rounded-full transition-all duration-500"
+                      style={{ width: `${tool.proficiency}%` }}
+                    />
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground text-sm mb-2">
-                      {tool.name}
-                    </h3>
-                    <div className="relative w-full h-2 bg-muted rounded-full overflow-hidden">
-                      <div
-                        className="absolute left-0 top-0 h-full bg-gradient-to-r from-primary to-orange-400 rounded-full transition-all duration-500"
-                        style={{ width: `${tool.proficiency}%` }}
-                      />
-                    </div>
-                    <span className="text-xs text-muted-foreground mt-1 block">
-                      {tool.proficiency}%
-                    </span>
-                  </div>
+                  <span className="text-xs text-muted-foreground mt-1 block">
+                    {tool.proficiency}%
+                  </span>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>
