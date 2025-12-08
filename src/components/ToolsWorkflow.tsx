@@ -10,6 +10,12 @@ import iconPremiere from "@/assets/icon-premiere.png";
 import iconCanva from "@/assets/icon-canva.png";
 import iconClaude from "@/assets/icon-claude.png";
 import iconCapcut from "@/assets/icon-capcut.png";
+import iconInstagram from "@/assets/icon-instagram.png";
+import iconTiktok from "@/assets/icon-tiktok.png";
+import iconFacebook from "@/assets/icon-facebook.png";
+import iconYoutube from "@/assets/icon-youtube.png";
+import iconLinkedin from "@/assets/icon-linkedin.png";
+import iconX from "@/assets/icon-x.png";
 
 const tools = [
   { name: "Canva", proficiency: 95, icon: iconCanva },
@@ -17,10 +23,16 @@ const tools = [
   { name: "DaVinci Resolve", proficiency: 85, icon: iconDavinci },
   { name: "Premiere Pro", proficiency: 88, icon: iconPremiere },
   { name: "ChatGPT", proficiency: 98, icon: iconChatgpt },
-  { name: "Midjourney", proficiency: 92, icon: null }, // No icon provided
+  { name: "Midjourney", proficiency: 92, icon: null },
   { name: "Gemini", proficiency: 94, icon: iconGemini },
   { name: "Claude", proficiency: 93, icon: iconClaude },
   { name: "Meta Business Suite", proficiency: 94, icon: iconMeta },
+  { name: "Instagram", proficiency: 96, icon: iconInstagram },
+  { name: "TikTok", proficiency: 92, icon: iconTiktok },
+  { name: "Facebook", proficiency: 94, icon: iconFacebook },
+  { name: "YouTube", proficiency: 90, icon: iconYoutube },
+  { name: "LinkedIn", proficiency: 88, icon: iconLinkedin },
+  { name: "X", proficiency: 85, icon: iconX },
 ];
 
 export const ToolsWorkflow = () => {
