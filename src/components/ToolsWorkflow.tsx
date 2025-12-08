@@ -136,7 +136,7 @@ export const ToolsWorkflow = () => {
                     <img 
                       src={tool.icon} 
                       alt={tool.name} 
-                      className="w-8 h-8 object-contain"
+                      className="w-10 h-10 object-contain"
                     />
                   ) : (
                     <Sparkles className="w-7 h-7 text-primary" />
