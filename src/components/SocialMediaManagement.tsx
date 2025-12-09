@@ -5,9 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import logoConvey from "@/assets/logo-convey.png";
 import logoTechmindset from "@/assets/logo-techmindset.png";
 import logoJoan from "@/assets/logo-joan.png";
+import logoIclear from "@/assets/logo-iclear.png";
 
 const brandsManagedData = [
-  { name: "iClear Wellife Service", industry: "Water Purification Company", logo: null },
+  { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },
   { name: "Convey Communications", industry: "PR Firm", logo: logoConvey },
   { name: "Joan Mbesya", industry: "Personal Brand", logo: logoJoan },
   { name: "TechMindset Africa", industry: "AI Company", logo: logoTechmindset },
