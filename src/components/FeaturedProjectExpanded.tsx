@@ -102,8 +102,8 @@ export function FeaturedProjectExpanded({
                 className={cn(
                   "flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-300",
                   activeTab === "designs"
-                    ? "bg-primary text-primary-foreground shadow-elegant"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                    ? "bg-gradient-orange text-white shadow-[var(--shadow-orange-glow)]"
+                    : "bg-secondary text-secondary-foreground hover:brightness-110"
                 )}
               >
                 <ImageIcon className="h-4 w-4" />
@@ -116,8 +116,8 @@ export function FeaturedProjectExpanded({
                 className={cn(
                   "flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-300",
                   activeTab === "videos"
-                    ? "bg-primary text-primary-foreground shadow-elegant"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                    ? "bg-gradient-orange text-white shadow-[var(--shadow-orange-glow)]"
+                    : "bg-secondary text-secondary-foreground hover:brightness-110"
                 )}
               >
                 <Video className="h-4 w-4" />
@@ -157,8 +157,8 @@ export function FeaturedProjectExpanded({
                       {/* Play icon overlay for videos */}
                       {activeTab === "videos" && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-primary/90 rounded-full p-4 shadow-lg transform transition-transform duration-300 group-hover:scale-110">
-                            <Play className="h-8 w-8 text-primary-foreground fill-primary-foreground" />
+                          <div className="bg-gradient-orange rounded-full p-4 shadow-[var(--shadow-orange-glow)] transform transition-transform duration-300 group-hover:scale-110 group-hover:brightness-110">
+                            <Play className="h-8 w-8 text-white fill-white" />
                           </div>
                         </div>
                       )}

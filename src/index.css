@@ -40,12 +40,17 @@ All colors MUST be HSL.
 
     /* Custom tokens */
     --orange: 25 100% 50%;
-    --orange-light: 25 100% 96%;
+    --orange-light: 30 100% 58%;
     --orange-dark: 25 100% 40%;
+    
+    /* Orange gradient colors - #FF6A00 → #FF9E2C */
+    --gradient-orange-start: 25 100% 50%;
+    --gradient-orange-end: 33 100% 58%;
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --shadow-elegant: 0 10px 40px -10px hsl(25 100% 50% / 0.2);
     --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.05);
+    --shadow-orange-glow: 0 4px 20px hsl(25 100% 50% / 0.35);
   }
 
   .dark {
@@ -77,9 +82,12 @@ All colors MUST be HSL.
     --input: 0 0% 15%;
     --ring: 25 100% 50%;
 
-    --orange-light: 25 100% 10%;
+    --orange-light: 30 100% 58%;
+    --gradient-orange-start: 25 100% 50%;
+    --gradient-orange-end: 33 100% 58%;
     --shadow-elegant: 0 10px 40px -10px hsl(25 100% 50% / 0.3);
     --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.3);
+    --shadow-orange-glow: 0 4px 20px hsl(25 100% 50% / 0.45);
   }
 }
 
@@ -99,11 +107,32 @@ All colors MUST be HSL.
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-orange-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-orange to-orange-light bg-clip-text text-transparent;
+  }
+
+  .bg-gradient-orange {
+    background: linear-gradient(135deg, hsl(var(--gradient-orange-start)), hsl(var(--gradient-orange-end)));
+  }
+
+  .bg-gradient-orange-horizontal {
+    background: linear-gradient(90deg, hsl(var(--gradient-orange-start)), hsl(var(--gradient-orange-end)));
+  }
+
+  .bg-gradient-orange-diagonal {
+    background: linear-gradient(45deg, hsl(var(--gradient-orange-start)), hsl(var(--gradient-orange-end)));
   }
 
   .hover-lift {
     @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .btn-gradient {
+    @apply bg-gradient-orange text-white rounded-lg shadow-[var(--shadow-orange-glow)] transition-all duration-300;
+  }
+
+  .btn-gradient:hover {
+    filter: brightness(1.1);
+    @apply shadow-lg;
   }
 
   .animate-fade-in {
