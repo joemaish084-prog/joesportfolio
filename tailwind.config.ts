@@ -52,6 +52,8 @@ export default {
           light: "hsl(var(--orange-light))",
           dark: "hsl(var(--orange-dark))",
         },
+        "gradient-start": "hsl(var(--gradient-orange-start))",
+        "gradient-end": "hsl(var(--gradient-orange-end))",
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
