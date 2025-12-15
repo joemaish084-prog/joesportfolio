@@ -17,6 +17,9 @@ import iclearHomes from "@/assets/design-iclear-homes.png";
 import iclearDecember from "@/assets/design-iclear-december.png";
 import iclearParachute from "@/assets/design-iclear-parachute.png";
 import iclearFilter from "@/assets/design-iclear-filter.png";
+import iclearEngineered from "@/assets/design-iclear-engineered.webp";
+import iclearNakuru from "@/assets/design-iclear-nakuru.webp";
+import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 
 const designs = [
   {
@@ -94,18 +97,36 @@ const designs = [
     image: iclearFilter,
     description: "Free filter promotional campaign",
   },
+  {
+    title: "iClear Engineered for Home",
+    image: iclearEngineered,
+    description: "Holiday season product showcase design",
+  },
+  {
+    title: "iClear Nakuru Location",
+    image: iclearNakuru,
+    description: "City expansion promotional campaign",
+  },
+  {
+    title: "iClear Free Filter Promo",
+    image: iclearFilterPromo,
+    description: "Buy standard get free filter campaign",
+  },
 ];
 
 export function GraphicDesign() {
   const [selectedDesign, setSelectedDesign] = useState<typeof designs[0] | null>(null);
   
-  // Split designs into two rows
-  const firstRow = designs.slice(0, Math.ceil(designs.length / 2));
-  const secondRow = designs.slice(Math.ceil(designs.length / 2));
+  // Split designs into three rows
+  const rowSize = Math.ceil(designs.length / 3);
+  const firstRow = designs.slice(0, rowSize);
+  const secondRow = designs.slice(rowSize, rowSize * 2);
+  const thirdRow = designs.slice(rowSize * 2);
   
   // Create infinite loop by tripling the designs
   const infiniteFirstRow = [...firstRow, ...firstRow, ...firstRow];
   const infiniteSecondRow = [...secondRow, ...secondRow, ...secondRow];
+  const infiniteThirdRow = [...thirdRow, ...thirdRow, ...thirdRow];
 
   const [emblaRef1] = useEmblaCarousel(
     { 
@@ -124,7 +145,17 @@ export function GraphicDesign() {
       containScroll: false,
       startIndex: secondRow.length,
     },
-    [Autoplay({ delay: 3000, stopOnInteraction: true, stopOnMouseEnter: true })]
+    [Autoplay({ delay: 3500, stopOnInteraction: true, stopOnMouseEnter: true })]
+  );
+
+  const [emblaRef3] = useEmblaCarousel(
+    { 
+      loop: true,
+      dragFree: true,
+      containScroll: false,
+      startIndex: thirdRow.length,
+    },
+    [Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]
   );
 
   return (
@@ -178,6 +209,37 @@ export function GraphicDesign() {
               {infiniteSecondRow.map((design, index) => (
                 <div
                   key={`row2-${index}`}
+                  className="flex-[0_0_300px] sm:flex-[0_0_400px] lg:flex-[0_0_500px] min-w-0 px-4"
+                >
+                  <button
+                    onClick={() => setSelectedDesign(design)}
+                    className="w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden">
+                      <img
+                        src={design.image}
+                        alt={design.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 className="text-xl font-display font-bold text-white mb-2">
+                          {design.title}
+                        </h3>
+                        <p className="text-white/90 text-sm">{design.description}</p>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Third Row Carousel */}
+          <div className="overflow-hidden" ref={emblaRef3}>
+            <div className="flex">
+              {infiniteThirdRow.map((design, index) => (
+                <div
+                  key={`row3-${index}`}
                   className="flex-[0_0_300px] sm:flex-[0_0_400px] lg:flex-[0_0_500px] min-w-0 px-4"
                 >
                   <button
