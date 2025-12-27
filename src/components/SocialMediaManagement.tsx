@@ -52,6 +52,7 @@ const brandsManagedData = [
 ];
 
 const socialProjects = [
+  // Row 1 - New Designs
   {
     title: "Free Filter Campaign",
     description: "Strategic promotional campaign driving product awareness and customer engagement through compelling social media content",
@@ -64,13 +65,29 @@ const socialProjects = [
       { thumbnail: iclearFreshLiving, fullImage: iclearFreshLiving, title: "Walk Your Way Fresh Living" },
       { thumbnail: iclearBoxingDay, fullImage: iclearBoxingDay, title: "Happy Boxing Day" },
       { thumbnail: iclearNewyear, fullImage: iclearNewyear, title: "Happy New Year 2025" },
-      { thumbnail: iclearDecember, fullImage: iclearDecember, title: "iClear Happy December" },
-      { thumbnail: iclearParachute, fullImage: iclearParachute, title: "iClear Filter Delivery" },
     ],
     videos: [
       { thumbnail: contentTiktok, videoUrl: "https://www.tiktok.com/@iclearwellife", title: "iClear TikTok Content" },
     ],
   },
+  {
+    title: "Convey with Caroline Podcast",
+    description: "Complete podcast branding, social media content strategy, and promotional material design",
+    type: "Podcast Branding",
+    thumbnail: podcastCover,
+    designs: [
+      { thumbnail: schoolAdmission, fullImage: schoolAdmission, title: "School Admission 2026" },
+      { thumbnail: schoolInnovative, fullImage: schoolInnovative, title: "Innovative Learning Campaign" },
+      { thumbnail: schoolChristmas, fullImage: schoolChristmas, title: "Merry Christmas Greeting" },
+      { thumbnail: christmasNewyear, fullImage: christmasNewyear, title: "Merry Christmas & Happy New Year" },
+      { thumbnail: podcastCover, fullImage: podcastCover, title: "Convey with Caroline Podcast Cover" },
+    ],
+    videos: [
+      { thumbnail: conveyPodcast, videoUrl: "https://open.spotify.com/show/60e2Uhy5tyYb4Xj4VINVKS", title: "Convey with Caroline Podcast" },
+      { thumbnail: contentYoutube, videoUrl: "https://www.youtube.com/@CarolineNjiruConveys", title: "Caroline Njiru YouTube Channel" },
+    ],
+  },
+  // Row 2 - Existing Projects
   {
     title: "TECNO x iClear",
     description: "Collaborative brand partnership campaign showcasing cross-industry marketing synergy",
@@ -87,28 +104,13 @@ const socialProjects = [
     videos: [],
   },
   {
-    title: "Convey with Caroline Podcast",
-    description: "Complete podcast branding, social media content strategy, and promotional material design",
-    type: "Podcast Branding",
-    thumbnail: podcastCover,
-    designs: [
-      { thumbnail: podcastCover, fullImage: podcastCover, title: "Convey with Caroline Podcast Cover" },
-      { thumbnail: schoolAdmission, fullImage: schoolAdmission, title: "School Admission 2026" },
-      { thumbnail: schoolInnovative, fullImage: schoolInnovative, title: "Innovative Learning Campaign" },
-      { thumbnail: schoolChristmas, fullImage: schoolChristmas, title: "Merry Christmas Greeting" },
-      { thumbnail: christmasNewyear, fullImage: christmasNewyear, title: "Merry Christmas & Happy New Year" },
-    ],
-    videos: [
-      { thumbnail: conveyPodcast, videoUrl: "https://open.spotify.com/show/60e2Uhy5tyYb4Xj4VINVKS", title: "Convey with Caroline Podcast" },
-      { thumbnail: contentYoutube, videoUrl: "https://www.youtube.com/@CarolineNjiruConveys", title: "Caroline Njiru YouTube Channel" },
-    ],
-  },
-  {
     title: "ASDSP Documentary",
     description: "Documentary video production showcasing agricultural transformation and community impact storytelling",
     type: "Documentary",
     thumbnail: contentAsdsp,
     designs: [
+      { thumbnail: iclearDecember, fullImage: iclearDecember, title: "iClear Happy December" },
+      { thumbnail: iclearParachute, fullImage: iclearParachute, title: "iClear Filter Delivery" },
       { thumbnail: iclearFacebook, fullImage: iclearFacebook, title: "iClear Facebook Campaign" },
       { thumbnail: iclearNewMonth, fullImage: iclearNewMonth, title: "iClear New Month Campaign" },
       { thumbnail: iclearOct, fullImage: iclearOct, title: "iClear October Campaign" },
