@@ -26,6 +26,18 @@ import tecno1 from "@/assets/design-tecno-1.png";
 import tecno2 from "@/assets/design-tecno-2.png";
 import tecno3 from "@/assets/design-tecno-3.png";
 
+// New design assets
+import freeFilterCampaign from "@/assets/design-free-filter-campaign.webp";
+import iclearNewyear from "@/assets/design-iclear-newyear.webp";
+import iclearPurity from "@/assets/design-iclear-purity.webp";
+import iclearNakuruActivated from "@/assets/design-iclear-nakuru-activated.webp";
+import iclearFreshLiving from "@/assets/design-iclear-fresh-living.webp";
+import iclearBoxingDay from "@/assets/design-iclear-boxing-day.webp";
+import schoolAdmission from "@/assets/design-school-admission.webp";
+import schoolInnovative from "@/assets/design-school-innovative.webp";
+import schoolChristmas from "@/assets/design-school-christmas.webp";
+import christmasNewyear from "@/assets/design-christmas-newyear.webp";
+
 // Content thumbnails
 import contentYoutube from "@/assets/content-youtube-thumbnail.jpg";
 import contentTiktok from "@/assets/content-tiktok-thumbnail.jpg";
@@ -41,32 +53,50 @@ const brandsManagedData = [
 
 const socialProjects = [
   {
-    title: "Instagram Campaign Series",
-    description: "30-day content strategy with carousel posts driving 80% engagement increase",
+    title: "Free Filter Campaign",
+    description: "Strategic promotional campaign driving product awareness and customer engagement through compelling social media content",
     type: "Campaign",
-    thumbnail: iclearFacebook,
+    thumbnail: freeFilterCampaign,
     designs: [
-      { thumbnail: waterPurifiers, fullImage: waterPurifiers, title: "iClear Water Purifiers Campaign" },
-      { thumbnail: waterJourney, fullImage: waterJourney, title: "iClear Brand Campaign" },
-      { thumbnail: iclearNewMonth, fullImage: iclearNewMonth, title: "iClear New Month Campaign" },
-      { thumbnail: iclearOct, fullImage: iclearOct, title: "iClear October Campaign" },
-      { thumbnail: iclearMonday, fullImage: iclearMonday, title: "iClear Monday Motivation" },
-      { thumbnail: iclearHomes, fullImage: iclearHomes, title: "iClear Built for Homes" },
+      { thumbnail: freeFilterCampaign, fullImage: freeFilterCampaign, title: "Free Filter Campaign" },
+      { thumbnail: iclearPurity, fullImage: iclearPurity, title: "Unmatched Purity Campaign" },
+      { thumbnail: iclearNakuruActivated, fullImage: iclearNakuruActivated, title: "Nakuru Activated Campaign" },
+      { thumbnail: iclearFreshLiving, fullImage: iclearFreshLiving, title: "Walk Your Way Fresh Living" },
+      { thumbnail: iclearBoxingDay, fullImage: iclearBoxingDay, title: "Happy Boxing Day" },
+      { thumbnail: iclearNewyear, fullImage: iclearNewyear, title: "Happy New Year 2025" },
+      { thumbnail: iclearDecember, fullImage: iclearDecember, title: "iClear Happy December" },
+      { thumbnail: iclearParachute, fullImage: iclearParachute, title: "iClear Filter Delivery" },
     ],
     videos: [
       { thumbnail: contentTiktok, videoUrl: "https://www.tiktok.com/@iclearwellife", title: "iClear TikTok Content" },
     ],
   },
   {
-    title: "Brand Identity Posts",
-    description: "Cohesive social media design maintaining consistent brand voice",
-    type: "Content Design",
-    thumbnail: podcastCover,
+    title: "TECNO x iClear",
+    description: "Collaborative brand partnership campaign showcasing cross-industry marketing synergy",
+    type: "Collaboration",
+    thumbnail: tecno1,
     designs: [
-      { thumbnail: podcastCover, fullImage: podcastCover, title: "Convey with Caroline Podcast Cover" },
       { thumbnail: tecno1, fullImage: tecno1, title: "TECNO x iClear Collaboration" },
       { thumbnail: tecno2, fullImage: tecno2, title: "TECNO Product Campaign" },
       { thumbnail: tecno3, fullImage: tecno3, title: "TECNO Mobile Promotion" },
+      { thumbnail: waterPurifiers, fullImage: waterPurifiers, title: "iClear Water Purifiers Campaign" },
+      { thumbnail: waterJourney, fullImage: waterJourney, title: "iClear Brand Campaign" },
+      { thumbnail: iclearHomes, fullImage: iclearHomes, title: "iClear Built for Homes" },
+    ],
+    videos: [],
+  },
+  {
+    title: "Convey with Caroline Podcast",
+    description: "Complete podcast branding, social media content strategy, and promotional material design",
+    type: "Podcast Branding",
+    thumbnail: podcastCover,
+    designs: [
+      { thumbnail: podcastCover, fullImage: podcastCover, title: "Convey with Caroline Podcast Cover" },
+      { thumbnail: schoolAdmission, fullImage: schoolAdmission, title: "School Admission 2026" },
+      { thumbnail: schoolInnovative, fullImage: schoolInnovative, title: "Innovative Learning Campaign" },
+      { thumbnail: schoolChristmas, fullImage: schoolChristmas, title: "Merry Christmas Greeting" },
+      { thumbnail: christmasNewyear, fullImage: christmasNewyear, title: "Merry Christmas & Happy New Year" },
     ],
     videos: [
       { thumbnail: conveyPodcast, videoUrl: "https://open.spotify.com/show/60e2Uhy5tyYb4Xj4VINVKS", title: "Convey with Caroline Podcast" },
@@ -74,15 +104,16 @@ const socialProjects = [
     ],
   },
   {
-    title: "Growth Analytics Dashboard",
-    description: "Data-driven insights showcasing 25% brand visibility growth",
-    type: "Analytics",
-    thumbnail: iclearDecember,
+    title: "ASDSP Documentary",
+    description: "Documentary video production showcasing agricultural transformation and community impact storytelling",
+    type: "Documentary",
+    thumbnail: contentAsdsp,
     designs: [
-      { thumbnail: iclearDecember, fullImage: iclearDecember, title: "iClear Happy December" },
-      { thumbnail: iclearParachute, fullImage: iclearParachute, title: "iClear Filter Delivery" },
-      { thumbnail: iclearFilter, fullImage: iclearFilter, title: "iClear December Promo" },
       { thumbnail: iclearFacebook, fullImage: iclearFacebook, title: "iClear Facebook Campaign" },
+      { thumbnail: iclearNewMonth, fullImage: iclearNewMonth, title: "iClear New Month Campaign" },
+      { thumbnail: iclearOct, fullImage: iclearOct, title: "iClear October Campaign" },
+      { thumbnail: iclearMonday, fullImage: iclearMonday, title: "iClear Monday Motivation" },
+      { thumbnail: iclearFilter, fullImage: iclearFilter, title: "iClear December Promo" },
     ],
     videos: [
       { thumbnail: contentAsdsp, videoUrl: "https://youtu.be/7jCqcsyXGC8", title: "ASDSP Documentary" },
@@ -161,57 +192,61 @@ export function SocialMediaManagement() {
           </div>
         </div>
 
-        {/* Social Media Projects */}
+        {/* Featured Projects - 2x2 Grid */}
         <div className="mb-16">
           <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-8">
             Featured Projects
           </h3>
-          <div className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {socialProjects.map((project, index) => (
               <div key={index}>
                 <Card
                   onClick={() => handleProjectClick(index)}
                   className={cn(
-                    "group cursor-pointer overflow-hidden border-2 transition-all duration-300",
+                    "group cursor-pointer overflow-hidden border-2 transition-all duration-300 h-full",
                     expandedProject === index
                       ? "border-primary shadow-elegant"
                       : "hover:border-primary/50 hover:shadow-elegant"
                   )}
                 >
-                  <div className="flex flex-col sm:flex-row">
-                    <div className="relative w-full sm:w-48 lg:w-64 aspect-square sm:aspect-auto overflow-hidden bg-muted flex-shrink-0">
+                  <div className="flex flex-col">
+                    <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted">
                       <img
                         src={project.thumbnail}
                         alt={project.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <Badge 
+                        variant="secondary" 
+                        className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm"
+                      >
+                        {project.type}
+                      </Badge>
                     </div>
-                    <CardContent className="flex-1 p-6 flex flex-col justify-center">
-                      <div className="flex items-start justify-between gap-3 mb-3">
-                        <h4 className="text-xl font-display font-semibold">
-                          {project.title}
-                        </h4>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary" className="shrink-0">
-                            {project.type}
-                          </Badge>
+                    <CardContent className="p-6 flex flex-col justify-between flex-1">
+                      <div>
+                        <div className="flex items-start justify-between gap-3 mb-3">
+                          <h4 className="text-xl font-display font-semibold">
+                            {project.title}
+                          </h4>
                           <ChevronDown
                             className={cn(
-                              "h-5 w-5 text-muted-foreground transition-transform duration-300",
+                              "h-5 w-5 text-muted-foreground transition-transform duration-300 flex-shrink-0",
                               expandedProject === index && "rotate-180"
                             )}
                           />
                         </div>
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                          {project.description}
+                        </p>
                       </div>
-                      <p className="text-muted-foreground text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                      <p className="text-xs text-primary mt-3 font-medium">
+                      <p className="text-xs text-primary mt-4 font-medium">
                         Click to explore {project.designs.length > 0 && project.videos.length > 0 
-                          ? "designs & videos" 
+                          ? `${project.designs.length} designs & ${project.videos.length} video${project.videos.length > 1 ? 's' : ''}` 
                           : project.designs.length > 0 
-                            ? "designs" 
-                            : "videos"}
+                            ? `${project.designs.length} designs` 
+                            : `${project.videos.length} video${project.videos.length > 1 ? 's' : ''}`}
                       </p>
                     </CardContent>
                   </div>

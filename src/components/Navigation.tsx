@@ -5,10 +5,8 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { name: "Home", href: "#home" },
-  { name: "Portfolio", href: "#portfolio" },
   { name: "Social Media", href: "#social-media" },
   { name: "Videos", href: "#videos" },
-  { name: "Clients", href: "#clients" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
