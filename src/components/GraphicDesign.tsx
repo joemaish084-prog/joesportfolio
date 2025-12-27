@@ -21,6 +21,73 @@ import iclearEngineered from "@/assets/design-iclear-engineered.webp";
 import iclearNakuru from "@/assets/design-iclear-nakuru.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 
+// New designs imports
+import freeFilterCampaign from "@/assets/design-free-filter-campaign.webp";
+import iclearNewyear from "@/assets/design-iclear-newyear.webp";
+import iclearPurity from "@/assets/design-iclear-purity.webp";
+import iclearNakuruActivated from "@/assets/design-iclear-nakuru-activated.webp";
+import iclearFreshLiving from "@/assets/design-iclear-fresh-living.webp";
+import iclearBoxingDay from "@/assets/design-iclear-boxing-day.webp";
+import schoolAdmission from "@/assets/design-school-admission.webp";
+import schoolInnovative from "@/assets/design-school-innovative.webp";
+import schoolChristmas from "@/assets/design-school-christmas.webp";
+import christmasNewyear from "@/assets/design-christmas-newyear.webp";
+
+// New designs - First Row
+const newDesigns = [
+  {
+    title: "Free Filter Campaign",
+    image: freeFilterCampaign,
+    description: "Buy standard get free filter promotional campaign",
+  },
+  {
+    title: "Unmatched Purity",
+    image: iclearPurity,
+    description: "iClear effortless hydration campaign",
+  },
+  {
+    title: "Nakuru Activated",
+    image: iclearNakuruActivated,
+    description: "City expansion delivery campaign",
+  },
+  {
+    title: "Fresh Living",
+    image: iclearFreshLiving,
+    description: "Walk your way into healthy lifestyle",
+  },
+  {
+    title: "Happy Boxing Day",
+    image: iclearBoxingDay,
+    description: "Festive celebration promotional design",
+  },
+  {
+    title: "Happy New Year 2025",
+    image: iclearNewyear,
+    description: "New year celebration campaign",
+  },
+  {
+    title: "School Admission 2026",
+    image: schoolAdmission,
+    description: "NorthGate School enrollment campaign",
+  },
+  {
+    title: "Innovative Learning",
+    image: schoolInnovative,
+    description: "Educational campaign design",
+  },
+  {
+    title: "School Christmas Greeting",
+    image: schoolChristmas,
+    description: "Festive school greeting design",
+  },
+  {
+    title: "Christmas & New Year",
+    image: christmasNewyear,
+    description: "Holiday season greeting card",
+  },
+];
+
+// Existing designs
 const designs = [
   {
     title: "iClear Water Purifiers Campaign",
@@ -117,7 +184,10 @@ const designs = [
 export function GraphicDesign() {
   const [selectedDesign, setSelectedDesign] = useState<typeof designs[0] | null>(null);
   
-  // Split designs into three rows
+  // New designs for first row
+  const infiniteNewRow = [...newDesigns, ...newDesigns, ...newDesigns];
+  
+  // Split existing designs into three rows
   const rowSize = Math.ceil(designs.length / 3);
   const firstRow = designs.slice(0, rowSize);
   const secondRow = designs.slice(rowSize, rowSize * 2);
@@ -127,6 +197,17 @@ export function GraphicDesign() {
   const infiniteFirstRow = [...firstRow, ...firstRow, ...firstRow];
   const infiniteSecondRow = [...secondRow, ...secondRow, ...secondRow];
   const infiniteThirdRow = [...thirdRow, ...thirdRow, ...thirdRow];
+
+  // New designs carousel (first row)
+  const [emblaRefNew] = useEmblaCarousel(
+    { 
+      loop: true,
+      dragFree: true,
+      containScroll: false,
+      startIndex: newDesigns.length,
+    },
+    [Autoplay({ delay: 2500, stopOnInteraction: true, stopOnMouseEnter: true })]
+  );
 
   const [emblaRef1] = useEmblaCarousel(
     { 
@@ -172,7 +253,38 @@ export function GraphicDesign() {
         </div>
 
         <div className="space-y-6">
-          {/* First Row Carousel */}
+          {/* New Designs Row - First */}
+          <div className="overflow-hidden" ref={emblaRefNew}>
+            <div className="flex">
+              {infiniteNewRow.map((design, index) => (
+                <div
+                  key={`row-new-${index}`}
+                  className="flex-[0_0_300px] sm:flex-[0_0_400px] lg:flex-[0_0_500px] min-w-0 px-4"
+                >
+                  <button
+                    onClick={() => setSelectedDesign(design)}
+                    className="w-full group relative overflow-hidden rounded-lg border-2 border-primary/30 hover:border-primary transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                  >
+                    <div className="relative aspect-[3/4] overflow-hidden">
+                      <img
+                        src={design.image}
+                        alt={design.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <h3 className="text-xl font-display font-bold text-white mb-2">
+                          {design.title}
+                        </h3>
+                        <p className="text-white/90 text-sm">{design.description}</p>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Second Row Carousel */}
           <div className="overflow-hidden" ref={emblaRef1}>
             <div className="flex">
               {infiniteFirstRow.map((design, index) => (
