@@ -1,11 +1,5 @@
 import { ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import logoIclear from "@/assets/logo-iclear.png";
-import logoConvey from "@/assets/logo-convey.png";
-import logoCaroline from "@/assets/logo-joan.png";
-import logoTechmindset from "@/assets/logo-techmindset.png";
-import logoNorthgate from "@/assets/logo-northgate.png";
-import logoPowwater from "@/assets/logo-powwater.png";
 
 const managedAccounts = [
   {
@@ -46,15 +40,6 @@ const managedAccounts = [
     ],
     description: "Personal brand",
   },
-];
-
-const brandLogos = [
-  { name: "iClear Well Life Service", logo: logoIclear },
-  { name: "Convey Communications", logo: logoConvey },
-  { name: "Convey With Caroline", logo: logoCaroline },
-  { name: "TechMindset Africa", logo: logoTechmindset },
-  { name: "NorthGate School", logo: logoNorthgate },
-  { name: "PowWater", logo: logoPowwater },
 ];
 
 const PlatformIcon = ({ platform }: { platform: string }) => {
@@ -102,30 +87,6 @@ export function ManagedAccounts() {
             Building and growing digital presence across multiple platforms with strategic 
             content creation, design, and data-driven growth strategies.
           </p>
-        </div>
-
-        {/* Infinite Logo Carousel */}
-        <div className="mb-16">
-          <h3 className="text-center text-xl font-display font-semibold text-muted-foreground mb-8">
-            Brands & Accounts I've Managed
-          </h3>
-          <div className="relative overflow-hidden">
-            <div className="flex animate-infinite-scroll">
-              {[...brandLogos, ...brandLogos, ...brandLogos, ...brandLogos].map((brand, index) => (
-                <div
-                  key={`logo-${index}`}
-                  className="flex-shrink-0 mx-8 sm:mx-12 flex items-center justify-center"
-                >
-                  <img
-                    src={brand.logo}
-                    alt={brand.name}
-                    className="h-16 sm:h-20 w-auto object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
-                    title={brand.name}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -9,6 +9,8 @@ import logoConvey from "@/assets/logo-convey.png";
 import logoTechmindset from "@/assets/logo-techmindset.png";
 import logoJoan from "@/assets/logo-joan.png";
 import logoIclear from "@/assets/logo-iclear.png";
+import logoNorthgate from "@/assets/logo-northgate.png";
+import logoPowwater from "@/assets/logo-powwater.png";
 
 // Design assets
 import waterPurifiers from "@/assets/design-water-purifiers.png";
@@ -49,6 +51,8 @@ const brandsManagedData = [
   { name: "Convey Communications", industry: "PR Firm", logo: logoConvey },
   { name: "Joan Mbesya", industry: "Personal Brand", logo: logoJoan },
   { name: "TechMindset Africa", industry: "AI Company", logo: logoTechmindset },
+  { name: "NorthGate School", industry: "Education", logo: logoNorthgate },
+  { name: "PowWater", industry: "Water Services", logo: logoPowwater },
 ];
 
 const socialProjects = [
@@ -165,32 +169,28 @@ export function SocialMediaManagement() {
           </p>
         </div>
 
-        {/* Brands & Accounts Managed */}
+        {/* Brands & Accounts Managed - Infinite Scroll */}
         <div className="mb-16">
           <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-8">
             Brands & Accounts I've Managed
           </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {brandsManagedData.map((brand, index) => (
-              <Card
-                key={index}
-                className="border-2 hover:border-primary/30 transition-all duration-300 hover:shadow-soft"
-              >
-                <CardContent className="p-6 flex flex-col items-center text-center space-y-3">
-                  {brand.logo ? (
-                    <img src={brand.logo} alt={brand.name} className="h-16 w-auto object-contain" />
-                  ) : (
-                    <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-2xl font-bold text-primary">{brand.name.charAt(0)}</span>
-                    </div>
-                  )}
-                  <div>
-                    <h4 className="font-semibold text-foreground">{brand.name}</h4>
-                    <p className="text-sm text-muted-foreground">{brand.industry}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="relative overflow-hidden">
+            <div className="flex animate-infinite-scroll">
+              {[...brandsManagedData, ...brandsManagedData, ...brandsManagedData, ...brandsManagedData].map((brand, index) => (
+                <div
+                  key={`brand-${index}`}
+                  className="flex-shrink-0 mx-8 sm:mx-12 flex flex-col items-center gap-2"
+                >
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="h-16 sm:h-20 w-auto object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                    title={brand.name}
+                  />
+                  <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">{brand.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
