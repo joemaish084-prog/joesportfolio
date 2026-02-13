@@ -1,111 +1,99 @@
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { Play } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import podcastThumbnail from "@/assets/convey-podcast-thumbnail.png";
+import thumb1 from "@/assets/video-thumb-1.png";
+import thumb2 from "@/assets/video-thumb-2.png";
+import thumb3 from "@/assets/video-thumb-3.png";
+import thumb4 from "@/assets/video-thumb-4.png";
 
-const videoProjects = [
+const videos = [
   {
-    title: "Convey with Caroline Podcast",
-    description: "Full video and audio production from filming to final delivery. Created visual identity and managed post-production for engaging podcast experience.",
-    type: "Podcast Production",
-    date: "Jan '25",
-    thumbnail: podcastThumbnail,
-    link: "https://open.spotify.com/show/60e2Uhy5tyYb4Xj4VINVKS?si=39d88e0150784a2a",
+    title: "iClear Water Delivery",
+    thumbnail: thumb1,
+    link: "https://www.instagram.com/reel/DT-w2FtjTnk/",
   },
   {
-    title: "County Government Campaign",
-    description: "Assisted in setting up camera equipment and supported live broadcasts ensuring high-quality visual content for government communications.",
-    type: "Live Broadcast",
-    date: "2023",
+    title: "Commonly Asked Questions",
+    thumbnail: thumb2,
+    link: "https://www.instagram.com/reel/DUFhZLMCkI6/",
   },
   {
-    title: "Brand Campaign Videos",
-    description: "Produced promotional video content for iClear Wellife Service, contributing to 25% growth in brand visibility.",
-    type: "Marketing Videos",
-    date: "2024",
+    title: "Filter Installation",
+    thumbnail: thumb3,
+    link: "https://www.instagram.com/reel/DR0_0WSCKvx/",
   },
   {
-    title: "Social Media Content",
-    description: "Created engaging video content for social media platforms, driving 30+ multimedia assets for various clients.",
-    type: "Social Content",
-    date: "2024-Present",
+    title: "Corporate Trends",
+    thumbnail: thumb4,
+    link: "https://www.instagram.com/reel/DQ6zTmTjqlq/",
   },
 ];
 
+const infiniteVideos = [...videos, ...videos, ...videos];
+
 export function Videos() {
+  const [emblaRef] = useEmblaCarousel(
+    {
+      loop: true,
+      dragFree: true,
+      containScroll: false,
+      startIndex: videos.length,
+    },
+    [Autoplay({ delay: 2500, stopOnInteraction: true, stopOnMouseEnter: true })]
+  );
+
   return (
-    <section id="videos" className="py-20 sm:py-32">
+    <section id="videos" className="py-20 sm:py-32 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
             Video <span className="text-gradient">Projects</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From concept to final cut - showcasing expertise in video production, editing, and storytelling
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-6 lg:gap-8">
-          {videoProjects.map((project, index) => {
-            const CardWrapper = project.link ? 'a' : 'div';
-            const cardProps = project.link ? { href: project.link, target: "_blank", rel: "noopener noreferrer" } : {};
-            
-            return (
-              <CardWrapper key={index} {...cardProps} className="block">
-                <Card className="group hover-lift cursor-pointer border-2 hover:border-primary/50 transition-all overflow-hidden h-full">
-                  <div className="aspect-video relative overflow-hidden">
-                    {project.thumbnail ? (
-                      <>
-                        <img 
-                          src={project.thumbnail} 
-                          alt={project.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                          <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-elegant">
-                            <Play className="h-8 w-8 text-primary-foreground ml-1" fill="currentColor" />
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5" />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                          <div className="relative z-10 flex flex-col items-center gap-2">
-                            <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-elegant">
-                              <Play className="h-8 w-8 text-primary-foreground ml-1" fill="currentColor" />
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
-                    <Badge variant="secondary" className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm">
-                      {project.type}
-                    </Badge>
-                  </div>
-                  <CardContent className="p-6 space-y-3">
-                    <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-xl font-display font-semibold group-hover:text-primary transition-colors">
-                        {project.title}
-                      </h3>
-                      <span className="text-sm text-muted-foreground whitespace-nowrap">
-                        {project.date}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground">{project.description}</p>
-                  </CardContent>
-                </Card>
-              </CardWrapper>
-            );
-          })}
-        </div>
-
-        <div className="mt-12 text-center space-y-4">
-          <p className="text-muted-foreground">
-            Video embeds from YouTube and Vimeo can be added here
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Short-form video content created for social media — from concept to final cut
           </p>
         </div>
       </div>
+
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex">
+          {infiniteVideos.map((video, index) => (
+            <div
+              key={`video-${index}`}
+              className="flex-[0_0_260px] sm:flex-[0_0_320px] lg:flex-[0_0_380px] min-w-0 px-3"
+            >
+              <a
+                href={video.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant"
+              >
+                <div className="relative aspect-[9/16] overflow-hidden">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-elegant">
+                      <Play className="h-7 w-7 text-primary-foreground ml-0.5" fill="currentColor" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="text-lg font-display font-bold text-white">
+                      {video.title}
+                    </h3>
+                  </div>
+                </div>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="text-center text-sm text-muted-foreground mt-8">
+        Swipe to browse • Click to watch • Auto-scrolls when idle
+      </p>
     </section>
   );
 }
