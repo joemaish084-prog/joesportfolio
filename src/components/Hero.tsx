@@ -17,11 +17,12 @@ const tags = [
 ];
 
 function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; index: number; mouseX: any; mouseY: any }) {
-  // Invert direction: cursor right → tags left (negate values)
-  const moveX = useTransform(mouseX, (val: number) => val * -30);
-  const moveY = useTransform(mouseY, (val: number) => val * -30);
-  const smoothX = useSpring(moveX, { damping: 18, stiffness: 80 });
-  const smoothY = useSpring(moveY, { damping: 18, stiffness: 80 });
+  // Per-tag variation: different intensity and spring settings for organic feel
+  const intensity = 40 + (index % 3) * 15; // 40, 55, 70 range
+  const moveX = useTransform(mouseX, (val: number) => val * -intensity);
+  const moveY = useTransform(mouseY, (val: number) => val * -intensity);
+  const smoothX = useSpring(moveX, { damping: 12 + index * 1.5, stiffness: 50 + index * 5 });
+  const smoothY = useSpring(moveY, { damping: 12 + index * 1.5, stiffness: 50 + index * 5 });
 
   const { label, ...position } = tag;
 
@@ -39,14 +40,14 @@ function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; inde
       transition={{ delay: 0.4 + index * 0.1 }}
     >
       <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
+        animate={{ y: [0, -8, 0], x: [0, index % 2 === 0 ? 4 : -4, 0] }}
+        transition={{ duration: 3.5 + index * 0.3, repeat: Infinity, ease: "easeInOut" }}
         whileHover={{
-          scale: 1.08,
-          boxShadow: "0 4px 24px hsl(var(--orange) / 0.25)",
-          transition: { duration: 0.25 },
+          scale: 1.1,
+          boxShadow: "0 6px 28px hsl(var(--orange) / 0.3)",
+          transition: { duration: 0.2 },
         }}
-        className="px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-muted-foreground shadow-[0_2px_16px_hsl(var(--orange)/0.12)] backdrop-blur-sm cursor-default transition-shadow duration-300"
+        className="px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-muted-foreground shadow-[0_2px_16px_hsl(var(--orange)/0.1)] backdrop-blur-sm cursor-default transition-shadow duration-300"
       >
         {label}
       </motion.div>
