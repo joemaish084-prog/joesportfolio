@@ -43,8 +43,9 @@ function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; inde
         animate={{ y: [0, -8, 0], x: [0, index % 2 === 0 ? 4 : -4, 0] }}
         transition={{ duration: 3.5 + index * 0.3, repeat: Infinity, ease: "easeInOut" }}
         whileHover={{
-          scale: 1.1,
-          boxShadow: "0 6px 28px hsl(var(--orange) / 0.3)",
+          scale: 1.12,
+          boxShadow: "0 0 20px hsl(var(--orange) / 0.5), 0 0 40px hsl(var(--orange) / 0.25), 0 8px 32px hsl(var(--orange) / 0.3)",
+          borderColor: "hsl(var(--orange) / 0.4)",
           transition: { duration: 0.2 },
         }}
         className="px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-muted-foreground shadow-[0_2px_16px_hsl(var(--orange)/0.1)] backdrop-blur-sm cursor-default transition-shadow duration-300"
