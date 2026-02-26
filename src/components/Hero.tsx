@@ -17,10 +17,11 @@ const tags = [
 ];
 
 function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; index: number; mouseX: any; mouseY: any }) {
-  const moveX = useTransform(mouseX, (val: number) => val * 20);
-  const moveY = useTransform(mouseY, (val: number) => val * 20);
-  const smoothX = useSpring(moveX, { damping: 20, stiffness: 100 });
-  const smoothY = useSpring(moveY, { damping: 20, stiffness: 100 });
+  // Invert direction: cursor right → tags left (negate values)
+  const moveX = useTransform(mouseX, (val: number) => val * -30);
+  const moveY = useTransform(mouseY, (val: number) => val * -30);
+  const smoothX = useSpring(moveX, { damping: 18, stiffness: 80 });
+  const smoothY = useSpring(moveY, { damping: 18, stiffness: 80 });
 
   const { label, ...position } = tag;
 
@@ -40,7 +41,12 @@ function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; inde
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
-        className="px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-muted-foreground shadow-[0_2px_16px_hsl(var(--orange)/0.12)] backdrop-blur-sm"
+        whileHover={{
+          scale: 1.08,
+          boxShadow: "0 4px 24px hsl(var(--orange) / 0.25)",
+          transition: { duration: 0.25 },
+        }}
+        className="px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-muted-foreground shadow-[0_2px_16px_hsl(var(--orange)/0.12)] backdrop-blur-sm cursor-default transition-shadow duration-300"
       >
         {label}
       </motion.div>
