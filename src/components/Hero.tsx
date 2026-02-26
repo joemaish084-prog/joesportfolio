@@ -40,7 +40,7 @@ function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; inde
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
-        className="px-4 py-2 bg-card border border-border rounded-xl shadow-soft text-sm text-muted-foreground"
+        className="px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-muted-foreground shadow-[0_2px_16px_hsl(var(--orange)/0.12)] backdrop-blur-sm"
       >
         {label}
       </motion.div>
