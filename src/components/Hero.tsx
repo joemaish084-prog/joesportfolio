@@ -115,7 +115,7 @@ export function Hero() {
           className="mt-10 flex flex-col sm:flex-row items-center gap-4"
         >
           <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base" asChild>
-            <a href="#portfolio">
+            <a href="#graphic-design">
               View My Work
               <ArrowRight className="ml-2 h-5 w-5" />
             </a>
