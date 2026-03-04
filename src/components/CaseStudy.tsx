@@ -1,4 +1,4 @@
-import { TrendingUp, Video, MousePointerClick, BarChart3, Zap, Target, Layers } from "lucide-react";
+import { BarChart3, Zap } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const stats = [
@@ -45,9 +45,10 @@ const platforms = [
     subtitle: "Steady Supplemental Channel",
     accentVar: "--facebook",
     metrics: [
+      "4.8M total views",
       "15.8K link clicks (↑2.3%)",
-      "6.1K content interactions (↑9.3%)",
       "16.9K page visits",
+      "6.1K content interactions (↑9.3%)",
       "816 new followers (↑6%)",
     ],
     topVideo: null,
@@ -55,23 +56,6 @@ const platforms = [
   },
 ];
 
-const recommendations = [
-  {
-    icon: Video,
-    title: "Double Down on Video Content",
-    description: "Prioritise installation and educational videos, maintaining 10+ second average watch time for optimal algorithm performance.",
-  },
-  {
-    icon: MousePointerClick,
-    title: "Prioritise Instagram for Conversions",
-    description: "Highest link click-through and intent signals. Target 50% further view growth with continued investment.",
-  },
-  {
-    icon: Layers,
-    title: "Optimise Platform Mix",
-    description: "Instagram (#1 for conversions) → TikTok (#2 for awareness) → Facebook (supplemental traffic).",
-  },
-];
 
 export function CaseStudy() {
   return (
@@ -87,8 +71,7 @@ export function CaseStudy() {
             className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
             style={{ color: "hsl(var(--case-study-text))" }}
           >
-            Case Study: 2025 Annual Social Media{" "}
-            <span className="text-gradient">Marketing Campaign</span>
+            Case <span className="text-gradient">Study</span>
           </h2>
           <p
             className="text-lg max-w-3xl mx-auto"
@@ -240,46 +223,6 @@ export function CaseStudy() {
           </p>
         </div>
 
-        {/* Strategic Recommendations */}
-        <h3
-          className="text-2xl sm:text-3xl font-display font-bold text-center mb-10"
-          style={{ color: "hsl(var(--case-study-text))" }}
-        >
-          Strategic Recommendations
-        </h3>
-        <div className="space-y-4">
-          {recommendations.map((rec, i) => {
-            const Icon = rec.icon;
-            return (
-              <div
-                key={i}
-                className="flex items-start gap-5 rounded-xl p-6 border transition-all duration-300 hover:-translate-y-0.5"
-                style={{
-                  background: "hsl(var(--case-study-card))",
-                  borderColor: "hsl(var(--case-study-card-border))",
-                }}
-              >
-                <div className="rounded-lg p-3 bg-gradient-orange flex-shrink-0">
-                  <Icon className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <h4
-                    className="text-lg font-display font-semibold mb-1"
-                    style={{ color: "hsl(var(--case-study-text))" }}
-                  >
-                    {rec.title}
-                  </h4>
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{ color: "hsl(var(--case-study-muted))" }}
-                  >
-                    {rec.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
