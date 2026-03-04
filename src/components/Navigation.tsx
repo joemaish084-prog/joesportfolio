@@ -50,7 +50,7 @@ export function Navigation() {
             ))}
             <ThemeToggle />
             <Button asChild className="shadow-elegant">
-              <a href="/Joseph_Maina_CV.pdf" download>
+              <a href="/Joseph_Isaac_Maina_Resume.pdf" download="Joseph Isaac Maina Resume.pdf">
                 <Download className="mr-2 h-4 w-4" />
                 CV
               </a>
@@ -88,7 +88,7 @@ export function Navigation() {
               </a>
             ))}
             <Button asChild className="w-full shadow-elegant">
-              <a href="/Joseph_Maina_CV.pdf" download>
+              <a href="/Joseph_Isaac_Maina_Resume.pdf" download="Joseph Isaac Maina Resume.pdf">
                 <Download className="mr-2 h-4 w-4" />
                 Download CV
               </a>
