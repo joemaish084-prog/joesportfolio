@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { GraphicDesign } from "@/components/GraphicDesign";
 import { Videos } from "@/components/Videos";
 import { SocialMediaManagement } from "@/components/SocialMediaManagement";
+import { CaseStudy } from "@/components/CaseStudy";
 import { ManagedAccounts } from "@/components/ManagedAccounts";
 import { ToolsWorkflow } from "@/components/ToolsWorkflow";
 import { ContentLinks } from "@/components/ContentLinks";
@@ -20,6 +21,7 @@ const Index = () => {
         <GraphicDesign />
         <Videos />
         <SocialMediaManagement />
+        <CaseStudy />
         <ManagedAccounts />
         <ToolsWorkflow />
         <ContentLinks />
