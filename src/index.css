@@ -51,6 +51,18 @@ All colors MUST be HSL.
     --shadow-elegant: 0 10px 40px -10px hsl(25 100% 50% / 0.2);
     --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.05);
     --shadow-orange-glow: 0 4px 20px hsl(25 100% 50% / 0.35);
+
+    /* Case study section */
+    --case-study-bg: 220 20% 10%;
+    --case-study-card: 220 15% 14%;
+    --case-study-card-border: 220 10% 22%;
+    --case-study-text: 0 0% 92%;
+    --case-study-muted: 0 0% 55%;
+
+    /* Platform accents */
+    --tiktok: 170 70% 45%;
+    --instagram: 330 80% 55%;
+    --facebook: 220 70% 55%;
   }
 
   .dark {

@@ -127,28 +127,6 @@ const socialProjects = [
   },
 ];
 
-const caseStudies = [
-  {
-    company: "iClear Wellife Service",
-    role: "Assistant Marketing Supervisor",
-    period: "Aug '24 - Present",
-    metrics: [
-      { label: "Engagement Increase", value: "80%", icon: TrendingUp },
-      { label: "Brand Visibility Growth", value: "25%", icon: Target },
-      { label: "Campaigns Executed", value: "12+", icon: Users },
-    ],
-  },
-  {
-    company: "Convey Communications",
-    role: "Creative Digital Officer",
-    period: "Feb '24 - May '25",
-    metrics: [
-      { label: "Client Engagement", value: "15%", icon: TrendingUp },
-      { label: "Multimedia Assets", value: "30+", icon: Target },
-    ],
-  },
-];
-
 export function SocialMediaManagement() {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
@@ -266,44 +244,6 @@ export function SocialMediaManagement() {
           </div>
         </div>
 
-        {/* Case Studies */}
-        <div>
-          <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-8">
-            Case Studies & Results
-          </h3>
-          <div className="space-y-8">
-            {caseStudies.map((study, index) => (
-              <Card key={index} className="border-2 hover:border-primary/30 transition-all">
-                <CardHeader className="space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                    <CardTitle className="text-2xl font-display">{study.company}</CardTitle>
-                    <span className="text-sm text-muted-foreground">{study.period}</span>
-                  </div>
-                  <p className="text-primary font-medium">{study.role}</p>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    {study.metrics.map((metric, idx) => {
-                      const Icon = metric.icon;
-                      return (
-                        <div
-                          key={idx}
-                          className="bg-primary/5 rounded-lg p-4 space-y-2 border border-primary/10"
-                        >
-                          <Icon className="h-5 w-5 text-primary" />
-                          <p className="text-2xl sm:text-3xl font-display font-bold text-primary">
-                            {metric.value}
-                          </p>
-                          <p className="text-sm text-muted-foreground">{metric.label}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
