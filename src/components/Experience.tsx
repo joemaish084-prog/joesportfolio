@@ -3,25 +3,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const experiences = [
   {
-    company: "iClear Well Life Service",
-    role: "Digital Marketing Specialist",
-    period: "Aug '25 - Present",
+    company: "iClear Welllife Service Limited",
+    role: "Assistant Marketing Supervisor / Digital Marketing Specialist",
+    period: "May '25 - Present",
     responsibilities: [
-      "Managed social media accounts and created compelling content to boost follower growth and online engagement",
-      "Developed and implemented creative marketing strategies that increased audience engagement and campaign reach",
-      "Supported the team in developing unique campaigns, helping to achieve a 80% increase in brand visibility",
-      "Assisted in planning and executing 12+ promotional campaigns, resulting in a 25% growth in brand visibility within one year",
+      "Co-led end-to-end marketing strategy and execution across social media and digital campaigns, contributing to 80% growth in brand visibility and engagement",
+      "Owned planning, execution, and optimization of 12+ integrated promotional campaigns, driving a 25% increase in brand reach and measurable ROI",
+      "Built and managed paid and organic experimentation frameworks across creative assets, app store optimization, and landing pages to maximize growth",
+      "Developed and managed retention marketing strategies and lifecycle campaigns to grow and retain the user base",
+      "Introduced AI-powered marketing workflows (ChatGPT, Gemini) to streamline ideation, content creation, and campaign planning",
+      "Directed end-to-end content production (video, graphics, copy), ensuring brand alignment with business objectives",
+      "Collaborated cross-functionally with internal teams to align marketing initiatives with organizational priorities",
     ],
   },
   {
-    company: "iClear Well Life Service",
-    role: "Content Creator",
-    period: "May '25 - Present",
+    company: "Convey Communications",
+    role: "Digital Creative Lead",
+    period: "Jan '25 - Present",
     responsibilities: [
-      "Promoted to Assistant Marketing Supervisor to support the supervision and coordination of day-to-day marketing operations",
-      "Demonstrated strong leadership capabilities, strategic insight, and a deep commitment to the success of marketing initiatives",
-      "Played a key role in driving several successful campaigns and enhancing the brand's visibility",
-      "Collaborated closely with internal teams and external partners to ensure effective marketing operations",
+      "Led creative direction and digital strategy for the 'Convey with Caroline' podcast, defining brand identity, tone, audience growth strategy, and platform expansion",
+      "Designed and executed multi-platform promotional campaigns including reels, teasers, thumbnails, and branded content across social channels",
+      "Owned full multimedia production lifecycle: concept development, filming, editing, sound design, and post-production",
     ],
   },
   {
@@ -29,9 +31,10 @@ const experiences = [
     role: "Creative Digital Officer",
     period: "Feb '24 - May '25",
     responsibilities: [
-      "Spearheaded content creation for both Convey Communications and its clients, maintaining brand identity while amplifying engagement across all platforms",
-      "Designed and delivered over 30 multimedia assets, contributing to a 15% surge in client engagement and stronger brand visibility",
-      "Transformed campaign data into actionable insights, optimizing content strategies and boosting audience interaction by 15%",
+      "Grew audience engagement and brand clarity through consistent, high-quality storytelling and platform-specific content distribution",
+      "Spearheaded digital content execution for internal brand initiatives and client campaigns, delivering 30+ multimedia assets",
+      "Achieved a 15% increase in engagement and brand visibility through strategic content improvements informed by performance analysis",
+      "Supported senior leadership in campaign ideation, execution, and optimization across digital and social channels",
     ],
   },
   {
@@ -39,10 +42,8 @@ const experiences = [
     role: "Communications Intern",
     period: "May '23 - Aug '23",
     responsibilities: [
-      "Assisted in data collection of current affairs by conducting street interviews",
-      "Collected and created content, such as case studies, photos, and videos, to aid various communication",
-      "Assisted in setting up camera equipment and supported live broadcasts to ensure the production of high-quality visual content",
-      "Crafted clear, concise and engaging script for the social media pages",
+      "Supported public communications through content creation, field interviews, digital storytelling, and social media content strategy",
+      "Assisted in script development, live broadcast setup, and multimedia production for community engagement initiatives",
     ],
   },
 ];
