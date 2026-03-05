@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail } from "lucide-react";
 
@@ -69,6 +70,7 @@ export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const isMobile = useIsMobile();
   const [currentLine, setCurrentLine] = useState(0);
 
   useEffect(() => {
@@ -125,9 +127,9 @@ export function Hero() {
           <AnimatePresence mode="wait">
             <motion.p
               key={currentLine}
-              initial={{ y: 30, opacity: 0, filter: "blur(4px)" }}
+              initial={{ y: isMobile ? 0 : 30, opacity: 0, filter: "blur(4px)" }}
               animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-              exit={{ y: -30, opacity: 0, filter: "blur(4px)" }}
+              exit={{ y: isMobile ? 0 : -30, opacity: 0, filter: "blur(4px)" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="text-lg sm:text-xl text-muted-foreground absolute inset-0 flex items-center justify-center"
             >
