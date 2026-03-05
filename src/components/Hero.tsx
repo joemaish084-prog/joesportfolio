@@ -1,7 +1,16 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail } from "lucide-react";
+
+const rotatingLines = [
+  "I turn ideas into assets and attention into revenue.",
+  "Creative strategy that moves culture, and the numbers.",
+  "I don't just design content. I engineer impact.",
+  "From concept to conversion, I build what performs.",
+  "Where storytelling meets measurable growth.",
+  "I build campaigns that turn attention into measurable growth.",
+];
 
 const tags = [
   { label: "Content Strategy", top: "8%", left: "4%" },
@@ -60,6 +69,14 @@ export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [currentLine, setCurrentLine] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentLine((prev) => (prev + 1) % rotatingLines.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!containerRef.current) return;
@@ -99,14 +116,33 @@ export function Hero() {
           Visual Storytelling
         </motion.h1>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl"
+          className="mt-6 h-[2em] sm:h-[1.8em] relative overflow-hidden max-w-2xl w-full"
         >
-          I build campaigns that turn attention into measurable growth.
-        </motion.p>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={currentLine}
+              initial={{ y: 30, opacity: 0, filter: "blur(4px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              exit={{ y: -30, opacity: 0, filter: "blur(4px)" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="text-lg sm:text-xl text-muted-foreground absolute inset-0 flex items-center justify-center"
+            >
+              <span className="inline-block">
+                {rotatingLines[currentLine]}
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.5, duration: 0.4, ease: "easeOut" }}
+                  className="block h-[2px] mt-1 bg-gradient-to-r from-primary to-orange-light origin-left"
+                />
+              </span>
+            </motion.p>
+          </AnimatePresence>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
