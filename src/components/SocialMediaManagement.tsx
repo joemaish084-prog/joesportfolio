@@ -152,8 +152,11 @@ export function SocialMediaManagement() {
           <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-8">
             Brands & Accounts I've Managed
           </h3>
-          <div className="relative overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing">
-            <div className="flex animate-infinite-scroll hover:[animation-play-state:paused]">
+          <div 
+            className="relative overflow-x-auto cursor-grab active:cursor-grabbing"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
+            <div className="flex animate-infinite-scroll hover:[animation-play-state:paused] active:[animation-play-state:paused] w-max">
               {[...brandsManagedData, ...brandsManagedData, ...brandsManagedData, ...brandsManagedData].map((brand, index) => (
                 <div
                   key={`brand-${index}`}
