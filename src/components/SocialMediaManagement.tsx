@@ -152,8 +152,8 @@ export function SocialMediaManagement() {
           <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-8">
             Brands & Accounts I've Managed
           </h3>
-          <div className="relative overflow-hidden">
-            <div className="flex animate-infinite-scroll">
+          <div className="relative overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing">
+            <div className="flex animate-infinite-scroll hover:[animation-play-state:paused]">
               {[...brandsManagedData, ...brandsManagedData, ...brandsManagedData, ...brandsManagedData].map((brand, index) => (
                 <div
                   key={`brand-${index}`}
@@ -162,7 +162,7 @@ export function SocialMediaManagement() {
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="h-16 sm:h-20 w-auto object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                    className="h-20 sm:h-28 w-auto object-contain transition-all duration-300"
                     title={brand.name}
                   />
                   <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">{brand.name}</span>
