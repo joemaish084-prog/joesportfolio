@@ -7,6 +7,7 @@ const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Social Media", href: "#social-media" },
   { name: "Videos", href: "#videos" },
+  { name: "Case Study", href: "#case-study" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
