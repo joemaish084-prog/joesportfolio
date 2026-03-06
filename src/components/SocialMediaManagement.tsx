@@ -178,7 +178,7 @@ export function SocialMediaManagement() {
         {/* Featured Projects - 2x2 Grid */}
         <div className="mb-16">
           <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-8">
-            <span className="text-gradient">Campaign Projects</span>
+            Campaign <span className="text-gradient">Projects</span>
           </h3>
           <div className="grid md:grid-cols-2 gap-6">
             {socialProjects.map((project, index) => (
