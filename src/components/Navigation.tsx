@@ -5,9 +5,11 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { name: "Home", href: "#home" },
-  { name: "Social Media", href: "#social-media" },
+  { name: "Design", href: "#graphic-design" },
   { name: "Videos", href: "#videos" },
+  { name: "Social Media", href: "#social-media" },
   { name: "Case Study", href: "#case-study" },
+  { name: "Experience", href: "#experience" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
@@ -26,6 +28,7 @@ export function Navigation() {
 
   return (
     <nav
+      aria-label="Main navigation"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-soft"
@@ -39,7 +42,7 @@ export function Navigation() {
             <span className="text-primary">Maina</span>
           </a>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -64,7 +67,7 @@ export function Navigation() {
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />

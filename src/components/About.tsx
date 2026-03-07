@@ -1,18 +1,20 @@
 import { Badge } from "@/components/ui/badge";
 
 const skills = [
-  "Adobe Creative Suite",
-  "Video Editing",
+  "Video Production & Editing",
   "Graphic Design",
   "Social Media Marketing",
-  "Content Development",
-  "Digital Marketing",
+  "Content Strategy & Development",
+  "Digital Marketing & Analytics",
+  "Adobe Premiere Pro",
+  "Adobe Creative Suite",
+  "Meta Business Suite",
+  "Google Ads & SEO",
   "Photography",
-  "Podcasting",
-  "Adobe Premiere",
-  "AI Tools",
+  "Podcast Production",
+  "AI-Powered Marketing (ChatGPT, Gemini, Midjourney)",
   "Public Relations",
-  "Communication",
+  "Brand Strategy & Storytelling",
 ];
 
 export function About() {
@@ -22,25 +24,33 @@ export function About() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-              About <span className="text-gradient">Me</span>
+              About <span className="text-gradient">Joseph Maina</span>
             </h2>
           </div>
 
           <div className="space-y-12">
-            <div className="space-y-6">
+            <article className="space-y-6">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Creative marketing specialist with{" "}
-                <span className="text-primary font-semibold">3+ years' experience</span> in video
-                production, graphic design, and social media strategy. I've delivered campaigns that
-                boosted engagement by 30% and built strong brand loyalty across diverse industries.
+                I'm <strong className="text-foreground">Joseph Isaac Maina</strong>, a{" "}
+                <span className="text-primary font-semibold">Digital Marketing Specialist</span> based
+                in <strong className="text-foreground">Nairobi, Kenya</strong> with over 3 years of
+                hands-on experience in video production, graphic design, social media management, and
+                data-driven campaign execution. I help brands grow their digital presence and turn
+                engagement into measurable revenue.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                My approach combines strategic thinking with creative execution, transforming data
-                into actionable insights and concepts into compelling visual stories. Whether it's
-                managing social media accounts, producing podcast content, or crafting multimedia
-                campaigns, I bring a proven track record of driving real results.
+                My approach combines strategic thinking with creative execution — from producing
+                short-form video content and designing social media campaigns, to managing Meta Ads,
+                optimising SEO, and leveraging AI tools like ChatGPT and Midjourney to streamline
+                workflows. Whether it's managing social media accounts, producing podcast content, or
+                crafting multimedia campaigns, I bring a proven track record of driving real results.
               </p>
-            </div>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                I'm currently <span className="text-primary font-semibold">open to freelance projects
+                and full-time opportunities</span> in digital marketing, content creation, and brand
+                management. Let's build something impactful together.
+              </p>
+            </article>
 
             <div className="space-y-6">
               <h3 className="text-2xl font-display font-semibold">Skills & Expertise</h3>
@@ -59,7 +69,7 @@ export function About() {
                 <div className="border-l-2 border-primary pl-6 space-y-1">
                   <h4 className="font-semibold text-lg">The Technical University of Kenya</h4>
                   <p className="text-primary">
-                    Diploma in Journalism and Mass Communication - Broadcast Option
+                    Diploma in Journalism and Mass Communication — Broadcast Option
                   </p>
                   <p className="text-sm text-muted-foreground">Dec '23</p>
                 </div>
@@ -68,15 +78,18 @@ export function About() {
 
             <div className="bg-primary/5 border-2 border-primary/20 rounded-xl p-8 text-center space-y-4">
               <p className="text-lg font-medium">
-                Based in <span className="text-primary">Nairobi, Kenya</span>
+                Joseph Maina · Digital Marketing Specialist
+              </p>
+              <p className="text-base text-muted-foreground">
+                Based in <span className="text-primary font-semibold">Nairobi, Kenya</span> — open to freelance & full-time roles
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
                 <a href="mailto:joemaish084@gmail.com" className="hover:text-primary transition-colors">
                   joemaish084@gmail.com
                 </a>
                 <span>•</span>
-                <a href="tel:0704700160" className="hover:text-primary transition-colors">
-                  0704 700 160
+                <a href="tel:+254704700160" className="hover:text-primary transition-colors">
+                  +254 704 700 160
                 </a>
               </div>
             </div>
