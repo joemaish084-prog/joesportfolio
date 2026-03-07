@@ -2,7 +2,7 @@ import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from
 import { useRef, useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Mail, Briefcase } from "lucide-react";
 
 const rotatingLines = [
   "I turn ideas into assets and attention into revenue.",
@@ -27,8 +27,7 @@ const tags = [
 ];
 
 function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; index: number; mouseX: any; mouseY: any }) {
-  // Per-tag variation: different intensity and spring settings for organic feel
-  const intensity = 40 + (index % 3) * 15; // 40, 55, 70 range
+  const intensity = 40 + (index % 3) * 15;
   const moveX = useTransform(mouseX, (val: number) => val * -intensity);
   const moveY = useTransform(mouseY, (val: number) => val * -intensity);
   const smoothX = useSpring(moveX, { damping: 12 + index * 1.5, stiffness: 50 + index * 5 });
@@ -107,6 +106,15 @@ export function Hero() {
       ))}
 
       <div className="flex flex-col items-center justify-center text-center min-h-screen px-6 relative z-20">
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="text-sm sm:text-base font-medium text-primary mb-4 tracking-wide uppercase"
+        >
+          Digital Marketing Specialist · Nairobi, Kenya
+        </motion.p>
+
         <motion.h1
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -146,11 +154,21 @@ export function Hero() {
           </AnimatePresence>
         </motion.div>
 
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="mt-6 text-base text-muted-foreground max-w-xl"
+        >
+          I help brands across Kenya and beyond grow through video production, graphic design,
+          social media management, and data-driven digital marketing campaigns.
+        </motion.p>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-10 flex flex-col sm:flex-row items-center gap-4"
+          className="mt-8 flex flex-col sm:flex-row items-center gap-4"
         >
           <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base" asChild>
             <a href="#graphic-design">
@@ -159,6 +177,12 @@ export function Hero() {
             </a>
           </Button>
           <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 hover:bg-primary/5 text-base" asChild>
+            <a href="#contact">
+              <Briefcase className="mr-2 h-5 w-5" />
+              Hire Me
+            </a>
+          </Button>
+          <Button size="lg" variant="ghost" className="w-full sm:w-auto text-base" asChild>
             <a href="#contact">
               <Mail className="mr-2 h-5 w-5" />
               Contact Me
