@@ -164,7 +164,10 @@ export function SocialMediaManagement() {
                 >
                   <img
                     src={brand.logo}
-                    alt={brand.name}
+                    alt={`${brand.name} logo - ${brand.industry}`}
+                    width={112}
+                    height={112}
+                    loading="lazy"
                     className="h-20 sm:h-28 w-auto object-contain transition-all duration-300"
                     title={brand.name}
                   />
@@ -194,11 +197,14 @@ export function SocialMediaManagement() {
                 >
                   <div className="flex flex-col">
                     <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted">
-                      <img
-                        src={project.thumbnail}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                       <img
+                         src={project.thumbnail}
+                         alt={`${project.title} - ${project.type} project by Joseph Maina`}
+                         width={600}
+                         height={450}
+                         loading="lazy"
+                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <Badge 
                         variant="secondary" 
