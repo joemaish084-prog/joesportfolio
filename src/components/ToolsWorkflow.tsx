@@ -135,9 +135,12 @@ export const ToolsWorkflow = () => {
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
                   {tool.icon ? (
                     <img 
-                      src={tool.icon} 
-                      alt={tool.name} 
-                      className="w-10 h-10 object-contain"
+                       src={tool.icon} 
+                       alt={`${tool.name} icon`} 
+                       width={40}
+                       height={40}
+                       loading="lazy"
+                       className="w-10 h-10 object-contain"
                     />
                   ) : (
                     <Sparkles className="w-7 h-7 text-primary" />

@@ -55,10 +55,13 @@ function VideoCarousel({ videos, direction = "forward" }: { videos: typeof video
             >
               <div className="relative aspect-[9/16] overflow-hidden">
                 <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+                   src={video.thumbnail}
+                   alt={`Video thumbnail for ${video.title} - Instagram Reel by Joseph Maina`}
+                   width={320}
+                   height={569}
+                   loading="lazy"
+                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                   <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-elegant">
                     <Play className="h-7 w-7 text-primary-foreground ml-0.5" fill="currentColor" />

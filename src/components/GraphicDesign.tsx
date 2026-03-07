@@ -268,7 +268,10 @@ export function GraphicDesign() {
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
                         src={design.image}
-                        alt={design.title}
+                        alt={`${design.title} - ${design.description}`}
+                        width={500}
+                        height={667}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
@@ -299,7 +302,10 @@ export function GraphicDesign() {
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
                         src={design.image}
-                        alt={design.title}
+                        alt={`${design.title} - graphic design by Joseph Maina`}
+                        width={500}
+                        height={667}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
@@ -330,7 +336,10 @@ export function GraphicDesign() {
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
                         src={design.image}
-                        alt={design.title}
+                        alt={`${design.title} - graphic design by Joseph Maina`}
+                        width={500}
+                        height={667}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
@@ -361,7 +370,10 @@ export function GraphicDesign() {
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
                         src={design.image}
-                        alt={design.title}
+                        alt={`${design.title} - graphic design by Joseph Maina`}
+                        width={500}
+                        height={667}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
