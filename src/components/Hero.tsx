@@ -121,7 +121,7 @@ export function Hero() {
           transition={{ duration: 0.6 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-tight"
         >
-          Joseph Maina — Creative Strategy
+          Creative Strategy
           <span className="text-gradient"> Meets </span>
           Visual Storytelling
         </motion.h1>
