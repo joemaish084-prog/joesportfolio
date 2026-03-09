@@ -154,15 +154,6 @@ export function Hero() {
           </AnimatePresence>
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mt-6 text-base text-muted-foreground max-w-xl"
-        >
-          I help brands across Kenya and beyond grow through video production, graphic design,
-          social media management, and data-driven digital marketing campaigns.
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
