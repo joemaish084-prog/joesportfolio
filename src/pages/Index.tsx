@@ -25,6 +25,7 @@ const Index = () => {
         <SocialMediaManagement />
         <CaseStudy />
         <FAQ />
+        <SkillsStats />
         <ManagedAccounts />
         <ToolsWorkflow />
         <Testimonials />
