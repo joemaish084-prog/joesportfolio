@@ -1,5 +1,6 @@
-import { BarChart3, Zap } from "lucide-react";
+import { BarChart3, Zap, ArrowRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 const stats = [
   { value: "704K", label: "Instagram Reach" },
@@ -15,11 +16,11 @@ const platforms = [
     subtitle: "Brand Awareness Champion",
     accentVar: "--tiktok",
     metrics: [
-      "4M total video views",
-      "16K profile views",
-      "230K total likes",
-      "2.1K comments",
-      "5.4K shares",
+      { text: "4M total video views", bold: true },
+      { text: "16K profile views", bold: false },
+      { text: "230K total likes", bold: true },
+      { text: "2.1K comments", bold: false },
+      { text: "5.4K shares", bold: false },
     ],
     topVideo: "103.9K views, 321+ hours total play time, 10.67s avg watch time, 9.1% full-video completion rate",
     insight: "Best platform for viral reach and watch time. Video content averaged 6–8% engagement rate.",
@@ -29,13 +30,13 @@ const platforms = [
     subtitle: "Lead Generation Powerhouse",
     accentVar: "--instagram",
     metrics: [
-      "2.5M total video views",
-      "322.9% views growth",
-      "173.4% link clicks growth",
-      "18.6K link clicks",
-      "32.1K profile visits (↑78.4%)",
-      "16.2K content interactions (↑100%)",
-      "4.1K new followers",
+      { text: "2.5M total video views", bold: true },
+      { text: "322.9% views growth", bold: true },
+      { text: "173.4% link clicks growth", bold: true },
+      { text: "18.6K link clicks", bold: false },
+      { text: "32.1K profile visits (↑78.4%)", bold: false },
+      { text: "16.2K content interactions (↑100%)", bold: false },
+      { text: "4.1K new followers", bold: false },
     ],
     topVideo: "92,631 views reaching 31,988 users — 375 likes, 188 saves, 96 shares, 62 comments",
     insight: "Strongest platform for high-intent traffic and lead generation.",
@@ -45,11 +46,11 @@ const platforms = [
     subtitle: "Steady Supplemental Channel",
     accentVar: "--facebook",
     metrics: [
-      "4.8M total views",
-      "15.8K link clicks (↑2.3%)",
-      "16.9K page visits",
-      "6.1K content interactions (↑9.3%)",
-      "816 new followers (↑6%)",
+      { text: "4.8M total views", bold: true },
+      { text: "15.8K link clicks (↑2.3%)", bold: false },
+      { text: "16.9K page visits", bold: false },
+      { text: "6.1K content interactions (↑9.3%)", bold: false },
+      { text: "816 new followers (↑6%)", bold: false },
     ],
     topVideo: null,
     insight: "Reliable channel for consistent audience touchpoints and link sharing.",
@@ -63,6 +64,7 @@ export function CaseStudy() {
       id="case-study"
       className="py-20 sm:py-32"
       style={{ background: "hsl(var(--case-study-bg))" }}
+      aria-label="Digital marketing case study showcasing results from 2025 campaigns in Nairobi, Kenya"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Header */}
@@ -71,14 +73,15 @@ export function CaseStudy() {
             className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
             style={{ color: "hsl(var(--case-study-text))" }}
           >
-            Case <span className="text-gradient">Study</span>
+            Case <span className="text-gradient">Study</span>: Digital Marketing Results 2025
           </h2>
           <p
             className="text-lg max-w-3xl mx-auto"
             style={{ color: "hsl(var(--case-study-muted))" }}
           >
-            A full-year digital marketing campaign across TikTok, Instagram, and Facebook — driving
-            brand awareness, engagement, and lead generation through video-first content strategy.
+            As a Digital Marketing Specialist in Nairobi, I planned and executed a full-year campaign
+            across TikTok, Instagram, and Facebook — driving brand awareness, engagement, and lead
+            generation through a video-first SEO strategy in Kenya.
           </p>
         </div>
 
@@ -95,7 +98,7 @@ export function CaseStudy() {
             style={{ color: "hsl(var(--case-study-text) / 0.85)" }}
           >
             "In 2025, I planned and executed a comprehensive social media marketing strategy across
-            three platforms, producing 336 pieces of content (142 videos + 194 static posts). The
+            three platforms, producing <strong>336 pieces of content</strong> (142 videos + 194 static posts). The
             campaign prioritised video content, which consistently outperformed static posts across
             all platforms in views, engagement, and conversion metrics."
           </p>
@@ -113,7 +116,7 @@ export function CaseStudy() {
               }}
             >
               <p className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">
-                {stat.value}
+                <strong>{stat.value}</strong>
               </p>
               <p
                 className="text-xs sm:text-sm mt-2 font-medium"
@@ -136,7 +139,7 @@ export function CaseStudy() {
         </h3>
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {platforms.map((platform, i) => (
-            <div
+            <article
               key={i}
               className="rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col"
               style={{
@@ -168,7 +171,7 @@ export function CaseStudy() {
                       style={{ color: "hsl(var(--case-study-text) / 0.8)" }}
                     >
                       <BarChart3 className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-primary" />
-                      {m}
+                      {m.bold ? <strong>{m.text}</strong> : m.text}
                     </li>
                   ))}
                 </ul>
@@ -198,7 +201,7 @@ export function CaseStudy() {
                   "{platform.insight}"
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
@@ -206,7 +209,7 @@ export function CaseStudy() {
 
         {/* Content Strategy Insight */}
         <div
-          className="rounded-xl p-6 sm:p-8 mb-16 border-l-4"
+          className="rounded-xl p-6 sm:p-8 mb-12 border-l-4"
           style={{
             background: "hsl(var(--case-study-card))",
             borderLeftColor: "hsl(var(--primary))",
@@ -219,10 +222,19 @@ export function CaseStudy() {
           >
             "Installation and engagement videos dominated performance across all platforms. Video
             content consistently outperformed static posts in views, engagement, and conversion
-            intent — making a video-first strategy the clear driver of campaign success."
+            intent — making a <strong>video-first strategy the clear driver of campaign success</strong>."
           </p>
         </div>
 
+        {/* CTA */}
+        <div className="text-center">
+          <Button variant="gradient" size="lg" asChild>
+            <a href="#contact" className="gap-2">
+              Impressed? Let's Work Together
+              <ArrowRight className="h-5 w-5" />
+            </a>
+          </Button>
+        </div>
       </div>
     </section>
   );
