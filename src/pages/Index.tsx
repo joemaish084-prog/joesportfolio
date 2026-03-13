@@ -13,6 +13,7 @@ import { Experience } from "@/components/Experience";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { ChatAssistant } from "@/components/ChatAssistant";
 
 const Index = () => {
   return (
@@ -34,6 +35,7 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
+      <ChatAssistant />
     </div>
   );
 };
