@@ -76,12 +76,11 @@ export function ChatAssistant() {
           const jsonStr = line.slice(6).trim();
           if (jsonStr === "[DONE]") continue;
 
-          // Anthropic SSE format
           try {
             const parsed = JSON.parse(jsonStr);
-            // Handle Anthropic streaming events
-            if (parsed.type === "content_block_delta" && parsed.delta?.text) {
-              assistantContent += parsed.delta.text;
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantContent += content;
               setMessages((prev) => {
                 const last = prev[prev.length - 1];
                 if (last?.role === "assistant" && last !== prev[0]) {
