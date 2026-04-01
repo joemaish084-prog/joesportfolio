@@ -181,6 +181,8 @@ const designs = [
   },
 ];
 
+import { ScrollReveal } from "./ScrollReveal";
+
 export function GraphicDesign() {
   const [selectedDesign, setSelectedDesign] = useState<typeof designs[0] | null>(null);
   
