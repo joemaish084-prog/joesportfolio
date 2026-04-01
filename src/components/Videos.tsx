@@ -81,18 +81,22 @@ function VideoCarousel({ videos, direction = "forward" }: { videos: typeof video
   );
 }
 
+import { ScrollReveal } from "./ScrollReveal";
+
 export function Videos() {
   return (
     <section id="videos" className="py-20 sm:py-32 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-            Video <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Short-form video content created for social media — from concept to final cut
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
+              Video <span className="text-gradient">Projects</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Short-form video content created for social media — from concept to final cut
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
 
       <div className="space-y-6">

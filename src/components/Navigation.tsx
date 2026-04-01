@@ -47,13 +47,13 @@ export function Navigation() {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors nav-link-animated pb-1"
               >
                 {link.name}
               </a>
             ))}
             <ThemeToggle />
-            <Button asChild className="shadow-elegant">
+            <Button asChild className="shadow-elegant btn-hover">
               <a href="/Joseph_Isaac_Maina_Resume.pdf" download="Joseph Isaac Maina Resume.pdf">
                 <Download className="mr-2 h-4 w-4" />
                 CV

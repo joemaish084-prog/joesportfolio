@@ -1,8 +1,9 @@
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail, Briefcase } from "lucide-react";
+import { ParticlesBackground } from "./ParticlesBackground";
 
 const rotatingLines = [
   "I turn ideas into assets and attention into revenue.",
@@ -11,6 +12,14 @@ const rotatingLines = [
   "From concept to conversion, I build what performs.",
   "Where storytelling meets measurable growth.",
   "I build campaigns that turn attention into measurable growth.",
+];
+
+const typingTitles = [
+  "Digital Marketing Specialist",
+  "SEO Expert",
+  "Content Strategist",
+  "Social Media Marketer",
+  "Available for Full-Time Roles",
 ];
 
 const tags = [
@@ -26,6 +35,33 @@ const tags = [
   { label: "Analytics & Insights", bottom: "14%", right: "20%" },
 ];
 
+function useTypingEffect(titles: string[]) {
+  const [display, setDisplay] = useState("");
+  const [titleIndex, setTitleIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = titles[titleIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && display === current) {
+      timeout = setTimeout(() => setIsDeleting(true), 1800);
+    } else if (isDeleting && display === "") {
+      setIsDeleting(false);
+      setTitleIndex((i) => (i + 1) % titles.length);
+    } else {
+      const speed = isDeleting ? 30 : 60;
+      timeout = setTimeout(() => {
+        setDisplay(isDeleting ? current.slice(0, display.length - 1) : current.slice(0, display.length + 1));
+      }, speed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [display, isDeleting, titleIndex, titles]);
+
+  return display;
+}
+
 function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; index: number; mouseX: any; mouseY: any }) {
   const intensity = 40 + (index % 3) * 15;
   const moveX = useTransform(mouseX, (val: number) => val * -intensity);
@@ -37,12 +73,7 @@ function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; inde
 
   return (
     <motion.div
-      style={{
-        position: "absolute",
-        ...position,
-        x: smoothX,
-        y: smoothY,
-      }}
+      style={{ position: "absolute", ...position, x: smoothX, y: smoothY }}
       className="hidden md:block z-10"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -71,6 +102,7 @@ export function Hero() {
   const mouseY = useMotionValue(0);
   const isMobile = useIsMobile();
   const [currentLine, setCurrentLine] = useState(0);
+  const typedTitle = useTypingEffect(typingTitles);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -79,19 +111,19 @@ export function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     mouseX.set((e.clientX - centerX) / rect.width);
     mouseY.set((e.clientY - centerY) / rect.height);
-  };
+  }, [mouseX, mouseY]);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     mouseX.set(0);
     mouseY.set(0);
-  };
+  }, [mouseX, mouseY]);
 
   return (
     <section
@@ -101,24 +133,30 @@ export function Hero() {
       onMouseLeave={handleMouseLeave}
       className="relative w-full min-h-screen bg-background overflow-hidden"
     >
+      {/* Particles */}
+      <ParticlesBackground />
+
       {tags.map((tag, index) => (
         <FloatingTag key={index} tag={tag} index={index} mouseX={mouseX} mouseY={mouseY} />
       ))}
 
       <div className="flex flex-col items-center justify-center text-center min-h-screen px-6 relative z-20">
+        {/* Typing title above name */}
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-sm sm:text-base font-medium text-primary mb-4 tracking-wide uppercase"
+          className="text-sm sm:text-base font-medium text-primary mb-4 tracking-wide uppercase h-6"
         >
-          Digital Marketing Specialist · Nairobi, Kenya
+          {typedTitle}
+          <span className="animate-pulse">|</span>
+          <span className="text-muted-foreground ml-2">· Nairobi, Kenya</span>
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-tight"
         >
           Creative Strategy
@@ -129,7 +167,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.5 }}
           className="mt-6 h-[2em] sm:h-[1.8em] relative overflow-hidden max-w-2xl w-full"
         >
           <AnimatePresence mode="wait">
@@ -154,26 +192,25 @@ export function Hero() {
           </AnimatePresence>
         </motion.div>
 
-
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.8 }}
           className="mt-8 flex flex-col sm:flex-row items-center gap-4"
         >
-          <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base" asChild>
+          <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base btn-hover" asChild>
             <a href="#graphic-design">
               View My Work
               <ArrowRight className="ml-2 h-5 w-5" />
             </a>
           </Button>
-          <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 hover:bg-primary/5 text-base" asChild>
+          <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 hover:bg-primary/5 text-base btn-hover" asChild>
             <a href="#contact">
               <Briefcase className="mr-2 h-5 w-5" />
               Hire Me
             </a>
           </Button>
-          <Button size="lg" variant="ghost" className="w-full sm:w-auto text-base" asChild>
+          <Button size="lg" variant="ghost" className="w-full sm:w-auto text-base btn-hover" asChild>
             <a href="#contact">
               <Mail className="mr-2 h-5 w-5" />
               Contact Me

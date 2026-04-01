@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Sparkles } from "lucide-react";
+import { ScrollReveal } from "./ScrollReveal";
 
 // Import brand icons
 import iconMeta from "@/assets/icon-meta.png";
@@ -101,14 +102,16 @@ export const ToolsWorkflow = () => {
   return (
     <section className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3 gradient-underline pb-4">
-            Tools That Power My Workflow
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            These Are the Tools That Power My Work
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3 gradient-underline pb-4">
+              Tools That Power My Workflow
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              These Are the Tools That Power My Work
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div
           ref={scrollRef}

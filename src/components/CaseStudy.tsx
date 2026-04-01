@@ -1,6 +1,7 @@
 import { BarChart3, Zap, ArrowRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { ScrollReveal } from "./ScrollReveal";
 
 const stats = [
   { value: "704K", label: "Instagram Reach" },
@@ -67,174 +68,130 @@ export function CaseStudy() {
       aria-label="Digital marketing case study showcasing results from 2025 campaigns in Nairobi, Kenya"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        {/* Header */}
-        <div className="text-center mb-16 space-y-4">
-          <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
-            style={{ color: "hsl(var(--case-study-text))" }}
-          >
-            Case <span className="text-gradient">Study</span>: Digital Marketing Results 2025
-          </h2>
-          <p
-            className="text-lg max-w-3xl mx-auto"
-            style={{ color: "hsl(var(--case-study-muted))" }}
-          >
-            As a Digital Marketing Specialist in Nairobi, I planned and executed a full-year campaign
-            across TikTok, Instagram, and Facebook — driving brand awareness, engagement, and lead
-            generation through a video-first SEO strategy in Kenya.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16 space-y-4">
+            <h2
+              className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
+              style={{ color: "hsl(var(--case-study-text))" }}
+            >
+              Case <span className="text-gradient">Study</span>: Digital Marketing Results 2025
+            </h2>
+            <p className="text-lg max-w-3xl mx-auto" style={{ color: "hsl(var(--case-study-muted))" }}>
+              As a Digital Marketing Specialist in Nairobi, I planned and executed a full-year campaign
+              across TikTok, Instagram, and Facebook — driving brand awareness, engagement, and lead
+              generation through a video-first SEO strategy in Kenya.
+            </p>
+          </div>
+        </ScrollReveal>
 
-        {/* Overview */}
-        <div
-          className="rounded-xl p-6 sm:p-8 mb-12 border"
-          style={{
-            background: "hsl(var(--case-study-card))",
-            borderColor: "hsl(var(--case-study-card-border))",
-          }}
-        >
-          <p
-            className="text-base sm:text-lg leading-relaxed italic"
-            style={{ color: "hsl(var(--case-study-text) / 0.85)" }}
+        <ScrollReveal direction="scale" delay={0.1}>
+          <div
+            className="rounded-xl p-6 sm:p-8 mb-12 border"
+            style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}
           >
-            "In 2025, I planned and executed a comprehensive social media marketing strategy across
-            three platforms, producing <strong>336 pieces of content</strong> (142 videos + 194 static posts). The
-            campaign prioritised video content, which consistently outperformed static posts across
-            all platforms in views, engagement, and conversion metrics."
-          </p>
-        </div>
+            <p className="text-base sm:text-lg leading-relaxed italic" style={{ color: "hsl(var(--case-study-text) / 0.85)" }}>
+              "In 2025, I planned and executed a comprehensive social media marketing strategy across
+              three platforms, producing <strong>336 pieces of content</strong> (142 videos + 194 static posts). The
+              campaign prioritised video content, which consistently outperformed static posts across
+              all platforms in views, engagement, and conversion metrics."
+            </p>
+          </div>
+        </ScrollReveal>
 
-        {/* Key Highlights */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mb-16">
           {stats.map((stat, i) => (
-            <div
-              key={i}
-              className="rounded-xl p-5 text-center border transition-all duration-300 hover:-translate-y-1"
-              style={{
-                background: "hsl(var(--case-study-card))",
-                borderColor: "hsl(var(--case-study-card-border))",
-              }}
-            >
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">
-                <strong>{stat.value}</strong>
-              </p>
-              <p
-                className="text-xs sm:text-sm mt-2 font-medium"
-                style={{ color: "hsl(var(--case-study-muted))" }}
+            <ScrollReveal key={i} direction="up" delay={i * 0.1}>
+              <div
+                className="rounded-xl p-5 text-center border transition-all duration-300 hover:-translate-y-1"
+                style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}
               >
-                {stat.label}
-              </p>
-            </div>
+                <p className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">
+                  <strong>{stat.value}</strong>
+                </p>
+                <p className="text-xs sm:text-sm mt-2 font-medium" style={{ color: "hsl(var(--case-study-muted))" }}>
+                  {stat.label}
+                </p>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
 
         <Separator className="mb-16 opacity-20" />
 
-        {/* Platform Breakdown */}
-        <h3
-          className="text-2xl sm:text-3xl font-display font-bold text-center mb-10"
-          style={{ color: "hsl(var(--case-study-text))" }}
-        >
-          Platform Breakdown
-        </h3>
+        <ScrollReveal>
+          <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-10" style={{ color: "hsl(var(--case-study-text))" }}>
+            Platform Breakdown
+          </h3>
+        </ScrollReveal>
+
         <div className="grid md:grid-cols-3 gap-6 mb-16">
           {platforms.map((platform, i) => (
-            <article
-              key={i}
-              className="rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col"
-              style={{
-                background: "hsl(var(--case-study-card))",
-                borderColor: "hsl(var(--case-study-card-border))",
-                borderTopWidth: "3px",
-                borderTopColor: `hsl(var(${platform.accentVar}))`,
-              }}
-            >
-              <div className="p-6 flex-1 flex flex-col">
-                <h4
-                  className="text-xl font-display font-bold mb-1"
-                  style={{ color: `hsl(var(${platform.accentVar}))` }}
-                >
-                  {platform.name}
-                </h4>
-                <p
-                  className="text-sm font-medium mb-5"
-                  style={{ color: "hsl(var(--case-study-muted))" }}
-                >
-                  {platform.subtitle}
-                </p>
-
-                <ul className="space-y-2 mb-5 flex-1">
-                  {platform.metrics.map((m, j) => (
-                    <li
-                      key={j}
-                      className="flex items-start gap-2 text-sm"
-                      style={{ color: "hsl(var(--case-study-text) / 0.8)" }}
-                    >
-                      <BarChart3 className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-primary" />
-                      {m.bold ? <strong>{m.text}</strong> : m.text}
-                    </li>
-                  ))}
-                </ul>
-
-                {platform.topVideo && (
-                  <div
-                    className="rounded-lg p-3 mb-4 text-xs"
-                    style={{
-                      background: `hsl(var(${platform.accentVar}) / 0.1)`,
-                      color: "hsl(var(--case-study-text) / 0.7)",
-                    }}
-                  >
-                    <span className="font-semibold" style={{ color: `hsl(var(${platform.accentVar}))` }}>
-                      Top Video:
-                    </span>{" "}
-                    {platform.topVideo}
+            <ScrollReveal key={i} direction="up" delay={i * 0.15}>
+              <article
+                className="rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-lg flex flex-col"
+                style={{
+                  background: "hsl(var(--case-study-card))",
+                  borderColor: "hsl(var(--case-study-card-border))",
+                  borderTopWidth: "3px",
+                  borderTopColor: `hsl(var(${platform.accentVar}))`,
+                }}
+              >
+                <div className="p-6 flex-1 flex flex-col">
+                  <h4 className="text-xl font-display font-bold mb-1" style={{ color: `hsl(var(${platform.accentVar}))` }}>
+                    {platform.name}
+                  </h4>
+                  <p className="text-sm font-medium mb-5" style={{ color: "hsl(var(--case-study-muted))" }}>
+                    {platform.subtitle}
+                  </p>
+                  <ul className="space-y-2 mb-5 flex-1">
+                    {platform.metrics.map((m, j) => (
+                      <li key={j} className="flex items-start gap-2 text-sm" style={{ color: "hsl(var(--case-study-text) / 0.8)" }}>
+                        <BarChart3 className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-primary" />
+                        {m.bold ? <strong>{m.text}</strong> : m.text}
+                      </li>
+                    ))}
+                  </ul>
+                  {platform.topVideo && (
+                    <div className="rounded-lg p-3 mb-4 text-xs" style={{ background: `hsl(var(${platform.accentVar}) / 0.1)`, color: "hsl(var(--case-study-text) / 0.7)" }}>
+                      <span className="font-semibold" style={{ color: `hsl(var(${platform.accentVar}))` }}>Top Video:</span>{" "}
+                      {platform.topVideo}
+                    </div>
+                  )}
+                  <div className="rounded-lg p-3 text-sm italic border" style={{ borderColor: `hsl(var(${platform.accentVar}) / 0.2)`, color: "hsl(var(--case-study-text) / 0.75)" }}>
+                    "{platform.insight}"
                   </div>
-                )}
-
-                <div
-                  className="rounded-lg p-3 text-sm italic border"
-                  style={{
-                    borderColor: `hsl(var(${platform.accentVar}) / 0.2)`,
-                    color: "hsl(var(--case-study-text) / 0.75)",
-                  }}
-                >
-                  "{platform.insight}"
                 </div>
-              </div>
-            </article>
+              </article>
+            </ScrollReveal>
           ))}
         </div>
 
         <Separator className="mb-16 opacity-20" />
 
-        {/* Content Strategy Insight */}
-        <div
-          className="rounded-xl p-6 sm:p-8 mb-12 border-l-4"
-          style={{
-            background: "hsl(var(--case-study-card))",
-            borderLeftColor: "hsl(var(--primary))",
-          }}
-        >
-          <Zap className="h-6 w-6 text-primary mb-3" />
-          <p
-            className="text-base sm:text-lg leading-relaxed font-medium"
-            style={{ color: "hsl(var(--case-study-text) / 0.9)" }}
+        <ScrollReveal direction="left">
+          <div
+            className="rounded-xl p-6 sm:p-8 mb-12 border-l-4"
+            style={{ background: "hsl(var(--case-study-card))", borderLeftColor: "hsl(var(--primary))" }}
           >
-            "Installation and engagement videos dominated performance across all platforms. Video
-            content consistently outperformed static posts in views, engagement, and conversion
-            intent — making a <strong>video-first strategy the clear driver of campaign success</strong>."
-          </p>
-        </div>
+            <Zap className="h-6 w-6 text-primary mb-3" />
+            <p className="text-base sm:text-lg leading-relaxed font-medium" style={{ color: "hsl(var(--case-study-text) / 0.9)" }}>
+              "Installation and engagement videos dominated performance across all platforms. Video
+              content consistently outperformed static posts in views, engagement, and conversion
+              intent — making a <strong>video-first strategy the clear driver of campaign success</strong>."
+            </p>
+          </div>
+        </ScrollReveal>
 
-        {/* CTA */}
-        <div className="text-center">
-          <Button variant="gradient" size="lg" asChild>
-            <a href="#contact" className="gap-2">
-              Impressed? Let's Work Together
-              <ArrowRight className="h-5 w-5" />
-            </a>
-          </Button>
-        </div>
+        <ScrollReveal direction="up">
+          <div className="text-center">
+            <Button variant="gradient" size="lg" asChild>
+              <a href="#contact" className="gap-2">
+                Impressed? Let's Work Together
+                <ArrowRight className="h-5 w-5" />
+              </a>
+            </Button>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

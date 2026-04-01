@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { GraphicDesign } from "@/components/GraphicDesign";
@@ -14,29 +15,41 @@ import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { ChatAssistant } from "@/components/ChatAssistant";
+import { SplashScreen } from "@/components/SplashScreen";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { BackToTop } from "@/components/BackToTop";
 
 const Index = () => {
+  const [splashDone, setSplashDone] = useState(
+    !!sessionStorage.getItem("splash-seen")
+  );
+
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      <main>
-        <Hero />
-        <GraphicDesign />
-        <Videos />
-        <SocialMediaManagement />
-        <CaseStudy />
-        <FAQ />
-        <SkillsStats />
-        <ManagedAccounts />
-        <ToolsWorkflow />
-        <Testimonials />
-        <Experience />
-        <About />
-        <Contact />
-      </main>
-      <Footer />
-      <ChatAssistant />
-    </div>
+    <>
+      {!splashDone && <SplashScreen onComplete={() => setSplashDone(true)} />}
+      <div className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
+        <ScrollProgress />
+        <Navigation />
+        <main>
+          <Hero />
+          <GraphicDesign />
+          <Videos />
+          <SocialMediaManagement />
+          <CaseStudy />
+          <FAQ />
+          <SkillsStats />
+          <ManagedAccounts />
+          <ToolsWorkflow />
+          <Testimonials />
+          <Experience />
+          <About />
+          <Contact />
+        </main>
+        <Footer />
+        <ChatAssistant />
+        <BackToTop />
+      </div>
+    </>
   );
 };
 

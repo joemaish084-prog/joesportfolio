@@ -127,6 +127,8 @@ const socialProjects = [
   },
 ];
 
+import { ScrollReveal } from "./ScrollReveal";
+
 export function SocialMediaManagement() {
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
@@ -137,15 +139,17 @@ export function SocialMediaManagement() {
   return (
     <section id="social-media" className="py-20 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-            Social Media <span className="text-gradient">Management</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Strategic content planning, creative execution, and data-driven analytics to build 
-            engaging social media presence and drive measurable brand growth across platforms.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
+              Social Media <span className="text-gradient">Management</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Strategic content planning, creative execution, and data-driven analytics to build 
+              engaging social media presence and drive measurable brand growth across platforms.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Brands & Accounts Managed - Infinite Scroll */}
         <div className="mb-16">

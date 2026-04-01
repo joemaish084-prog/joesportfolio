@@ -75,25 +75,29 @@ const PlatformIcon = ({ platform }: { platform: string }) => {
   }
 };
 
+import { ScrollReveal } from "./ScrollReveal";
+
 export function ManagedAccounts() {
   return (
     <section id="managed-accounts" className="py-20 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-            Social Media Accounts <span className="text-gradient">Managed</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Building and growing digital presence across multiple platforms with strategic 
-            content creation, design, and data-driven growth strategies.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
+              Social Media Accounts <span className="text-gradient">Managed</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Building and growing digital presence across multiple platforms with strategic 
+              content creation, design, and data-driven growth strategies.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {managedAccounts.map((account, index) => (
+            <ScrollReveal key={index} direction="up" delay={index * 0.1}>
             <Card
-              key={index}
-              className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-1"
+              className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2"
             >
               <CardHeader className="space-y-3 pb-4">
                 <CardTitle className="text-xl font-display">{account.name}</CardTitle>
@@ -125,6 +129,7 @@ export function ManagedAccounts() {
                 </div>
               </CardContent>
             </Card>
+            </ScrollReveal>
           ))}
         </div>
       </div>

@@ -181,6 +181,8 @@ const designs = [
   },
 ];
 
+import { ScrollReveal } from "./ScrollReveal";
+
 export function GraphicDesign() {
   const [selectedDesign, setSelectedDesign] = useState<typeof designs[0] | null>(null);
   
@@ -242,15 +244,17 @@ export function GraphicDesign() {
   return (
     <section id="graphic-design" className="py-20 sm:py-32 bg-muted/30 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-            Graphic <span className="text-gradient">Design</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Creative visual designs for digital marketing campaigns, brand identity, 
-            social media content, and promotional materials that drive engagement and conversions.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
+              Graphic <span className="text-gradient">Design</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Creative visual designs for digital marketing campaigns, brand identity, 
+              social media content, and promotional materials that drive engagement and conversions.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="space-y-6">
           {/* New Designs Row - First */}
