@@ -129,6 +129,7 @@ export function ManagedAccounts() {
                 </div>
               </CardContent>
             </Card>
+            </ScrollReveal>
           ))}
         </div>
       </div>

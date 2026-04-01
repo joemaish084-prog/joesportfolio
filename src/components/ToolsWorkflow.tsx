@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Sparkles } from "lucide-react";
+import { ScrollReveal } from "./ScrollReveal";
 
 // Import brand icons
 import iconMeta from "@/assets/icon-meta.png";
