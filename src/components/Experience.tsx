@@ -1,5 +1,6 @@
 import { Briefcase, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollReveal } from "./ScrollReveal";
 
 const experiences = [
   {
@@ -52,53 +53,54 @@ export function Experience() {
   return (
     <section id="experience" className="py-20 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-            Professional <span className="text-gradient">Experience</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Building brands and driving engagement through strategic digital marketing, 
-            creative content, and data-driven campaigns.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
+              Professional <span className="text-gradient">Experience</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Building brands and driving engagement through strategic digital marketing, 
+              creative content, and data-driven campaigns.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="max-w-4xl mx-auto space-y-6">
           {experiences.map((exp, index) => (
-            <Card
-              key={index}
-              className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant"
-            >
-              <CardHeader className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <div className="space-y-2">
-                    <CardTitle className="text-xl sm:text-2xl font-display flex items-center gap-2">
-                      <Briefcase className="w-5 h-5 text-primary" />
-                      {exp.role}
-                    </CardTitle>
-                    <p className="text-lg font-semibold text-foreground/90">
-                      {exp.company}
-                    </p>
+            <ScrollReveal key={index} direction="up" delay={index * 0.15}>
+              <Card className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-1">
+                <CardHeader className="space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div className="space-y-2">
+                      <CardTitle className="text-xl sm:text-2xl font-display flex items-center gap-2">
+                        <Briefcase className="w-5 h-5 text-primary" />
+                        {exp.role}
+                      </CardTitle>
+                      <p className="text-lg font-semibold text-foreground/90">
+                        {exp.company}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Calendar className="w-4 h-4" />
+                      <span className="font-medium">{exp.period}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Calendar className="w-4 h-4" />
-                    <span className="font-medium">{exp.period}</span>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {exp.responsibilities.map((responsibility, idx) => (
-                    <li
-                      key={idx}
-                      className="flex gap-3 text-muted-foreground leading-relaxed"
-                    >
-                      <span className="text-primary mt-1.5 flex-shrink-0">•</span>
-                      <span>{responsibility}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {exp.responsibilities.map((responsibility, idx) => (
+                      <li
+                        key={idx}
+                        className="flex gap-3 text-muted-foreground leading-relaxed"
+                      >
+                        <span className="text-primary mt-1.5 flex-shrink-0">•</span>
+                        <span>{responsibility}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </ScrollReveal>
           ))}
         </div>
       </div>
