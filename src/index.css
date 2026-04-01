@@ -2,51 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 5%;
-
     --card: 0 0% 100%;
     --card-foreground: 0 0% 5%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 5%;
-
     --primary: 25 100% 50%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
-
     --accent: 25 100% 50%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 0 0% 90%;
     --input: 0 0% 90%;
     --ring: 25 100% 50%;
-
     --radius: 0.75rem;
 
     /* Custom tokens */
     --orange: 25 100% 50%;
     --orange-light: 30 100% 58%;
     --orange-dark: 25 100% 40%;
-    
-    /* Orange gradient colors - #FF6A00 → #FF9E2C */
     --gradient-orange-start: 25 100% 50%;
     --gradient-orange-end: 33 100% 58%;
-    
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --shadow-elegant: 0 10px 40px -10px hsl(25 100% 50% / 0.2);
     --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.05);
@@ -68,32 +52,23 @@ All colors MUST be HSL.
   .dark {
     --background: 0 0% 5%;
     --foreground: 0 0% 98%;
-
     --card: 0 0% 8%;
     --card-foreground: 0 0% 98%;
-
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
-
     --primary: 25 100% 50%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
-
     --accent: 25 100% 50%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 0 0% 15%;
     --input: 0 0% 15%;
     --ring: 25 100% 50%;
-
     --orange-light: 30 100% 58%;
     --gradient-orange-start: 25 100% 50%;
     --gradient-orange-end: 33 100% 58%;
@@ -114,6 +89,16 @@ All colors MUST be HSL.
 
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
@@ -147,6 +132,18 @@ All colors MUST be HSL.
     @apply shadow-lg;
   }
 
+  /* Button hover effects */
+  .btn-hover {
+    @apply transition-all duration-300;
+  }
+  .btn-hover:hover {
+    @apply scale-105;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  .btn-hover:active {
+    @apply scale-95;
+  }
+
   .animate-fade-in {
     animation: fade-in 0.6s ease-out forwards;
   }
@@ -170,6 +167,19 @@ All colors MUST be HSL.
     height: 4px;
     background: linear-gradient(90deg, hsl(var(--gradient-orange-start)), hsl(var(--gradient-orange-end)));
     border-radius: 2px;
+  }
+
+  /* Nav link underline animation */
+  .nav-link-animated {
+    @apply relative;
+  }
+  .nav-link-animated::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-[2px] origin-left scale-x-0 transition-transform duration-300;
+    background: hsl(var(--primary));
+  }
+  .nav-link-animated:hover::after {
+    @apply scale-x-100;
   }
 }
 
