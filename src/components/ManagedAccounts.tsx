@@ -95,9 +95,9 @@ export function ManagedAccounts() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {managedAccounts.map((account, index) => (
+            <ScrollReveal key={index} direction="up" delay={index * 0.1}>
             <Card
-              key={index}
-              className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-1"
+              className="group border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2"
             >
               <CardHeader className="space-y-3 pb-4">
                 <CardTitle className="text-xl font-display">{account.name}</CardTitle>
