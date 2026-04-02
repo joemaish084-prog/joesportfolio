@@ -34,6 +34,7 @@ const Index = () => {
         <main>
           <Hero />
           <GraphicDesign />
+          <PrintMockup />
           <Videos />
           <SocialMediaManagement />
           <CaseStudy />
