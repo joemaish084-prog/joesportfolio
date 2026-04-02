@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { GraphicDesign } from "@/components/GraphicDesign";
+import { PrintMockup } from "@/components/PrintMockup";
 import { Videos } from "@/components/Videos";
 import { SocialMediaManagement } from "@/components/SocialMediaManagement";
 import { CaseStudy } from "@/components/CaseStudy";
@@ -33,6 +34,7 @@ const Index = () => {
         <main>
           <Hero />
           <GraphicDesign />
+          <PrintMockup />
           <Videos />
           <SocialMediaManagement />
           <CaseStudy />
