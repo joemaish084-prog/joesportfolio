@@ -140,24 +140,26 @@ export function Hero() {
         <FloatingTag key={index} tag={tag} index={index} mouseX={mouseX} mouseY={mouseY} />
       ))}
 
-      <div className="flex flex-col items-center justify-center text-center min-h-screen px-6 relative z-20">
+      <div className="flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-8 relative z-20">
         {/* Typing title above name */}
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-sm sm:text-base font-medium text-primary mb-4 tracking-wide uppercase h-6"
+          className="text-xs sm:text-sm md:text-base font-medium text-primary mb-3 sm:mb-4 tracking-wide uppercase min-h-[1.5rem] flex flex-wrap items-center justify-center gap-x-1"
         >
-          {typedTitle}
-          <span className="animate-pulse">|</span>
-          <span className="text-muted-foreground ml-2">· Nairobi, Kenya</span>
+          <span className="whitespace-nowrap">
+            {typedTitle}
+            <span className="animate-pulse">|</span>
+          </span>
+          <span className="text-muted-foreground whitespace-nowrap">· Nairobi, Kenya</span>
         </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight leading-tight"
+          className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight leading-tight max-w-4xl"
         >
           Creative Strategy
           <span className="text-gradient"> Meets </span>
@@ -168,7 +170,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-6 h-[2em] sm:h-[1.8em] relative overflow-hidden max-w-2xl w-full"
+          className="mt-4 sm:mt-6 min-h-[3.5em] sm:min-h-[2.5em] relative overflow-visible max-w-2xl w-full"
         >
           <AnimatePresence mode="wait">
             <motion.p
@@ -177,9 +179,9 @@ export function Hero() {
               animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
               exit={{ y: isMobile ? 0 : -30, opacity: 0, filter: "blur(4px)" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="text-lg sm:text-xl text-muted-foreground absolute inset-0 flex items-center justify-center"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground absolute inset-0 flex items-center justify-center px-2"
             >
-              <span className="inline-block">
+              <span className="inline-block text-center">
                 {rotatingLines[currentLine]}
                 <motion.span
                   initial={{ scaleX: 0 }}
@@ -196,7 +198,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="mt-8 flex flex-col sm:flex-row items-center gap-4"
+          className="mt-8 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto"
         >
           <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base btn-hover" asChild>
             <a href="#graphic-design">
