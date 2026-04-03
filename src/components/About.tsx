@@ -42,7 +42,6 @@ export function About() {
                   <strong className="text-foreground">Social Media Manager in Kenya</strong>, I help brands grow their digital presence and turn
                   engagement into measurable revenue.
                 </p>
-                </p>
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.2}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
