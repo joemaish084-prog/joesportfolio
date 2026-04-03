@@ -56,9 +56,10 @@ export function About() {
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm currently <span className="text-primary font-semibold">open to freelance projects
-                  and full-time opportunities</span> in digital marketing, content creation, and brand
+                  I'm currently a <span className="text-primary font-semibold">digital marketer for hire in Nairobi (2026)</span>,
+                  open to freelance projects and full-time opportunities in digital marketing, content creation, and brand
                   management. Let's build something impactful together.
+                </p>
                 </p>
               </ScrollReveal>
             </article>
