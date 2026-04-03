@@ -45,11 +45,13 @@ export function About() {
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.2}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  My approach combines strategic thinking with creative execution — from producing
-                  short-form video content and designing social media campaigns, to managing Meta Ads,
+                  My approach as a <strong className="text-foreground">Content Strategist in Nairobi</strong> combines strategic thinking with creative execution — from producing
+                  short-form video content and designing social media campaigns, to managing Meta Ads as a{" "}
+                  <strong className="text-foreground">Meta Ads Specialist in Kenya</strong>,
                   optimising SEO, and leveraging AI tools like ChatGPT and Midjourney to streamline
-                  workflows. Whether it's managing social media accounts, producing podcast content, or
+                  workflows. Whether it's <span className="text-primary font-semibold">TikTok marketing in Nairobi</span>, producing podcast content, or
                   crafting multimedia campaigns, I bring a proven track record of driving real results.
+                </p>
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3}>
