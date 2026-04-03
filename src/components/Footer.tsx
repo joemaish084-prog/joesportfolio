@@ -5,7 +5,7 @@ export function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left space-y-1">
             <p className="text-sm font-medium text-foreground">
-              Joseph Isaac Maina · Digital Marketing Specialist
+              Joseph Maina · Digital Marketing Specialist · SEO Expert Nairobi
             </p>
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} Joseph Isaac Maina. All rights reserved.
