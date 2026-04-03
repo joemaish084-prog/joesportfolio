@@ -35,12 +35,13 @@ export function About() {
             <article className="space-y-6">
               <ScrollReveal direction="left" delay={0.1}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm <strong className="text-foreground">Joseph Isaac Maina</strong>, a{" "}
-                  <span className="text-primary font-semibold">Digital Marketing Specialist</span> based
-                  in <strong className="text-foreground">Nairobi, Kenya</strong> with over 3 years of
+                  I'm <strong className="text-foreground">Joseph Maina</strong>, a{" "}
+                  <span className="text-primary font-semibold">Digital Marketing Specialist in Nairobi, Kenya</span> with over 3 years of
                   hands-on experience in video production, graphic design, social media management, and
-                  data-driven campaign execution. I help brands grow their digital presence and turn
+                  data-driven campaign execution. As an experienced <strong className="text-foreground">SEO Expert in Nairobi</strong> and{" "}
+                  <strong className="text-foreground">Social Media Manager in Kenya</strong>, I help brands grow their digital presence and turn
                   engagement into measurable revenue.
+                </p>
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.2}>
