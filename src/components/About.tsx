@@ -59,7 +59,6 @@ export function About() {
                   open to freelance projects and full-time opportunities in digital marketing, content creation, and brand
                   management. Let's build something impactful together.
                 </p>
-                </p>
               </ScrollReveal>
             </article>
 
