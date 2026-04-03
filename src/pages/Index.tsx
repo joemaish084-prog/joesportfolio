@@ -13,6 +13,7 @@ import { ToolsWorkflow } from "@/components/ToolsWorkflow";
 import { Testimonials } from "@/components/Testimonials";
 import { Experience } from "@/components/Experience";
 import { About } from "@/components/About";
+import { Blog } from "@/components/Blog";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { ChatAssistant } from "@/components/ChatAssistant";
@@ -44,6 +45,7 @@ const Index = () => {
           <ToolsWorkflow />
           <Testimonials />
           <Experience />
+          <Blog />
           <About />
           <Contact />
         </main>
