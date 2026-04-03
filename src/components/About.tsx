@@ -52,7 +52,6 @@ export function About() {
                   workflows. Whether it's <span className="text-primary font-semibold">TikTok marketing in Nairobi</span>, producing podcast content, or
                   crafting multimedia campaigns, I bring a proven track record of driving real results.
                 </p>
-                </p>
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
