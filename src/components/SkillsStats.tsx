@@ -14,10 +14,10 @@ const stats = [
 const skills = [
   { name: "SEO Optimization", pct: 90 },
   { name: "Content Strategy", pct: 85 },
-  { name: "Social Media Marketing", pct: 88 },
-  { name: "Google Analytics", pct: 85 },
-  { name: "Email Marketing", pct: 80 },
-  { name: "Campaign Management", pct: 87 },
+  { name: "Social Media Management", pct: 88 },
+  { name: "Google Analytics & Reporting", pct: 85 },
+  { name: "Meta Ads & PPC", pct: 80 },
+  { name: "TikTok & Video Marketing", pct: 87 },
 ];
 
 /* ── Tools ── */

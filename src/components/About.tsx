@@ -97,7 +97,7 @@ export function About() {
             <ScrollReveal direction="scale" delay={0.2}>
               <div className="bg-primary/5 border-2 border-primary/20 rounded-xl p-8 text-center space-y-4">
                 <p className="text-lg font-medium">
-                  Joseph Maina · Digital Marketing Specialist
+                  Joseph Maina · Digital Marketing Specialist Nairobi Kenya
                 </p>
                 <p className="text-base text-muted-foreground">
                   Based in <span className="text-primary font-semibold">Nairobi, Kenya</span> — open to freelance & full-time roles

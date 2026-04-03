@@ -13,7 +13,7 @@ export function Footer() {
           </div>
           <div className="text-center sm:text-right space-y-1">
             <p className="text-sm text-muted-foreground">
-              Based in <span className="text-primary">Nairobi, Kenya</span>
+              <span className="text-primary">Digital Marketer for Hire · Nairobi, Kenya</span>
             </p>
             <p className="text-xs text-muted-foreground">
               <a href="mailto:joemaish084@gmail.com" className="hover:text-primary transition-colors">
