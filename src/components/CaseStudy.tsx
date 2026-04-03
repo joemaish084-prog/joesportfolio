@@ -77,9 +77,10 @@ export function CaseStudy() {
               Case <span className="text-gradient">Study</span>: Digital Marketing Results 2025
             </h2>
             <p className="text-lg max-w-3xl mx-auto" style={{ color: "hsl(var(--case-study-muted))" }}>
-              As a Digital Marketing Specialist in Nairobi, I planned and executed a full-year campaign
+              As a <strong>Digital Marketing Specialist in Nairobi, Kenya</strong>, I planned and executed a full-year campaign
               across TikTok, Instagram, and Facebook — driving brand awareness, engagement, and lead
-              generation through a video-first SEO strategy in Kenya.
+              generation through a video-first SEO strategy. This case study showcases results from{" "}
+              <strong>TikTok marketing in Nairobi</strong>, Meta Ads management, and content strategy across Kenya.
             </p>
           </div>
         </ScrollReveal>

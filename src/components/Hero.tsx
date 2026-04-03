@@ -16,10 +16,11 @@ const rotatingLines = [
 
 const typingTitles = [
   "Digital Marketing Specialist",
-  "SEO Expert",
+  "SEO Expert Nairobi",
   "Content Strategist",
-  "Social Media Marketer",
-  "Available for Full-Time Roles",
+  "Social Media Manager Kenya",
+  "Meta Ads Specialist",
+  "Available for Hire 2026",
 ];
 
 const tags = [

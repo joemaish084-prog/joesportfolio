@@ -26,7 +26,7 @@ export function About() {
           <ScrollReveal>
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-                About <span className="text-gradient">Joseph Maina</span>
+                About <span className="text-gradient">Joseph Maina</span> — Digital Marketing Specialist
               </h2>
             </div>
           </ScrollReveal>
@@ -35,27 +35,28 @@ export function About() {
             <article className="space-y-6">
               <ScrollReveal direction="left" delay={0.1}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm <strong className="text-foreground">Joseph Isaac Maina</strong>, a{" "}
-                  <span className="text-primary font-semibold">Digital Marketing Specialist</span> based
-                  in <strong className="text-foreground">Nairobi, Kenya</strong> with over 3 years of
+                  I'm <strong className="text-foreground">Joseph Maina</strong>, a{" "}
+                  <span className="text-primary font-semibold">Digital Marketing Specialist in Nairobi, Kenya</span> with over 3 years of
                   hands-on experience in video production, graphic design, social media management, and
-                  data-driven campaign execution. I help brands grow their digital presence and turn
+                  data-driven campaign execution. As an experienced <strong className="text-foreground">SEO Expert in Nairobi</strong> and{" "}
+                  <strong className="text-foreground">Social Media Manager in Kenya</strong>, I help brands grow their digital presence and turn
                   engagement into measurable revenue.
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.2}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  My approach combines strategic thinking with creative execution — from producing
-                  short-form video content and designing social media campaigns, to managing Meta Ads,
+                  My approach as a <strong className="text-foreground">Content Strategist in Nairobi</strong> combines strategic thinking with creative execution — from producing
+                  short-form video content and designing social media campaigns, to managing Meta Ads as a{" "}
+                  <strong className="text-foreground">Meta Ads Specialist in Kenya</strong>,
                   optimising SEO, and leveraging AI tools like ChatGPT and Midjourney to streamline
-                  workflows. Whether it's managing social media accounts, producing podcast content, or
+                  workflows. Whether it's <span className="text-primary font-semibold">TikTok marketing in Nairobi</span>, producing podcast content, or
                   crafting multimedia campaigns, I bring a proven track record of driving real results.
                 </p>
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm currently <span className="text-primary font-semibold">open to freelance projects
-                  and full-time opportunities</span> in digital marketing, content creation, and brand
+                  I'm currently a <span className="text-primary font-semibold">digital marketer for hire in Nairobi (2026)</span>,
+                  open to freelance projects and full-time opportunities in digital marketing, content creation, and brand
                   management. Let's build something impactful together.
                 </p>
               </ScrollReveal>
@@ -94,7 +95,7 @@ export function About() {
             <ScrollReveal direction="scale" delay={0.2}>
               <div className="bg-primary/5 border-2 border-primary/20 rounded-xl p-8 text-center space-y-4">
                 <p className="text-lg font-medium">
-                  Joseph Maina · Digital Marketing Specialist
+                  Joseph Maina · Digital Marketing Specialist Nairobi Kenya
                 </p>
                 <p className="text-base text-muted-foreground">
                   Based in <span className="text-primary font-semibold">Nairobi, Kenya</span> — open to freelance & full-time roles
