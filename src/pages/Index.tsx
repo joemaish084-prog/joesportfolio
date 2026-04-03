@@ -45,6 +45,7 @@ const Index = () => {
           <ToolsWorkflow />
           <Testimonials />
           <Experience />
+          <Blog />
           <About />
           <Contact />
         </main>
