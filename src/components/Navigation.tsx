@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -31,10 +31,8 @@ export function Navigation() {
     if (isAtTop) {
       setIsVisible(true);
     } else if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
-      // Scrolling down
       setIsVisible(false);
     } else {
-      // Scrolling up
       setIsVisible(true);
     }
 
@@ -59,7 +57,6 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -84,7 +81,6 @@ export function Navigation() {
               isScrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
             }`}
           >
-            {/* Logo */}
             <a href="#home" className="text-xl sm:text-2xl font-display font-bold">
               <span className="text-foreground">Joseph</span>
               <span className="text-primary">Maina</span>
@@ -126,7 +122,7 @@ export function Navigation() {
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-                className="relative z-[60]"
+                className="relative z-[80]"
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -141,17 +137,8 @@ export function Navigation() {
 
       {/* Full-screen mobile menu */}
       {isMobileMenuOpen && (
-        <div
-          className="fixed inset-0 z-[70] md:hidden flex flex-col items-center justify-center bg-card"
-        >
-          <button
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="absolute top-5 right-5 text-foreground"
-            aria-label="Close menu"
-          >
-            <X className="h-7 w-7" />
-          </button>
-          <nav className="flex flex-col items-center gap-8 relative z-10">
+        <div className="fixed inset-0 z-[70] md:hidden" style={{ background: "hsl(0 0% 8%)" }}>
+          <div className="flex flex-col items-center justify-center h-full w-full gap-7 pt-16">
             {navLinks.map((link) => {
               const sectionId = link.href.replace("#", "");
               const isActive = activeSection === sectionId;
@@ -160,14 +147,14 @@ export function Navigation() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  style={{ color: isActive ? "hsl(25, 100%, 50%)" : "#ffffff" }}
                   className="text-2xl font-semibold"
+                  style={{ color: isActive ? "hsl(25, 100%, 50%)" : "#f5f5f5" }}
                 >
                   {link.name}
                 </a>
               );
             })}
-            <Button asChild className="mt-4 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
+            <Button asChild className="mt-2 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
               <a
                 href="/Joseph_Isaac_Maina_Resume.pdf"
                 download="Joseph Isaac Maina Resume.pdf"
@@ -177,7 +164,7 @@ export function Navigation() {
                 Download CV
               </a>
             </Button>
-          </nav>
+          </div>
         </div>
       )}
     </>
