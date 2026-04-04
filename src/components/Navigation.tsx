@@ -140,45 +140,49 @@ export function Navigation() {
       </motion.nav>
 
       {/* Full-screen mobile menu */}
-      <div
-        className={`fixed inset-0 z-[55] md:hidden flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen
-            ? "opacity-100 translate-x-0 pointer-events-auto"
-            : "opacity-0 translate-x-full pointer-events-none"
-        }`}
-        style={{ backgroundColor: "hsl(var(--background))" }}
-      >
-        <nav className="flex flex-col items-center gap-8">
-          {navLinks.map((link) => {
-            const sectionId = link.href.replace("#", "");
-            const isActive = activeSection === sectionId;
-            return (
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-[70] md:hidden flex flex-col items-center justify-center bg-card"
+        >
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-5 right-5 text-foreground"
+            aria-label="Close menu"
+          >
+            <X className="h-7 w-7" />
+          </button>
+          <nav className="flex flex-col items-center gap-8">
+            {navLinks.map((link) => {
+              const sectionId = link.href.replace("#", "");
+              const isActive = activeSection === sectionId;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`text-2xl font-semibold transition-colors duration-200 ${
+                    isActive
+                      ? "text-primary"
+                      : "text-foreground hover:text-primary"
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
+            <Button asChild className="mt-4 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
               <a
-                key={link.name}
-                href={link.href}
+                href="/Joseph_Isaac_Maina_Resume.pdf"
+                download="Joseph Isaac Maina Resume.pdf"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`text-2xl font-semibold transition-colors duration-200 ${
-                  isActive
-                    ? "text-primary"
-                    : "text-foreground hover:text-primary"
-                }`}
               >
-                {link.name}
+                <Download className="mr-2 h-5 w-5" />
+                Download CV
               </a>
-            );
-          })}
-          <Button asChild className="mt-4 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
-            <a
-              href="/Joseph_Isaac_Maina_Resume.pdf"
-              download="Joseph Isaac Maina Resume.pdf"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Download className="mr-2 h-5 w-5" />
-              Download CV
-            </a>
-          </Button>
-        </nav>
-      </div>
+            </Button>
+          </nav>
+        </div>
+      )}
     </>
   );
 }
