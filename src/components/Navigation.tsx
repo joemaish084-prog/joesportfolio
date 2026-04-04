@@ -151,7 +151,7 @@ export function Navigation() {
           >
             <X className="h-7 w-7" />
           </button>
-          <nav className="flex flex-col items-center gap-8">
+          <nav className="flex flex-col items-center gap-8 relative z-10">
             {navLinks.map((link) => {
               const sectionId = link.href.replace("#", "");
               const isActive = activeSection === sectionId;
