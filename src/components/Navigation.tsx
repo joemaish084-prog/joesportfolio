@@ -147,46 +147,37 @@ export function Navigation() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-0 z-[55] bg-background/95 backdrop-blur-xl md:hidden flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[55] bg-background backdrop-blur-xl md:hidden flex flex-col items-center justify-center"
           >
-            <nav className="flex flex-col items-center gap-6">
-              {navLinks.map((link, i) => {
+            <nav className="flex flex-col items-center gap-8">
+              {navLinks.map((link) => {
                 const sectionId = link.href.replace("#", "");
                 const isActive = activeSection === sectionId;
                 return (
-                  <motion.a
+                  <a
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 * i, duration: 0.3 }}
                     className={`text-2xl font-semibold transition-colors duration-200 ${
                       isActive
                         ? "text-primary"
-                        : "text-muted-foreground hover:text-primary"
+                        : "text-foreground hover:text-primary"
                     }`}
                   >
                     {link.name}
-                  </motion.a>
+                  </a>
                 );
               })}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.3 }}
-              >
-                <Button asChild className="mt-4 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
-                  <a
-                    href="/Joseph_Isaac_Maina_Resume.pdf"
-                    download="Joseph Isaac Maina Resume.pdf"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Download className="mr-2 h-5 w-5" />
-                    Download CV
-                  </a>
-                </Button>
-              </motion.div>
+              <Button asChild className="mt-4 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
+                <a
+                  href="/Joseph_Isaac_Maina_Resume.pdf"
+                  download="Joseph Isaac Maina Resume.pdf"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download CV
+                </a>
+              </Button>
             </nav>
           </motion.div>
         )}
