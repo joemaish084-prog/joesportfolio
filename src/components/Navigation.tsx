@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -31,10 +31,8 @@ export function Navigation() {
     if (isAtTop) {
       setIsVisible(true);
     } else if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
-      // Scrolling down
       setIsVisible(false);
     } else {
-      // Scrolling up
       setIsVisible(true);
     }
 
@@ -59,7 +57,6 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -84,7 +81,6 @@ export function Navigation() {
               isScrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
             }`}
           >
-            {/* Logo */}
             <a href="#home" className="text-xl sm:text-2xl font-display font-bold">
               <span className="text-foreground">Joseph</span>
               <span className="text-primary">Maina</span>
@@ -126,7 +122,7 @@ export function Navigation() {
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-                className="relative z-[60]"
+                className="relative z-[80]"
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6" />
@@ -140,57 +136,37 @@ export function Navigation() {
       </motion.nav>
 
       {/* Full-screen mobile menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-0 z-[55] bg-background/95 backdrop-blur-xl md:hidden flex flex-col items-center justify-center"
-          >
-            <nav className="flex flex-col items-center gap-6">
-              {navLinks.map((link, i) => {
-                const sectionId = link.href.replace("#", "");
-                const isActive = activeSection === sectionId;
-                return (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    initial={{ opacity: 0, x: 40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 * i, duration: 0.3 }}
-                    className={`text-2xl font-semibold transition-colors duration-200 ${
-                      isActive
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-primary"
-                    }`}
-                  >
-                    {link.name}
-                  </motion.a>
-                );
-              })}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.3 }}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[70] md:hidden" style={{ background: "hsl(0 0% 8%)" }}>
+          <div className="flex flex-col items-center justify-center h-full w-full gap-7 pt-16">
+            {navLinks.map((link) => {
+              const sectionId = link.href.replace("#", "");
+              const isActive = activeSection === sectionId;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-2xl font-semibold"
+                  style={{ color: isActive ? "hsl(25, 100%, 50%)" : "#f5f5f5" }}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
+            <Button asChild className="mt-2 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
+              <a
+                href="/Joseph_Isaac_Maina_Resume.pdf"
+                download="Joseph Isaac Maina Resume.pdf"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
-                <Button asChild className="mt-4 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
-                  <a
-                    href="/Joseph_Isaac_Maina_Resume.pdf"
-                    download="Joseph Isaac Maina Resume.pdf"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Download className="mr-2 h-5 w-5" />
-                    Download CV
-                  </a>
-                </Button>
-              </motion.div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <Download className="mr-2 h-5 w-5" />
+                Download CV
+              </a>
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
