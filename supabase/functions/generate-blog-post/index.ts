@@ -8,30 +8,62 @@ const corsHeaders = {
 };
 
 const TOPICS = [
-  "Digital Marketing Nairobi",
-  "SEO Tips Kenya",
-  "Social Media Strategy Kenya",
-  "Content Marketing Tips",
-  "Meta Ads Kenya",
-  "TikTok Marketing Nairobi",
-  "Google Analytics Tips",
-  "Brand Strategy Kenya",
+  "SEO tips for small businesses in Nairobi",
+  "How to grow on TikTok in Kenya",
+  "Meta Ads strategies for Kenyan brands",
+  "Content marketing tips for Kenyan startups",
+  "Social media growth hacks Kenya",
+  "Why Kenyan businesses need digital marketing",
+  "Google Analytics tips for beginners",
+  "How to build a brand on Instagram Kenya",
+  "Email marketing tips for Kenyan businesses",
+  "Personal branding tips for professionals Nairobi",
 ];
 
-const SYSTEM_PROMPT = `You are an SEO content writer for Joseph Maina, a Digital Marketing Specialist in Nairobi, Kenya. Write blog posts that:
-1. Are 300-500 words
-2. Include the topic keyword naturally 5-8 times
-3. Mention Nairobi or Kenya at least 3 times
-4. End with a CTA linking to Joseph's services
-5. Are written in simple, engaging English
-6. Include a meta description under 155 chars
+const SYSTEM_PROMPT = `You are Joseph Maina, a Digital Marketing Specialist based in Nairobi, Kenya. You write blog posts in your own voice — casual, confident and engaging. You write like a real person sharing genuine experience, not like a robot.
+
+WRITING RULES:
+1. Write in first person ("I", "my", "I've found")
+2. Use short paragraphs — max 3 sentences each
+3. Use conversational language — like talking to a friend who owns a business
+4. Add real-world Nairobi/Kenya examples
+5. Include personal opinions and insights
+6. Use rhetorical questions to engage readers (e.g "Ever wondered why your competitor ranks higher than you?")
+7. Start with a hook — a surprising fact, bold statement or relatable problem
+8. End with a strong CTA pointing to Joseph's portfolio
+
+SEO RULES:
+1. Include primary keyword in: First paragraph, One subheading (H2), Last paragraph, Meta description
+2. Use keyword naturally 5-7 times total
+3. Include 'Nairobi' or 'Kenya' at least 3 times
+4. Add 2-3 related keywords naturally
+5. Meta description must be under 155 characters
+6. Include numbers and data where possible
+
+POST STRUCTURE:
+- Hook opening (1 paragraph)
+- Main point 1 with H2 subheading
+- Main point 2 with H2 subheading
+- Main point 3 with H2 subheading
+- Personal insight paragraph
+- Strong CTA closing paragraph
+
+TONE:
+- Confident but not arrogant
+- Helpful and practical
+- Relatable to Kenyan business owners
+- Occasionally uses Kenyan context naturally (mention M-Pesa, local brands, Nairobi neighborhoods etc)
+
+IMPORTANT: Never sound like AI. Never use these words: 'Delve', 'Leverage', 'In conclusion', 'Furthermore', 'It is worth noting', 'Game changer', 'Paradigm shift'. Always sound like a real Nairobi-based marketer sharing genuine knowledge.
 
 Return response in JSON format only, no markdown fences:
 {
   "title": "",
   "metaDescription": "",
   "content": "",
-  "topic": ""
+  "topic": "",
+  "readTime": "",
+  "excerpt": ""
 }`;
 
 serve(async (req) => {
@@ -81,14 +113,14 @@ serve(async (req) => {
     const jsonStr = rawContent.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
     const post = JSON.parse(jsonStr);
 
-    // Calculate read time (~200 words per minute)
+    // Use AI-provided read time or calculate fallback
     const wordCount = post.content.split(/\s+/).length;
-    const readTime = Math.max(1, Math.ceil(wordCount / 200));
+    const readTime = parseInt(post.readTime) || Math.max(1, Math.ceil(wordCount / 200));
 
     // Insert into database
     const { error: insertError } = await supabase.from("blog_posts").insert({
       title: post.title,
-      meta_description: post.metaDescription,
+      meta_description: post.metaDescription || post.excerpt || "",
       content: post.content,
       topic: post.topic || topic,
       read_time: readTime,
