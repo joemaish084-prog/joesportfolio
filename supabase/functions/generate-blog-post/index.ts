@@ -113,14 +113,14 @@ serve(async (req) => {
     const jsonStr = rawContent.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
     const post = JSON.parse(jsonStr);
 
-    // Calculate read time (~200 words per minute)
+    // Use AI-provided read time or calculate fallback
     const wordCount = post.content.split(/\s+/).length;
-    const readTime = Math.max(1, Math.ceil(wordCount / 200));
+    const readTime = parseInt(post.readTime) || Math.max(1, Math.ceil(wordCount / 200));
 
     // Insert into database
     const { error: insertError } = await supabase.from("blog_posts").insert({
       title: post.title,
-      meta_description: post.metaDescription,
+      meta_description: post.metaDescription || post.excerpt || "",
       content: post.content,
       topic: post.topic || topic,
       read_time: readTime,
