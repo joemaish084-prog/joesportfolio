@@ -160,11 +160,8 @@ export function Navigation() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-2xl font-semibold transition-colors duration-200 ${
-                    isActive
-                      ? "text-primary"
-                      : "text-foreground hover:text-primary"
-                  }`}
+                  style={{ color: isActive ? "hsl(25, 100%, 50%)" : "#ffffff" }}
+                  className="text-2xl font-semibold"
                 >
                   {link.name}
                 </a>
