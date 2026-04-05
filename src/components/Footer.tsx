@@ -15,9 +15,13 @@ export function Footer() {
             <p className="text-sm text-muted-foreground">
               <span className="text-primary">Digital Marketer for Hire · Nairobi, Kenya</span>
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground flex flex-wrap items-center justify-center sm:justify-end gap-2">
               <a href="mailto:joemaish084@gmail.com" className="hover:text-primary transition-colors">
                 joemaish084@gmail.com
+              </a>
+              <span>·</span>
+              <a href="tel:+254704700160" className="hover:text-primary transition-colors">
+                +254 704 700 160
               </a>
             </p>
           </div>

@@ -93,7 +93,7 @@ export function Contact() {
                       </div>
                       <span>joemaish084@gmail.com</span>
                     </a>
-                    <a href="tel:0704700160" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+                    <a href="tel:+254704700160" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                         <Phone className="h-5 w-5 text-primary" />
                       </div>
