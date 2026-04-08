@@ -14,11 +14,14 @@ export function ParticlesBackground() {
   const animRef = useRef<number>(0);
   const reducedMotion = useRef(false);
 
-  const init = useCallback(() => {
+  const sizeRef = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
+
+  const initWithSize = useCallback((w: number, h: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const w = canvas.width = canvas.offsetWidth;
-    const h = canvas.height = canvas.offsetHeight;
+    canvas.width = w;
+    canvas.height = h;
+    sizeRef.current = { w, h };
     const count = Math.min(Math.floor((w * h) / 15000), 80);
     
     particlesRef.current = Array.from({ length: count }, () => ({
@@ -39,10 +42,16 @@ export function ParticlesBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    init();
-
-    const handleResize = () => init();
-    window.addEventListener("resize", handleResize);
+    // Use ResizeObserver to avoid forced reflow from offsetWidth/offsetHeight
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) {
+          initWithSize(Math.round(width), Math.round(height));
+        }
+      }
+    });
+    ro.observe(canvas);
 
     const primaryColor = getComputedStyle(document.documentElement)
       .getPropertyValue("--primary").trim();
@@ -90,9 +99,9 @@ export function ParticlesBackground() {
 
     return () => {
       cancelAnimationFrame(animRef.current);
-      window.removeEventListener("resize", handleResize);
+      ro.disconnect();
     };
-  }, [init]);
+  }, [initWithSize]);
 
   if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     return null;
