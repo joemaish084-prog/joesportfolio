@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { motion } from "framer-motion";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -77,11 +76,12 @@ export function Navigation() {
 
   return (
     <>
-      <motion.nav
+      <nav
         aria-label="Main navigation"
-        initial={{ y: 0 }}
-        animate={{ y: isVisible ? 0 : -100 }}
-        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+        style={{
+          transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
+          transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-background/80 backdrop-blur-xl border-b border-primary/10 shadow-[0_1px_20px_hsl(var(--primary)/0.08)]"
@@ -146,7 +146,7 @@ export function Navigation() {
             </div>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Full-screen mobile menu */}
       {isMobileMenuOpen && (
