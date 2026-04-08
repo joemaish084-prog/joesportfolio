@@ -37,19 +37,32 @@ export function Navigation() {
     }
 
     lastScrollY.current = currentScrollY;
+  }, []);
 
-    // Active section detection
-    const sections = navLinks.map((l) => l.href.replace("#", ""));
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const el = document.getElementById(sections[i]);
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= 120) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
-    }
+  // Use IntersectionObserver for active section detection (avoids forced reflow)
+  useEffect(() => {
+    const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(id);
+            }
+          });
+        },
+        { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   useEffect(() => {
