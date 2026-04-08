@@ -1,6 +1,20 @@
 import { useState, lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
-import { Hero } from "@/components/Hero";
+
+// Lazy-load Hero to split framer-motion out of the critical path and reduce longest task
+const Hero = lazy(() => import("@/components/Hero").then(m => ({ default: m.Hero })));
+
+// Lightweight placeholder matching Hero dimensions to avoid layout shift
+const HeroFallback = () => (
+  <section id="home" className="relative w-full min-h-screen bg-background flex items-center justify-center">
+    <div className="text-center px-4">
+      <p className="text-sm font-medium text-primary mb-4 tracking-wide uppercase">Digital Marketing Specialist · Nairobi, Kenya</p>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight max-w-4xl">
+        Creative Strategy<span className="text-gradient"> Meets </span>Visual Storytelling
+      </h1>
+    </div>
+  </section>
+);
 
 // Lazy-load non-critical above-the-fold utilities
 const SplashScreen = lazy(() => import("@/components/SplashScreen").then(m => ({ default: m.SplashScreen })));
@@ -37,7 +51,7 @@ const Index = () => {
         <Suspense fallback={null}><ScrollProgress /></Suspense>
         <Navigation />
         <main>
-          <Hero />
+          <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
           <Suspense fallback={null}>
             <GraphicDesign />
             <PrintMockup />
