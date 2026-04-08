@@ -146,7 +146,7 @@ export function Navigation() {
             </div>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Full-screen mobile menu */}
       {isMobileMenuOpen && (
