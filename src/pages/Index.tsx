@@ -59,7 +59,7 @@ const Index = () => {
           <Footer />
           <ChatAssistant />
         </Suspense>
-        <BackToTop />
+        <Suspense fallback={null}><BackToTop /></Suspense>
       </div>
     </>
   );
