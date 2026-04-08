@@ -32,9 +32,9 @@ const Index = () => {
 
   return (
     <>
-      {!splashDone && <SplashScreen onComplete={() => setSplashDone(true)} />}
+      {!splashDone && <Suspense fallback={null}><SplashScreen onComplete={() => setSplashDone(true)} /></Suspense>}
       <div className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
-        <ScrollProgress />
+        <Suspense fallback={null}><ScrollProgress /></Suspense>
         <Navigation />
         <main>
           <Hero />
