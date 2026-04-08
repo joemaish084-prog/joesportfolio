@@ -1,9 +1,11 @@
 import { useState, lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
-import { SplashScreen } from "@/components/SplashScreen";
-import { ScrollProgress } from "@/components/ScrollProgress";
-import { BackToTop } from "@/components/BackToTop";
+
+// Lazy-load non-critical above-the-fold utilities
+const SplashScreen = lazy(() => import("@/components/SplashScreen").then(m => ({ default: m.SplashScreen })));
+const ScrollProgress = lazy(() => import("@/components/ScrollProgress").then(m => ({ default: m.ScrollProgress })));
+const BackToTop = lazy(() => import("@/components/BackToTop").then(m => ({ default: m.BackToTop })));
 
 // Lazy-load below-the-fold components to reduce main-thread blocking
 const GraphicDesign = lazy(() => import("@/components/GraphicDesign").then(m => ({ default: m.GraphicDesign })));
