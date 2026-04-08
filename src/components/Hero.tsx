@@ -99,6 +99,7 @@ function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; inde
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const isMobile = useIsMobile();
@@ -112,9 +113,20 @@ export function Hero() {
     return () => clearInterval(interval);
   }, []);
 
+  // Cache rect via ResizeObserver to avoid forced reflow on mousemove
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      rectRef.current = el.getBoundingClientRect();
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    const rect = rectRef.current;
+    if (!rect) return;
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     mouseX.set((e.clientX - centerX) / rect.width);
