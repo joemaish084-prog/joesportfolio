@@ -33,7 +33,6 @@ const ManagedAccounts = lazy(() => import("@/components/ManagedAccounts").then(m
 const ToolsWorkflow = lazy(() => import("@/components/ToolsWorkflow").then(m => ({ default: m.ToolsWorkflow })));
 const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({ default: m.Testimonials })));
 const Experience = lazy(() => import("@/components/Experience").then(m => ({ default: m.Experience })));
-const Blog = lazy(() => import("@/components/Blog").then(m => ({ default: m.Blog })));
 const About = lazy(() => import("@/components/About").then(m => ({ default: m.About })));
 const Contact = lazy(() => import("@/components/Contact").then(m => ({ default: m.Contact })));
 const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.Footer })));
@@ -64,7 +63,6 @@ const Index = () => {
             <ToolsWorkflow />
             <Testimonials />
             <Experience />
-            <Blog />
             <About />
             <Contact />
           </Suspense>
