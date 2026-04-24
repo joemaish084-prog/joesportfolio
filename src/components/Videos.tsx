@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
 import featuredThumb from "@/assets/featured-showreel-thumb.jpeg";
+import longJoanThumb from "@/assets/longform-joan-mbesya.jpeg";
+import longAsdspThumb from "@/assets/longform-asdsp.jpeg";
 import thumb1 from "@/assets/video-thumb-1.png";
 import thumb2 from "@/assets/video-thumb-2.png";
 import thumb3 from "@/assets/video-thumb-3.png";
@@ -46,23 +48,22 @@ const shortVideos: ShortVideo[] = [
   { title: "Behind The Scenes", thumbnail: thumb9, link: "https://www.instagram.com/reel/DP1XkoaDsUE/", platform: "Instagram", duration: "0:33" },
 ];
 
-// Long-form placeholders — to be replaced when client provides real videos
 const longVideos: LongVideo[] = [
   {
-    title: "Brand Film — Coming Soon",
-    description: "Full-length brand documentary currently in post-production",
-    thumbnail: thumb4,
-    link: "#",
+    title: "Joan Mbesya — Full Interview",
+    description: "Long-form interview feature with entrepreneur Joan Mbesya",
+    thumbnail: longJoanThumb,
+    link: "https://youtu.be/lulDBOcFiCw",
     platform: "YouTube",
-    duration: "5:30",
+    duration: "—",
   },
   {
-    title: "Campaign Documentary — Coming Soon",
-    description: "Long-form campaign story showcasing process and results",
-    thumbnail: thumb7,
-    link: "#",
+    title: "ASDSP Programme — A Game Changer for Nyeri Farmers",
+    description: "New documentary on the ASDSP programme transforming Nyeri agriculture",
+    thumbnail: longAsdspThumb,
+    link: "https://youtu.be/7jCqcsyXGC8",
     platform: "YouTube",
-    duration: "8:15",
+    duration: "—",
   },
 ];
 
