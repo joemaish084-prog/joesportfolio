@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
-import { Play, Volume2, VolumeX, Film, Clock } from "lucide-react";
+import { useState } from "react";
+import { Play, Volume2, Film, Clock, ExternalLink } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
+import featuredThumb from "@/assets/featured-showreel-thumb.jpeg";
 import thumb1 from "@/assets/video-thumb-1.png";
 import thumb2 from "@/assets/video-thumb-2.png";
 import thumb3 from "@/assets/video-thumb-3.png";
@@ -181,63 +182,102 @@ function LongCard({ v }: { v: LongVideo }) {
   );
 }
 
-function FeaturedVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
+const FEATURED_VIDEO = {
+  youtubeId: "RREDY1htp7Q",
+  title: "Let Go of the Fear & Own Your Authentic Voice! — Caroline Njiru",
+  description: "Featured brand film directed and produced by Joseph Maina — Caroline Njiru opens up about confidence, voice and authenticity.",
+  watchUrl: "https://youtu.be/RREDY1htp7Q",
+};
 
-  const toggleSound = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !videoRef.current.muted;
-    setMuted(videoRef.current.muted);
+function FeaturedVideo() {
+  const [playing, setPlaying] = useState(false);
+
+  const featuredSchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: FEATURED_VIDEO.title,
+    description: FEATURED_VIDEO.description,
+    thumbnailUrl: featuredThumb,
+    uploadDate: "2024-01-01",
+    contentUrl: FEATURED_VIDEO.watchUrl,
+    embedUrl: `https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}`,
+    publisher: { "@type": "Person", name: "Joseph Maina" },
   };
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-border shadow-elegant group">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredSchema) }} />
       <div className="relative aspect-video bg-black">
-        {/* Placeholder — replace src with real featured video URL/file */}
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={thumb6}
-          className="h-full w-full object-cover"
-          aria-label="Featured video showreel by Joseph Maina"
-        >
-          {/* Source intentionally omitted — to be provided by client */}
-        </video>
-        <img
-          src={thumb6}
-          alt="Featured showreel placeholder — Video Production Nairobi Kenya by Joseph Maina"
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40" />
+        {playing ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+            title={FEATURED_VIDEO.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        ) : (
+          <>
+            {/* Muted autoplay preview via YouTube embed (desktop) */}
+            <iframe
+              src={`https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&playlist=${FEATURED_VIDEO.youtubeId}`}
+              title={`${FEATURED_VIDEO.title} — muted preview`}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              className="absolute inset-0 h-full w-full hidden md:block pointer-events-none"
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+            {/* Mobile poster fallback */}
+            <img
+              src={featuredThumb}
+              alt={`${FEATURED_VIDEO.title} — featured brand film thumbnail by Joseph Maina, Video Production Nairobi Kenya`}
+              className="absolute inset-0 h-full w-full object-cover md:hidden"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
 
-        <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
-          <Badge className="bg-primary text-primary-foreground border-0 shadow-elegant">
-            <Film className="h-3 w-3 mr-1" /> Featured Showreel
-          </Badge>
-        </div>
+            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
+              <Badge className="bg-primary text-primary-foreground border-0 shadow-elegant">
+                <Film className="h-3 w-3 mr-1" /> Featured Showreel
+              </Badge>
+            </div>
 
-        <button
-          onClick={toggleSound}
-          className="absolute top-4 right-4 sm:top-6 sm:right-6 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold text-primary-foreground shadow-elegant transition-transform hover:scale-105"
-          aria-label={muted ? "Unmute featured video" : "Mute featured video"}
-        >
-          {muted ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
-          <span className="hidden sm:inline">{muted ? "Watch with Sound" : "Mute"}</span>
-        </button>
+            <button
+              onClick={() => setPlaying(true)}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold text-primary-foreground shadow-elegant hover:scale-105"
+              style={{ transition: "transform 0.2s" }}
+              aria-label="Watch featured video with sound"
+            >
+              <Volume2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Watch with Sound</span>
+            </button>
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
-          <h3 className="font-display text-2xl sm:text-4xl font-bold text-white drop-shadow-2xl">
-            The Showreel
-          </h3>
-          <p className="mt-2 text-sm sm:text-base text-white/80 max-w-2xl">
-            A snapshot of brand stories, campaigns and short-form content produced for clients across Kenya.
-          </p>
-        </div>
+            {/* Center play button */}
+            <button
+              onClick={() => setPlaying(true)}
+              className="absolute inset-0 z-10 flex items-center justify-center group/play"
+              aria-label={`Play ${FEATURED_VIDEO.title}`}
+            >
+              <span className="flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-full bg-primary shadow-elegant group-hover/play:scale-110" style={{ transition: "transform 0.3s" }}>
+                <Play className="ml-1 h-10 w-10 sm:h-12 sm:w-12 text-primary-foreground" fill="currentColor" />
+              </span>
+            </button>
+
+            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 z-10 pointer-events-none">
+              <h3 className="font-display text-2xl sm:text-4xl font-bold text-white drop-shadow-2xl max-w-3xl">
+                {FEATURED_VIDEO.title}
+              </h3>
+              <a
+                href={FEATURED_VIDEO.watchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-1.5 text-sm sm:text-base text-white/80 hover:text-primary pointer-events-auto"
+              >
+                Watch on YouTube <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
