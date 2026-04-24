@@ -1,6 +1,9 @@
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
-import { Play } from "lucide-react";
+import { useRef, useState } from "react";
+import { Play, Volume2, VolumeX, Film, Clock } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ScrollReveal } from "./ScrollReveal";
 import thumb1 from "@/assets/video-thumb-1.png";
 import thumb2 from "@/assets/video-thumb-2.png";
 import thumb3 from "@/assets/video-thumb-3.png";
@@ -11,102 +14,330 @@ import thumb7 from "@/assets/video-thumb-7.png";
 import thumb8 from "@/assets/video-thumb-8.png";
 import thumb9 from "@/assets/video-thumb-9.png";
 
-const videosRow1 = [
-  { title: "iClear Water Delivery", thumbnail: thumb1, link: "https://www.instagram.com/reel/DT-w2FtjTnk/" },
-  { title: "Commonly Asked Questions", thumbnail: thumb2, link: "https://www.instagram.com/reel/DUFhZLMCkI6/" },
-  { title: "Filter Installation", thumbnail: thumb3, link: "https://www.instagram.com/reel/DR0_0WSCKvx/" },
-  { title: "Corporate Trends", thumbnail: thumb4, link: "https://www.instagram.com/reel/DQ6zTmTjqlq/" },
+type Platform = "Instagram" | "TikTok" | "YouTube";
+
+interface ShortVideo {
+  title: string;
+  thumbnail: string;
+  link: string;
+  platform: Platform;
+  duration: string;
+}
+
+interface LongVideo {
+  title: string;
+  description: string;
+  thumbnail: string;
+  link: string;
+  platform: Platform;
+  duration: string;
+}
+
+const shortVideos: ShortVideo[] = [
+  { title: "iClear Water Delivery Reel", thumbnail: thumb1, link: "https://www.instagram.com/reel/DT-w2FtjTnk/", platform: "Instagram", duration: "0:30" },
+  { title: "Commonly Asked Questions", thumbnail: thumb2, link: "https://www.instagram.com/reel/DUFhZLMCkI6/", platform: "Instagram", duration: "0:45" },
+  { title: "Filter Installation Tutorial", thumbnail: thumb3, link: "https://www.instagram.com/reel/DR0_0WSCKvx/", platform: "Instagram", duration: "0:38" },
+  { title: "Corporate Trends Recap", thumbnail: thumb4, link: "https://www.instagram.com/reel/DQ6zTmTjqlq/", platform: "Instagram", duration: "0:28" },
+  { title: "Water Filter Setup Guide", thumbnail: thumb5, link: "https://www.instagram.com/reel/DLuTwgPCbbw/", platform: "Instagram", duration: "0:42" },
+  { title: "Product Showcase Reel", thumbnail: thumb6, link: "https://www.instagram.com/reel/DScs6erjcfO/", platform: "Instagram", duration: "0:25" },
+  { title: "On Location Shoot", thumbnail: thumb7, link: "https://www.instagram.com/reel/DQ_5aRdl2YS/", platform: "Instagram", duration: "0:35" },
+  { title: "Sustainability Report Reel", thumbnail: thumb8, link: "https://www.instagram.com/reel/DP4KbNTDQj-/", platform: "Instagram", duration: "0:50" },
+  { title: "Behind The Scenes", thumbnail: thumb9, link: "https://www.instagram.com/reel/DP1XkoaDsUE/", platform: "Instagram", duration: "0:33" },
 ];
 
-const videosRow2 = [
-  { title: "Water Filter Setup", thumbnail: thumb5, link: "https://www.instagram.com/reel/DLuTwgPCbbw/" },
-  { title: "Product Showcase", thumbnail: thumb6, link: "https://www.instagram.com/reel/DScs6erjcfO/" },
-  { title: "On Location", thumbnail: thumb7, link: "https://www.instagram.com/reel/DQ_5aRdl2YS/" },
-  { title: "Sustainability Report", thumbnail: thumb8, link: "https://www.instagram.com/reel/DP4KbNTDQj-/" },
-  { title: "Behind The Scenes", thumbnail: thumb9, link: "https://www.instagram.com/reel/DP1XkoaDsUE/" },
+// Long-form placeholders — to be replaced when client provides real videos
+const longVideos: LongVideo[] = [
+  {
+    title: "Brand Film — Coming Soon",
+    description: "Full-length brand documentary currently in post-production",
+    thumbnail: thumb4,
+    link: "#",
+    platform: "YouTube",
+    duration: "5:30",
+  },
+  {
+    title: "Campaign Documentary — Coming Soon",
+    description: "Long-form campaign story showcasing process and results",
+    thumbnail: thumb7,
+    link: "#",
+    platform: "YouTube",
+    duration: "8:15",
+  },
 ];
 
-function VideoCarousel({ videos, direction = "forward" }: { videos: typeof videosRow1; direction?: "forward" | "backward" }) {
-  const infiniteVideos = [...videos, ...videos, ...videos];
-  const [emblaRef] = useEmblaCarousel(
-    {
-      loop: true,
-      dragFree: true,
-      containScroll: false,
-      startIndex: videos.length,
-      direction: "ltr",
-    },
-    [Autoplay({ delay: direction === "forward" ? 2500 : 3000, stopOnInteraction: true, stopOnMouseEnter: true, playOnInit: true })]
-  );
+const platformStyles: Record<Platform, string> = {
+  Instagram: "bg-gradient-to-r from-[hsl(330_85%_55%)] to-[hsl(25_100%_50%)] text-white",
+  TikTok: "bg-foreground text-background",
+  YouTube: "bg-[hsl(0_85%_55%)] text-white",
+};
 
+function VideoSchema({ v }: { v: ShortVideo | LongVideo }) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: v.title,
+    description: "description" in v ? v.description : `${v.title} — video by Joseph Maina, Digital Marketing Specialist in Nairobi, Kenya.`,
+    thumbnailUrl: v.thumbnail,
+    uploadDate: "2024-01-01",
+    contentUrl: v.link,
+    publisher: { "@type": "Person", name: "Joseph Maina" },
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}
+
+function ShortCard({ v }: { v: ShortVideo }) {
   return (
-    <div className="overflow-hidden" ref={emblaRef}>
-      <div className="flex">
-        {infiniteVideos.map((video, index) => (
-          <div
-            key={`video-${index}`}
-            className="flex-[0_0_220px] sm:flex-[0_0_280px] lg:flex-[0_0_320px] min-w-0 px-2"
-          >
-            <a
-              href={video.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant"
-            >
-              <div className="relative aspect-[9/16] overflow-hidden">
-                <img
-                   src={video.thumbnail}
-                   alt={`Video thumbnail for ${video.title} - Instagram Reel by Joseph Maina`}
-                   width={320}
-                   height={569}
-                   loading="lazy"
-                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                 />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-elegant">
-                    <Play className="h-7 w-7 text-primary-foreground ml-0.5" fill="currentColor" />
-                  </div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <h3 className="text-lg font-display font-bold text-white">
-                    {video.title}
-                  </h3>
-                </div>
-              </div>
-            </a>
+    <a
+      href={v.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={`Watch ${v.title} — ${v.platform} short-form video by Joseph Maina`}
+      className="group relative block overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_40px_hsl(var(--primary)/0.25)] hover:-translate-y-1"
+    >
+      <VideoSchema v={v} />
+      <div className="relative aspect-[9/16] overflow-hidden">
+        <img
+          src={v.thumbnail}
+          alt={`${v.title} — ${v.platform} short-form video thumbnail by Joseph Maina, Digital Marketing Specialist in Nairobi`}
+          loading="lazy"
+          width={400}
+          height={711}
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30 transition-opacity duration-300 group-hover:from-black/90" />
+
+        {/* Top badges */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+          <Badge className={`${platformStyles[v.platform]} border-0 shadow-elegant text-xs font-semibold`}>
+            {v.platform}
+          </Badge>
+          <Badge variant="secondary" className="bg-black/60 text-white border-0 backdrop-blur-sm text-xs">
+            <Clock className="h-3 w-3 mr-1" /> {v.duration}
+          </Badge>
+        </div>
+
+        {/* Play button */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary shadow-elegant transition-transform duration-300 group-hover:scale-110">
+            <Play className="ml-0.5 h-8 w-8 text-primary-foreground" fill="currentColor" />
           </div>
-        ))}
+        </div>
+
+        {/* Title */}
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <h4 className="font-display text-base font-bold text-white drop-shadow-lg line-clamp-2">{v.title}</h4>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function LongCard({ v }: { v: LongVideo }) {
+  const isPlaceholder = v.link === "#";
+  return (
+    <div
+      className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_50px_hsl(var(--primary)/0.25)] hover:-translate-y-1"
+    >
+      <VideoSchema v={v} />
+      <div className="relative aspect-video overflow-hidden">
+        <img
+          src={v.thumbnail}
+          alt={`${v.title} — ${v.platform} long-form brand film thumbnail by Joseph Maina, Nairobi Kenya`}
+          loading="lazy"
+          width={1280}
+          height={720}
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary shadow-elegant scale-90 group-hover:scale-100 transition-transform duration-500">
+            <Play className="ml-1 h-10 w-10 text-primary-foreground" fill="currentColor" />
+          </div>
+        </div>
+        <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+          <Badge className={`${platformStyles[v.platform]} border-0 shadow-elegant`}>{v.platform}</Badge>
+          <Badge variant="secondary" className="bg-black/60 text-white border-0 backdrop-blur-sm">
+            <Clock className="h-3 w-3 mr-1" /> {v.duration}
+          </Badge>
+        </div>
+      </div>
+      <div className="p-6 space-y-3">
+        <h4 className="font-display text-xl font-bold">{v.title}</h4>
+        <p className="text-sm text-muted-foreground line-clamp-1">{v.description}</p>
+        <Button
+          asChild={!isPlaceholder}
+          disabled={isPlaceholder}
+          className="w-full bg-primary text-primary-foreground hover:opacity-90 shadow-elegant"
+        >
+          {isPlaceholder ? (
+            <span><Play className="mr-2 h-4 w-4" fill="currentColor" /> Coming Soon</span>
+          ) : (
+            <a href={v.link} target="_blank" rel="noopener noreferrer">
+              <Play className="mr-2 h-4 w-4" fill="currentColor" /> Watch Full Video
+            </a>
+          )}
+        </Button>
       </div>
     </div>
   );
 }
 
-import { ScrollReveal } from "./ScrollReveal";
+function FeaturedVideo() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  const toggleSound = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !videoRef.current.muted;
+    setMuted(videoRef.current.muted);
+  };
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-border shadow-elegant group">
+      <div className="relative aspect-video bg-black">
+        {/* Placeholder — replace src with real featured video URL/file */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={thumb6}
+          className="h-full w-full object-cover"
+          aria-label="Featured video showreel by Joseph Maina"
+        >
+          {/* Source intentionally omitted — to be provided by client */}
+        </video>
+        <img
+          src={thumb6}
+          alt="Featured showreel placeholder — Video Production Nairobi Kenya by Joseph Maina"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40" />
+
+        <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
+          <Badge className="bg-primary text-primary-foreground border-0 shadow-elegant">
+            <Film className="h-3 w-3 mr-1" /> Featured Showreel
+          </Badge>
+        </div>
+
+        <button
+          onClick={toggleSound}
+          className="absolute top-4 right-4 sm:top-6 sm:right-6 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold text-primary-foreground shadow-elegant transition-transform hover:scale-105"
+          aria-label={muted ? "Unmute featured video" : "Mute featured video"}
+        >
+          {muted ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+          <span className="hidden sm:inline">{muted ? "Watch with Sound" : "Mute"}</span>
+        </button>
+
+        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+          <h3 className="font-display text-2xl sm:text-4xl font-bold text-white drop-shadow-2xl">
+            The Showreel
+          </h3>
+          <p className="mt-2 text-sm sm:text-base text-white/80 max-w-2xl">
+            A snapshot of brand stories, campaigns and short-form content produced for clients across Kenya.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Videos() {
   return (
-    <section id="videos" className="py-20 sm:py-32 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="videos"
+      className="relative py-20 sm:py-32 overflow-hidden bg-background"
+      aria-labelledby="videos-heading"
+    >
+      {/* Cinematic film-grain texture */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/5 to-transparent"
+      />
+
+      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-              Video <span className="text-gradient">Projects</span>
+          <div className="text-center mb-12 space-y-4">
+            <Badge variant="outline" className="border-primary/40 text-primary bg-primary/5">
+              <Film className="h-3 w-3 mr-1.5" /> Video Production
+            </Badge>
+            <h2
+              id="videos-heading"
+              className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
+            >
+              Telling Stories <span className="text-gradient">Through Video</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Short-form video content created for social media — from concept to final cut
+              From short punchy social content to full brand documentaries — every frame with purpose.
             </p>
+            <p className="sr-only">Video Production Nairobi Kenya</p>
           </div>
         </ScrollReveal>
-      </div>
 
-      <div className="space-y-6">
-        <VideoCarousel videos={videosRow1} direction="forward" />
-        <VideoCarousel videos={videosRow2} direction="backward" />
-      </div>
+        {/* Featured video */}
+        <ScrollReveal>
+          <div className="mb-16">
+            <FeaturedVideo />
+          </div>
+        </ScrollReveal>
 
-      <p className="text-center text-sm text-muted-foreground mt-8">
-        Swipe to browse • Click to watch • Auto-scrolls when idle
-      </p>
+        {/* Tabs */}
+        <Tabs defaultValue="short" className="w-full">
+          <div className="flex justify-center mb-10">
+            <TabsList className="bg-card border border-border p-1 h-auto">
+              <TabsTrigger
+                value="short"
+                className="px-6 py-2.5 text-sm font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-elegant transition-all"
+              >
+                Short Form
+              </TabsTrigger>
+              <TabsTrigger
+                value="long"
+                className="px-6 py-2.5 text-sm font-semibold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-elegant transition-all"
+              >
+                Long Form
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          <TabsContent value="short" className="animate-fade-in">
+            <div className="text-center mb-10 space-y-2">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold">Short Form Content</h3>
+              <p className="text-muted-foreground">Reels, TikToks &amp; Social Clips</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {shortVideos.map((v, i) => (
+                <ScrollReveal key={v.link} delay={i * 0.05}>
+                  <ShortCard v={v} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="long" className="animate-fade-in">
+            <div className="text-center mb-10 space-y-2">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold">Long Form Content</h3>
+              <p className="text-muted-foreground">Brand Films, Documentaries &amp; Campaign Videos</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {longVideos.map((v, i) => (
+                <ScrollReveal key={v.title} delay={i * 0.08}>
+                  <LongCard v={v} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </section>
   );
 }
