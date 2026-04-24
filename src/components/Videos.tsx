@@ -377,31 +377,37 @@ export function Videos() {
           </div>
 
           <TabsContent value="short" className="animate-fade-in">
-            <div className="text-center mb-10 space-y-2">
-              <h3 className="font-display text-2xl sm:text-3xl font-bold">Short Form Content</h3>
-              <p className="text-muted-foreground">Reels, TikToks &amp; Social Clips</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {shortVideos.map((v, i) => (
-                <ScrollReveal key={v.link} delay={i * 0.05}>
-                  <ShortCard v={v} />
-                </ScrollReveal>
-              ))}
-            </div>
+            <CollapsibleSection
+              id="short-form"
+              title="Short Form Content"
+              subtitle="Reels, TikToks & Social Clips"
+              defaultOpen
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {shortVideos.map((v, i) => (
+                  <ScrollReveal key={v.link} delay={i * 0.05}>
+                    <ShortCard v={v} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            </CollapsibleSection>
           </TabsContent>
 
           <TabsContent value="long" className="animate-fade-in">
-            <div className="text-center mb-10 space-y-2">
-              <h3 className="font-display text-2xl sm:text-3xl font-bold">Long Form Content</h3>
-              <p className="text-muted-foreground">Brand Films, Documentaries &amp; Campaign Videos</p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {longVideos.map((v, i) => (
-                <ScrollReveal key={v.title} delay={i * 0.08}>
-                  <LongCard v={v} />
-                </ScrollReveal>
-              ))}
-            </div>
+            <CollapsibleSection
+              id="long-form"
+              title="Long Form Content"
+              subtitle="Brand Films, Documentaries & Campaign Videos"
+              defaultOpen
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {longVideos.map((v, i) => (
+                  <ScrollReveal key={v.title} delay={i * 0.08}>
+                    <LongCard v={v} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            </CollapsibleSection>
           </TabsContent>
         </Tabs>
       </div>
