@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
+import { CollapsibleSection } from "./CollapsibleSection";
 import featuredThumb from "@/assets/featured-showreel-thumb.jpeg";
 import longJoanThumb from "@/assets/longform-joan-mbesya.jpeg";
 import longAsdspThumb from "@/assets/longform-asdsp.jpeg";
@@ -241,36 +242,38 @@ function FeaturedVideo() {
               className="absolute inset-0 h-full w-full object-cover md:hidden"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none" />
+            {/* Overlay gradient — desktop only so mobile thumbnail stays clean */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none hidden md:block" />
 
-            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
-              <Badge className="bg-primary text-primary-foreground border-0 shadow-elegant">
+            <div className="absolute top-3 left-3 sm:top-6 sm:left-6 z-10">
+              <Badge className="bg-primary text-primary-foreground border-0 shadow-elegant text-xs">
                 <Film className="h-3 w-3 mr-1" /> Featured Showreel
               </Badge>
             </div>
 
             <button
               onClick={() => setPlaying(true)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold text-primary-foreground shadow-elegant hover:scale-105"
+              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-10 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-elegant hover:scale-105"
               style={{ transition: "transform 0.2s" }}
               aria-label="Watch featured video with sound"
             >
-              <Volume2 className="h-4 w-4" />
+              <Volume2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span className="hidden sm:inline">Watch with Sound</span>
             </button>
 
-            {/* Center play button */}
+            {/* Center play button — smaller on mobile */}
             <button
               onClick={() => setPlaying(true)}
               className="absolute inset-0 z-10 flex items-center justify-center group/play"
               aria-label={`Play ${FEATURED_VIDEO.title}`}
             >
-              <span className="flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-full bg-primary shadow-elegant group-hover/play:scale-110" style={{ transition: "transform 0.3s" }}>
-                <Play className="ml-1 h-10 w-10 sm:h-12 sm:w-12 text-primary-foreground" fill="currentColor" />
+              <span className="flex h-12 w-12 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-primary shadow-elegant group-hover/play:scale-110" style={{ transition: "transform 0.3s" }}>
+                <Play className="ml-0.5 h-6 w-6 sm:h-10 sm:w-10 md:h-12 md:w-12 text-primary-foreground" fill="currentColor" />
               </span>
             </button>
 
-            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 z-10 pointer-events-none">
+            {/* Desktop overlay title (hidden on mobile) */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 z-10 pointer-events-none hidden md:block">
               <h3 className="font-display text-2xl sm:text-4xl font-bold text-white drop-shadow-2xl max-w-3xl">
                 {FEATURED_VIDEO.title}
               </h3>
@@ -286,6 +289,23 @@ function FeaturedVideo() {
           </>
         )}
       </div>
+
+      {/* Mobile-only title block below the video */}
+      {!playing && (
+        <div className="md:hidden p-5 space-y-3 bg-card border-t border-border">
+          <h3 className="font-display text-lg font-bold leading-snug">
+            {FEATURED_VIDEO.title}
+          </h3>
+          <a
+            href={FEATURED_VIDEO.watchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+          >
+            Watch on YouTube <ExternalLink className="h-3.5 w-3.5" />
+          </a>
+        </div>
+      )}
     </div>
   );
 }
@@ -357,31 +377,37 @@ export function Videos() {
           </div>
 
           <TabsContent value="short" className="animate-fade-in">
-            <div className="text-center mb-10 space-y-2">
-              <h3 className="font-display text-2xl sm:text-3xl font-bold">Short Form Content</h3>
-              <p className="text-muted-foreground">Reels, TikToks &amp; Social Clips</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {shortVideos.map((v, i) => (
-                <ScrollReveal key={v.link} delay={i * 0.05}>
-                  <ShortCard v={v} />
-                </ScrollReveal>
-              ))}
-            </div>
+            <CollapsibleSection
+              id="short-form"
+              title="Short Form Content"
+              subtitle="Reels, TikToks & Social Clips"
+              defaultOpen
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {shortVideos.map((v, i) => (
+                  <ScrollReveal key={v.link} delay={i * 0.05}>
+                    <ShortCard v={v} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            </CollapsibleSection>
           </TabsContent>
 
           <TabsContent value="long" className="animate-fade-in">
-            <div className="text-center mb-10 space-y-2">
-              <h3 className="font-display text-2xl sm:text-3xl font-bold">Long Form Content</h3>
-              <p className="text-muted-foreground">Brand Films, Documentaries &amp; Campaign Videos</p>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {longVideos.map((v, i) => (
-                <ScrollReveal key={v.title} delay={i * 0.08}>
-                  <LongCard v={v} />
-                </ScrollReveal>
-              ))}
-            </div>
+            <CollapsibleSection
+              id="long-form"
+              title="Long Form Content"
+              subtitle="Brand Films, Documentaries & Campaign Videos"
+              defaultOpen
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {longVideos.map((v, i) => (
+                  <ScrollReveal key={v.title} delay={i * 0.08}>
+                    <LongCard v={v} />
+                  </ScrollReveal>
+                ))}
+              </div>
+            </CollapsibleSection>
           </TabsContent>
         </Tabs>
       </div>

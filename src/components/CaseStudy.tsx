@@ -2,6 +2,7 @@ import { BarChart3, Zap, ArrowRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
+import { CollapsibleSection } from "./CollapsibleSection";
 
 const stats = [
   { value: "704K", label: "Instagram Reach" },
@@ -119,53 +120,54 @@ export function CaseStudy() {
 
         <Separator className="mb-16 opacity-20" />
 
-        <ScrollReveal>
-          <h3 className="text-2xl sm:text-3xl font-display font-bold text-center mb-10" style={{ color: "hsl(var(--case-study-text))" }}>
-            Platform Breakdown
-          </h3>
-        </ScrollReveal>
-
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {platforms.map((platform, i) => (
-            <ScrollReveal key={i} direction="up" delay={i * 0.15}>
-              <article
-                className="rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-lg flex flex-col"
-                style={{
-                  background: "hsl(var(--case-study-card))",
-                  borderColor: "hsl(var(--case-study-card-border))",
-                  borderTopWidth: "3px",
-                  borderTopColor: `hsl(var(${platform.accentVar}))`,
-                }}
-              >
-                <div className="p-6 flex-1 flex flex-col">
-                  <h4 className="text-xl font-display font-bold mb-1" style={{ color: `hsl(var(${platform.accentVar}))` }}>
-                    {platform.name}
-                  </h4>
-                  <p className="text-sm font-medium mb-5" style={{ color: "hsl(var(--case-study-muted))" }}>
-                    {platform.subtitle}
-                  </p>
-                  <ul className="space-y-2 mb-5 flex-1">
-                    {platform.metrics.map((m, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm" style={{ color: "hsl(var(--case-study-text) / 0.8)" }}>
-                        <BarChart3 className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-primary" />
-                        {m.bold ? <strong>{m.text}</strong> : m.text}
-                      </li>
-                    ))}
-                  </ul>
-                  {platform.topVideo && (
-                    <div className="rounded-lg p-3 mb-4 text-xs" style={{ background: `hsl(var(${platform.accentVar}) / 0.1)`, color: "hsl(var(--case-study-text) / 0.7)" }}>
-                      <span className="font-semibold" style={{ color: `hsl(var(${platform.accentVar}))` }}>Top Video:</span>{" "}
-                      {platform.topVideo}
+        <CollapsibleSection
+          id="platform-breakdown"
+          title={<span style={{ color: "hsl(var(--case-study-text))" }}>Platform Breakdown</span>}
+          defaultOpen
+          className="mb-16"
+        >
+          <div className="grid md:grid-cols-3 gap-6">
+            {platforms.map((platform, i) => (
+              <ScrollReveal key={i} direction="up" delay={i * 0.15}>
+                <article
+                  className="rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-lg flex flex-col"
+                  style={{
+                    background: "hsl(var(--case-study-card))",
+                    borderColor: "hsl(var(--case-study-card-border))",
+                    borderTopWidth: "3px",
+                    borderTopColor: `hsl(var(${platform.accentVar}))`,
+                  }}
+                >
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h4 className="text-xl font-display font-bold mb-1" style={{ color: `hsl(var(${platform.accentVar}))` }}>
+                      {platform.name}
+                    </h4>
+                    <p className="text-sm font-medium mb-5" style={{ color: "hsl(var(--case-study-muted))" }}>
+                      {platform.subtitle}
+                    </p>
+                    <ul className="space-y-2 mb-5 flex-1">
+                      {platform.metrics.map((m, j) => (
+                        <li key={j} className="flex items-start gap-2 text-sm" style={{ color: "hsl(var(--case-study-text) / 0.8)" }}>
+                          <BarChart3 className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-primary" />
+                          {m.bold ? <strong>{m.text}</strong> : m.text}
+                        </li>
+                      ))}
+                    </ul>
+                    {platform.topVideo && (
+                      <div className="rounded-lg p-3 mb-4 text-xs" style={{ background: `hsl(var(${platform.accentVar}) / 0.1)`, color: "hsl(var(--case-study-text) / 0.7)" }}>
+                        <span className="font-semibold" style={{ color: `hsl(var(${platform.accentVar}))` }}>Top Video:</span>{" "}
+                        {platform.topVideo}
+                      </div>
+                    )}
+                    <div className="rounded-lg p-3 text-sm italic border" style={{ borderColor: `hsl(var(${platform.accentVar}) / 0.2)`, color: "hsl(var(--case-study-text) / 0.75)" }}>
+                      "{platform.insight}"
                     </div>
-                  )}
-                  <div className="rounded-lg p-3 text-sm italic border" style={{ borderColor: `hsl(var(${platform.accentVar}) / 0.2)`, color: "hsl(var(--case-study-text) / 0.75)" }}>
-                    "{platform.insight}"
                   </div>
-                </div>
-              </article>
-            </ScrollReveal>
-          ))}
-        </div>
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+        </CollapsibleSection>
 
         <Separator className="mb-16 opacity-20" />
 
