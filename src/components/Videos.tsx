@@ -16,6 +16,9 @@ import thumb6 from "@/assets/video-thumb-6.png";
 import thumb7 from "@/assets/video-thumb-7.png";
 import thumb8 from "@/assets/video-thumb-8.png";
 import thumb9 from "@/assets/video-thumb-9.png";
+import shortIclearDishwash from "@/assets/short-iclear-dishwash.png";
+import shortMajiNiUhai from "@/assets/short-maji-ni-uhai.jpg";
+import shortForTypography from "@/assets/short-for-typography.png";
 
 type Platform = "Instagram" | "TikTok" | "YouTube";
 
@@ -46,6 +49,9 @@ const shortVideos: ShortVideo[] = [
   { title: "On Location Shoot", thumbnail: thumb7, link: "https://www.instagram.com/reel/DQ_5aRdl2YS/", platform: "Instagram", duration: "0:35" },
   { title: "Sustainability Report Reel", thumbnail: thumb8, link: "https://www.instagram.com/reel/DP4KbNTDQj-/", platform: "Instagram", duration: "0:50" },
   { title: "Behind The Scenes", thumbnail: thumb9, link: "https://www.instagram.com/reel/DP1XkoaDsUE/", platform: "Instagram", duration: "0:33" },
+  { title: "iClear Field Service Reel", thumbnail: shortIclearDishwash, link: "https://www.instagram.com/reel/DW3-G4fIMjO/", platform: "Instagram", duration: "0:30" },
+  { title: "Maji Ni Uhai — iClear Campaign", thumbnail: shortMajiNiUhai, link: "https://www.instagram.com/reel/DXesQTfjYnp/", platform: "Instagram", duration: "0:35" },
+  { title: "Cinematic Typography Promo", thumbnail: shortForTypography, link: "https://www.instagram.com/reel/DVnbbkKjSRa/", platform: "Instagram", duration: "0:20" },
 ];
 
 const longVideos: LongVideo[] = [
