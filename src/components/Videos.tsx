@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
+import { CollapsibleSection } from "./CollapsibleSection";
 import featuredThumb from "@/assets/featured-showreel-thumb.jpeg";
 import longJoanThumb from "@/assets/longform-joan-mbesya.jpeg";
 import longAsdspThumb from "@/assets/longform-asdsp.jpeg";
