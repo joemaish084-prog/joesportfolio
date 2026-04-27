@@ -57,6 +57,14 @@ const shortVideos: ShortVideo[] = [
 
 const longVideos: LongVideo[] = [
   {
+    title: "Let Go of the Fear & Own Your Authentic Voice! — Caroline Njiru",
+    description: "Featured brand film — Caroline Njiru opens up about confidence, voice and authenticity.",
+    thumbnail: featuredThumb,
+    link: "https://youtu.be/RREDY1htp7Q",
+    platform: "YouTube",
+    duration: "—",
+  },
+  {
     title: "Joan Mbesya — Full Interview",
     description: "Long-form interview feature with entrepreneur Joan Mbesya",
     thumbnail: longJoanThumb,
@@ -73,6 +81,11 @@ const longVideos: LongVideo[] = [
     duration: "—",
   },
 ];
+
+function getYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  return m ? m[1] : null;
+}
 
 const platformStyles: Record<Platform, string> = {
   Instagram: "bg-gradient-to-r from-[hsl(330_85%_55%)] to-[hsl(25_100%_50%)] text-white",
@@ -143,31 +156,53 @@ function ShortCard({ v }: { v: ShortVideo }) {
 
 function LongCard({ v }: { v: LongVideo }) {
   const isPlaceholder = v.link === "#";
+  const youtubeId = getYouTubeId(v.link);
+  const [playing, setPlaying] = useState(false);
+
   return (
     <div
       className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_50px_hsl(var(--primary)/0.25)] hover:-translate-y-1"
     >
       <VideoSchema v={v} />
-      <div className="relative aspect-video overflow-hidden">
-        <img
-          src={v.thumbnail}
-          alt={`${v.title} — ${v.platform} long-form brand film thumbnail by Joseph Maina, Nairobi Kenya`}
-          loading="lazy"
-          width={1280}
-          height={720}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary shadow-elegant scale-90 group-hover:scale-100 transition-transform duration-500">
-            <Play className="ml-1 h-10 w-10 text-primary-foreground" fill="currentColor" />
-          </div>
-        </div>
-        <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-          <Badge className={`${platformStyles[v.platform]} border-0 shadow-elegant`}>{v.platform}</Badge>
-          <Badge variant="secondary" className="bg-black/60 text-white border-0 backdrop-blur-sm">
-            <Clock className="h-3 w-3 mr-1" /> {v.duration}
-          </Badge>
-        </div>
+      <div className="relative aspect-video overflow-hidden bg-black">
+        {playing && youtubeId ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+            title={v.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full"
+          />
+        ) : (
+          <>
+            <img
+              src={v.thumbnail}
+              alt={`${v.title} — ${v.platform} long-form brand film thumbnail by Joseph Maina, Nairobi Kenya`}
+              loading="lazy"
+              width={1280}
+              height={720}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black/30 transition-opacity duration-300 group-hover:bg-black/40" />
+            <button
+              type="button"
+              onClick={() => !isPlaceholder && youtubeId && setPlaying(true)}
+              disabled={isPlaceholder || !youtubeId}
+              aria-label={`Play ${v.title}`}
+              className="absolute inset-0 z-10 flex items-center justify-center"
+            >
+              <span className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-primary shadow-elegant scale-95 group-hover:scale-100 transition-transform duration-500">
+                <Play className="ml-1 h-8 w-8 sm:h-10 sm:w-10 text-primary-foreground" fill="currentColor" />
+              </span>
+            </button>
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+              <Badge className={`${platformStyles[v.platform]} border-0 shadow-elegant`}>{v.platform}</Badge>
+              <Badge variant="secondary" className="bg-black/60 text-white border-0 backdrop-blur-sm">
+                <Clock className="h-3 w-3 mr-1" /> {v.duration}
+              </Badge>
+            </div>
+          </>
+        )}
       </div>
       <div className="p-6 space-y-3">
         <h4 className="font-display text-xl font-bold">{v.title}</h4>
@@ -175,13 +210,14 @@ function LongCard({ v }: { v: LongVideo }) {
         <Button
           asChild={!isPlaceholder}
           disabled={isPlaceholder}
-          className="w-full bg-primary text-primary-foreground hover:opacity-90 shadow-elegant"
+          variant="outline"
+          className="w-full"
         >
           {isPlaceholder ? (
             <span><Play className="mr-2 h-4 w-4" fill="currentColor" /> Coming Soon</span>
           ) : (
             <a href={v.link} target="_blank" rel="noopener noreferrer">
-              <Play className="mr-2 h-4 w-4" fill="currentColor" /> Watch Full Video
+              <ExternalLink className="mr-2 h-4 w-4" /> Watch on YouTube
             </a>
           )}
         </Button>
