@@ -57,6 +57,14 @@ const shortVideos: ShortVideo[] = [
 
 const longVideos: LongVideo[] = [
   {
+    title: "Let Go of the Fear & Own Your Authentic Voice! — Caroline Njiru",
+    description: "Featured brand film — Caroline Njiru opens up about confidence, voice and authenticity.",
+    thumbnail: featuredThumb,
+    link: "https://youtu.be/RREDY1htp7Q",
+    platform: "YouTube",
+    duration: "—",
+  },
+  {
     title: "Joan Mbesya — Full Interview",
     description: "Long-form interview feature with entrepreneur Joan Mbesya",
     thumbnail: longJoanThumb,
@@ -73,6 +81,11 @@ const longVideos: LongVideo[] = [
     duration: "—",
   },
 ];
+
+function getYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  return m ? m[1] : null;
+}
 
 const platformStyles: Record<Platform, string> = {
   Instagram: "bg-gradient-to-r from-[hsl(330_85%_55%)] to-[hsl(25_100%_50%)] text-white",
