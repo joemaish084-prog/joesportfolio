@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Menu, X, Download } from "lucide-react";
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
+import { Menu, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+
+const CVViewer = lazy(() => import("./CVViewer").then(m => ({ default: m.CVViewer })));
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -18,6 +20,7 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const lastScrollY = useRef(0);
 
@@ -119,11 +122,12 @@ export function Navigation() {
                 );
               })}
               <ThemeToggle />
-              <Button asChild className="shadow-elegant btn-hover bg-primary text-primary-foreground">
-                <a href="/Joseph_Isaac_Maina_Resume.pdf" download="Joseph Isaac Maina Resume.pdf">
-                  <Download className="mr-2 h-4 w-4" />
-                  CV
-                </a>
+              <Button
+                onClick={() => setCvOpen(true)}
+                className="shadow-elegant btn-hover bg-primary text-primary-foreground"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                View CV
               </Button>
             </div>
 
@@ -167,19 +171,20 @@ export function Navigation() {
                 </a>
               );
             })}
-            <Button asChild className="mt-2 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
-              <a
-                href="/Joseph_Isaac_Maina_Resume.pdf"
-                download="Joseph Isaac Maina Resume.pdf"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Download className="mr-2 h-5 w-5" />
-                Download CV
-              </a>
+            <Button
+              onClick={() => { setIsMobileMenuOpen(false); setCvOpen(true); }}
+              className="mt-2 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg"
+            >
+              <FileText className="mr-2 h-5 w-5" />
+              View CV
             </Button>
           </div>
         </div>
       )}
+
+      <Suspense fallback={null}>
+        <CVViewer open={cvOpen} onClose={() => setCvOpen(false)} />
+      </Suspense>
     </>
   );
 }
