@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Menu, X, Download } from "lucide-react";
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
+import { Menu, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+
+const CVViewer = lazy(() => import("./CVViewer").then(m => ({ default: m.CVViewer })));
 
 const navLinks = [
   { name: "Home", href: "#home" },
