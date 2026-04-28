@@ -171,19 +171,20 @@ export function Navigation() {
                 </a>
               );
             })}
-            <Button asChild className="mt-2 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg">
-              <a
-                href="/Joseph_Isaac_Maina_Resume.pdf"
-                download="Joseph Isaac Maina Resume.pdf"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Download className="mr-2 h-5 w-5" />
-                Download CV
-              </a>
+            <Button
+              onClick={() => { setIsMobileMenuOpen(false); setCvOpen(true); }}
+              className="mt-2 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg"
+            >
+              <FileText className="mr-2 h-5 w-5" />
+              View CV
             </Button>
           </div>
         </div>
       )}
+
+      <Suspense fallback={null}>
+        <CVViewer open={cvOpen} onClose={() => setCvOpen(false)} />
+      </Suspense>
     </>
   );
 }
