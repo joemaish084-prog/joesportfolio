@@ -20,6 +20,7 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const lastScrollY = useRef(0);
 
