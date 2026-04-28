@@ -122,11 +122,12 @@ export function Navigation() {
                 );
               })}
               <ThemeToggle />
-              <Button asChild className="shadow-elegant btn-hover bg-primary text-primary-foreground">
-                <a href="/Joseph_Isaac_Maina_Resume.pdf" download="Joseph Isaac Maina Resume.pdf">
-                  <Download className="mr-2 h-4 w-4" />
-                  CV
-                </a>
+              <Button
+                onClick={() => setCvOpen(true)}
+                className="shadow-elegant btn-hover bg-primary text-primary-foreground"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                View CV
               </Button>
             </div>
 
