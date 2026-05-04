@@ -290,6 +290,7 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
             <p className="text-center text-xs text-muted-foreground mt-6 print:hidden">
               Press <kbd className="px-1.5 py-0.5 rounded bg-muted">Esc</kbd> to close
             </p>
+            </div>
           </motion.div>
         </motion.div>
       )}
