@@ -125,14 +125,13 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-sm overflow-y-auto overscroll-contain print:bg-white print:static print:overflow-visible"
+          className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-sm flex flex-col print:bg-white print:static print:block"
           role="dialog"
           aria-modal="true"
           aria-label="Resume viewer"
-          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {/* Top toolbar */}
-          <div className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-border print:hidden">
+          <div className="shrink-0 bg-background/90 backdrop-blur border-b border-border print:hidden">
             <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-2">
               <h2 className="text-base sm:text-lg font-display font-bold truncate">
                 <span className="text-foreground">Joseph Isaac</span>
