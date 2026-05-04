@@ -161,8 +161,10 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="container mx-auto max-w-4xl px-4 sm:px-8 py-6 sm:py-12 print:max-w-none print:py-4"
+            className="flex-1 overflow-y-auto overscroll-contain print:overflow-visible"
+            style={{ WebkitOverflowScrolling: "touch" }}
           >
+           <div className="container mx-auto max-w-4xl px-4 sm:px-8 py-6 sm:py-12 print:max-w-none print:py-4">
             <article className="bg-card border border-border rounded-2xl shadow-elegant p-6 sm:p-10 print:shadow-none print:border-0 print:rounded-none print:bg-white print:text-black">
               {/* Header */}
               <header className="border-b border-border pb-6 mb-6">
