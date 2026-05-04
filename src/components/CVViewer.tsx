@@ -125,14 +125,13 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-sm overflow-y-auto overscroll-contain print:bg-white print:static print:overflow-visible"
+          className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-sm flex flex-col print:bg-white print:static print:block"
           role="dialog"
           aria-modal="true"
           aria-label="Resume viewer"
-          style={{ WebkitOverflowScrolling: "touch" }}
         >
           {/* Top toolbar */}
-          <div className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-border print:hidden">
+          <div className="shrink-0 bg-background/90 backdrop-blur border-b border-border print:hidden">
             <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-2">
               <h2 className="text-base sm:text-lg font-display font-bold truncate">
                 <span className="text-foreground">Joseph Isaac</span>
@@ -162,8 +161,10 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="container mx-auto max-w-4xl px-4 sm:px-8 py-6 sm:py-12 print:max-w-none print:py-4"
+            className="flex-1 overflow-y-auto overscroll-contain print:overflow-visible"
+            style={{ WebkitOverflowScrolling: "touch" }}
           >
+           <div className="container mx-auto max-w-4xl px-4 sm:px-8 py-6 sm:py-12 print:max-w-none print:py-4">
             <article className="bg-card border border-border rounded-2xl shadow-elegant p-6 sm:p-10 print:shadow-none print:border-0 print:rounded-none print:bg-white print:text-black">
               {/* Header */}
               <header className="border-b border-border pb-6 mb-6">
@@ -289,6 +290,7 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
             <p className="text-center text-xs text-muted-foreground mt-6 print:hidden">
               Press <kbd className="px-1.5 py-0.5 rounded bg-muted">Esc</kbd> to close
             </p>
+            </div>
           </motion.div>
         </motion.div>
       )}
