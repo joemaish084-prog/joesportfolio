@@ -33,7 +33,7 @@ export function Navigation() {
 
     if (isAtTop) {
       setIsVisible(true);
-    } else if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+    } else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
       setIsVisible(false);
     } else {
       setIsVisible(true);
