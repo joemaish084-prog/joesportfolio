@@ -54,6 +54,7 @@ const Index = () => {
           <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
           <Suspense fallback={null}>
             <Videos />
+            <MediaBuying />
             <GraphicDesign />
             <PrintMockup />
             <SocialMediaManagement />
