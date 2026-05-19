@@ -1,5 +1,8 @@
 import { useState, lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
+import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
+import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
+import { Video, Palette, DollarSign, BarChart3, Briefcase, Award, BookOpen, Image as ImageIcon, Tag, HelpCircle } from "lucide-react";
 
 // Lazy-load Hero to split framer-motion out of the critical path and reduce longest task
 const Hero = lazy(() => import("@/components/Hero").then(m => ({ default: m.Hero })));
@@ -52,19 +55,34 @@ const Index = () => {
         <Navigation />
         <main>
           <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
+          <ExpandCollapseAll />
           <Suspense fallback={null}>
-            <Videos />
-            <MediaBuying />
-            <GraphicDesign />
-            <PrintMockup />
+            <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="9+ Videos">
+              <Videos />
+            </CollapsibleWrapper>
+            <CollapsibleWrapper id="media-buying" title="Media Buying & Paid Advertising" Icon={DollarSign} count="KES 500K+/mo">
+              <MediaBuying />
+            </CollapsibleWrapper>
+            <CollapsibleWrapper id="graphic-design" title="Graphic Design" Icon={Palette} count="Gallery">
+              <GraphicDesign />
+            </CollapsibleWrapper>
+            <CollapsibleWrapper id="print-mockup" title="Mockups (Coming Soon)" Icon={ImageIcon} count="Soon">
+              <PrintMockup />
+            </CollapsibleWrapper>
             <SocialMediaManagement />
-            <CaseStudy />
-            <FAQ />
+            <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured">
+              <CaseStudy />
+            </CollapsibleWrapper>
+            <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
+              <FAQ />
+            </CollapsibleWrapper>
             <SkillsStats />
             <ManagedAccounts />
             <ToolsWorkflow />
             <Testimonials />
-            <Experience />
+            <CollapsibleWrapper id="experience" title="Experience" Icon={Briefcase} count="Timeline">
+              <Experience />
+            </CollapsibleWrapper>
             <About />
             <Contact />
           </Suspense>
