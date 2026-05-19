@@ -25,6 +25,7 @@ const BackToTop = lazy(() => import("@/components/BackToTop").then(m => ({ defau
 const GraphicDesign = lazy(() => import("@/components/GraphicDesign").then(m => ({ default: m.GraphicDesign })));
 const PrintMockup = lazy(() => import("@/components/PrintMockup").then(m => ({ default: m.PrintMockup })));
 const Videos = lazy(() => import("@/components/Videos").then(m => ({ default: m.Videos })));
+const MediaBuying = lazy(() => import("@/components/MediaBuying").then(m => ({ default: m.MediaBuying })));
 const SocialMediaManagement = lazy(() => import("@/components/SocialMediaManagement").then(m => ({ default: m.SocialMediaManagement })));
 const CaseStudy = lazy(() => import("@/components/CaseStudy").then(m => ({ default: m.CaseStudy })));
 const FAQ = lazy(() => import("@/components/FAQ").then(m => ({ default: m.FAQ })));
@@ -53,6 +54,7 @@ const Index = () => {
           <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
           <Suspense fallback={null}>
             <Videos />
+            <MediaBuying />
             <GraphicDesign />
             <PrintMockup />
             <SocialMediaManagement />
