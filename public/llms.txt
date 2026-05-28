@@ -1,0 +1,29 @@
+# Joseph Maina — Digital Marketing Specialist
+
+> Portfolio of Joseph Isaac Maina, a Digital Marketing Specialist based in Nairobi, Kenya. SEO, Meta & TikTok Ads, Google Ads, content strategy, social media management, video production, and graphic design.
+
+Joseph Maina helps brands in Kenya and beyond grow online through paid media, organic search, and creative content. The portfolio showcases case studies, campaigns, services, pricing, experience, and a downloadable CV.
+
+## Pages
+
+- [Home](/): Single-page portfolio with all sections.
+
+## Sections (anchors on the home page)
+
+- [About](/#about): Background, skills, education.
+- [Video Production](/#videos): Short-form Instagram Reels and campaign videos.
+- [Media Buying & Paid Advertising](/#media-buying): Meta, Google, TikTok ad management; KES 500K+/month managed.
+- [Graphic Design](/#graphic-design): Gallery of brand and social design work.
+- [Social Media Management](/#social-media): Brands managed and campaign projects.
+- [Case Studies](/#case-study): Results-driven digital marketing campaigns.
+- [Services & Pricing](/#services): Packages and pricing in KES.
+- [Experience](/#experience): Roles at Convey Communications, iClear, Nyeri.
+- [Testimonials](/#testimonials): Client quotes.
+- [FAQ](/#faq): Common questions about digital marketing in Nairobi.
+- [Contact](/#contact): Email, phone, social links.
+
+## Contact
+
+- Email: joemaish084@gmail.com
+- Phone: +254 704 700 160
+- Location: Nairobi, Kenya
