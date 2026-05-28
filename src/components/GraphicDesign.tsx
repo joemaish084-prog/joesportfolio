@@ -25,7 +25,7 @@ import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 import freeFilterCampaign from "@/assets/design-free-filter-campaign.webp";
 import iclearNewyear from "@/assets/design-iclear-newyear.webp";
 import iclearPurity from "@/assets/design-iclear-purity.webp";
-import iclearNakuruActivated from "@/assets/design-iclear-nakuru-activated.webp";
+
 import iclearFreshLiving from "@/assets/design-iclear-fresh-living.webp";
 import iclearBoxingDay from "@/assets/design-iclear-boxing-day.webp";
 import schoolAdmission from "@/assets/design-school-admission.webp";
@@ -76,11 +76,6 @@ const newDesigns = [
     title: "Unmatched Purity",
     image: iclearPurity,
     description: "iClear effortless hydration campaign",
-  },
-  {
-    title: "Nakuru Activated",
-    image: iclearNakuruActivated,
-    description: "City expansion delivery campaign",
   },
   {
     title: "Fresh Living",
