@@ -33,8 +33,40 @@ import schoolInnovative from "@/assets/design-school-innovative.webp";
 import schoolChristmas from "@/assets/design-school-christmas.webp";
 import christmasNewyear from "@/assets/design-christmas-newyear.webp";
 
+// Latest designs (added to top of first row)
+import fuelGrind from "@/assets/design-fuel.webp";
+import standardPurifier from "@/assets/design-standard.webp";
+import powwaterApp from "@/assets/design-powwater-app.webp";
+import weekendBonanza from "@/assets/design-weekend.webp";
+import heavyLifting from "@/assets/design-heavy-lifting.webp";
+
 // New designs - First Row
 const newDesigns = [
+  {
+    title: "Fuel Your Grind",
+    image: fuelGrind,
+    description: "iClear lifestyle hydration campaign",
+  },
+  {
+    title: "Standard Water Purifier",
+    image: standardPurifier,
+    description: "iClear 4-year anniversary product feature",
+  },
+  {
+    title: "Download PowWater Today",
+    image: powwaterApp,
+    description: "PowWater mobile app promo creative",
+  },
+  {
+    title: "Weekend Basket Bonanza",
+    image: weekendBonanza,
+    description: "iClear weekend promotional campaign",
+  },
+  {
+    title: "We Handle The Heavy Lifting",
+    image: heavyLifting,
+    description: "PowWater bulk delivery campaign",
+  },
   {
     title: "Free Filter Campaign",
     image: freeFilterCampaign,
