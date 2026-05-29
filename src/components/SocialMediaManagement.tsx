@@ -32,7 +32,7 @@ import tecno3 from "@/assets/design-tecno-3.png";
 import freeFilterCampaign from "@/assets/design-free-filter-campaign.webp";
 import iclearNewyear from "@/assets/design-iclear-newyear.webp";
 import iclearPurity from "@/assets/design-iclear-purity.webp";
-import iclearNakuruActivated from "@/assets/design-iclear-nakuru-activated.webp";
+
 import iclearFreshLiving from "@/assets/design-iclear-fresh-living.webp";
 import iclearBoxingDay from "@/assets/design-iclear-boxing-day.webp";
 import schoolAdmission from "@/assets/design-school-admission.webp";
@@ -65,7 +65,7 @@ const socialProjects = [
     designs: [
       { thumbnail: freeFilterCampaign, fullImage: freeFilterCampaign, title: "Free Filter Campaign" },
       { thumbnail: iclearPurity, fullImage: iclearPurity, title: "Unmatched Purity Campaign" },
-      { thumbnail: iclearNakuruActivated, fullImage: iclearNakuruActivated, title: "Nakuru Activated Campaign" },
+      
       { thumbnail: iclearFreshLiving, fullImage: iclearFreshLiving, title: "Walk Your Way Fresh Living" },
       { thumbnail: iclearBoxingDay, fullImage: iclearBoxingDay, title: "Happy Boxing Day" },
       { thumbnail: iclearNewyear, fullImage: iclearNewyear, title: "Happy New Year 2025" },
