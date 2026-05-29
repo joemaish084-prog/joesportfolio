@@ -76,7 +76,7 @@ export function Contact() {
                 Let's <span className="text-gradient">Connect</span>
               </h2>
               <p className="text-lg text-muted-foreground">
-                Have a project in mind? Let's discuss how we can work together
+                Looking to <strong className="text-foreground">hire a digital marketing specialist in Nairobi</strong>? Whether you need a freelance Meta Ads manager Kenya, Google Ads expert for hire Kenya, TikTok ads specialist Nairobi, or a social media manager for SMEs Nairobi — I'm a digital marketing consultant Nairobi available for projects across Westlands, Kilimani, CBD, Karen, Mombasa and Kisumu. Let's discuss how we can work together.
               </p>
             </div>
           </ScrollReveal>
