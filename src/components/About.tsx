@@ -55,9 +55,7 @@ export function About() {
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm currently a <span className="text-primary font-semibold">digital marketer for hire in Nairobi (2026)</span>,
-                  open to freelance projects and full-time opportunities in digital marketing, content creation, and brand
-                  management. Let's build something impactful together.
+                  I'm currently a <span className="text-primary font-semibold">digital marketer available for hire in Nairobi (2026)</span> — covering Westlands, CBD, Kilimani and Karen, plus remote clients in Mombasa and Kisumu. I work with startups, SMEs, ecommerce, real estate and hospitality brands as a <strong className="text-foreground">digital marketing consultant Nairobi</strong> focused on performance marketing Kenya 2026, AI digital marketing Nairobi workflows and full funnel marketing Kenya. Open to freelance projects and full-time opportunities — let's build something impactful together.
                 </p>
               </ScrollReveal>
             </article>

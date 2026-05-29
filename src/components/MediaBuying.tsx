@@ -109,7 +109,7 @@ export function MediaBuying() {
               Media Buying & <span className="text-gradient">Paid Advertising</span>
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground">
-              Managing ad budgets of <strong className="text-foreground">KES 500,000+ per month</strong> across Meta, Google, TikTok and more — every shilling accountable. Trusted <strong className="text-foreground">media buyer in Nairobi</strong> and <strong className="text-foreground">performance marketing specialist in Kenya</strong>.
+              Managing ad budgets of <strong className="text-foreground">KES 500,000+ per month</strong> across Meta, Google, TikTok and more — every shilling accountable. The <strong className="text-foreground">best media buyer in Kenya</strong> for brands that want a <strong className="text-foreground">freelance Meta Ads manager Kenya</strong>, <strong className="text-foreground">Google Ads expert for hire Kenya</strong> or <strong className="text-foreground">TikTok ads specialist for hire Nairobi</strong> — ROI focused, data-driven, full funnel marketing Kenya.
             </p>
           </div>
         </ScrollReveal>
