@@ -281,11 +281,16 @@ function FeaturedVideo() {
     "@type": "VideoObject",
     name: FEATURED_VIDEO.title,
     description: FEATURED_VIDEO.description,
-    thumbnailUrl: featuredThumb,
-    uploadDate: "2024-01-01",
+    thumbnailUrl: [absUrl(featuredThumb)],
+    uploadDate: "2024-11-20",
+    duration: "PT12M18S",
     contentUrl: FEATURED_VIDEO.watchUrl,
     embedUrl: `https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}`,
-    publisher: { "@type": "Person", name: "Joseph Maina" },
+    publisher: {
+      "@type": "Person",
+      name: "Joseph Maina",
+      url: SITE_URL,
+    },
   };
 
   return (
