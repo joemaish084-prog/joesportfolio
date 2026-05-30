@@ -121,16 +121,29 @@ const platformStyles: Record<Platform, string> = {
 };
 
 function VideoSchema({ v }: { v: ShortVideo | LongVideo }) {
-  const schema = {
+  const isLong = "description" in v && !!v.description;
+  const description = isLong
+    ? (v as LongVideo).description
+    : (v as ShortVideo).description ||
+      `${v.title} — ${v.platform} video by Joseph Maina, Digital Marketing Specialist in Nairobi, Kenya.`;
+  const iso = durationToISO8601(v.duration);
+  const ytId = getYouTubeId(v.link);
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     name: v.title,
-    description: "description" in v ? v.description : `${v.title} — video by Joseph Maina, Digital Marketing Specialist in Nairobi, Kenya.`,
-    thumbnailUrl: v.thumbnail,
-    uploadDate: "2024-01-01",
+    description,
+    thumbnailUrl: [absUrl(v.thumbnail)],
+    uploadDate: v.uploadDate,
     contentUrl: v.link,
-    publisher: { "@type": "Person", name: "Joseph Maina" },
+    publisher: {
+      "@type": "Person",
+      name: "Joseph Maina",
+      url: SITE_URL,
+    },
   };
+  if (iso) schema.duration = iso;
+  if (ytId) schema.embedUrl = `https://www.youtube.com/embed/${ytId}`;
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
