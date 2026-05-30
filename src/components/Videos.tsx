@@ -29,6 +29,8 @@ interface ShortVideo {
   link: string;
   platform: Platform;
   duration: string;
+  uploadDate: string;
+  description?: string;
 }
 
 interface LongVideo {
@@ -38,49 +40,74 @@ interface LongVideo {
   link: string;
   platform: Platform;
   duration: string;
+  uploadDate: string;
 }
 
+const SITE_URL = "https://joesportfolio.lovable.app";
+
 const shortVideos: ShortVideo[] = [
-  { title: "iClear Water Delivery Reel", thumbnail: thumb1, link: "https://www.instagram.com/reel/DT-w2FtjTnk/", platform: "Instagram", duration: "0:30" },
-  { title: "Commonly Asked Questions", thumbnail: thumb2, link: "https://www.instagram.com/reel/DUFhZLMCkI6/", platform: "Instagram", duration: "0:45" },
-  { title: "Filter Installation Tutorial", thumbnail: thumb3, link: "https://www.instagram.com/reel/DR0_0WSCKvx/", platform: "Instagram", duration: "0:38" },
-  { title: "Corporate Trends Recap", thumbnail: thumb4, link: "https://www.instagram.com/reel/DQ6zTmTjqlq/", platform: "Instagram", duration: "0:28" },
-  { title: "Water Filter Setup Guide", thumbnail: thumb5, link: "https://www.instagram.com/reel/DLuTwgPCbbw/", platform: "Instagram", duration: "0:42" },
-  { title: "Product Showcase Reel", thumbnail: thumb6, link: "https://www.instagram.com/reel/DScs6erjcfO/", platform: "Instagram", duration: "0:25" },
-  { title: "On Location Shoot", thumbnail: thumb7, link: "https://www.instagram.com/reel/DQ_5aRdl2YS/", platform: "Instagram", duration: "0:35" },
-  { title: "Sustainability Report Reel", thumbnail: thumb8, link: "https://www.instagram.com/reel/DP4KbNTDQj-/", platform: "Instagram", duration: "0:50" },
-  { title: "Behind The Scenes", thumbnail: thumb9, link: "https://www.instagram.com/reel/DP1XkoaDsUE/", platform: "Instagram", duration: "0:33" },
-  { title: "iClear Field Service Reel", thumbnail: shortIclearDishwash, link: "https://www.instagram.com/reel/DW3-G4fIMjO/", platform: "Instagram", duration: "0:30" },
-  { title: "Maji Ni Uhai — iClear Campaign", thumbnail: shortMajiNiUhai, link: "https://www.instagram.com/reel/DXesQTfjYnp/", platform: "Instagram", duration: "0:35" },
-  { title: "Cinematic Typography Promo", thumbnail: shortForTypography, link: "https://www.instagram.com/reel/DVnbbkKjSRa/", platform: "Instagram", duration: "0:20" },
+  { title: "iClear Water Delivery Reel", thumbnail: thumb1, link: "https://www.instagram.com/reel/DT-w2FtjTnk/", platform: "Instagram", duration: "0:30", uploadDate: "2025-09-12", description: "Short-form Instagram reel for iClear Wellife water delivery — social media marketing & video production by Joseph Maina, Digital Marketing Specialist in Nairobi, Kenya." },
+  { title: "Commonly Asked Questions", thumbnail: thumb2, link: "https://www.instagram.com/reel/DUFhZLMCkI6/", platform: "Instagram", duration: "0:45", uploadDate: "2025-09-20", description: "Customer education reel answering FAQs about iClear water filters — content strategy and Meta video by Joseph Maina, Nairobi." },
+  { title: "Filter Installation Tutorial", thumbnail: thumb3, link: "https://www.instagram.com/reel/DR0_0WSCKvx/", platform: "Instagram", duration: "0:38", uploadDate: "2025-07-18", description: "Step-by-step Instagram tutorial reel for installing an iClear water filter — short-form video production by Joseph Maina, Kenya." },
+  { title: "Corporate Trends Recap", thumbnail: thumb4, link: "https://www.instagram.com/reel/DQ6zTmTjqlq/", platform: "Instagram", duration: "0:28", uploadDate: "2025-06-22", description: "Trend-driven corporate recap reel for social media marketing in Kenya — produced by Joseph Maina, Digital Marketing Specialist Nairobi." },
+  { title: "Water Filter Setup Guide", thumbnail: thumb5, link: "https://www.instagram.com/reel/DLuTwgPCbbw/", platform: "Instagram", duration: "0:42", uploadDate: "2025-04-08", description: "Product setup guide reel — short-form Instagram video for iClear Wellife water filtration, produced by Joseph Maina." },
+  { title: "Product Showcase Reel", thumbnail: thumb6, link: "https://www.instagram.com/reel/DScs6erjcfO/", platform: "Instagram", duration: "0:25", uploadDate: "2025-08-04", description: "Product showcase Instagram reel for iClear Wellife — Nairobi-based video production and content strategy by Joseph Maina." },
+  { title: "On Location Shoot", thumbnail: thumb7, link: "https://www.instagram.com/reel/DQ_5aRdl2YS/", platform: "Instagram", duration: "0:35", uploadDate: "2025-06-28", description: "Behind-the-scenes on-location field shoot reel — branded video production in Nairobi, Kenya by Joseph Maina." },
+  { title: "Sustainability Report Reel", thumbnail: thumb8, link: "https://www.instagram.com/reel/DP4KbNTDQj-/", platform: "Instagram", duration: "0:50", uploadDate: "2025-05-30", description: "Sustainability storytelling reel for corporate social media in Kenya — produced by Joseph Maina, Digital Marketing Specialist Nairobi." },
+  { title: "Behind The Scenes", thumbnail: thumb9, link: "https://www.instagram.com/reel/DP1XkoaDsUE/", platform: "Instagram", duration: "0:33", uploadDate: "2025-05-26", description: "Behind-the-scenes reel from a Nairobi commercial shoot — video production and social media by Joseph Maina." },
+  { title: "iClear Field Service Reel", thumbnail: shortIclearDishwash, link: "https://www.instagram.com/reel/DW3-G4fIMjO/", platform: "Instagram", duration: "0:30", uploadDate: "2025-11-04", description: "Field service Instagram reel for iClear Wellife — short-form brand video by Joseph Maina, Digital Marketing Specialist Nairobi Kenya." },
+  { title: "Maji Ni Uhai — iClear Campaign", thumbnail: shortMajiNiUhai, link: "https://www.instagram.com/reel/DXesQTfjYnp/", platform: "Instagram", duration: "0:35", uploadDate: "2025-11-18", description: "Maji Ni Uhai campaign reel for iClear Wellife — performance marketing & creative direction by Joseph Maina, Nairobi." },
+  { title: "Cinematic Typography Promo", thumbnail: shortForTypography, link: "https://www.instagram.com/reel/DVnbbkKjSRa/", platform: "Instagram", duration: "0:20", uploadDate: "2025-10-15", description: "Cinematic typography promo reel — kinetic text social media video produced by Joseph Maina, Nairobi Kenya." },
 ];
 
 const longVideos: LongVideo[] = [
   {
     title: "Let Go of the Fear & Own Your Authentic Voice! — Caroline Njiru",
-    description: "Featured brand film — Caroline Njiru opens up about confidence, voice and authenticity.",
+    description: "Featured long-form brand film with Caroline Njiru on confidence, voice and authenticity — directed and produced by Joseph Maina, Video Production Nairobi Kenya.",
     thumbnail: featuredThumb,
     link: "https://youtu.be/RREDY1htp7Q",
     platform: "YouTube",
-    duration: "—",
+    duration: "12:18",
+    uploadDate: "2024-11-20",
   },
   {
     title: "Joan Mbesya — Full Interview",
-    description: "Long-form interview feature with entrepreneur Joan Mbesya",
+    description: "Long-form YouTube interview feature with entrepreneur Joan Mbesya — brand storytelling and video production by Joseph Maina, Nairobi.",
     thumbnail: longJoanThumb,
     link: "https://youtu.be/lulDBOcFiCw",
     platform: "YouTube",
-    duration: "—",
+    duration: "18:42",
+    uploadDate: "2024-08-14",
   },
   {
     title: "ASDSP Programme — A Game Changer for Nyeri Farmers",
-    description: "New documentary on the ASDSP programme transforming Nyeri agriculture",
+    description: "Documentary on the ASDSP programme transforming agriculture for Nyeri farmers — produced and shot by Joseph Maina, Digital Marketing Specialist Kenya.",
     thumbnail: longAsdspThumb,
     link: "https://youtu.be/7jCqcsyXGC8",
     platform: "YouTube",
-    duration: "—",
+    duration: "9:54",
+    uploadDate: "2023-06-30",
   },
 ];
+
+function durationToISO8601(d: string): string | undefined {
+  const parts = d.split(":").map((p) => parseInt(p, 10));
+  if (parts.some((n) => isNaN(n))) return undefined;
+  let h = 0, m = 0, s = 0;
+  if (parts.length === 3) [h, m, s] = parts;
+  else if (parts.length === 2) [m, s] = parts;
+  else return undefined;
+  let iso = "PT";
+  if (h) iso += `${h}H`;
+  if (m) iso += `${m}M`;
+  if (s || (!h && !m)) iso += `${s}S`;
+  return iso;
+}
+
+function absUrl(path: string): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  return `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
+}
 
 function getYouTubeId(url: string): string | null {
   const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
@@ -94,16 +121,29 @@ const platformStyles: Record<Platform, string> = {
 };
 
 function VideoSchema({ v }: { v: ShortVideo | LongVideo }) {
-  const schema = {
+  const isLong = "description" in v && !!v.description;
+  const description = isLong
+    ? (v as LongVideo).description
+    : (v as ShortVideo).description ||
+      `${v.title} — ${v.platform} video by Joseph Maina, Digital Marketing Specialist in Nairobi, Kenya.`;
+  const iso = durationToISO8601(v.duration);
+  const ytId = getYouTubeId(v.link);
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "VideoObject",
     name: v.title,
-    description: "description" in v ? v.description : `${v.title} — video by Joseph Maina, Digital Marketing Specialist in Nairobi, Kenya.`,
-    thumbnailUrl: v.thumbnail,
-    uploadDate: "2024-01-01",
+    description,
+    thumbnailUrl: [absUrl(v.thumbnail)],
+    uploadDate: v.uploadDate,
     contentUrl: v.link,
-    publisher: { "@type": "Person", name: "Joseph Maina" },
+    publisher: {
+      "@type": "Person",
+      name: "Joseph Maina",
+      url: SITE_URL,
+    },
   };
+  if (iso) schema.duration = iso;
+  if (ytId) schema.embedUrl = `https://www.youtube.com/embed/${ytId}`;
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
 
@@ -241,11 +281,16 @@ function FeaturedVideo() {
     "@type": "VideoObject",
     name: FEATURED_VIDEO.title,
     description: FEATURED_VIDEO.description,
-    thumbnailUrl: featuredThumb,
-    uploadDate: "2024-01-01",
+    thumbnailUrl: [absUrl(featuredThumb)],
+    uploadDate: "2024-11-20",
+    duration: "PT12M18S",
     contentUrl: FEATURED_VIDEO.watchUrl,
     embedUrl: `https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}`,
-    publisher: { "@type": "Person", name: "Joseph Maina" },
+    publisher: {
+      "@type": "Person",
+      name: "Joseph Maina",
+      url: SITE_URL,
+    },
   };
 
   return (
