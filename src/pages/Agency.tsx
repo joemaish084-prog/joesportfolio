@@ -146,7 +146,7 @@ const Agency = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" asChild>
-                <a href="https://wa.me/254700000000" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/254704700160" target="_blank" rel="noopener noreferrer">
                   <Phone className="mr-2 h-5 w-5" /> WhatsApp Me
                 </a>
               </Button>
