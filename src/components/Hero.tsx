@@ -1,9 +1,11 @@
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail, Briefcase } from "lucide-react";
+import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
+
 
 const rotatingLines = [
   "I turn ideas into assets and attention into revenue.",
@@ -211,27 +213,28 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="mt-8 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto"
+          className="mt-8 flex flex-col items-center gap-4 w-full sm:w-auto"
         >
-          <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base btn-hover" asChild>
-            <a href="#graphic-design">
-              View My Work
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </a>
-          </Button>
-          <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 hover:bg-primary/5 text-base btn-hover" asChild>
-            <a href="#contact">
-              <Briefcase className="mr-2 h-5 w-5" />
-              Hire Me
-            </a>
-          </Button>
-          <Button size="lg" variant="ghost" className="w-full sm:w-auto text-base btn-hover" asChild>
-            <a href="#contact">
-              <Mail className="mr-2 h-5 w-5" />
-              Contact Me
-            </a>
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
+            <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base btn-hover" asChild>
+              <a href="#case-study">
+                <Briefcase className="mr-2 h-5 w-5" />
+                Hire Me as an Employee
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 hover:bg-primary/5 text-base btn-hover" asChild>
+              <Link to="/agency">
+                <Users className="mr-2 h-5 w-5" />
+                Work With Me as a Client
+              </Link>
+            </Button>
+          </div>
+          <p className="text-xs sm:text-sm text-muted-foreground text-center max-w-md px-4">
+            Whether you're a recruiter or a brand looking to grow — you're in the right place.
+          </p>
         </motion.div>
+
       </div>
     </section>
   );
