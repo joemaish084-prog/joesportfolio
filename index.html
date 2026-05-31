@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Permanent redirect from old lovable.app host to the canonical custom domain -->
+    <script>
+      (function(){
+        var h = window.location.hostname;
+        if (h === 'joesportfolio.lovable.app' || h.endsWith('.lovableproject.com')) {
+          window.location.replace('https://www.josephmaina.co.ke' + window.location.pathname + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <!-- Google tag (gtag.js) - deferred until user interaction to reduce unused JS -->
     <script>
       window.dataLayer = window.dataLayer || [];
