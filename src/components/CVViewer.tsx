@@ -178,7 +178,7 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
                   <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" /> Nairobi, Kenya</span>
                   <a href="tel:+254704700160" className="inline-flex items-center gap-1.5 hover:text-primary"><Phone className="h-4 w-4" /> 0704 700 160</a>
                   <a href="mailto:joemaish084@gmail.com" className="inline-flex items-center gap-1.5 hover:text-primary"><Mail className="h-4 w-4" /> joemaish084@gmail.com</a>
-                  <a href="https://joesportfolio.lovable.app" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-primary"><Globe className="h-4 w-4" /> joesportfolio.lovable.app</a>
+                  <a href="https://www.josephmaina.co.ke" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-primary"><Globe className="h-4 w-4" /> www.josephmaina.co.ke</a>
                 </div>
               </header>
 

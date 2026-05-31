@@ -43,7 +43,7 @@ interface LongVideo {
   uploadDate: string;
 }
 
-const SITE_URL = "https://joesportfolio.lovable.app";
+const SITE_URL = "https://www.josephmaina.co.ke";
 
 const shortVideos: ShortVideo[] = [
   { title: "iClear Water Delivery Reel", thumbnail: thumb1, link: "https://www.instagram.com/reel/DT-w2FtjTnk/", platform: "Instagram", duration: "0:30", uploadDate: "2025-09-12", description: "Short-form Instagram reel for iClear Wellife water delivery — social media marketing & video production by Joseph Maina, Digital Marketing Specialist in Nairobi, Kenya." },

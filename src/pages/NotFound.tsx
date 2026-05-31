@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
-const SITE_URL = "https://joesportfolio.lovable.app";
+const SITE_URL = "https://www.josephmaina.co.ke";
 
 const NotFound = () => {
   const location = useLocation();

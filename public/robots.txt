@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://joesportfolio.lovable.app/sitemap.xml
+Sitemap: https://www.josephmaina.co.ke/sitemap.xml
