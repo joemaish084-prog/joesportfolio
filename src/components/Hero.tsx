@@ -1,9 +1,11 @@
 import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail, Briefcase } from "lucide-react";
+import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
+
 
 const rotatingLines = [
   "I turn ideas into assets and attention into revenue.",
