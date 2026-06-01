@@ -57,33 +57,24 @@ const Index = () => {
           <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
           <ExpandCollapseAll />
           <Suspense fallback={null}>
+            <About />
+            <SkillsStats />
+            <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured">
+              <CaseStudy />
+            </CollapsibleWrapper>
+            <CollapsibleWrapper id="experience" title="Experience" Icon={Briefcase} count="Timeline">
+              <Experience />
+            </CollapsibleWrapper>
             <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="9+ Videos">
               <Videos />
-            </CollapsibleWrapper>
-            <CollapsibleWrapper id="media-buying" title="Media Buying & Paid Advertising" Icon={DollarSign} count="KES 500K+/mo">
-              <MediaBuying />
             </CollapsibleWrapper>
             <CollapsibleWrapper id="graphic-design" title="Graphic Design" Icon={Palette} count="Gallery">
               <GraphicDesign />
             </CollapsibleWrapper>
-            <CollapsibleWrapper id="print-mockup" title="Mockups (Coming Soon)" Icon={ImageIcon} count="Soon">
-              <PrintMockup />
-            </CollapsibleWrapper>
-            <SocialMediaManagement />
-            <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured">
-              <CaseStudy />
-            </CollapsibleWrapper>
+            <Testimonials />
             <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
               <FAQ />
             </CollapsibleWrapper>
-            <SkillsStats />
-            <ManagedAccounts />
-            <ToolsWorkflow />
-            <Testimonials />
-            <CollapsibleWrapper id="experience" title="Experience" Icon={Briefcase} count="Timeline">
-              <Experience />
-            </CollapsibleWrapper>
-            <About />
             <Contact />
           </Suspense>
         </main>

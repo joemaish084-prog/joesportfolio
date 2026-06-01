@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Check, Calendar, Mail, Phone, Sparkles, Megaphone, BarChart3, Video, Palette } from "lucide-react";
-import { useEffect } from "react";
+import {
+  ArrowLeft, Check, Calendar, Mail, Phone, Sparkles,
+  Megaphone, BarChart3, Video, Palette, Smartphone, FileText, LogIn,
+} from "lucide-react";
+import { lazy, Suspense, useEffect } from "react";
+
+const MediaBuying = lazy(() => import("@/components/MediaBuying").then(m => ({ default: m.MediaBuying })));
+const ManagedAccounts = lazy(() => import("@/components/ManagedAccounts").then(m => ({ default: m.ManagedAccounts })));
+const ToolsWorkflow = lazy(() => import("@/components/ToolsWorkflow").then(m => ({ default: m.ToolsWorkflow })));
 
 const services = [
   { icon: Megaphone, title: "Meta & Google Ads Management", desc: "Performance-driven paid campaigns built around ROAS, not vanity metrics." },
@@ -53,6 +60,13 @@ const tiers = [
   },
 ];
 
+const subNav = [
+  { href: "#services", label: "Services" },
+  { href: "#media-buying", label: "Media Buying" },
+  { href: "#pricing", label: "Pricing" },
+  { href: "#book", label: "Book" },
+];
+
 const Agency = () => {
   useEffect(() => {
     document.title = "Work With Me — Agency Services | Joseph Maina";
@@ -60,14 +74,27 @@ const Agency = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Top bar */}
       <header className="border-b border-border/40 sticky top-0 bg-background/80 backdrop-blur-md z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to portfolio
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Portfolio
           </Link>
-          <Button asChild size="sm">
-            <a href="#book">Book a call</a>
-          </Button>
+          <nav className="hidden md:flex items-center gap-6 text-sm">
+            {subNav.map(n => (
+              <a key={n.href} href={n.href} className="text-muted-foreground hover:text-foreground transition-colors">{n.label}</a>
+            ))}
+          </nav>
+          <div className="flex items-center gap-2">
+            <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
+              <Link to="/agency/login">
+                <LogIn className="mr-1.5 h-4 w-4" /> Client Login
+              </Link>
+            </Button>
+            <Button asChild size="sm">
+              <a href="#book">Book a call</a>
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -83,10 +110,13 @@ const Agency = () => {
           <p className="mt-6 text-lg text-muted-foreground">
             Full-service social media management, paid ads, and creative production for Kenyan brands ready to scale.
           </p>
+          <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border/60 text-sm text-muted-foreground">
+            <Smartphone className="h-4 w-4 text-primary" /> Pay easily with M-Pesa · Proposals delivered in 48hrs
+          </div>
         </section>
 
         {/* Services */}
-        <section className="mt-24">
+        <section id="services" className="mt-24 scroll-mt-20">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">What I do for clients</h2>
           <div className="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {services.map((s) => (
@@ -99,10 +129,26 @@ const Agency = () => {
           </div>
         </section>
 
+        {/* Media Buying */}
+        <section id="media-buying" className="mt-24 scroll-mt-20">
+          <Suspense fallback={<div className="h-40" />}>
+            <MediaBuying />
+          </Suspense>
+        </section>
+
+        {/* Social proof */}
+        <section className="mt-24 space-y-16">
+          <Suspense fallback={null}><ManagedAccounts /></Suspense>
+          <Suspense fallback={null}><ToolsWorkflow /></Suspense>
+        </section>
+
         {/* Pricing */}
-        <section id="pricing" className="mt-24">
+        <section id="pricing" className="mt-24 scroll-mt-20">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-3">Simple, transparent pricing</h2>
-          <p className="text-center text-muted-foreground mb-12">Retainers built around outcomes, not deliverables.</p>
+          <p className="text-center text-muted-foreground mb-4">Retainers built around outcomes, not deliverables.</p>
+          <p className="text-center text-sm text-primary mb-12 inline-flex items-center gap-1.5 justify-center w-full">
+            <Smartphone className="h-4 w-4" /> Pay with M-Pesa, card, or bank transfer
+          </p>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {tiers.map((t) => (
               <Card
@@ -136,15 +182,15 @@ const Agency = () => {
           </div>
         </section>
 
-        {/* Booking */}
-        <section id="book" className="mt-24 max-w-2xl mx-auto">
+        {/* Booking + Proposal */}
+        <section id="book" className="mt-24 max-w-3xl mx-auto scroll-mt-20">
           <Card className="p-8 md:p-12 text-center border-primary/30">
             <Calendar className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">Book a discovery call</h2>
             <p className="text-muted-foreground mb-8">
               Free 30-minute call to understand your brand, goals, and whether we're a good fit.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               <Button size="lg" asChild>
                 <a href="https://wa.me/254704700160" target="_blank" rel="noopener noreferrer">
                   <Phone className="mr-2 h-5 w-5" /> WhatsApp Me
@@ -156,12 +202,24 @@ const Agency = () => {
                 </a>
               </Button>
             </div>
+            <div className="pt-6 border-t border-border/40">
+              <p className="text-sm text-muted-foreground mb-3">Already in talks? Request a tailored proposal:</p>
+              <Button size="lg" variant="secondary" asChild>
+                <Link to="/agency/login">
+                  <FileText className="mr-2 h-5 w-5" /> Request a Proposal
+                </Link>
+              </Button>
+            </div>
           </Card>
         </section>
       </main>
 
-      <footer className="border-t border-border/40 py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Joseph Maina · <Link to="/" className="hover:text-foreground">Back to portfolio</Link>
+      <footer className="border-t border-border/40 py-8 text-center text-sm text-muted-foreground space-x-2">
+        <span>© {new Date().getFullYear()} Joseph Maina</span>
+        <span>·</span>
+        <Link to="/" className="hover:text-foreground">Portfolio</Link>
+        <span>·</span>
+        <Link to="/agency/login" className="hover:text-foreground">Client Portal</Link>
       </footer>
     </div>
   );
