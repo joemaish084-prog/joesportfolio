@@ -1,96 +1,37 @@
+# /agency 404 — Diagnosis & Fix
 
-# Restructure homepage + build /agency client platform
+## What I checked
 
-This is a large multi-phase change. I'll split it into 3 phases so each one is reviewable and shippable on its own. We can stop after any phase if priorities change.
+- `src/App.tsx` — `<Route path="/agency" element={<Agency />} />` is already registered, with `Agency` imported from `./pages/Agency`.
+- `src/pages/Agency.tsx` — exists, 480 lines, fully built page (hero, services, pricing, WhatsApp `wa.me/254704700160`, email `joemaish084@gmail.com`, Calendly, EmailJS contact form, FAQ, etc.).
+- `public/sitemap.xml` — already lists `https://www.josephmaina.co.ke/agency`.
+- Lovable hosting has built-in SPA fallback — `/agency` on a deep refresh works automatically once deployed.
 
----
+## Root cause
 
-## Phase 1 — Homepage reorder (small, ~1 step)
+The code is correct. `/agency` 404s on `josephmaina.co.ke` because **the latest build has not been published**. The route, component, and sitemap entry all exist in the repo but the live custom domain is still serving an older deploy that didn't include `Agency.tsx` / the `/agency` route.
 
-Edit `src/pages/Index.tsx` to match your structure. Skipping Certifications per your note.
+Quick sanity check you can do right now: open the preview URL `https://id-preview--615b1a33-b9fa-4acd-ba78-2ff0f2f2cbd9.lovable.app/agency` — it will load the full Agency page. That confirms the code is fine.
 
-New order:
-```
-Hero
-About
-Skills & Stats
-Case Studies
-Experience
-Video Production
-Graphic Design
-Testimonials
-FAQ
-Contact
-```
+## Fix (no code changes needed)
 
-Remove from homepage (they become /agency-only): **Media Buying**, **Social Media Management**, **Print/Mockup**, **Managed Accounts**, **Tools Workflow**.
+1. Click **Publish → Update** in the top right of the editor. This pushes the current build (which includes `/agency`) to `joesportfolio.lovable.app` and your custom domain.
+2. After publish completes (~30s), verify:
+   - `https://www.josephmaina.co.ke/agency` → loads Agency page
+   - `https://josephmaina.co.ke/agency` → loads Agency page (or 301s to www if you've set www as Primary in Domains settings, per the earlier www-canonical fix)
+3. Sitemap already includes `/agency` with the www host — nothing to change there.
 
-Keep `ManagedAccounts` + `ToolsWorkflow` available as components — they'll move to /agency in Phase 2. Nothing is deleted.
+## If it still 404s after publishing
 
-Also update `Hero.tsx` primary CTA: "Hire Me as an Employee" should scroll to `#experience` (recruiter target) instead of `#case-study`, since case studies now sit higher up and experience is the recruiter destination.
+That would mean the custom domain `josephmaina.co.ke` is pointing at a stale deployment or a different host. In that case:
+- Open **Project Settings → Domains** and confirm `www.josephmaina.co.ke` is connected and set as Primary.
+- Reconnect the domain if it shows any error state.
+- DNS: A record for apex → `185.158.133.1`, CNAME for `www` → `joesportfolio.lovable.app`.
 
----
+## What I will NOT do
 
-## Phase 2 — Build out /agency page (medium, ~1–2 steps)
+- Will not replace the existing 480-line Agency page with the smaller placeholder from your message — your real Agency page already includes everything in the placeholder spec (and much more). Replacing it would be a regression.
+- Will not change routing — it's already correct.
+- Will not remove `/agency` from sitemap — it's the right entry.
 
-Restructure `src/pages/Agency.tsx` into clear sections with anchor nav:
-
-```
-/agency
-├── Hero (client-focused)
-├── Services (existing 4 cards)
-├── Media Buying (moved from homepage — paid-ads expertise)
-├── Social Proof (Managed Accounts carousel + Tools)
-├── Pricing (existing 3 tiers — add "Pay with M-Pesa" badge)
-├── Booking (existing WhatsApp/Email + add "Request Proposal" button)
-└── Footer
-```
-
-Add a sticky sub-nav inside /agency: Services · Media Buying · Pricing · Book · Portal Login.
-
-No backend yet in this phase — "Request Proposal" and "Client Login" buttons are wired but route to Phase 3 features.
-
----
-
-## Phase 3 — Backend: M-Pesa, Proposals, Client Portal (large, ~3–4 steps)
-
-This is the real engineering work. Needs Lovable Cloud (already enabled) + Safaricom Daraja API credentials.
-
-### 3a. Client Portal authentication
-- Enable email/password + Google sign-in on Lovable Cloud
-- Create `/agency/login`, `/agency/signup`, `/agency/portal` routes
-- Add `profiles` table (id, full_name, company, phone, created_at) auto-populated via trigger on signup
-- RLS: users see only their own profile
-
-### 3b. Proposals system
-- `proposals` table: id, client_id (→ auth.users), title, scope, line_items (jsonb), total_kes, status (draft/sent/accepted/declined), created_at, accepted_at
-- Client portal view: list of proposals sent to them with Accept / Decline buttons
-- Admin-only view (you): create + send proposals (gated by a `user_roles` table with `admin` role — never on profile)
-- Email notification on send/accept via Resend (needs RESEND_API_KEY)
-
-### 3c. M-Pesa STK Push (Daraja API)
-- Two edge functions:
-  - `mpesa-stk-push` — initiates payment for an accepted proposal or pricing tier
-  - `mpesa-callback` — receives Safaricom confirmation, marks payment paid
-- `payments` table: id, user_id, proposal_id (nullable), amount_kes, mpesa_receipt, status, raw_callback (jsonb), created_at
-- Secrets needed (you'll be prompted): `MPESA_CONSUMER_KEY`, `MPESA_CONSUMER_SECRET`, `MPESA_SHORTCODE`, `MPESA_PASSKEY`, `MPESA_ENV` (sandbox/production)
-- Callback URL will be the deployed edge function URL — I'll give it to you to whitelist in the Daraja dashboard
-
-### 3d. Client portal dashboard
-- After login at `/agency/portal`: shows their proposals, payment history, active retainer status, and a "Book a call" link
-
----
-
-## What I need from you before Phase 3
-
-1. **Safaricom Daraja account** — register at developer.safaricom.co.ke, create an app, get the consumer key/secret + shortcode + passkey (sandbox is free for testing)
-2. **Resend account** (for proposal emails) — or I can use Lovable's built-in email
-3. **Your admin email** — to seed the first admin role so only you can create proposals
-
----
-
-## Recommended next step
-
-Confirm and I'll execute **Phase 1 now** (5 min), then **Phase 2** in the same turn since it's mostly moving components around. Phase 3 we tackle as a separate conversation once you have the Daraja keys ready — it's too big to do safely in one shot.
-
-Want me to proceed?
+If after publishing it still 404s, send me a screenshot of the failing URL + Project Settings → Domains and I'll dig deeper.
