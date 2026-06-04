@@ -20,7 +20,6 @@ const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
 const EMAILJS_PUBLIC_KEY = "2H5maWozuCEEd6vtl";
 
-// TODO: replace with your real Calendly URL once created
 const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
 const WHATSAPP_NUMBER = "254704700160";
 const WHATSAPP_MESSAGE = encodeURIComponent(
@@ -372,6 +371,19 @@ const Agency = () => {
                 <Button asChild className="w-full">
                   <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                     <Phone className="mr-2 h-4 w-4" /> Message me on WhatsApp
+                  </a>
+                </Button>
+              </Card>
+
+              <Card className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Calendar className="h-5 w-5 text-primary" />
+                  <h3 className="font-display text-xl font-semibold">Schedule a Call</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Book a free 30-minute discovery call at a time that works for you.</p>
+                <Button asChild className="w-full">
+                  <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+                    <Calendar className="mr-2 h-4 w-4" /> Book on Calendly
                   </a>
                 </Button>
               </Card>
