@@ -8,10 +8,10 @@ const CVViewer = lazy(() => import("./CVViewer").then(m => ({ default: m.CVViewe
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Videos", href: "#videos" },
-  { name: "Media Buying", href: "#media-buying" },
   { name: "Design", href: "#graphic-design" },
-  { name: "Social Media", href: "#social-media" },
-  { name: "Case Study", href: "#case-study" },
+  { name: "Mockups", href: "#mockups" },
+  { name: "Skills", href: "#skills" },
+  { name: "Case Studies", href: "#case-study" },
   { name: "Experience", href: "#experience" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
@@ -122,6 +122,12 @@ export function Navigation() {
                   </a>
                 );
               })}
+              <a
+                href="/agency"
+                className="text-sm font-semibold px-3 py-1.5 rounded-full bg-gradient-orange text-white shadow-[var(--shadow-orange-glow)] hover:brightness-110 transition"
+              >
+                Agency
+              </a>
               <ThemeToggle />
               <Button
                 onClick={() => setCvOpen(true)}
@@ -153,35 +159,55 @@ export function Navigation() {
         </div>
       </nav>
 
-      {/* Full-screen mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[70] md:hidden" style={{ background: "hsl(0 0% 8%)" }}>
-          <div className="flex flex-col items-center justify-center h-full w-full gap-7 pt-16">
-            {navLinks.map((link) => {
-              const sectionId = link.href.replace("#", "");
-              const isActive = activeSection === sectionId;
-              return (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-2xl font-semibold"
-                  style={{ color: isActive ? "hsl(25, 100%, 50%)" : "#f5f5f5" }}
-                >
-                  {link.name}
-                </a>
-              );
-            })}
-            <Button
-              onClick={() => { setIsMobileMenuOpen(false); setCvOpen(true); }}
-              className="mt-2 shadow-elegant bg-primary text-primary-foreground px-8 py-3 text-lg"
-            >
-              <FileText className="mr-2 h-5 w-5" />
-              View CV
-            </Button>
-          </div>
+      {/* Mobile menu — slide from right */}
+      <div
+        className={`fixed inset-0 z-[60] md:hidden transition-opacity duration-300 ${
+          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      </div>
+      <aside
+        className={`fixed top-0 right-0 bottom-0 z-[70] w-[82%] max-w-sm md:hidden transform transition-transform duration-300 ease-out ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{ background: "hsl(0 0% 8%)" }}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <div className="flex flex-col h-full pt-20 px-8 gap-6 overflow-y-auto">
+          {navLinks.map((link) => {
+            const sectionId = link.href.replace("#", "");
+            const isActive = activeSection === sectionId;
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-xl font-semibold"
+                style={{ color: isActive ? "hsl(25, 100%, 50%)" : "#f5f5f5" }}
+              >
+                {link.name}
+              </a>
+            );
+          })}
+          <a
+            href="/agency"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-xl font-semibold text-white inline-block px-4 py-2 rounded-full bg-gradient-orange shadow-[var(--shadow-orange-glow)] w-fit"
+          >
+            Agency
+          </a>
+          <Button
+            onClick={() => { setIsMobileMenuOpen(false); setCvOpen(true); }}
+            className="mt-2 shadow-elegant bg-primary text-primary-foreground px-6 py-3 text-base w-fit"
+          >
+            <FileText className="mr-2 h-5 w-5" />
+            View CV
+          </Button>
         </div>
-      )}
+      </aside>
 
       <Suspense fallback={null}>
         <CVViewer open={cvOpen} onClose={() => setCvOpen(false)} />
