@@ -1,37 +1,104 @@
-# /agency 404 — Diagnosis & Fix
+# Rearrange Portfolio + Navbar Overhaul
 
-## What I checked
+## 1. Final section order on `/` (src/pages/Index.tsx)
 
-- `src/App.tsx` — `<Route path="/agency" element={<Agency />} />` is already registered, with `Agency` imported from `./pages/Agency`.
-- `src/pages/Agency.tsx` — exists, 480 lines, fully built page (hero, services, pricing, WhatsApp `wa.me/254704700160`, email `joemaish084@gmail.com`, Calendly, EmailJS contact form, FAQ, etc.).
-- `public/sitemap.xml` — already lists `https://www.josephmaina.co.ke/agency`.
-- Lovable hosting has built-in SPA fallback — `/agency` on a deep refresh works automatically once deployed.
+```
+1.  Hero
+2.  Videos
+3.  Graphic Design
+4.  Mockups Coming Soon       (PrintMockup, already exists)
+5.  About
+6.  Services & Pricing         NEW
+7.  Media Buying               (MediaBuying, already imported but not rendered)
+8.  Skills & Stats             (already exists — verify content)
+9.  Case Studies
+10. Experience
+12. Testimonials
+13. FAQ
+14. Contact
+```
 
-## Root cause
+All sections wrapped in `CollapsibleWrapper` where the current pattern uses it, and every section gets a stable `id` matching the navbar anchors below. No section will be duplicated or dropped.
 
-The code is correct. `/agency` 404s on `josephmaina.co.ke` because **the latest build has not been published**. The route, component, and sitemap entry all exist in the repo but the live custom domain is still serving an older deploy that didn't include `Agency.tsx` / the `/agency` route.
+## 2. New sections to build
 
-Quick sanity check you can do right now: open the preview URL `https://id-preview--615b1a33-b9fa-4acd-ba78-2ff0f2f2cbd9.lovable.app/agency` — it will load the full Agency page. That confirms the code is fine.
+`**src/components/ServicesPricing.tsx**` — `id="services"`
 
-## Fix (no code changes needed)
+- Section heading "Services & Pricing"
+- 3–4 cards: Meta Ads, Google Ads, Social Media Management, SEO/Content
+- Each card: icon, short description, starting price in KES, "Book Discovery Call" link to `/agency`
+- Dark card surface, orange gradient on price/CTA, Framer Motion fade-in-on-scroll
+- No new business logic — pure presentational, mirrors the visual language of the Agency page
 
-1. Click **Publish → Update** in the top right of the editor. This pushes the current build (which includes `/agency`) to `joesportfolio.lovable.app` and your custom domain.
-2. After publish completes (~30s), verify:
-   - `https://www.josephmaina.co.ke/agency` → loads Agency page
-   - `https://josephmaina.co.ke/agency` → loads Agency page (or 301s to www if you've set www as Primary in Domains settings, per the earlier www-canonical fix)
-3. Sitemap already includes `/agency` with the www host — nothing to change there.
+`**src/components/Certifications.tsx**` — `id="certifications"`
 
-## If it still 404s after publishing
+- Section heading "Certifications & Achievements"
+- Grid of placeholder cards (Google Ads, Meta Blueprint, HubSpot, Google Analytics) using existing Lucide icons as stand-ins
+- Each card: badge icon, title, issuer, year
+- Note in the card area inviting you to send real badge images/PDFs for swap-in later
+- Framer Motion stagger animation on scroll
 
-That would mean the custom domain `josephmaina.co.ke` is pointing at a stale deployment or a different host. In that case:
-- Open **Project Settings → Domains** and confirm `www.josephmaina.co.ke` is connected and set as Primary.
-- Reconnect the domain if it shows any error state.
-- DNS: A record for apex → `185.158.133.1`, CNAME for `www` → `joesportfolio.lovable.app`.
+## 3. Skills & Stats verification
 
-## What I will NOT do
+Open `src/components/SkillsStats.tsx` and ensure the exact data is present, replacing whatever is there if it differs:
 
-- Will not replace the existing 480-line Agency page with the smaller placeholder from your message — your real Agency page already includes everything in the placeholder spec (and much more). Replacing it would be a regression.
-- Will not change routing — it's already correct.
-- Will not remove `/agency` from sitemap — it's the right entry.
+Counters (animated count-up):
 
-If after publishing it still 404s, send me a screenshot of the failing URL + Project Settings → Domains and I'll dig deeper.
+- 20+ Campaigns Managed
+- 50+ Keywords Ranked
+- 3+ Years Experience
+- 15+ Clients Served
+
+Progress bars:
+
+- SEO Optimization 90%
+- Content Strategy 85%
+- Social Media Marketing 88%
+- Google Analytics 85%
+- Meta Ads 87%
+- TikTok Ads 85%
+
+Existing IntersectionObserver-triggered count-up + progress fill is kept.
+
+## 4. Navbar (src/components/Navigation.tsx)
+
+Replace `navLinks` with this exact order:
+
+```
+Home          → #home
+Videos        → #videos
+Design        → #graphic-design
+Mockups       → #mockups
+Skills        → #skills
+Case Studies  → #case-study
+Experience    → #experience
+About         → #about
+Contact       → #contact
+Agency        → /agency           (real route, not anchor)
+```
+
+Behavior (most already present, will verify / fix):
+
+- Smooth scroll to section via native hash navigation
+- Active section highlights orange via existing IntersectionObserver
+- Hides on scroll-down, reappears on scroll-up (already in place)
+- Transparent at top, `bg-background/80 backdrop-blur-xl` after 50px (already in place)
+- Mobile menu: opens from the right (currently full-screen overlay — switch to right-side slide-in sheet), each link closes the menu on click
+- "View CV" button always visible on the right on desktop; on mobile it stays inside the menu
+- Agency link is rendered as an `<a href="/agency">` (full page navigation) and styled distinctly (small orange pill) so it stands out from anchor links
+
+## 5. Section IDs to add / confirm
+
+So navbar anchors actually resolve, ensure these ids exist on the section wrappers:
+`home, videos, graphic-design, mockups, about, services, media-buying, skills, case-study, experience, certifications, testimonials, faq, contact`.
+
+## 6. Scroll animations
+
+Each new and rearranged section uses the existing `ScrollReveal` / Framer Motion `whileInView` pattern already in the project — no new animation library, respects `prefers-reduced-motion`.
+
+## 7. Technical details
+
+- Files created: `src/components/ServicesPricing.tsx`, `src/components/Certifications.tsx`
+- Files edited: `src/pages/Index.tsx` (imports + JSX reorder, add the two new lazy imports, render `PrintMockup` and `MediaBuying` which are already imported but currently unrendered), `src/components/Navigation.tsx` (navLinks array, Agency link, right-side mobile sheet), `src/components/SkillsStats.tsx` (data sync only if needed)
+- No changes to routing (Agency route already exists), no changes to backend, no new dependencies
+- After implementing, I'll verify in the preview that every navbar link scrolls to a real section and that no section is missing or rendered twice
