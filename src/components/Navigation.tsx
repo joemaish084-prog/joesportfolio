@@ -205,10 +205,9 @@ export function Navigation() {
           >
             <FileText className="mr-2 h-5 w-5" />
             View CV
-            </Button>
-          </div>
+          </Button>
         </div>
-      )}
+      </aside>
 
       <Suspense fallback={null}>
         <CVViewer open={cvOpen} onClose={() => setCvOpen(false)} />
