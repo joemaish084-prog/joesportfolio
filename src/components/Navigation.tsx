@@ -8,10 +8,10 @@ const CVViewer = lazy(() => import("./CVViewer").then(m => ({ default: m.CVViewe
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Videos", href: "#videos" },
-  { name: "Media Buying", href: "#media-buying" },
   { name: "Design", href: "#graphic-design" },
-  { name: "Social Media", href: "#social-media" },
-  { name: "Case Study", href: "#case-study" },
+  { name: "Mockups", href: "#mockups" },
+  { name: "Skills", href: "#skills" },
+  { name: "Case Studies", href: "#case-study" },
   { name: "Experience", href: "#experience" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
