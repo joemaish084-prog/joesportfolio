@@ -148,7 +148,7 @@ export function FeaturedProjectExpanded({
                     className="w-full group relative overflow-hidden rounded-xl border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
                   >
                     <div className="relative aspect-[4/5] overflow-hidden">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={item.thumbnail}
                         alt={item.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -188,7 +188,7 @@ export function FeaturedProjectExpanded({
           <DialogTitle className="sr-only">{selectedImage?.title}</DialogTitle>
           {selectedImage && (
             <div className="relative">
-              <img
+              <img loading="lazy" decoding="async"
                 src={selectedImage.fullImage || selectedImage.thumbnail}
                 alt={selectedImage.title}
                 className="w-full h-auto"

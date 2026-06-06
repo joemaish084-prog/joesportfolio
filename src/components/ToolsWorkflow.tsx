@@ -3,21 +3,21 @@ import { Sparkles } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
 
 // Import brand icons
-import iconMeta from "@/assets/icon-meta.png";
-import iconGemini from "@/assets/icon-gemini.png";
-import iconChatgpt from "@/assets/icon-chatgpt.png";
-import iconDavinci from "@/assets/icon-davinci.png";
-import iconPremiere from "@/assets/icon-premiere.png";
-import iconCanva from "@/assets/icon-canva.png";
-import iconClaude from "@/assets/icon-claude.png";
-import iconCapcut from "@/assets/icon-capcut.png";
-import iconInstagram from "@/assets/icon-instagram.png";
-import iconTiktok from "@/assets/icon-tiktok.png";
-import iconFacebook from "@/assets/icon-facebook.png";
-import iconYoutube from "@/assets/icon-youtube.png";
-import iconLinkedin from "@/assets/icon-linkedin.png";
-import iconX from "@/assets/icon-x.png";
-import iconMidjourney from "@/assets/icon-midjourney.png";
+import iconMeta from "@/assets/icon-meta.webp";
+import iconGemini from "@/assets/icon-gemini.webp";
+import iconChatgpt from "@/assets/icon-chatgpt.webp";
+import iconDavinci from "@/assets/icon-davinci.webp";
+import iconPremiere from "@/assets/icon-premiere.webp";
+import iconCanva from "@/assets/icon-canva.webp";
+import iconClaude from "@/assets/icon-claude.webp";
+import iconCapcut from "@/assets/icon-capcut.webp";
+import iconInstagram from "@/assets/icon-instagram.webp";
+import iconTiktok from "@/assets/icon-tiktok.webp";
+import iconFacebook from "@/assets/icon-facebook.webp";
+import iconYoutube from "@/assets/icon-youtube.webp";
+import iconLinkedin from "@/assets/icon-linkedin.webp";
+import iconX from "@/assets/icon-x.webp";
+import iconMidjourney from "@/assets/icon-midjourney.webp";
 
 const tools = [
   { name: "Canva", proficiency: 95, icon: iconCanva },

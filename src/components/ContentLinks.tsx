@@ -1,8 +1,8 @@
 import { ExternalLink } from "lucide-react";
-import podcastThumbnail from "@/assets/convey-podcast-thumbnail.png";
-import youtubeThumbnail from "@/assets/content-youtube-thumbnail.jpg";
-import tiktokThumbnail from "@/assets/content-tiktok-thumbnail.jpg";
-import asdspThumbnail from "@/assets/content-asdsp-thumbnail.png";
+import podcastThumbnail from "@/assets/convey-podcast-thumbnail.webp";
+import youtubeThumbnail from "@/assets/content-youtube-thumbnail.webp";
+import tiktokThumbnail from "@/assets/content-tiktok-thumbnail.webp";
+import asdspThumbnail from "@/assets/content-asdsp-thumbnail.webp";
 
 const contentLinks = [
   {
@@ -58,7 +58,7 @@ export function ContentLinks() {
               className="group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant hover:-translate-y-1"
             >
               <div className="relative aspect-video overflow-hidden">
-                <img
+                <img loading="lazy" decoding="async"
                   src={content.thumbnail}
                   alt={content.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
