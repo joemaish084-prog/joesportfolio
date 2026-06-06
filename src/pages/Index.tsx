@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
 import { Video, Palette, DollarSign, BarChart3, Briefcase, HelpCircle } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 // Lazy-load Hero to split framer-motion out of the critical path and reduce longest task
 const Hero = lazy(() => import("@/components/Hero").then(m => ({ default: m.Hero })));
@@ -48,6 +49,9 @@ const Index = () => {
 
   return (
     <>
+      <Helmet>
+        <link rel="canonical" href="https://www.josephmaina.co.ke/" />
+      </Helmet>
       {!splashDone && <Suspense fallback={null}><SplashScreen onComplete={() => setSplashDone(true)} /></Suspense>}
       <div className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
         <Suspense fallback={null}><ScrollProgress /></Suspense>

@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, Wallet, Flag, Zap,
   CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Landmark, FileText, Star,
@@ -108,40 +109,6 @@ const Agency = () => {
   const [form, setForm] = useState({ name: "", brand: "", service: "", budget: "", goals: "" });
   const [sending, setSending] = useState(false);
 
-  useEffect(() => {
-    document.title = "Digital Marketing Services Nairobi | Joseph Maina";
-
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prevDesc = metaDesc?.getAttribute("content") || "";
-    metaDesc?.setAttribute("content", "Professional digital marketing services in Nairobi, Kenya. Meta Ads, Google Ads, TikTok, SEO & brand strategy. Book a free discovery call today.");
-
-    const ld = document.createElement("script");
-    ld.type = "application/ld+json";
-    ld.id = "agency-localbusiness-jsonld";
-    ld.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "@id": "https://www.josephmaina.co.ke/agency#localbusiness",
-      name: "Joseph Maina — Digital Marketing Agency",
-      image: "https://www.josephmaina.co.ke/og-image.jpg",
-      url: "https://www.josephmaina.co.ke/agency",
-      telephone: "+254704700160",
-      priceRange: "KES",
-      address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
-      areaServed: "Kenya",
-      sameAs: [
-        "https://www.linkedin.com/in/joseph-isaac-m-33a9a611b/",
-        "https://www.instagram.com/m_k_ush_/",
-      ],
-    });
-    document.head.appendChild(ld);
-
-    return () => {
-      document.title = "Joseph Maina — Digital Marketing Specialist Nairobi";
-      if (prevDesc) metaDesc?.setAttribute("content", prevDesc);
-      document.getElementById("agency-localbusiness-jsonld")?.remove();
-    };
-  }, []);
 
   const submitBrief = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -169,6 +136,29 @@ const Agency = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Digital Marketing Services Nairobi | Joseph Maina Agency</title>
+        <meta name="description" content="Professional digital marketing services in Nairobi, Kenya. Meta Ads, Google Ads, TikTok Ads, SEO & Media Buying from KES 15,000/mo. Book a free discovery call today." />
+        <link rel="canonical" href="https://www.josephmaina.co.ke/agency" />
+        <meta property="og:title" content="Joseph Maina | Digital Marketing Agency Nairobi" />
+        <meta property="og:url" content="https://www.josephmaina.co.ke/agency" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "@id": "https://www.josephmaina.co.ke/agency#localbusiness",
+          name: "Joseph Maina — Digital Marketing Agency",
+          image: "https://www.josephmaina.co.ke/og-image.jpg",
+          url: "https://www.josephmaina.co.ke/agency",
+          telephone: "+254704700160",
+          priceRange: "KES",
+          address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
+          areaServed: "Kenya",
+          sameAs: [
+            "https://www.linkedin.com/in/joseph-isaac-m-33a9a611b/",
+            "https://www.instagram.com/m_k_ush_/",
+          ],
+        })}</script>
+      </Helmet>
       {/* Navbar */}
       <header className="border-b border-border/40 sticky top-0 bg-background/80 backdrop-blur-md z-50">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
