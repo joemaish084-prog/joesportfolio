@@ -434,7 +434,7 @@ export function GraphicDesign() {
           </DialogTitle>
           {selectedDesign && (
             <div className="relative">
-              <img
+              <img loading="lazy" decoding="async"
                 src={selectedDesign.image}
                 alt={selectedDesign.title}
                 className="w-full h-auto"
