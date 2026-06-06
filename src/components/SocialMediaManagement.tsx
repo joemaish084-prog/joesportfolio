@@ -5,28 +5,28 @@ import { Badge } from "@/components/ui/badge";
 import { FeaturedProjectExpanded } from "@/components/FeaturedProjectExpanded";
 import { cn } from "@/lib/utils";
 
-import logoConvey from "@/assets/logo-convey.png";
-import logoTechmindset from "@/assets/logo-techmindset.png";
-import logoJoan from "@/assets/logo-joan.png";
-import logoIclear from "@/assets/logo-iclear.png";
-import logoNorthgate from "@/assets/logo-northgate.png";
-import logoPowwater from "@/assets/logo-powwater.png";
+import logoConvey from "@/assets/logo-convey.webp";
+import logoTechmindset from "@/assets/logo-techmindset.webp";
+import logoJoan from "@/assets/logo-joan.webp";
+import logoIclear from "@/assets/logo-iclear.webp";
+import logoNorthgate from "@/assets/logo-northgate.webp";
+import logoPowwater from "@/assets/logo-powwater.webp";
 
 // Design assets
-import waterPurifiers from "@/assets/design-water-purifiers.png";
-import waterJourney from "@/assets/design-water-journey.png";
-import iclearFacebook from "@/assets/design-iclear-facebook.png";
-import iclearNewMonth from "@/assets/design-iclear-new-month.png";
-import iclearOct from "@/assets/design-iclear-oct.png";
-import iclearMonday from "@/assets/design-iclear-monday.png";
-import iclearHomes from "@/assets/design-iclear-homes.png";
-import iclearDecember from "@/assets/design-iclear-december.png";
-import iclearParachute from "@/assets/design-iclear-parachute.png";
-import iclearFilter from "@/assets/design-iclear-filter.png";
-import podcastCover from "@/assets/design-podcast-cover.png";
-import tecno1 from "@/assets/design-tecno-1.png";
-import tecno2 from "@/assets/design-tecno-2.png";
-import tecno3 from "@/assets/design-tecno-3.png";
+import waterPurifiers from "@/assets/design-water-purifiers.webp";
+import waterJourney from "@/assets/design-water-journey.webp";
+import iclearFacebook from "@/assets/design-iclear-facebook.webp";
+import iclearNewMonth from "@/assets/design-iclear-new-month.webp";
+import iclearOct from "@/assets/design-iclear-oct.webp";
+import iclearMonday from "@/assets/design-iclear-monday.webp";
+import iclearHomes from "@/assets/design-iclear-homes.webp";
+import iclearDecember from "@/assets/design-iclear-december.webp";
+import iclearParachute from "@/assets/design-iclear-parachute.webp";
+import iclearFilter from "@/assets/design-iclear-filter.webp";
+import podcastCover from "@/assets/design-podcast-cover.webp";
+import tecno1 from "@/assets/design-tecno-1.webp";
+import tecno2 from "@/assets/design-tecno-2.webp";
+import tecno3 from "@/assets/design-tecno-3.webp";
 
 // New design assets
 import freeFilterCampaign from "@/assets/design-free-filter-campaign.webp";
@@ -41,10 +41,10 @@ import schoolChristmas from "@/assets/design-school-christmas.webp";
 import christmasNewyear from "@/assets/design-christmas-newyear.webp";
 
 // Content thumbnails
-import contentYoutube from "@/assets/content-youtube-thumbnail.jpg";
-import contentTiktok from "@/assets/content-tiktok-thumbnail.jpg";
-import contentAsdsp from "@/assets/content-asdsp-thumbnail.png";
-import conveyPodcast from "@/assets/convey-podcast-thumbnail.png";
+import contentYoutube from "@/assets/content-youtube-thumbnail.webp";
+import contentTiktok from "@/assets/content-tiktok-thumbnail.webp";
+import contentAsdsp from "@/assets/content-asdsp-thumbnail.webp";
+import conveyPodcast from "@/assets/convey-podcast-thumbnail.webp";
 
 const brandsManagedData = [
   { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },

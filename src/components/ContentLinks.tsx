@@ -1,8 +1,8 @@
 import { ExternalLink } from "lucide-react";
-import podcastThumbnail from "@/assets/convey-podcast-thumbnail.png";
-import youtubeThumbnail from "@/assets/content-youtube-thumbnail.jpg";
-import tiktokThumbnail from "@/assets/content-tiktok-thumbnail.jpg";
-import asdspThumbnail from "@/assets/content-asdsp-thumbnail.png";
+import podcastThumbnail from "@/assets/convey-podcast-thumbnail.webp";
+import youtubeThumbnail from "@/assets/content-youtube-thumbnail.webp";
+import tiktokThumbnail from "@/assets/content-tiktok-thumbnail.webp";
+import asdspThumbnail from "@/assets/content-asdsp-thumbnail.webp";
 
 const contentLinks = [
   {
