@@ -55,7 +55,7 @@ export function Contact() {
         message: formData.message.trim(),
         to_name: "Joseph Maina",
       }, EMAILJS_PUBLIC_KEY);
-      toast({ title: "✅ Message sent!", description: "I'll reply within 24 hours." });
+      toast({ title: "Message sent", description: "I'll reply within 24 hours." });
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
     } catch (error) {
