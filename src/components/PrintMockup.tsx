@@ -30,8 +30,8 @@ export function PrintMockup() {
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Badge */}
         <ScrollReveal direction="fade" className="flex justify-center mb-4">
-          <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1.5 text-sm animate-pulse">
-            🎨 New Section
+          <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1.5 text-sm animate-pulse gap-1.5">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden /> New Section
           </Badge>
         </ScrollReveal>
 
