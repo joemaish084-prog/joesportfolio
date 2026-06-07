@@ -36,28 +36,28 @@ const stats = [
 ];
 
 const whyCards = [
-  { icon: Target, emoji: "🎯", title: "Results You Can Measure", desc: "Every campaign tracked with clear KPIs — reach, leads, conversions and ROI. No vanity metrics." },
-  { icon: Wallet, emoji: "💰", title: "Your Budget Is Sacred", desc: "I treat every shilling like my own. Zero wasteful spending, maximum return on every campaign." },
-  { icon: Flag, emoji: "🇰🇪", title: "Kenya Market Expert", desc: "Deep understanding of Kenyan consumer behavior, peak seasons and what actually converts locally." },
-  { icon: Zap, emoji: "⚡", title: "Fast & Transparent", desc: "Weekly updates, monthly reports and always available on WhatsApp. No chasing, no guessing." },
+  { icon: Target, title: "Results You Can Measure", desc: "Every campaign tracked with clear KPIs — reach, leads, conversions and ROI. No vanity metrics." },
+  { icon: ShieldCheck, title: "Your Budget Is Sacred", desc: "I treat every shilling like my own. Zero wasteful spending, maximum return on every campaign." },
+  { icon: MapPin, title: "Kenya Market Expert", desc: "Deep understanding of Kenyan consumer behavior, peak seasons and what actually converts locally." },
+  { icon: Zap, title: "Fast & Transparent", desc: "Weekly updates, monthly reports and always available on WhatsApp. No chasing, no guessing." },
 ];
 
 const services = [
-  { emoji: "📱", name: "Social Media Management", price: "From KES 15,000/mo", features: ["2 platforms managed", "12 posts per month", "Community management", "Monthly performance report"], cta: "Get Started" },
-  { emoji: "📊", name: "Meta Ads Management", price: "From KES 20,000/mo", features: ["Facebook & Instagram ads", "Audience research", "Ad creative strategy", "Weekly optimization", "Bi-weekly reports"], cta: "Get Started" },
-  { emoji: "🎵", name: "TikTok Ads Management", price: "From KES 15,000/mo", features: ["TikTok campaign setup", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reports"], cta: "Get Started" },
-  { emoji: "🔍", name: "Google Ads Management", price: "From KES 20,000/mo", features: ["Search & Display campaigns", "Keyword research", "Bid management", "Conversion tracking", "Monthly reports"], cta: "Get Started" },
-  { emoji: "💰", name: "Media Buying", price: "From KES 50,000/mo", features: ["Multi-platform ad buying", "KES 500K+ budgets managed", "Full funnel strategy", "Weekly reporting", "ROAS optimization"], cta: "Let's Talk" },
-  { emoji: "🎯", name: "Full Digital Package", price: "From KES 65,000/mo", badge: "Most Popular ⭐", features: ["Everything in all packages", "Brand strategy", "Content creation", "SEO optimization", "Priority support"], cta: "Get Started", highlight: true },
-  { emoji: "🧠", name: "Strategy Consultation", price: "KES 3,500 per session", features: ["60-minute strategy call", "Digital audit of your brand", "Custom recommendations", "Action plan document", "1 week email support"], cta: "Book Session" },
+  { icon: Smartphone, name: "Social Media Management", price: "From KES 15,000/mo", features: ["2 platforms managed", "12 posts per month", "Community management", "Monthly performance report"], cta: "Get Started" },
+  { icon: BarChart3, name: "Meta Ads Management", price: "From KES 20,000/mo", features: ["Facebook & Instagram ads", "Audience research", "Ad creative strategy", "Weekly optimization", "Bi-weekly reports"], cta: "Get Started" },
+  { icon: Video, name: "TikTok Ads Management", price: "From KES 15,000/mo", features: ["TikTok campaign setup", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reports"], cta: "Get Started" },
+  { icon: Search, name: "Google Ads Management", price: "From KES 20,000/mo", features: ["Search & Display campaigns", "Keyword research", "Bid management", "Conversion tracking", "Monthly reports"], cta: "Get Started" },
+  { icon: TrendingUp, name: "Media Buying", price: "From KES 50,000/mo", features: ["Multi-platform ad buying", "KES 500K+ budgets managed", "Full funnel strategy", "Weekly reporting", "ROAS optimization"], cta: "Let's Talk" },
+  { icon: Target, name: "Full Digital Package", price: "From KES 65,000/mo", badge: "Most Popular", features: ["Everything in all packages", "Brand strategy", "Content creation", "SEO optimization", "Priority support"], cta: "Get Started", highlight: true },
+  { icon: Lightbulb, name: "Strategy Consultation", price: "KES 3,500 per session", features: ["60-minute strategy call", "Digital audit of your brand", "Custom recommendations", "Action plan document", "1 week email support"], cta: "Book Session" },
 ];
 
 const steps = [
-  { icon: CalendarDays, emoji: "🗓️", title: "Discovery Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
-  { icon: ClipboardList, emoji: "📋", title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
-  { icon: PenLine, emoji: "✍️", title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
-  { icon: Rocket, emoji: "🚀", title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
-  { icon: BarChart3, emoji: "📊", title: "Report & Grow", desc: "Weekly updates and monthly reports. We optimize, scale and keep growing." },
+  { icon: CalendarDays, title: "Discovery Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
+  { icon: ClipboardList, title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
+  { icon: PenLine, title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
+  { icon: Rocket, title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
+  { icon: BarChart3, title: "Report & Grow", desc: "Weekly updates and monthly reports. We optimize, scale and keep growing." },
 ];
 
 const caseStudies = [
@@ -67,9 +67,9 @@ const caseStudies = [
 ];
 
 const payments = [
-  { icon: CreditCard, emoji: "💳", title: "M-Pesa", desc: "Pay instantly via M-Pesa STK push. Paybill or Till number provided on invoice." },
-  { icon: Landmark, emoji: "🏦", title: "Bank Transfer", desc: "Direct bank transfer for larger retainers. Details on invoice." },
-  { icon: FileText, emoji: "📄", title: "Invoice & Receipt", desc: "Professional invoice sent within 1 hour of booking confirmation. Receipt on payment." },
+  { icon: CreditCard, title: "M-Pesa", desc: "Pay instantly via M-Pesa STK push. Paybill or Till number provided on invoice." },
+  { icon: Building2, title: "Bank Transfer", desc: "Direct bank transfer for larger retainers. Details on invoice." },
+  { icon: Receipt, title: "Invoice & Receipt", desc: "Professional invoice sent within 1 hour of booking confirmation. Receipt on payment." },
 ];
 
 const faqs = [
