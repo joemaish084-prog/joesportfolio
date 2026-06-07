@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Facebook, Search, Music2, Linkedin, MonitorPlay, TrendingUp, Target, BarChart3, Lightbulb, Flag, ArrowRight, Sparkles } from "lucide-react";
+import { Facebook, Search, Music2, Linkedin, MonitorPlay, TrendingUp, Target, BarChart3, Lightbulb, MapPin, ArrowRight, Sparkles, DollarSign } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
