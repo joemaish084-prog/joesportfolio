@@ -104,7 +104,7 @@ export function MediaBuying() {
         {/* Header */}
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
-            <Badge variant="secondary" className="text-sm px-4 py-1.5">💰 Paid Media</Badge>
+            <Badge variant="secondary" className="text-sm px-4 py-1.5 gap-1.5"><DollarSign className="h-3.5 w-3.5" aria-hidden /> Paid Media</Badge>
             <h2 id="media-buying-heading" className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
               Media Buying & <span className="text-gradient">Paid Advertising</span>
             </h2>
