@@ -430,7 +430,7 @@ const Agency = () => {
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {payments.map((p) => (
               <Card key={p.title} className="p-6 text-center">
-                <div className="text-3xl mb-3">{p.emoji}</div>
+                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20"><p.icon className="h-6 w-6 text-primary" aria-hidden /></div>
                 <h3 className="font-display text-lg font-semibold mb-2">{p.title}</h3>
                 <p className="text-sm text-muted-foreground">{p.desc}</p>
               </Card>
