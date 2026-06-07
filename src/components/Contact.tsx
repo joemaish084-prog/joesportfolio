@@ -60,7 +60,7 @@ export function Contact() {
       setErrors({});
     } catch (error) {
       console.error("EmailJS error:", error);
-      toast({ title: "❌ Something went wrong", description: "Please email me directly at joemaish084@gmail.com", variant: "destructive" });
+      toast({ title: "Something went wrong", description: "Please email me directly at joemaish084@gmail.com", variant: "destructive" });
     } finally {
       setIsSending(false);
     }
