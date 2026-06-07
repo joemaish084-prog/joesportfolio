@@ -182,7 +182,7 @@ const Agency = () => {
         <section className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-              🚀 Digital Marketing Agency
+              <Sparkles className="h-4 w-4" aria-hidden /> Digital Marketing Agency
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight max-w-4xl mx-auto">
               Grow Your Brand With <span className="text-gradient">Data-Driven</span> Marketing
