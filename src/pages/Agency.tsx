@@ -225,7 +225,7 @@ const Agency = () => {
             {whyCards.map((c, i) => (
               <motion.div key={c.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Card className="p-6 h-full hover:border-primary/40 transition-colors">
-                  <div className="text-3xl mb-3">{c.emoji}</div>
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-110"><c.icon className="h-6 w-6 text-primary" aria-hidden /></div>
                   <h3 className="font-display text-lg font-semibold mb-2">{c.title}</h3>
                   <p className="text-sm text-muted-foreground">{c.desc}</p>
                 </Card>
