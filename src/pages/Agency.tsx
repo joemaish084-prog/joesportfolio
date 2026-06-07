@@ -13,8 +13,9 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
-  ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, Wallet, Flag, Zap,
-  CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Landmark, FileText, Star,
+  ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
+  CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
+  Smartphone, Video, Search, TrendingUp, Lightbulb, Send, ArrowRight, Sparkles,
 } from "lucide-react";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
