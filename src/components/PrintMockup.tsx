@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Lock, Mail, CheckCircle } from "lucide-react";
+import { Lock, Mail, CheckCircle, Sparkles, ArrowDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
