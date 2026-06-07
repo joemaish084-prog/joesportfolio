@@ -55,12 +55,12 @@ export function Contact() {
         message: formData.message.trim(),
         to_name: "Joseph Maina",
       }, EMAILJS_PUBLIC_KEY);
-      toast({ title: "✅ Message sent!", description: "I'll reply within 24 hours." });
+      toast({ title: "Message sent", description: "I'll reply within 24 hours." });
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
     } catch (error) {
       console.error("EmailJS error:", error);
-      toast({ title: "❌ Something went wrong", description: "Please email me directly at joemaish084@gmail.com", variant: "destructive" });
+      toast({ title: "Something went wrong", description: "Please email me directly at joemaish084@gmail.com", variant: "destructive" });
     } finally {
       setIsSending(false);
     }

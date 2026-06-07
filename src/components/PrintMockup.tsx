@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Lock, Mail, CheckCircle } from "lucide-react";
+import { Lock, Mail, CheckCircle, Sparkles, ArrowDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -30,8 +30,8 @@ export function PrintMockup() {
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Badge */}
         <ScrollReveal direction="fade" className="flex justify-center mb-4">
-          <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1.5 text-sm animate-pulse">
-            🎨 New Section
+          <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1.5 text-sm animate-pulse gap-1.5">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden /> New Section
           </Badge>
         </ScrollReveal>
 
@@ -89,8 +89,8 @@ export function PrintMockup() {
         {/* Notify form */}
         <ScrollReveal direction="up" delay={0.6}>
           <div className="max-w-md mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-3">
-              Get notified when mockups go live 👇
+            <p className="text-sm text-muted-foreground mb-3 inline-flex items-center gap-1.5 justify-center">
+              Get notified when mockups go live <ArrowDown className="h-4 w-4" aria-hidden />
             </p>
 
             {submitted ? (

@@ -11,7 +11,7 @@ interface Message {
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-assistant`;
 
-const GREETING = "Hi! 👋 I'm Joseph's AI assistant. Ask me about his services, digital marketing tips, or how to get in touch!";
+const GREETING = "Hi! I'm Joseph's AI assistant. Ask me about his services, digital marketing tips, or how to get in touch!";
 
 export function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);

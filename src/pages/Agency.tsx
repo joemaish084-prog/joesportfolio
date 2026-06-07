@@ -13,8 +13,9 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
-  ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, Wallet, Flag, Zap,
-  CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Landmark, FileText, Star,
+  ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
+  CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
+  Smartphone, Video, Search, TrendingUp, Lightbulb, Send, ArrowRight, Sparkles,
 } from "lucide-react";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
@@ -35,28 +36,28 @@ const stats = [
 ];
 
 const whyCards = [
-  { icon: Target, emoji: "🎯", title: "Results You Can Measure", desc: "Every campaign tracked with clear KPIs — reach, leads, conversions and ROI. No vanity metrics." },
-  { icon: Wallet, emoji: "💰", title: "Your Budget Is Sacred", desc: "I treat every shilling like my own. Zero wasteful spending, maximum return on every campaign." },
-  { icon: Flag, emoji: "🇰🇪", title: "Kenya Market Expert", desc: "Deep understanding of Kenyan consumer behavior, peak seasons and what actually converts locally." },
-  { icon: Zap, emoji: "⚡", title: "Fast & Transparent", desc: "Weekly updates, monthly reports and always available on WhatsApp. No chasing, no guessing." },
+  { icon: Target, title: "Results You Can Measure", desc: "Every campaign tracked with clear KPIs — reach, leads, conversions and ROI. No vanity metrics." },
+  { icon: ShieldCheck, title: "Your Budget Is Sacred", desc: "I treat every shilling like my own. Zero wasteful spending, maximum return on every campaign." },
+  { icon: MapPin, title: "Kenya Market Expert", desc: "Deep understanding of Kenyan consumer behavior, peak seasons and what actually converts locally." },
+  { icon: Zap, title: "Fast & Transparent", desc: "Weekly updates, monthly reports and always available on WhatsApp. No chasing, no guessing." },
 ];
 
 const services = [
-  { emoji: "📱", name: "Social Media Management", price: "From KES 15,000/mo", features: ["2 platforms managed", "12 posts per month", "Community management", "Monthly performance report"], cta: "Get Started" },
-  { emoji: "📊", name: "Meta Ads Management", price: "From KES 20,000/mo", features: ["Facebook & Instagram ads", "Audience research", "Ad creative strategy", "Weekly optimization", "Bi-weekly reports"], cta: "Get Started" },
-  { emoji: "🎵", name: "TikTok Ads Management", price: "From KES 15,000/mo", features: ["TikTok campaign setup", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reports"], cta: "Get Started" },
-  { emoji: "🔍", name: "Google Ads Management", price: "From KES 20,000/mo", features: ["Search & Display campaigns", "Keyword research", "Bid management", "Conversion tracking", "Monthly reports"], cta: "Get Started" },
-  { emoji: "💰", name: "Media Buying", price: "From KES 50,000/mo", features: ["Multi-platform ad buying", "KES 500K+ budgets managed", "Full funnel strategy", "Weekly reporting", "ROAS optimization"], cta: "Let's Talk" },
-  { emoji: "🎯", name: "Full Digital Package", price: "From KES 65,000/mo", badge: "Most Popular ⭐", features: ["Everything in all packages", "Brand strategy", "Content creation", "SEO optimization", "Priority support"], cta: "Get Started", highlight: true },
-  { emoji: "🧠", name: "Strategy Consultation", price: "KES 3,500 per session", features: ["60-minute strategy call", "Digital audit of your brand", "Custom recommendations", "Action plan document", "1 week email support"], cta: "Book Session" },
+  { icon: Smartphone, name: "Social Media Management", price: "From KES 15,000/mo", features: ["2 platforms managed", "12 posts per month", "Community management", "Monthly performance report"], cta: "Get Started" },
+  { icon: BarChart3, name: "Meta Ads Management", price: "From KES 20,000/mo", features: ["Facebook & Instagram ads", "Audience research", "Ad creative strategy", "Weekly optimization", "Bi-weekly reports"], cta: "Get Started" },
+  { icon: Video, name: "TikTok Ads Management", price: "From KES 15,000/mo", features: ["TikTok campaign setup", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reports"], cta: "Get Started" },
+  { icon: Search, name: "Google Ads Management", price: "From KES 20,000/mo", features: ["Search & Display campaigns", "Keyword research", "Bid management", "Conversion tracking", "Monthly reports"], cta: "Get Started" },
+  { icon: TrendingUp, name: "Media Buying", price: "From KES 50,000/mo", features: ["Multi-platform ad buying", "KES 500K+ budgets managed", "Full funnel strategy", "Weekly reporting", "ROAS optimization"], cta: "Let's Talk" },
+  { icon: Target, name: "Full Digital Package", price: "From KES 65,000/mo", badge: "Most Popular", features: ["Everything in all packages", "Brand strategy", "Content creation", "SEO optimization", "Priority support"], cta: "Get Started", highlight: true },
+  { icon: Lightbulb, name: "Strategy Consultation", price: "KES 3,500 per session", features: ["60-minute strategy call", "Digital audit of your brand", "Custom recommendations", "Action plan document", "1 week email support"], cta: "Book Session" },
 ];
 
 const steps = [
-  { icon: CalendarDays, emoji: "🗓️", title: "Discovery Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
-  { icon: ClipboardList, emoji: "📋", title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
-  { icon: PenLine, emoji: "✍️", title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
-  { icon: Rocket, emoji: "🚀", title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
-  { icon: BarChart3, emoji: "📊", title: "Report & Grow", desc: "Weekly updates and monthly reports. We optimize, scale and keep growing." },
+  { icon: CalendarDays, title: "Discovery Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
+  { icon: ClipboardList, title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
+  { icon: PenLine, title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
+  { icon: Rocket, title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
+  { icon: BarChart3, title: "Report & Grow", desc: "Weekly updates and monthly reports. We optimize, scale and keep growing." },
 ];
 
 const caseStudies = [
@@ -66,9 +67,9 @@ const caseStudies = [
 ];
 
 const payments = [
-  { icon: CreditCard, emoji: "💳", title: "M-Pesa", desc: "Pay instantly via M-Pesa STK push. Paybill or Till number provided on invoice." },
-  { icon: Landmark, emoji: "🏦", title: "Bank Transfer", desc: "Direct bank transfer for larger retainers. Details on invoice." },
-  { icon: FileText, emoji: "📄", title: "Invoice & Receipt", desc: "Professional invoice sent within 1 hour of booking confirmation. Receipt on payment." },
+  { icon: CreditCard, title: "M-Pesa", desc: "Pay instantly via M-Pesa STK push. Paybill or Till number provided on invoice." },
+  { icon: Building2, title: "Bank Transfer", desc: "Direct bank transfer for larger retainers. Details on invoice." },
+  { icon: Receipt, title: "Invoice & Receipt", desc: "Professional invoice sent within 1 hour of booking confirmation. Receipt on payment." },
 ];
 
 const faqs = [
@@ -124,11 +125,11 @@ const Agency = () => {
         message: `New Agency Brief\n\nName: ${form.name}\nBrand: ${form.brand}\nService: ${form.service}\nBudget: ${form.budget}\n\nGoals:\n${form.goals}`,
         to_name: "Joseph Maina",
       }, EMAILJS_PUBLIC_KEY);
-      toast({ title: "✅ Brief sent!", description: "I'll reply within 24 hours." });
+      toast({ title: "Brief sent", description: "I'll reply within 24 hours." });
       setForm({ name: "", brand: "", service: "", budget: "", goals: "" });
     } catch (err) {
       console.error(err);
-      toast({ title: "❌ Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
+      toast({ title: "Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
     } finally {
       setSending(false);
     }
@@ -181,7 +182,7 @@ const Agency = () => {
         <section className="container mx-auto px-4 pt-16 md:pt-24 pb-12 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-              🚀 Digital Marketing Agency
+              <Sparkles className="h-4 w-4" aria-hidden /> Digital Marketing Agency
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight max-w-4xl mx-auto">
               Grow Your Brand With <span className="text-gradient">Data-Driven</span> Marketing
@@ -224,7 +225,7 @@ const Agency = () => {
             {whyCards.map((c, i) => (
               <motion.div key={c.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Card className="p-6 h-full hover:border-primary/40 transition-colors">
-                  <div className="text-3xl mb-3">{c.emoji}</div>
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-110"><c.icon className="h-6 w-6 text-primary" aria-hidden /></div>
                   <h3 className="font-display text-lg font-semibold mb-2">{c.title}</h3>
                   <p className="text-sm text-muted-foreground">{c.desc}</p>
                 </Card>
@@ -247,7 +248,7 @@ const Agency = () => {
                     {s.badge}
                   </div>
                 )}
-                <div className="text-3xl mb-3">{s.emoji}</div>
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20 transition-transform duration-300 hover:scale-110"><s.icon className="h-6 w-6 text-primary" aria-hidden /></div>
                 <h3 className="font-display text-xl font-semibold">{s.name}</h3>
                 <div className="text-2xl font-bold text-gradient mt-2 mb-4">{s.price}</div>
                 <ul className="space-y-2 mb-6 flex-1">
@@ -281,7 +282,7 @@ const Agency = () => {
                 className="relative">
                 <Card className="p-5 h-full text-center border-border/60">
                   <div className="w-10 h-10 rounded-full bg-gradient-orange text-white font-bold flex items-center justify-center mx-auto mb-3">{i + 1}</div>
-                  <div className="text-2xl mb-2">{s.emoji}</div>
+                  <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-2 ring-1 ring-primary/20"><s.icon className="h-5 w-5 text-primary" aria-hidden /></div>
                   <h3 className="font-display font-semibold mb-2">{s.title}</h3>
                   <p className="text-xs text-muted-foreground">{s.desc}</p>
                 </Card>
@@ -429,7 +430,7 @@ const Agency = () => {
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {payments.map((p) => (
               <Card key={p.title} className="p-6 text-center">
-                <div className="text-3xl mb-3">{p.emoji}</div>
+                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20"><p.icon className="h-6 w-6 text-primary" aria-hidden /></div>
                 <h3 className="font-display text-lg font-semibold mb-2">{p.title}</h3>
                 <p className="text-sm text-muted-foreground">{p.desc}</p>
               </Card>

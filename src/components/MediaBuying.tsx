@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Facebook, Search, Music2, Linkedin, MonitorPlay, TrendingUp, Target, BarChart3, Lightbulb, Flag, ArrowRight, Sparkles } from "lucide-react";
+import { Facebook, Search, Music2, Linkedin, MonitorPlay, TrendingUp, Target, BarChart3, Lightbulb, MapPin, ArrowRight, Sparkles, DollarSign } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
@@ -84,10 +84,10 @@ const steps = [
 ];
 
 const differentiators = [
-  { Icon: Lightbulb, emoji: "💡", title: "Budget Accountability", desc: "Every shilling tracked. No wasteful spending — I treat your budget like my own." },
-  { Icon: BarChart3, emoji: "📊", title: "Data-First Decisions", desc: "No guesswork. Every decision is backed by real campaign data and performance metrics." },
-  { Icon: Target, emoji: "🎯", title: "Full-Funnel Thinking", desc: "From cold audience awareness all the way to conversion — I manage the entire customer journey." },
-  { Icon: Flag, emoji: "🇰🇪", title: "Kenya Market Knowledge", desc: "Deep understanding of Kenyan consumer behavior, peak periods and what actually converts in the local market." },
+  { Icon: Lightbulb, title: "Budget Accountability", desc: "Every shilling tracked. No wasteful spending — I treat your budget like my own." },
+  { Icon: BarChart3, title: "Data-First Decisions", desc: "No guesswork. Every decision is backed by real campaign data and performance metrics." },
+  { Icon: Target, title: "Full-Funnel Thinking", desc: "From cold audience awareness all the way to conversion — I manage the entire customer journey." },
+  { Icon: MapPin, title: "Kenya Market Knowledge", desc: "Deep understanding of Kenyan consumer behavior, peak periods and what actually converts in the local market." },
 ];
 
 const tiers = [
@@ -104,7 +104,7 @@ export function MediaBuying() {
         {/* Header */}
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
-            <Badge variant="secondary" className="text-sm px-4 py-1.5">💰 Paid Media</Badge>
+            <Badge variant="secondary" className="text-sm px-4 py-1.5 gap-1.5"><DollarSign className="h-3.5 w-3.5" aria-hidden /> Paid Media</Badge>
             <h2 id="media-buying-heading" className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
               Media Buying & <span className="text-gradient">Paid Advertising</span>
             </h2>
@@ -201,7 +201,7 @@ export function MediaBuying() {
             {differentiators.map((d, i) => (
               <ScrollReveal key={d.title} delay={i * 0.06}>
                 <div className="h-full bg-card/40 border border-border rounded-xl p-6 hover:border-primary/40 transition-colors">
-                  <div className="text-3xl mb-3" aria-hidden>{d.emoji}</div>
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20"><d.Icon className="h-6 w-6 text-primary" aria-hidden /></div>
                   <h4 className="font-semibold mb-2">{d.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{d.desc}</p>
                 </div>
