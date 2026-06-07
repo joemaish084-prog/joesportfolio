@@ -89,8 +89,8 @@ export function PrintMockup() {
         {/* Notify form */}
         <ScrollReveal direction="up" delay={0.6}>
           <div className="max-w-md mx-auto text-center">
-            <p className="text-sm text-muted-foreground mb-3">
-              Get notified when mockups go live 👇
+            <p className="text-sm text-muted-foreground mb-3 inline-flex items-center gap-1.5 justify-center">
+              Get notified when mockups go live <ArrowDown className="h-4 w-4" aria-hidden />
             </p>
 
             {submitted ? (
