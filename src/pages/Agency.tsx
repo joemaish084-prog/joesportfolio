@@ -125,7 +125,7 @@ const Agency = () => {
         message: `New Agency Brief\n\nName: ${form.name}\nBrand: ${form.brand}\nService: ${form.service}\nBudget: ${form.budget}\n\nGoals:\n${form.goals}`,
         to_name: "Joseph Maina",
       }, EMAILJS_PUBLIC_KEY);
-      toast({ title: "✅ Brief sent!", description: "I'll reply within 24 hours." });
+      toast({ title: "Brief sent", description: "I'll reply within 24 hours." });
       setForm({ name: "", brand: "", service: "", budget: "", goals: "" });
     } catch (err) {
       console.error(err);
