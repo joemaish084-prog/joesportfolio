@@ -282,7 +282,7 @@ const Agency = () => {
                 className="relative">
                 <Card className="p-5 h-full text-center border-border/60">
                   <div className="w-10 h-10 rounded-full bg-gradient-orange text-white font-bold flex items-center justify-center mx-auto mb-3">{i + 1}</div>
-                  <div className="text-2xl mb-2">{s.emoji}</div>
+                  <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-2 ring-1 ring-primary/20"><s.icon className="h-5 w-5 text-primary" aria-hidden /></div>
                   <h3 className="font-display font-semibold mb-2">{s.title}</h3>
                   <p className="text-xs text-muted-foreground">{s.desc}</p>
                 </Card>
