@@ -201,7 +201,7 @@ export function MediaBuying() {
             {differentiators.map((d, i) => (
               <ScrollReveal key={d.title} delay={i * 0.06}>
                 <div className="h-full bg-card/40 border border-border rounded-xl p-6 hover:border-primary/40 transition-colors">
-                  <div className="text-3xl mb-3" aria-hidden>{d.emoji}</div>
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20"><d.Icon className="h-6 w-6 text-primary" aria-hidden /></div>
                   <h4 className="font-semibold mb-2">{d.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{d.desc}</p>
                 </div>
