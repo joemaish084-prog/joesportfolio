@@ -129,7 +129,7 @@ const Agency = () => {
       setForm({ name: "", brand: "", service: "", budget: "", goals: "" });
     } catch (err) {
       console.error(err);
-      toast({ title: "❌ Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
+      toast({ title: "Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
     } finally {
       setSending(false);
     }
