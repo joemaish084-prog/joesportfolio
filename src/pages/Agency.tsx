@@ -248,7 +248,7 @@ const Agency = () => {
                     {s.badge}
                   </div>
                 )}
-                <div className="text-3xl mb-3">{s.emoji}</div>
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20 transition-transform duration-300 hover:scale-110"><s.icon className="h-6 w-6 text-primary" aria-hidden /></div>
                 <h3 className="font-display text-xl font-semibold">{s.name}</h3>
                 <div className="text-2xl font-bold text-gradient mt-2 mb-4">{s.price}</div>
                 <ul className="space-y-2 mb-6 flex-1">
