@@ -84,10 +84,10 @@ const steps = [
 ];
 
 const differentiators = [
-  { Icon: Lightbulb, emoji: "💡", title: "Budget Accountability", desc: "Every shilling tracked. No wasteful spending — I treat your budget like my own." },
-  { Icon: BarChart3, emoji: "📊", title: "Data-First Decisions", desc: "No guesswork. Every decision is backed by real campaign data and performance metrics." },
-  { Icon: Target, emoji: "🎯", title: "Full-Funnel Thinking", desc: "From cold audience awareness all the way to conversion — I manage the entire customer journey." },
-  { Icon: Flag, emoji: "🇰🇪", title: "Kenya Market Knowledge", desc: "Deep understanding of Kenyan consumer behavior, peak periods and what actually converts in the local market." },
+  { Icon: Lightbulb, title: "Budget Accountability", desc: "Every shilling tracked. No wasteful spending — I treat your budget like my own." },
+  { Icon: BarChart3, title: "Data-First Decisions", desc: "No guesswork. Every decision is backed by real campaign data and performance metrics." },
+  { Icon: Target, title: "Full-Funnel Thinking", desc: "From cold audience awareness all the way to conversion — I manage the entire customer journey." },
+  { Icon: MapPin, title: "Kenya Market Knowledge", desc: "Deep understanding of Kenyan consumer behavior, peak periods and what actually converts in the local market." },
 ];
 
 const tiers = [
