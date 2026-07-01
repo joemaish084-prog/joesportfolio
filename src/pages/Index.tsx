@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
 import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
+import { PressFeatures } from "@/components/PressFeatures";
 import { Video, Palette, DollarSign, BarChart3, Briefcase, HelpCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
@@ -58,6 +59,7 @@ const Index = () => {
         <Navigation />
         <main>
           <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
+          <PressFeatures />
           <ExpandCollapseAll />
           <Suspense fallback={null}>
             <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="9+ Videos">
