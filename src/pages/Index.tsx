@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from "react";
 import { Navigation } from "@/components/Navigation";
 import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
+import { PressFeatures } from "@/components/PressFeatures";
 import { Video, Palette, DollarSign, BarChart3, Briefcase, HelpCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
