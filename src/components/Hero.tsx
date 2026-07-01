@@ -219,7 +219,7 @@ export function Hero() {
             <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base btn-hover" asChild>
               <a href="#experience">
                 <Briefcase className="mr-2 h-5 w-5" />
-                Hire Me as an Employee
+                Hire Me{"\u00a0"}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
