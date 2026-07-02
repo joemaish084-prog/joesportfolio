@@ -6,14 +6,6 @@ import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
 
 
-const rotatingLines = [
-  "I turn ideas into assets and attention into revenue.",
-  "Creative strategy that moves culture, and the numbers.",
-  "I don't just design content. I engineer impact.",
-  "From concept to conversion, I build what performs.",
-  "Where storytelling meets measurable growth.",
-  "I build campaigns that turn attention into measurable growth.",
-];
 
 const typingTitles = [
   "Digital Marketing Specialist",
