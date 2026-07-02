@@ -53,6 +53,41 @@ const faqs = [
     answer:
       "You can reach me directly through the contact section below, via email, or connect with me on LinkedIn. I respond within 24 hours.",
   },
+  {
+    question: "Do you offer digital marketing for restaurants and hospitality businesses in Nairobi?",
+    answer:
+      "Yes. I help restaurants, hotels and hospitality brands in Nairobi grow their online presence through Instagram marketing, Google Ads and local SEO. Many Nairobi restaurants see 30%+ more reservations through targeted digital campaigns.",
+  },
+  {
+    question: "Can you help e-commerce brands in Kenya with digital marketing?",
+    answer:
+      "Absolutely. I specialize in e-commerce marketing for Kenyan brands including Meta Ads for product sales, Google Shopping campaigns, TikTok Shop marketing and SEO for online stores.",
+  },
+  {
+    question: "Do you offer digital marketing for real estate companies in Nairobi?",
+    answer:
+      "Yes. Real estate is one of the highest ROI sectors for digital marketing in Kenya. I help real estate agents and developers generate qualified leads through Facebook Ads, Google Ads and content marketing.",
+  },
+  {
+    question: "Can you help startups in Kenya with their digital marketing?",
+    answer:
+      "Yes. I work with early-stage startups and SMEs across Kenya to build their digital presence from scratch — brand strategy, social media, SEO and paid ads all in one package.",
+  },
+  {
+    question: "What makes you different from a digital marketing agency in Nairobi?",
+    answer:
+      "Unlike large agencies where your account is managed by juniors, you work directly with me — a senior specialist with 3+ years of proven results. Faster decisions, personal attention and better ROI.",
+  },
+  {
+    question: "Do you offer affordable digital marketing packages for small businesses in Kenya?",
+    answer:
+      "Yes. I offer flexible packages starting from KES 15,000/month designed specifically for Kenyan SMEs and small businesses that want professional digital marketing without agency-level pricing.",
+  },
+  {
+    question: "Can you manage YouTube marketing and video campaigns in Kenya?",
+    answer:
+      "Yes. I handle YouTube Ads, video content strategy and YouTube SEO for brands in Kenya looking to build an audience through video content.",
+  },
 ];
 
 export function FAQ() {
