@@ -1,20 +1,11 @@
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
 
 
-const rotatingLines = [
-  "I turn ideas into assets and attention into revenue.",
-  "Creative strategy that moves culture, and the numbers.",
-  "I don't just design content. I engineer impact.",
-  "From concept to conversion, I build what performs.",
-  "Where storytelling meets measurable growth.",
-  "I build campaigns that turn attention into measurable growth.",
-];
 
 const typingTitles = [
   "Digital Marketing Specialist",
@@ -104,16 +95,7 @@ export function Hero() {
   const rectRef = useRef<DOMRect | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const isMobile = useIsMobile();
-  const [currentLine, setCurrentLine] = useState(0);
   const typedTitle = useTypingEffect(typingTitles);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentLine((prev) => (prev + 1) % rotatingLines.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Cache rect via ResizeObserver to avoid forced reflow on mousemove
   useEffect(() => {
@@ -176,38 +158,19 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight leading-tight max-w-4xl"
         >
-          Creative Strategy
-          <span className="text-gradient"> Meets </span>
-          Visual Storytelling
+          Digital Marketing Specialist
+          <span className="text-gradient"> &amp; Agency Owner </span>
+          | Nairobi, Kenya
         </motion.h1>
 
-        <motion.div
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-4 sm:mt-6 min-h-[3.5em] sm:min-h-[2.5em] relative overflow-visible max-w-2xl w-full"
+          className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto text-center px-2"
         >
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={currentLine}
-              initial={{ y: isMobile ? 0 : 30, opacity: 0, filter: "blur(4px)" }}
-              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-              exit={{ y: isMobile ? 0 : -30, opacity: 0, filter: "blur(4px)" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground absolute inset-0 flex items-center justify-center px-2"
-            >
-              <span className="inline-block text-center">
-                {rotatingLines[currentLine]}
-                <motion.span
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.5, duration: 0.4, ease: "easeOut" }}
-                  className="block h-[2px] mt-1 bg-gradient-to-r from-primary to-orange-light origin-left"
-                />
-              </span>
-            </motion.p>
-          </AnimatePresence>
-        </motion.div>
+          I help Kenyan brands and businesses grow online through Meta Ads, Google Ads, TikTok, SEO and Social Media Marketing. Based in Nairobi, Kenya.
+        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -230,8 +193,8 @@ export function Hero() {
               </Link>
             </Button>
           </div>
-          <p className="text-xs sm:text-sm text-muted-foreground text-center max-w-md px-4">
-            Whether you're a recruiter or a brand looking to grow — you're in the right place.
+          <p className="text-sm text-muted-foreground text-center max-w-xl px-4 leading-relaxed">
+            Looking for a digital marketing specialist in Nairobi? Whether you need Meta Ads management, Google Ads campaigns, TikTok marketing, SEO services or a full digital marketing strategy — I deliver real measurable results for Kenyan brands and businesses.
           </p>
         </motion.div>
 

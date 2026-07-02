@@ -169,6 +169,10 @@ export function Footer() {
           </p>
           <p>Built &amp; maintained by Joseph Isaac Maina</p>
         </div>
+
+        <div className="mt-6 text-xs text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
+          Joseph Maina — Digital Marketing Specialist in Nairobi, Kenya. Offering Meta Ads, Google Ads, TikTok Ads, SEO, Social Media Management and Media Buying services across Kenya and Africa.
+        </div>
       </div>
     </footer>
   );
