@@ -176,9 +176,9 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight leading-tight max-w-4xl"
         >
-          Creative Strategy
-          <span className="text-gradient"> Meets </span>
-          Visual Storytelling
+          Digital Marketing Specialist
+          <span className="text-gradient"> &amp; Agency Owner </span>
+          | Nairobi, Kenya
         </motion.h1>
 
         <motion.div
