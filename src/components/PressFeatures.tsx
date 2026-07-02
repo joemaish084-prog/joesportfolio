@@ -45,7 +45,7 @@ export function PressFeatures() {
                 <div className="relative">
                   <img
                     src={dailyNationFeature.url}
-                    alt={`${pub.name} article: ${pub.articleTitle}`}
+                    alt="Joseph Maina Digital Marketing Specialist Nairobi Kenya — Daily Nation press feature"
                     className="w-full h-auto object-cover"
                     loading="lazy"
                     width={1200}
