@@ -95,16 +95,7 @@ export function Hero() {
   const rectRef = useRef<DOMRect | null>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const isMobile = useIsMobile();
-  const [currentLine, setCurrentLine] = useState(0);
   const typedTitle = useTypingEffect(typingTitles);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentLine((prev) => (prev + 1) % rotatingLines.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Cache rect via ResizeObserver to avoid forced reflow on mousemove
   useEffect(() => {
