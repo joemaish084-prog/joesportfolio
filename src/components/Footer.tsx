@@ -138,6 +138,11 @@ export function Footer() {
                   Terms of Service
                 </Link>
               </li>
+              <li>
+                <Link to="/connect" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  Connect AI Assistant
+                </Link>
+              </li>
             </ul>
             <ul className="space-y-2.5 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
