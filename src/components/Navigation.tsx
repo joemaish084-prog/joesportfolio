@@ -1,62 +1,39 @@
-import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
-import { Menu, X, FileText } from "lucide-react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import PillNav from "./PillNav.jsx";
 
 const CVViewer = lazy(() => import("./CVViewer").then(m => ({ default: m.CVViewer })));
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Videos", href: "#videos" },
-  { name: "Design", href: "#graphic-design" },
-  { name: "Mockups", href: "#mockups" },
-  { name: "Skills", href: "#skills" },
-  { name: "Case Studies", href: "#case-study" },
-  { name: "Experience", href: "#experience" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { label: "Home", href: "#home" },
+  { label: "Videos", href: "#videos" },
+  { label: "Design", href: "#graphic-design" },
+  { label: "Cases", href: "#case-study" },
+  { label: "Experience", href: "#experience" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState("#home");
   const lastScrollY = useRef(0);
+  const [isVisible, setIsVisible] = useState(true);
 
-  const handleScroll = useCallback(() => {
-    const currentScrollY = window.scrollY;
-    const isAtTop = currentScrollY < 50;
-
-    setIsScrolled(!isAtTop);
-
-    if (isAtTop) {
-      setIsVisible(true);
-    } else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-      setIsVisible(false);
-    } else {
-      setIsVisible(true);
-    }
-
-    lastScrollY.current = currentScrollY;
-  }, []);
-
-  // Use IntersectionObserver for active section detection (avoids forced reflow)
+  // Active section via IntersectionObserver
   useEffect(() => {
-    const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
     const observers: IntersectionObserver[] = [];
-
-    sectionIds.forEach((id) => {
+    navLinks.forEach((link) => {
+      const id = link.href.replace("#", "");
       const el = document.getElementById(id);
       if (!el) return;
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id);
-            }
+            if (entry.isIntersecting) setActiveHref(`#${id}`);
           });
         },
         { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
@@ -64,150 +41,109 @@ export function Navigation() {
       observer.observe(el);
       observers.push(observer);
     });
-
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
+  // Hide-on-scroll-down
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y < 50) setIsVisible(true);
+      else if (y > lastScrollY.current && y > 120) setIsVisible(false);
+      else setIsVisible(true);
+      lastScrollY.current = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [isMobileMenuOpen]);
+  }, [mobileMenuOpen]);
 
   return (
     <>
-      <nav
-        aria-label="Main navigation"
+      <div
+        className="pill-nav-container"
         style={{
-          transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
-          transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          transform: `translateX(-50%) translateY(${isVisible ? "0" : "-140%"})`,
+          transition: "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-primary/10 shadow-[0_1px_20px_hsl(var(--primary)/0.08)]"
-            : "bg-transparent border-b border-transparent"
-        }`}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className={`flex items-center justify-between transition-all duration-300 ${
-              isScrolled ? "h-14 sm:h-16" : "h-16 sm:h-20"
-            }`}
-          >
-            <a href="#home" className="text-xl sm:text-2xl font-display font-bold">
-              <span className="text-foreground">Joseph</span>
-              <span className="text-primary">Maina</span>
+        <div className="pill-nav-wrap">
+          <PillNav
+            logo=""
+            logoAlt="Joseph Maina"
+            initialLoadAnimation
+            activeHref={activeHref}
+            baseColor="#0a0a0a"
+            pillColor="#F97316"
+            pillTextColor="#ffffff"
+            hoveredPillTextColor="#ffffff"
+            ease="power3.out"
+            items={navLinks}
+            mobileMenuOpen={mobileMenuOpen}
+            onMobileMenuClick={() => setMobileMenuOpen((v) => !v)}
+            onNavigate={() => setMobileMenuOpen(false)}
+          />
+
+          <div className="pill-nav-side">
+            <ThemeToggle />
+            <a
+              href="/agency"
+              className="text-xs font-semibold px-3 py-1.5 rounded-full bg-gradient-orange text-white shadow-[var(--shadow-orange-glow)] hover:brightness-110 transition"
+            >
+              Agency
             </a>
-
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-6 lg:gap-8">
-              {navLinks.map((link) => {
-                const sectionId = link.href.replace("#", "");
-                const isActive = activeSection === sectionId;
-                return (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    className={`text-sm font-medium transition-colors duration-200 nav-link-animated pb-1 ${
-                      isActive
-                        ? "text-primary"
-                        : "text-muted-foreground hover:text-primary"
-                    }`}
-                  >
-                    {link.name}
-                  </a>
-                );
-              })}
-              <a
-                href="/agency"
-                className="text-sm font-semibold px-3 py-1.5 rounded-full bg-gradient-orange text-white shadow-[var(--shadow-orange-glow)] hover:brightness-110 transition"
-              >
-                Agency
-              </a>
-              <ThemeToggle />
-              <Button
-                onClick={() => setCvOpen(true)}
-                className="shadow-elegant btn-hover bg-primary text-primary-foreground"
-              >
-                <FileText className="mr-2 h-4 w-4" />
-                View CV
-              </Button>
-            </div>
-
-            {/* Mobile Controls */}
-            <div className="flex items-center gap-2 md:hidden">
-              <ThemeToggle />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-                className="relative z-[80]"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </Button>
-            </div>
+            <Button
+              size="sm"
+              onClick={() => setCvOpen(true)}
+              className="shadow-elegant btn-hover bg-primary text-primary-foreground rounded-full h-9"
+            >
+              <FileText className="mr-1.5 h-4 w-4" />
+              View CV
+            </Button>
           </div>
         </div>
-      </nav>
 
-      {/* Mobile menu — slide from right */}
-      <div
-        className={`fixed inset-0 z-[60] md:hidden transition-opacity duration-300 ${
-          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={() => setIsMobileMenuOpen(false)}
-        aria-hidden={!isMobileMenuOpen}
-      >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-      </div>
-      <aside
-        className={`fixed top-0 right-0 bottom-0 z-[70] w-[82%] max-w-sm md:hidden transform transition-transform duration-300 ease-out ${
-          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        style={{ background: "hsl(0 0% 8%)" }}
-        aria-hidden={!isMobileMenuOpen}
-      >
-        <div className="flex flex-col h-full pt-20 px-8 gap-6 overflow-y-auto">
-          {navLinks.map((link) => {
-            const sectionId = link.href.replace("#", "");
-            const isActive = activeSection === sectionId;
-            return (
+        {/* Mobile menu popover */}
+        <div className={`mobile-menu-popover mobile-only ${mobileMenuOpen ? "open" : ""}`}>
+          <ul className="mobile-menu-list">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="mobile-menu-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.querySelector(link.href);
+                    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href="/agency" className="mobile-menu-link">Agency</a>
+            </li>
+            <li>
               <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-xl font-semibold"
-                style={{ color: isActive ? "hsl(25, 100%, 50%)" : "#f5f5f5" }}
+                href="#"
+                className="mobile-menu-link"
+                onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); setCvOpen(true); }}
               >
-                {link.name}
+                View CV
               </a>
-            );
-          })}
-          <a
-            href="/agency"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-xl font-semibold text-white inline-block px-4 py-2 rounded-full bg-gradient-orange shadow-[var(--shadow-orange-glow)] w-fit"
-          >
-            Agency
-          </a>
-          <Button
-            onClick={() => { setIsMobileMenuOpen(false); setCvOpen(true); }}
-            className="mt-2 shadow-elegant bg-primary text-primary-foreground px-6 py-3 text-base w-fit"
-          >
-            <FileText className="mr-2 h-5 w-5" />
-            View CV
-          </Button>
+            </li>
+          </ul>
         </div>
-      </aside>
+      </div>
+
+      {/* Push content below fixed navbar */}
+      <div aria-hidden style={{ height: 80 }} />
 
       <Suspense fallback={null}>
         <CVViewer open={cvOpen} onClose={() => setCvOpen(false)} />
