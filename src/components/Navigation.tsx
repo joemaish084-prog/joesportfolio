@@ -3,6 +3,7 @@ import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import PillNav from "./PillNav.jsx";
+import StaggeredMenu from "./StaggeredMenu.jsx";
 
 const CVViewer = lazy(() => import("./CVViewer").then(m => ({ default: m.CVViewer })));
 
@@ -140,6 +141,32 @@ export function Navigation() {
             </li>
           </ul>
         </div>
+      </div>
+
+      {/* Mobile-only StaggeredMenu */}
+      <div className="mobile-staggered-menu">
+        {/* @ts-expect-error jsx component */}
+        <StaggeredMenu
+          position="right"
+          isFixed
+          displaySocials
+          displayItemNumbering
+          menuButtonColor="#ffffff"
+          openMenuButtonColor="#ffffff"
+          accentColor="#F97316"
+          colors={["#1a1a1a", "#0a0a0a"]}
+          logoUrl=""
+          items={[
+            ...navLinks.map((l) => ({ label: l.label, link: l.href, ariaLabel: l.label })),
+            { label: "Agency", link: "/agency", ariaLabel: "Agency" },
+          ]}
+          socialItems={[
+            { label: "Instagram", link: "https://instagram.com" },
+            { label: "LinkedIn", link: "https://linkedin.com" },
+            { label: "TikTok", link: "https://tiktok.com" },
+          ]}
+          onItemClick={() => setMobileMenuOpen(false)}
+        />
       </div>
 
       {/* Push content below fixed navbar */}
