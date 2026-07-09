@@ -3,6 +3,7 @@ import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import PillNav from "./PillNav.jsx";
+import StaggeredMenu from "./StaggeredMenu.jsx";
 
 const CVViewer = lazy(() => import("./CVViewer").then(m => ({ default: m.CVViewer })));
 
