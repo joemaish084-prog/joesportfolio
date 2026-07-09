@@ -143,6 +143,31 @@ export function Navigation() {
         </div>
       </div>
 
+      {/* Mobile-only StaggeredMenu */}
+      <div className="mobile-staggered-menu">
+        <StaggeredMenu
+          position="right"
+          isFixed
+          displaySocials
+          displayItemNumbering
+          menuButtonColor="#ffffff"
+          openMenuButtonColor="#ffffff"
+          accentColor="#F97316"
+          colors={["#1a1a1a", "#0a0a0a"]}
+          logoUrl=""
+          items={[
+            ...navLinks.map((l) => ({ label: l.label, link: l.href, ariaLabel: l.label })),
+            { label: "Agency", link: "/agency", ariaLabel: "Agency" },
+          ]}
+          socialItems={[
+            { label: "Instagram", link: "https://instagram.com" },
+            { label: "LinkedIn", link: "https://linkedin.com" },
+            { label: "TikTok", link: "https://tiktok.com" },
+          ]}
+          onItemClick={() => setMobileMenuOpen(false)}
+        />
+      </div>
+
       {/* Push content below fixed navbar */}
       <div aria-hidden style={{ height: 80 }} />
 
