@@ -145,6 +145,7 @@ export function Navigation() {
 
       {/* Mobile-only StaggeredMenu */}
       <div className="mobile-staggered-menu">
+        {/* @ts-expect-error jsx component */}
         <StaggeredMenu
           position="right"
           isFixed
