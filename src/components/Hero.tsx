@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
@@ -65,10 +65,6 @@ export function Hero() {
 
       {/* Particles */}
       <ParticlesBackground />
-
-      {tags.map((tag, index) => (
-        <FloatingTag key={index} tag={tag} index={index} mouseX={mouseX} mouseY={mouseY} />
-      ))}
 
       <div className="flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-8 relative z-20">
         {/* Typing title above name */}
