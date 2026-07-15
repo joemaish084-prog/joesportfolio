@@ -1,5 +1,5 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
@@ -15,19 +15,6 @@ const typingTitles = [
   "Social Media Manager Kenya",
   "Meta Ads Specialist",
   "Available for Hire 2026",
-];
-
-const tags = [
-  { label: "Content Strategy", top: "8%", left: "4%" },
-  { label: "Brand Storytelling", top: "4%", left: "24%" },
-  { label: "Performance Marketing", top: "10%", left: "48%" },
-  { label: "Video Production", top: "20%", left: "36%" },
-  { label: "Meta Ads", top: "6%", right: "22%" },
-  { label: "Google Ads", top: "12%", right: "6%" },
-  { label: "SEO Optimization", top: "40%", right: "8%" },
-  { label: "Social Media Growth", top: "55%", right: "4%" },
-  { label: "Creative Direction", bottom: "18%", left: "40%" },
-  { label: "Analytics & Insights", bottom: "14%", right: "20%" },
 ];
 
 function useTypingEffect(titles: string[]) {
