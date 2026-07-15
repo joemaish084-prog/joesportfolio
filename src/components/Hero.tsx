@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
+import Aurora from "./Aurora";
 
 
 
@@ -130,6 +131,16 @@ export function Hero() {
       onMouseLeave={handleMouseLeave}
       className="relative w-full min-h-screen bg-background overflow-hidden"
     >
+      {/* Aurora background */}
+      <div className="absolute inset-0 z-0 opacity-60 md:opacity-80 pointer-events-none">
+        <Aurora
+          colorStops={["#F97316", "#0a0a0a", "#F97316"]}
+          blend={0.6}
+          amplitude={1.2}
+          speed={0.4}
+        />
+      </div>
+
       {/* Particles */}
       <ParticlesBackground />
 
