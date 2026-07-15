@@ -51,7 +51,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full min-h-screen bg-background overflow-hidden"
+      className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden"
     >
       {/* Aurora background */}
       <div className="absolute inset-0 z-0 opacity-60 md:opacity-80 pointer-events-none">
@@ -66,29 +66,29 @@ export function Hero() {
       {/* Particles */}
       <ParticlesBackground />
 
-      <div className="flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-8 relative z-20">
+      <div className="flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-8 relative z-20 text-white">
         {/* Typing title above name */}
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-xs sm:text-sm md:text-base font-medium text-primary mb-3 sm:mb-4 tracking-wide uppercase min-h-[1.5rem] flex flex-wrap items-center justify-center gap-x-1"
+          className="text-xs sm:text-sm md:text-base font-medium text-white mb-3 sm:mb-4 tracking-wide uppercase min-h-[1.5rem] flex flex-wrap items-center justify-center gap-x-1"
         >
           <span className="whitespace-nowrap">
             {typedTitle}
             <span className="animate-pulse">|</span>
           </span>
-          <span className="text-muted-foreground whitespace-nowrap">· Nairobi, Kenya</span>
+          <span className="text-white/70 whitespace-nowrap">· Nairobi, Kenya</span>
         </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight leading-tight max-w-4xl"
+          className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight leading-tight max-w-4xl text-white"
         >
           Digital Marketing Specialist
-          <span className="text-gradient"> &amp; Agency Owner </span>
+          <span className="text-white"> &amp; Agency Owner </span>
           | Nairobi, Kenya
         </motion.h1>
 
@@ -96,7 +96,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto text-center px-2"
+          className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-2xl mx-auto text-center px-2"
         >
           I help Kenyan brands and businesses grow online through Meta Ads, Google Ads, TikTok, SEO and Social Media Marketing. Based in Nairobi, Kenya.
         </motion.p>
@@ -115,14 +115,14 @@ export function Hero() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 hover:bg-primary/5 text-base btn-hover" asChild>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-white/80 bg-transparent text-white hover:bg-white/10 hover:text-white text-base btn-hover" asChild>
               <Link to="/agency">
                 <Users className="mr-2 h-5 w-5" />
                 Work With Me as a Client
               </Link>
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground text-center max-w-xl px-4 leading-relaxed">
+          <p className="text-sm text-white/70 text-center max-w-xl px-4 leading-relaxed">
             Looking for a digital marketing specialist in Nairobi? Whether you need Meta Ads management, Google Ads campaigns, TikTok marketing, SEO services or a full digital marketing strategy — I deliver real measurable results for Kenyan brands and businesses.
           </p>
         </motion.div>
