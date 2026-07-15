@@ -1,5 +1,5 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
@@ -15,19 +15,6 @@ const typingTitles = [
   "Social Media Manager Kenya",
   "Meta Ads Specialist",
   "Available for Hire 2026",
-];
-
-const tags = [
-  { label: "Content Strategy", top: "8%", left: "4%" },
-  { label: "Brand Storytelling", top: "4%", left: "24%" },
-  { label: "Performance Marketing", top: "10%", left: "48%" },
-  { label: "Video Production", top: "20%", left: "36%" },
-  { label: "Meta Ads", top: "6%", right: "22%" },
-  { label: "Google Ads", top: "12%", right: "6%" },
-  { label: "SEO Optimization", top: "40%", right: "8%" },
-  { label: "Social Media Growth", top: "55%", right: "4%" },
-  { label: "Creative Direction", bottom: "18%", left: "40%" },
-  { label: "Analytics & Insights", bottom: "14%", right: "20%" },
 ];
 
 function useTypingEffect(titles: string[]) {
@@ -57,78 +44,13 @@ function useTypingEffect(titles: string[]) {
   return display;
 }
 
-function FloatingTag({ tag, index, mouseX, mouseY }: { tag: typeof tags[0]; index: number; mouseX: any; mouseY: any }) {
-  const intensity = 40 + (index % 3) * 15;
-  const moveX = useTransform(mouseX, (val: number) => val * -intensity);
-  const moveY = useTransform(mouseY, (val: number) => val * -intensity);
-  const smoothX = useSpring(moveX, { damping: 12 + index * 1.5, stiffness: 50 + index * 5 });
-  const smoothY = useSpring(moveY, { damping: 12 + index * 1.5, stiffness: 50 + index * 5 });
-
-  const { label, ...position } = tag;
-
-  return (
-    <motion.div
-      style={{ position: "absolute", ...position, x: smoothX, y: smoothY }}
-      className="hidden md:block z-10"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.4 + index * 0.1 }}
-    >
-      <motion.div
-        animate={{ y: [0, -8, 0], x: [0, index % 2 === 0 ? 4 : -4, 0] }}
-        transition={{ duration: 3.5 + index * 0.3, repeat: Infinity, ease: "easeInOut" }}
-        whileHover={{
-          scale: 1.12,
-          boxShadow: "0 0 20px hsl(var(--orange) / 0.5), 0 0 40px hsl(var(--orange) / 0.25), 0 8px 32px hsl(var(--orange) / 0.3)",
-          borderColor: "hsl(var(--orange) / 0.4)",
-          transition: { duration: 0.2 },
-        }}
-        className="px-5 py-2.5 bg-card border border-border rounded-xl text-sm font-medium text-muted-foreground shadow-[0_2px_16px_hsl(var(--orange)/0.1)] backdrop-blur-sm cursor-default transition-shadow duration-300"
-      >
-        {label}
-      </motion.div>
-    </motion.div>
-  );
-}
 
 export function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const rectRef = useRef<DOMRect | null>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
   const typedTitle = useTypingEffect(typingTitles);
-
-  // Cache rect via ResizeObserver to avoid forced reflow on mousemove
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => {
-      rectRef.current = el.getBoundingClientRect();
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const rect = rectRef.current;
-    if (!rect) return;
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set((e.clientX - centerX) / rect.width);
-    mouseY.set((e.clientY - centerY) / rect.height);
-  }, [mouseX, mouseY]);
-
-  const handleMouseLeave = useCallback(() => {
-    mouseX.set(0);
-    mouseY.set(0);
-  }, [mouseX, mouseY]);
 
   return (
     <section
       id="home"
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       className="relative w-full min-h-screen bg-background overflow-hidden"
     >
       {/* Aurora background */}
@@ -143,10 +65,6 @@ export function Hero() {
 
       {/* Particles */}
       <ParticlesBackground />
-
-      {tags.map((tag, index) => (
-        <FloatingTag key={index} tag={tag} index={index} mouseX={mouseX} mouseY={mouseY} />
-      ))}
 
       <div className="flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-8 relative z-20">
         {/* Typing title above name */}
