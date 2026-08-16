@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import Agency from "./pages/Agency";
+import AgencyBlog from "./pages/AgencyBlog";
+import AgencyBlogPost from "./pages/AgencyBlogPost";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import Terms from "./pages/Terms";
@@ -26,6 +28,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/agency" element={<Agency />} />
+            <Route path="/agency/blog" element={<AgencyBlog />} />
+            <Route path="/agency/blog/:slug" element={<AgencyBlogPost />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/terms" element={<Terms />} />
