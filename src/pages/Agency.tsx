@@ -171,6 +171,7 @@ const Agency = () => {
             <button onClick={() => scrollTo("services")} className="text-muted-foreground hover:text-foreground">Services</button>
             <button onClick={() => scrollTo("how")} className="text-muted-foreground hover:text-foreground">Process</button>
             <button onClick={() => scrollTo("results")} className="text-muted-foreground hover:text-foreground">Results</button>
+            <Link to="/agency/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
             <span className="text-primary font-semibold">Work With Me</span>
           </nav>
           <Button size="sm" onClick={() => scrollTo("booking")}>Book Call</Button>
