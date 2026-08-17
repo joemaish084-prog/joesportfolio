@@ -336,3 +336,34 @@
     letter-spacing: -1px;
   }
 }
+
+/* Mobile fixed overlay fixes */
+.staggered-menu-wrapper.fixed-wrapper {
+  position: fixed !important;
+}
+
+.staggered-menu-panel {
+  position: fixed !important;
+  top: 0 !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  overflow-y: auto !important;
+}
+
+.sm-prelayer {
+  position: fixed !important;
+  top: 0 !important;
+  height: 100vh !important;
+}
+
+@media (max-width: 768px) {
+  .sm-panel-item {
+    font-size: 2rem !important;
+  }
+  .staggered-menu-header {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    padding: 1.25em 1.25em !important;
+  }
+}
