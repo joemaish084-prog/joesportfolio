@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
+import { createPortal } from "react-dom";
 import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
@@ -50,6 +51,8 @@ export function Navigation() {
 
   return (
     <>
+      {createPortal(
+        <>
       <div className="pill-nav-container">
         <div className="pill-nav-wrap">
           <PillNav
@@ -147,6 +150,10 @@ export function Navigation() {
           onItemClick={() => setMobileMenuOpen(false)}
         />
       </div>
+
+        </>,
+        document.body
+      )}
 
       {/* Push content below fixed navbar */}
       <div aria-hidden style={{ height: 80 }} />
