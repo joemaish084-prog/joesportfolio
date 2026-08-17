@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
@@ -21,8 +21,6 @@ export function Navigation() {
   const [cvOpen, setCvOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("#home");
-  const lastScrollY = useRef(0);
-  const [isVisible, setIsVisible] = useState(true);
 
   // Active section via IntersectionObserver
   useEffect(() => {
@@ -45,19 +43,6 @@ export function Navigation() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
-  // Hide-on-scroll-down
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      if (y < 50) setIsVisible(true);
-      else if (y > lastScrollY.current && y > 120) setIsVisible(false);
-      else setIsVisible(true);
-      lastScrollY.current = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -65,13 +50,7 @@ export function Navigation() {
 
   return (
     <>
-      <div
-        className="pill-nav-container"
-        style={{
-          transform: `translateX(-50%) translateY(${isVisible ? "0" : "-140%"})`,
-          transition: "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-      >
+      <div className="pill-nav-container">
         <div className="pill-nav-wrap">
           <PillNav
             logo=""

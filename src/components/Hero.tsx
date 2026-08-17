@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
-import Aurora from "./Aurora";
+import GradientWaves from "./GradientWaves";
 
 
 
@@ -53,15 +53,28 @@ export function Hero() {
       id="home"
       className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden"
     >
-      {/* Aurora background */}
-      <div className="absolute inset-0 z-0 opacity-60 md:opacity-80 pointer-events-none">
-        <Aurora
-          colorStops={["#F97316", "#0a0a0a", "#F97316"]}
-          blend={0.6}
-          amplitude={1.2}
-          speed={0.4}
+      {/* GradientWaves background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <GradientWaves
+          horizonColor="#1a0800"
+          waveColor="#F97316"
+          crestColor="#ffffff"
+          speed={0.3}
+          amplitude={2.0}
+          waveScale={0.5}
+          height={5.5}
+          fogDepth={12}
+          detail="medium"
+          brightness={0.9}
+          opacity={1.0}
+          mouseInteraction={true}
+          grain={true}
+          grainIntensity={0.03}
         />
       </div>
+
+      {/* Readability overlay */}
+      <div className="absolute inset-0 z-10 pointer-events-none bg-[#0a0a0a]/45" />
 
       {/* Particles */}
       <ParticlesBackground />
