@@ -51,7 +51,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden"
+      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden"
     >
       {/* GradientWaves background */}
       <div className="absolute inset-0 z-0 pointer-events-none">

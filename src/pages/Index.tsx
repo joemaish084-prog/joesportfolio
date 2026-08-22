@@ -1,5 +1,5 @@
 import { useState, lazy, Suspense } from "react";
-import { Navigation } from "@/components/Navigation";
+import { SiteHeader } from "@/components/SiteHeader";
 import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
 import { PressFeatures } from "@/components/PressFeatures";
@@ -56,7 +56,7 @@ const Index = () => {
       {!splashDone && <Suspense fallback={null}><SplashScreen onComplete={() => setSplashDone(true)} /></Suspense>}
       <div className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
         <Suspense fallback={null}><ScrollProgress /></Suspense>
-        <Navigation />
+        <SiteHeader />
         <main>
           <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
           <PressFeatures />

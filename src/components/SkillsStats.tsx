@@ -73,7 +73,7 @@ export function SkillsStats() {
     <section
       id="skills"
       ref={ref}
-      className="py-20 sm:py-32"
+      className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32"
       aria-label="Skills and statistics for Joseph Maina, Digital Marketing Specialist Nairobi"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
