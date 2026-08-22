@@ -90,7 +90,7 @@ void main() {
   }
 
   col *= uBrightness;
-  col *= 0.38;
+  col *= 0.62;
 
   if (uGrain > 0.5) {
     float g = hash(gl_FragCoord.xy + fract(uTime) * 100.0) - 0.5;
