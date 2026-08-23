@@ -1,145 +1,130 @@
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Briefcase, Users } from "lucide-react";
-import { ParticlesBackground } from "./ParticlesBackground";
-import GradientWaves from "./GradientWaves";
 
+type Tag = {
+  label: string;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+};
 
-
-const typingTitles = [
-  "Digital Marketing Specialist",
-  "SEO Expert Nairobi",
-  "Content Strategist",
-  "Social Media Manager Kenya",
-  "Meta Ads Specialist",
-  "Available for Hire 2026",
+const tags: Tag[] = [
+  { label: "Content Strategy", top: "8%", left: "4%" },
+  { label: "Brand Storytelling", top: "4%", left: "24%" },
+  { label: "Performance Marketing", top: "10%", left: "48%" },
+  { label: "Video Production", top: "20%", left: "36%" },
+  { label: "Meta Ads", top: "6%", right: "22%" },
+  { label: "Google Ads", top: "12%", right: "6%" },
+  { label: "SEO Optimization", top: "40%", right: "8%" },
+  { label: "Social Media Growth", top: "55%", right: "4%" },
+  { label: "Creative Direction", bottom: "18%", left: "40%" },
+  { label: "Analytics & Insights", bottom: "14%", right: "20%" },
 ];
 
-function useTypingEffect(titles: string[]) {
-  const [display, setDisplay] = useState("");
-  const [titleIndex, setTitleIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+function FloatingTag({
+  tag,
+  index,
+  mouseX,
+  mouseY,
+}: {
+  tag: Tag;
+  index: number;
+  mouseX: MotionValue<number>;
+  mouseY: MotionValue<number>;
+}) {
+  const moveX = useTransform(mouseX, (v) => v * 20);
+  const moveY = useTransform(mouseY, (v) => v * 20);
+  const smoothX = useSpring(moveX, { damping: 20, stiffness: 100 });
+  const smoothY = useSpring(moveY, { damping: 20, stiffness: 100 });
 
-  useEffect(() => {
-    const current = titles[titleIndex];
-    let timeout: ReturnType<typeof setTimeout>;
+  const { label, ...position } = tag;
 
-    if (!isDeleting && display === current) {
-      timeout = setTimeout(() => setIsDeleting(true), 1800);
-    } else if (isDeleting && display === "") {
-      setIsDeleting(false);
-      setTitleIndex((i) => (i + 1) % titles.length);
-    } else {
-      const speed = isDeleting ? 30 : 60;
-      timeout = setTimeout(() => {
-        setDisplay(isDeleting ? current.slice(0, display.length - 1) : current.slice(0, display.length + 1));
-      }, speed);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [display, isDeleting, titleIndex, titles]);
-
-  return display;
+  return (
+    <motion.div
+      style={{ position: "absolute", ...position, x: smoothX, y: smoothY }}
+      className="hidden md:block z-10"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.4 + index * 0.1 }}
+    >
+      <motion.div
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
+        className="px-4 py-2 bg-card border border-border rounded-xl shadow-sm text-sm text-muted-foreground"
+      >
+        {label}
+      </motion.div>
+    </motion.div>
+  );
 }
 
-
 export function Hero() {
-  const typedTitle = useTypingEffect(typingTitles);
+  const containerRef = useRef<HTMLElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set((e.clientX - centerX) / rect.width);
+    mouseY.set((e.clientY - centerY) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   return (
     <section
+      ref={containerRef}
       id="home"
-      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen bg-[#0a0a0a] overflow-hidden"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen bg-background overflow-hidden"
     >
-      {/* GradientWaves background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <GradientWaves
-          horizonColor="#1a0800"
-          waveColor="#F97316"
-          crestColor="#ffffff"
-          speed={0.3}
-          amplitude={2.0}
-          waveScale={0.5}
-          height={5.5}
-          fogDepth={12}
-          detail="medium"
-          brightness={0.9}
-          opacity={1.0}
-          mouseInteraction={true}
-          grain={true}
-          grainIntensity={0.03}
-        />
-      </div>
+      {tags.map((tag, index) => (
+        <FloatingTag key={tag.label} tag={tag} index={index} mouseX={mouseX} mouseY={mouseY} />
+      ))}
 
-      {/* Readability overlay */}
-      <div className="absolute inset-0 z-10 pointer-events-none bg-[#0a0a0a]/45" />
-
-      {/* Particles */}
-      <ParticlesBackground />
-
-      <div className="flex flex-col items-center justify-center text-center min-h-screen px-4 sm:px-6 md:px-8 relative z-20 text-white">
-        {/* Typing title above name */}
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="text-xs sm:text-sm md:text-base font-medium text-white mb-3 sm:mb-4 tracking-wide uppercase min-h-[1.5rem] flex flex-wrap items-center justify-center gap-x-1"
-        >
-          <span className="whitespace-nowrap">
-            {typedTitle}
-            <span className="animate-pulse">|</span>
-          </span>
-          <span className="text-white/70 whitespace-nowrap">· Nairobi, Kenya</span>
-        </motion.p>
-
+      <div className="flex flex-col items-center justify-center text-center min-h-screen px-6 relative z-20">
         <motion.h1
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold tracking-tight leading-tight max-w-4xl text-white"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight max-w-4xl"
         >
-          Digital Marketing Specialist
-          <span className="text-white"> &amp; Agency Owner </span>
-          | Nairobi, Kenya
+          Creative Strategy
+          <span className="text-gradient"> Meets </span>
+          Visual Storytelling
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-2xl mx-auto text-center px-2"
+          transition={{ delay: 0.3 }}
+          className="mt-6 text-lg text-muted-foreground max-w-2xl"
         >
-          I help Kenyan brands and businesses grow online through Meta Ads, Google Ads, TikTok, SEO and Social Media Marketing. Based in Nairobi, Kenya.
+          I build campaigns that turn attention into measurable growth.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-8 flex flex-col items-center gap-4 w-full sm:w-auto"
+          transition={{ delay: 0.5 }}
+          className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
-          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
-            <Button size="lg" className="w-full sm:w-auto shadow-elegant text-base btn-hover" asChild>
-              <a href="#experience">
-                <Briefcase className="mr-2 h-5 w-5" />
-                Hire Me{"\u00a0"}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-white/80 bg-transparent text-white hover:bg-white/10 hover:text-white text-base btn-hover" asChild>
-              <Link to="/agency">
-                <Users className="mr-2 h-5 w-5" />
-                Work With Me as a Client
-              </Link>
-            </Button>
-          </div>
-          <p className="text-sm text-white/70 text-center max-w-xl px-4 leading-relaxed">
-            Looking for a digital marketing specialist in Nairobi? Whether you need Meta Ads management, Google Ads campaigns, TikTok marketing, SEO services or a full digital marketing strategy — I deliver real measurable results for Kenyan brands and businesses.
-          </p>
+          <Button size="lg" className="w-full sm:w-auto shadow-elegant btn-hover" asChild>
+            <a href="#videos">View My Work</a>
+          </Button>
+          <Button size="lg" variant="outline" className="w-full sm:w-auto btn-hover" asChild>
+            <a href="#contact">Contact Me</a>
+          </Button>
         </motion.div>
-
       </div>
     </section>
   );
