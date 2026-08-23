@@ -214,3 +214,103 @@
     transform: translateX(-50%);
   }
 }
+
+/* ============================================================
+   Visual design language: labels, brackets, textures, surfaces
+   ============================================================ */
+@layer utilities {
+  /* 1. Section labels */
+  .section-label {
+    @apply font-mono text-xs font-bold tracking-widest uppercase;
+    color: #F97316;
+  }
+  .section-label > .slashes {
+    opacity: 0.7;
+  }
+
+  /* 2. Corner accent brackets (8x8 at each corner) */
+  .corner-brackets {
+    position: relative;
+  }
+  .corner-brackets::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    --bracket: rgba(0, 0, 0, 0.25);
+    background-image:
+      linear-gradient(var(--bracket), var(--bracket)),
+      linear-gradient(var(--bracket), var(--bracket)),
+      linear-gradient(var(--bracket), var(--bracket)),
+      linear-gradient(var(--bracket), var(--bracket)),
+      linear-gradient(var(--bracket), var(--bracket)),
+      linear-gradient(var(--bracket), var(--bracket)),
+      linear-gradient(var(--bracket), var(--bracket)),
+      linear-gradient(var(--bracket), var(--bracket));
+    background-repeat: no-repeat;
+    background-size:
+      8px 1px, 1px 8px,
+      8px 1px, 1px 8px,
+      8px 1px, 1px 8px,
+      8px 1px, 1px 8px;
+    background-position:
+      left top, left top,
+      right top, right top,
+      left bottom, left bottom,
+      right bottom, right bottom;
+  }
+  .dark .corner-brackets::before,
+  .corner-brackets.on-dark::before {
+    --bracket: rgba(255, 255, 255, 0.4);
+  }
+
+  /* 3. Sharp corners on cards & containers (buttons, avatars, badges, pills keep radius) */
+  main section :is(.rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl):not(button):not(a):not(img):not(.rounded-full):not([role="button"]):not(.keep-radius),
+  main > div :is(.rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl):not(button):not(a):not(img):not(.rounded-full):not([role="button"]):not(.keep-radius) {
+    border-radius: 0;
+  }
+
+  /* 4. Card surface treatment */
+  .surface-card {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(8px);
+    transition: background-color 300ms ease, border-color 300ms ease;
+  }
+  .dark .surface-card {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .surface-card:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+  .dark .surface-card:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  /* 5. Dot grid texture */
+  .dot-grid {
+    background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .dark .dot-grid {
+    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+
+  /* 6. Thin divider line at top of sections (desktop only) */
+  @media (min-width: 1024px) {
+    .section-divider {
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .dark .section-divider {
+      border-top-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  /* 8. Mono accents */
+  .mono-accent {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
