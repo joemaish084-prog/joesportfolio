@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
 import { CollapsibleSection } from "./CollapsibleSection";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const stats = [
   { value: "704K", label: "Instagram Reach" },
@@ -64,13 +65,14 @@ export function CaseStudy() {
   return (
     <section
       id="case-study"
-      className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32"
+      className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider on-dark py-20 sm:py-32"
       style={{ background: "hsl(var(--case-study-bg))" }}
       aria-label="Digital marketing case study showcasing results from 2025 campaigns in Nairobi, Kenya"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
+            <SectionLabel>CASE STUDIES</SectionLabel>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
               style={{ color: "hsl(var(--case-study-text))" }}
@@ -88,7 +90,7 @@ export function CaseStudy() {
 
         <ScrollReveal direction="scale" delay={0.1}>
           <div
-            className="rounded-xl p-6 sm:p-8 mb-12 border"
+            className="corner-brackets rounded-xl p-6 sm:p-8 mb-12 border"
             style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}
           >
             <p className="text-base sm:text-lg leading-relaxed italic" style={{ color: "hsl(var(--case-study-text) / 0.85)" }}>
@@ -104,7 +106,7 @@ export function CaseStudy() {
           {stats.map((stat, i) => (
             <ScrollReveal key={i} direction="up" delay={i * 0.1}>
               <div
-                className="rounded-xl p-5 text-center border transition-all duration-300 hover:-translate-y-1"
+                className="corner-brackets rounded-xl p-5 text-center border transition-all duration-300 hover:-translate-y-1"
                 style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}
               >
                 <p className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">
@@ -130,7 +132,7 @@ export function CaseStudy() {
             {platforms.map((platform, i) => (
               <ScrollReveal key={i} direction="up" delay={i * 0.15}>
                 <article
-                  className="rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-lg flex flex-col"
+                  className="corner-brackets rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-lg flex flex-col"
                   style={{
                     background: "hsl(var(--case-study-card))",
                     borderColor: "hsl(var(--case-study-card-border))",
@@ -173,7 +175,7 @@ export function CaseStudy() {
 
         <ScrollReveal direction="left">
           <div
-            className="rounded-xl p-6 sm:p-8 mb-12 border-l-4"
+            className="corner-brackets rounded-xl p-6 sm:p-8 mb-12 border-l-4"
             style={{ background: "hsl(var(--case-study-card))", borderLeftColor: "hsl(var(--primary))" }}
           >
             <Zap className="h-6 w-6 text-primary mb-3" />

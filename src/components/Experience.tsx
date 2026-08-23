@@ -2,6 +2,7 @@ import { Briefcase, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollReveal } from "./ScrollReveal";
 import { CollapsibleSection } from "./CollapsibleSection";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const experiences = [
   {
@@ -52,10 +53,11 @@ const experiences = [
 
 export function Experience() {
   return (
-    <section id="experience" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32 bg-muted/30">
+    <section id="experience" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
+            <SectionLabel>EXPERIENCE</SectionLabel>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
               Professional <span className="text-gradient">Experience</span>
             </h2>

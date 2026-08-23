@@ -4,6 +4,7 @@ import { Facebook, Search, Music2, Linkedin, MonitorPlay, TrendingUp, Target, Ba
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const stats = [
   { value: 500, suffix: "K+", prefix: "KES ", label: "Monthly Ad Budget Managed" },
@@ -98,13 +99,14 @@ const tiers = [
 
 export function MediaBuying() {
   return (
-    <section id="media-buying" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32 relative overflow-hidden" aria-labelledby="media-buying-heading">
+    <section id="media-buying" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 relative overflow-hidden" aria-labelledby="media-buying-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
             <Badge variant="secondary" className="text-sm px-4 py-1.5 gap-1.5"><DollarSign className="h-3.5 w-3.5" aria-hidden /> Paid Media</Badge>
+            <SectionLabel>MEDIA BUYING</SectionLabel>
             <h2 id="media-buying-heading" className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
               Media Buying & <span className="text-gradient">Paid Advertising</span>
             </h2>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Award, BadgeCheck, Trophy, GraduationCap } from "lucide-react";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const certs = [
   { icon: BadgeCheck, title: "Google Ads Certified", issuer: "Google Skillshop", year: "2024" },
@@ -10,9 +11,10 @@ const certs = [
 
 export function Certifications() {
   return (
-    <section id="certifications" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-28" aria-label="Certifications & Achievements">
+    <section id="certifications" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-28" aria-label="Certifications & Achievements">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-12 space-y-3">
+          <SectionLabel>CERTIFICATIONS</SectionLabel>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
             Certifications & <span className="text-gradient">Achievements</span>
           </h2>
@@ -31,7 +33,7 @@ export function Certifications() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
-                className="rounded-2xl border border-border bg-card p-5 text-center hover:border-primary/40 hover:-translate-y-1 transition-all duration-300"
+                className="corner-brackets surface-card rounded-2xl border border-border p-5 text-center hover:border-primary/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="h-12 w-12 mx-auto rounded-full bg-gradient-orange flex items-center justify-center mb-3 shadow-[var(--shadow-orange-glow)]">
                   <Icon className="h-6 w-6 text-white" />

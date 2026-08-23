@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
+import { SectionLabel } from "@/components/SectionLabel";
 
 /* ── Stats ── */
 const stats = [
@@ -73,12 +74,13 @@ export function SkillsStats() {
     <section
       id="skills"
       ref={ref}
-      className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32"
+      className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32"
       aria-label="Skills and statistics for Joseph Maina, Digital Marketing Specialist Nairobi"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
+          <SectionLabel>SKILLS & STATS</SectionLabel>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
             Skills & <span className="text-gradient">Stats</span>
           </h2>
