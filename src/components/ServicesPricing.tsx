@@ -58,7 +58,7 @@ export function ServicesPricing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="rounded-2xl border border-border bg-card p-6 flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300"
+                className="corner-brackets surface-card rounded-2xl border border-border p-6 flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="h-12 w-12 rounded-xl bg-gradient-orange flex items-center justify-center mb-4 shadow-[var(--shadow-orange-glow)]">
                   <Icon className="h-6 w-6 text-white" />

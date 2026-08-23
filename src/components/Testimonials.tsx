@@ -40,7 +40,7 @@ export function Testimonials() {
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <ScrollReveal key={index} direction="up" delay={index * 0.15} rotate={-2}>
-              <Card className="border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2">
+              <Card className="corner-brackets surface-card border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2">
                 <CardContent className="pt-6 space-y-4">
                   <Quote className="h-8 w-8 text-primary/30" />
                   <blockquote className="text-muted-foreground leading-relaxed italic">

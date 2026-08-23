@@ -155,7 +155,7 @@ function ShortCard({ v }: { v: ShortVideo }) {
       target="_blank"
       rel="noopener noreferrer"
       title={`Watch ${v.title} — ${v.platform} short-form video by Joseph Maina`}
-      className="group relative block overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_40px_hsl(var(--primary)/0.25)] hover:-translate-y-1"
+      className="corner-brackets group relative block overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_40px_hsl(var(--primary)/0.25)] hover:-translate-y-1"
     >
       <VideoSchema v={v} />
       <div className="relative aspect-[9/16] overflow-hidden">
@@ -202,7 +202,7 @@ function LongCard({ v }: { v: LongVideo }) {
 
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_50px_hsl(var(--primary)/0.25)] hover:-translate-y-1"
+      className="corner-brackets group relative overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_50px_hsl(var(--primary)/0.25)] hover:-translate-y-1"
     >
       <VideoSchema v={v} />
       <div className="relative aspect-video overflow-hidden bg-black">
@@ -295,7 +295,7 @@ function FeaturedVideo() {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-border shadow-elegant group">
+    <div className="corner-brackets relative overflow-hidden rounded-2xl border border-border shadow-elegant group">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredSchema) }} />
       <div className="relative aspect-video bg-black">
         {playing ? (

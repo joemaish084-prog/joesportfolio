@@ -296,7 +296,7 @@ export function GraphicDesign() {
                 >
                   <button
                     onClick={() => setSelectedDesign(design)}
-                    className="w-full group relative overflow-hidden rounded-lg border-2 border-primary/30 hover:border-primary transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                    className="corner-brackets w-full group relative overflow-hidden rounded-lg border-2 border-primary/30 hover:border-primary transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
                   >
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
@@ -330,7 +330,7 @@ export function GraphicDesign() {
                 >
                   <button
                     onClick={() => setSelectedDesign(design)}
-                    className="w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                    className="corner-brackets w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
                   >
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
@@ -364,7 +364,7 @@ export function GraphicDesign() {
                 >
                   <button
                     onClick={() => setSelectedDesign(design)}
-                    className="w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                    className="corner-brackets w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
                   >
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
@@ -398,7 +398,7 @@ export function GraphicDesign() {
                 >
                   <button
                     onClick={() => setSelectedDesign(design)}
-                    className="w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                    className="corner-brackets w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/50 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
                   >
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <img
