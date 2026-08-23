@@ -92,7 +92,7 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32 bg-muted/30" aria-label="Frequently Asked Questions">
+    <section id="faq" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 bg-muted/30" aria-label="Frequently Asked Questions">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">

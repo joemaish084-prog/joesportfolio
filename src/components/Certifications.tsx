@@ -10,7 +10,7 @@ const certs = [
 
 export function Certifications() {
   return (
-    <section id="certifications" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-28" aria-label="Certifications & Achievements">
+    <section id="certifications" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-28" aria-label="Certifications & Achievements">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-12 space-y-3">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">

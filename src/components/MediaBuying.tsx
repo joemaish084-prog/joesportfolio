@@ -98,7 +98,7 @@ const tiers = [
 
 export function MediaBuying() {
   return (
-    <section id="media-buying" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32 relative overflow-hidden" aria-labelledby="media-buying-heading">
+    <section id="media-buying" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 relative overflow-hidden" aria-labelledby="media-buying-heading">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}

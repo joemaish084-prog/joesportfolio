@@ -35,7 +35,7 @@ const services = [
 
 export function ServicesPricing() {
   return (
-    <section id="services" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32" aria-label="Digital Marketing Services & Pricing">
+    <section id="services" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32" aria-label="Digital Marketing Services & Pricing">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-14 space-y-4">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">

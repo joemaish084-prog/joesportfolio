@@ -52,7 +52,7 @@ const experiences = [
 
 export function Experience() {
   return (
-    <section id="experience" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32 bg-muted/30">
+    <section id="experience" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
