@@ -1,4 +1,5 @@
 import {
+import { SectionLabel } from "@/components/SectionLabel";
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -96,6 +97,7 @@ export function FAQ() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
+            <SectionLabel>FAQ</SectionLabel>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
               Frequently Asked <span className="text-gradient">Questions</span>
             </h2>

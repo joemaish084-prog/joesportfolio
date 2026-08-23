@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 import { ScrollReveal } from "./ScrollReveal";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
@@ -72,6 +73,7 @@ export function Contact() {
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16 space-y-4">
+              <SectionLabel>CONTACT</SectionLabel>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
                 Let's <span className="text-gradient">Connect</span>
               </h2>

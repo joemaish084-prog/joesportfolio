@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "./ScrollReveal";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const skills = [
   "Video Production & Editing",
@@ -25,6 +26,7 @@ export function About() {
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16 space-y-4">
+              <SectionLabel>ABOUT</SectionLabel>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
                 About <span className="text-gradient">Joseph Maina</span> — Digital Marketing Specialist
               </h2>

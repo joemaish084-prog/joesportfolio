@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
 import { CollapsibleSection } from "./CollapsibleSection";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const stats = [
   { value: "704K", label: "Instagram Reach" },
@@ -71,6 +72,7 @@ export function CaseStudy() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
+            <SectionLabel>CASE STUDIES</SectionLabel>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
               style={{ color: "hsl(var(--case-study-text))" }}

@@ -1,6 +1,7 @@
 import { Quote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollReveal } from "./ScrollReveal";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const testimonials = [
   {
@@ -26,6 +27,7 @@ export function Testimonials() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
+            <SectionLabel>TESTIMONIALS</SectionLabel>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
               What Clients <span className="text-gradient">Say</span>
             </h2>

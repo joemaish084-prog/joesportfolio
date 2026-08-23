@@ -20,6 +20,7 @@ import iclearFilter from "@/assets/design-iclear-filter.webp";
 import iclearEngineered from "@/assets/design-iclear-engineered.webp";
 import iclearNakuru from "@/assets/design-iclear-nakuru.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
+import { SectionLabel } from "@/components/SectionLabel";
 
 // New designs imports
 import freeFilterCampaign from "@/assets/design-free-filter-campaign.webp";
@@ -273,6 +274,7 @@ export function GraphicDesign() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
+            <SectionLabel>DESIGN</SectionLabel>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
               Graphic <span className="text-gradient">Design</span>
             </h2>

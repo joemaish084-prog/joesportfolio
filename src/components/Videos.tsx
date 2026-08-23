@@ -20,6 +20,7 @@ import thumb9 from "@/assets/video-thumb-9.webp";
 import shortIclearDishwash from "@/assets/short-iclear-dishwash.webp";
 import shortMajiNiUhai from "@/assets/short-maji-ni-uhai.webp";
 import shortForTypography from "@/assets/short-for-typography.webp";
+import { SectionLabel } from "@/components/SectionLabel";
 
 type Platform = "Instagram" | "TikTok" | "YouTube";
 
@@ -418,6 +419,7 @@ export function Videos() {
             <Badge variant="outline" className="border-primary/40 text-primary bg-primary/5">
               <Film className="h-3 w-3 mr-1.5" /> Video Production
             </Badge>
+            <SectionLabel>VIDEOS</SectionLabel>
             <h2
               id="videos-heading"
               className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"

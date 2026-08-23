@@ -4,6 +4,7 @@ import { Facebook, Search, Music2, Linkedin, MonitorPlay, TrendingUp, Target, Ba
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const stats = [
   { value: 500, suffix: "K+", prefix: "KES ", label: "Monthly Ad Budget Managed" },
@@ -105,6 +106,7 @@ export function MediaBuying() {
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
             <Badge variant="secondary" className="text-sm px-4 py-1.5 gap-1.5"><DollarSign className="h-3.5 w-3.5" aria-hidden /> Paid Media</Badge>
+            <SectionLabel>MEDIA BUYING</SectionLabel>
             <h2 id="media-buying-heading" className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
               Media Buying & <span className="text-gradient">Paid Advertising</span>
             </h2>
