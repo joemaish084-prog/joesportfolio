@@ -64,7 +64,7 @@ export function CaseStudy() {
   return (
     <section
       id="case-study"
-      className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-32"
+      className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider on-dark py-20 sm:py-32"
       style={{ background: "hsl(var(--case-study-bg))" }}
       aria-label="Digital marketing case study showcasing results from 2025 campaigns in Nairobi, Kenya"
     >

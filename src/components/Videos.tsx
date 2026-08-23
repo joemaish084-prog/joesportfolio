@@ -395,7 +395,7 @@ export function Videos() {
   return (
     <section
       id="videos"
-      className="scroll-mt-20 lg:scroll-mt-24 relative py-20 sm:py-32 overflow-hidden bg-background"
+      className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider relative py-20 sm:py-32 overflow-hidden bg-background"
       aria-labelledby="videos-heading"
     >
       {/* Cinematic film-grain texture */}
