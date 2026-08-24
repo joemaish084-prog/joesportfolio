@@ -1,5 +1,5 @@
-import {
 import { SectionLabel } from "@/components/SectionLabel";
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
