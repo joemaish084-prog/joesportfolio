@@ -41,6 +41,9 @@ export const blogPosts: BlogPost[] = [
       "The real reasons Nairobi businesses stay invisible on Google search, and the practical SEO fixes that get you ranking locally in 2026.",
     intro:
       "If customers in Nairobi search for what you sell and your business never appears, the problem is rarely the product. It is almost always a handful of technical and local search gaps that are cheap to fix once you know where to look.",
+    thumbnail: seoThumb.url,
+    thumbnailAlt:
+      "Nairobi skyline with an orange location pin and magnifying glass, representing local Google search visibility",
     sections: [
       {
         id: "google-business-profile",
