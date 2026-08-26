@@ -301,40 +301,142 @@ const Agency = () => {
           </div>
         </section>
 
-        {/* SERVICES */}
+        {/* SERVICES / PRICING */}
         <section id="services" className="container mx-auto px-4 py-20 scroll-mt-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">Services & Pricing</h2>
-            <p className="text-muted-foreground">Transparent pricing — no hidden fees, no surprises</p>
+          {/* Positioning */}
+          <div className="text-center mb-16 space-y-4">
+            <SectionLabel>PERFORMANCE MARKETING</SectionLabel>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+              Performance Marketing for <span className="text-gradient">Kenyan Businesses</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              I help businesses generate more leads and sales through Meta, Google and TikTok Ads.
+            </p>
+            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+              Management fees are separate from your advertising budget.
+            </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {services.map((s) => (
-              <Card key={s.name} className={`p-6 flex flex-col relative ${s.highlight ? "border-primary shadow-elegant" : "border-border/60"}`}>
-                {s.badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-orange text-white text-xs font-medium whitespace-nowrap">
-                    {s.badge}
+
+          {/* Single Platform — 60% visual weight */}
+          <div className="mb-20">
+            <h3 className="text-xl font-display font-semibold text-center mb-8">Single Platform</h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {singlePlatform.map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <motion.div
+                    key={s.name}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    className="corner-brackets surface-card p-7 flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300"
+                  >
+                    <div className="h-14 w-14 bg-gradient-orange flex items-center justify-center mb-5 shadow-[var(--shadow-orange-glow)]">
+                      <Icon className="h-7 w-7 text-white" aria-hidden />
+                    </div>
+                    <h3 className="text-2xl font-display font-semibold mb-2">{s.name}</h3>
+                    <p className="text-3xl font-display font-bold text-gradient mb-5">{s.price}</p>
+                    <ul className="space-y-3 mb-7 flex-1">
+                      {s.features.map((f) => (
+                        <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Button variant="outline" className="w-full" onClick={() => scrollTo("booking")}>
+                      Get Custom Quote
+                    </Button>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Retainer Packages — 60% visual weight */}
+          <div className="mb-20">
+            <h3 className="text-xl font-display font-semibold text-center mb-8">Retainer Packages</h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {retainerPackages.map((p, i) => (
+                <motion.div
+                  key={p.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className={`corner-brackets surface-card p-7 flex flex-col relative hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 ${p.highlight ? "border-primary/60 shadow-elegant" : ""}`}
+                >
+                  {p.highlight && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-orange text-white text-xs font-bold uppercase tracking-wide whitespace-nowrap">
+                      {p.label}
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-2xl font-display font-bold">{p.name}</h3>
+                    {!p.highlight && (
+                      <span className="text-xs font-medium px-2 py-1 bg-muted text-muted-foreground">{p.label}</span>
+                    )}
                   </div>
-                )}
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20 transition-transform duration-300 hover:scale-110"><s.icon className="h-6 w-6 text-primary" aria-hidden /></div>
-                <h3 className="font-display text-xl font-semibold">{s.name}</h3>
-                <div className="text-2xl font-bold text-gradient mt-2 mb-4">{s.price}</div>
-                <ul className="space-y-2 mb-6 flex-1">
-                  {s.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button variant={s.highlight ? "default" : "outline"} onClick={() => scrollTo("booking")}>{s.cta}</Button>
-              </Card>
-            ))}
+                  <p className="text-3xl font-display font-bold text-gradient mb-1">{p.price}</p>
+                  <p className="text-sm text-muted-foreground mb-6">{p.note}</p>
+                  <ul className="space-y-3 mb-7 flex-1">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button className={p.highlight ? "w-full" : "w-full variant-outline"} variant={p.highlight ? "default" : "outline"} onClick={() => scrollTo("booking")}>
+                    Get Custom Quote
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
           </div>
-          <div className="text-center mt-12">
-            <p className="text-muted-foreground mb-4">Need something custom? Every brand is different.</p>
+
+          {/* Supporting Services — 40% visual weight */}
+          <div className="mb-20">
+            <div className="text-center mb-10 space-y-3">
+              <SectionLabel>ALSO AVAILABLE</SectionLabel>
+              <h3 className="text-xl font-display font-semibold">Supporting Services</h3>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+              {supportingServices.map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <motion.div
+                    key={s.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    className="corner-brackets surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300"
+                  >
+                    <div className="h-10 w-10 bg-gradient-orange flex items-center justify-center mb-3 shadow-[var(--shadow-orange-glow)]">
+                      <Icon className="h-5 w-5 text-white" aria-hidden />
+                    </div>
+                    <h4 className="font-display font-semibold mb-1">{s.name}</h4>
+                    <p className="text-sm font-bold text-gradient mb-2">{s.price}</p>
+                    <p className="text-xs text-muted-foreground flex-1 mb-4">{s.desc}</p>
+                    <Button variant="outline" size="sm" className="w-full" onClick={() => scrollTo("booking")}>
+                      Get Custom Quote
+                    </Button>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Closing CTA */}
+          <div className="text-center max-w-2xl mx-auto space-y-6">
+            <p className="text-lg text-muted-foreground">
+              Not sure which package fits? Book a free 30-minute strategy call and I'll recommend the right plan for your business and budget.
+            </p>
             <Button size="lg" asChild>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="mr-2 h-5 w-5" /> Let's Build Your Package
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+                <Calendar className="mr-2 h-5 w-5" /> Book Free Strategy Call
               </a>
             </Button>
           </div>
