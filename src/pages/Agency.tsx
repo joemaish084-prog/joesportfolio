@@ -564,7 +564,7 @@ const Agency = () => {
                     <Select value={form.service} onValueChange={(v) => setForm({ ...form, service: v })}>
                       <SelectTrigger><SelectValue placeholder="Select a service" /></SelectTrigger>
                       <SelectContent>
-                        {services.map((s) => <SelectItem key={s.name} value={s.name}>{s.name}</SelectItem>)}
+                        {serviceOptions.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
                       </SelectContent>
                     </Select>
                   </div>
