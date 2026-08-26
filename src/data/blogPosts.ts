@@ -178,6 +178,9 @@ export const blogPosts: BlogPost[] = [
       "A behind-the-scenes breakdown of the content strategy, posting cadence and creative decisions that took a Kenyan brand to 4 million TikTok views.",
     intro:
       "This account started from zero. No following, no existing content library, no influencer budget. Four million views later, here is exactly what the strategy looked like.",
+    thumbnail: caseStudyThumb.url,
+    thumbnailAlt:
+      "Viral video play button with rising growth chart and audience icons, representing 4 million TikTok views",
     sections: [
       {
         id: "foundation",
