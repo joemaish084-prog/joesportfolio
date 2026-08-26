@@ -135,6 +135,9 @@ export const blogPosts: BlogPost[] = [
       "A data-backed comparison of TikTok and Instagram for Kenyan brands in 2026: reach, cost per result, audience intent and where to invest.",
     intro:
       "Brands keep asking which platform to choose. After running paid and organic campaigns on both across Kenyan audiences, the difference is less about which is better and more about what each one is for.",
+    thumbnail: tiktokThumb.url,
+    thumbnailAlt:
+      "Smartphone split screen showing TikTok and Instagram interfaces for Kenyan brands",
     sections: [
       {
         id: "reach",
