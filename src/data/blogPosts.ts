@@ -92,6 +92,9 @@ export const blogPosts: BlogPost[] = [
       "A practical Meta Ads budget guide for Kenyan SMEs, with realistic daily spend, testing budgets and the numbers to watch before scaling.",
     intro:
       "The honest answer is that there is no universal number, but there is a floor below which Meta cannot learn fast enough to be useful. Here is how I set budgets for small and medium businesses in Kenya.",
+    thumbnail: metaThumb.url,
+    thumbnailAlt:
+      "Kenyan shilling coins, Meta infinity logo and a rising bar chart, representing Meta Ads budgeting",
     sections: [
       {
         id: "floor",
