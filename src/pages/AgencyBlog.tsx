@@ -81,8 +81,16 @@ const AgencyBlog = () => {
 
           {/* Featured */}
           <article className="mb-20 overflow-hidden rounded-2xl border border-[#EAEAEA]">
-            <div className="relative h-56 bg-gradient-to-br from-[#111111] via-[#1c1c1c] to-[#2a1508] sm:h-80">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(249,115,22,0.35),transparent_60%)]" />
+            <div className="relative h-56 sm:h-80">
+              <img
+                src={featured.thumbnail}
+                alt={featured.thumbnailAlt}
+                loading="eager"
+                width={1200}
+                height={630}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               <span className="absolute bottom-6 left-6 rounded-full bg-[#F97316] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
                 {featured.category}
               </span>
