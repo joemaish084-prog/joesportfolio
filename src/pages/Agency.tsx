@@ -15,8 +15,10 @@ import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
   CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
-  Smartphone, Video, Search, TrendingUp, Lightbulb, Send, ArrowRight, Sparkles,
+  Smartphone, Video, Search, TrendingUp, Lightbulb, Send, ArrowRight, Sparkles, Share2, FileText,
+  Palette, MessageSquare,
 } from "lucide-react";
+import { SectionLabel } from "@/components/SectionLabel";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
