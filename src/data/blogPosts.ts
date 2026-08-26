@@ -1,3 +1,8 @@
+import seoThumb from "@/assets/blog-thumb-seo.webp.asset.json";
+import metaThumb from "@/assets/blog-thumb-meta.webp.asset.json";
+import tiktokThumb from "@/assets/blog-thumb-tiktok.webp.asset.json";
+import caseStudyThumb from "@/assets/blog-thumb-case-study.webp.asset.json";
+
 export interface BlogSection {
   id: string;
   heading: string;
@@ -16,6 +21,8 @@ export interface BlogPost {
   metaDescription: string;
   intro: string;
   sections: BlogSection[];
+  thumbnail: string;
+  thumbnailAlt: string;
 }
 
 export const AUTHOR = "Joseph Maina";
