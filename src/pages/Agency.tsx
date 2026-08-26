@@ -44,14 +44,78 @@ const whyCards = [
   { icon: Zap, title: "Fast & Transparent", desc: "Weekly updates, monthly reports and always available on WhatsApp. No chasing, no guessing." },
 ];
 
-const services = [
-  { icon: Smartphone, name: "Social Media Management", price: "From KES 15,000/mo", features: ["2 platforms managed", "12 posts per month", "Community management", "Monthly performance report"], cta: "Get Started" },
-  { icon: BarChart3, name: "Meta Ads Management", price: "From KES 20,000/mo", features: ["Facebook & Instagram ads", "Audience research", "Ad creative strategy", "Weekly optimization", "Bi-weekly reports"], cta: "Get Started" },
-  { icon: Video, name: "TikTok Ads Management", price: "From KES 15,000/mo", features: ["TikTok campaign setup", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reports"], cta: "Get Started" },
-  { icon: Search, name: "Google Ads Management", price: "From KES 20,000/mo", features: ["Search & Display campaigns", "Keyword research", "Bid management", "Conversion tracking", "Monthly reports"], cta: "Get Started" },
-  { icon: TrendingUp, name: "Media Buying", price: "From KES 50,000/mo", features: ["Multi-platform ad buying", "KES 500K+ budgets managed", "Full funnel strategy", "Weekly reporting", "ROAS optimization"], cta: "Let's Talk" },
-  { icon: Target, name: "Full Digital Package", price: "From KES 65,000/mo", badge: "Most Popular", features: ["Everything in all packages", "Brand strategy", "Content creation", "SEO optimization", "Priority support"], cta: "Get Started", highlight: true },
-  { icon: Lightbulb, name: "Strategy Consultation", price: "KES 3,500 per session", features: ["60-minute strategy call", "Digital audit of your brand", "Custom recommendations", "Action plan document", "1 week email support"], cta: "Book Session" },
+const singlePlatform = [
+  {
+    icon: Target,
+    name: "Meta Ads Management",
+    price: "From KES 40,000/month",
+    features: ["Campaign strategy and setup", "Audience research", "Creative direction", "Weekly optimization", "Monthly reporting"],
+  },
+  {
+    icon: Search,
+    name: "Google Ads Management",
+    price: "From KES 45,000/month",
+    features: ["Search, Display and YouTube campaigns", "Keyword research and strategy", "Bid management", "Conversion tracking", "Monthly reporting"],
+  },
+  {
+    icon: Video,
+    name: "TikTok Ads Management",
+    price: "From KES 40,000/month",
+    features: ["Campaign strategy", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reporting"],
+  },
+];
+
+const retainerPackages = [
+  {
+    name: "STARTER",
+    label: "For small businesses",
+    price: "From KES 40,000/month",
+    note: "Ad spend under KES 50,000/month",
+    features: ["1 platform managed", "Campaign setup and strategy", "Audience research", "Monthly reporting", "Email support"],
+  },
+  {
+    name: "GROWTH",
+    label: "Most popular",
+    highlight: true,
+    price: "From KES 70,000/month",
+    note: "Ad spend KES 50,000 - 200,000/month",
+    features: ["2 platforms managed", "Full campaign management", "Creative direction", "Weekly optimization", "Bi-weekly reporting", "WhatsApp support"],
+  },
+  {
+    name: "SCALE",
+    label: "For established brands",
+    price: "From KES 120,000/month",
+    note: "Ad spend KES 200,000+/month",
+    features: ["All platforms managed", "Full performance marketing", "Dedicated strategy sessions", "Daily monitoring", "Weekly reporting", "Priority WhatsApp support", "Quarterly strategy review"],
+  },
+];
+
+const supportingServices = [
+  { icon: Share2, name: "Social Media Management", price: "from KES 40,000/mo", desc: "Content, scheduling and community management." },
+  { icon: Search, name: "SEO Optimization", price: "from KES 45,000/mo", desc: "On-page, technical and local SEO." },
+  { icon: FileText, name: "Content Strategy", price: "from KES 45,000/mo", desc: "Editorial calendars and content plans." },
+  { icon: Video, name: "Video Production", price: "from KES 40,000/project", desc: "Short-form ads and brand videos." },
+  { icon: Lightbulb, name: "Brand Strategy", price: "from KES 60,000", desc: "Positioning, messaging and identity." },
+  { icon: Palette, name: "Graphic Design", price: "from KES 40,000/mo", desc: "Social graphics, ads and collateral." },
+  { icon: ClipboardList, name: "Digital Marketing Audit", price: "KES 40,000", desc: "Full-channel performance review." },
+  { icon: MessageSquare, name: "Strategy Consultation", price: "KES 40,000/session", desc: "One-on-one advisory session." },
+];
+
+const serviceOptions = [
+  "Meta Ads Management",
+  "Google Ads Management",
+  "TikTok Ads Management",
+  "Starter Retainer",
+  "Growth Retainer",
+  "Scale Retainer",
+  "Social Media Management",
+  "SEO Optimization",
+  "Content Strategy",
+  "Video Production",
+  "Brand Strategy",
+  "Graphic Design",
+  "Digital Marketing Audit",
+  "Strategy Consultation",
 ];
 
 const steps = [
