@@ -14,7 +14,7 @@ const HeroFallback = () => (
   <section id="home" className="relative w-full min-h-screen bg-background flex items-center justify-center">
     <div className="text-center px-4">
       <p className="text-sm font-medium text-primary mb-4 tracking-wide uppercase">Digital Marketing Specialist · Nairobi, Kenya</p>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-tight max-w-4xl">
+      <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight max-w-4xl">
         Creative Strategy<span className="text-gradient"> Meets </span>Visual Storytelling
       </h1>
     </div>

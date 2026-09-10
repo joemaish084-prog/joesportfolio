@@ -11,7 +11,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 7%;
     --primary: 25 100% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 0 0% 7%;
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 96%;
@@ -58,7 +58,7 @@
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
     --primary: 25 100% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 0 0% 7%;
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 12%;
@@ -222,6 +222,9 @@
   /* 1. Section labels */
   .section-label {
     @apply font-mono text-xs font-bold tracking-widest uppercase;
+    color: #C2410C;
+  }
+  .dark .section-label {
     color: #F97316;
   }
   .section-label > .slashes {
