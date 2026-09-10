@@ -24,7 +24,8 @@
     --input: 0 0% 90%;
     --muted-foreground: 0 0% 38%;
     --ring: 25 100% 50%;
-    --radius: 0.75rem;
+    --radius: 1.25rem;
+    --ease-out-apple: cubic-bezier(0.22, 1, 0.36, 1);
 
     /* Custom tokens */
     --orange: 25 100% 50%;
@@ -249,6 +250,28 @@
   }
   .dark .surface-card:hover {
     background: rgba(255, 255, 255, 0.02);
+  }
+
+  .glass {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: hsl(var(--background) / 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .dark .glass {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: hsl(var(--background) / 0.5);
+  }
+
+  .glass-thick {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: hsl(var(--background) / 0.85);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+  }
+  .dark .glass-thick {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: hsl(var(--background) / 0.8);
   }
 
   /* 5. Dot grid texture */
