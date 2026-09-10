@@ -72,6 +72,7 @@ const Index = () => {
             <PrintMockup />
             <About />
             <ServicesPricing />
+            <AgencyPromo />
             <MediaBuying />
             <SkillsStats />
             <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured">
