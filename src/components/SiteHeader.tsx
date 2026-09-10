@@ -165,16 +165,17 @@ export function SiteHeader() {
           {/* Desktop right */}
           <div className="hidden lg:flex items-center gap-3">
             <ThemeToggle />
-            <a href="/agency" className={`${navLinkClass} text-foreground/70 hover:text-foreground`}>
-              Agency
-            </a>
             <Button
               size="sm"
+              variant="outline"
               onClick={() => setCvOpen(true)}
-              className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+              className="rounded-full"
             >
               <FileText className="mr-1.5 h-4 w-4" />
               View CV
+            </Button>
+            <Button size="sm" asChild className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
+              <a href="/agency">Agency</a>
             </Button>
           </div>
 
@@ -242,19 +243,17 @@ export function SiteHeader() {
 
                 <div className="border-t border-border my-4" />
 
-                <a
-                  href="/agency"
-                  className="block py-3 min-h-[44px] text-2xl font-display font-semibold text-foreground"
-                >
-                  Agency
-                </a>
+                <Button asChild className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
+                  <a href="/agency">Agency</a>
+                </Button>
 
                 <Button
+                  variant="outline"
                   onClick={() => {
                     setOpen(false);
                     setCvOpen(true);
                   }}
-                  className="mt-4 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                  className="mt-3 w-full rounded-full"
                 >
                   <FileText className="mr-2 h-4 w-4" />
                   View CV
