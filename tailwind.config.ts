@@ -68,6 +68,15 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontSize: {
+        caption: ["0.75rem", { lineHeight: "1rem" }],
+        body: ["1rem", { lineHeight: "1.5rem" }],
+        headline: ["1.0625rem", { lineHeight: "1.375rem", fontWeight: "600" }],
+        "title-3": ["1.25rem", { lineHeight: "1.625rem", fontWeight: "600" }],
+        "title-2": ["1.75rem", { lineHeight: "2.125rem", fontWeight: "700" }],
+        "title-1": ["2.25rem", { lineHeight: "2.625rem", fontWeight: "700" }],
+        "large-title": ["3rem", { lineHeight: "3.5rem", fontWeight: "700" }],
+      },
       keyframes: {
         "accordion-down": {
           from: {
