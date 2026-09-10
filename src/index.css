@@ -232,11 +232,6 @@
   }
 
 
-  /* 3. Sharp corners on cards & containers (buttons, avatars, badges, pills keep radius) */
-  main section :is(.rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl):not(button):not(a):not(img):not(.rounded-full):not([role="button"]):not(.keep-radius),
-  main > div :is(.rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl):not(button):not(a):not(img):not(.rounded-full):not([role="button"]):not(.keep-radius) {
-    border-radius: 0;
-  }
 
   /* 4. Card surface treatment */
   .surface-card {
