@@ -32,6 +32,7 @@ const GraphicDesign = lazy(() => import("@/components/GraphicDesign").then(m => 
 const PrintMockup = lazy(() => import("@/components/PrintMockup").then(m => ({ default: m.PrintMockup })));
 const About = lazy(() => import("@/components/About").then(m => ({ default: m.About })));
 const ServicesPricing = lazy(() => import("@/components/ServicesPricing").then(m => ({ default: m.ServicesPricing })));
+const AgencyPromo = lazy(() => import("@/components/AgencyPromo").then(m => ({ default: m.AgencyPromo })));
 const MediaBuying = lazy(() => import("@/components/MediaBuying").then(m => ({ default: m.MediaBuying })));
 const SkillsStats = lazy(() => import("@/components/SkillsStats").then(m => ({ default: m.SkillsStats })));
 const CaseStudy = lazy(() => import("@/components/CaseStudy").then(m => ({ default: m.CaseStudy })));
