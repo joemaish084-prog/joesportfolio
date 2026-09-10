@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft } from "lucide-react";
-import { Navigation } from "@/components/Navigation";
+import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 
 interface LegalPageProps {
@@ -23,7 +23,7 @@ export function LegalPage({ title, description, canonical, heading, lastUpdated,
         <link rel="canonical" href={canonical} />
       </Helmet>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
-        <Navigation />
+        <SiteHeader />
         <main className="flex-1 pt-28 pb-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
             <Link

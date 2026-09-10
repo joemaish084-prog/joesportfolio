@@ -8,18 +8,20 @@ import { ThemeToggle } from "./ThemeToggle";
 const CVViewer = lazy(() => import("./CVViewer").then((m) => ({ default: m.CVViewer })));
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Videos", href: "#videos" },
-  { label: "Design", href: "#graphic-design" },
-  { label: "Cases", href: "#case-study" },
-  { label: "Experience", href: "#experience" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Videos", href: "/#videos" },
+  { label: "Design", href: "/#graphic-design" },
+  { label: "Cases", href: "/#case-study" },
+  { label: "Experience", href: "/#experience" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "/#contact" },
 ];
+
+const getHash = (href: string) => "#" + href.split("#")[1];
 
 function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
-    <a href="#home" onClick={onClick} className="flex items-center gap-2.5 shrink-0">
+    <a href="/#home" onClick={onClick} className="flex items-center gap-2.5 shrink-0">
       <span className="h-8 w-8 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold tracking-wide">
         JM
       </span>
@@ -51,7 +53,7 @@ export function SiteHeader() {
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     navLinks.forEach((link) => {
-      const id = link.href.replace("#", "");
+      const id = getHash(link.href).replace("#", "");
       const el = document.getElementById(id);
       if (!el) return;
       const observer = new IntersectionObserver(
@@ -116,10 +118,12 @@ export function SiteHeader() {
   }, []);
 
   const handleAnchor = useCallback((e: React.MouseEvent, href: string) => {
-    if (!href.startsWith("#")) return;
+    const hash = getHash(href);
+    // Off the homepage, let the browser do a normal navigation to "/#id"
+    if (window.location.pathname !== "/") return;
     e.preventDefault();
     setOpen(false);
-    const el = document.querySelector(href);
+    const el = document.querySelector(hash);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
@@ -135,12 +139,12 @@ export function SiteHeader() {
         }`}
       >
         <div className="container mx-auto px-6 h-full flex items-center justify-between gap-4">
-          <Logo onClick={(e) => handleAnchor(e, "#home")} />
+          <Logo onClick={(e) => handleAnchor(e, "/#home")} />
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-7" aria-label="Primary">
             {navLinks.map((link) => {
-              const isActive = activeHref === link.href;
+              const isActive = activeHref === getHash(link.href);
               return (
                 <a
                   key={link.href}
@@ -210,7 +214,7 @@ export function SiteHeader() {
               transition={reduceMotion ? { duration: 0.12 } : { duration: 0.26, ease: "easeOut" }}
             >
               <div className="h-14 px-6 flex items-center justify-between">
-                <Logo onClick={(e) => handleAnchor(e, "#home")} />
+                <Logo onClick={(e) => handleAnchor(e, "/#home")} />
                 <button
                   ref={closeRef}
                   type="button"
@@ -234,7 +238,7 @@ export function SiteHeader() {
                     animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                     transition={reduceMotion ? undefined : { delay: i * 0.04, duration: 0.2 }}
                     className={`block py-3 min-h-[44px] text-2xl font-display font-semibold ${
-                      activeHref === link.href ? "text-primary" : "text-foreground"
+                      activeHref === getHash(link.href) ? "text-primary" : "text-foreground"
                     }`}
                   >
                     {link.label}

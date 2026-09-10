@@ -1,15 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { SectionLabel } from "@/components/SectionLabel";
-
-/* ── Stats ── */
-const stats = [
-  { value: 20, suffix: "+", label: "Campaigns Managed" },
-  { value: 50, suffix: "+", label: "Keywords Ranked" },
-  { value: 3, suffix: "+", label: "Years Experience" },
-  { value: 15, suffix: "+", label: "Clients Served" },
-];
 
 /* ── Skills ── */
 const skills = [
@@ -32,39 +24,6 @@ const tools = [
   "Meta Ads Manager",
   "WordPress",
 ];
-
-/* ── Animated counter hook ── */
-function useCounter(end: number, inView: boolean, duration = 2000) {
-  const [count, setCount] = useState(0);
-  const started = useRef(false);
-
-  useEffect(() => {
-    if (!inView || started.current) return;
-    started.current = true;
-    const step = Math.ceil(duration / end);
-    let current = 0;
-    const id = setInterval(() => {
-      current += 1;
-      setCount(current);
-      if (current >= end) clearInterval(id);
-    }, step);
-    return () => clearInterval(id);
-  }, [inView, end, duration]);
-
-  return count;
-}
-
-function StatCard({ value, suffix, label, inView }: { value: number; suffix: string; label: string; inView: boolean }) {
-  const count = useCounter(value, inView);
-  return (
-    <div className="rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:-translate-y-1">
-      <p className="text-4xl sm:text-5xl font-display font-bold text-gradient">
-        {count}{suffix}
-      </p>
-      <p className="mt-2 text-sm font-medium text-muted-foreground">{label}</p>
-    </div>
-  );
-}
 
 export function SkillsStats() {
   const ref = useRef<HTMLDivElement>(null);
@@ -92,20 +51,6 @@ export function SkillsStats() {
             with hands-on experience in SEO, content strategy, social media marketing and
             data-driven digital campaigns.
           </p>
-        </div>
-
-        {/* Stats Counter */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
-          {stats.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <StatCard {...s} inView={inView} />
-            </motion.div>
-          ))}
         </div>
 
         {/* Skills Progress Bars */}
