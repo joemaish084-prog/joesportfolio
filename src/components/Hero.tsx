@@ -11,17 +11,13 @@ type Tag = {
 };
 
 const tags: Tag[] = [
-  { label: "Content Strategy", top: "8%", left: "4%" },
-  { label: "Brand Storytelling", top: "4%", left: "24%" },
-  { label: "Performance Marketing", top: "10%", left: "48%" },
-  { label: "Video Production", top: "20%", left: "36%" },
-  { label: "Meta Ads", top: "6%", right: "22%" },
-  { label: "Google Ads", top: "12%", right: "6%" },
-  { label: "SEO Optimization", top: "40%", right: "8%" },
-  { label: "Social Media Growth", top: "55%", right: "4%" },
-  { label: "Creative Direction", bottom: "18%", left: "40%" },
-  { label: "Analytics & Insights", bottom: "14%", right: "20%" },
+  { label: "Content Strategy", top: "12%", left: "8%" },
+  { label: "Meta Ads", top: "10%", right: "10%" },
+  { label: "Google Ads", top: "46%", left: "6%" },
+  { label: "SEO Optimization", top: "50%", right: "8%" },
 ];
+
+const appleEase = [0.22, 1, 0.36, 1] as const;
 
 function FloatingTag({
   tag,
@@ -47,11 +43,11 @@ function FloatingTag({
       className="hidden md:block z-10"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.4 + index * 0.1 }}
+      transition={{ delay: 0.4 + index * 0.1, duration: 0.45, ease: appleEase }}
     >
       <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 3 + index * 0.2, repeat: Infinity, ease: appleEase }}
         className="px-4 py-2 bg-card border border-border rounded-xl shadow-sm text-sm text-muted-foreground"
       >
         {label}
@@ -95,18 +91,18 @@ export function Hero() {
         <motion.h1
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight max-w-4xl"
+          transition={{ duration: 0.45, ease: appleEase }}
+          className="text-large-title font-display font-bold tracking-tight max-w-4xl"
         >
           Creative Strategy
-          <span className="text-gradient"> Meets </span>
+          <span className="text-primary"> Meets </span>
           Visual Storytelling
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.3, duration: 0.45, ease: appleEase }}
           className="mt-6 text-lg text-muted-foreground max-w-2xl"
         >
           I build campaigns that turn attention into measurable growth.
@@ -115,13 +111,13 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.5, duration: 0.45, ease: appleEase }}
           className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
-          <Button size="lg" className="w-full sm:w-auto shadow-elegant btn-hover" asChild>
+          <Button size="lg" className="w-full sm:w-auto rounded-full" asChild>
             <a href="#videos">View My Work</a>
           </Button>
-          <Button size="lg" variant="outline" className="w-full sm:w-auto btn-hover" asChild>
+          <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild>
             <a href="#contact">Contact Me</a>
           </Button>
         </motion.div>
