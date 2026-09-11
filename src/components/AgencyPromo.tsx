@@ -39,10 +39,10 @@ export function AgencyPromo() {
           <div className="glass-thick rounded-3xl p-8 sm:p-12 lg:p-14 max-w-4xl mx-auto text-center">
             <SectionLabel>THE AGENCY</SectionLabel>
             <h2 id="agency-promo-heading" className="text-title-1 sm:text-large-title font-display mt-4 mb-4">
-              Also Available: My Marketing Agency
+              My Marketing Agency
             </h2>
             <p className="text-body sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-              Meta, Google and TikTok Ads managed end-to-end for Kenyan brands — strategy, creative, budget and reporting, handled by me directly.
+              Need more than a portfolio? My agency runs the campaigns.
             </p>
 
             <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto mb-10">
