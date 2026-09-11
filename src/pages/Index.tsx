@@ -55,46 +55,44 @@ const Index = () => {
         <link rel="canonical" href="https://www.josephmaina.co.ke/" />
       </Helmet>
       {!splashDone && <Suspense fallback={null}><SplashScreen onComplete={() => setSplashDone(true)} /></Suspense>}
-      <div className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
-        <Suspense fallback={null}><ScrollProgress /></Suspense>
-        <SiteHeader />
-        <main>
-          <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
-          <PressFeatures />
-          <ExpandCollapseAll />
-          <Suspense fallback={null}>
-            <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="9+ Videos">
-              <Videos />
-            </CollapsibleWrapper>
-            <CollapsibleWrapper id="graphic-design" title="Graphic Design" Icon={Palette} count="Gallery">
-              <GraphicDesign />
-            </CollapsibleWrapper>
-            <PrintMockup />
-            <About />
-            <ServicesPricing />
-            <AgencyPromo />
-            <MediaBuying />
-            <SkillsStats />
-            <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured">
-              <CaseStudy />
-            </CollapsibleWrapper>
-            <CollapsibleWrapper id="experience" title="Experience" Icon={Briefcase} count="Timeline">
-              <Experience />
-            </CollapsibleWrapper>
-            <Certifications />
-            <Testimonials />
-            <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
-              <FAQ />
-            </CollapsibleWrapper>
-            <Contact />
-          </Suspense>
-        </main>
+      <Suspense fallback={null}><ScrollProgress /></Suspense>
+      <SiteHeader />
+      <main className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
+        <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
+        <PressFeatures />
+        <ExpandCollapseAll />
         <Suspense fallback={null}>
-          <Footer />
-          <ChatAssistant />
+          <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="9+ Videos">
+            <Videos />
+          </CollapsibleWrapper>
+          <CollapsibleWrapper id="graphic-design" title="Graphic Design" Icon={Palette} count="Gallery">
+            <GraphicDesign />
+          </CollapsibleWrapper>
+          <PrintMockup />
+          <About />
+          <ServicesPricing />
+          <AgencyPromo />
+          <MediaBuying />
+          <SkillsStats />
+          <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured">
+            <CaseStudy />
+          </CollapsibleWrapper>
+          <CollapsibleWrapper id="experience" title="Experience" Icon={Briefcase} count="Timeline">
+            <Experience />
+          </CollapsibleWrapper>
+          <Certifications />
+          <Testimonials />
+          <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
+            <FAQ />
+          </CollapsibleWrapper>
+          <Contact />
         </Suspense>
-        <Suspense fallback={null}><BackToTop /></Suspense>
-      </div>
+      </main>
+      <Suspense fallback={null}>
+        <Footer />
+        <ChatAssistant />
+      </Suspense>
+      <Suspense fallback={null}><BackToTop /></Suspense>
     </>
   );
 };
