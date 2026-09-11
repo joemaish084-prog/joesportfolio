@@ -1,7 +1,3 @@
-import seoThumb from "@/assets/blog-thumb-seo.webp.asset.json";
-import metaThumb from "@/assets/blog-thumb-meta.webp.asset.json";
-import tiktokThumb from "@/assets/blog-thumb-tiktok.webp.asset.json";
-import caseStudyThumb from "@/assets/blog-thumb-case-study.webp.asset.json";
 
 export interface BlogSection {
   id: string;
@@ -41,9 +37,9 @@ export const blogPosts: BlogPost[] = [
       "The real reasons Nairobi businesses stay invisible on Google search, and the practical SEO fixes that get you ranking locally in 2026.",
     intro:
       "If customers in Nairobi search for what you sell and your business never appears, the problem is rarely the product. It is almost always a handful of technical and local search gaps that are cheap to fix once you know where to look.",
-    thumbnail: seoThumb.url,
-    thumbnailAlt:
-      "Nairobi skyline with an orange location pin and magnifying glass, representing local Google search visibility",
+    thumbnail: "https://images.unsplash.com/photo-1741991110666-88115e724741?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Nairobi city skyline with modern high-rise buildings under a bright sky",
+
     sections: [
       {
         id: "google-business-profile",
@@ -92,9 +88,9 @@ export const blogPosts: BlogPost[] = [
       "A practical Meta Ads budget guide for Kenyan SMEs, with realistic daily spend, testing budgets and the numbers to watch before scaling.",
     intro:
       "The honest answer is that there is no universal number, but there is a floor below which Meta cannot learn fast enough to be useful. Here is how I set budgets for small and medium businesses in Kenya.",
-    thumbnail: metaThumb.url,
-    thumbnailAlt:
-      "Kenyan shilling coins, Meta infinity logo and a rising bar chart, representing Meta Ads budgeting",
+    thumbnail: "https://images.unsplash.com/photo-1675352162363-ac40c3bb8265?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Close-up of a smartphone screen showing the Facebook app",
+
     sections: [
       {
         id: "floor",
@@ -135,9 +131,9 @@ export const blogPosts: BlogPost[] = [
       "A data-backed comparison of TikTok and Instagram for Kenyan brands in 2026: reach, cost per result, audience intent and where to invest.",
     intro:
       "Brands keep asking which platform to choose. After running paid and organic campaigns on both across Kenyan audiences, the difference is less about which is better and more about what each one is for.",
-    thumbnail: tiktokThumb.url,
-    thumbnailAlt:
-      "Smartphone split screen showing TikTok and Instagram interfaces for Kenyan brands",
+    thumbnail: "https://images.unsplash.com/photo-1745848413099-13adc3aaf308?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone screen showing a folder of social media apps including Instagram and TikTok icons",
+
     sections: [
       {
         id: "reach",
@@ -178,9 +174,9 @@ export const blogPosts: BlogPost[] = [
       "A behind-the-scenes breakdown of the content strategy, posting cadence and creative decisions that took a Kenyan brand to 4 million TikTok views.",
     intro:
       "This account started from zero. No following, no existing content library, no influencer budget. Four million views later, here is exactly what the strategy looked like.",
-    thumbnail: caseStudyThumb.url,
-    thumbnailAlt:
-      "Viral video play button with rising growth chart and audience icons, representing 4 million TikTok views",
+    thumbnail: "https://images.unsplash.com/photo-1744135995241-3afc337786fd?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone mounted on a tripod filming a short-form video",
+
     sections: [
       {
         id: "foundation",
