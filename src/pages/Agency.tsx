@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
+import { supabase } from "@/integrations/supabase/client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
@@ -172,26 +173,46 @@ const scrollTo = (id: string) => {
 
 const Agency = () => {
   const { toast } = useToast();
-  const [form, setForm] = useState({ name: "", brand: "", service: "", budget: "", goals: "" });
+  const [form, setForm] = useState<{ name: string; email: string; phone: string; brand: string; service: string; budget: string; goals: string; source: string | null }>({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "", source: null });
   const [sending, setSending] = useState(false);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get("source") || params.get("utm_source");
+    if (source) setForm((f) => ({ ...f, source }));
+  }, []);
 
   const submitBrief = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.brand.trim() || !form.service || !form.budget || !form.goals.trim()) {
+    if (!form.name.trim() || !form.email.trim() || !form.brand.trim() || !form.service || !form.budget || !form.goals.trim()) {
       toast({ title: "Please complete all fields", variant: "destructive" });
       return;
     }
     setSending(true);
     try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name: form.name,
-        from_email: "agency-brief@josephmaina.co.ke",
-        message: `New Agency Brief\n\nName: ${form.name}\nBrand: ${form.brand}\nService: ${form.service}\nBudget: ${form.budget}\n\nGoals:\n${form.goals}`,
-        to_name: "Joseph Maina",
-      }, EMAILJS_PUBLIC_KEY);
+      const { error } = await supabase.from("agency_leads").insert({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || null,
+        business_name: form.brand,
+        service_interest: form.service,
+        budget_range: form.budget,
+        goals: form.goals,
+        source: form.source,
+      });
+      if (error) throw error;
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          from_name: form.name,
+          from_email: form.email,
+          message: `New Agency Brief\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "—"}\nBrand: ${form.brand}\nService: ${form.service}\nBudget: ${form.budget}\n\nGoals:\n${form.goals}`,
+          to_name: "Joseph Maina",
+        }, EMAILJS_PUBLIC_KEY);
+      } catch (emailErr) {
+        console.error("EmailJS send failed (lead already saved):", emailErr);
+      }
       toast({ title: "Brief sent", description: "I'll reply within 24 hours." });
-      setForm({ name: "", brand: "", service: "", budget: "", goals: "" });
+      setForm({ ...form, name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
     } catch (err) {
       console.error(err);
       toast({ title: "Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
@@ -553,6 +574,14 @@ const Agency = () => {
                   <div>
                     <Label htmlFor="b-name">Name</Label>
                     <Input id="b-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                  </div>
+                  <div>
+                    <Label htmlFor="b-email">Email</Label>
+                    <Input id="b-email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                  </div>
+                  <div>
+                    <Label htmlFor="b-phone">Phone (optional)</Label>
+                    <Input id="b-phone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
                   </div>
                   <div>
                     <Label htmlFor="b-brand">Brand name</Label>
