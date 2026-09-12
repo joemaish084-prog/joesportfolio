@@ -156,7 +156,16 @@ const AgencyBlogPost = () => {
               <div className="mt-8 grid gap-8 md:grid-cols-3">
                 {related.map((r) => (
                   <article key={r.slug} className="overflow-hidden rounded-2xl border border-[#EAEAEA]">
-                    <div className="relative h-32 bg-gradient-to-br from-[#111111] via-[#1c1c1c] to-[#2a1508]">
+                    <div className="relative h-32">
+                      <img
+                        src={r.thumbnail}
+                        alt={r.thumbnailAlt}
+                        loading="lazy"
+                        width={400}
+                        height={128}
+                        className="h-full w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                       <span className="absolute bottom-3 left-3 rounded-full bg-[#F97316] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
                         {r.category}
                       </span>
