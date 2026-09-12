@@ -124,8 +124,16 @@ const AgencyBlog = () => {
                 key={post.slug}
                 className="flex flex-col overflow-hidden rounded-2xl border border-[#EAEAEA] transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
               >
-                <div className="relative h-44 bg-gradient-to-br from-[#111111] via-[#1c1c1c] to-[#2a1508]">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(249,115,22,0.3),transparent_60%)]" />
+                <div className="relative h-44">
+                  <img
+                    src={post.thumbnail}
+                    alt={post.thumbnailAlt}
+                    loading="lazy"
+                    width={800}
+                    height={440}
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <span className="absolute bottom-4 left-4 rounded-full bg-[#F97316] px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
                     {post.category}
                   </span>
