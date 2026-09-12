@@ -212,6 +212,10 @@ const Agency = () => {
         console.error("EmailJS send failed (lead already saved):", emailErr);
       }
       toast({ title: "Brief sent", description: "I'll reply within 24 hours." });
+      const fbq = (window as any).fbq;
+      if (typeof fbq === "function") {
+        fbq("track", "Lead");
+      }
       setForm({ ...form, name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
     } catch (err) {
       console.error(err);

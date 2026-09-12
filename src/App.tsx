@@ -14,6 +14,7 @@ import Terms from "./pages/Terms";
 import Connect from "./pages/Connect";
 import NotFound from "./pages/NotFound";
 import { CookieConsent } from "@/components/CookieConsent";
+import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
 
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <MetaPixelRouteTracker />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/agency" element={<Agency />} />
