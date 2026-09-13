@@ -212,6 +212,116 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "ad-mistakes-nairobi-smes-keep-making-2026",
+    category: "Paid Ads",
+    title: "5 Ad Mistakes Nairobi SMEs Keep Making on Google and Meta",
+    excerpt: "Chasing clicks and reach while sales stay flat. Here's what's actually going wrong.",
+    date: "2026-08-19",
+    dateLabel: "August 2026",
+    readTime: "5 min read",
+    metaTitle: "5 Ad Mistakes Nairobi SMEs Keep Making on Google and Meta",
+    metaDescription:
+      "The most common Google and Meta Ads mistakes I see Nairobi SMEs make, and the fixes that actually move sales instead of vanity metrics.",
+    intro:
+      "I look at a lot of ad accounts for Nairobi businesses, and the same five mistakes show up almost every time. None of them are complicated to fix. Most cost the business money every single day they go unnoticed.",
+    thumbnail: "https://images.unsplash.com/photo-1683721003111-070bcc053d8b?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Social media platform logos representing brand awareness and digital marketing strategies",
+
+    sections: [
+      {
+        id: "wrong-metric",
+        heading: "Judging the campaign by reach and clicks",
+        paragraphs: [
+          "A campaign with a low cost per click and huge reach can still be losing money. Reach and clicks tell you an ad was shown and tapped, not that it made anyone buy anything.",
+          "Before judging a campaign, look at cost per lead or cost per sale, and compare that number to what the sale is actually worth. If a KES 300 lead turns into a KES 5,000 sale one time in ten, the account is healthy even if the click through rate looks unremarkable.",
+        ],
+      },
+      {
+        id: "no-tracking",
+        heading: "Running ads with no real conversion tracking",
+        paragraphs: [
+          "Many accounts I audit have a pixel installed but nothing configured to track an actual purchase, lead form, or WhatsApp click. Meta and Google are then optimising blind, spending money to show ads to whoever is cheapest to reach rather than whoever is likely to buy.",
+          "Set up proper event tracking before spending a shilling on scaling. Without it you are guessing, and the platforms are guessing along with you.",
+        ],
+      },
+      {
+        id: "broad-targeting",
+        heading: "Targeting too broad or too narrow, with no in-between",
+        paragraphs: [
+          "Some businesses target all of Nairobi with no interest or behaviour layer, which burns budget on people who will never buy. Others narrow so hard the algorithm cannot find enough people to learn from, and the account never leaves the learning phase.",
+          "Start with a defined but not tiny audience, let the algorithm run for at least a week without interference, then narrow based on what the data actually shows rather than a guess.",
+        ],
+      },
+      {
+        id: "creative-fatigue",
+        heading: "Using the same three creatives for months",
+        paragraphs: [
+          "Frequency creeps up, cost per result climbs, and the business assumes the platform stopped working. Usually the real problem is that the same audience has seen the same three images sixty times.",
+          "Budget for fresh creative every three to four weeks. This matters more in a small market like Nairobi, where the addressable audience for a niche product is smaller than businesses assume.",
+        ],
+      },
+      {
+        id: "no-followup",
+        heading: "Treating the ad as the whole funnel",
+        paragraphs: [
+          "An ad that gets someone to comment 'price' or fill a form is only the first step. If nobody replies for six hours, or the WhatsApp number goes unanswered on weekends, the ad spend was wasted regardless of how well the ad performed.",
+          "The businesses getting the best return from ads in this market are the ones treating reply speed and the sales conversation as part of the campaign, not as a separate department's problem.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ai-marketing-honest-take-2026",
+    category: "AI & Marketing",
+    title: "AI Is Not a Marketing Strategy: My Honest Take After a Year Using It Daily",
+    excerpt: "I use AI tools every day. Here's where they actually help and where they quietly cost you clients.",
+    date: "2026-09-05",
+    dateLabel: "September 2026",
+    readTime: "5 min read",
+    metaTitle: "AI Is Not a Marketing Strategy: My Honest Take After a Year Using It Daily",
+    metaDescription:
+      "A Nairobi digital marketer's honest breakdown of where AI tools genuinely help marketing work, and where relying on them quietly hurts results.",
+    intro:
+      "I use AI tools every day of my working life, for content, research, and even parts of this website. After a year of that, I have a clear view on what they are actually good for, and where I see brands quietly hurting themselves by leaning on AI for things it was never built to do.",
+    thumbnail: "https://images.unsplash.com/photo-1642543348791-b1cc1b07e756?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Sole proprietor working on a laptop with AI marketing concepts in the background",
+
+    sections: [
+      {
+        id: "good-at",
+        heading: "Where AI genuinely earns its place",
+        paragraphs: [
+          "Drafting, summarising, and speeding up production are where these tools shine. A first draft of an ad script, a content calendar skeleton, or a quick summary of a messy client brief takes minutes instead of an afternoon.",
+          "I use it daily for exactly this kind of work, and it has made me faster without making the work worse, as long as I am the one editing what comes out before a client or an ad platform ever sees it.",
+        ],
+      },
+      {
+        id: "bad-at",
+        heading: "Where it quietly hurts brands",
+        paragraphs: [
+          "Strategy is the biggest one. AI can describe a strategy convincingly without knowing your margins, your actual customers, or what your competitors are doing right now in Nairobi this month. It will confidently give you a plan that sounds right and is wrong for your business.",
+          "Voice is the second one. Unedited AI copy has a recognisable rhythm, and Kenyan audiences notice when a brand's Instagram caption suddenly stops sounding like a person. That gap in authenticity costs more trust than most business owners realise.",
+        ],
+      },
+      {
+        id: "own-work",
+        heading: "How I actually use it on this website",
+        paragraphs: [
+          "This site's blog section runs on AI-assisted drafting with a system prompt built around Nairobi and Kenyan context, but every post gets a real edit pass before it is published. The AI writes a first draft, not the final version.",
+          "That split, AI for speed and a human for judgement and voice, is the same one I recommend to every client who asks whether they should just let a tool run their content.",
+        ],
+      },
+      {
+        id: "advice",
+        heading: "My advice if you're deciding how much to lean on it",
+        paragraphs: [
+          "Use it for volume: first drafts, variations, research summaries, and repetitive formatting work. Do not use it to decide your budget, your targeting, or your brand's voice without a person who knows the business checking the output first.",
+          "The businesses getting real value from AI right now are not the ones using it the most. They are the ones being precise about which five percent of the work they still refuse to hand over.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
