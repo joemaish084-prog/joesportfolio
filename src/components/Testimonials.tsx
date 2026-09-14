@@ -28,8 +28,8 @@ export function Testimonials() {
         <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
             <SectionLabel>TESTIMONIALS</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
-              What Clients <span className="text-gradient">Say</span>
+            <h2 className="text-title-1 sm:text-large-title font-display">
+              What Clients Say
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Trusted by brands across Kenya to deliver creative campaigns that drive real results.
@@ -39,8 +39,8 @@ export function Testimonials() {
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <ScrollReveal key={index} direction="up" delay={index * 0.15} rotate={-2}>
-              <Card className="corner-brackets surface-card border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2">
+            <ScrollReveal key={index} direction="up" delay={index * 0.15}>
+              <Card className="glass hover:border-primary/40 hover-lift">
                 <CardContent className="pt-6 space-y-4">
                   <Quote className="h-8 w-8 text-primary/30" />
                   <blockquote className="text-muted-foreground leading-relaxed italic">
