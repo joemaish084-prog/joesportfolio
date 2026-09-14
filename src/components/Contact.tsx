@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
+import { supabase } from "@/integrations/supabase/client";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 
@@ -49,18 +50,33 @@ export function Contact() {
     e.preventDefault();
     if (!validate()) return;
     setIsSending(true);
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
     try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name: formData.name.trim(),
-        from_email: formData.email.trim(),
-        message: formData.message.trim(),
-        to_name: "Joseph Maina",
-      }, EMAILJS_PUBLIC_KEY);
+      const { error } = await supabase.from("contact_messages").insert({
+        name,
+        email,
+        message,
+        source: null,
+      });
+      if (error) throw error;
       toast({ title: "Message sent", description: "I'll reply within 24 hours." });
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
+      // Best-effort email notification — the message is already safely stored
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          from_name: name,
+          from_email: email,
+          message: message,
+          to_name: "Joseph Maina",
+        }, EMAILJS_PUBLIC_KEY);
+      } catch (emailError) {
+        console.error("EmailJS error:", emailError);
+      }
     } catch (error) {
-      console.error("EmailJS error:", error);
+      console.error("Message save error:", error);
       toast({ title: "Something went wrong", description: "Please email me directly at joemaish084@gmail.com", variant: "destructive" });
     } finally {
       setIsSending(false);
