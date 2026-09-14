@@ -322,6 +322,63 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "how-i-landed-national-press-coverage-for-iclear",
+    category: "Case Study",
+    title: "My Playbook for Turning a Campaign Into National Press Coverage",
+    excerpt: "How a clean-water brand's anniversary campaign turned into features in Daily Nation, Capital FM and Kenya Engineer.",
+    date: "2026-09-13",
+    dateLabel: "September 2026",
+    readTime: "6 min read",
+    metaTitle: "My Playbook for Turning a Campaign Into National Press Coverage",
+    metaDescription: "The PR playbook I used as Marketing Lead at iClear to land features in Daily Nation, Capital FM and Kenya Engineer for a Kenyan water brand.",
+    intro: "As Marketing Lead at iClear, a Kenyan water purification company (a past employer, not a client), I ran the brand's 4th anniversary campaign from May to July 2026. The goal wasn't just a sale, it was a story worth writing about. Here's how proactive press outreach, a real CSR initiative, and a multi-platform push turned into national media coverage.",
+    thumbnail: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Magnifying glass over a newspaper article, symbolizing press and media coverage",
+
+    sections: [
+      {
+        id: "reason-to-care",
+        heading: "Give journalists a reason to care",
+        paragraphs: [
+          "Nobody writes a story about a discount code. What we built the campaign around instead was the 4th anniversary itself, paired with a genuine give-back: donating water purifiers to a school. That combination, a milestone plus a community impact angle, is what makes a pitch worth a journalist's time.",
+          "So before any outreach went out, we lined up the story: what iClear does, why clean water access still matters in Kenya, and the concrete difference the campaign would make for one specific school.",
+        ],
+      },
+      {
+        id: "press-placements",
+        heading: "The outreach: three real placements",
+        paragraphs: [
+          "We reached out to journalists directly rather than waiting to be discovered, and it landed real coverage: Daily Nation ran a feature titled \"The Business of Water,\" Capital FM covered the story, and so did Kenya Engineer. In the Daily Nation piece I'm quoted by name as iClear's Marketing Lead, explaining how the brand's water purification technology works.",
+          "That kind of earned media does something paid ads can't: it puts an independent, national outlet's credibility behind the brand, for free, because the story was genuinely worth telling.",
+        ],
+      },
+      {
+        id: "csr-baobab-school",
+        heading: "The CSR piece: Baobab School",
+        paragraphs: [
+          "On July 8, 2026, the team donated and installed 3 water purifiers at Baobab School, reaching 90 students and 8 teachers and staff with clean water access. Five iClear team members were on-site for the handover, and we documented the day in photos and video.",
+          "This wasn't a photo-op tacked on after the fact, it was planned in from the start as the story's emotional core, and it's the piece that made the press pitch land.",
+        ],
+      },
+      {
+        id: "wider-push",
+        heading: "What the wider push looked like",
+        paragraphs: [
+          "Alongside the press and CSR work, the campaign ran across TikTok, Instagram and Facebook, with TikTok alone pulling in over a million views a quarter. Instagram was the strongest channel for turning attention into sales, driving 28 units through direct messages.",
+          "We also showed up in person: an activation at the Nairobi City Marathon generated over 500 inquiries and 15 high-potential leads. Two monthly lucky draws, giving away a water dispensing unit each in May and June, kept the audience engaged between the bigger moments. Across the anniversary window, the campaign moved 120 units.",
+        ],
+      },
+      {
+        id: "takeaway",
+        heading: "The takeaway",
+        paragraphs: [
+          "National press coverage rarely happens because a brand asks for it. It happens because there's a real story, told to the right people, backed by something a brand actually did. The anniversary gave us the timing, the school donation gave us the substance, and direct journalist outreach did the rest.",
+          "This is the same approach I bring to my agency's client work now: pair a genuine story with the outreach to get it seen, rather than treating press coverage as something separate from the marketing plan.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
