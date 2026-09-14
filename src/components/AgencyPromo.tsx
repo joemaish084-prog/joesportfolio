@@ -4,6 +4,7 @@ import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 const proofPoints = [
   { value: 500, prefix: "KES ", suffix: "K+", label: "Ad budgets managed" },
@@ -36,7 +37,8 @@ export function AgencyPromo() {
     <section id="agency-promo" className="scroll-mt-20 lg:scroll-mt-24 py-20 sm:py-28 relative overflow-hidden" aria-labelledby="agency-promo-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <ScrollReveal>
-          <div className="glass-thick rounded-3xl p-8 sm:p-12 lg:p-14 max-w-4xl mx-auto text-center">
+          <div className="relative overflow-hidden glass-thick rounded-3xl p-8 sm:p-12 lg:p-14 max-w-4xl mx-auto text-center">
+            <ShineBorder shineColor="hsl(var(--primary))" borderWidth={1} duration={14} />
             <SectionLabel>THE AGENCY</SectionLabel>
             <h2 id="agency-promo-heading" className="text-title-1 sm:text-large-title font-display mt-4 mb-4">
               My Marketing Agency
