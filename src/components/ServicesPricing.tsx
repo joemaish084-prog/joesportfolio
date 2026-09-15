@@ -1,38 +1,33 @@
-import { motion } from "framer-motion";
 import { Target, Search, Share2, FileText, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BentoGrid } from "@/components/ui/bento-grid";
+import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
-import { cn } from "@/lib/utils";
 
 const services = [
   {
     icon: Target,
     title: "Meta Ads",
-    description: "Facebook & Instagram campaigns optimized for ROAS — creative, targeting, retargeting, A/B testing.",
-    price: "KES 35,000",
-    unit: "/mo + ad spend",
+    description: "KES 35,000/mo + ad spend — Facebook & Instagram campaigns optimized for ROAS: creative, targeting, retargeting, A/B testing.",
+    className: "md:col-span-2",
   },
   {
     icon: Search,
     title: "Google Ads",
-    description: "Search, Performance Max & YouTube campaigns — keyword strategy, conversion tracking, weekly optimization.",
-    price: "KES 40,000",
-    unit: "/mo + ad spend",
+    description: "KES 40,000/mo + ad spend — Search, Performance Max & YouTube campaigns: keyword strategy, conversion tracking, weekly optimization.",
+    className: "md:col-span-1",
   },
   {
     icon: Share2,
     title: "Social Media Management",
-    description: "Strategy, content calendar, posting, community management, monthly reporting across 3–4 platforms.",
-    price: "KES 45,000",
-    unit: "/mo",
+    description: "KES 45,000/mo — Strategy, content calendar, posting, community management, monthly reporting across 3–4 platforms.",
+    className: "md:col-span-1",
   },
   {
     icon: FileText,
     title: "SEO & Content",
-    description: "Keyword research, on-page SEO, technical audits, blog content built to rank in Kenyan SERPs.",
-    price: "KES 30,000",
-    unit: "/mo",
+    description: "KES 30,000/mo — Keyword research, on-page SEO, technical audits, blog content built to rank in Kenyan SERPs.",
+    className: "md:col-span-1",
   },
 ];
 
@@ -50,35 +45,22 @@ export function ServicesPricing() {
           </p>
         </div>
 
-        <BentoGrid className="grid-cols-1 md:grid-cols-3 auto-rows-fr gap-5">
-          {services.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className={cn(
-                  "glass hover:border-primary/40 hover-lift p-6 flex flex-col",
-                  s.title === "Meta Ads" && "md:col-span-2"
-                )}
-              >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <Icon className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="text-xl font-display font-semibold mb-2">{s.title}</h3>
-                <p className="text-sm text-muted-foreground flex-1">{s.description}</p>
-                <div className="mt-5">
-                  <p className="text-title-2 font-display font-bold text-foreground">
-                    {s.price}
-                    <span className="text-xs font-medium text-muted-foreground ml-1">{s.unit}</span>
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
+        <BentoGrid className="grid-cols-1 md:grid-cols-3 gap-4">
+          {services.map((s, i) => (
+            <ScrollReveal key={s.title} direction="up" delay={i * 0.1}>
+              <BentoCard
+                name={s.title}
+                description={s.description}
+                Icon={s.icon}
+                href="/agency"
+                cta="Learn more"
+                className={s.className}
+                background={
+                  <s.icon className="pointer-events-none absolute -right-6 -top-6 h-40 w-40 text-primary/5" />
+                }
+              />
+            </ScrollReveal>
+          ))}
         </BentoGrid>
 
         <div className="mt-12 text-center">
