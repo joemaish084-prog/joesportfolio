@@ -38,6 +38,7 @@ const SkillsStats = lazy(() => import("@/components/SkillsStats").then(m => ({ d
 const CaseStudy = lazy(() => import("@/components/CaseStudy").then(m => ({ default: m.CaseStudy })));
 const Experience = lazy(() => import("@/components/Experience").then(m => ({ default: m.Experience })));
 const Certifications = lazy(() => import("@/components/Certifications").then(m => ({ default: m.Certifications })));
+const BrandsLogoMarquee = lazy(() => import("@/components/BrandsLogoMarquee").then(m => ({ default: m.BrandsLogoMarquee })));
 const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({ default: m.Testimonials })));
 const FAQ = lazy(() => import("@/components/FAQ").then(m => ({ default: m.FAQ })));
 const Contact = lazy(() => import("@/components/Contact").then(m => ({ default: m.Contact })));
@@ -81,6 +82,7 @@ const Index = () => {
             <Experience />
           </CollapsibleWrapper>
           <Certifications />
+          <BrandsLogoMarquee />
           <Testimonials />
           <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
             <FAQ />
