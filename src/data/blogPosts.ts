@@ -379,6 +379,52 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "iclear-water-initiative-baobab-school",
+    category: "CSR",
+    title: "Inside iClear's Water Initiative at Baobab School",
+    excerpt: "A closer look at the day iClear donated and installed 3 water purifiers at Baobab School — and what changed for 90 students and 8 staff.",
+    date: "2026-09-15",
+    dateLabel: "September 2026",
+    readTime: "4 min read",
+    metaTitle: "Inside iClear's Water Initiative at Baobab School",
+    metaDescription: "How iClear donated and installed 3 water purifiers at Baobab School, reaching 90 students and 8 staff — the story behind the CSR initiative that anchored the brand's anniversary campaign.",
+    intro: "As Marketing Lead at iClear, I helped plan and run the school donation at the centre of our 4th anniversary campaign. The press coverage told the headline version of that story. This is the fuller one — what the day at Baobab School actually looked like, and why we built the campaign around it in the first place.",
+    thumbnail: "https://images.unsplash.com/photo-1747330665987-78cec08c8ec9?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Children drinking clean water from a public fountain",
+
+    sections: [
+      {
+        id: "why-a-school",
+        heading: "Why a school",
+        paragraphs: [
+          "Clean water access is the actual problem iClear exists to solve, so when we planned the anniversary campaign, giving back had to mean more than a discount. We picked a school because the impact is immediate and shared: one installation, dozens of kids and staff drinking clean water every day from that point on, not just for one afternoon.",
+        ],
+      },
+      {
+        id: "the-day",
+        heading: "The day at Baobab School",
+        paragraphs: [
+          "On July 8, 2026, the iClear team installed 3 Premier purifier units at Baobab School, giving 90 students and 8 teachers and staff clean drinking water. Five of us were on-site for the handover.",
+          "What stuck with the team wasn't the installation itself, it was watching the kids try the water and react to it. They were genuinely amazed at how it tasted — for a lot of them, it was the first time water from a tap had tasted like that. That reaction is the reason this kind of work is worth doing beyond the campaign calendar.",
+        ],
+      },
+      {
+        id: "why-it-matters",
+        heading: "Why it matters beyond one day",
+        paragraphs: [
+          "Access to safe drinking water is still inconsistent in a lot of Kenyan schools, and it affects everything from attendance to health. iClear's whole pitch is built around making that access affordable — the brand's standard message puts clean water at around KES 3 a litre — which is part of why a school donation fit so naturally: it's the same promise, just given instead of sold.",
+        ],
+      },
+      {
+        id: "closing",
+        heading: "Closing",
+        paragraphs: [
+          "This is the same instinct I bring into agency work now: don't treat CSR or community impact as a marketing bolt-on. Build it in as something real, and let the story follow from what actually happened.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
