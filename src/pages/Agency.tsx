@@ -19,6 +19,7 @@ import {
   Video, Search, Lightbulb, Send, ArrowRight, Sparkles, Share2, FileText, Palette, MessageSquare,
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
+import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
@@ -306,6 +307,8 @@ const Agency = () => {
             </div>
           </div>
         </section>
+
+        <BrandsLogoMarquee />
 
         {/* WHY */}
         <section className="container mx-auto px-4 py-20">
