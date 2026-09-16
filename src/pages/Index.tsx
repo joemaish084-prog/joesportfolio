@@ -11,10 +11,10 @@ const Hero = lazy(() => import("@/components/Hero").then(m => ({ default: m.Hero
 
 // Lightweight placeholder matching Hero dimensions to avoid layout shift
 const HeroFallback = () => (
-  <section id="home" className="relative w-full min-h-screen bg-[#08090a] flex items-center px-6 sm:px-10 lg:px-16">
+  <section id="home" className="relative w-full min-h-screen bg-background flex items-center px-6 sm:px-10 lg:px-16">
     <div className="max-w-xl">
-      <p className="text-xs font-medium text-white/80 mb-6 tracking-wide uppercase">Digital Marketing Specialist · Nairobi, Kenya</p>
-      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white">
+      <p className="text-xs font-medium text-muted-foreground mb-6 tracking-wide uppercase">Digital Marketing Specialist · Nairobi, Kenya</p>
+      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-foreground">
         Creative Strategy<span className="text-primary"> Meets </span>Visual Storytelling
       </h1>
     </div>
