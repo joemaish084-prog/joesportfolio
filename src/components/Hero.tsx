@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { HeroBackground } from "@/components/HeroBackground";
 import { ChevronDown } from "lucide-react";
 
 const appleEase = [0.22, 1, 0.36, 1] as const;
@@ -137,19 +138,7 @@ export function Hero() {
       onMouseLeave={handleMouseLeave}
       className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen bg-[#08090a] overflow-hidden"
     >
-      {/* Layer 0 — drifting glow blobs */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] right-[5%] w-[32rem] h-[32rem] rounded-full bg-primary/25 blur-[120px] animate-drift-a" />
-        <div className="absolute bottom-[-15%] left-[0%] w-[28rem] h-[28rem] rounded-full bg-primary/10 blur-[130px] animate-drift-b" />
-      </div>
-
-      {/* Layer 1 — grid, spotlight, grain */}
-      <div className="absolute inset-0 z-[1] hero-grid pointer-events-none" />
-      <div className="absolute inset-0 z-[1] hero-spotlight pointer-events-none transition-[background] duration-300" />
-      <div className="absolute inset-0 z-[1] hero-noise opacity-[0.05] mix-blend-overlay pointer-events-none" />
-
-      {/* Layer 2 — seam into the rest of the page, theme-adaptive */}
-      <div className="absolute inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-b from-transparent to-background pointer-events-none" />
+      <HeroBackground />
 
       <div className="relative z-10 min-h-screen grid lg:grid-cols-2 gap-16 items-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto py-32 lg:py-20">
         <div className="text-left">
