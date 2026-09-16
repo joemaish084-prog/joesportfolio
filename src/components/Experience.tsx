@@ -6,9 +6,32 @@ import { SectionLabel } from "@/components/SectionLabel";
 
 const experiences = [
   {
-    company: "iClear Welllife Service Limited",
-    role: "Assistant Marketing Supervisor / Digital Marketing Specialist",
-    period: "May '25 - Present",
+    company: "Beauty Square Kenya & Sage Sknn Aesthetics",
+    role: "Digital Marketing Manager",
+    period: "Jul '26 - Present",
+    responsibilities: [
+      "Own end-to-end digital strategy for two retail and beauty brands simultaneously — social media, paid advertising, SEO, and website management",
+      "Direct paid campaigns across Meta, TikTok, and Google Ads, managing budgets against reach and ROAS targets",
+      "Set content strategy and publishing calendars across Instagram, TikTok, Facebook, and WhatsApp for both brands",
+      "Lead weekly and monthly performance reporting, presenting strategy and results to Operations and executive leadership",
+      "Ran a full digital audit within the first 30 days, catching and fixing a significant ad-attribution discrepancy between Meta and on-site analytics",
+    ],
+  },
+  {
+    company: "Powwater",
+    role: "Marketing Consultant (Part-Time)",
+    period: "Apr '26 - Jul '26",
+    responsibilities: [
+      "Ran digital marketing campaigns to grow the brand online and bring in new customers",
+      "Created and managed social media content across key platforms, keeping posting consistent and on-brand",
+      "Advised on paid ads, audience targeting, budget allocation, and campaign performance improvement",
+      "Designed creative assets and wrote copy for digital channels, tracking results and reporting findings",
+    ],
+  },
+  {
+    company: "iClear Wellife Service Limited",
+    role: "Marketing Lead / Digital Marketing Specialist",
+    period: "May '25 - Jul '26",
     responsibilities: [
       "Co-led end-to-end marketing strategy and execution across social media and digital campaigns, contributing to 80% growth in brand visibility and engagement",
       "Owned planning, execution, and optimization of 12+ integrated promotional campaigns, driving a 25% increase in brand reach and measurable ROI",
@@ -22,7 +45,7 @@ const experiences = [
   {
     company: "Convey Communications",
     role: "Digital Creative Lead",
-    period: "Jan '25 - Present",
+    period: "Jan '25 - May '25",
     responsibilities: [
       "Led creative direction and digital strategy for the 'Convey with Caroline' podcast, defining brand identity, tone, audience growth strategy, and platform expansion",
       "Designed and executed multi-platform promotional campaigns including reels, teasers, thumbnails, and branded content across social channels",
@@ -32,7 +55,7 @@ const experiences = [
   {
     company: "Convey Communications",
     role: "Creative Digital Officer",
-    period: "Feb '24 - May '25",
+    period: "Feb '24 - Jan '25",
     responsibilities: [
       "Grew audience engagement and brand clarity through consistent, high-quality storytelling and platform-specific content distribution",
       "Spearheaded digital content execution for internal brand initiatives and client campaigns, delivering 30+ multimedia assets",

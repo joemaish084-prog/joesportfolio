@@ -3,7 +3,7 @@ import { Building2 } from "lucide-react";
 const clients = [
   {
     name: "iClear Wellife Service",
-    role: "Assistant Marketing Supervisor",
+    role: "Marketing Lead / Digital Marketing Specialist",
     description: "Social media management, campaign execution, brand visibility growth",
   },
   {

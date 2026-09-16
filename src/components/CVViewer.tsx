@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Download, Printer, MapPin, Mail, Phone, Globe, Briefcase, GraduationCap, Award, Star } from "lucide-react";
+import { X, Download, Printer, MapPin, Mail, Phone, Globe, Briefcase, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface CVViewerProps {
@@ -10,18 +10,42 @@ interface CVViewerProps {
 
 const experience = [
   {
-    company: "iClear Welllife Service Limited",
-    role: "Digital Marketing Specialist / Asst. Marketing Supervisor",
-    period: "May 2025 – Present",
+    company: "Beauty Square Kenya & Sage Sknn Aesthetics",
+    role: "Digital Marketing Manager",
+    period: "Jul 2026 – Present",
     location: "Nairobi, Kenya",
     bullets: [
-      "Planned and executed a full-year integrated digital marketing campaign across TikTok, Instagram, LinkedIn, Facebook, and YouTube — producing 336 pieces of content (142 videos + 194 static posts).",
+      "Own end-to-end digital strategy for two retail/beauty brands simultaneously, social media, paid advertising, SEO, and website management, reporting directly to the Operations Manager.",
+      "Direct and manage paid campaigns across Meta, TikTok, and Google Ads, overseeing budgets and performance against reach and ROAS targets.",
+      "Set and manage content strategy and publishing calendars across Instagram, TikTok, Facebook, and WhatsApp for both brands.",
+      "Lead weekly and monthly performance reporting, presenting strategy, results, and data-driven recommendations to Operations and executive leadership.",
+      "Conducted a full digital audit within the first 30 days, identifying and correcting a significant ad-attribution discrepancy between Meta and on-site analytics.",
+    ],
+  },
+  {
+    company: "Powwater",
+    role: "Marketing Consultant (part time)",
+    period: "Apr 2026 – Jul 2026",
+    location: "Nairobi, Kenya",
+    bullets: [
+      "Ran digital marketing campaigns to grow the brand online and bring in new customers.",
+      "Created and managed social media content across key platforms, keeping posting consistent and on-brand.",
+      "Advised on paid ads, audience targeting, budget allocation, and campaign performance improvement.",
+      "Designed creative assets and wrote copy for digital channels, tracking results and reporting findings with clear recommendations.",
+    ],
+  },
+  {
+    company: "iClear Wellife Service Limited",
+    role: "Marketing Lead / Digital Marketing Specialist",
+    period: "May 2025 – Jul 2026",
+    location: "Nairobi, Kenya",
+    bullets: [
+      "Planned and executed a full-year integrated digital marketing campaign across TikTok, Instagram, LinkedIn, Facebook, and YouTube, producing 336 pieces of content (142 videos + 194 static posts).",
       "Generated 4M+ total TikTok video views and 2.5M+ Instagram video views through a video-first content strategy, with top single videos reaching 104K views on TikTok.",
-      "Achieved 704K Instagram reach and 103% growth in Instagram video views, with link clicks growing 179% — directly supporting lead and traffic objectives.",
+      "Achieved 704K Instagram reach and 103% growth in Instagram video views, with link clicks growing 179%, directly supporting lead and traffic objectives.",
       "Led 12+ integrated campaigns including a TECNO co-brand promotion and Kilimall e-commerce activation, contributing to 80% brand visibility growth and 25% increase in brand reach.",
       "Built and managed organic and paid experimentation frameworks, refining campaigns in real time based on performance data.",
-      "Introduced AI-powered content workflows (ChatGPT, Gemini, n8n) to accelerate ideation and production pipelines while maintaining brand consistency.",
-      "Reported campaign effectiveness with data-driven insights translated into clear recommendations for leadership.",
+      "Introduced AI-powered content workflows (ChatGPT, Gemini, n8n) to accelerate ideation and production while maintaining brand consistency.",
     ],
   },
   {
@@ -53,43 +77,35 @@ const experience = [
     period: "May 2023 – Aug 2023",
     location: "Nyeri, Kenya",
     bullets: [
-      "Produced digital content, conducted field interviews, and ran social media campaigns for large-scale public engagement initiatives.",
-      "Built early experience in reputation management and community communication.",
+      "Produced digital content, conducted field interviews, and ran social media campaigns for large-scale public engagement initiatives, building early experience in reputation management and community communication.",
     ],
   },
 ];
 
-const keyProject = {
-  title: "Convey with Caroline Podcast — Brand & Growth Lead",
-  period: "Jan 2025 – Present",
-  bullets: [
-    "Built the brand's entire digital identity and content ecosystem from scratch: visual language, tone of voice, platform strategy, and community engagement model.",
-    "Grew audience engagement through consistent, high-quality storytelling and platform-optimized content distribution across Instagram, YouTube, and TikTok.",
-    "Demonstrated core digital marketing skills: narrative framing, audience building, and growth through owned and earned channels.",
-  ],
-};
-
 const coreSkills = [
   "Digital Marketing Strategy",
-  "Social Media Management (LinkedIn, Instagram, TikTok, Facebook, YouTube, X)",
+  "Retail & Consumer Brand Marketing",
+  "Paid Media (Meta, TikTok, Google Ads)",
+  "Campaign Planning & Execution",
+  "Customer Acquisition & Engagement",
+  "Brand Positioning",
+  "SEO & Website Performance",
+  "Social Media Management (Instagram, TikTok, Facebook, LinkedIn, YouTube, X)",
   "Content Calendar Development",
-  "Platform-Specific Copywriting",
-  "Influencer Briefing & Management",
-  "Earned & Owned Channel Strategy",
-  "Community Building",
   "Campaign Analytics & Reporting",
   "Video Production & Editing",
-  "AI-Powered Content Workflows (ChatGPT, Gemini, n8n)",
+  "AI-Powered Content Workflows (ChatGPT, Gemini, n8n, Zapier, Make.com)",
   "Crisis Communications Support",
   "Adobe Creative Suite",
   "Canva",
   "Meta Ads Manager",
   "Google Analytics",
+  "Google Search Console",
 ];
 
 const tools = [
-  "Adobe Premiere", "Adobe Photoshop", "Canva", "Meta Ads Manager", "Google Ads",
-  "Google Analytics", "Buffer", "Later", "ChatGPT", "Gemini", "n8n",
+  "Meta Ads Manager", "Google Ads", "Google Analytics", "Google Search Console",
+  "Adobe Premiere", "Adobe Photoshop", "Canva", "Buffer", "Later", "ChatGPT", "Gemini", "n8n",
   "Instagram", "LinkedIn", "TikTok", "Facebook", "YouTube", "X (Twitter)",
   "Video Production & Editing", "Press Release Writing", "Campaign Analytics", "Workflow Automation",
 ];
@@ -172,7 +188,7 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
                   Joseph Isaac Maina
                 </h1>
                 <p className="text-base sm:text-lg text-primary font-medium mt-1 italic">
-                  Digital Marketing &amp; Growth · Content Strategy · Brand Storytelling
+                  Digital Marketing Manager · Retail &amp; Consumer Brands · Paid Media &amp; Growth Strategy
                 </p>
                 <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-sm text-muted-foreground print:text-gray-700">
                   <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" /> Nairobi, Kenya</span>
@@ -188,12 +204,13 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
                   Professional Profile
                 </h2>
                 <p className="text-base leading-relaxed text-foreground/90 print:text-black">
-                  Results-driven digital marketing and communications professional with 3+ years of hands-on experience
-                  building integrated campaigns across social media, content strategy, and community-driven storytelling.
-                  Proven ability to develop platform-specific content, manage multi-channel distribution at scale, and
-                  translate brand narratives into measurable digital impact. Experienced in agency-adjacent environments
-                  supporting brands across multiple sectors. Strong writing skills, deep platform fluency, and a data-first
-                  approach to campaign optimization.
+                  Results-driven digital marketing professional with 3+ years managing integrated marketing strategy, paid
+                  media, and content across retail, beauty, and consumer-facing brands. Currently leads full digital strategy
+                  for two retail/beauty brands simultaneously — social media, paid advertising, SEO, and website performance —
+                  with direct accountability for reach, engagement, and ROAS targets. Comfortable moving between strategic
+                  planning and hands-on execution, with a data-first approach to campaign optimization and a track record of
+                  driving measurable growth in traffic, engagement, and lead generation. Also operates an independent
+                  marketing consultancy, bringing a contractor's ownership mindset to every engagement.
                 </p>
               </section>
 
@@ -232,20 +249,6 @@ export function CVViewer({ open, onClose }: CVViewerProps) {
                     </div>
                   ))}
                 </div>
-              </section>
-
-              {/* Key Project */}
-              <section className="mb-8">
-                <h2 className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3 inline-flex items-center gap-2">
-                  <Star className="h-4 w-4" /> Key Project
-                </h2>
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                  <h3 className="text-base font-semibold">{keyProject.title}</h3>
-                  <span className="text-xs text-muted-foreground print:text-gray-600">{keyProject.period}</span>
-                </div>
-                <ul className="mt-3 space-y-1.5 text-sm text-foreground/85 print:text-black list-disc pl-5">
-                  {keyProject.bullets.map((b, j) => <li key={j}>{b}</li>)}
-                </ul>
               </section>
 
               {/* Education */}

@@ -5,8 +5,8 @@ import { ScrollReveal } from "./ScrollReveal";
 const caseStudies = [
   {
     company: "iClear Wellife Service",
-    role: "Assistant Marketing Supervisor",
-    period: "Aug '24 - Present",
+    role: "Marketing Lead / Digital Marketing Specialist",
+    period: "May '25 - Jul '26",
     intro: "When I joined iClear Wellife, their social media presence was practically nonexistent. The brand had solid products — water purification and wellness solutions — but nobody online knew they existed. My job was to change that.",
     metrics: [
       { label: "Engagement Increase", value: "80%", icon: TrendingUp },

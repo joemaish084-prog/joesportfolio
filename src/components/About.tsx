@@ -47,7 +47,7 @@ export function About() {
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Fast forward to today, and I'm a <strong className="text-foreground">Digital Marketing Specialist in Nairobi, Kenya</strong> with over 3 years of hands-on experience. I've worked with brands like iClear Wellife Service and Convey Communications, producing content, managing campaigns, and driving measurable growth. As an <strong className="text-foreground">SEO Expert in Nairobi</strong> and <strong className="text-foreground">Social Media Manager in Kenya</strong>, I don't just post content — I build systems that turn engagement into revenue.
+                  Fast forward to today, and I'm a <strong className="text-foreground">Digital Marketing Manager in Nairobi, Kenya</strong> with over 3 years of hands-on experience. I currently lead digital strategy for Beauty Square Kenya and Sage Sknn Aesthetics, and I've previously worked with brands like iClear Wellife Service, Powwater, and Convey Communications, producing content, managing campaigns, and driving measurable growth. As an <strong className="text-foreground">SEO Expert in Nairobi</strong> and <strong className="text-foreground">Social Media Manager in Kenya</strong>, I don't just post content — I build systems that turn engagement into revenue.
                 </p>
               </ScrollReveal>
             </article>
@@ -90,7 +90,7 @@ export function About() {
                   I grew up seeing small Kenyan businesses with incredible products and services struggle simply because no one knew they existed. That frustration stuck with me. Today, I get out of bed knowing that the work I do — a well-timed Instagram post, a carefully targeted Google Ad, a viral TikTok video — can be the difference between a business surviving and thriving.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm currently a <span className="text-primary font-semibold">digital marketer available for hire in Nairobi (2026)</span> — covering Westlands, CBD, Kilimani and Karen, plus remote clients in Mombasa and Kisumu. I work with startups, SMEs, ecommerce, real estate and hospitality brands as a <strong className="text-foreground">digital marketing consultant Nairobi</strong> focused on performance marketing Kenya 2026, AI digital marketing Nairobi workflows and full funnel marketing Kenya. Open to freelance projects and full-time opportunities — let's build something impactful together.
+                  I'm currently a <span className="text-primary font-semibold">Digital Marketing Manager at Beauty Square Kenya and Sage Sknn Aesthetics</span>, and I also take on select freelance and consulting work in Nairobi (2026) — covering Westlands, CBD, Kilimani and Karen, plus remote clients in Mombasa and Kisumu. I work with startups, SMEs, ecommerce, real estate and hospitality brands as a <strong className="text-foreground">digital marketing consultant Nairobi</strong> focused on performance marketing Kenya 2026, AI digital marketing Nairobi workflows and full funnel marketing Kenya. Open to select freelance and consulting projects — let's build something impactful together.
                 </p>
               </div>
             </ScrollReveal>
