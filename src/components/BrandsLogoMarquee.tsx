@@ -5,6 +5,8 @@ import logoJoan from "@/assets/logo-joan.webp";
 import logoIclear from "@/assets/logo-iclear.webp";
 import logoNorthgate from "@/assets/logo-northgate.webp";
 import logoPowwater from "@/assets/logo-powwater.webp";
+import logoGlowskin from "@/assets/logo-glowskin.jpg";
+import logoBeautysquare from "@/assets/logo-beautysquare.jpg";
 
 const brands = [
   { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },
@@ -13,6 +15,8 @@ const brands = [
   { name: "TechMindset Africa", industry: "AI Company", logo: logoTechmindset },
   { name: "NorthGate School", industry: "Education", logo: logoNorthgate },
   { name: "PowWater", industry: "Water Services", logo: logoPowwater },
+  { name: "Glow Skin Cosmetics", industry: "Skincare Retailer", logo: logoGlowskin },
+  { name: "Beauty Square Kenya", industry: "Skincare Retail", logo: logoBeautysquare },
 ];
 
 export function BrandsLogoMarquee() {
