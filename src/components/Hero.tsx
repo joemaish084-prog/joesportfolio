@@ -1,58 +1,108 @@
-import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
-import { useRef } from "react";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-
-type Tag = {
-  label: string;
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-};
-
-const tags: Tag[] = [
-  { label: "Content Strategy", top: "12%", left: "8%" },
-  { label: "Meta Ads", top: "10%", right: "10%" },
-  { label: "Google Ads", top: "46%", left: "6%" },
-  { label: "SEO Optimization", top: "50%", right: "8%" },
-];
+import GradientWaves from "@/components/GradientWaves";
 
 const appleEase = [0.22, 1, 0.36, 1] as const;
 
-function FloatingTag({
-  tag,
-  index,
-  mouseX,
-  mouseY,
-}: {
-  tag: Tag;
-  index: number;
-  mouseX: MotionValue<number>;
-  mouseY: MotionValue<number>;
-}) {
-  const moveX = useTransform(mouseX, (v) => v * 20);
-  const moveY = useTransform(mouseY, (v) => v * 20);
+const proofStats = [
+  { value: "4M+", label: "TikTok views on a single campaign" },
+  { value: "KES 500K+", label: "Monthly ad budgets managed" },
+  { value: "120+", label: "Units sold in one campaign window" },
+  { value: "3+", label: "Years in digital marketing" },
+];
+
+type Tag = { label: string; top?: string; left?: string; right?: string; bottom?: string };
+
+const tags: Tag[] = [
+  { label: "Content Strategy", top: "-6%", left: "-8%" },
+  { label: "Meta Ads", top: "8%", right: "-12%" },
+  { label: "Google Ads", bottom: "10%", left: "-14%" },
+  { label: "SEO Optimization", bottom: "-6%", right: "-6%" },
+];
+
+function FloatingTag({ tag, index, mouseX, mouseY }: { tag: Tag; index: number; mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
+  const moveX = useTransform(mouseX, (v) => v * 16);
+  const moveY = useTransform(mouseY, (v) => v * 16);
   const smoothX = useSpring(moveX, { damping: 20, stiffness: 100 });
   const smoothY = useSpring(moveY, { damping: 20, stiffness: 100 });
-
   const { label, ...position } = tag;
 
   return (
     <motion.div
       style={{ position: "absolute", ...position, x: smoothX, y: smoothY }}
-      className="hidden md:block z-10"
+      className="hidden lg:block z-20"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.4 + index * 0.1, duration: 0.45, ease: appleEase }}
+      transition={{ delay: 0.7 + index * 0.1, duration: 0.5, ease: appleEase }}
     >
       <motion.div
-        animate={{ y: [0, -4, 0] }}
+        animate={{ y: [0, -5, 0] }}
         transition={{ duration: 3 + index * 0.2, repeat: Infinity, ease: appleEase }}
-        className="px-4 py-2 bg-card border border-border rounded-xl shadow-sm text-sm text-muted-foreground"
+        className="px-3.5 py-2 rounded-xl border border-white/15 bg-white/[0.06] backdrop-blur-md text-xs font-medium text-white/85 shadow-lg whitespace-nowrap"
       >
         {label}
       </motion.div>
     </motion.div>
+  );
+}
+
+function ProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
+  const [statIndex, setStatIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setStatIndex((i) => (i + 1) % proofStats.length), 2800);
+    return () => clearInterval(id);
+  }, []);
+
+  const rotateX = useSpring(useTransform(mouseY, (v) => v * -8), { damping: 25, stiffness: 150 });
+  const rotateY = useSpring(useTransform(mouseX, (v) => v * 8), { damping: 25, stiffness: 150 });
+
+  const stat = proofStats[statIndex];
+
+  return (
+    <div className="relative mx-auto w-full max-w-sm" style={{ perspective: 1200 }}>
+      {tags.map((tag, i) => (
+        <FloatingTag key={tag.label} tag={tag} index={i} mouseX={mouseX} mouseY={mouseY} />
+      ))}
+
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 0.35, duration: 0.6, ease: appleEase }}
+        className="relative z-10 rounded-3xl border border-white/15 bg-white/[0.06] backdrop-blur-xl p-8 sm:p-10 shadow-2xl dot-grid"
+      >
+        <div className="flex items-center gap-2 mb-8">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+          </span>
+          <span className="text-[11px] uppercase tracking-widest text-white/60 font-medium">Live results</span>
+        </div>
+
+        <div className="h-28 flex flex-col justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={stat.value}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.4, ease: appleEase }}
+            >
+              <p className="text-5xl sm:text-6xl font-display font-bold text-white tracking-tight">{stat.value}</p>
+              <p className="mt-2 text-sm text-white/60 max-w-[220px]">{stat.label}</p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="mt-8 flex items-center gap-1.5">
+          {proofStats.map((s, i) => (
+            <span key={s.value} className={`h-1 rounded-full transition-all duration-500 ${i === statIndex ? "w-6 bg-primary" : "w-1.5 bg-white/20"}`} />
+          ))}
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
@@ -81,46 +131,101 @@ export function Hero() {
       id="home"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen bg-background overflow-hidden"
+      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen bg-[#08090a] overflow-hidden"
     >
-      {tags.map((tag, index) => (
-        <FloatingTag key={tag.label} tag={tag} index={index} mouseX={mouseX} mouseY={mouseY} />
-      ))}
+      <div className="absolute inset-0 z-0 opacity-80">
+        <GradientWaves
+          horizonColor="#0a0a0c"
+          waveColor="#F97316"
+          crestColor="#ffb37a"
+          speed={0.22}
+          amplitude={1.6}
+          waveScale={0.5}
+          height={5}
+          fogDepth={10}
+          brightness={0.85}
+          opacity={1}
+          mouseInteraction
+          grain
+          grainIntensity={0.025}
+        />
+      </div>
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#08090a] via-transparent to-[#08090a]" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#08090a] via-transparent to-[#08090a]/60" />
 
-      <div className="flex flex-col items-center justify-center text-center min-h-screen px-6 relative z-20">
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.45, ease: appleEase }}
-          className="text-large-title font-display font-bold tracking-tight max-w-4xl"
-        >
-          Creative Strategy
-          <span className="text-primary"> Meets </span>
-          Visual Storytelling
-        </motion.h1>
+      <div className="relative z-10 min-h-screen grid lg:grid-cols-2 gap-16 items-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto py-32 lg:py-20">
+        <div className="text-left">
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: appleEase }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-md text-xs font-medium text-white/80 mb-6"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            Digital Marketing Specialist — Nairobi, Kenya
+          </motion.span>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.45, ease: appleEase }}
-          className="mt-6 text-lg text-muted-foreground max-w-2xl"
-        >
-          I build campaigns that turn attention into measurable growth.
-        </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5, ease: appleEase }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white max-w-xl"
+          >
+            Creative Strategy
+            <span className="text-primary"> Meets </span>
+            Visual Storytelling
+          </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.45, ease: appleEase }}
-          className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
-        >
-          <Button size="lg" className="w-full sm:w-auto rounded-full" asChild>
-            <a href="#videos">View My Work</a>
-          </Button>
-          <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild>
-            <a href="#contact">Contact Me</a>
-          </Button>
-        </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.22, duration: 0.5, ease: appleEase }}
+            className="mt-6 text-lg text-white/60 max-w-md"
+          >
+            I build campaigns that turn attention into measurable growth.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.34, duration: 0.5, ease: appleEase }}
+            className="mt-10 flex flex-col sm:flex-row gap-4"
+          >
+            <Button size="lg" className="w-full sm:w-auto rounded-full" asChild>
+              <a href="#videos">View My Work</a>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto rounded-full bg-transparent border-white/25 text-white hover:bg-white/10 hover:text-white"
+              asChild
+            >
+              <a href="#contact">Contact Me</a>
+            </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.6, ease: appleEase }}
+            className="mt-14 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-6"
+          >
+            {[
+              ["KES 500K+", "Ad budgets managed"],
+              ["4M+", "TikTok views"],
+              ["3+", "Years experience"],
+            ].map(([value, label]) => (
+              <div key={value}>
+                <p className="text-lg font-display font-semibold text-white">{value}</p>
+                <p className="text-xs text-white/50">{label}</p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        <div className="hidden lg:block">
+          <ProofPanel mouseX={mouseX} mouseY={mouseY} />
+        </div>
       </div>
     </section>
   );

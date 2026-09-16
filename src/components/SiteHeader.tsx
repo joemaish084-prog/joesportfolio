@@ -19,13 +19,17 @@ const navLinks = [
 
 const getHash = (href: string) => "#" + href.split("#")[1];
 
-function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
+function Logo({ onClick, light }: { onClick?: (e: React.MouseEvent) => void; light?: boolean }) {
   return (
     <a href="/#home" onClick={onClick} className="flex items-center gap-2.5 shrink-0">
-      <span className="h-8 w-8 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold tracking-wide">
+      <span
+        className={`h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold tracking-wide ${
+          light ? "bg-white text-[#08090a]" : "bg-foreground text-background"
+        }`}
+      >
         JM
       </span>
-      <span className="font-display font-semibold text-base text-foreground">Joseph Maina</span>
+      <span className={`font-display font-semibold text-base ${light ? "text-white" : "text-foreground"}`}>Joseph Maina</span>
     </a>
   );
 }
@@ -139,7 +143,7 @@ export function SiteHeader() {
         }`}
       >
         <div className="container mx-auto px-6 h-full flex items-center justify-between gap-4">
-          <Logo onClick={(e) => handleAnchor(e, "/#home")} />
+          <Logo onClick={(e) => handleAnchor(e, "/#home")} light={!scrolled} />
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-7" aria-label="Primary">
@@ -152,7 +156,11 @@ export function SiteHeader() {
                   onClick={(e) => handleAnchor(e, link.href)}
                   aria-current={isActive ? "true" : undefined}
                   className={`relative ${navLinkClass} ${
-                    isActive ? "text-primary" : "text-foreground/70 hover:text-foreground"
+                    isActive
+                      ? "text-primary"
+                      : scrolled
+                      ? "text-foreground/70 hover:text-foreground"
+                      : "text-white/70 hover:text-white"
                   }`}
                 >
                   {link.label}
@@ -173,7 +181,7 @@ export function SiteHeader() {
               size="sm"
               variant="outline"
               onClick={() => setCvOpen(true)}
-              className="rounded-full"
+              className={`rounded-full ${!scrolled ? "bg-transparent border-white/25 text-white hover:bg-white/10 hover:text-white" : ""}`}
             >
               <FileText className="mr-1.5 h-4 w-4" />
               View CV
@@ -191,7 +199,7 @@ export function SiteHeader() {
             aria-label="Open menu"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            className="lg:hidden h-11 w-11 rounded-full text-foreground inline-flex items-center justify-center"
+            className={`lg:hidden h-11 w-11 rounded-full inline-flex items-center justify-center ${scrolled ? "text-foreground" : "text-white"}`}
           >
             <Menu className="h-6 w-6" />
           </button>
