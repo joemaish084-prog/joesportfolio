@@ -49,6 +49,16 @@
     --tiktok: 170 70% 45%;
     --instagram: 330 80% 55%;
     --facebook: 220 70% 55%;
+
+    /* Sidebar (admin dashboard) — aliased to the neutral palette above */
+    --sidebar-background: 0 0% 97%;
+    --sidebar-foreground: 0 0% 7%;
+    --sidebar-primary: 25 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 92%;
+    --sidebar-accent-foreground: 0 0% 7%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 25 100% 50%;
   }
 
   .dark {
@@ -77,6 +87,15 @@
     --shadow-elegant: 0 10px 40px -10px hsl(25 100% 50% / 0.3);
     --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.3);
     --shadow-orange-glow: 0 4px 20px hsl(25 100% 50% / 0.45);
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 25 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 25 100% 50%;
   }
 }
 
