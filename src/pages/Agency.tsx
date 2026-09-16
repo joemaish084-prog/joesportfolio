@@ -10,7 +10,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 import { supabase } from "@/integrations/supabase/client";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Stepper } from "@/components/ui/stepper";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
@@ -176,6 +177,8 @@ const Agency = () => {
   const { toast } = useToast();
   const [form, setForm] = useState<{ name: string; email: string; phone: string; brand: string; service: string; budget: string; goals: string; source: string | null }>({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "", source: null });
   const [sending, setSending] = useState(false);
+  const [howStep, setHowStep] = useState(0);
+  const [briefStep, setBriefStep] = useState(0);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -218,6 +221,7 @@ const Agency = () => {
         fbq("track", "Lead");
       }
       setForm({ ...form, name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
+      setBriefStep(0);
     } catch (err) {
       console.error(err);
       toast({ title: "Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
@@ -471,19 +475,27 @@ const Agency = () => {
 
         {/* HOW IT WORKS */}
         <section id="how" className="container mx-auto px-4 py-20 scroll-mt-20">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">Working Together Is Simple</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
-            {steps.map((s, i) => (
-              <motion.div key={s.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="relative">
-                <Card className="p-5 h-full text-center border-border/60">
-                  <div className="w-10 h-10 rounded-full bg-gradient-orange text-white font-bold flex items-center justify-center mx-auto mb-3">{i + 1}</div>
-                  <div className="w-10 h-10 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-2 ring-1 ring-primary/20"><s.icon className="h-5 w-5 text-primary" aria-hidden /></div>
-                  <h3 className="font-display font-semibold mb-2">{s.title}</h3>
-                  <p className="text-xs text-muted-foreground">{s.desc}</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-4">Working Together Is Simple</h2>
+          <p className="text-center text-sm text-muted-foreground mb-10">Click a step to see what happens</p>
+          <div className="max-w-3xl mx-auto mb-10">
+            <Stepper steps={steps.map((s) => s.title)} currentStep={howStep} onStepClick={setHowStep} />
+          </div>
+          <div className="max-w-2xl mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div key={howStep} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.25 }}>
+                <Card className="p-8 text-center border-border/60">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-4 ring-1 ring-primary/20">
+                    {(() => { const Icon = steps[howStep].icon; return <Icon className="h-6 w-6 text-primary" aria-hidden />; })()}
+                  </div>
+                  <h3 className="font-display text-xl font-semibold mb-2">{steps[howStep].title}</h3>
+                  <p className="text-sm text-muted-foreground">{steps[howStep].desc}</p>
                 </Card>
               </motion.div>
-            ))}
+            </AnimatePresence>
+            <div className="flex justify-between mt-6">
+              <Button variant="outline" onClick={() => setHowStep((s) => Math.max(0, s - 1))} disabled={howStep === 0}>Back</Button>
+              <Button onClick={() => setHowStep((s) => Math.min(steps.length - 1, s + 1))} disabled={howStep === steps.length - 1}>Next</Button>
+            </div>
           </div>
         </section>
 
@@ -576,52 +588,92 @@ const Agency = () => {
               </Card>
 
               <Card className="p-6">
-                <h3 className="font-display text-xl font-semibold mb-4">Send Brief Directly</h3>
-                <form onSubmit={submitBrief} className="space-y-3">
-                  <div>
-                    <Label htmlFor="b-name">Name</Label>
-                    <Input id="b-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                <h3 className="font-display text-xl font-semibold mb-5">Send Brief Directly</h3>
+                <Stepper steps={["Contact", "Business", "Goals"]} currentStep={briefStep} onStepClick={(i) => i < briefStep && setBriefStep(i)} className="mb-6" />
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (briefStep === 0) {
+                      if (!form.name.trim() || !form.email.trim()) {
+                        toast({ title: "Please fill in your name and email", variant: "destructive" });
+                        return;
+                      }
+                      setBriefStep(1);
+                    } else if (briefStep === 1) {
+                      if (!form.brand.trim() || !form.service || !form.budget) {
+                        toast({ title: "Please complete these fields", variant: "destructive" });
+                        return;
+                      }
+                      setBriefStep(2);
+                    } else {
+                      submitBrief(e);
+                    }
+                  }}
+                  className="space-y-3"
+                >
+                  <AnimatePresence mode="wait">
+                    {briefStep === 0 && (
+                      <motion.div key="step-0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
+                        <div>
+                          <Label htmlFor="b-name">Name</Label>
+                          <Input id="b-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                        </div>
+                        <div>
+                          <Label htmlFor="b-email">Email</Label>
+                          <Input id="b-email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                        </div>
+                        <div>
+                          <Label htmlFor="b-phone">Phone (optional)</Label>
+                          <Input id="b-phone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                        </div>
+                      </motion.div>
+                    )}
+                    {briefStep === 1 && (
+                      <motion.div key="step-1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
+                        <div>
+                          <Label htmlFor="b-brand">Brand name</Label>
+                          <Input id="b-brand" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
+                        </div>
+                        <div>
+                          <Label>Service interested in</Label>
+                          <Select value={form.service} onValueChange={(v) => setForm({ ...form, service: v })}>
+                            <SelectTrigger><SelectValue placeholder="Select a service" /></SelectTrigger>
+                            <SelectContent>
+                              {serviceOptions.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label>Monthly budget</Label>
+                          <Select value={form.budget} onValueChange={(v) => setForm({ ...form, budget: v })}>
+                            <SelectTrigger><SelectValue placeholder="Select budget" /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="<KES 20,000">Below KES 20,000</SelectItem>
+                              <SelectItem value="KES 20,000 - 50,000">KES 20,000 – 50,000</SelectItem>
+                              <SelectItem value="KES 50,000 - 100,000">KES 50,000 – 100,000</SelectItem>
+                              <SelectItem value="KES 100,000+">KES 100,000+</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </motion.div>
+                    )}
+                    {briefStep === 2 && (
+                      <motion.div key="step-2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
+                        <div>
+                          <Label htmlFor="b-goals">Brief description of goals</Label>
+                          <Textarea id="b-goals" rows={3} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  <div className="flex gap-3 pt-1">
+                    {briefStep > 0 && (
+                      <Button type="button" variant="outline" className="flex-1" onClick={() => setBriefStep((s) => s - 1)}>Back</Button>
+                    )}
+                    <Button type="submit" className="flex-1" disabled={sending}>
+                      {briefStep < 2 ? "Next" : sending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending…</> : "Send Brief"}
+                    </Button>
                   </div>
-                  <div>
-                    <Label htmlFor="b-email">Email</Label>
-                    <Input id="b-email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-                  </div>
-                  <div>
-                    <Label htmlFor="b-phone">Phone (optional)</Label>
-                    <Input id="b-phone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-                  </div>
-                  <div>
-                    <Label htmlFor="b-brand">Brand name</Label>
-                    <Input id="b-brand" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
-                  </div>
-                  <div>
-                    <Label>Service interested in</Label>
-                    <Select value={form.service} onValueChange={(v) => setForm({ ...form, service: v })}>
-                      <SelectTrigger><SelectValue placeholder="Select a service" /></SelectTrigger>
-                      <SelectContent>
-                        {serviceOptions.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label>Monthly budget</Label>
-                    <Select value={form.budget} onValueChange={(v) => setForm({ ...form, budget: v })}>
-                      <SelectTrigger><SelectValue placeholder="Select budget" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="<KES 20,000">Below KES 20,000</SelectItem>
-                        <SelectItem value="KES 20,000 - 50,000">KES 20,000 – 50,000</SelectItem>
-                        <SelectItem value="KES 50,000 - 100,000">KES 50,000 – 100,000</SelectItem>
-                        <SelectItem value="KES 100,000+">KES 100,000+</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="b-goals">Brief description of goals</Label>
-                    <Textarea id="b-goals" rows={3} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={sending}>
-                    {sending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending…</> : "Send Brief"}
-                  </Button>
                 </form>
               </Card>
             </div>
