@@ -15,6 +15,8 @@ import Connect from "./pages/Connect";
 import NotFound from "./pages/NotFound";
 import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
+import { PulseTracker } from "@/components/PulseTracker";
+import Admin from "./pages/Admin";
 
 
 const queryClient = new QueryClient();
@@ -27,6 +29,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <MetaPixelRouteTracker />
+          <PulseTracker />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/agency" element={<Agency />} />
@@ -36,6 +39,7 @@ const App = () => (
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/connect" element={<Connect />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <CookieConsent />

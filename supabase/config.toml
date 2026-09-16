@@ -2,3 +2,9 @@ project_id = "yjvzzdsmzylnalqccdiy"
 
 [functions.chat-assistant]
 verify_jwt = false
+
+[functions.pulse]
+verify_jwt = false
+
+[functions.admin-analytics]
+verify_jwt = false
