@@ -27,7 +27,7 @@ export function PressFeatures() {
           </div>
         </ScrollReveal>
 
-        <div className="max-w-xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           {publications.map((pub) => (
             <ScrollReveal key={pub.name} direction="up">
               <a
@@ -38,24 +38,24 @@ export function PressFeatures() {
                 aria-label={`Read article in ${pub.name}: ${pub.articleTitle}`}
               >
                 <Card className="glass hover:border-primary/40 hover-lift overflow-hidden">
-                  <div className="p-5 flex gap-4 items-start">
+                  <div className="p-6 sm:p-8 flex flex-col sm:flex-row gap-4 items-start">
                     <img
                       src={pub.thumbnail}
                       alt={`${pub.name} press feature — Joseph Maina`}
                       width={96}
                       height={96}
                       loading="lazy"
-                      className="h-20 w-20 sm:h-24 sm:w-24 rounded-xl object-cover shrink-0"
+                      className="h-32 w-full sm:h-36 sm:w-36 rounded-xl object-cover shrink-0"
                     />
                     <CardContent className="p-0 flex-1 space-y-2">
                       <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 text-primary">
                         <Newspaper className="h-3.5 w-3.5" aria-hidden="true" />
                         {pub.name}
                       </span>
-                      <h3 className="font-display font-semibold text-foreground leading-snug">
+                      <h3 className="font-display font-semibold text-foreground leading-snug text-lg sm:text-xl">
                         {pub.articleTitle}
                       </h3>
-                      <p className="text-sm text-muted-foreground">{pub.credibilityLine}</p>
+                      <p className="text-muted-foreground text-sm sm:text-base">{pub.credibilityLine}</p>
                       <span className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">
                         Read the article
                         <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
