@@ -12,13 +12,12 @@ import emailjs from "@emailjs/browser";
 import { supabase } from "@/integrations/supabase/client";
 import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { Stepper } from "@/components/ui/stepper";
-import { HeroBackground } from "@/components/HeroBackground";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
   CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
-  Video, Search, Lightbulb, Send, ArrowRight, Sparkles, Share2, FileText, Palette, MessageSquare,
+  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare,
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
@@ -170,83 +169,38 @@ function CountUp({ value, prefix = "", suffix = "" }: { value: number; prefix?: 
   return <span ref={ref}>{prefix}{n}{suffix}</span>;
 }
 
-const heroTags = [
-  { label: "Meta Ads", top: "-6%", left: "-10%" },
-  { label: "Google Ads", top: "10%", right: "-12%" },
-  { label: "TikTok Ads", bottom: "14%", left: "-14%" },
-  { label: "SEO", bottom: "-6%", right: "-6%" },
-];
-
-function HeroFloatingTag({
-  tag,
-  index,
-  mouseX,
-  mouseY,
-}: {
-  tag: (typeof heroTags)[number];
-  index: number;
-  mouseX: MotionValue<number>;
-  mouseY: MotionValue<number>;
-}) {
-  const moveX = useTransform(mouseX, (v) => v * 14);
-  const moveY = useTransform(mouseY, (v) => v * 14);
-  const smoothX = useSpring(moveX, { damping: 20, stiffness: 100 });
-  const smoothY = useSpring(moveY, { damping: 20, stiffness: 100 });
-  const { label, ...position } = tag;
-
-  return (
-    <motion.div
-      style={{ position: "absolute", ...position, x: smoothX, y: smoothY }}
-      className="hidden lg:block z-20"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.8 + index * 0.1, duration: 0.5 }}
-    >
-      <motion.div
-        animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 3 + index * 0.2, repeat: Infinity }}
-        className="px-3.5 py-2 rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur-md text-xs font-medium text-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.4)] whitespace-nowrap"
-      >
-        {label}
-      </motion.div>
-    </motion.div>
-  );
-}
-
 function HeroProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
-  const rotateX = useSpring(useTransform(mouseY, (v) => v * -6), { damping: 25, stiffness: 150 });
-  const rotateY = useSpring(useTransform(mouseX, (v) => v * 6), { damping: 25, stiffness: 150 });
+  const rotateX = useSpring(useTransform(mouseY, (v) => v * -5), { damping: 25, stiffness: 150 });
+  const rotateY = useSpring(useTransform(mouseX, (v) => v * 5), { damping: 25, stiffness: 150 });
 
   return (
     <div className="relative mx-auto w-full max-w-sm" style={{ perspective: 1200 }}>
-      {heroTags.map((tag, i) => (
-        <HeroFloatingTag key={tag.label} tag={tag} index={i} mouseX={mouseX} mouseY={mouseY} />
-      ))}
+      <div
+        aria-hidden
+        className="absolute -top-10 -right-6 font-serif italic text-[10rem] leading-none text-primary/10 select-none pointer-events-none"
+      >
+        &rdquo;
+      </div>
 
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         initial={{ opacity: 0, y: 24, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.4, duration: 0.6 }}
-        className="relative z-10 rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl p-8 sm:p-10 shadow-[0_20px_70px_rgba(0,0,0,0.55)]"
+        className="relative z-10 rounded-2xl border border-border/60 bg-card/70 backdrop-blur-2xl p-8 sm:p-10 shadow-2xl"
       >
-        <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-white/[0.05] to-transparent" />
-
         <div className="relative flex items-center gap-2 mb-7">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-          </span>
-          <span className="text-[11px] uppercase tracking-widest text-white/50 font-medium">Trusted by brands across Kenya</span>
+          <span className="h-px w-6 bg-primary" />
+          <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-medium">Trusted by brands across Kenya</span>
         </div>
 
         <div className="relative space-y-5">
           {stats.map((s, i) => (
-            <div key={s.label} className={i > 0 ? "pt-5 border-t border-white/10" : ""}>
-              <p className="text-4xl font-display font-bold text-white tracking-tight">
+            <div key={s.label} className={i > 0 ? "pt-5 border-t border-border/60" : ""}>
+              <p className="text-4xl font-display font-bold text-foreground tracking-tight">
                 <CountUp value={s.value} prefix={s.prefix} suffix={s.suffix} />
               </p>
-              <p className="mt-1 text-sm text-white/50">{s.label}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
             </div>
           ))}
         </div>
@@ -382,35 +336,43 @@ const Agency = () => {
           ref={heroRef}
           onMouseMove={handleHeroMouseMove}
           onMouseLeave={handleHeroMouseLeave}
-          className="relative w-full overflow-hidden bg-[#08090a]"
+          className="relative w-full overflow-hidden bg-background"
         >
-          <HeroBackground />
+          {/* Editorial background — theme-aware, so it never fights the site's light/dark mode */}
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-[-15%] right-[0%] w-[36rem] h-[36rem] rounded-full bg-primary/[0.07] blur-[130px] animate-drift-a" />
+            <div className="absolute bottom-[-20%] left-[-5%] w-[30rem] h-[30rem] rounded-full bg-primary/[0.05] blur-[140px] animate-drift-b" />
+          </div>
+          <div className="absolute inset-0 z-[1] dot-grid pointer-events-none [mask-image:radial-gradient(ellipse_90%_70%_at_50%_0%,black_40%,transparent_100%)]" />
+          <div className="absolute inset-0 z-[1] hero-spotlight opacity-60 pointer-events-none transition-[background] duration-300" />
 
-          <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto pt-16 md:pt-24 pb-20 md:pb-28">
+          <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto pt-20 md:pt-28 pb-20 md:pb-28">
             <div className="text-left">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45 }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md text-xs font-medium text-white/70 mb-6"
+                className="flex items-center gap-3 mb-7"
               >
-                <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden /> Digital Marketing Agency
+                <span className="h-px w-8 bg-primary" />
+                <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-medium">Digital Marketing Agency</span>
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.5 }}
-                className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-white max-w-xl"
+                className="text-4xl sm:text-5xl lg:text-[3.75rem] font-display font-semibold tracking-tight text-foreground max-w-xl leading-[1.08]"
               >
-                Grow Your Brand With <span className="text-primary">Data-Driven</span> Marketing
+                Grow your brand with{" "}
+                <span className="font-serif italic font-normal text-primary">data-driven</span> marketing
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.22, duration: 0.5 }}
-                className="mt-6 text-lg text-white/55 max-w-md"
+                className="mt-6 text-lg text-muted-foreground max-w-md"
               >
                 From Meta Ads to full digital strategy — I help Kenyan brands get real results online. No fluff, just growth.
               </motion.p>
@@ -426,12 +388,7 @@ const Agency = () => {
                     <Calendar className="mr-2 h-5 w-5" /> Book Free Discovery Call
                   </a>
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto rounded-full bg-transparent border-white/20 text-white hover:bg-white/10 hover:text-white"
-                  onClick={() => scrollTo("services")}
-                >
+                <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" onClick={() => scrollTo("services")}>
                   View Pricing
                 </Button>
               </motion.div>
