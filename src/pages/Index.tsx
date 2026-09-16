@@ -60,7 +60,6 @@ const Index = () => {
       <SiteHeader />
       <main className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
         <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
-        <PressFeatures />
         <ExpandCollapseAll />
         <Suspense fallback={null}>
           <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="9+ Videos">
@@ -83,6 +82,7 @@ const Index = () => {
           </CollapsibleWrapper>
           <Certifications />
           <BrandsLogoMarquee />
+          <PressFeatures />
           <Testimonials />
           <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
             <FAQ />

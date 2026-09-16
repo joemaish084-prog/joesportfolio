@@ -1,73 +1,72 @@
-import { motion } from "framer-motion";
-import { Newspaper, ExternalLink } from "lucide-react";
-import dailyNationFeature from "@/assets/daily-nation-feature.png.asset.json";
+import { ExternalLink, Newspaper } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { ScrollReveal } from "./ScrollReveal";
+import { SectionLabel } from "@/components/SectionLabel";
+import pressDailyNation from "@/assets/press-daily-nation.webp";
 
 const publications = [
   {
     name: "Daily Nation",
     articleTitle: "The business of water: Firm rides on growing demand in Kenya",
+    credibilityLine: "Quoted as Marketing Lead, iClear",
     url: "https://nation.africa/kenya/business/enterprise/business-riding-on-demand-for-affordable-safe-water-5489720",
+    thumbnail: pressDailyNation,
   },
 ];
 
 export function PressFeatures() {
   return (
-    <section className="py-10 sm:py-14 border-y border-border/40 bg-muted/30" aria-label="Press and media features">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col items-center gap-6"
-        >
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Newspaper className="h-5 w-5 text-primary" aria-hidden="true" />
-            <span className="text-sm font-semibold uppercase tracking-widest">
-              As Featured In
-            </span>
+    <section className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32" aria-label="Press and media features">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <ScrollReveal>
+          <div className="text-center mb-16 space-y-4">
+            <SectionLabel>AS FEATURED IN</SectionLabel>
+            <h2 className="text-title-1 sm:text-large-title font-display">
+              National Press Coverage
+            </h2>
           </div>
+        </ScrollReveal>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-            {publications.map((pub) => (
-              <motion.a
-                key={pub.name}
+        <div className="max-w-xl mx-auto">
+          {publications.map((pub) => (
+            <ScrollReveal key={pub.name} direction="up">
+              <a
                 href={pub.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                className="group block max-w-3xl w-full rounded-xl border border-border bg-card/50 hover:border-primary/40 hover:bg-card transition-all duration-300 overflow-hidden"
+                className="block group"
                 aria-label={`Read article in ${pub.name}: ${pub.articleTitle}`}
               >
-                <div className="relative">
-                  <img
-                    src={dailyNationFeature.url}
-                    alt="Joseph Maina Digital Marketing Specialist Nairobi Kenya — Daily Nation press feature"
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                    width={1200}
-                    height={675}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 flex items-end justify-between gap-4">
-                    <div>
-                      <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-primary text-white mb-2">
+                <Card className="glass hover:border-primary/40 hover-lift overflow-hidden">
+                  <div className="p-5 flex gap-4 items-start">
+                    <img
+                      src={pub.thumbnail}
+                      alt={`${pub.name} press feature — Joseph Maina`}
+                      width={96}
+                      height={96}
+                      loading="lazy"
+                      className="h-20 w-20 sm:h-24 sm:w-24 rounded-xl object-cover shrink-0"
+                    />
+                    <CardContent className="p-0 flex-1 space-y-2">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 text-primary">
+                        <Newspaper className="h-3.5 w-3.5" aria-hidden="true" />
                         {pub.name}
                       </span>
-                      <h3 className="text-white font-display font-bold text-base sm:text-lg leading-snug">
+                      <h3 className="font-display font-semibold text-foreground leading-snug">
                         {pub.articleTitle}
                       </h3>
-                    </div>
-                    <ExternalLink className="h-5 w-5 text-white/80 group-hover:text-white shrink-0 transition-colors" aria-hidden="true" />
+                      <p className="text-sm text-muted-foreground">{pub.credibilityLine}</p>
+                      <span className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                        Read the article
+                        <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                      </span>
+                    </CardContent>
                   </div>
-                </div>
-              </motion.a>
-            ))}
-          </div>
-        </motion.div>
+                </Card>
+              </a>
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
     </section>
   );
