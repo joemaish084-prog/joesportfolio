@@ -7,6 +7,12 @@ Joseph Maina helps brands in Kenya and beyond grow online through paid media, or
 ## Pages
 
 - [Home](/): Single-page portfolio with all sections.
+- [Agency](/agency): Digital marketing agency landing page — services, pricing from KES 15,000/mo, and discovery call booking.
+- [Agency Blog](/agency/blog): Articles on Kenyan digital marketing, SEO, Meta/TikTok ads, and campaign case studies.
+- [Connect](/connect): MCP endpoint for AI assistants (ChatGPT, Claude) to query this site's content directly.
+- [Privacy Policy](/privacy-policy)
+- [Cookie Policy](/cookie-policy)
+- [Terms](/terms)
 
 ## Sections (anchors on the home page)
 
@@ -21,6 +27,17 @@ Joseph Maina helps brands in Kenya and beyond grow online through paid media, or
 - [Testimonials](/#testimonials): Client quotes.
 - [FAQ](/#faq): Common questions about digital marketing in Nairobi.
 - [Contact](/#contact): Email, phone, social links.
+
+## Blog Posts
+
+- [Why Your Nairobi Business Isn't Showing Up on Google in 2026](/agency/blog/why-your-nairobi-business-isnt-showing-up-on-google-2026)
+- [How Much Should a Kenyan SME Spend on Meta Ads?](/agency/blog/how-much-should-a-kenyan-sme-spend-on-meta-ads)
+- [TikTok vs Instagram for Kenyan Brands in 2026](/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026)
+- [From 0 to 4 Million TikTok Views — Behind the Campaign](/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign)
+- [5 Ad Mistakes Nairobi SMEs Keep Making on Google and Meta](/agency/blog/ad-mistakes-nairobi-smes-keep-making-2026)
+- [AI Is Not a Marketing Strategy: My Honest Take After a Year Using It Daily](/agency/blog/ai-marketing-honest-take-2026)
+- [My Playbook for Turning a Campaign Into National Press Coverage](/agency/blog/how-i-landed-national-press-coverage-for-iclear)
+- [Inside iClear's Water Initiative at Baobab School](/agency/blog/iclear-water-initiative-baobab-school)
 
 ## Contact
 
