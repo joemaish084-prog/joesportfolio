@@ -1,8 +1,19 @@
+import csrBaobabGroupPhoto from "@/assets/csr-baobab-group-photo.jpg";
+import csrBaobabInstalledUnits from "@/assets/csr-baobab-installed-units.jpg";
+import csrBaobabHandover from "@/assets/csr-baobab-handover.jpg";
+import csrBaobabTeamHoodie from "@/assets/csr-baobab-team-hoodie.jpg";
+
+export interface BlogSectionImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
 
 export interface BlogSection {
   id: string;
   heading: string;
   paragraphs: string[];
+  image?: BlogSectionImage;
 }
 
 export interface BlogPost {
@@ -360,6 +371,11 @@ export const blogPosts: BlogPost[] = [
           "On July 8, 2026, the team donated and installed 3 water purifiers at Baobab School, reaching 90 students and 8 teachers and staff with clean water access. Five iClear team members were on-site for the handover, and we documented the day in photos and video.",
           "This wasn't a photo-op tacked on after the fact, it was planned in from the start as the story's emotional core, and it's the piece that made the press pitch land.",
         ],
+        image: {
+          src: csrBaobabGroupPhoto,
+          alt: "The iClear team with students and staff at Baobab School on the day of the water purifier handover",
+          caption: "The iClear team with Baobab School students and staff, July 8, 2026.",
+        },
       },
       {
         id: "wider-push",
@@ -400,6 +416,11 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "Clean water access is the actual problem iClear exists to solve, so when we planned the anniversary campaign, giving back had to mean more than a discount. We picked a school because the impact is immediate and shared: one installation, dozens of kids and staff drinking clean water every day from that point on, not just for one afternoon.",
         ],
+        image: {
+          src: csrBaobabTeamHoodie,
+          alt: "iClear team members on-site at Baobab School, wearing branded hoodies reading 'Water is Sweet'",
+          caption: "On-site at Baobab School for the installation.",
+        },
       },
       {
         id: "the-day",
@@ -408,6 +429,11 @@ export const blogPosts: BlogPost[] = [
           "On July 8, 2026, the iClear team installed 3 Premier purifier units at Baobab School, giving 90 students and 8 teachers and staff clean drinking water. Five of us were on-site for the handover.",
           "What stuck with the team wasn't the installation itself, it was watching the kids try the water and react to it. They were genuinely amazed at how it tasted — for a lot of them, it was the first time water from a tap had tasted like that. That reaction is the reason this kind of work is worth doing beyond the campaign calendar.",
         ],
+        image: {
+          src: csrBaobabGroupPhoto,
+          alt: "The iClear team with students and staff at Baobab School on the day of the water purifier handover",
+          caption: "The team with Baobab School's students and staff after the handover.",
+        },
       },
       {
         id: "why-it-matters",
@@ -415,6 +441,11 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "Access to safe drinking water is still inconsistent in a lot of Kenyan schools, and it affects everything from attendance to health. iClear's whole pitch is built around making that access affordable — the brand's standard message puts clean water at around KES 3 a litre — which is part of why a school donation fit so naturally: it's the same promise, just given instead of sold.",
         ],
+        image: {
+          src: csrBaobabInstalledUnits,
+          alt: "Three iClear Premier water purifier units installed and running at Baobab School",
+          caption: "The 3 Premier purifier units, installed and running.",
+        },
       },
       {
         id: "closing",
@@ -422,6 +453,11 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "This is the same instinct I bring into agency work now: don't treat CSR or community impact as a marketing bolt-on. Build it in as something real, and let the story follow from what actually happened.",
         ],
+        image: {
+          src: csrBaobabHandover,
+          alt: "iClear team members handing over water purifier units at Baobab School",
+          caption: "Handing over the units on-site at Baobab School.",
+        },
       },
     ],
   },

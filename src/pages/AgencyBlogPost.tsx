@@ -106,6 +106,21 @@ const AgencyBlogPost = () => {
                       {p}
                     </p>
                   ))}
+                  {section.image && (
+                    <figure className="mt-8">
+                      <img
+                        src={section.image.src}
+                        alt={section.image.alt}
+                        loading="lazy"
+                        className="w-full rounded-2xl border border-[#EAEAEA] object-cover"
+                      />
+                      {section.image.caption && (
+                        <figcaption className="mt-3 text-center text-sm text-[#999999]">
+                          {section.image.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  )}
                 </section>
               ))}
 
