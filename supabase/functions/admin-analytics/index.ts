@@ -40,7 +40,11 @@ serve(async (req) => {
       });
     }
 
-    const { data, error } = await supabase.rpc("get_admin_analytics");
+    const url = new URL(req.url);
+    const daysParam = parseInt(url.searchParams.get("days") || "14", 10);
+    const days = [1, 7, 14, 30, 90].includes(daysParam) ? daysParam : 14;
+
+    const { data, error } = await supabase.rpc("get_admin_analytics", { p_days: days });
     if (error) throw error;
 
     return new Response(JSON.stringify(data), {

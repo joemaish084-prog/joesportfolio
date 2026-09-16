@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Lock,
   Users,
@@ -13,12 +13,17 @@ import {
   List,
   LogOut,
   RefreshCw,
+  ArrowUp,
+  ArrowDown,
+  Download,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
 import {
   SidebarProvider,
   Sidebar,
@@ -41,8 +46,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  BarChart,
-  Bar,
   PieChart,
   Pie,
   Cell,
@@ -53,8 +56,16 @@ const PULSE_BASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const CHART_ACCENT = "hsl(25 100% 50%)";
 const CHART_MUTED = "hsl(0 0% 55%)";
 const PIE_COLORS = ["hsl(25 100% 50%)", "hsl(0 0% 70%)", "hsl(25 60% 70%)", "hsl(0 0% 40%)", "hsl(25 30% 45%)"];
+const RANGE_OPTIONS = [
+  { days: 1, label: "24h" },
+  { days: 7, label: "7d" },
+  { days: 14, label: "14d" },
+  { days: 30, label: "30d" },
+  { days: 90, label: "90d" },
+];
 
 interface AnalyticsData {
+  range_days: number;
   totals: {
     visitors: number;
     human_visitors: number;
@@ -62,6 +73,14 @@ interface AnalyticsData {
     pulses: number;
     page_views: number;
     clicks: number;
+  };
+  period: {
+    page_views: number;
+    prev_page_views: number;
+    visitors: number;
+    prev_visitors: number;
+    clicks: number;
+    prev_clicks: number;
   };
   visits_by_day: { day: string; page_views: number; unique_visitors: number }[];
   top_pages: { page_path: string; views: number }[];
@@ -86,6 +105,51 @@ function formatDuration(ms: number): string {
   return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
 }
 
+function computeDelta(current: number, prev: number): { pct: number | null; direction: "up" | "down" | "flat" } {
+  if (prev === 0) return { pct: current > 0 ? null : 0, direction: current > 0 ? "up" : "flat" };
+  const pct = Math.round(((current - prev) / prev) * 100);
+  return { pct, direction: pct > 0 ? "up" : pct < 0 ? "down" : "flat" };
+}
+
+function DeltaBadge({ current, prev }: { current: number; prev: number }) {
+  const { pct, direction } = computeDelta(current, prev);
+  if (direction === "flat" && prev === 0 && current === 0) return null;
+  const label = pct === null ? "New" : `${pct > 0 ? "+" : ""}${pct}%`;
+  return (
+    <span
+      className={`inline-flex items-center gap-0.5 text-[11px] font-medium ${
+        direction === "up" ? "text-emerald-600 dark:text-emerald-500" : direction === "down" ? "text-red-500" : "text-muted-foreground"
+      }`}
+    >
+      {direction === "up" && <ArrowUp className="h-3 w-3" />}
+      {direction === "down" && <ArrowDown className="h-3 w-3" />}
+      {label}
+    </span>
+  );
+}
+
+function CountUp({ value, duration = 600 }: { value: number; duration?: number }) {
+  const [display, setDisplay] = useState(0);
+  const prevValue = useRef(0);
+
+  useEffect(() => {
+    const from = prevValue.current;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - start) / duration);
+      setDisplay(Math.round(from + (value - from) * p));
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else prevValue.current = value;
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  return <>{display.toLocaleString()}</>;
+}
+
 const NAV_ITEMS = [
   { id: "overview", label: "Overview", icon: LayoutGrid },
   { id: "pages", label: "Pages", icon: FileText },
@@ -97,7 +161,34 @@ function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function StatCard({ icon: Icon, label, value }: { icon: typeof Users; label: string; value: number | string }) {
+function downloadCsv(filename: string, rows: (string | number)[][]) {
+  const csv = rows
+    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    .join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  current,
+  prev,
+}: {
+  icon: typeof Users;
+  label: string;
+  value: number;
+  current?: number;
+  prev?: number;
+}) {
   return (
     <Card className="border-border/60 shadow-none">
       <CardContent className="p-4">
@@ -105,7 +196,12 @@ function StatCard({ icon: Icon, label, value }: { icon: typeof Users; label: str
           <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{label}</span>
           <Icon className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
         </div>
-        <p className="text-2xl font-semibold tabular-nums leading-none">{value}</p>
+        <div className="flex items-end justify-between gap-2">
+          <p className="text-2xl font-semibold tabular-nums leading-none">
+            <CountUp value={value} />
+          </p>
+          {current !== undefined && prev !== undefined && <DeltaBadge current={current} prev={prev} />}
+        </div>
       </CardContent>
     </Card>
   );
@@ -114,24 +210,48 @@ function StatCard({ icon: Icon, label, value }: { icon: typeof Users; label: str
 function SectionCard({
   title,
   icon: Icon,
+  action,
   className,
   children,
 }: {
   title: string;
   icon?: typeof Users;
+  action?: React.ReactNode;
   className?: string;
   children: React.ReactNode;
 }) {
   return (
     <Card className={`border-border/60 shadow-none ${className ?? ""}`}>
-      <CardHeader className="py-4 px-5 border-b border-border/60">
+      <CardHeader className="py-4 px-5 border-b border-border/60 flex-row items-center justify-between space-y-0">
         <CardTitle className="text-sm font-medium flex items-center gap-2 text-foreground">
           {Icon && <Icon className="h-4 w-4 text-muted-foreground" aria-hidden />}
           {title}
         </CardTitle>
+        {action}
       </CardHeader>
       <CardContent className="p-5">{children}</CardContent>
     </Card>
+  );
+}
+
+function RankedList({ items }: { items: { label: string; value: number }[] }) {
+  const max = Math.max(1, ...items.map((i) => i.value));
+  if (items.length === 0) return <p className="text-sm text-muted-foreground">No data yet.</p>;
+  return (
+    <div className="space-y-2.5">
+      {items.map((item) => (
+        <div key={item.label} className="relative">
+          <div
+            className="absolute inset-y-0 left-0 bg-muted rounded"
+            style={{ width: `${Math.max(4, (item.value / max) * 100)}%` }}
+          />
+          <div className="relative flex items-center justify-between text-sm px-2 py-1.5">
+            <span className="truncate max-w-[70%] text-foreground" title={item.label}>{item.label}</span>
+            <span className="font-medium tabular-nums text-foreground">{item.value.toLocaleString()}</span>
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -184,15 +304,44 @@ function PasscodeGate({ onUnlock }: { onUnlock: (passcode: string) => void }) {
   );
 }
 
+function DashboardSkeleton() {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <Skeleton key={i} className="h-[76px] rounded-lg" />
+        ))}
+      </div>
+      <Skeleton className="h-80 rounded-lg" />
+      <div className="grid lg:grid-cols-2 gap-6">
+        <Skeleton className="h-64 rounded-lg" />
+        <Skeleton className="h-64 rounded-lg" />
+      </div>
+    </div>
+  );
+}
+
+const ACTIVITY_FILTERS = [
+  { value: "all", label: "All" },
+  { value: "page_view", label: "Views" },
+  { value: "click", label: "Clicks" },
+  { value: "bot", label: "Bots" },
+] as const;
+
 function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailure: () => void }) {
+  const { toast } = useToast();
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [refreshedAt, setRefreshedAt] = useState<Date | null>(null);
   const [loading, setLoading] = useState(false);
+  const [rangeDays, setRangeDays] = useState(14);
+  const [activeSection, setActiveSection] = useState("overview");
+  const [activityFilter, setActivityFilter] = useState<(typeof ACTIVITY_FILTERS)[number]["value"]>("all");
+  const isFirstLoad = useRef(true);
 
-  const load = () => {
+  const load = (opts?: { silent?: boolean }) => {
     setLoading(true);
-    fetch(`${PULSE_BASE_URL}/functions/v1/admin-analytics`, {
+    fetch(`${PULSE_BASE_URL}/functions/v1/admin-analytics?days=${rangeDays}`, {
       headers: { "x-admin-passcode": passcode },
     })
       .then(async (res) => {
@@ -207,13 +356,71 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
         setData(d);
         setRefreshedAt(new Date());
         setError(null);
+        if (!opts?.silent && !isFirstLoad.current) {
+          toast({ title: "Analytics refreshed" });
+        }
+        isFirstLoad.current = false;
       })
-      .catch((e) => setError(e.message || "Failed to load analytics"))
+      .catch((e) => {
+        setError(e.message || "Failed to load analytics");
+        if (!opts?.silent) toast({ title: "Refresh failed", description: e.message, variant: "destructive" });
+      })
       .finally(() => setLoading(false));
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(load, [passcode]);
+  useEffect(() => load({ silent: true }), [passcode, rangeDays]);
+
+  // Scrollspy: highlight the sidebar item for the section currently in view.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-15% 0px -70% 0px" },
+    );
+    NAV_ITEMS.forEach((item) => {
+      const el = document.getElementById(item.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [data]);
+
+  const filteredActivity = useMemo(() => {
+    if (!data) return [];
+    if (activityFilter === "all") return data.recent_activity;
+    if (activityFilter === "bot") return data.recent_activity.filter((a) => a.is_bot);
+    return data.recent_activity.filter((a) => a.event_type === activityFilter);
+  }, [data, activityFilter]);
+
+  const exportActivity = () => {
+    if (!data) return;
+    downloadCsv(
+      `activity-${new Date().toISOString().slice(0, 10)}.csv`,
+      [
+        ["Time", "Event", "Page", "Detail", "Bot", "Browser", "Device"],
+        ...filteredActivity.map((a) => [
+          a.created_at,
+          a.event_type,
+          a.page_path,
+          a.element_text || "",
+          a.is_bot ? "yes" : "no",
+          a.browser || "",
+          a.device_type || "",
+        ]),
+      ],
+    );
+  };
+
+  const exportTopPages = () => {
+    if (!data) return;
+    downloadCsv(
+      `top-pages-${new Date().toISOString().slice(0, 10)}.csv`,
+      [["Page", "Views"], ...data.top_pages.map((p) => [p.page_path, p.views])],
+    );
+  };
 
   return (
     <SidebarProvider>
@@ -233,9 +440,9 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
           <SidebarGroup>
             <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
             <SidebarMenu>
-              {NAV_ITEMS.map((item, i) => (
+              {NAV_ITEMS.map((item) => (
                 <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton onClick={() => scrollToSection(item.id)} isActive={i === 0}>
+                  <SidebarMenuButton onClick={() => scrollToSection(item.id)} isActive={activeSection === item.id}>
                     <item.icon />
                     <span>{item.label}</span>
                   </SidebarMenuButton>
@@ -252,18 +459,38 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
       </Sidebar>
 
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex items-center justify-between border-b border-border/60 bg-background/95 backdrop-blur px-4 sm:px-6 py-3">
+        <header className="sticky top-0 z-10 flex items-center justify-between border-b border-border/60 bg-background/95 backdrop-blur px-4 sm:px-6 py-3 gap-3 flex-wrap">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="-ml-1" />
             <h1 className="text-sm font-medium">Overview</h1>
+            <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+              </span>
+              Live
+            </span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center rounded-md border border-border/60 p-0.5">
+              {RANGE_OPTIONS.map((opt) => (
+                <button
+                  key={opt.days}
+                  onClick={() => setRangeDays(opt.days)}
+                  className={`px-2.5 py-1 text-xs rounded font-medium transition-colors ${
+                    rangeDays === opt.days ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
             {refreshedAt && (
-              <span className="text-[11px] text-muted-foreground hidden sm:inline">
+              <span className="text-[11px] text-muted-foreground hidden lg:inline">
                 Updated {refreshedAt.toLocaleTimeString()}
               </span>
             )}
-            <Button variant="outline" size="sm" onClick={load} disabled={loading} className="h-8">
+            <Button variant="outline" size="sm" onClick={() => load()} disabled={loading} className="h-8">
               <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
               <span className="hidden sm:inline">Refresh</span>
             </Button>
@@ -273,49 +500,51 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
         <div className="px-4 sm:px-6 py-6 space-y-6 max-w-7xl">
           {error && <p className="text-sm text-destructive">{error}</p>}
 
+          {!data && !error && <DashboardSkeleton />}
+
           {data && (
             <>
               <section id="overview" className="space-y-6 scroll-mt-16">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                  <StatCard icon={Users} label="Visitors" value={data.totals.visitors} />
-                  <StatCard icon={Eye} label="Page Views" value={data.totals.page_views} />
-                  <StatCard icon={MousePointerClick} label="Clicks" value={data.totals.clicks} />
+                  <StatCard icon={Users} label="Visitors" value={data.totals.visitors} current={data.period.visitors} prev={data.period.prev_visitors} />
+                  <StatCard icon={Eye} label="Page Views" value={data.totals.page_views} current={data.period.page_views} prev={data.period.prev_page_views} />
+                  <StatCard icon={MousePointerClick} label="Clicks" value={data.totals.clicks} current={data.period.clicks} prev={data.period.prev_clicks} />
                   <StatCard icon={Activity} label="Events" value={data.totals.pulses} />
                   <StatCard icon={Users} label="Human" value={data.totals.human_visitors} />
                   <StatCard icon={Bot} label="Bots" value={data.totals.bot_visitors} />
                 </div>
 
-                <SectionCard title="Traffic — last 14 days" icon={Activity}>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={data.visits_by_day} margin={{ left: -20 }}>
-                        <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
-                        <XAxis dataKey="day" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} />
-                        <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} axisLine={false} tickLine={false} />
-                        <Tooltip
-                          contentStyle={{ fontSize: 12, borderRadius: 6, border: "1px solid hsl(var(--border))" }}
-                        />
-                        <Line type="monotone" dataKey="page_views" name="Page Views" stroke={CHART_ACCENT} strokeWidth={2} dot={false} />
-                        <Line type="monotone" dataKey="unique_visitors" name="Unique Visitors" stroke={CHART_MUTED} strokeWidth={2} dot={false} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
+                <SectionCard title={`Traffic — last ${rangeDays === 1 ? "24 hours" : `${rangeDays} days`}`} icon={Activity}>
+                  {data.visits_by_day.length === 0 ? (
+                    <p className="text-sm text-muted-foreground">No traffic in this range yet.</p>
+                  ) : (
+                    <div className="h-64">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={data.visits_by_day} margin={{ left: -20 }}>
+                          <CartesianGrid strokeDasharray="3 3" className="stroke-border" vertical={false} />
+                          <XAxis dataKey="day" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} axisLine={false} tickLine={false} />
+                          <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} axisLine={false} tickLine={false} />
+                          <Tooltip contentStyle={{ fontSize: 12, borderRadius: 6, border: "1px solid hsl(var(--border))" }} />
+                          <Line type="monotone" dataKey="page_views" name="Page Views" stroke={CHART_ACCENT} strokeWidth={2} dot={false} />
+                          <Line type="monotone" dataKey="unique_visitors" name="Unique Visitors" stroke={CHART_MUTED} strokeWidth={2} dot={false} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  )}
                 </SectionCard>
               </section>
 
               <section id="pages" className="grid lg:grid-cols-2 gap-6 scroll-mt-16">
-                <SectionCard title="Top pages" icon={FileText}>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={data.top_pages} layout="vertical" margin={{ left: 8 }}>
-                        <CartesianGrid strokeDasharray="3 3" className="stroke-border" horizontal={false} />
-                        <XAxis type="number" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} axisLine={false} tickLine={false} />
-                        <YAxis type="category" dataKey="page_path" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} width={110} axisLine={false} tickLine={false} />
-                        <Tooltip contentStyle={{ fontSize: 12, borderRadius: 6, border: "1px solid hsl(var(--border))" }} />
-                        <Bar dataKey="views" fill={CHART_ACCENT} radius={[0, 3, 3, 0]} barSize={14} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
+                <SectionCard
+                  title="Top pages"
+                  icon={FileText}
+                  action={
+                    <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground" onClick={exportTopPages}>
+                      <Download className="h-3.5 w-3.5" /> Export
+                    </Button>
+                  }
+                >
+                  <RankedList items={data.top_pages.map((p) => ({ label: p.page_path, value: p.views }))} />
                 </SectionCard>
 
                 <SectionCard title="Avg. time on page" icon={Clock}>
@@ -378,23 +607,39 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
                 </SectionCard>
 
                 <SectionCard title="Referrers" icon={List}>
-                  <div className="space-y-3">
-                    {data.referrers.map((r) => (
-                      <div key={r.referrer} className="flex items-center justify-between text-sm border-b border-border/40 pb-2 last:border-0 last:pb-0">
-                        <span className="truncate max-w-[70%] text-foreground" title={r.referrer}>{r.referrer}</span>
-                        <span className="font-medium tabular-nums text-muted-foreground">{r.count}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <RankedList items={data.referrers.map((r) => ({ label: r.referrer, value: r.count }))} />
                 </SectionCard>
               </section>
 
               <section id="activity" className="scroll-mt-16">
-                <SectionCard title="Recent activity" icon={List}>
-                  <div className="overflow-x-auto">
+                <SectionCard
+                  title="Recent activity"
+                  icon={List}
+                  action={
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center rounded-md border border-border/60 p-0.5">
+                        {ACTIVITY_FILTERS.map((f) => (
+                          <button
+                            key={f.value}
+                            onClick={() => setActivityFilter(f.value)}
+                            className={`px-2 py-1 text-[11px] rounded font-medium transition-colors ${
+                              activityFilter === f.value ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+                            }`}
+                          >
+                            {f.label}
+                          </button>
+                        ))}
+                      </div>
+                      <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground" onClick={exportActivity}>
+                        <Download className="h-3.5 w-3.5" /> Export
+                      </Button>
+                    </div>
+                  }
+                >
+                  <div className="overflow-x-auto max-h-96">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground border-b border-border/60">
+                        <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground border-b border-border/60 sticky top-0 bg-card">
                           <th className="pb-2 pr-4 font-medium">Event</th>
                           <th className="pb-2 pr-4 font-medium">Page</th>
                           <th className="pb-2 pr-4 font-medium">Detail</th>
@@ -403,7 +648,12 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
                         </tr>
                       </thead>
                       <tbody>
-                        {data.recent_activity.map((a, i) => (
+                        {filteredActivity.length === 0 && (
+                          <tr>
+                            <td colSpan={5} className="py-6 text-center text-muted-foreground">No matching activity.</td>
+                          </tr>
+                        )}
+                        {filteredActivity.map((a, i) => (
                           <tr key={i} className="border-b border-border/40 last:border-0">
                             <td className="py-2 pr-4">
                               <Badge variant="secondary" className="font-normal text-[11px]">{a.event_type}</Badge>
