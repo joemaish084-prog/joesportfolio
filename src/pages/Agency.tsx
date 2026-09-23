@@ -345,9 +345,93 @@ const Agency = () => {
             <Link to="/agency/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
             <span className="text-primary font-semibold">Work With Me</span>
           </nav>
-          <Button size="sm" onClick={() => scrollTo("booking")}>Book Call</Button>
+          <div className="hidden md:block">
+            <Button size="sm" onClick={() => scrollTo("booking")}>Book Call</Button>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMobileNavOpen(true)}
+            aria-label="Open menu"
+            aria-expanded={mobileNavOpen}
+            aria-controls="agency-mobile-nav"
+            className="md:hidden h-11 w-11 -mr-2 rounded-full text-foreground inline-flex items-center justify-center shrink-0"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
         </div>
       </header>
+
+      <AnimatePresence>
+        {mobileNavOpen && (
+          <motion.div
+            id="agency-mobile-nav"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            className="fixed inset-0 z-[100] bg-background md:hidden overflow-y-auto"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.26, ease: "easeOut" }}
+          >
+            <div className="h-14 px-4 flex items-center justify-between border-b border-border/40">
+              <span className="text-sm font-medium text-foreground">Menu</span>
+              <button
+                type="button"
+                onClick={() => setMobileNavOpen(false)}
+                aria-label="Close menu"
+                className="h-11 w-11 -mr-2 rounded-full text-foreground inline-flex items-center justify-center"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            <div className="px-4 pt-4 pb-10 flex flex-col">
+              <Link
+                to="/"
+                onClick={() => setMobileNavOpen(false)}
+                className="py-3 min-h-[44px] text-2xl font-display font-semibold text-foreground"
+              >
+                Home
+              </Link>
+              <button
+                onClick={() => scrollToAndClose("services")}
+                className="py-3 min-h-[44px] text-left text-2xl font-display font-semibold text-foreground"
+              >
+                Services
+              </button>
+              <button
+                onClick={() => scrollToAndClose("how")}
+                className="py-3 min-h-[44px] text-left text-2xl font-display font-semibold text-foreground"
+              >
+                Process
+              </button>
+              <button
+                onClick={() => scrollToAndClose("results")}
+                className="py-3 min-h-[44px] text-left text-2xl font-display font-semibold text-foreground"
+              >
+                Results
+              </button>
+              <Link
+                to="/agency/blog"
+                onClick={() => setMobileNavOpen(false)}
+                className="py-3 min-h-[44px] text-2xl font-display font-semibold text-foreground"
+              >
+                Blog
+              </Link>
+
+              <div className="border-t border-border my-4" />
+
+              <Button
+                className="w-full rounded-full"
+                onClick={() => scrollToAndClose("booking")}
+              >
+                Book Call
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main>
         {/* HERO */}
