@@ -14,6 +14,21 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_settings: {
+        Row: {
+          id: boolean
+          passcode_hash: string
+        }
+        Insert: {
+          id?: boolean
+          passcode_hash: string
+        }
+        Update: {
+          id?: boolean
+          passcode_hash?: string
+        }
+        Relationships: []
+      }
       agency_leads: {
         Row: {
           budget_range: string | null
@@ -56,6 +71,90 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          meta_description: string
+          read_time: number
+          title: string
+          topic: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          meta_description: string
+          read_time?: number
+          title: string
+          topic: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          meta_description?: string
+          read_time?: number
+          title?: string
+          topic?: string
+        }
+        Relationships: []
+      }
+      chat_leads: {
+        Row: {
+          budget_range: string | null
+          business_name: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          need: string | null
+          qualified: boolean | null
+          source: string | null
+          start_timeframe: string | null
+          status: string
+          step: string
+          updated_at: string
+          what_they_sell: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          budget_range?: string | null
+          business_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          need?: string | null
+          qualified?: boolean | null
+          source?: string | null
+          start_timeframe?: string | null
+          status?: string
+          step?: string
+          updated_at?: string
+          what_they_sell?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          budget_range?: string | null
+          business_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          need?: string | null
+          qualified?: boolean | null
+          source?: string | null
+          start_timeframe?: string | null
+          status?: string
+          step?: string
+          updated_at?: string
+          what_they_sell?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
@@ -86,12 +185,105 @@ export type Database = {
         }
         Relationships: []
       }
+      pulses: {
+        Row: {
+          created_at: string
+          duration_ms: number | null
+          element_selector: string | null
+          element_text: string | null
+          event_type: string
+          id: number
+          page_path: string
+          page_title: string | null
+          referrer: string | null
+          session_id: string
+          visitor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          duration_ms?: number | null
+          element_selector?: string | null
+          element_text?: string | null
+          event_type: string
+          id?: never
+          page_path: string
+          page_title?: string | null
+          referrer?: string | null
+          session_id: string
+          visitor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          duration_ms?: number | null
+          element_selector?: string | null
+          element_text?: string | null
+          event_type?: string
+          id?: never
+          page_path?: string
+          page_title?: string | null
+          referrer?: string | null
+          session_id?: string
+          visitor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pulses_visitor_id_fkey"
+            columns: ["visitor_id"]
+            isOneToOne: false
+            referencedRelation: "visitors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      visitors: {
+        Row: {
+          browser: string | null
+          device_id: string | null
+          device_type: string | null
+          first_seen: string
+          id: string
+          ip_hash: string
+          is_bot: boolean
+          last_seen: string
+          os: string | null
+          user_agent: string | null
+          visit_count: number
+        }
+        Insert: {
+          browser?: string | null
+          device_id?: string | null
+          device_type?: string | null
+          first_seen?: string
+          id?: string
+          ip_hash: string
+          is_bot?: boolean
+          last_seen?: string
+          os?: string | null
+          user_agent?: string | null
+          visit_count?: number
+        }
+        Update: {
+          browser?: string | null
+          device_id?: string | null
+          device_type?: string | null
+          first_seen?: string
+          id?: string
+          ip_hash?: string
+          is_bot?: boolean
+          last_seen?: string
+          os?: string | null
+          user_agent?: string | null
+          visit_count?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_admin_analytics: { Args: { p_days?: number }; Returns: Json }
+      touch_visitor: { Args: { p_visitor_id: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
