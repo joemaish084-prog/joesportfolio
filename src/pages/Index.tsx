@@ -25,6 +25,7 @@ const HeroFallback = () => (
 const SplashScreen = lazy(() => import("@/components/SplashScreen").then(m => ({ default: m.SplashScreen })));
 const ScrollProgress = lazy(() => import("@/components/ScrollProgress").then(m => ({ default: m.ScrollProgress })));
 const BackToTop = lazy(() => import("@/components/BackToTop").then(m => ({ default: m.BackToTop })));
+const WhatsAppButton = lazy(() => import("@/components/WhatsAppButton").then(m => ({ default: m.WhatsAppButton })));
 
 // Lazy-load below-the-fold components to reduce main-thread blocking
 const Videos = lazy(() => import("@/components/Videos").then(m => ({ default: m.Videos })));
@@ -95,6 +96,7 @@ const Index = () => {
         <ChatAssistant />
       </Suspense>
       <Suspense fallback={null}><BackToTop /></Suspense>
+      <Suspense fallback={null}><WhatsAppButton /></Suspense>
     </>
   );
 };

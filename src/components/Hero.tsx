@@ -180,7 +180,7 @@ export function Hero() {
               <a href="#videos">View My Work</a>
             </Button>
             <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild>
-              <a href="#contact">Contact Me</a>
+              <a href="/agency">Agency</a>
             </Button>
           </motion.div>
 
