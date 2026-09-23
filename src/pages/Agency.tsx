@@ -17,7 +17,7 @@ import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
   CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
-  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare,
+  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare, Menu, X,
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
@@ -219,6 +219,7 @@ const Agency = () => {
   const [sending, setSending] = useState(false);
   const [howStep, setHowStep] = useState(0);
   const [briefStep, setBriefStep] = useState(0);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const heroMouseX = useMotionValue(0);
   const heroMouseY = useMotionValue(0);
@@ -242,6 +243,24 @@ const Agency = () => {
     const source = params.get("source") || params.get("utm_source");
     if (source) setForm((f) => ({ ...f, source }));
   }, []);
+
+  useEffect(() => {
+    if (!mobileNavOpen) return;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileNavOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileNavOpen]);
+
+  const scrollToAndClose = (id: string) => {
+    setMobileNavOpen(false);
+    window.setTimeout(() => scrollTo(id), 250);
+  };
 
   const submitBrief = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -817,6 +836,8 @@ const Agency = () => {
         <span>© {new Date().getFullYear()} Joseph Maina</span>
         <span>·</span>
         <Link to="/" className="hover:text-foreground">Portfolio</Link>
+        <span>·</span>
+        <Link to="/agency/blog" className="hover:text-foreground">Blog</Link>
         <span>·</span>
         <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-foreground" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       </footer>
