@@ -2,6 +2,15 @@ import emailjs from "@emailjs/browser";
 import { supabase } from "@/integrations/supabase/client";
 import type { TablesInsert, TablesUpdate } from "@/integrations/supabase/types";
 
+export const INDUSTRY_OPTIONS = [
+  "Beauty & skincare",
+  "Health & wellness",
+  "Real estate",
+  "Retail & e-commerce",
+  "Food & hospitality",
+  "Other",
+] as const;
+
 export const NEED_OPTIONS = [
   "SEO",
   "Meta Ads",
@@ -13,7 +22,7 @@ export const NEED_OPTIONS = [
 
 export const BUDGET_OPTIONS = ["Under 30k", "30k–50k", "50k–100k", "100k+"] as const;
 
-export const START_OPTIONS = ["This month", "1–2 months", "Just exploring"] as const;
+export const START_OPTIONS = ["This month", "In 1–2 months", "Just exploring"] as const;
 
 export type ChatLeadStatus = "hot" | "warm" | "cold";
 
@@ -21,25 +30,27 @@ export interface ChatLeadFields {
   name?: string;
   business_name?: string;
   what_they_sell?: string;
+  industry?: string;
   need?: string;
   budget_range?: string;
   start_timeframe?: string;
   email?: string;
   whatsapp?: string;
+  website_or_social?: string;
 }
 
-const QUALIFIED_BUDGETS = new Set<string>(["30k–50k", "50k–100k", "100k+"]);
-const QUALIFIED_STARTS = new Set<string>(["This month", "1–2 months"]);
-
-export function isQualified(budgetRange?: string, startTimeframe?: string): boolean {
-  if (!budgetRange || !startTimeframe) return false;
-  return QUALIFIED_BUDGETS.has(budgetRange) && QUALIFIED_STARTS.has(startTimeframe);
-}
-
+// HOT = budget 30k+ AND starting within 2 months (service choice, including "Not sure", never disqualifies)
+// WARM = budget 30k+ AND "Just exploring"
+// COLD = budget under 30k (or not yet given)
 export function computeStatus(fields: ChatLeadFields): ChatLeadStatus {
-  if (isQualified(fields.budget_range, fields.start_timeframe)) return "hot";
-  if (fields.email || fields.whatsapp || fields.need) return "warm";
-  return "cold";
+  const budget = fields.budget_range;
+  if (!budget || budget === "Under 30k") return "cold";
+
+  const start = fields.start_timeframe;
+  if (start === "This month" || start === "In 1–2 months") return "hot";
+  if (start === "Just exploring") return "warm";
+  // Budget already qualifies as 30k+ but start hasn't been answered yet — provisional.
+  return "warm";
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,10 +75,16 @@ export function buildCalendlyUrl(name: string, email: string): string {
   return `${CALENDLY_URL}?${params.toString()}`;
 }
 
-export function buildWhatsAppUrl(name: string, need?: string): string {
-  const text = need
-    ? `Hi Joseph! I'm ${name}. I'm interested in ${need} and chatted with your site assistant.`
-    : `Hi Joseph! I'm ${name}, I chatted with your site assistant.`;
+export function buildWhatsAppUrl(name?: string, business?: string, need?: string): string {
+  let text: string;
+  if (!name) {
+    text = "Hi Joseph! I have a question — I was chatting with your site assistant.";
+  } else {
+    const parts = [`Hi Joseph! I'm ${name}`];
+    if (business) parts.push(`from ${business}`);
+    if (need) parts.push(`— I need help with ${need}`);
+    text = `${parts.join(" ")}. I chatted with your site assistant.`;
+  }
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
@@ -75,10 +92,10 @@ export async function createChatLead(fields: ChatLeadFields): Promise<string | n
   const status = computeStatus(fields);
   const insert: TablesInsert<"chat_leads"> = {
     ...fields,
-    qualified: isQualified(fields.budget_range, fields.start_timeframe),
     status,
     step: "name",
-    source: typeof window !== "undefined" ? window.location.pathname : null,
+    source: "chat_widget",
+    page_path: typeof window !== "undefined" ? window.location.pathname : null,
   };
   const { data, error } = await supabase.from("chat_leads").insert(insert).select("id").single();
   if (error) {
@@ -88,15 +105,10 @@ export async function createChatLead(fields: ChatLeadFields): Promise<string | n
   return data?.id ?? null;
 }
 
-export async function updateChatLead(
-  id: string,
-  fields: ChatLeadFields,
-  step: string
-): Promise<void> {
+export async function updateChatLead(id: string, fields: ChatLeadFields, step: string): Promise<void> {
   const status = computeStatus(fields);
   const update: TablesUpdate<"chat_leads"> = {
     ...fields,
-    qualified: isQualified(fields.budget_range, fields.start_timeframe),
     status,
     step,
     updated_at: new Date().toISOString(),
@@ -105,21 +117,37 @@ export async function updateChatLead(
   if (error) console.error("updateChatLead error:", error);
 }
 
+export async function markChatLeadBooked(id: string): Promise<void> {
+  const { error } = await supabase
+    .from("chat_leads")
+    .update({ booked: true, updated_at: new Date().toISOString() })
+    .eq("id", id);
+  if (error) console.error("markChatLeadBooked error:", error);
+}
+
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
 const EMAILJS_PUBLIC_KEY = "2H5maWozuCEEd6vtl";
+
+const STATUS_EMOJI: Record<ChatLeadStatus, string> = {
+  hot: "🔥",
+  warm: "☀️",
+  cold: "❄️",
+};
 
 export async function notifyLeadByEmail(fields: ChatLeadFields, status: ChatLeadStatus) {
   const summary = [
     `Name: ${fields.name ?? "—"}`,
     `Business: ${fields.business_name ?? "—"}`,
+    `Industry: ${fields.industry ?? "—"}`,
     `Sells: ${fields.what_they_sell ?? "—"}`,
     `Need: ${fields.need ?? "—"}`,
     `Budget: ${fields.budget_range ?? "—"}`,
     `Start: ${fields.start_timeframe ?? "—"}`,
     `Email: ${fields.email ?? "—"}`,
     `WhatsApp: ${fields.whatsapp ?? "—"}`,
-    `Qualified: ${isQualified(fields.budget_range, fields.start_timeframe) ? "Yes" : "No"}`,
+    `Website/Instagram: ${fields.website_or_social ?? "—"}`,
+    `Status: ${status.toUpperCase()}`,
   ].join("\n");
 
   try {
@@ -132,6 +160,10 @@ export async function notifyLeadByEmail(fields: ChatLeadFields, status: ChatLead
         message: `New chat lead [${status.toUpperCase()}]\n\n${summary}`,
         to_name: "Joseph Maina",
         lead_status: status,
+        status_emoji: STATUS_EMOJI[status],
+        business_name: fields.business_name || "—",
+        need: fields.need || "—",
+        budget_range: fields.budget_range || "—",
       },
       EMAILJS_PUBLIC_KEY
     );

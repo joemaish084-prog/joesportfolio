@@ -18,7 +18,7 @@ const CookiePolicy = () => (
     <LegalSection title="Types of Cookies We Use">
       <p>
         <strong className="text-foreground">Analytics Cookies:</strong> Google Analytics
-        (G-XCTEXX3DG9) tracks page views and user behavior anonymously.
+        (G-X86CZEY9GV) tracks page views and user behavior anonymously.
       </p>
       <p>
         <strong className="text-foreground">Functional Cookies:</strong> Remember your dark / light

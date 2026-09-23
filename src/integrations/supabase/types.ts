@@ -103,53 +103,62 @@ export type Database = {
       }
       chat_leads: {
         Row: {
+          booked: boolean
           budget_range: string | null
           business_name: string | null
           created_at: string
           email: string | null
           id: string
+          industry: string | null
           name: string | null
           need: string | null
-          qualified: boolean | null
+          page_path: string | null
           source: string | null
           start_timeframe: string | null
           status: string
           step: string
           updated_at: string
+          website_or_social: string | null
           what_they_sell: string | null
           whatsapp: string | null
         }
         Insert: {
+          booked?: boolean
           budget_range?: string | null
           business_name?: string | null
           created_at?: string
           email?: string | null
           id?: string
+          industry?: string | null
           name?: string | null
           need?: string | null
-          qualified?: boolean | null
+          page_path?: string | null
           source?: string | null
           start_timeframe?: string | null
           status?: string
           step?: string
           updated_at?: string
+          website_or_social?: string | null
           what_they_sell?: string | null
           whatsapp?: string | null
         }
         Update: {
+          booked?: boolean
           budget_range?: string | null
           business_name?: string | null
           created_at?: string
           email?: string | null
           id?: string
+          industry?: string | null
           name?: string | null
           need?: string | null
-          qualified?: boolean | null
+          page_path?: string | null
           source?: string | null
           start_timeframe?: string | null
           status?: string
           step?: string
           updated_at?: string
+          website_or_social?: string | null
           what_they_sell?: string | null
           whatsapp?: string | null
         }

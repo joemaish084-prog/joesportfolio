@@ -1,14 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Loader2, Bot, CalendarCheck } from "lucide-react";
+import { MessageCircle, X, Send, Bot, CalendarCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trackEvent } from "@/lib/analytics";
+import { openCalendlyPopup } from "@/lib/calendly";
 import {
+  INDUSTRY_OPTIONS,
   NEED_OPTIONS,
   BUDGET_OPTIONS,
   START_OPTIONS,
-  isQualified,
   computeStatus,
   isValidEmail,
   normalizeKenyanPhone,
@@ -16,6 +17,7 @@ import {
   buildWhatsAppUrl,
   createChatLead,
   updateChatLead,
+  markChatLeadBooked,
   notifyLeadByEmail,
   type ChatLeadFields,
 } from "@/lib/chatLead";
@@ -31,30 +33,80 @@ type Step =
   | "name"
   | "business_name"
   | "what_they_sell"
+  | "industry"
   | "need"
   | "budget_range"
   | "start_timeframe"
   | "email"
   | "whatsapp"
+  | "website_or_social"
   | "done";
 
+const STEP_ORDER: Step[] = [
+  "name",
+  "business_name",
+  "what_they_sell",
+  "industry",
+  "need",
+  "budget_range",
+  "start_timeframe",
+  "email",
+  "whatsapp",
+  "website_or_social",
+  "done",
+];
+
+const GREETING = "Hey! 👋 I'm Joseph's assistant — mind if I ask a few quick questions so I can point you in the right direction? What's your name?";
+
 const STEP_PROMPTS: Record<Step, string> = {
-  name: "Hi! I'm Joseph's assistant 👋 What's your name?",
-  business_name: "Nice to meet you, {name}! What's your business called?",
-  what_they_sell: "And what does {business} sell or offer?",
-  need: "What do you need help with?",
-  budget_range: "What's your monthly budget for this (my fee + ad spend), in KES?",
-  start_timeframe: "When are you looking to start?",
-  email: "Great! What's the best email to reach you on?",
-  whatsapp: "Last one — what's your WhatsApp number? (e.g. 07XX XXX XXX)",
+  name: GREETING,
+  business_name: "Great to meet you, {name}! What's your business called?",
+  what_they_sell: "Cool — and what does {business} sell or offer?",
+  industry: "Got it. Which of these is closest to what you do?",
+  need: "Nice. So what are you hoping to get help with?",
+  budget_range: "Makes sense. And roughly what's your monthly budget for this — my fee plus ad spend, in KES?",
+  start_timeframe: "Good to know. When are you thinking of starting?",
+  email: "Perfect — what's the best email for you?",
+  whatsapp: "And a WhatsApp number so we can carry this on directly? (e.g. 07XX XXX XXX)",
+  website_or_social: "Last thing — got a website or Instagram I could take a quick look at? Totally optional.",
   done: "",
 };
+
+const NEED_REACTIONS: Record<string, string> = {
+  SEO: "Smart move — SEO compounds over time and keeps paying off long after you stop paying for ads.",
+  "Meta Ads": "Good pick — Meta Ads are great for fast visibility on Instagram & Facebook.",
+  "Google Ads": "Solid choice — Google Ads catches people who are already searching for what you sell.",
+  "TikTok Ads": "TikTok's blowing up in Kenya right now, good timing on that one.",
+  "Content & social media": "Consistent content is honestly what builds real trust with an audience.",
+  "Not sure": "No worries at all — that's exactly what this chat is for, let's figure it out together.",
+};
+
+const BUTTON_STEPS: Partial<Record<Step, readonly string[]>> = {
+  industry: INDUSTRY_OPTIONS,
+  need: NEED_OPTIONS,
+  budget_range: BUDGET_OPTIONS,
+  start_timeframe: START_OPTIONS,
+};
+
+const TEXT_STEPS = new Set<Step>(["name", "business_name", "what_they_sell", "email", "whatsapp", "website_or_social"]);
 
 const AI_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-assistant`;
 
 function looksLikeQuestion(text: string): boolean {
   const t = text.trim();
   return /\?$/.test(t) || /^(what|how|why|who|when|where|can you|do you|does|is it|are you|will you|which)\b/i.test(t);
+}
+
+// A human doesn't reply instantly, and a longer message takes longer to type.
+function typingDelayFor(text: string): number {
+  return Math.min(1800, 450 + text.length * 10 + Math.random() * 300);
+}
+
+function reactionFor(step: Step, fields: ChatLeadFields): string | null {
+  if (step === "what_they_sell") return `Nice, ${fields.business_name} sounds like a great business to grow.`;
+  if (step === "need") return NEED_REACTIONS[fields.need || ""] ?? null;
+  if (step === "budget_range") return fields.budget_range === "Under 30k" ? null : "Great, that's a solid budget to work with.";
+  return null;
 }
 
 async function askAI(question: string, onDelta: (chunk: string) => void): Promise<string> {
@@ -99,89 +151,116 @@ async function askAI(question: string, onDelta: (chunk: string) => void): Promis
   return full;
 }
 
+function TypingDots() {
+  return (
+    <div className="flex justify-start">
+      <div className="bg-muted rounded-xl px-3 py-2.5 flex items-center gap-1">
+        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-bounce [animation-delay:-0.3s]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-bounce [animation-delay:-0.15s]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-bounce" />
+      </div>
+    </div>
+  );
+}
+
 export function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasOpened, setHasOpened] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "bot", content: STEP_PROMPTS.name },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [step, setStep] = useState<Step>("name");
   const [fields, setFields] = useState<ChatLeadFields>({});
   const [leadId, setLeadId] = useState<string | null>(null);
   const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const leadIdRef = useRef<string | null>(null);
+  const fieldsRef = useRef<ChatLeadFields>({});
+
+  useEffect(() => {
+    leadIdRef.current = leadId;
+  }, [leadId]);
+
+  useEffect(() => {
+    fieldsRef.current = fields;
+  }, [fields]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, isTyping, isLoading]);
+
+  // Listen for Calendly's postMessage once a booking is confirmed, so we can
+  // mark the lead as booked even though the popup lives in an iframe we don't control.
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.event !== "calendly.event_scheduled") return;
+      if (!leadIdRef.current) return;
+      void markChatLeadBooked(leadIdRef.current);
+      trackEvent("calendly_booked", { name: fieldsRef.current.name });
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+
+  const botSay = async (content: string, quickReplies?: string[], action?: "calendly" | "whatsapp") => {
+    setIsTyping(true);
+    await new Promise((resolve) => setTimeout(resolve, typingDelayFor(content)));
+    setIsTyping(false);
+    setMessages((prev) => [...prev, { role: "bot", content, quickReplies, action }]);
+  };
 
   const openChat = () => {
     setIsOpen(true);
     if (!hasOpened) {
       setHasOpened(true);
       trackEvent("chat_opened");
+      void botSay(GREETING, ["I just have a question"]);
     }
   };
 
-  const addBotMessage = (content: string, quickReplies?: string[], action?: "calendly" | "whatsapp") => {
-    setMessages((prev) => [...prev, { role: "bot", content, quickReplies, action }]);
-  };
+  const nextStepAfter = (current: Step): Step => STEP_ORDER[STEP_ORDER.indexOf(current) + 1];
 
-  const nextStepAfter = (current: Step): Step => {
-    const order: Step[] = [
-      "name",
-      "business_name",
-      "what_they_sell",
-      "need",
-      "budget_range",
-      "start_timeframe",
-      "email",
-      "whatsapp",
-      "done",
-    ];
-    return order[order.indexOf(current) + 1];
-  };
-
-  const askStep = (target: Step, updatedFields: ChatLeadFields) => {
+  const askStep = async (target: Step, updatedFields: ChatLeadFields) => {
     if (target === "done") {
-      void finishFlow(updatedFields);
+      await finishFlow(updatedFields);
       return;
     }
     let prompt = STEP_PROMPTS[target];
-    prompt = prompt.replace("{name}", updatedFields.name || "there").replace("{business}", updatedFields.business_name || "your business");
+    prompt = prompt
+      .replace("{name}", updatedFields.name || "there")
+      .replace("{business}", updatedFields.business_name || "your business");
 
-    if (target === "need") {
-      addBotMessage(prompt, [...NEED_OPTIONS]);
-    } else if (target === "budget_range") {
-      addBotMessage(prompt, [...BUDGET_OPTIONS]);
-    } else if (target === "start_timeframe") {
-      addBotMessage(prompt, [...START_OPTIONS]);
+    const options = BUTTON_STEPS[target];
+    if (options) {
+      await botSay(prompt, [...options]);
+    } else if (target === "website_or_social") {
+      await botSay(prompt, ["Skip"]);
     } else {
-      addBotMessage(prompt);
+      await botSay(prompt);
     }
     setStep(target);
   };
 
   const finishFlow = async (finalFields: ChatLeadFields) => {
-    const qualified = isQualified(finalFields.budget_range, finalFields.start_timeframe);
     const status = computeStatus(finalFields);
 
     if (leadId) {
       await updateChatLead(leadId, finalFields, "done");
     }
     await notifyLeadByEmail(finalFields, status);
-    trackEvent("lead_submitted", { qualified, status });
+    trackEvent("lead_submitted", { status });
 
-    if (qualified) {
-      addBotMessage(
-        `You're all set, ${finalFields.name}! Based on what you've shared, a quick strategy call makes sense. Pick a time that works for you and I'll be there.`,
+    const industryNote = finalFields.industry ? ` in ${finalFields.industry.toLowerCase()}` : "";
+
+    if (status === "hot") {
+      await botSay(
+        `You're all set, ${finalFields.name}! What you've shared about ${finalFields.business_name || "your business"}${industryNote} tells me a quick strategy call is worth it. Pick a time that works for you and I'll be there.`,
         undefined,
         "calendly"
       );
     } else {
-      addBotMessage(
+      await botSay(
         `Thanks so much, ${finalFields.name}! I've got your details and I'll personally follow up with some ideas for ${finalFields.business_name || "your business"}. In the meantime, feel free to message me directly on WhatsApp.`,
         undefined,
         "whatsapp"
@@ -194,9 +273,8 @@ export function ChatAssistant() {
     const trimmed = value.trim();
     if (!trimmed) return;
 
-    // Validate + normalize per-step
     let fieldKey: keyof ChatLeadFields;
-    let storedValue = trimmed;
+    let storedValue: string | undefined = trimmed;
 
     if (step === "email") {
       if (!isValidEmail(trimmed)) {
@@ -212,18 +290,11 @@ export function ChatAssistant() {
       }
       fieldKey = "whatsapp";
       storedValue = normalized;
-    } else if (step === "need") {
-      fieldKey = "need";
-    } else if (step === "budget_range") {
-      fieldKey = "budget_range";
-    } else if (step === "start_timeframe") {
-      fieldKey = "start_timeframe";
-    } else if (step === "business_name") {
-      fieldKey = "business_name";
-    } else if (step === "what_they_sell") {
-      fieldKey = "what_they_sell";
+    } else if (step === "website_or_social") {
+      fieldKey = "website_or_social";
+      if (trimmed.toLowerCase() === "skip") storedValue = undefined;
     } else {
-      fieldKey = "name";
+      fieldKey = step as keyof ChatLeadFields;
     }
 
     setErrorText(null);
@@ -239,28 +310,36 @@ export function ChatAssistant() {
       void updateChatLead(leadId, updatedFields, step);
     }
 
-    askStep(nextStepAfter(step), updatedFields);
+    const reaction = reactionFor(step, updatedFields);
+    if (reaction) await botSay(reaction);
+
+    await askStep(nextStepAfter(step), updatedFields);
   };
 
-  const handleQuickReply = (value: string) => {
-    void handleFieldAnswer(value);
+  const handleQuickReply = async (value: string) => {
+    if (value === "I just have a question" && step === "name" && messages.length === 1) {
+      setMessages((prev) => [...prev, { role: "user", content: value }]);
+      await botSay("Great question — Joe can answer that directly on WhatsApp.", undefined, "whatsapp");
+      setStep("done");
+      return;
+    }
+    await handleFieldAnswer(value);
   };
 
   const handleSend = async () => {
     const text = input.trim();
-    if (!text || isLoading || step === "done") return;
+    if (!text || isLoading || isTyping || step === "done") return;
 
-    const isButtonStep = step === "need" || step === "budget_range" || step === "start_timeframe";
-    const options = step === "need" ? NEED_OPTIONS : step === "budget_range" ? BUDGET_OPTIONS : START_OPTIONS;
-    const matchesOption = isButtonStep && options.some((o) => o.toLowerCase() === text.toLowerCase());
+    const options = BUTTON_STEPS[step];
+    const isButtonStep = !!options;
+    const matchedOption = options?.find((o) => o.toLowerCase() === text.toLowerCase());
 
-    if (matchesOption) {
-      const match = options.find((o) => o.toLowerCase() === text.toLowerCase())!;
-      void handleFieldAnswer(match);
+    if (matchedOption) {
+      void handleFieldAnswer(matchedOption);
       return;
     }
 
-    if (looksLikeQuestion(text) || (isButtonStep && !matchesOption)) {
+    if (looksLikeQuestion(text) || isButtonStep) {
       setMessages((prev) => [...prev, { role: "user", content: text }]);
       setInput("");
       setIsLoading(true);
@@ -279,19 +358,28 @@ export function ChatAssistant() {
         });
       } catch (err) {
         console.error("Chat AI error:", err);
-        addBotMessage("Sorry, I couldn't look that up right now. Let's continue below 👇");
+        setMessages((prev) => [...prev, { role: "bot", content: "Hmm, couldn't pull that up right now. Let's carry on below 👇" }]);
       } finally {
         setIsLoading(false);
-        // Re-ask the current step so they can pick up where they left off
-        askStep(step, fields);
+        await askStep(step, fields);
       }
       return;
     }
 
-    void handleFieldAnswer(text);
+    await handleFieldAnswer(text);
   };
 
-  const isTextStep = ["name", "business_name", "what_they_sell", "email", "whatsapp"].includes(step);
+  const handleBookCall = async () => {
+    trackEvent("calendly_clicked");
+    await openCalendlyPopup(buildCalendlyUrl(fields.name || "", fields.email || ""));
+  };
+
+  const handleWhatsAppClick = () => {
+    trackEvent("whatsapp_clicked");
+  };
+
+  const isTextStep = TEXT_STEPS.has(step);
+  const isBusy = isTyping || isLoading;
 
   return (
     <>
@@ -354,24 +442,17 @@ export function ChatAssistant() {
                     </div>
                   )}
                   {msg.action === "calendly" && (
-                    <a
-                      href={buildCalendlyUrl(fields.name || "", fields.email || "")}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => trackEvent("calendly_clicked")}
-                      className="mt-2"
-                    >
-                      <Button size="sm" className="text-xs h-9 gap-1.5">
-                        <CalendarCheck className="h-3.5 w-3.5" />
-                        Book your free strategy call
-                      </Button>
-                    </a>
+                    <Button size="sm" className="mt-2 text-xs h-9 gap-1.5" onClick={handleBookCall}>
+                      <CalendarCheck className="h-3.5 w-3.5" />
+                      Book your free strategy call
+                    </Button>
                   )}
                   {msg.action === "whatsapp" && (
                     <a
-                      href={buildWhatsAppUrl(fields.name || "", fields.need)}
+                      href={buildWhatsAppUrl(fields.name, fields.business_name, fields.need)}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={handleWhatsAppClick}
                       className="mt-2"
                     >
                       <Button size="sm" variant="outline" className="text-xs h-9 gap-1.5">
@@ -382,14 +463,7 @@ export function ChatAssistant() {
                   )}
                 </div>
               ))}
-              {isLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-muted rounded-xl px-3 py-2 text-sm flex items-center gap-2 text-muted-foreground">
-                    <Loader2 className="h-3 w-3 animate-spin" />
-                    Thinking...
-                  </div>
-                </div>
-              )}
+              {isBusy && <TypingDots />}
               <div ref={messagesEndRef} />
             </div>
 
@@ -403,9 +477,9 @@ export function ChatAssistant() {
                   onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
                   placeholder={isTextStep ? "Type your answer..." : "Ask a question, or tap an option above"}
                   className="h-10 text-sm"
-                  disabled={isLoading}
+                  disabled={isBusy}
                 />
-                <Button size="icon" onClick={handleSend} disabled={isLoading || !input.trim()} className="h-10 w-10 shrink-0">
+                <Button size="icon" onClick={handleSend} disabled={isBusy || !input.trim()} className="h-10 w-10 shrink-0">
                   <Send className="h-4 w-4" />
                 </Button>
               </div>
