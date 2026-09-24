@@ -746,6 +746,161 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "convey-communications-case-study-10x-leads",
+    category: "Case Study",
+    title: "Convey Communications: 10x Qualified Leads in 6 Months",
+    excerpt: "Low organic reach and stagnant lead flow, turned into a 10x increase in qualified leads and 300%+ engagement growth across IG and TikTok.",
+    date: "2026-11-24",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Convey Communications: 10x Qualified Leads in 6 Months",
+    metaDescription: "How a combination of Meta Ads, TikTok strategy and content production took Convey Communications from stagnant lead flow to a 10x increase in qualified leads.",
+    intro: "Convey Communications came to me with a familiar problem: decent brand recognition, but organic reach had flatlined and the lead pipeline had gone quiet. Six months later, qualified leads were up 10x and engagement across Instagram and TikTok had grown more than 300%. Here's what changed.",
+    thumbnail: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Team reviewing marketing performance charts on a screen in an office",
+
+    sections: [
+      {
+        id: "the-problem",
+        heading: "The starting problem",
+        paragraphs: [
+          "Convey's organic content was going out consistently, but reach and engagement had been declining for months, and the leads that did come in were inconsistent and hard to attribute to any specific effort. Nobody could say with confidence what was actually working.",
+          "Before touching a single ad account, the first step was figuring out which content formats and topics still had any organic pull left, and which had simply worn out with the existing audience.",
+        ],
+      },
+      {
+        id: "the-fix",
+        heading: "What we changed: Meta Ads, TikTok strategy, and content production",
+        paragraphs: [
+          "We layered targeted Meta Ads on top of the organic content that was still performing, rather than starting from zero with untested creative. That let the ad budget amplify what the audience had already shown interest in.",
+          "On TikTok, we rebuilt the content strategy around native, fast-hook formats instead of repurposed Instagram content, which is a mistake I see constantly in this market, treating TikTok like a second Instagram feed instead of its own platform with its own rules.",
+        ],
+      },
+      {
+        id: "the-results",
+        heading: "The results over six months",
+        paragraphs: [
+          "Qualified leads increased tenfold, and engagement across Instagram and TikTok combined grew more than 300%. Neither number moved in isolation, the paid and organic work reinforced each other throughout the six months.",
+          "The lead increase mattered more than the engagement number, since engagement without a lead increase is a vanity metric. In this case both moved together, which is the actual sign a strategy is working rather than just performing.",
+        ],
+      },
+      {
+        id: "takeaway",
+        heading: "The takeaway",
+        paragraphs: [
+          "The biggest lever wasn't a bigger budget, it was refusing to treat every platform the same way and building paid spend around organic signals instead of guessing at new creative from a blank page.",
+          "That combination, test organically first, then put paid budget behind what already resonates, is the same approach I bring to every new client account.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "nyeri-county-campaign-hyper-local-marketing",
+    category: "Case Study",
+    title: "Nyeri County Campaign: Reaching a Hyper-Local Audience on a Small Budget",
+    excerpt: "500K+ video views and 22 community events filled to capacity, without a national ad budget behind it.",
+    date: "2026-12-01",
+    dateLabel: "December 2026",
+    readTime: "5 min read",
+    metaTitle: "Nyeri County Campaign: Reaching a Hyper-Local Audience on a Small Budget",
+    metaDescription: "How a hyper-local video production and Meta Ads strategy generated over 500,000 views and filled 22 community events to capacity in Nyeri County on a limited budget.",
+    intro: "Hyper-local campaigns get a fraction of the budget national campaigns do, but they need to move a very specific, geographically concentrated audience to actually show up somewhere. Here's how a limited budget turned into 500,000+ video views and 22 fully booked community events in Nyeri County.",
+    thumbnail: "https://images.unsplash.com/photo-1516382799247-87df95d790b7?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Rural Kenyan town street with local shops and community activity",
+
+    sections: [
+      {
+        id: "the-challenge",
+        heading: "The challenge: hyper-local reach on a limited budget",
+        paragraphs: [
+          "A national brand campaign can afford to be broad and still find its audience through sheer volume. A county-level campaign cannot. Every shilling had to reach someone who could plausibly attend an event in Nyeri specifically, not just someone generally interested in the brand.",
+          "That meant location targeting had to be precise from day one, down to specific towns and trading centres rather than the county as a whole, and the content had to feel local rather than like a national ad dropped into a regional feed.",
+        ],
+      },
+      {
+        id: "the-approach",
+        heading: "Video production and hyper-local Meta targeting",
+        paragraphs: [
+          "The content leaned heavily on local video production, filmed on location, using local landmarks and community language rather than generic stock-style branding. That authenticity is what made people trust an event invitation from a brand they hadn't necessarily heard of.",
+          "On Meta, targeting was layered tightly around geography combined with interest signals relevant to each event, rather than one broad campaign covering the whole county. Local SEO also played a role, making sure each event page could be found by anyone searching for it directly.",
+        ],
+      },
+      {
+        id: "the-results",
+        heading: "The results: 500K+ views, 22 events at capacity",
+        paragraphs: [
+          "The video content crossed 500,000 views across the campaign, a strong number for content built around a single county rather than a national audience. More importantly, all 22 community events booked to full capacity.",
+          "View count was never the actual goal here, filled events were. The views mattered only because they were the mechanism that got people to actually show up.",
+        ],
+      },
+      {
+        id: "takeaway",
+        heading: "The takeaway",
+        paragraphs: [
+          "Hyper-local campaigns succeed or fail on precision, not budget size. Tight geographic targeting and content that visibly belongs to the specific place you're targeting will consistently outperform a bigger, broader budget aimed at the same region.",
+          "This is the same principle behind the Google Business Profile and local SEO advice I give Nairobi businesses: specificity beats scale when your customer is defined by where they physically are.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "whatsapp-as-a-sales-channel-kenya-2026",
+    category: "Marketing",
+    title: "WhatsApp as a Sales Channel: What Kenyan Businesses Get Wrong",
+    excerpt: "It's the highest-intent channel most Kenyan businesses have, and most of them still run it like an afterthought.",
+    date: "2026-12-08",
+    dateLabel: "December 2026",
+    readTime: "5 min read",
+    metaTitle: "WhatsApp as a Sales Channel: What Kenyan Businesses Get Wrong",
+    metaDescription: "Why WhatsApp outperforms lead forms and DMs for Kenyan businesses, and the common mistakes, from slow replies to no catalog, that quietly cost sales.",
+    intro: "For a huge share of Kenyan businesses, WhatsApp is already the real sales floor, whether the business treats it that way or not. Ask, quote, negotiate, pay, it all happens there. Most businesses still run it like a side channel instead of the primary one it actually is.",
+    thumbnail: "https://images.unsplash.com/photo-1611746872915-64382b5c76da?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hands typing a message on a smartphone chat app",
+
+    sections: [
+      {
+        id: "why-it-wins",
+        heading: "Why WhatsApp outperforms forms and DMs in this market",
+        paragraphs: [
+          "A WhatsApp click-to-chat button removes almost all the friction between interest and a conversation. There is no form to fill, no app switch, and the person is already in the exact app they use daily to talk to people they trust.",
+          "It also matches how buying actually happens in Kenya for a lot of products and services: a real back-and-forth negotiation and clarification, not a one-way form submission that a business replies to hours later.",
+        ],
+      },
+      {
+        id: "mistake-slow-replies",
+        heading: "Mistake one: treating it like email",
+        paragraphs: [
+          "The single biggest failure is response time. A WhatsApp enquiry that sits unanswered for hours has effectively expired, the same person has usually already messaged a competitor and moved on by the time a reply arrives the next morning.",
+          "If WhatsApp is a real sales channel for your business, it needs a real response-time standard, ideally minutes during business hours, not whenever someone gets around to checking the phone.",
+        ],
+      },
+      {
+        id: "mistake-no-catalog",
+        heading: "Mistake two: no catalog, no saved replies, no structure",
+        paragraphs: [
+          "WhatsApp Business supports a proper product catalog, quick replies for common questions, and labels to track where a conversation is in the sales process. Most small businesses never turn any of it on and end up retyping the same price list by hand every day.",
+          "Setting this up once removes most of the daily friction and makes it possible for more than one person to handle enquiries consistently, instead of everything bottlenecking through whoever's phone the number lives on.",
+        ],
+      },
+      {
+        id: "mistake-personal-number",
+        heading: "Mistake three: running the business off a personal number with no backup",
+        paragraphs: [
+          "A single personal number with no second admin, no backup access, and no separation from the owner's personal chats is a fragile way to run a sales channel. If that phone is lost, stolen, or the owner is simply unavailable for a day, the business loses its main sales line entirely.",
+          "A dedicated WhatsApp Business number with more than one person able to respond is a small operational change that removes a genuinely large risk.",
+        ],
+      },
+      {
+        id: "how-it-fits",
+        heading: "How WhatsApp fits into a paid campaign",
+        paragraphs: [
+          "Sending Meta or Google traffic to a WhatsApp click-to-chat link instead of a form or landing page consistently produces higher-quality leads for service businesses in this market, a pattern I cover in more detail in my piece on lead generation campaigns that actually work.",
+          "The ad's job is just to start the conversation. Everything that decides whether it becomes a sale happens in the chat that follows, which is exactly why the mistakes above cost more than a slightly worse ad ever could.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
