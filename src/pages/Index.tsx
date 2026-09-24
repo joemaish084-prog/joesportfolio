@@ -15,7 +15,7 @@ const HeroFallback = () => (
     <div className="max-w-xl">
       <p className="text-xs font-medium text-muted-foreground mb-6 tracking-wide uppercase">Digital Marketing Specialist · Nairobi, Kenya</p>
       <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-foreground">
-        Creative Strategy<span className="text-primary"> Meets </span>Visual Storytelling
+        Digital Marketing That Turns Attention Into<span className="text-primary"> Real Growth</span>
       </h1>
     </div>
   </section>

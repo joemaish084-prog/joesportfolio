@@ -156,9 +156,8 @@ export function Hero() {
             transition={{ delay: 0.1, duration: 0.5, ease: appleEase }}
             className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-foreground max-w-xl"
           >
-            Creative Strategy
-            <span className="text-primary"> Meets </span>
-            Visual Storytelling
+            Digital Marketing That Turns Attention Into
+            <span className="text-primary"> Real Growth</span>
           </motion.h1>
 
           <motion.p
@@ -167,7 +166,7 @@ export function Hero() {
             transition={{ delay: 0.22, duration: 0.5, ease: appleEase }}
             className="mt-6 text-lg text-muted-foreground max-w-md"
           >
-            I build campaigns that turn attention into measurable growth.
+            I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content — not just reach.
           </motion.p>
 
           <motion.div
@@ -177,10 +176,10 @@ export function Hero() {
             className="mt-10 flex flex-col sm:flex-row gap-4"
           >
             <Button size="lg" className="w-full sm:w-auto rounded-full" asChild>
-              <a href="#videos">View My Work</a>
+              <a href="/agency#booking">Book a Free Strategy Call</a>
             </Button>
             <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild>
-              <a href="/agency">Agency</a>
+              <a href="#videos">See My Work</a>
             </Button>
           </motion.div>
 
