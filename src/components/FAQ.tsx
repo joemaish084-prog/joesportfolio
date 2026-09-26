@@ -44,12 +44,6 @@ const faqs = [
       "A local digital marketing consultant Nairobi understands the Kenyan consumer, the platforms that convert here, and the pricing realities of the market. You get a ROI focused digital marketer Nairobi who speaks the language of your audience — not a generic overseas agency.",
   },
   {
-    question: "Are you available for full-time opportunities?",
-    answer:
-      "Yes — I'm a digital marketer available for hire Nairobi for freelance, contract and full-time roles. If you're hiring a performance marketing Kenya 2026 specialist, let's talk.",
-  },
-
-  {
     question: "How do I get in touch with you?",
     answer:
       "You can reach me directly through the contact section below, via email, or connect with me on LinkedIn. I respond within 24 hours.",
