@@ -901,6 +901,267 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "what-a-digital-marketing-audit-finds-kenya-2026",
+    category: "Agency",
+    title: "What a Digital Marketing Audit Actually Finds (and Why It's Worth KES 40,000)",
+    excerpt: "Before you spend another shilling on ads or SEO, an audit tells you exactly what's broken and what to fix first.",
+    date: "2026-12-15",
+    dateLabel: "December 2026",
+    readTime: "5 min read",
+    metaTitle: "What a Digital Marketing Audit Actually Finds (and Why It's Worth KES 40,000)",
+    metaDescription: "What's inside a full-channel digital marketing audit for a Kenyan business: what gets checked, what usually turns up, and why it's worth doing before spending on ads or SEO.",
+    intro: "Most businesses come to me wanting to spend money on ads or SEO before anyone has checked whether the site, the tracking, or the offer can actually support that spend. An audit is the KES 40,000 conversation that prevents a much more expensive mistake.",
+    thumbnail: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person annotating a printed report with a red pen next to a laptop",
+
+    sections: [
+      {
+        id: "what-gets-checked",
+        heading: "What actually gets checked",
+        paragraphs: [
+          "A proper full-channel audit covers technical site health, on-page and local SEO, existing ad account setup if any exists, conversion tracking, and a review of what content and social presence is already in place. It is a snapshot of the entire digital footprint, not just one channel.",
+          "The point is to see the business the way a customer and a search engine both see it, which is often very different from how the business sees itself.",
+        ],
+      },
+      {
+        id: "common-findings",
+        heading: "What usually turns up",
+        paragraphs: [
+          "The most common finding by far is broken or missing conversion tracking, businesses that have been running ads for months with no reliable way to tell which campaigns actually produced a sale.",
+          "Close behind that is a Google Business Profile left half-filled, no structured data on the site, and a mobile experience that quietly loses visitors before they ever see the offer. None of these are expensive to fix once they are found, they are just invisible until someone looks.",
+        ],
+      },
+      {
+        id: "why-before-spend",
+        heading: "Why this comes before ad spend, not after",
+        paragraphs: [
+          "Running ads to a site with no tracking means you cannot tell Google or Meta what a good customer looks like, so the platform cannot optimise toward one. You end up paying to learn things the audit would have told you for free.",
+          "The same logic applies to SEO. Publishing content on a site with a serious technical problem is like decorating a room with a leaking roof, the content will not perform until the underlying issue is fixed.",
+        ],
+      },
+      {
+        id: "what-you-get",
+        heading: "What you actually walk away with",
+        paragraphs: [
+          "A prioritised list, not a wall of jargon. Every audit I run ends with what to fix first, what can wait, and a rough sense of what each fix is likely to be worth, so a business owner with a small budget knows exactly where to spend it first.",
+          "Whether you fix it yourself, hand it to your existing team, or come back to me for the retainer work, the audit is designed to be useful on its own, not just a sales pitch for more work.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "peak-season-marketing-kenya-2026",
+    category: "Paid Ads",
+    title: "Peak Season Marketing in Kenya: Black Friday, Festive and Back-to-School",
+    excerpt: "Three completely different shopping moods, three completely different campaigns. Treating them the same is why most seasonal pushes underperform.",
+    date: "2026-12-22",
+    dateLabel: "December 2026",
+    readTime: "6 min read",
+    metaTitle: "Peak Season Marketing in Kenya: Black Friday, Festive and Back-to-School",
+    metaDescription: "How to plan Black Friday, festive season and back-to-school marketing campaigns in Kenya: timing, budget shifts, and the mistakes that waste seasonal ad spend.",
+    intro: "Kenya has three real peak shopping windows a year, Black Friday, the festive season, and back-to-school in January. Each one has a different buyer mindset, and running the same campaign structure across all three is the fastest way to waste a seasonal budget.",
+    thumbnail: "https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shopping bags and gift boxes arranged on a table",
+
+    sections: [
+      {
+        id: "black-friday",
+        heading: "Black Friday: price is the entire message",
+        paragraphs: [
+          "Black Friday shoppers in Kenya are already comparing prices across multiple brands before they open your ad. The offer needs to be clear in the first second, not buried under brand messaging, and the discount needs to be real enough to survive a direct comparison.",
+          "Budgets should shift heavily toward the week itself rather than being spread evenly through November. Start warming up the audience a week or two out, then commit most of the spend to the 48 to 72 hours around the day itself.",
+        ],
+      },
+      {
+        id: "festive",
+        heading: "Festive season: it's a gifting and family mindset, not a discount mindset",
+        paragraphs: [
+          "Unlike Black Friday, festive season buying is driven more by occasion and relationship than by finding the lowest price. Creative that leans into family, celebration and gifting typically outperforms a pure discount message during this window.",
+          "This is also the period where WhatsApp click-to-chat tends to spike in importance, since a lot of festive purchasing involves a conversation, checking sizes, availability, or delivery timing, before someone commits.",
+        ],
+      },
+      {
+        id: "back-to-school",
+        heading: "Back-to-school: practical, urgent, and price-sensitive again",
+        paragraphs: [
+          "January's back-to-school window is short and driven by a hard deadline, school opening day. Messaging should be practical and direct: what it is, what it costs, and that it will arrive in time. This is not the moment for brand-building creative.",
+          "Businesses selling anything remotely related to school, uniforms, stationery, electronics, transport, should expect a compressed but genuinely high-intent window in the first two to three weeks of January.",
+        ],
+      },
+      {
+        id: "the-mistake",
+        heading: "The mistake that wastes the most seasonal budget",
+        paragraphs: [
+          "Running one generic 'sale' campaign across all three windows with the same creative and the same targeting. Each of these moments has a different customer mindset, and treating them identically means the message misses the actual reason people are buying at that specific time.",
+          "Plan each window as its own small campaign with its own message, even if the underlying product or offer barely changes between them.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "video-ads-vs-static-ads-kenya-2026",
+    category: "Meta Ads",
+    title: "Video Ads vs Static Ads: What Converts Better on Kenyan Social Media",
+    excerpt: "The honest answer depends on what you're selling and where in the funnel the ad sits, not on which format is inherently better.",
+    date: "2026-12-29",
+    dateLabel: "December 2026",
+    readTime: "5 min read",
+    metaTitle: "Video Ads vs Static Ads: What Converts Better on Kenyan Social Media",
+    metaDescription: "A practical comparison of video and static ads for Kenyan social media campaigns: when each format wins, production cost, and how to decide without guessing.",
+    intro: "Business owners often ask whether they should invest in video production or just run well-designed static images. The honest answer is that both have a job, and the mistake is picking one format for every stage of the campaign.",
+    thumbnail: "https://images.unsplash.com/photo-1626544827763-d516dce335e2?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Camera and lighting equipment set up for a video shoot",
+
+    sections: [
+      {
+        id: "when-video-wins",
+        heading: "When video wins",
+        paragraphs: [
+          "Video earns its cost when the product or service needs to be seen in motion to be understood, a process being done, a space being used, a result being demonstrated. It also tends to hold attention longer in a scrolling feed, which matters most at the awareness stage of a campaign.",
+          "Short, native-feeling video, filmed simply rather than over-produced, consistently outperforms polished but generic video for Kenyan audiences, echoing the same lesson from running TikTok content: authenticity beats production value.",
+        ],
+      },
+      {
+        id: "when-static-wins",
+        heading: "When static wins",
+        paragraphs: [
+          "Static images are cheaper and faster to produce, easier to test in volume, and often perform just as well or better once someone already knows what your product is and is deciding whether to buy. A clean image with a clear price and offer can outperform video at the bottom of the funnel, where the job is closing the sale, not building interest.",
+          "Static also wins by default for any business that cannot realistically produce fresh video every few weeks. A steady stream of well-made static creative beats one video ad running until it fatigues.",
+        ],
+      },
+      {
+        id: "cost-reality",
+        heading: "The real cost difference",
+        paragraphs: [
+          "Video production in Kenya typically runs from around KES 40,000 per project upward, depending on complexity, versus a fraction of that for a batch of static designs. That cost difference should factor directly into the decision, not just which format performs marginally better in isolation.",
+          "If a modest static budget can produce ten creative variations to test against one video's budget, the static batch often wins on data alone, simply because it generates more signal, faster.",
+        ],
+      },
+      {
+        id: "verdict",
+        heading: "How I'd decide for your campaign",
+        paragraphs: [
+          "Use video for awareness and to explain anything that benefits from being seen in motion. Use static for retargeting, price-led offers, and anything close to a purchase decision.",
+          "Most of the Kenyan brands I work with run a mix: a small number of video pieces doing the heavy lifting on cold audiences, backed by a rotating set of static creative carrying the closing message.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "google-business-profile-setup-nairobi-2026",
+    category: "SEO",
+    title: "How to Set Up Your Google Business Profile the Right Way in Nairobi",
+    excerpt: "From picking the right category to handling reviews when someone's just being mean — the GBP setup guide for Nairobi businesses.",
+    date: "2026-11-03",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "How to Set Up Your Google Business Profile the Right Way in Nairobi",
+    metaDescription: "A practical Google Business Profile setup guide for Nairobi businesses: category, service area, photos, posts, reviews, and the mistakes that cost you visibility.",
+    intro: "Whether you're running a kinyozi in Kawangware, a boutique in Kilimani, or a consultancy in Upper Hill, your Google Business Profile is doing more work for you than your website is. Most Nairobi business owners set theirs up once, in five minutes, and never touch it again. Here's how to actually do it right.",
+    thumbnail: "https://images.unsplash.com/photo-1669127300649-940337f1487e?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "The Nairobi Expressway and city skyline in Westlands, Nairobi",
+
+    sections: [
+      {
+        id: "category-and-name",
+        heading: "Get your category and name right from day one",
+        paragraphs: [
+          "Pick the most specific category that fits, not the broadest one. 'Skin care clinic' beats 'Health' every time, because Google shows your listing for the searches that actually match, not the ones that sound impressive.",
+          "Don't stuff keywords into your business name (adding 'Nairobi's Best' or 'Cheap' to the name field). Google flags this, and it can get your listing suspended right when you need it most, like during a Black Friday push.",
+        ],
+      },
+      {
+        id: "location-and-hours",
+        heading: "Set your service area and hours like customers actually check them",
+        paragraphs: [
+          "If you deliver across Nairobi, use a service area instead of pinning one office. A duka in South B doesn't need a public storefront pin if half the business is boda-boda deliveries across Eastlands.",
+          "Update your hours for public holidays and Sundays specifically. Nothing loses trust faster than someone walking to your CBD shop after 'closing time confirmed on Google' only to find it shut.",
+        ],
+      },
+      {
+        id: "photos-and-posts",
+        heading: "Photos and posts, done consistently",
+        paragraphs: [
+          "Upload real photos of your actual shop, staff, and products, not stock images. People searching locally can tell the difference immediately, and profiles with real photos consistently get more calls and direction requests.",
+          "Post at least twice a month. A quick photo of new stock, a service you're running this week, or a shoutout for a Till number promotion keeps the profile 'active' in Google's eyes, which matters for ranking.",
+        ],
+      },
+      {
+        id: "reviews",
+        heading: "Handle reviews like they're part of the job, because they are",
+        paragraphs: [
+          "Ask every satisfied customer to leave a review before they walk out or hang up the phone, while the good experience is still fresh. Most Kenyan SMEs only get reviews from people who are angry, which skews the whole profile.",
+          "Reply to every review, good or bad, in a calm and professional tone. When someone leaves a one-star review because a boda rider was late through no fault of yours, a polite public reply does more for trust than deleting the comment ever could (and you can't delete someone else's review anyway).",
+        ],
+      },
+      {
+        id: "common-mistakes",
+        heading: "The mistakes I see most often",
+        paragraphs: [
+          "Duplicate listings are the biggest one, usually created by accident when a business moves from Ngong Road to Kilimani and someone makes a new profile instead of updating the old one. Google punishes both listings for it.",
+          "The second is ignoring the Q&A section. Random people can post fake answers to questions about your business, and if you're not checking it, wrong information about your prices or hours can sit there for months.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ad-creative-testing-kenyan-brands-2026",
+    category: "Paid Ads",
+    title: "Ad Creative Testing for Kenyan Brands: What to Test and When to Kill It",
+    excerpt: "Why one ad blows up while three others just sit there eating budget — and how to make that less random.",
+    date: "2026-11-17",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Ad Creative Testing for Kenyan Brands: What to Test and When to Kill It",
+    metaDescription: "How to run ad creative testing properly for Kenyan brands: what to test, what actually performs locally, sample size, and setting kill criteria before you launch.",
+    intro: "Every brand I work with asks the same question sooner or later: why did that one ad blow up while three others just sat there eating budget? The answer is almost never luck. It's a testing process, run properly, in a market that behaves differently from the case studies you'll find on YouTube.",
+    thumbnail: "https://images.unsplash.com/photo-1759417501276-a309088f1521?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Professional video camera and lighting set up for a content shoot",
+
+    sections: [
+      {
+        id: "what-to-test",
+        heading: "Test one thing at a time, not everything at once",
+        paragraphs: [
+          "Hook, visual, and offer are the three things worth testing on their own. Change all three between versions and you'll have a 'winner' with no idea why it won, which means you can't repeat it.",
+          "Start with the hook. In a market where people are scrolling TikTok on a Safaricom bundle they're watching the clock on, the first two seconds decide everything else.",
+        ],
+      },
+      {
+        id: "local-creative",
+        heading: "What actually performs with Kenyan audiences",
+        paragraphs: [
+          "Sheng and everyday Swahili phrases used naturally, not forced, consistently outperform stiff corporate English in the comments and shares, especially for anything aimed at under-35s in Nairobi.",
+          "Real people using the actual product on camera, in a real setting like a matatu stage, a salon chair, or someone's kitchen, beats a studio shoot almost every time for engagement rate. Polish reads as an ad. Realness reads as a recommendation from a friend.",
+        ],
+      },
+      {
+        id: "sample-size",
+        heading: "Give a test enough data before you judge it",
+        paragraphs: [
+          "A day and a half of spend with three clicks is not a result, it's noise. Let each variant spend enough to get a meaningful number of link clicks or add-to-carts, usually a few thousand shillings per version, before comparing them.",
+          "Judging too early is how good creative gets killed by accident and mediocre creative gets scaled by mistake.",
+        ],
+      },
+      {
+        id: "kill-criteria",
+        heading: "Know your kill criteria before you launch, not after",
+        paragraphs: [
+          "Decide upfront what 'this isn't working' looks like: a cost per result above a set number, or a click-through rate under a set percentage, checked after the variant has spent enough to be judged fairly.",
+          "Without a kill criteria set in advance, it's tempting to keep a creative running because you personally like it, even after the numbers have made the call.",
+        ],
+      },
+      {
+        id: "refresh-cycle",
+        heading: "Build a refresh habit, not a one-off shoot",
+        paragraphs: [
+          "Budget for a new batch of creative every three to four weeks, even for campaigns that are performing well. Frequency climbs faster in Nairobi's smaller, more connected online audience than it does in bigger markets, so fatigue sets in sooner than most brands expect.",
+          "Keep a simple swipe file of everything that's ever worked, hooks, formats, offers, so testing next month builds on what you already know instead of starting from zero every time.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
