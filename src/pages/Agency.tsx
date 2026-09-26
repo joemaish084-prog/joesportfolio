@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
+import { trackConversion } from "@/lib/analytics";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
@@ -292,10 +293,7 @@ const Agency = () => {
         console.error("EmailJS send failed (lead already saved):", emailErr);
       }
       toast({ title: "Brief sent", description: "I'll reply within 24 hours." });
-      const fbq = (window as any).fbq;
-      if (typeof fbq === "function") {
-        fbq("track", "Lead");
-      }
+      trackConversion("Lead");
       setForm({ ...form, name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
       setBriefStep(0);
     } catch (err) {
@@ -759,7 +757,7 @@ const Agency = () => {
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">Prefer WhatsApp? Let's talk there.</p>
                 <Button asChild className="w-full">
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackConversion("Contact")}>
                     <Phone className="mr-2 h-4 w-4" /> Message me on WhatsApp
                   </a>
                 </Button>
@@ -923,7 +921,7 @@ const Agency = () => {
         <span>·</span>
         <Link to="/agency/blog" className="hover:text-foreground">Blog</Link>
         <span>·</span>
-        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-foreground" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-foreground" target="_blank" rel="noopener noreferrer" onClick={() => trackConversion("Contact")}>WhatsApp</a>
       </footer>
     </div>
   );

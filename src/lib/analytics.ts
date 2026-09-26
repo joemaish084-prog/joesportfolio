@@ -40,3 +40,19 @@ export function trackEvent(name: string, params?: Record<string, unknown>) {
   initGA();
   window.gtag?.("event", name, params);
 }
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+/**
+ * Fires a named conversion to both Meta Pixel and GA4. fbq is unconditional
+ * (matches the existing Meta Pixel setup, which isn't consent-gated); the
+ * GA4 side still goes through trackEvent's cookie-consent check.
+ */
+export function trackConversion(name: "Lead" | "Contact" | "Schedule", params?: Record<string, unknown>) {
+  window.fbq?.("track", name);
+  trackEvent(name, params);
+}

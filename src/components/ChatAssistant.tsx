@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, CalendarCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackConversion } from "@/lib/analytics";
 import { openCalendlyPopup } from "@/lib/calendly";
 import {
   INDUSTRY_OPTIONS,
@@ -176,15 +176,10 @@ export function ChatAssistant() {
   const [errorText, setErrorText] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const leadIdRef = useRef<string | null>(null);
-  const fieldsRef = useRef<ChatLeadFields>({});
 
   useEffect(() => {
     leadIdRef.current = leadId;
   }, [leadId]);
-
-  useEffect(() => {
-    fieldsRef.current = fields;
-  }, [fields]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -197,7 +192,6 @@ export function ChatAssistant() {
       if (event.data?.event !== "calendly.event_scheduled") return;
       if (!leadIdRef.current) return;
       void markChatLeadBooked(leadIdRef.current);
-      trackEvent("calendly_booked", { name: fieldsRef.current.name });
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
@@ -375,7 +369,7 @@ export function ChatAssistant() {
   };
 
   const handleWhatsAppClick = () => {
-    trackEvent("whatsapp_clicked");
+    trackConversion("Contact");
   };
 
   const isTextStep = TEXT_STEPS.has(step);

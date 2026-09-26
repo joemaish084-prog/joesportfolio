@@ -17,6 +17,7 @@ import Connect from "./pages/Connect";
 import NotFound from "./pages/NotFound";
 import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
+import { ConversionTracker } from "@/components/ConversionTracker";
 import { PulseTracker } from "@/components/PulseTracker";
 import Admin from "./pages/Admin";
 
@@ -31,6 +32,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <MetaPixelRouteTracker />
+          <ConversionTracker />
           <PulseTracker />
           <Routes>
             <Route path="/" element={<Index />} />

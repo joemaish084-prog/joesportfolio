@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { trackConversion } from "@/lib/analytics";
 
 const WHATSAPP_NUMBER = "254704700160";
 const WHATSAPP_MESSAGE = encodeURIComponent(
@@ -20,6 +21,7 @@ export function WhatsAppButton() {
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackConversion("Contact")}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.1 }}

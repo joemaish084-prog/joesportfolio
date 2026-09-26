@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 import { supabase } from "@/integrations/supabase/client";
+import { trackConversion } from "@/lib/analytics";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 
@@ -62,6 +63,7 @@ export function Contact() {
       });
       if (error) throw error;
       toast({ title: "Message sent", description: "I'll reply within 24 hours." });
+      trackConversion("Lead");
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
       // Best-effort email notification — the message is already safely stored
@@ -117,7 +119,7 @@ export function Contact() {
                       </div>
                       <span>0704 700 160</span>
                     </a>
-                    <a href="https://wa.me/254704700160" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+                    <a href="https://wa.me/254704700160" target="_blank" rel="noopener noreferrer" onClick={() => trackConversion("Contact")} className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                         <MessageCircle className="h-5 w-5 text-primary" />
                       </div>
