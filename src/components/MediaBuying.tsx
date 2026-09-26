@@ -255,7 +255,7 @@ export function MediaBuying() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="bg-gradient-to-r from-[#FF6A00] to-[#FF9E2C] text-white shadow-elegant btn-hover">
-                <a href="#contact">Book Free Audit <ArrowRight className="ml-2 w-4 h-4" /></a>
+                <a href="#contact">Book a Free Strategy Call <ArrowRight className="ml-2 w-4 h-4" /></a>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <a href="#case-study">View Case Studies</a>
