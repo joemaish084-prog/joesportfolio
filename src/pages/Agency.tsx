@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
+import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { trackConversion } from "@/lib/analytics";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
@@ -520,6 +521,8 @@ const Agency = () => {
             ))}
           </div>
         </section>
+
+        <PaidMediaApproachSection />
 
         {/* SERVICES / PRICING */}
         <section id="services" className="container mx-auto px-4 py-20 scroll-mt-20">

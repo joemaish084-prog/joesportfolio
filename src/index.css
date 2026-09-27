@@ -50,6 +50,15 @@
     --instagram: 330 80% 55%;
     --facebook: 220 70% 55%;
 
+    /* Paid Media Approach — illustrative "Campaign Snapshot" panel.
+       Always-dark regardless of light/dark theme, so it stays a contained
+       dark card inside the page rather than flipping with --foreground. */
+    --panel-dark-bg: 220 20% 9%;
+    --panel-dark-card: 220 15% 13%;
+    --panel-dark-border: 220 10% 22%;
+    --panel-dark-text: 0 0% 94%;
+    --panel-dark-muted: 0 0% 62%;
+
     /* Sidebar (admin dashboard) — aliased to the neutral palette above */
     --sidebar-background: 0 0% 97%;
     --sidebar-foreground: 0 0% 7%;
