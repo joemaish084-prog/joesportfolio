@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { AreaChart, Area, ResponsiveContainer, XAxis, Tooltip } from "recharts";
-import { Search, Target, Palette, TrendingUp, ArrowUpRight, Info } from "lucide-react";
+import { useInView } from "framer-motion";
+import { AreaChart, Area, BarChart, Bar, Cell, ResponsiveContainer, XAxis, Tooltip } from "recharts";
+import { Search, Target, Palette, TrendingUp, ArrowUpRight, ArrowRight, Info, Check } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,29 +13,59 @@ const approachSteps = [
     icon: Search,
     title: "Audit & Research",
     desc: "Map the account, audience and competitive landscape before spending a shilling.",
+    details: [
+      "Review historical account data and past creative performance",
+      "Competitor ad and offer research on the platform",
+      "Define audience segments, offer and success metrics upfront",
+    ],
   },
   {
     icon: Target,
     title: "Structure & Targeting",
     desc: "Build a lean campaign structure aligned to how each platform's algorithm actually learns.",
+    details: [
+      "Consolidated campaign structure — no budget fragmented across duplicate ad sets",
+      "Targeting set broad enough for the algorithm to find signal fast",
+      "Conversion tracking and events verified before launch, not after",
+    ],
   },
   {
     icon: Palette,
     title: "Creative Testing",
     desc: "Run multiple angles in parallel, kill the losers fast, double down on what converts.",
+    details: [
+      "3-5 creative angles tested simultaneously in the first 7-10 days",
+      "Underperformers cut early based on CTR and cost-per-result, not gut feel",
+      "Winning hooks and formats reused to brief the next batch of creative",
+    ],
   },
   {
     icon: TrendingUp,
     title: "Scale & Optimize",
     desc: "Shift budget toward proven winners while protecting cost-per-result as spend grows.",
+    details: [
+      "Budget shifted incrementally toward proven winners to avoid resetting learning",
+      "Weekly check-ins on CPA/ROAS trend, not just week-over-week snapshots",
+      "Monthly report ties spend directly back to leads and revenue impact",
+    ],
   },
 ];
 
 type Stat = { label: string; value: number; prefix?: string; suffix?: string; decimals?: number };
+type FunnelStage = { label: string; value: number; suffix?: string; decimals?: number };
+type Creative = { name: string; ctr: number };
 
 const platformData: Record<
   "google" | "meta",
-  { label: string; dotColor: string; change: number; stats: Stat[]; trend: { week: string; value: number }[] }
+  {
+    label: string;
+    dotColor: string;
+    change: number;
+    stats: Stat[];
+    funnel: FunnelStage[];
+    creatives: Creative[];
+    trend: { week: string; value: number }[];
+  }
 > = {
   google: {
     label: "Google Ads",
@@ -44,8 +74,18 @@ const platformData: Record<
     stats: [
       { label: "Ad Spend", value: 180, prefix: "KES ", suffix: "K" },
       { label: "Avg. CTR", value: 4.8, suffix: "%", decimals: 1 },
-      { label: "Cost / Lead", value: 640, prefix: "KES " },
+      { label: "Cost / Lead", value: 643, prefix: "KES " },
       { label: "ROAS", value: 5.1, suffix: "x", decimals: 1 },
+    ],
+    funnel: [
+      { label: "Impressions", value: 240, suffix: "K" },
+      { label: "Clicks", value: 11.5, suffix: "K", decimals: 1 },
+      { label: "Leads", value: 280 },
+    ],
+    creatives: [
+      { name: "Variant A", ctr: 5.6 },
+      { name: "Variant B", ctr: 4.8 },
+      { name: "Variant C", ctr: 3.2 },
     ],
     trend: [
       { week: "W1", value: 38 },
@@ -63,8 +103,18 @@ const platformData: Record<
     stats: [
       { label: "Ad Spend", value: 150, prefix: "KES ", suffix: "K" },
       { label: "Avg. CTR", value: 3.6, suffix: "%", decimals: 1 },
-      { label: "Cost / Lead", value: 520, prefix: "KES " },
+      { label: "Cost / Lead", value: 517, prefix: "KES " },
       { label: "ROAS", value: 4.4, suffix: "x", decimals: 1 },
+    ],
+    funnel: [
+      { label: "Impressions", value: 300, suffix: "K" },
+      { label: "Clicks", value: 10.8, suffix: "K", decimals: 1 },
+      { label: "Leads", value: 290 },
+    ],
+    creatives: [
+      { name: "Variant A", ctr: 4.5 },
+      { name: "Variant B", ctr: 3.6 },
+      { name: "Variant C", ctr: 2.4 },
     ],
     trend: [
       { week: "W1", value: 30 },
@@ -105,9 +155,64 @@ function NumberTicker({ value, prefix = "", suffix = "", decimals = 0 }: Stat) {
   );
 }
 
+function FunnelRow({ stages }: { stages: FunnelStage[] }) {
+  return (
+    <div className="flex items-center justify-between gap-1">
+      {stages.map((stage, i) => (
+        <div key={stage.label} className="flex items-center gap-1 min-w-0">
+          <div className="text-center px-1">
+            <p className="text-lg font-display font-bold whitespace-nowrap">
+              <NumberTicker {...stage} />
+            </p>
+            <p className="text-[10px] uppercase tracking-wide" style={{ color: "hsl(var(--panel-dark-muted))" }}>
+              {stage.label}
+            </p>
+          </div>
+          {i < stages.length - 1 && (
+            <ArrowRight className="h-3.5 w-3.5 shrink-0" style={{ color: "hsl(var(--panel-dark-muted))" }} aria-hidden />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CreativeTestChart({ creatives }: { creatives: Creative[] }) {
+  const best = Math.max(...creatives.map((c) => c.ctr));
+  return (
+    <div className="h-20">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={creatives} margin={{ top: 4, right: 4, left: 4, bottom: 0 }} barCategoryGap="30%">
+          <XAxis
+            dataKey="name"
+            tick={{ fill: "hsl(var(--panel-dark-muted))", fontSize: 10 }}
+            axisLine={false}
+            tickLine={false}
+          />
+          <Tooltip
+            cursor={{ fill: "hsl(var(--primary) / 0.08)" }}
+            contentStyle={{
+              background: "hsl(var(--panel-dark-bg))",
+              border: "1px solid hsl(var(--panel-dark-border))",
+              borderRadius: 8,
+              fontSize: 12,
+              color: "hsl(var(--panel-dark-text))",
+            }}
+            formatter={(value: number) => [`${value}% CTR`, "Sample"]}
+          />
+          <Bar dataKey="ctr" radius={[4, 4, 0, 0]}>
+            {creatives.map((c) => (
+              <Cell key={c.name} fill="hsl(var(--primary))" fillOpacity={c.ctr === best ? 1 : 0.35} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 function CampaignSnapshotPanel() {
   const [platform, setPlatform] = useState<"google" | "meta">("google");
-  const data = platformData[platform];
 
   return (
     <Card
@@ -153,6 +258,17 @@ function CampaignSnapshotPanel() {
 
           {(Object.keys(platformData) as Array<"google" | "meta">).map((key) => (
             <TabsContent key={key} value={key} className="mt-0 space-y-6">
+              {/* Funnel */}
+              <div>
+                <p className="text-[10px] uppercase tracking-wide mb-2" style={{ color: "hsl(var(--panel-dark-muted))" }}>
+                  Sample Funnel
+                </p>
+                <FunnelRow stages={platformData[key].funnel} />
+              </div>
+
+              <div className="h-px" style={{ background: "hsl(var(--panel-dark-border))" }} />
+
+              {/* Key metrics */}
               <div className="grid grid-cols-2 gap-4">
                 {platformData[key].stats.map((s) => (
                   <div key={s.label}>
@@ -172,6 +288,7 @@ function CampaignSnapshotPanel() {
                 <span style={{ color: "hsl(var(--panel-dark-muted))" }}>vs. baseline (illustrative)</span>
               </div>
 
+              {/* Trend */}
               <div className="h-28 -mx-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={platformData[key].trend} margin={{ top: 4, right: 8, left: 8, bottom: 0 }}>
@@ -209,8 +326,26 @@ function CampaignSnapshotPanel() {
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
+              <p className="text-[11px] -mt-3" style={{ color: "hsl(var(--panel-dark-muted))" }}>
+                6-week performance index (sample)
+              </p>
+
+              <div className="h-px" style={{ background: "hsl(var(--panel-dark-border))" }} />
+
+              {/* Creative test */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-[10px] uppercase tracking-wide" style={{ color: "hsl(var(--panel-dark-muted))" }}>
+                    Creative Test — CTR by Variant
+                  </p>
+                  <span className="text-[10px] font-medium text-primary">Winner: Variant A</span>
+                </div>
+                <CreativeTestChart creatives={platformData[key].creatives} />
+              </div>
+
               <p className="text-[11px] leading-relaxed" style={{ color: "hsl(var(--panel-dark-muted))" }}>
-                Illustrative performance index over a 6-week sample period — not tied to a real account or client.
+                All figures on this panel are illustrative sample data for demonstration — not a real account,
+                client or result.
               </p>
             </TabsContent>
           ))}
@@ -229,7 +364,7 @@ export function PaidMediaApproachSection() {
           How I Approach <span className="text-gradient">Paid Media</span>
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          A look at the process and reporting style behind every campaign I run.
+          A detailed look at the process and reporting style behind every campaign I run.
         </p>
       </div>
 
@@ -247,16 +382,30 @@ export function PaidMediaApproachSection() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 max-w-6xl mx-auto items-start">
-        <div className="space-y-8">
+        <div className="space-y-10">
           {approachSteps.map((step, i) => (
             <ScrollReveal key={step.title} direction="left" delay={i * 0.08}>
               <div className="flex gap-4">
-                <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 shrink-0">
-                  <step.icon className="h-5 w-5 text-primary" aria-hidden />
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="h-11 w-11 rounded-full bg-primary/10 flex items-center justify-center ring-1 ring-primary/20">
+                    <step.icon className="h-5 w-5 text-primary" aria-hidden />
+                  </div>
+                  {i < approachSteps.length - 1 && <div className="w-px flex-1 mt-2 bg-border/60" aria-hidden />}
                 </div>
-                <div>
-                  <h3 className="font-display text-lg font-semibold mb-1">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground">{step.desc}</p>
+                <div className="pb-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-mono text-primary">0{i + 1}</span>
+                    <h3 className="font-display text-lg font-semibold">{step.title}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-3">{step.desc}</p>
+                  <ul className="space-y-1.5">
+                    {step.details.map((d) => (
+                      <li key={d} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <Check className="h-3.5 w-3.5 text-primary mt-0.5 shrink-0" aria-hidden />
+                        <span>{d}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </ScrollReveal>
