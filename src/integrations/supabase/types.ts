@@ -292,6 +292,8 @@ export type Database = {
     }
     Functions: {
       get_admin_analytics: { Args: { p_days?: number }; Returns: Json }
+      pulse_bot_name: { Args: { ua: string }; Returns: string }
+      pulse_channel: { Args: { ref: string }; Returns: string }
       touch_visitor: { Args: { p_visitor_id: string }; Returns: undefined }
     }
     Enums: {
