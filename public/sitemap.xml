@@ -28,7 +28,17 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.josephmaina.co.ke/agency/blog/topics/seo</loc>
+    <loc>https://www.josephmaina.co.ke/agency/blog/topics/local-seo</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.josephmaina.co.ke/agency/blog/topics/lead-generation</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.josephmaina.co.ke/agency/blog/topics/pricing-and-buying</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -39,11 +49,6 @@
   </url>
   <url>
     <loc>https://www.josephmaina.co.ke/agency/blog/topics/case-studies</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.josephmaina.co.ke/agency/blog/topics/hiring-an-agency</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

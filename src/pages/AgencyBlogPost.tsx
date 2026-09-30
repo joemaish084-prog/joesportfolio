@@ -3,7 +3,12 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, User } from "lucide-react";
 import { getPostBySlug } from "@/data/blogPosts";
-import { getHubsForPost, getPrimaryHubForPost, getRelatedByHub } from "@/data/blogHubs";
+import {
+  getHubsForPost,
+  getPrimaryHubForPost,
+  getRelatedByHub,
+  resolveHubServiceHref,
+} from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 
 const SITE = "https://www.josephmaina.co.ke";
@@ -176,7 +181,7 @@ const AgencyBlogPost = () => {
                     {primaryHub.service.blurb}
                   </p>
                   <Link
-                    to={primaryHub.service.href}
+                    to={resolveHubServiceHref(primaryHub)}
                     className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#111111] px-6 py-3 text-sm font-semibold text-[#111111] transition-colors hover:bg-[#111111] hover:text-white"
                   >
                     View Service &amp; Pricing

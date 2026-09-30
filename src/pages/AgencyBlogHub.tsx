@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock } from "lucide-react";
-import { blogHubs, getHubBySlug, getHubPosts } from "@/data/blogHubs";
+import { blogHubs, getHubBySlug, getHubPosts, resolveHubServiceHref } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 
 const SITE = "https://www.josephmaina.co.ke";
@@ -187,7 +187,7 @@ const AgencyBlogHub = () => {
                 <p className="mt-3 text-base leading-relaxed text-[#555555]">{hub.service.blurb}</p>
               </div>
               <Link
-                to={hub.service.href}
+                to={resolveHubServiceHref(hub)}
                 className="mt-6 inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-[#111111] px-6 py-3 text-sm font-semibold text-[#111111] transition-colors hover:bg-[#111111] hover:text-white sm:mt-0"
               >
                 View Service &amp; Pricing

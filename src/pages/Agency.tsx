@@ -20,6 +20,7 @@ import {
   Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare, Menu, X,
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
+import { getLiveServicePages } from "@/data/servicePages";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { trackConversion } from "@/lib/analytics";
@@ -51,21 +52,30 @@ const whyCards = [
 const singlePlatform = [
   {
     icon: Target,
+    slug: "meta-ads",
     name: "Meta Ads Management",
     price: "From KES 40,000/month",
     features: ["Campaign strategy and setup", "Audience research", "Creative direction", "Weekly optimization", "Monthly reporting"],
+    proof: { label: "Read: what Kenyan SMEs should spend on Meta Ads", to: "/agency/blog/how-much-should-a-kenyan-sme-spend-on-meta-ads" },
+    hub: { label: "All Meta Ads guides", to: "/agency/blog/topics/meta-ads" },
   },
   {
     icon: Search,
+    slug: "google-ads",
     name: "Google Ads Management",
     price: "From KES 45,000/month",
     features: ["Search, Display and YouTube campaigns", "Keyword research and strategy", "Bid management", "Conversion tracking", "Monthly reporting"],
+    proof: { label: "Read: what Google Ads management costs in Kenya", to: "/agency/blog/google-ads-cost-kenya-2026" },
+    hub: { label: "All Google Ads guides", to: "/agency/blog/topics/google-ads" },
   },
   {
     icon: Video,
+    slug: "tiktok-ads",
     name: "TikTok Ads Management",
     price: "From KES 40,000/month",
     features: ["Campaign strategy", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reporting"],
+    proof: { label: "Case study: 0 to 4 million TikTok views", to: "/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign" },
+    hub: { label: "All TikTok & social guides", to: "/agency/blog/topics/tiktok-and-social" },
   },
 ];
 
@@ -95,14 +105,14 @@ const retainerPackages = [
 ];
 
 const supportingServices = [
-  { icon: Share2, name: "Social Media Management", price: "from KES 40,000/mo", desc: "Content, scheduling and community management." },
-  { icon: Search, name: "SEO Optimization", price: "from KES 45,000/mo", desc: "On-page, technical and local SEO." },
-  { icon: FileText, name: "Content Strategy", price: "from KES 45,000/mo", desc: "Editorial calendars and content plans." },
-  { icon: Video, name: "Video Production", price: "from KES 40,000/project", desc: "Short-form ads and brand videos." },
-  { icon: Lightbulb, name: "Brand Strategy", price: "from KES 60,000", desc: "Positioning, messaging and identity." },
-  { icon: Palette, name: "Graphic Design", price: "from KES 40,000/mo", desc: "Social graphics, ads and collateral." },
-  { icon: ClipboardList, name: "Digital Marketing Audit", price: "KES 40,000", desc: "Full-channel performance review." },
-  { icon: MessageSquare, name: "Strategy Consultation", price: "KES 40,000/session", desc: "One-on-one advisory session." },
+  { icon: Share2, slug: "social-media-management", name: "Social Media Management", price: "from KES 40,000/mo", desc: "Content, scheduling and community management.", proof: { label: "Read: TikTok vs Instagram for Kenyan brands", to: "/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026" } },
+  { icon: Search, slug: "seo-optimization", name: "SEO Optimization", price: "from KES 45,000/mo", desc: "On-page, technical and local SEO.", proof: { label: "Read: why your Nairobi business isn't on Google", to: "/agency/blog/why-your-nairobi-business-isnt-showing-up-on-google-2026" } },
+  { icon: FileText, slug: "content-strategy", name: "Content Strategy", price: "from KES 45,000/mo", desc: "Editorial calendars and content plans.", proof: { label: "Read: my honest take on AI and marketing", to: "/agency/blog/ai-marketing-honest-take-2026" } },
+  { icon: Video, slug: "video-production", name: "Video Production", price: "from KES 40,000/project", desc: "Short-form ads and brand videos.", proof: { label: "Read: video ads vs static ads in Kenya", to: "/agency/blog/video-ads-vs-static-ads-kenya-2026" } },
+  { icon: Lightbulb, slug: "brand-strategy", name: "Brand Strategy", price: "from KES 60,000", desc: "Positioning, messaging and identity.", proof: { label: "Read: why most Kenyan SMEs fail at marketing", to: "/agency/blog/real-reason-kenyan-smes-fail-at-marketing" } },
+  { icon: Palette, slug: "graphic-design", name: "Graphic Design", price: "from KES 40,000/mo", desc: "Social graphics, ads and collateral.", proof: { label: "Read: ad creative testing for Kenyan brands", to: "/agency/blog/ad-creative-testing-kenyan-brands-2026" } },
+  { icon: ClipboardList, slug: "digital-marketing-audit", name: "Digital Marketing Audit", price: "KES 40,000", desc: "Full-channel performance review.", proof: { label: "Read: what an audit actually finds", to: "/agency/blog/what-a-digital-marketing-audit-finds-kenya-2026" } },
+  { icon: MessageSquare, slug: "strategy-consultation", name: "Strategy Consultation", price: "KES 40,000/session", desc: "One-on-one advisory session.", proof: { label: "Read: how to choose an agency in Nairobi", to: "/agency/blog/how-to-choose-a-digital-marketing-agency-nairobi-2026" } },
 ];
 
 const serviceOptions = [
@@ -240,10 +250,23 @@ const Agency = () => {
     heroMouseY.set(0);
   };
 
+  const liveServicePages = getLiveServicePages();
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const source = params.get("source") || params.get("utm_source");
     if (source) setForm((f) => ({ ...f, source }));
+  }, []);
+
+  // Deep links from the blog (e.g. /agency#service-meta-ads) need to be scrolled
+  // to manually — React Router does not restore hash targets on navigation.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
@@ -553,7 +576,8 @@ const Agency = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
-                    className="corner-brackets surface-card p-7 flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300"
+                    id={`service-${s.slug}`}
+                    className="corner-brackets surface-card p-7 flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 scroll-mt-24"
                   >
                     <div className="h-14 w-14 bg-gradient-orange flex items-center justify-center mb-5 shadow-[var(--shadow-orange-glow)]">
                       <Icon className="h-7 w-7 text-white" aria-hidden />
@@ -568,6 +592,20 @@ const Agency = () => {
                         </li>
                       ))}
                     </ul>
+                    <div className="mb-5 space-y-2 border-t border-border/60 pt-5">
+                      <Link
+                        to={s.proof.to}
+                        className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        {s.proof.label} &rarr;
+                      </Link>
+                      <Link
+                        to={s.hub.to}
+                        className="block text-sm font-medium text-primary hover:underline"
+                      >
+                        {s.hub.label} &rarr;
+                      </Link>
+                    </div>
                     <Button variant="outline" className="w-full" onClick={() => scrollTo("booking")}>
                       Get Custom Quote
                     </Button>
@@ -635,14 +673,21 @@ const Agency = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.5, delay: i * 0.05 }}
-                    className="corner-brackets surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300"
+                    id={`service-${s.slug}`}
+                    className="corner-brackets surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300 scroll-mt-24"
                   >
                     <div className="h-10 w-10 bg-gradient-orange flex items-center justify-center mb-3 shadow-[var(--shadow-orange-glow)]">
                       <Icon className="h-5 w-5 text-white" aria-hidden />
                     </div>
                     <h4 className="font-display font-semibold mb-1">{s.name}</h4>
                     <p className="text-sm font-bold text-gradient mb-2">{s.price}</p>
-                    <p className="text-xs text-muted-foreground flex-1 mb-4">{s.desc}</p>
+                    <p className="text-xs text-muted-foreground flex-1 mb-3">{s.desc}</p>
+                    <Link
+                      to={s.proof.to}
+                      className="mb-4 block text-xs text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {s.proof.label} &rarr;
+                    </Link>
                     <Button variant="outline" size="sm" className="w-full" onClick={() => scrollTo("booking")}>
                       Get Custom Quote
                     </Button>
@@ -651,6 +696,38 @@ const Agency = () => {
               })}
             </div>
           </div>
+
+          {/* Dedicated service pages. Renders only once a page is out of draft. */}
+          {liveServicePages.length > 0 && (
+            <div className="mb-20">
+              <div className="text-center mb-10 space-y-3">
+                <SectionLabel>IN DETAIL</SectionLabel>
+                <h3 className="text-xl font-display font-semibold">Full Service Pages</h3>
+                <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+                  Scope, pricing, process, case studies and FAQs for each service.
+                </p>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+                {liveServicePages.map((sp) => {
+                  const Icon = sp.icon;
+                  return (
+                    <Link
+                      key={sp.slug}
+                      to={`/agency/${sp.slug}`}
+                      className="corner-brackets surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300 group"
+                    >
+                      <Icon className="h-6 w-6 text-primary mb-3" aria-hidden />
+                      <h4 className="font-display font-semibold mb-1 group-hover:text-primary transition-colors">
+                        {sp.navLabel}
+                      </h4>
+                      <p className="text-sm font-bold text-gradient mb-2">{sp.price.amount}</p>
+                      <p className="text-xs text-muted-foreground flex-1">{sp.standfirst}</p>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Closing CTA */}
           <div className="text-center max-w-2xl mx-auto space-y-6">
