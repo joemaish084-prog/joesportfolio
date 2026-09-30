@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import Index from "./pages/Index";
 import Agency from "./pages/Agency";
 import AgencyBlog from "./pages/AgencyBlog";
+import AgencyBlogHub from "./pages/AgencyBlogHub";
 import AgencyBlogPost from "./pages/AgencyBlogPost";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/agency" element={<Agency />} />
             <Route path="/agency/blog" element={<AgencyBlog />} />
+            <Route path="/agency/blog/topics/:hub" element={<AgencyBlogHub />} />
             <Route path="/agency/blog/:slug" element={<AgencyBlogPost />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />

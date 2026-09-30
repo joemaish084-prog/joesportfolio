@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ArrowRight, CalendarDays, Clock, User } from "lucide-react";
-import { getPostBySlug, getRelatedPosts } from "@/data/blogPosts";
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, User } from "lucide-react";
+import { getPostBySlug } from "@/data/blogPosts";
+import { getHubsForPost, getPrimaryHubForPost, getRelatedByHub } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 
 const SITE = "https://www.josephmaina.co.ke";
@@ -30,7 +31,27 @@ const AgencyBlogPost = () => {
   if (!post) return <Navigate to="/agency/blog" replace />;
 
   const url = `${SITE}/agency/blog/${post.slug}`;
-  const related = getRelatedPosts(post.slug);
+  const related = getRelatedByHub(post.slug);
+  const hubs = getHubsForPost(post.slug);
+  const primaryHub = getPrimaryHubForPost(post.slug);
+
+  const breadcrumb = {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Blog", item: `${SITE}/agency/blog` },
+      ...(primaryHub
+        ? [
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: primaryHub.name,
+              item: `${SITE}/agency/blog/topics/${primaryHub.slug}`,
+            },
+          ]
+        : []),
+      { "@type": "ListItem", position: primaryHub ? 3 : 2, name: post.title, item: url },
+    ],
+  };
 
   const schema = {
     "@context": "https://schema.org",
@@ -41,7 +62,8 @@ const AgencyBlogPost = () => {
     author: { "@type": "Person", name: "Joseph Maina", url: SITE },
     publisher: { "@type": "Organization", name: "Joseph Maina Agency", url: SITE },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    articleSection: post.category,
+    articleSection: primaryHub?.name ?? post.category,
+    breadcrumb,
   };
 
   return (
@@ -67,13 +89,29 @@ const AgencyBlogPost = () => {
 
       <div className="min-h-screen bg-white text-[#111111]">
         <div className="mx-auto max-w-6xl px-5 pb-24 pt-16 sm:px-8">
-          <Link
-            to="/agency/blog"
-            className="inline-flex items-center gap-2 text-sm text-[#666666] transition-colors hover:text-[#F97316]"
+          <nav
+            aria-label="Breadcrumb"
+            className="flex flex-wrap items-center gap-2 text-sm text-[#666666]"
           >
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Back to Blog
-          </Link>
+            <Link
+              to="/agency/blog"
+              className="inline-flex items-center gap-2 transition-colors hover:text-[#F97316]"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              Blog
+            </Link>
+            {primaryHub && (
+              <>
+                <ChevronRight className="h-3.5 w-3.5 text-[#CCCCCC]" aria-hidden="true" />
+                <Link
+                  to={`/agency/blog/topics/${primaryHub.slug}`}
+                  className="transition-colors hover:text-[#F97316]"
+                >
+                  {primaryHub.name}
+                </Link>
+              </>
+            )}
+          </nav>
 
           <div className="mt-10 lg:flex lg:gap-14">
             <article className="mx-auto w-full max-w-[800px]">
@@ -124,21 +162,56 @@ const AgencyBlogPost = () => {
                 </section>
               ))}
 
+              {/* Related service for this topic */}
+              {primaryHub && (
+                <section className="mt-20 rounded-2xl border border-[#EAEAEA] p-7 sm:p-9">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#999999]">
+                    Related service
+                  </p>
+                  <h2 className="mt-4 text-xl font-bold tracking-tight sm:text-2xl">
+                    {primaryHub.service.name}
+                  </h2>
+                  <p className="mt-1 text-sm font-semibold text-[#F97316]">{primaryHub.service.price}</p>
+                  <p className="mt-3 text-base leading-relaxed text-[#555555]">
+                    {primaryHub.service.blurb}
+                  </p>
+                  <Link
+                    to={primaryHub.service.href}
+                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#111111] px-6 py-3 text-sm font-semibold text-[#111111] transition-colors hover:bg-[#111111] hover:text-white"
+                  >
+                    View Service &amp; Pricing
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </section>
+              )}
+
               {/* CTA */}
-              <div className="mt-20 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-8 text-center sm:p-12">
+              <div className="mt-8 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-8 text-center sm:p-12">
                 <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                  Ready to grow your business?
+                  {primaryHub ? primaryHub.cta.heading : "Ready to grow your business?"}
                 </h2>
-                <p className="mt-3 text-base text-[#555555]">Book a free strategy call.</p>
-                <a
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                >
-                  Book a Free Strategy Call
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
+                <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-[#555555]">
+                  {primaryHub ? primaryHub.cta.body : "Book a free strategy call."}
+                </p>
+                {primaryHub && !primaryHub.cta.external ? (
+                  <Link
+                    to={primaryHub.cta.href}
+                    className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  >
+                    {primaryHub.cta.label}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                ) : (
+                  <a
+                    href={primaryHub ? primaryHub.cta.href : CALENDLY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  >
+                    {primaryHub ? primaryHub.cta.label : "Book a Free Strategy Call"}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                )}
               </div>
             </article>
 
@@ -160,6 +233,27 @@ const AgencyBlogPost = () => {
                     </li>
                   ))}
                 </ul>
+
+                {hubs.length > 0 && (
+                  <div className="mt-10 border-t border-[#EAEAEA] pt-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#999999]">
+                      Part of
+                    </p>
+                    <ul className="mt-4 space-y-2.5">
+                      {hubs.map((h) => (
+                        <li key={h.slug}>
+                          <Link
+                            to={`/agency/blog/topics/${h.slug}`}
+                            className="inline-flex items-start gap-2 text-sm font-semibold leading-snug text-[#F97316] hover:underline"
+                          >
+                            <h.icon className="mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                            {h.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </nav>
             </aside>
           </div>
@@ -167,7 +261,20 @@ const AgencyBlogPost = () => {
           {/* Related */}
           {related.length > 0 && (
             <section className="mt-24 border-t border-[#EAEAEA] pt-14">
-              <h2 className="text-2xl font-bold tracking-tight">Related articles</h2>
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <h2 className="text-2xl font-bold tracking-tight">
+                  {primaryHub ? `More on ${primaryHub.name}` : "Related articles"}
+                </h2>
+                {primaryHub && (
+                  <Link
+                    to={`/agency/blog/topics/${primaryHub.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3"
+                  >
+                    See the whole hub
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                )}
+              </div>
               <div className="mt-8 grid gap-8 md:grid-cols-3">
                 {related.map((r) => (
                   <article key={r.slug} className="overflow-hidden rounded-2xl border border-[#EAEAEA]">
