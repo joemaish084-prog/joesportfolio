@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,7 +20,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
 import { ConversionTracker } from "@/components/ConversionTracker";
 import { PulseTracker } from "@/components/PulseTracker";
-import Admin from "./pages/Admin";
+const Admin = lazy(() => import("./pages/Admin"));
 
 
 const queryClient = new QueryClient();
@@ -43,7 +44,14 @@ const App = () => (
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/connect" element={<Connect />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route
+              path="/admin"
+              element={
+                <Suspense fallback={<div className="min-h-screen bg-background" />}>
+                  <Admin />
+                </Suspense>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <CookieConsent />
