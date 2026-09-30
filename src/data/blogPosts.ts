@@ -1162,6 +1162,177 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "why-i-stopped-taking-every-client-who-could-pay",
+    category: "Agency",
+    title: "Why I Stopped Taking Every Client Who Could Pay",
+    excerpt: "Early on I said yes to anyone with a budget. It nearly wrecked the work I was actually proud of.",
+    date: "2027-01-05",
+    dateLabel: "January 2027",
+    readTime: "6 min read",
+    metaTitle: "Why I Stopped Taking Every Client Who Could Pay",
+    metaDescription: "A personal, honest look at learning to turn down clients who could pay but weren't the right fit, and why that discipline ended up growing the business faster.",
+    intro: "For the first stretch of running this on my own, my only filter for a new client was whether they could pay the invoice. It felt like the responsible thing to do. It took a handful of genuinely bad months to understand it was actually the riskiest way to run things.",
+    thumbnail: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person sitting alone at a desk by a window, thinking, with a laptop open",
+
+    sections: [
+      {
+        id: "the-yes-phase",
+        heading: "The phase where I said yes to everything",
+        paragraphs: [
+          "If someone had a budget and a pulse, I took the work. A car spare parts dealer, a church event, a friend's cousin's clothing line, a fintech that needed 'just a quick landing page.' Different industries, different expectations, different definitions of what 'done' meant, all running at the same time.",
+          "I told myself this was hustle. What it actually was, was a business with no shape, spread so thin across unrelated problems that I was never getting good enough at any one of them to charge what the work was worth.",
+        ],
+      },
+      {
+        id: "the-cost",
+        heading: "What it actually cost me",
+        paragraphs: [
+          "The client who haggled hardest on price was, almost without exception, the one who needed the most hand-holding, changed the brief the most times, and paid the latest. I didn't notice the pattern until I'd lived it maybe six or seven times over.",
+          "The hidden cost wasn't just my time, it was momentum. Every week spent firefighting a mismatched client was a week not spent getting better at the work I actually wanted to be known for, or building the case studies that would attract the next right client instead of the next any client.",
+        ],
+      },
+      {
+        id: "what-changed",
+        heading: "What actually changed my mind",
+        paragraphs: [
+          "It was a specific project, one I won't name, where the client's budget was the biggest I'd landed at the time, and the six months I spent on it were the least proud I'd ever been of my own work, because the brief kept moving and there was never a clear decision-maker to sign anything off.",
+          "I finished it, got paid, and immediately realised I couldn't use a single piece of it to show anyone what I actually do well. A big invoice with nothing to show for it afterward is a worse outcome than a smaller invoice you can point to for years.",
+        ],
+      },
+      {
+        id: "the-filter-now",
+        heading: "What I actually screen for now",
+        paragraphs: [
+          "Three things, before budget ever enters the conversation: is there one clear decision-maker, is the goal something I can actually measure, and does the business have something real to sell once the marketing brings people in. That last one matters more than people expect, no campaign fixes a broken offer.",
+          "It means I turn down work every month that would pay well. It also means the case studies on my Agency page, Convey Communications, iClear, Nyeri County, are all projects I chose to be proud of, not just projects that happened to pay on time.",
+        ],
+      },
+      {
+        id: "the-honest-part",
+        heading: "The part that's still hard",
+        paragraphs: [
+          "Turning down money never stops feeling uncomfortable, especially in a slow month. I still second-guess it sometimes. What's changed is that I now trust the discomfort of saying no more than I trust the relief of saying yes to the wrong thing.",
+          "If you're earlier in this than I am, and taking everything because you're scared to say no, I understand exactly why. I just wish someone had told me sooner that the wrong client doesn't just cost you time, it costs you the version of your work you'd actually want a future client to see.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "real-reason-kenyan-smes-fail-at-marketing",
+    category: "Agency",
+    title: "The Real Reason Most Kenyan SMEs Fail at Marketing (It's Not the Budget)",
+    excerpt: "I've heard 'we just need a bigger budget' from businesses with every other problem except budget. Here's what's usually actually going on.",
+    date: "2027-01-12",
+    dateLabel: "January 2027",
+    readTime: "6 min read",
+    metaTitle: "The Real Reason Most Kenyan SMEs Fail at Marketing (It's Not the Budget)",
+    metaDescription: "Why marketing fails for most Kenyan SMEs isn't usually budget size. An honest look at the decision-making and follow-through problems that quietly sink campaigns.",
+    intro: "'We just need a bigger budget' is the sentence I hear most often from businesses whose marketing isn't working. In a genuine minority of cases that's true. In most of the ones I've actually looked closely at, the budget was never the thing standing between them and results.",
+    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Small business owner standing in their shop, looking thoughtfully out toward the street",
+
+    sections: [
+      {
+        id: "the-real-pattern",
+        heading: "The pattern underneath the budget excuse",
+        paragraphs: [
+          "The businesses I've seen actually struggle almost always share one of two things: nobody owns the decision, or nobody follows up fast enough on what marketing produces. Budget is the easy thing to blame because it doesn't require anyone to change how they operate.",
+          "I've run identical ad budgets for two businesses in the same industry and watched one turn it into steady revenue while the other burned through it with almost nothing to show, same spend, same platform, same targeting logic. The difference was never the money.",
+        ],
+      },
+      {
+        id: "no-owner",
+        heading: "Nobody actually owns the decision",
+        paragraphs: [
+          "In a lot of Kenyan SMEs, marketing decisions get made by committee, the owner, a sibling who's 'good with social media,' sometimes a friend with an opinion, and nobody has the authority to actually approve creative or commit to a direction for more than a week.",
+          "That indecision is expensive in a way that doesn't show up on an invoice. Every week spent debating an ad creative instead of running it is a week the algorithm isn't learning and the competitor down the road is.",
+        ],
+      },
+      {
+        id: "no-followup",
+        heading: "Nobody follows up on what the marketing produces",
+        paragraphs: [
+          "This is the bigger one, and it's the same lesson from my piece on ad mistakes: the ad's only job is to start something. I've watched genuinely good campaigns generate real enquiries that then sat unanswered for days because there was no clear person responsible for replying.",
+          "A business that treats the sales conversation after the ad as someone else's problem will underperform a smaller budget spent by a business that answers every message within the hour. I'd rather manage the second business's ads than the first's, at any budget.",
+        ],
+      },
+      {
+        id: "the-offer-problem",
+        heading: "Sometimes it really is the offer, not the marketing",
+        paragraphs: [
+          "Occasionally the honest answer is that the product or pricing itself has a problem marketing can't fix. I've had that conversation with a handful of business owners, and it's never a comfortable one to start, but it's more useful than quietly running ads I already suspect won't convert.",
+          "A good marketer's job includes telling a client this when it's true, even though it's the opposite of what keeps a retainer running. It's also, in my experience, exactly the kind of honesty that gets referrals later.",
+        ],
+      },
+      {
+        id: "what-i-tell-clients",
+        heading: "What I actually tell clients about budget now",
+        paragraphs: [
+          "Before we talk numbers, I ask who signs off on creative, who answers enquiries, and how fast. If those answers are shaky, I say so, because a bigger budget poured into an unclear process just produces a more expensive version of the same disappointment.",
+          "Fix the decision-making and the follow-up first, even informally, and a modest budget will usually outperform what a much bigger one would have done running through the same broken process.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "what-nobody-tells-you-about-pricing-your-services-kenya",
+    category: "Pricing",
+    title: "What Nobody Tells You About Pricing Your Services in Kenya",
+    excerpt: "I undercharged for two years because I was scared of hearing 'no.' Here's what actually changed that.",
+    date: "2027-01-19",
+    dateLabel: "January 2027",
+    readTime: "6 min read",
+    metaTitle: "What Nobody Tells You About Pricing Your Services in Kenya",
+    metaDescription: "An honest account of undercharging for years as a Kenyan service provider, what finally changed it, and practical lessons for pricing your own work with confidence.",
+    intro: "For roughly the first two years of doing this work, I priced everything based on what I thought people would say yes to, not what the work was actually worth. Nobody sits you down and tells you that's the wrong way to think about pricing. You just quietly lose money until you notice.",
+    thumbnail: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Calculator and Kenyan shilling notes laid out on a desk",
+
+    sections: [
+      {
+        id: "the-undercharging-years",
+        heading: "The years I priced from fear, not value",
+        paragraphs: [
+          "My first real client paid me a fraction of what I'd charge for the same scope today, and I remember feeling grateful they'd said yes at all. That gratitude was the problem. I was pricing to avoid rejection, not pricing what the outcome was actually worth to their business.",
+          "The math didn't work even at the time. I was doing the same strategy work, the same reporting, the same late nights, for a fee that assumed my time was worth almost nothing. Nobody forced that on me, I did it to myself out of fear that asking for more would lose the client.",
+        ],
+      },
+      {
+        id: "what-changed-it",
+        heading: "The moment that actually changed it",
+        paragraphs: [
+          "It wasn't a pricing course or a LinkedIn post. It was watching a client I was massively underpricing pay a different, more expensive vendor for something objectively worse, without blinking. That's when it landed: price was never really the barrier I imagined it was. Confidence was.",
+          "The businesses that could genuinely not afford my rates weren't the ones haggling hardest, they usually said so honestly and we found a smaller scope that fit. The hardest negotiators were almost always the ones who could pay and were testing whether I believed my own price.",
+        ],
+      },
+      {
+        id: "the-anchor-mistake",
+        heading: "The anchoring mistake almost everyone makes",
+        paragraphs: [
+          "Quoting a range instead of a number, or apologising for the price before the client has even reacted to it, teaches the client to negotiate before they've decided if they even want the work. I used to do both, constantly, and it cost me thousands of shillings every single month without me realising it.",
+          "State the number plainly, let there be a silence after it, and resist the urge to immediately justify it. That silence feels unbearable the first several times. It gets easier, and it changes how seriously a client takes the number.",
+        ],
+      },
+      {
+        id: "pricing-by-value-not-hours",
+        heading: "Pricing the outcome, not the hours",
+        paragraphs: [
+          "The shift that actually grew revenue was tying pricing to what a service was worth to the client's business, not to how many hours it took me. A Google Ads retainer that generates KES 500,000 in monthly revenue is worth more to price accordingly than the hours spent managing it would suggest, and clients who understand that math rarely argue with it.",
+          "This is part of why my published pricing, from KES 40,000 for a single-platform ads retainer up through the SCALE tier for bigger ad spend, is structured around scope and spend size rather than a flat hourly rate. It reflects value delivered, not just time logged.",
+        ],
+      },
+      {
+        id: "the-honest-advice",
+        heading: "What I'd tell someone starting out now",
+        paragraphs: [
+          "Charge the number that makes you slightly uncomfortable to say out loud. If nobody ever pushes back on your pricing, you're very likely still underpriced, not perfectly positioned.",
+          "And separate a client's 'that's more than I expected' from an actual no. Most of the time it's just someone recalibrating, not rejecting, and the two feel identical for about three seconds if you're the one who undercharged for years like I did.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
