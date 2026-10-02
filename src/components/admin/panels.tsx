@@ -19,6 +19,7 @@ import {
   MousePointerClick,
   Radio,
   Repeat,
+  RotateCcw,
   Target,
   TrendingDown,
   TriangleAlert,
@@ -36,11 +37,19 @@ import {
   formatDateTime,
   formatDayLabel,
   formatDuration,
+  formatMetricValue,
   hostOf,
   today,
   truncate,
 } from "./format";
-import { buildInsights, type Insight } from "./insights";
+import {
+  PRIORITY_ORDER,
+  buildInsights,
+  type Confidence,
+  type Insight,
+  type InsightPriority,
+} from "./insights";
+import { statusFor, useBaselines, type Baseline, type StatusKind } from "./baselines";
 import {
   ActivityHeatmap,
   BotBadge,
@@ -84,39 +93,290 @@ const TONE_STYLES: Record<Insight["tone"], { icon: typeof Info; className: strin
   info: { icon: Info, className: "text-muted-foreground bg-muted" },
 };
 
-function InsightList({ insights, limit }: { insights: Insight[]; limit?: number }) {
+const PRIORITY_STYLES: Record<
+  InsightPriority,
+  { label: string; badge: string; rail: string; blurb: string }
+> = {
+  critical: {
+    label: "Critical",
+    badge: "bg-red-500/12 text-red-600 dark:text-red-400 ring-1 ring-inset ring-red-500/25",
+    rail: "border-l-red-500/60",
+    blurb: "No leads, a capture path that looks broken, or tracking that has stopped reporting.",
+  },
+  high: {
+    label: "High",
+    badge: "bg-amber-500/12 text-amber-700 dark:text-amber-400 ring-1 ring-inset ring-amber-500/25",
+    rail: "border-l-amber-500/60",
+    blurb: "Readers arriving but not crossing from the blog into the agency pages.",
+  },
+  medium: {
+    label: "Medium",
+    badge: "bg-sky-500/12 text-sky-700 dark:text-sky-400 ring-1 ring-inset ring-sky-500/25",
+    rail: "border-l-sky-500/60",
+    blurb: "Bounce rate, return rate and pages that go nowhere.",
+  },
+  low: {
+    label: "Low",
+    badge: "bg-muted text-muted-foreground ring-1 ring-inset ring-border",
+    rail: "border-l-border",
+    blurb: "Thin samples and things already working — read, don't act.",
+  },
+};
+
+const CONFIDENCE_STYLES: Record<Confidence, string> = {
+  high: "text-emerald-600 dark:text-emerald-400",
+  moderate: "text-amber-600 dark:text-amber-400",
+  low: "text-red-600 dark:text-red-400",
+};
+
+const STATUS_STYLES: Record<StatusKind, string> = {
+  untracked: "text-muted-foreground",
+  improved: "text-emerald-600 dark:text-emerald-400",
+  worsened: "text-red-600 dark:text-red-400",
+  unchanged: "text-amber-600 dark:text-amber-400",
+};
+
+function PriorityBadge({ priority }: { priority: InsightPriority }) {
+  return (
+    <span
+      className={`shrink-0 rounded px-1.5 py-0.5 text-[9.5px] font-semibold uppercase tracking-[0.08em] ${PRIORITY_STYLES[priority].badge}`}
+    >
+      {PRIORITY_STYLES[priority].label}
+    </span>
+  );
+}
+
+/** One labelled fact from an insight's evidence block. */
+function Fact({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="min-w-0">
+      <dt className="text-[9.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground/70">{label}</dt>
+      <dd className="mt-0.5 text-[11.5px] leading-snug text-foreground">{children}</dd>
+    </div>
+  );
+}
+
+/**
+ * Full insight card: the observation, the numbers it was read from, what the
+ * figure does and does not cover, the change being proposed, and whether the
+ * target metric has moved since that change was marked as made.
+ */
+function InsightCard({
+  insight,
+  rangeDays,
+  baseline,
+  onMark,
+  onClear,
+}: {
+  insight: Insight;
+  rangeDays: number;
+  baseline: Baseline | undefined;
+  onMark: () => void;
+  onClear: () => void;
+}) {
+  const tone = TONE_STYLES[insight.tone];
+  const Icon = tone.icon;
+  const ev = insight.evidence;
+  const status = statusFor(insight, baseline, rangeDays);
+
+  return (
+    <div className={`rounded-lg border border-l-2 bg-card/40 p-3.5 ${PRIORITY_STYLES[insight.priority].rail}`}>
+      <div className="flex items-start gap-2.5">
+        <span
+          className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${tone.className}`}
+        >
+          <Icon className="h-3 w-3" aria-hidden />
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <PriorityBadge priority={insight.priority} />
+            <p className="min-w-0 text-[13px] font-medium leading-snug text-foreground">{insight.title}</p>
+          </div>
+          <p className="mt-1 text-[11.5px] leading-relaxed text-muted-foreground">{insight.detail}</p>
+        </div>
+      </div>
+
+      <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2.5 border-t border-border/60 pt-3 sm:grid-cols-4">
+        <Fact label="Sample size">
+          {ev.sampleSize.toLocaleString()} <span className="text-muted-foreground">{ev.sampleLabel}</span>
+        </Fact>
+        <Fact label="Date range">{ev.rangeLabel}</Fact>
+        <Fact label="Confidence">
+          <span className={`font-medium capitalize ${CONFIDENCE_STYLES[ev.confidence]}`}>{ev.confidence}</span>
+          <span className="text-muted-foreground"> — {ev.confidenceReason}</span>
+        </Fact>
+        <Fact label="Basis">
+          <span className="flex flex-col gap-0.5">
+            <span className="flex items-center gap-1">
+              <Users className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden />
+              {ev.humansOnly ? "Humans only" : "Humans and bots together"}
+            </span>
+            <span className="flex items-center gap-1">
+              <Bot className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden />
+              {ev.botsExcluded ? "Bots excluded" : "Bots not excluded"}
+            </span>
+          </span>
+        </Fact>
+      </dl>
+
+      {ev.caveat && (
+        <p className="mt-2.5 text-[11px] leading-relaxed text-muted-foreground">
+          <span className="font-medium text-foreground">Caveat: </span>
+          {ev.caveat}
+        </p>
+      )}
+
+      <div className="mt-3 rounded-md bg-muted/40 p-3">
+        <dl className="space-y-2.5">
+          <Fact label="Recommended action">{insight.action.recommended}</Fact>
+          <div className="grid grid-cols-1 gap-x-4 gap-y-2.5 sm:grid-cols-2">
+            <Fact label="Target metric">
+              <span className="flex items-center gap-1.5">
+                <Target className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden />
+                {insight.action.targetMetric}
+                <span className="text-muted-foreground">
+                  — now {formatMetricValue(insight.action.value, insight.action.unit)}, wants to be{" "}
+                  {insight.action.better}
+                </span>
+              </span>
+            </Fact>
+            <Fact label="Status after the change">
+              <span className={STATUS_STYLES[status.kind]}>{status.label}</span>
+              {status.warning && (
+                <span className="mt-0.5 block text-[10.5px] leading-snug text-amber-600 dark:text-amber-400">
+                  {status.warning}
+                </span>
+              )}
+            </Fact>
+          </div>
+        </dl>
+        <div className="mt-2.5 flex items-center gap-3">
+          <button
+            onClick={onMark}
+            className="text-[11px] font-medium text-primary transition-opacity hover:opacity-70"
+          >
+            {baseline ? "Re-baseline from today" : "Mark as actioned"}
+          </button>
+          {baseline && (
+            <button
+              onClick={onClear}
+              className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground transition-opacity hover:opacity-70"
+            >
+              <RotateCcw className="h-3 w-3" aria-hidden /> Clear baseline
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Condensed row for the overview card, where space is tight. */
+function InsightRow({ insight }: { insight: Insight }) {
+  const tone = TONE_STYLES[insight.tone];
+  const Icon = tone.icon;
+  const ev = insight.evidence;
+
+  return (
+    <div className="flex gap-2.5">
+      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${tone.className}`}>
+        <Icon className="h-3 w-3" aria-hidden />
+      </span>
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <PriorityBadge priority={insight.priority} />
+          <p className="min-w-0 text-[13px] font-medium leading-snug text-foreground">{insight.title}</p>
+        </div>
+        <p className="mt-0.5 text-[11.5px] leading-relaxed text-muted-foreground">{insight.detail}</p>
+        <p className="mt-1 text-[10.5px] leading-snug text-muted-foreground/80">
+          n={ev.sampleSize.toLocaleString()} {ev.sampleLabel} · {ev.rangeLabel} ·{" "}
+          <span className={CONFIDENCE_STYLES[ev.confidence]}>{ev.confidence} confidence</span> ·{" "}
+          {ev.humansOnly ? "humans only" : "humans+bots"} · {ev.botsExcluded ? "bots excluded" : "bots included"}
+        </p>
+        <p className="mt-1 text-[10.5px] leading-snug text-muted-foreground">
+          <span className="font-medium text-foreground">Do: </span>
+          {insight.action.recommended}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Triaged list. Insights arrive sorted by priority; this groups them under
+ * headings so a critical item can never be buried under a dozen low ones.
+ */
+function InsightList({
+  insights,
+  rangeDays,
+  limit,
+}: {
+  insights: Insight[];
+  rangeDays: number;
+  limit?: number;
+}) {
   const [expanded, setExpanded] = useState(false);
-  const shown = limit && !expanded ? insights.slice(0, limit) : insights;
+  const { baselines, mark, clear } = useBaselines();
 
   if (insights.length === 0) return <EmptyState label="Not enough traffic to draw conclusions from yet." />;
 
+  /* Compact mode: priority order is preserved, so a slice is still a triage. */
+  if (limit) {
+    const shown = expanded ? insights : insights.slice(0, limit);
+    return (
+      <div className="space-y-3">
+        {shown.map((insight) => (
+          <InsightRow key={insight.id} insight={insight} />
+        ))}
+        {insights.length > limit && (
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="text-[11px] font-medium text-primary transition-opacity hover:opacity-70"
+          >
+            {expanded ? "Show less" : `Show ${insights.length - limit} more`}
+          </button>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-2.5">
-      {shown.map((insight, i) => {
-        const tone = TONE_STYLES[insight.tone];
-        const Icon = tone.icon;
+    <div className="space-y-6">
+      {PRIORITY_ORDER.map((priority) => {
+        const group = insights.filter((i) => i.priority === priority);
+        if (group.length === 0) return null;
+        const style = PRIORITY_STYLES[priority];
         return (
-          <div key={i} className="flex gap-2.5">
-            <span
-              className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${tone.className}`}
-            >
-              <Icon className="h-3 w-3" aria-hidden />
-            </span>
-            <div className="min-w-0">
-              <p className="text-[13px] font-medium leading-snug text-foreground">{insight.title}</p>
-              <p className="mt-0.5 text-[11.5px] leading-relaxed text-muted-foreground">{insight.detail}</p>
+          <section key={priority}>
+            <div className="mb-2.5 flex flex-wrap items-baseline gap-2">
+              <PriorityBadge priority={priority} />
+              <span className="text-[11px] font-medium text-foreground">
+                {group.length} item{group.length === 1 ? "" : "s"}
+              </span>
+              <span className="text-[11px] text-muted-foreground">{style.blurb}</span>
             </div>
-          </div>
+            <div className="space-y-3">
+              {group.map((insight) => (
+                <InsightCard
+                  key={insight.id}
+                  insight={insight}
+                  rangeDays={rangeDays}
+                  baseline={baselines[insight.action.metricId]}
+                  onMark={() =>
+                    mark(insight.action.metricId, {
+                      value: insight.action.value,
+                      unit: insight.action.unit,
+                      markedAt: new Date().toISOString(),
+                      rangeDays,
+                    })
+                  }
+                  onClear={() => clear(insight.action.metricId)}
+                />
+              ))}
+            </div>
+          </section>
         );
       })}
-      {limit && insights.length > limit && (
-        <button
-          onClick={() => setExpanded((v) => !v)}
-          className="text-[11px] font-medium text-primary transition-opacity hover:opacity-70"
-        >
-          {expanded ? "Show less" : `Show ${insights.length - limit} more`}
-        </button>
-      )}
     </div>
   );
 }
@@ -234,11 +494,11 @@ export function OverviewPanel({ data, rangeLabel }: PanelProps) {
 
         <SectionCard
           title="What stands out"
-          subtitle="Read straight off the numbers for this range."
+          subtitle="Worst-first. Full evidence on the Insights tab."
           icon={Info}
           bodyClassName="p-5 max-h-[22rem] overflow-y-auto"
         >
-          <InsightList insights={insights} limit={6} />
+          <InsightList insights={insights} rangeDays={data.range_days} limit={6} />
         </SectionCard>
       </div>
 
@@ -1355,10 +1615,10 @@ export function InsightsPanel({ data }: PanelProps) {
   return (
     <SectionCard
       title="What stands out"
-      subtitle="Every observation is a direct reading of this range's numbers — no modelling or forecasting."
+      subtitle="Triaged worst-first. Every observation is a direct reading of this range's numbers — no modelling or forecasting — and carries the sample, window and caveats it came from."
       icon={Info}
     >
-      <InsightList insights={insights} />
+      <InsightList insights={insights} rangeDays={data.range_days} />
     </SectionCard>
   );
 }

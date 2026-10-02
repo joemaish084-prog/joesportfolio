@@ -70,6 +70,38 @@ export function formatDayLabel(day: string): string {
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
+/**
+ * "3 Sep – 2 Oct 2026 (30 days)" — the explicit window an insight was read
+ * from, so a figure can never be mistaken for an all-time number. `endIso` is
+ * the payload's `generated_at`, which is the real end of the window.
+ */
+export function formatRangeDates(endIso: string, days: number): string {
+  const end = new Date(endIso);
+  if (Number.isNaN(end.getTime())) return `the last ${days} day${days === 1 ? "" : "s"}`;
+  const start = new Date(end.getTime() - days * 86_400_000);
+  const dayCount = `${days} day${days === 1 ? "" : "s"}`;
+
+  if (days === 1) {
+    return `${formatDateTime(start.toISOString())} – ${formatDateTime(end.toISOString())} (${dayCount})`;
+  }
+
+  const sameYear = start.getFullYear() === end.getFullYear();
+  const startLabel = start.toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+    ...(sameYear ? {} : { year: "numeric" }),
+  });
+  const endLabel = end.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+  return `${startLabel} – ${endLabel} (${dayCount})`;
+}
+
+/** Renders an insight's target-metric value in its own unit. */
+export function formatMetricValue(value: number, unit: "%" | "count" | "ms"): string {
+  if (unit === "%") return `${value}%`;
+  if (unit === "ms") return formatDuration(value);
+  return value.toLocaleString();
+}
+
 export function relativeTime(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const mins = Math.round(diff / 60000);
