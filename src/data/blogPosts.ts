@@ -1333,6 +1333,234 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "digital-marketing-for-restaurants-kenya-2027",
+    category: "Restaurants",
+    title: "Digital Marketing for Restaurants in Kenya: What Actually Fills Tables",
+    excerpt: "Pretty food photos get likes. Here's what actually gets a table booked on a Friday night.",
+    date: "2027-02-02",
+    dateLabel: "February 2027",
+    readTime: "6 min read",
+    metaTitle: "Digital Marketing for Restaurants in Kenya: What Actually Fills Tables",
+    metaDescription: "A practical marketing guide for Kenyan restaurants and eateries: Google Business Profile, Meta Ads, TikTok, delivery platforms, and what actually drives bookings and orders.",
+    intro: "Every restaurant owner I've worked with starts in the same place: a nice Instagram feed, decent food photography, and a reservation book that doesn't reflect either. The gap between a good-looking page and a full table is almost always the same handful of things, and none of them is 'post more food photos.'",
+    thumbnail: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Table set at a restaurant with food being served and warm ambient lighting",
+
+    sections: [
+      {
+        id: "gbp-first",
+        heading: "Your Google Business Profile matters more than your Instagram",
+        paragraphs: [
+          "Someone deciding where to eat tonight searches 'restaurant near me' or 'nyama choma in Kilimani' far more often than they scroll Instagram looking for ideas. If your Google Business Profile has outdated hours, no menu, or three-year-old photos, you lose that search before your food ever gets a chance.",
+          "Keep your menu, price range, and photos current, and respond to every review. A restaurant with recent, specific reviews ('the ugali was perfect, service was quick') consistently outranks one with a higher star average but no recent activity.",
+        ],
+      },
+      {
+        id: "what-converts",
+        heading: "What actually gets someone to book or walk in",
+        paragraphs: [
+          "Video of the food being made or plated, not just the finished product, consistently outperforms static food photography on both Instagram and TikTok. People are deciding whether the experience matches the price, and process footage sells that better than a styled still shot.",
+          "A visible, specific offer, 'two-for-one nyama choma on Wednesdays,' 'live band every Friday from 7pm', gives someone an actual reason to choose tonight over any other night. Generic 'come dine with us' content rarely moves anyone off the couch.",
+        ],
+      },
+      {
+        id: "delivery-platforms",
+        heading: "Delivery platforms are a marketing channel, not just a sales channel",
+        paragraphs: [
+          "Glovo and Uber Eats visibility works similarly to Google, restaurants with complete menus, accurate photos, and fast confirmation times get promoted ahead of ones that don't. Treat your listing there with the same care as your website.",
+          "Running a small Meta Ads budget specifically to a delivery platform listing or a WhatsApp ordering number, rather than only to your Instagram page, often produces a more direct line to an actual order.",
+        ],
+      },
+      {
+        id: "whatsapp-for-bookings",
+        heading: "WhatsApp for reservations and events",
+        paragraphs: [
+          "For table bookings and private event enquiries, a WhatsApp Business number with quick replies for common questions, seating capacity, whether you take advance deposits, parking, beats a contact form every time, matching the same pattern I see across every service business in this market.",
+          "Reply speed during peak decision hours, lunchtime and early evening, matters more here than almost any other industry. A booking enquiry answered twenty minutes late has often already found a table somewhere else.",
+        ],
+      },
+      {
+        id: "getting-started",
+        heading: "Where to start on a modest budget",
+        paragraphs: [
+          "If you can only do one thing this month, fix your Google Business Profile completely: menu, hours, photos, and a habit of replying to reviews. It costs nothing and is where most local food searches actually happen.",
+          "From there, a small, consistent TikTok presence around your kitchen and signature dishes, paired with a modest Meta Ads budget promoting a specific weekly offer, is a realistic starting point before considering a full retainer.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "digital-marketing-for-real-estate-kenya-2027",
+    category: "Real Estate",
+    title: "Digital Marketing for Real Estate Agents and Developers in Kenya",
+    excerpt: "A listing with great photos and zero leads isn't a marketing problem you can fix with more photos.",
+    date: "2027-02-09",
+    dateLabel: "February 2027",
+    readTime: "6 min read",
+    metaTitle: "Digital Marketing for Real Estate Agents and Developers in Kenya",
+    metaDescription: "A practical digital marketing guide for Kenyan real estate agents and developers: targeting buyers by budget, video walkthroughs, lead qualification, and what actually sells units.",
+    intro: "Real estate marketing in Kenya has a longer, more considered buying journey than almost anything else I work on, nobody buys a plot or an apartment off a single ad. The businesses that do well here understand that and build a process for it instead of chasing a single viral post.",
+    thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Modern residential apartment buildings against a clear sky in Kenya",
+
+    sections: [
+      {
+        id: "budget-targeting",
+        heading: "Target by realistic budget, not broad location",
+        paragraphs: [
+          "A Meta Ads audience for a gated community in Kitengela and one for a penthouse in Kilimani should never share the same targeting. Income signals, interests, and even the device someone's browsing on tell you more about whether they can realistically afford a listing than their general location does.",
+          "This is where a lot of developer ad budgets get wasted, broad 'Nairobi' targeting that shows a KES 25 million unit to people who were never going to buy it, inflating impressions and clicks without producing a single serious lead.",
+        ],
+      },
+      {
+        id: "video-walkthroughs",
+        heading: "Video walkthroughs do more work than photo galleries",
+        paragraphs: [
+          "A walkthrough video, even filmed simply on a gimbal, lets a serious buyer rule a property in or out before booking a physical viewing, which saves everyone's time and filters out people who were never going to proceed.",
+          "For developments still under construction, regular short progress videos build trust with buyers who are nervous about paying for something they can't yet see completed, a genuine concern in a market where off-plan delays aren't rare.",
+        ],
+      },
+      {
+        id: "lead-qualification",
+        heading: "Qualify leads before you send anyone to view a property",
+        paragraphs: [
+          "Every enquiry should be screened for budget range, financing status (cash, mortgage, Sacco), and timeline before a site visit is arranged. Sending an agent to spend an afternoon with someone who was only browsing is one of the most expensive hidden costs in property marketing.",
+          "A short WhatsApp qualifying conversation before booking a viewing protects your team's time and tends to produce a higher percentage of visits that actually convert.",
+        ],
+      },
+      {
+        id: "seo-for-listings",
+        heading: "SEO for real estate is about specific, searchable combinations",
+        paragraphs: [
+          "Buyers search very specific combinations: '2 bedroom apartment for rent Kilimani under 60k,' '40 by 80 plot for sale Kitengela.' Content and listing pages built around these exact phrases, not generic 'properties for sale' pages, is what actually captures that search intent.",
+          "This is the same principle behind local SEO for any Nairobi business: match the specific language a buyer types, not the language your brochure uses.",
+        ],
+      },
+      {
+        id: "trust-signals",
+        heading: "Trust signals matter more here than almost any other industry",
+        paragraphs: [
+          "Real client testimonials, visible registration details, and transparent pricing without hidden fees address the single biggest hesitation in Kenyan real estate: the fear of being scammed. This fear is rational, given how often it happens in this market, and ignoring it in your marketing costs you serious buyers.",
+          "A marketing approach that leads with transparency, clear title status, clear pricing, real reviews, consistently outperforms one that leads purely with aspirational lifestyle imagery.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "marketing-your-airbnb-kenya-2027",
+    category: "Airbnb",
+    title: "Marketing Your Airbnb or Short-Term Rental in Kenya: What Actually Books Nights",
+    excerpt: "A beautiful listing photo gets a click. It's everything after that click that decides whether the night actually books.",
+    date: "2027-02-16",
+    dateLabel: "February 2027",
+    readTime: "5 min read",
+    metaTitle: "Marketing Your Airbnb or Short-Term Rental in Kenya: What Actually Books Nights",
+    metaDescription: "A practical marketing guide for Kenyan Airbnb and short-term rental hosts: platform SEO, direct booking channels, reviews, and filling the low season.",
+    intro: "Most Airbnb hosts I talk to think their marketing problem is the listing photos. In most cases the photos are fine, the actual problem is everything happening outside the Airbnb app that could be bringing in direct, commission-free bookings instead.",
+    thumbnail: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Cozy furnished living room in a short-term rental apartment",
+
+    sections: [
+      {
+        id: "platform-seo",
+        heading: "Treat your Airbnb listing itself as an SEO problem",
+        paragraphs: [
+          "Airbnb's own search ranks listings partly on response rate, response time, and booking acceptance rate, not just reviews and photos. A host who replies within minutes and rarely declines enquiries will outrank a host with slightly better photos but slower replies.",
+          "Title and description should include the specific neighbourhood and nearby landmarks guests actually search for, 'Westlands apartment near Sarit Centre' finds a very different search intent than a generic 'luxury Nairobi apartment.'",
+        ],
+      },
+      {
+        id: "direct-bookings",
+        heading: "Build a direct booking channel to escape platform commission",
+        paragraphs: [
+          "A simple Instagram or TikTok presence showing the actual space, paired with a WhatsApp number for direct enquiries, lets repeat guests and referrals book without you losing a percentage to Airbnb or Booking.com every time.",
+          "This matters most for guests who've already stayed once. A past guest messaging you directly for their next Nairobi trip is pure margin compared to the same booking coming back through the platform.",
+        ],
+      },
+      {
+        id: "reviews-and-trust",
+        heading: "Reviews are your entire reputation, manage them actively",
+        paragraphs: [
+          "Ask every satisfied guest for a review before they check out, while the experience is still fresh, the same discipline that applies to Google Business Profile reviews for any local business.",
+          "Respond professionally to any negative review, explaining context without being defensive. Future guests read how a host handles criticism as closely as they read the criticism itself.",
+        ],
+      },
+      {
+        id: "low-season",
+        heading: "Filling the low season takes a different approach than peak season",
+        paragraphs: [
+          "During low-demand months, targeting local corporate travellers, consultants on short assignments, or Kenyans relocating temporarily between houses can fill nights that tourist-focused marketing won't touch.",
+          "A modest Meta Ads budget aimed specifically at these local, practical use cases during slow months tends to produce better occupancy than simply discounting the nightly rate and hoping tourist demand picks up.",
+        ],
+      },
+      {
+        id: "practical-touches",
+        heading: "The small operational details that become marketing",
+        paragraphs: [
+          "A clear, well-photographed guide to checking in (gate codes, parking, where to find the key) reduces the back-and-forth that creates bad first impressions, and good first impressions are what turn into the five-star reviews that drive future bookings.",
+          "Treat guest communication, arrival messages, local recommendations, a thank-you after checkout, as part of your marketing, not just hospitality. It's the single highest-leverage, lowest-cost thing a host can improve.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "digital-marketing-for-ecommerce-kenya-2027",
+    category: "E-commerce",
+    title: "Digital Marketing for E-commerce Brands in Kenya: What Actually Drives Sales",
+    excerpt: "Traffic without checkout completion is the most common e-commerce failure in this market, and it's rarely about the ads.",
+    date: "2027-02-23",
+    dateLabel: "February 2027",
+    readTime: "6 min read",
+    metaTitle: "Digital Marketing for E-commerce Brands in Kenya: What Actually Drives Sales",
+    metaDescription: "A practical marketing guide for Kenyan e-commerce brands: payment friction, M-Pesa, retargeting, delivery trust, and fixing checkout drop-off before scaling ad spend.",
+    intro: "I've audited e-commerce stores in Kenya getting thousands of visits a month and almost no sales. The instinct is always to blame the ads. Almost every time, the real problem is what happens between a click and a completed checkout, not the click itself.",
+    thumbnail: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person holding a smartphone while shopping online, with packages nearby",
+
+    sections: [
+      {
+        id: "payment-friction",
+        heading: "Payment friction is the single biggest conversion killer",
+        paragraphs: [
+          "If M-Pesa isn't a smooth, obvious payment option at checkout, you are losing the majority of serious Kenyan buyers at the final step, after you've already paid for the click that got them there. Card-only checkout is still a common and expensive mistake.",
+          "Cash on delivery, where logistically possible, often outperforms prepayment entirely for first-time buyers who don't yet trust a new store. Trust is the actual product being sold at checkout, not just the item in the cart.",
+        ],
+      },
+      {
+        id: "retargeting",
+        heading: "Retargeting matters more than cold traffic for most stores",
+        paragraphs: [
+          "Most first-time visitors to an e-commerce store don't buy on the first visit. A retargeting campaign aimed specifically at people who viewed a product or started checkout but didn't complete it usually produces a far better cost per sale than another round of cold, broad targeting.",
+          "A simple WhatsApp or email follow-up for abandoned carts, even a manual one for a smaller store, recovers sales that a pure ads strategy would otherwise lose permanently.",
+        ],
+      },
+      {
+        id: "delivery-trust",
+        heading: "Delivery clarity sells as much as the product photos do",
+        paragraphs: [
+          "Buyers want to know exactly when something will arrive and how much delivery costs before they commit, vague or hidden delivery information at checkout causes abandonment even when the product itself was never in question.",
+          "Clearly stating delivery timelines by region, same-day in Nairobi, two to three days upcountry, for example, removes one of the most common last-minute hesitations in Kenyan online shopping.",
+        ],
+      },
+      {
+        id: "social-proof",
+        heading: "Social proof does more here than almost anywhere else",
+        paragraphs: [
+          "Because online shopping fraud is a real and common fear in Kenya, visible reviews, user-generated photos of the product in real use, and an active, responsive social media presence matter disproportionately compared to markets with less scam fatigue.",
+          "A store with a few dozen genuine reviews and visible recent activity will consistently outconvert a newer, better-designed store with none, regardless of how good the ad creative is.",
+        ],
+      },
+      {
+        id: "where-to-focus-budget",
+        heading: "Where I'd focus a limited budget first",
+        paragraphs: [
+          "Before increasing ad spend, fix checkout: confirm M-Pesa works cleanly, delivery costs are upfront, and the path from cart to confirmation has as few steps as possible. This alone recovers sales from traffic you're already paying for.",
+          "Only once checkout is solid does it make sense to scale Meta or Google Ads spend, otherwise you're just paying more to feed the same leaky step, a version of the same diagnostic logic behind a full digital marketing audit.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
