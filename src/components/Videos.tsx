@@ -170,25 +170,25 @@ function ShortCard({ v }: { v: ShortVideo }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30 transition-opacity duration-300 group-hover:from-black/90" />
 
         {/* Top badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-          <Badge className={`${platformStyles[v.platform]} border-0 shadow-elegant text-xs font-semibold`}>
+        <div className="absolute top-2 left-2 right-2 sm:top-3 sm:left-3 sm:right-3 flex items-center justify-between gap-1">
+          <Badge className={`${platformStyles[v.platform]} border-0 shadow-elegant px-2 sm:px-2.5 text-[11px] sm:text-xs font-semibold`}>
             {v.platform}
           </Badge>
-          <Badge variant="secondary" className="bg-black/60 text-white border-0 backdrop-blur-sm text-xs">
+          <Badge variant="secondary" className="bg-black/60 text-white border-0 backdrop-blur-sm px-2 sm:px-2.5 text-[11px] sm:text-xs">
             <Clock className="h-3 w-3 mr-1" /> {v.duration}
           </Badge>
         </div>
 
         {/* Play button */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary shadow-elegant transition-transform duration-300 group-hover:scale-110">
-            <Play className="ml-0.5 h-8 w-8 text-primary-foreground" fill="currentColor" />
+          <div className="flex h-11 w-11 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-primary shadow-elegant transition-transform duration-300 group-hover:scale-110">
+            <Play className="ml-0.5 h-5 w-5 sm:h-8 sm:w-8 text-primary-foreground" fill="currentColor" />
           </div>
         </div>
 
         {/* Title */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <h4 className="font-display text-base font-bold text-white drop-shadow-lg line-clamp-2">{v.title}</h4>
+        <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+          <h4 className="font-display text-sm sm:text-base font-bold text-white drop-shadow-lg line-clamp-2">{v.title}</h4>
         </div>
       </div>
     </a>
@@ -335,7 +335,7 @@ function FeaturedVideo() {
 
             <button
               onClick={() => setPlaying(true)}
-              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-10 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-elegant hover:scale-105"
+              className="absolute top-2 right-2 sm:top-6 sm:right-6 z-20 inline-flex items-center justify-center gap-2 min-h-11 min-w-11 sm:min-h-0 sm:min-w-0 rounded-full bg-primary px-3 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-elegant hover:scale-105"
               style={{ transition: "transform 0.2s" }}
               aria-label="Watch featured video with sound"
             >
@@ -374,7 +374,7 @@ function FeaturedVideo() {
 
       {/* Mobile-only title block below the video */}
       {!playing && (
-        <div className="md:hidden p-5 space-y-3 bg-card border-t border-border">
+        <div className="md:hidden p-5 space-y-1 bg-card border-t border-border">
           <h3 className="font-display text-lg font-bold leading-snug">
             {FEATURED_VIDEO.title}
           </h3>
@@ -382,7 +382,7 @@ function FeaturedVideo() {
             href={FEATURED_VIDEO.watchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+            className="inline-flex items-center gap-1.5 min-h-11 text-sm font-medium text-primary hover:underline"
           >
             Watch on YouTube <ExternalLink className="h-3.5 w-3.5" />
           </a>
@@ -466,7 +466,8 @@ export function Videos() {
               subtitle="Reels, TikToks & Social Clips"
               defaultOpen
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Two-up on phones: a single 9:16 card per row is a full screen of scrolling each */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                 {shortVideos.map((v, i) => (
                   <ScrollReveal key={v.link} delay={i * 0.05}>
                     <ShortCard v={v} />

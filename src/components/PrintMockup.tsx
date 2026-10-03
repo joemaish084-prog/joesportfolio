@@ -55,28 +55,29 @@ export function PrintMockup() {
         </ScrollReveal>
 
         {/* Placeholder cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+        {/* Three-up even on phones: stacked, these placeholders were ~2 screens of empty cards */}
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-6 max-w-4xl mx-auto mb-10 sm:mb-12">
           {placeholders.map((label, i) => (
             <ScrollReveal key={label} direction="up" delay={0.3 + i * 0.15}>
-              <div className="relative group rounded-xl border border-border/50 bg-card/30 backdrop-blur-xl overflow-hidden aspect-[4/5]">
+              <div className="relative group rounded-xl border border-border/50 bg-card/30 sm:backdrop-blur-xl overflow-hidden aspect-[4/5]">
                 {/* Shimmer overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/[0.03] to-transparent shimmer-animation" />
 
                 {/* Lock icon */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
-                    <Lock className="w-6 h-6 text-primary" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 sm:gap-3 px-1.5 text-center">
+                  <div className="w-9 h-9 sm:w-14 sm:h-14 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+                    <Lock className="w-4 h-4 sm:w-6 sm:h-6 text-primary" />
                   </div>
-                  <span className="text-sm font-medium text-muted-foreground">
+                  <span className="text-xs leading-tight sm:text-sm font-medium text-muted-foreground">
                     {label}
                   </span>
-                  <span className="text-xs text-muted-foreground/60">
+                  <span className="hidden sm:inline text-xs text-muted-foreground/60">
                     Coming Soon
                   </span>
                 </div>
 
                 {/* Frosted bottom bar */}
-                <div className="absolute bottom-0 inset-x-0 h-12 bg-card/60 backdrop-blur-md border-t border-border/30 flex items-center justify-center">
+                <div className="hidden sm:flex absolute bottom-0 inset-x-0 h-12 bg-card/60 backdrop-blur-md border-t border-border/30 items-center justify-center">
                   <span className="text-xs text-muted-foreground font-medium">
                     Mockup Coming Soon
                   </span>

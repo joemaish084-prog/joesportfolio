@@ -257,7 +257,7 @@ function CampaignSnapshotPanel() {
               <TabsTrigger
                 key={key}
                 value={key}
-                className="gap-2 rounded-full px-4 py-1.5 text-xs data-[state=active]:bg-white/[0.12] data-[state=active]:text-white data-[state=active]:shadow-none text-white/50 transition-colors"
+                className="gap-2 rounded-full px-4 py-1.5 min-h-10 md:min-h-0 text-xs data-[state=active]:bg-white/[0.12] data-[state=active]:text-white data-[state=active]:shadow-none text-white/50 transition-colors"
               >
                 <span
                   className="h-2 w-2 rounded-full shrink-0"

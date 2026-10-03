@@ -21,7 +21,8 @@ export function BackToTop() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-elegant flex items-center justify-center hover:shadow-lg transition-shadow"
+          // Sits above the chat launcher, which owns the bottom-right corner
+          className="fixed bottom-20 right-4 sm:bottom-[5.5rem] sm:right-6 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary text-primary-foreground shadow-elegant flex items-center justify-center hover:shadow-lg transition-shadow"
           aria-label="Back to top"
         >
           <ArrowUp className="h-5 w-5" />

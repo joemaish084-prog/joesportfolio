@@ -115,10 +115,27 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    /* Safety net against sideways scroll on phones. `clip` (unlike `hidden`)
+       doesn't create a scroll container, so sticky headers keep working. */
+    overflow-x: clip;
   }
 
   html {
     scroll-behavior: smooth;
+    /* Stop iOS inflating text in landscape */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* iOS zooms the whole page when a focused field is under 16px. Keyed to touch
+     devices rather than a width so it also covers phones in landscape. */
+  @media (hover: none) and (pointer: coarse) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
   }
 
   /* Respect reduced motion */
@@ -319,6 +336,20 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Chat panel: never taller than the visible screen (short phones, landscape).
+     dvh tracks the browser's collapsing toolbars; the vh line is the fallback.
+     The subtracted amount is twice the panel's bottom offset. */
+  .chat-panel {
+    max-height: min(560px, calc(100vh - 1.5rem));
+    max-height: min(560px, calc(100dvh - 1.5rem));
+  }
+  @media (min-width: 640px) {
+    .chat-panel {
+      max-height: min(560px, calc(100vh - 3rem));
+      max-height: min(560px, calc(100dvh - 3rem));
+    }
+  }
+
   /* 9. Premium hero background — theme-aware (uses .dot-grid for the grid layer) */
   .hero-spotlight {
     background: radial-gradient(600px circle at var(--spot-x, 50%) var(--spot-y, 30%), hsl(25 100% 60% / 0.15), transparent 65%);
@@ -341,4 +372,18 @@
 
 .animate-drift-b {
   animation: drift-b 20s ease-in-out infinite;
+}
+
+/* Phones: keep the look, drop the GPU-heavy extras. Continuously animating
+   500px blurred glows and blurring behind every card costs scroll smoothness
+   and battery, for an effect that is barely visible on a small screen. */
+@media (max-width: 767px) {
+  .animate-drift-a,
+  .animate-drift-b {
+    animation: none;
+  }
+
+  .surface-card {
+    backdrop-filter: none;
+  }
 }

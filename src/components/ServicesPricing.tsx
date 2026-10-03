@@ -45,7 +45,8 @@ export function ServicesPricing() {
           </p>
         </div>
 
-        <BentoGrid className="grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Fixed 22rem rows only suit the desktop bento; stacked cards size to their content */}
+        <BentoGrid className="grid-cols-1 md:grid-cols-3 auto-rows-auto md:auto-rows-[22rem] gap-4">
           {services.map((s, i) => (
             <ScrollReveal key={s.title} direction="up" delay={i * 0.1}>
               <BentoCard

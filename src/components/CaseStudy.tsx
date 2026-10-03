@@ -104,7 +104,13 @@ export function CaseStudy() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mb-16">
           {stats.map((stat, i) => (
-            <ScrollReveal key={i} direction="up" delay={i * 0.1}>
+            <ScrollReveal
+              key={i}
+              direction="up"
+              delay={i * 0.1}
+              // odd count in a 2-column phone grid: let the last tile fill the row
+              className={i === stats.length - 1 && stats.length % 2 === 1 ? "col-span-2 sm:col-span-1" : ""}
+            >
               <div
                 className="corner-brackets rounded-xl p-5 text-center border transition-all duration-300 hover:-translate-y-1"
                 style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}

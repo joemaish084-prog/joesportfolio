@@ -77,7 +77,7 @@ const AgencyBlog = () => {
         <div className="mx-auto max-w-6xl px-5 pb-24 pt-16 sm:px-8">
           <Link
             to="/agency"
-            className="inline-flex items-center gap-2 text-sm text-[#666666] transition-colors hover:text-[#F97316]"
+            className="inline-flex min-h-11 items-center gap-2 text-sm text-[#666666] transition-colors hover:text-[#F97316]"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back to Agency
@@ -184,7 +184,7 @@ const AgencyBlog = () => {
                   </div>
                   <Link
                     to={`/agency/blog/topics/${hub.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3"
+                    className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3"
                   >
                     Open hub
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -195,7 +195,7 @@ const AgencyBlog = () => {
                   {posts.map((post) => (
                     <article
                       key={post.slug}
-                      className="flex flex-col overflow-hidden rounded-2xl border border-[#EAEAEA] transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                      className="relative flex flex-col overflow-hidden rounded-2xl border border-[#EAEAEA] transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
                     >
                       <div className="relative h-44">
                         <img
@@ -223,7 +223,8 @@ const AgencyBlog = () => {
                         </div>
                         <Link
                           to={`/agency/blog/${post.slug}`}
-                          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3"
+                          // after: stretches the link over the whole card, so the card is one big tap target
+                          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3 after:absolute after:inset-0 after:content-['']"
                         >
                           Read Article
                           <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -244,7 +245,7 @@ const AgencyBlog = () => {
                 {strays.map((post) => (
                   <article
                     key={post.slug}
-                    className="flex flex-col overflow-hidden rounded-2xl border border-[#EAEAEA] transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+                    className="relative flex flex-col overflow-hidden rounded-2xl border border-[#EAEAEA] transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
                   >
                     <div className="relative h-44">
                       <img
@@ -272,7 +273,7 @@ const AgencyBlog = () => {
                       </div>
                       <Link
                         to={`/agency/blog/${post.slug}`}
-                        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3"
+                        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3 after:absolute after:inset-0 after:content-['']"
                       >
                         Read Article
                         <ArrowRight className="h-4 w-4" aria-hidden="true" />

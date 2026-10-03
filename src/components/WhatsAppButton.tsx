@@ -27,7 +27,7 @@ export function WhatsAppButton() {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       transition={{ delay: 1, duration: 0.4 }}
-      className="fixed bottom-6 left-6 z-50 w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elegant flex items-center justify-center hover:shadow-lg transition-shadow"
+      className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elegant flex items-center justify-center hover:shadow-lg transition-shadow"
       aria-label="Message me on WhatsApp"
     >
       <WhatsAppIcon />

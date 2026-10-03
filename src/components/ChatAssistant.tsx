@@ -384,7 +384,8 @@ export function ChatAssistant() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={openChat}
-            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-primary-foreground shadow-lg hover:opacity-90 transition-opacity"
+            aria-label="Get a free quote — open chat"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center justify-center gap-2 min-h-12 min-w-12 rounded-full bg-primary px-4 sm:px-5 py-3 text-primary-foreground shadow-lg hover:opacity-90 transition-opacity"
           >
             <Bot className="h-5 w-5" />
             <span className="text-sm font-medium hidden sm:inline">Get a Free Quote</span>
@@ -398,19 +399,23 @@ export function ChatAssistant() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-96 max-h-[560px] flex flex-col rounded-2xl border border-border bg-card shadow-2xl overflow-hidden"
+            className="chat-panel fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-[60] w-[calc(100vw-1.5rem)] sm:w-96 flex flex-col rounded-2xl border border-border bg-card shadow-2xl overflow-hidden"
           >
-            <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground">
+            <div className="flex items-center justify-between pl-4 pr-1.5 py-1 bg-primary text-primary-foreground">
               <div className="flex items-center gap-2">
                 <Bot className="h-5 w-5" />
                 <span className="font-semibold text-sm">Joseph's Assistant</span>
               </div>
-              <button onClick={() => setIsOpen(false)} className="hover:opacity-70 transition-opacity">
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Close chat"
+                className="h-11 w-11 inline-flex items-center justify-center hover:opacity-70 transition-opacity"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[320px] max-h-[400px]">
+            <div className="basis-[400px] shrink min-h-0 overflow-y-auto overscroll-contain p-4 space-y-3">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}>
                   <div
@@ -427,7 +432,7 @@ export function ChatAssistant() {
                           key={opt}
                           variant="outline"
                           size="sm"
-                          className="text-xs h-8"
+                          className="text-xs h-10 sm:h-8"
                           onClick={() => handleQuickReply(opt)}
                         >
                           {opt}
@@ -470,10 +475,10 @@ export function ChatAssistant() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
                   placeholder={isTextStep ? "Type your answer..." : "Ask a question, or tap an option above"}
-                  className="h-10 text-sm"
+                  className="h-11 sm:h-10 text-base sm:text-sm"
                   disabled={isBusy}
                 />
-                <Button size="icon" onClick={handleSend} disabled={isBusy || !input.trim()} className="h-10 w-10 shrink-0">
+                <Button size="icon" aria-label="Send message" onClick={handleSend} disabled={isBusy || !input.trim()} className="h-11 w-11 sm:h-10 sm:w-10 shrink-0">
                   <Send className="h-4 w-4" />
                 </Button>
               </div>

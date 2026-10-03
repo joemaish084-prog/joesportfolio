@@ -90,7 +90,7 @@ export function Contact() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16 space-y-4">
+            <div className="text-center mb-10 sm:mb-16 space-y-4">
               <SectionLabel>CONTACT</SectionLabel>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
                 Let's <span className="text-gradient">Connect</span>
@@ -137,7 +137,7 @@ export function Contact() {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${social.color}`}
+                          className={`w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1 ${social.color}`}
                           aria-label={social.label}
                         >
                           {social.icon}

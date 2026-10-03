@@ -40,10 +40,12 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-card text-foreground">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      {/* Extra bottom room on phones so the last lines clear the floating WhatsApp/chat buttons */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 sm:pb-12">
+        {/* Link columns sit side by side on phones; brand and contact span the full width */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
           {/* Column 1 — Brand */}
-          <div className="space-y-4">
+          <div className="col-span-2 md:col-span-1 space-y-4">
             <Link to="/" className="text-2xl font-display font-bold inline-block">
               <span className="text-foreground">Joseph</span>
               <span className="text-primary">Maina</span>
@@ -59,7 +61,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={name}
-                  className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+                  className="w-11 h-11 md:w-9 md:h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -69,7 +71,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Behance"
-                className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+                className="w-11 h-11 md:w-9 md:h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
               >
                 <BehanceIcon className="w-4 h-4" />
               </a>
@@ -118,7 +120,7 @@ export function Footer() {
           </div>
 
           {/* Column 4 — Legal & Contact */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
               Legal &amp; Contact
             </h3>

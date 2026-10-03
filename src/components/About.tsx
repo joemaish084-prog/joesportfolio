@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -20,12 +22,16 @@ const skills = [
 ];
 
 export function About() {
+  // Phones only: the full story is ~9 screens of text, so it starts clamped.
+  // It stays in the DOM either way; md+ always shows everything.
+  const [storyOpen, setStoryOpen] = useState(false);
+
   return (
     <section id="about" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16 space-y-4">
+            <div className="text-center mb-10 sm:mb-16 space-y-4">
               <SectionLabel>ABOUT</SectionLabel>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4">
                 About <span className="text-gradient">Joseph Maina</span> — Digital Marketing Specialist
@@ -34,6 +40,11 @@ export function About() {
           </ScrollReveal>
 
           <div className="space-y-12">
+            <div className="relative">
+            <div
+              id="about-story"
+              className={`space-y-12 ${storyOpen ? "" : "max-md:max-h-[26rem] max-md:overflow-hidden"}`}
+            >
             <article className="space-y-6">
               <ScrollReveal direction="left" delay={0.1}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
@@ -94,6 +105,27 @@ export function About() {
                 </p>
               </div>
             </ScrollReveal>
+            </div>
+              {!storyOpen && (
+                <div
+                  aria-hidden="true"
+                  className="md:hidden pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background to-transparent"
+                />
+              )}
+            </div>
+
+            <div className="md:hidden !mt-4 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setStoryOpen((v) => !v)}
+                aria-expanded={storyOpen}
+                aria-controls="about-story"
+                className="inline-flex items-center gap-2 min-h-11 px-5 rounded-full border border-primary/40 text-sm font-medium text-primary"
+              >
+                {storyOpen ? "Show less" : "Read my full story"}
+                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${storyOpen ? "rotate-180" : ""}`} aria-hidden />
+              </button>
+            </div>
 
             <ScrollReveal direction="up" delay={0.2}>
               <div className="space-y-6">

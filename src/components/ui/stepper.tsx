@@ -18,7 +18,8 @@ export function Stepper({ steps, currentStep, onStepClick, className }: StepperP
             type="button"
             onClick={() => onStepClick?.(i)}
             disabled={!onStepClick}
-            className={cn("flex flex-col items-center gap-2 shrink-0", onStepClick && "cursor-pointer")}
+            // min 44px box around the 36px dot so each step is comfortably tappable
+            className={cn("flex flex-col items-center justify-center gap-2 shrink-0 min-h-11 min-w-11", onStepClick && "cursor-pointer")}
           >
             <motion.div
               animate={{ scale: i === currentStep ? 1.12 : 1 }}
@@ -44,7 +45,7 @@ export function Stepper({ steps, currentStep, onStepClick, className }: StepperP
             </span>
           </button>
           {i < steps.length - 1 && (
-            <div className="flex-1 h-0.5 mx-1.5 sm:mx-2 bg-muted rounded-full overflow-hidden">
+            <div className="flex-1 h-0.5 mx-0.5 sm:mx-2 bg-muted rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-primary rounded-full"
                 initial={false}

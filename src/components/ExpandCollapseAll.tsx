@@ -2,7 +2,8 @@ import { useState } from "react";
 import { ChevronsDown, ChevronsUp } from "lucide-react";
 
 export function ExpandCollapseAll() {
-  const [allOpen, setAllOpen] = useState(true);
+  // Sections start collapsed on phones, so the first tap there should expand
+  const [allOpen, setAllOpen] = useState(() => !window.matchMedia("(max-width: 767px)").matches);
 
   const toggle = () => {
     const next = !allOpen;
@@ -17,7 +18,7 @@ export function ExpandCollapseAll() {
       <button
         type="button"
         onClick={toggle}
-        className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg bg-card/60 hover:bg-card border border-primary/30 hover:border-primary text-foreground hover:text-primary transition-all"
+        className="inline-flex items-center gap-2 min-h-11 text-sm font-medium px-4 py-2 rounded-lg bg-card/60 hover:bg-card border border-primary/30 hover:border-primary text-foreground hover:text-primary transition-all"
         aria-label={allOpen ? "Collapse all sections" : "Expand all sections"}
       >
         {allOpen ? <ChevronsUp className="h-4 w-4" /> : <ChevronsDown className="h-4 w-4" />}

@@ -40,7 +40,7 @@ export function CollapsibleSection({
           aria-expanded={open}
           aria-controls={panelId}
           className={cn(
-            "group inline-flex items-center gap-3 rounded-lg px-2 py-1 transition-colors hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+            "group inline-flex items-center gap-3 min-h-11 rounded-lg px-2 py-1 transition-colors hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
             align === "center" ? "justify-center" : "justify-start"
           )}
         >
@@ -69,11 +69,11 @@ export function CollapsibleSection({
       >
         <div className="overflow-hidden">
           {children}
-          <div className="mt-6 flex justify-center sm:hidden">
+          <div className="mt-4 flex justify-center sm:hidden">
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="text-sm font-medium text-primary hover:underline"
+              className="min-h-11 px-4 text-sm font-medium text-primary hover:underline"
             >
               Show Less
             </button>
@@ -82,11 +82,11 @@ export function CollapsibleSection({
       </div>
 
       {!open && (
-        <div className="mt-2 flex justify-center sm:hidden">
+        <div className="flex justify-center sm:hidden">
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="text-sm font-medium text-primary hover:underline"
+            className="min-h-11 px-4 text-sm font-medium text-primary hover:underline"
           >
             Show More
           </button>

@@ -134,11 +134,12 @@ export function Hero() {
       id="home"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen bg-background overflow-hidden"
+      className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen supports-[min-height:100svh]:min-h-svh bg-background overflow-hidden"
     >
       <HeroBackground />
 
-      <div className="relative z-10 min-h-screen grid lg:grid-cols-2 gap-16 items-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto py-32 lg:py-20">
+      {/* svh, not vh: on phones 100vh includes the area behind the browser's address bar */}
+      <div className="relative z-10 min-h-screen supports-[min-height:100svh]:min-h-svh grid lg:grid-cols-2 gap-16 items-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto pt-20 pb-28 sm:py-32 lg:py-20">
         <div className="text-left">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
@@ -187,7 +188,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.6, ease: appleEase }}
-            className="mt-14 flex flex-wrap gap-x-8 gap-y-3 border-t border-border/60 pt-6"
+            className="mt-10 sm:mt-14 grid grid-cols-[1.2fr_1fr_1fr] gap-x-4 sm:flex sm:flex-wrap sm:gap-x-8 gap-y-3 border-t border-border/60 pt-6"
           >
             {[
               ["KES 500K+", "Ad budgets managed"],
@@ -195,7 +196,7 @@ export function Hero() {
               ["3+", "Years experience"],
             ].map(([value, label]) => (
               <div key={value}>
-                <p className="text-lg font-display font-semibold text-foreground">{value}</p>
+                <p className="text-base sm:text-lg font-display font-semibold text-foreground whitespace-nowrap">{value}</p>
                 <p className="text-xs text-muted-foreground">{label}</p>
               </div>
             ))}

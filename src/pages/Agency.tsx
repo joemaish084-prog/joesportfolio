@@ -356,8 +356,12 @@ const Agency = () => {
       {/* Navbar */}
       <header className="border-b border-border/40 sticky top-0 bg-background/80 backdrop-blur-md z-50">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0">
-            <ArrowLeft className="h-4 w-4 sm:mr-2" /> <span className="hidden sm:inline">Back to Portfolio</span>
+          <Link
+            to="/"
+            aria-label="Back to Portfolio"
+            className="inline-flex items-center justify-center sm:justify-start min-h-11 min-w-11 -ml-3 sm:ml-0 sm:min-w-0 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0"
+          >
+            <ArrowLeft className="h-5 w-5 sm:h-4 sm:w-4 sm:mr-2" /> <span className="hidden sm:inline">Back to Portfolio</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Link to="/" className="text-muted-foreground hover:text-foreground">Home</Link>
@@ -368,7 +372,7 @@ const Agency = () => {
             <span className="text-primary font-semibold">Work With Me</span>
           </nav>
           <div className="flex items-center gap-1 shrink-0">
-            <Button size="sm" onClick={() => scrollTo("booking")}>Book Call</Button>
+            <Button size="sm" className="h-10 sm:h-9" onClick={() => scrollTo("booking")}>Book Call</Button>
             <button
               type="button"
               onClick={() => setMobileNavOpen(true)}
@@ -994,7 +998,7 @@ const Agency = () => {
         </section>
       </main>
 
-      <footer className="border-t border-border/40 py-8 text-center text-sm text-muted-foreground space-x-2">
+      <footer className="border-t border-border/40 px-4 py-8 text-center text-sm text-muted-foreground space-x-2 leading-8">
         <span>© {new Date().getFullYear()} Joseph Maina</span>
         <span>·</span>
         <Link to="/" className="hover:text-foreground">Portfolio</Link>
