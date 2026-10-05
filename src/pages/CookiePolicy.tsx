@@ -4,7 +4,7 @@ const CookiePolicy = () => (
   <LegalPage
     title="Cookie Policy | Joseph Maina"
     description="How josephmaina.co.ke uses cookies and analytics to improve your browsing experience."
-    canonical="https://www.josephmaina.co.ke/cookie-policy"
+    path="/cookie-policy"
     heading="Cookie Policy"
     lastUpdated="June 2026"
   >

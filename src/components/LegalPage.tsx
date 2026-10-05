@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Seo } from "@/components/Seo";
 import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
@@ -8,20 +8,16 @@ import { Footer } from "@/components/Footer";
 interface LegalPageProps {
   title: string;
   description: string;
-  canonical: string;
+  path: string;
   heading: string;
   lastUpdated: string;
   children: ReactNode;
 }
 
-export function LegalPage({ title, description, canonical, heading, lastUpdated, children }: LegalPageProps) {
+export function LegalPage({ title, description, path, heading, lastUpdated, children }: LegalPageProps) {
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <link rel="canonical" href={canonical} />
-      </Helmet>
+      <Seo title={title} description={description} path={path} />
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <SiteHeader />
         <main className="flex-1 pt-28 pb-16">

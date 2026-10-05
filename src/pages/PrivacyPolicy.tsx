@@ -4,7 +4,7 @@ const PrivacyPolicy = () => (
   <LegalPage
     title="Privacy Policy | Joseph Maina"
     description="How Joseph Maina Digital Marketing collects, uses and protects your personal information."
-    canonical="https://www.josephmaina.co.ke/privacy-policy"
+    path="/privacy-policy"
     heading="Privacy Policy"
     lastUpdated="June 2026"
   >

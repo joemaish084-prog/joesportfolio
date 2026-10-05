@@ -4,7 +4,7 @@ import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
 import { PressFeatures } from "@/components/PressFeatures";
 import { Video, Palette, DollarSign, BarChart3, Briefcase, HelpCircle } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+import { Seo } from "@/components/Seo";
 
 // Lazy-load Hero to split framer-motion out of the critical path and reduce longest task
 const Hero = lazy(() => import("@/components/Hero").then(m => ({ default: m.Hero })));
@@ -53,9 +53,11 @@ const Index = () => {
 
   return (
     <>
-      <Helmet>
-        <link rel="canonical" href="https://www.josephmaina.co.ke/" />
-      </Helmet>
+      <Seo
+        title="Joseph Maina | Digital Marketing Specialist Nairobi | Meta Ads, Google Ads & SEO Kenya"
+        description="Digital Marketing Specialist in Nairobi, Kenya. Expert in Meta Ads, Google Ads, TikTok, SEO & Social Media. Real results for Kenyan brands. Book a free strategy call today."
+        path="/"
+      />
       {!splashDone && <Suspense fallback={null}><SplashScreen onComplete={() => setSplashDone(true)} /></Suspense>}
       <Suspense fallback={null}><ScrollProgress /></Suspense>
       <SiteHeader />

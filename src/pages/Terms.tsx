@@ -4,7 +4,7 @@ const Terms = () => (
   <LegalPage
     title="Terms of Service | Joseph Maina"
     description="Terms of Service for Joseph Maina Digital Marketing — payments, IP, cancellation and liability."
-    canonical="https://www.josephmaina.co.ke/terms"
+    path="/terms"
     heading="Terms of Service"
     lastUpdated="June 2026"
   >

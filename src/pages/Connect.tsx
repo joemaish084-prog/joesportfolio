@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Copy, Check, ArrowLeft, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Seo } from "@/components/Seo";
 
 const mcpUrl = `https://${import.meta.env.VITE_SUPABASE_PROJECT_ID}.supabase.co/functions/v1/mcp`;
 
@@ -16,6 +17,11 @@ export default function Connect() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <Seo
+        title="Connect Your AI Assistant | Joseph Maina"
+        description="Add josephmaina.co.ke to ChatGPT or Claude so your AI assistant can answer questions about Joseph Maina's services, bio and contact details."
+        path="/connect"
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-3xl">
         <Link
           to="/"

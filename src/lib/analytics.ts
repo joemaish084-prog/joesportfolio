@@ -1,58 +1,21 @@
-const GA_MEASUREMENT_ID = "G-X86CZEY9GV";
-const CONSENT_KEY = "cookie-consent-v1";
-
-declare global {
-  interface Window {
-    dataLayer?: unknown[];
-    gtag?: (...args: unknown[]) => void;
-  }
-}
-
-let gaLoaded = false;
-
-function hasAnalyticsConsent(): boolean {
-  try {
-    return localStorage.getItem(CONSENT_KEY) === "accepted";
-  } catch {
-    return false;
-  }
-}
-
-export function initGA() {
-  if (gaLoaded || typeof window === "undefined" || !hasAnalyticsConsent()) return;
-  gaLoaded = true;
-
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer!.push(args);
-  };
-  window.gtag("js", new Date());
-  window.gtag("config", GA_MEASUREMENT_ID, { anonymize_ip: true });
-
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(script);
-}
-
-export function trackEvent(name: string, params?: Record<string, unknown>) {
-  if (!hasAnalyticsConsent()) return;
-  initGA();
-  window.gtag?.("event", name, params);
-}
-
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void;
-  }
-}
+import "@/lib/track";
 
 /**
- * Fires a named conversion to both Meta Pixel and GA4. fbq is unconditional
- * (matches the existing Meta Pixel setup, which isn't consent-gated); the
- * GA4 side still goes through trackEvent's cookie-consent check.
+ * GA4 is loaded by Google Tag Manager (see index.html), which
+ * starts with Consent Mode denied. Call this once the visitor accepts cookies.
  */
-export function trackConversion(name: "Lead" | "Contact" | "Schedule", params?: Record<string, unknown>) {
-  window.fbq?.("track", name);
-  trackEvent(name, params);
+export function grantAnalyticsConsent() {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  // Consent commands must be pushed as an `arguments` object, not an array.
+  function gtag(..._args: unknown[]) {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer!.push(arguments);
+  }
+  gtag("consent", "update", {
+    analytics_storage: "granted",
+    ad_storage: "granted",
+    ad_user_data: "granted",
+    ad_personalization: "granted",
+  });
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Cookie, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { initGA } from "@/lib/analytics";
+import { grantAnalyticsConsent } from "@/lib/analytics";
 
 const STORAGE_KEY = "cookie-consent-v1";
 
@@ -20,7 +20,7 @@ export function CookieConsent() {
         const t = setTimeout(() => setVisible(true), 800);
         return () => clearTimeout(t);
       }
-      if (stored === "accepted") initGA();
+      if (stored === "accepted") grantAnalyticsConsent();
     } catch {
       setVisible(true);
     }
@@ -32,7 +32,7 @@ export function CookieConsent() {
     } catch {
       // ignore
     }
-    if (value === "accepted") initGA();
+    if (value === "accepted") grantAnalyticsConsent();
     setVisible(false);
     setShowPrefs(false);
   };

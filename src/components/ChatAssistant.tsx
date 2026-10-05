@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, CalendarCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { trackEvent, trackConversion } from "@/lib/analytics";
+import { track } from "@/lib/track";
 import { openCalendlyPopup } from "@/lib/calendly";
 import {
   INDUSTRY_OPTIONS,
@@ -208,7 +208,7 @@ export function ChatAssistant() {
     setIsOpen(true);
     if (!hasOpened) {
       setHasOpened(true);
-      trackEvent("chat_opened");
+      track("chat_opened");
       void botSay(GREETING, ["I just have a question"]);
     }
   };
@@ -243,7 +243,7 @@ export function ChatAssistant() {
       await updateChatLead(leadId, finalFields, "done");
     }
     await notifyLeadByEmail(finalFields, status);
-    trackEvent("lead_submitted", { status });
+    track("lead_submitted", { status });
 
     const industryNote = finalFields.industry ? ` in ${finalFields.industry.toLowerCase()}` : "";
 
@@ -364,12 +364,7 @@ export function ChatAssistant() {
   };
 
   const handleBookCall = async () => {
-    trackEvent("calendly_clicked");
     await openCalendlyPopup(buildCalendlyUrl(fields.name || "", fields.email || ""));
-  };
-
-  const handleWhatsAppClick = () => {
-    trackConversion("Contact");
   };
 
   const isTextStep = TEXT_STEPS.has(step);
@@ -441,7 +436,7 @@ export function ChatAssistant() {
                     </div>
                   )}
                   {msg.action === "calendly" && (
-                    <Button size="sm" className="mt-2 text-xs h-9 gap-1.5" onClick={handleBookCall}>
+                    <Button size="sm" className="mt-2 text-xs h-9 gap-1.5" data-track="calendly_click" data-track-location="chat" onClick={handleBookCall}>
                       <CalendarCheck className="h-3.5 w-3.5" />
                       Book your free strategy call
                     </Button>
@@ -451,7 +446,7 @@ export function ChatAssistant() {
                       href={buildWhatsAppUrl(fields.name, fields.business_name, fields.need)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={handleWhatsAppClick}
+                      data-track-location="chat"
                       className="mt-2"
                     >
                       <Button size="sm" variant="outline" className="text-xs h-9 gap-1.5">
