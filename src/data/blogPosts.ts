@@ -1561,6 +1561,348 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "tiktok-ads-manager-setup-guide-kenya-2026",
+    category: "TikTok",
+    title: "TikTok Ads Manager: A Practical Setup Guide for Kenyan Businesses",
+    excerpt: "Boosting a post is not the same as running TikTok Ads. Here's how the actual ads platform works and how to set it up correctly the first time.",
+    date: "2026-10-03",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "TikTok Ads Manager: A Practical Setup Guide for Kenyan Businesses",
+    metaDescription: "A practical, step-by-step look at TikTok Ads Manager for Kenyan businesses: pixel setup, campaign structure, budgeting, and the setup mistakes that quietly waste spend.",
+    intro: "Most Kenyan businesses I meet have boosted a TikTok post before, almost none have actually used TikTok Ads Manager properly. The two look similar and behave completely differently. Here's how to set the real thing up without wasting your first month's budget on avoidable setup mistakes.",
+    thumbnail: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone displaying the TikTok app interface held in someone's hand",
+
+    sections: [
+      {
+        id: "pixel-first",
+        heading: "Install the TikTok Pixel before you spend a single shilling",
+        paragraphs: [
+          "The TikTok Pixel needs to be installed and firing correctly on your site or landing page before any campaign launches, not added halfway through once you notice results are hard to judge. Without it, TikTok is optimising toward clicks, not toward the people actually likely to buy.",
+          "Test every event, page view, add to cart, purchase or lead, using TikTok's own event debugging tool before turning on real spend. A pixel that looks installed but isn't firing correctly is one of the most common setup failures I see.",
+        ],
+      },
+      {
+        id: "campaign-structure",
+        heading: "Structure campaigns around one clear objective, not a mix",
+        paragraphs: [
+          "Decide upfront whether a campaign is for awareness, traffic, or conversions, and choose the matching objective in Ads Manager rather than a general 'promote my business' setting. Mixing objectives in one campaign confuses the algorithm about what a 'good result' even looks like.",
+          "Within a campaign, two to four ad groups testing different audiences or placements is usually enough. Spreading budget across ten ad groups at once starves each one of the data it needs to leave the learning phase.",
+        ],
+      },
+      {
+        id: "budget-and-learning",
+        heading: "Respect the learning phase or you'll pay for it twice",
+        paragraphs: [
+          "TikTok's algorithm needs a cluster of conversions, usually around fifty per ad group per week as a rough guide, before it can optimise reliably. Underfunding an ad group means it never graduates out of expensive, inefficient delivery.",
+          "Avoid editing budgets or creative more than once every three to four days early on. Every meaningful edit can reset the learning phase, which is the single most common reason a campaign that should be working still looks shaky after two weeks.",
+        ],
+      },
+      {
+        id: "creative-specs",
+        heading: "Native vertical video, not a repurposed Instagram ad",
+        paragraphs: [
+          "Ads built from repurposed Instagram or TV-style creative consistently underperform native, vertical, fast-hook content built specifically for TikTok's feed, the same lesson from organic TikTok strategy applies directly to paid.",
+          "Run at least three creative variations per ad group from day one. TikTok Ads Manager rewards variety early, and a single creative, however strong, caps how far an ad group can scale.",
+        ],
+      },
+      {
+        id: "common-setup-mistakes",
+        heading: "The setup mistakes that quietly waste budget",
+        paragraphs: [
+          "Leaving automatic placements and expanded targeting switched on without reviewing them sends budget to surfaces and audiences that may not fit the actual offer. Review these settings rather than accepting every default.",
+          "Launching with no clear kill criteria, the same discipline I cover in my piece on ad creative testing, means underperforming ad groups quietly drain budget for weeks before anyone notices and pauses them.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "chatgpt-ads-what-kenyan-businesses-should-do-now",
+    category: "AI & Marketing",
+    title: "ChatGPT Ads Are Coming: What Kenyan Businesses Should Do Now to Get Ready",
+    excerpt: "Advertising inside ChatGPT is being tested and rolled out gradually. The businesses that prepare now will have a real head start.",
+    date: "2026-10-04",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "ChatGPT Ads Are Coming: What Kenyan Businesses Should Do Now to Get Ready",
+    metaDescription: "What's known so far about advertising inside ChatGPT, why it matters for Kenyan businesses, and the practical steps to prepare before the platform opens up fully.",
+    intro: "Advertising inside ChatGPT has been rolling out gradually rather than arriving all at once, and the details are still evolving. I don't think it's too early for Kenyan businesses to start preparing, the brands that show up well in AI-generated answers before this becomes mainstream will have an advantage that's hard for latecomers to close.",
+    thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Abstract illustration of an AI chat interface glowing on a dark screen",
+
+    sections: [
+      {
+        id: "why-this-matters",
+        heading: "Why this is worth paying attention to now, not later",
+        paragraphs: [
+          "Every time a new ad platform has opened up, Google Ads, Facebook Ads, TikTok Ads, the earliest advertisers consistently got cheaper results simply because competition and auction prices hadn't caught up yet. There's no reason to expect ChatGPT advertising to behave differently once it scales.",
+          "Beyond paid ads specifically, a huge and growing number of purchase decisions already start with someone asking an AI assistant for a recommendation rather than searching Google. Being the brand that gets recommended in that conversation matters whether or not you ever run a paid ad there.",
+        ],
+      },
+      {
+        id: "the-new-seo",
+        heading: "This is really about a new kind of visibility, not just a new ad unit",
+        paragraphs: [
+          "Getting mentioned favourably when someone asks an AI assistant 'what's a good digital marketing agency in Nairobi' depends on the same fundamentals that help with traditional SEO, clear, specific, well-structured information about what you do, for whom, and at what price, published somewhere the AI's training and retrieval can actually find it.",
+          "Vague brand language performs badly here for the same reason it performs badly in Google search, an AI assistant can't recommend what it can't clearly understand about your business.",
+        ],
+      },
+      {
+        id: "what-to-do-now",
+        heading: "What's actually worth doing now, while the platform is still new",
+        paragraphs: [
+          "Keep your core business information, services, pricing, service area, genuinely accurate and specific across your website and any public profiles. AI systems pull from exactly this kind of structured, factual content when forming a recommendation.",
+          "Build a presence of honest, specific reviews and case studies, the same kind of concrete proof, 'KES 45,000 a month,' '10x qualified leads in 6 months,' that already works for human readers tends to be exactly what gets cited when an AI summarises options for someone.",
+        ],
+      },
+      {
+        id: "what-not-to-do",
+        heading: "What I'd avoid doing right now",
+        paragraphs: [
+          "Don't overhaul your entire content strategy around speculation about exactly how ChatGPT ad auctions will work, the specifics are still changing, and chasing a moving target wastes effort that's better spent on fundamentals that help regardless of which platform wins.",
+          "Avoid keyword-stuffing content to try to 'game' AI recommendations the way some tried to game early Google SEO. The systems are built on language models that are comparatively good at detecting unnatural, manipulative content, and it's likely to age badly as these systems improve.",
+        ],
+      },
+      {
+        id: "the-honest-takeaway",
+        heading: "The honest takeaway",
+        paragraphs: [
+          "Nobody, including the platforms themselves, has a fully settled picture of what ChatGPT advertising will look like at scale yet. What is already true is that AI-assisted discovery is growing regardless of the ad product, and the businesses with clear, specific, honestly-presented information online are already better positioned for it.",
+          "I'm watching this closely for my own clients and will write a follow-up once the ad product itself is live and testable, not just announced. Until then, the groundwork worth doing is the same groundwork that makes a business easier to find and trust everywhere else.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "meta-advantage-plus-ai-campaigns-kenya-2026",
+    category: "Meta Ads",
+    title: "Meta Advantage+ Explained: How Much Should You Let the AI Decide?",
+    excerpt: "Meta wants to automate almost the entire campaign now. Here's what's actually worth handing over, and what I still do manually.",
+    date: "2026-10-05",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "Meta Advantage+ Explained: How Much Should You Let the AI Decide?",
+    metaDescription: "How Meta's Advantage+ AI-automated campaign tools actually work for Kenyan advertisers, where they genuinely help, and where manual control still wins.",
+    intro: "Meta has spent the last couple of years pushing advertisers toward Advantage+, its AI-automated version of campaign setup, targeting and even creative. For Kenyan advertisers used to hands-on control, the natural question is how much of that control is actually safe to hand over.",
+    thumbnail: "https://images.unsplash.com/photo-1655720828018-edd2daec9349?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person reviewing ad campaign dashboards and automation settings on a laptop",
+
+    sections: [
+      {
+        id: "what-it-automates",
+        heading: "What Advantage+ actually automates",
+        paragraphs: [
+          "Advantage+ shopping and audience campaigns let Meta's algorithm choose placements, audience expansion, and in some cases creative combinations automatically, based on broad signals rather than the detailed manual targeting advertisers used to set themselves.",
+          "The pitch is straightforward: Meta's models see patterns across millions of accounts that no individual advertiser or agency can replicate manually, and letting the system find audiences often outperforms a human's best guess, provided the inputs feeding it are solid.",
+        ],
+      },
+      {
+        id: "where-it-helps",
+        heading: "Where I've genuinely seen it help Kenyan accounts",
+        paragraphs: [
+          "For e-commerce and direct-response campaigns with a working pixel and a decent volume of past purchase data, Advantage+ audience targeting has produced lower cost per result than my own manual targeting in several accounts I manage, simply because it's testing far more audience combinations than I could set up by hand.",
+          "It also removes a lot of the guesswork for businesses just getting started, where there isn't yet enough historical data to know which manual audience segments would even make sense to test.",
+        ],
+      },
+      {
+        id: "where-manual-still-wins",
+        heading: "Where I still take manual control",
+        paragraphs: [
+          "For hyper-local campaigns, the same precision targeting I describe in the Nyeri County case study, broad automated targeting tends to waste budget outside the specific geography that actually matters. Manual location and interest layering still outperforms letting the algorithm roam.",
+          "Creative strategy and messaging stay manual regardless of how automated the delivery is. Advantage+ can find the right person to show an ad to, but it can't decide what that ad should actually say to a Kenyan audience the way a person who understands the market can.",
+        ],
+      },
+      {
+        id: "the-data-dependency",
+        heading: "Automation is only as good as what you feed it",
+        paragraphs: [
+          "Every one of these AI tools depends entirely on accurate conversion tracking. Handing targeting over to an algorithm while your pixel is tracking the wrong events, the same conversion tracking gap I cover in my piece on common ad mistakes, just means the automation confidently optimises toward the wrong outcome, faster.",
+          "Before trusting Advantage+ with meaningful budget, confirm the underlying event tracking is clean. Automation amplifies whatever signal you give it, good or bad.",
+        ],
+      },
+      {
+        id: "my-actual-approach",
+        heading: "How I actually run it for clients now",
+        paragraphs: [
+          "I test Advantage+ campaigns alongside a manually targeted version rather than switching entirely, then shift budget toward whichever is actually producing a lower cost per qualified result, not whichever Meta's own dashboard happens to recommend.",
+          "Treat the AI as a very capable junior analyst, worth listening to, genuinely useful at scale, but not worth handing the whole account to without someone checking its homework against what the business actually needs.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "google-performance-max-kenya-2026",
+    category: "Paid Ads",
+    title: "Google Performance Max for Kenyan Businesses: What It Automates and What You Still Control",
+    excerpt: "Performance Max runs across every Google surface at once, which makes it powerful and genuinely hard to diagnose when something goes wrong.",
+    date: "2026-10-06",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "Google Performance Max for Kenyan Businesses: What It Automates and What You Still Control",
+    metaDescription: "A practical look at Google Performance Max campaigns for Kenyan businesses: what gets automated, what asset groups and signals still matter, and when to avoid it.",
+    intro: "Performance Max is now Google's default push for a lot of advertisers, one campaign type running across Search, Display, YouTube, Gmail and Maps simultaneously, optimised automatically by Google's models. It's powerful, and it's also the campaign type I get the most confused questions about.",
+    thumbnail: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Multiple device screens showing search and advertising interfaces side by side",
+
+    sections: [
+      {
+        id: "what-it-is",
+        heading: "What Performance Max actually is",
+        paragraphs: [
+          "Instead of separate Search, Display and YouTube campaigns each with their own manual settings, Performance Max takes a set of assets, headlines, images, video, and lets Google's AI decide where and to whom to show them across its entire network, chasing whatever conversion goal you set.",
+          "For a business with limited time to manage multiple campaign types, this consolidation is genuinely useful. The tradeoff is losing visibility into exactly which surface, Search versus YouTube versus Display, is actually producing the results.",
+        ],
+      },
+      {
+        id: "asset-groups",
+        heading: "Asset groups are where your actual control lives",
+        paragraphs: [
+          "Since you can't manually choose placements, the asset group, your headlines, descriptions, images and video, becomes the main lever you have. Weak or generic assets here get amplified across every surface just as much as strong ones would.",
+          "Providing a genuine range of creative, not just one headline variation repeated with small tweaks, gives Google's system more to work with and generally produces more stable performance than a thin asset group.",
+        ],
+      },
+      {
+        id: "audience-signals",
+        heading: "Audience signals guide, they don't restrict",
+        paragraphs: [
+          "Performance Max lets you provide audience signals, customer lists, website visitors, interest categories, as a starting hint for the algorithm, but unlike older campaign types, it isn't limited to only those people. It treats them as a suggestion, not a fence.",
+          "Feeding it a clean, specific signal still measurably helps performance, especially in the first few weeks, even though the system will expand beyond it once it has enough conversion data of its own.",
+        ],
+      },
+      {
+        id: "the-visibility-problem",
+        heading: "The real limitation: you can't see exactly where it's working",
+        paragraphs: [
+          "Performance Max deliberately limits the search term and placement-level reporting you'd get from a standard Search or Display campaign, which makes it genuinely harder to diagnose why a campaign is underperforming compared to older campaign types.",
+          "For a business that needs to understand precisely what's driving results, not just that results are happening, running a separate manual Search campaign alongside Performance Max can restore some of that visibility where it matters most.",
+        ],
+      },
+      {
+        id: "when-to-use-it",
+        heading: "When I'd recommend it, and when I wouldn't",
+        paragraphs: [
+          "Performance Max tends to work well for businesses with a solid volume of existing conversion data and a genuinely broad product range, e-commerce stores especially, where manually managing dozens of campaigns isn't realistic.",
+          "For a newer business, a single-service provider, or anyone who needs tight control over exactly which keywords trigger an ad, I'd still start with a standard Search campaign. Performance Max rewards businesses that already have data to feed it, it's a poor place to learn the absolute basics of what converts.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "digital-marketing-for-salons-and-spas-kenya-2026",
+    category: "Salons & Spas",
+    title: "Digital Marketing for Salons and Spas in Kenya: Filling the Booking Calendar",
+    excerpt: "A full Instagram feed and an empty appointment book is the most common gap I see in this industry.",
+    date: "2026-10-08",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "Digital Marketing for Salons and Spas in Kenya: Filling the Booking Calendar",
+    metaDescription: "A practical marketing guide for Kenyan salons and spas: booking-driven content, loyalty and repeat visits, reviews, and filling quiet weekday slots.",
+    intro: "Salons and spas have one of the clearest marketing goals of any business I work with, a filled appointment calendar, and yet one of the hardest gaps to close between a strong social media presence and someone actually booking a slot.",
+    thumbnail: "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Interior of a modern salon with styling chairs and mirrors",
+
+    sections: [
+      {
+        id: "content-that-books",
+        heading: "The content that actually drives bookings, not just likes",
+        paragraphs: [
+          "Before-and-after transformation content consistently outperforms general styling or product content, because it answers the exact question a potential client has: can this place actually deliver the result I want. Make this the backbone of your content, not an occasional post.",
+          "Show the specific stylist or therapist doing the work, not just the result. Clients booking a personal service want to feel some familiarity with who will actually be handling them before they commit to an appointment.",
+        ],
+      },
+      {
+        id: "booking-friction",
+        heading: "Remove every bit of friction between interest and a booked slot",
+        paragraphs: [
+          "A WhatsApp Business number with quick replies for pricing and availability, matching the pattern that works across every service business in this market, converts far better than making someone call during business hours or fill out a form.",
+          "If you can, display real-time availability, even informally through a pinned WhatsApp status or Instagram story, so a client sees a reason to book today rather than 'someday.'",
+        ],
+      },
+      {
+        id: "quiet-slots",
+        heading: "Fill weekday quiet hours with a specific, time-limited push",
+        paragraphs: [
+          "Most salons have predictable quiet periods, weekday mornings being the most common. A specific offer targeted at exactly that window, rather than a generic discount running all month, gives people with flexible schedules an actual reason to come in when you need them to.",
+          "A small, targeted Meta Ads budget aimed at people within a tight radius of your location, promoting that specific quiet-hours offer, usually outperforms a broader always-on discount running at full price times too.",
+        ],
+      },
+      {
+        id: "loyalty-and-repeat",
+        heading: "Repeat clients are worth more marketing attention than new ones",
+        paragraphs: [
+          "A simple loyalty system, even a basic punch card or WhatsApp broadcast list for existing clients announcing new services or seasonal offers, costs almost nothing and reliably brings back clients who already trust you, which is cheaper than acquiring a new one through ads.",
+          "Message past clients directly when it's been longer than their typical rebooking interval. A simple 'it's been six weeks, want to book your next appointment' message recovers business that would otherwise quietly drift to a competitor.",
+        ],
+      },
+      {
+        id: "reviews-and-trust",
+        heading: "Reviews matter more here than almost any other local business",
+        paragraphs: [
+          "A personal service like hair, skin or nails carries real risk in a client's mind, a bad haircut or reaction is visible and hard to undo. Recent, specific Google and Instagram reviews address that risk directly and should be actively requested after every good appointment.",
+          "Respond to every review, and handle a negative one calmly and specifically, the same discipline that matters for any local business's Google Business Profile.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "digital-marketing-for-clinics-healthcare-kenya-2026",
+    category: "Healthcare",
+    title: "Digital Marketing for Clinics and Healthcare Providers in Kenya",
+    excerpt: "Trust decides everything in this industry. Marketing that doesn't build it first is wasted no matter how good the offer is.",
+    date: "2026-10-10",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "Digital Marketing for Clinics and Healthcare Providers in Kenya",
+    metaDescription: "A practical, trust-first marketing guide for Kenyan clinics, dental practices and healthcare providers: Google Business Profile, advertising limits, reviews, and appointment booking.",
+    intro: "Healthcare marketing in Kenya runs on a different currency than most other industries, trust, built slowly, and lost instantly. A clinic's marketing has to earn that trust before it ever asks someone to book, which changes almost every tactical decision compared to a retail or hospitality business.",
+    thumbnail: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Clean, modern medical clinic waiting room with natural light",
+
+    sections: [
+      {
+        id: "gbp-for-clinics",
+        heading: "Your Google Business Profile is often the first and only touchpoint",
+        paragraphs: [
+          "Someone searching 'dentist near me' or 'clinic open now Kilimani' is usually in genuine need, not casually browsing. A complete, accurate profile with correct hours, services, and insurance accepted can be the difference between being chosen and being skipped entirely in a moment that matters.",
+          "Keep emergency or weekend hours especially accurate. A profile showing 'open' when a clinic is actually closed does real damage to trust the next time that same person searches.",
+        ],
+      },
+      {
+        id: "ad-platform-limits",
+        heading: "Understand the real restrictions before building a campaign",
+        paragraphs: [
+          "Google and Meta both apply tighter restrictions to healthcare advertising than most industries, certain health claims, before-and-after imagery for some treatments, and specific personal health condition targeting are restricted or banned outright. Plan creative and targeting with this in mind from the start, not after an ad gets rejected.",
+          "This is one of the few industries where a straightforward Google Business Profile and SEO strategy often does more reliable work than paid ads, simply because the advertising guardrails are so much tighter.",
+        ],
+      },
+      {
+        id: "trust-content",
+        heading: "The content that actually builds trust here",
+        paragraphs: [
+          "Content from the actual doctor, dentist or specialist, answering common patient questions in plain language, builds more trust than polished but anonymous clinic branding. Patients are choosing a person to trust with their health, not just a facility.",
+          "Clearly explaining what to expect during a visit, what a first consultation involves, what it costs, reduces the anxiety that keeps a lot of people from booking a healthcare appointment in the first place.",
+        ],
+      },
+      {
+        id: "booking-and-followup",
+        heading: "Booking has to be simple, and follow-up has to be reliable",
+        paragraphs: [
+          "A WhatsApp number for appointment enquiries, with a real person responding quickly, matters even more here than in other industries, since a health concern that goes unanswered for hours often means the person seeks care elsewhere rather than waiting.",
+          "Appointment reminders and simple follow-up messages after a visit build the kind of ongoing trust that turns a one-time patient into someone who brings their whole family to the same clinic for years.",
+        ],
+      },
+      {
+        id: "reviews-with-care",
+        heading: "Reviews matter, handled with more care than usual",
+        paragraphs: [
+          "Genuine patient reviews are powerful trust signals, but requesting them needs to respect patient privacy and comfort, a general request to leave a review after a good experience works, specifically asking about a sensitive condition or treatment does not.",
+          "Responding to a negative review in healthcare requires particular care, acknowledging the concern professionally without discussing any specific patient details publicly, since confidentiality matters more here than in almost any other industry.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

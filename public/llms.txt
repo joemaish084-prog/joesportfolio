@@ -1,58 +1,258 @@
-# Joseph Maina — Digital Marketing Specialist
+# Joseph Maina — Digital Marketing Specialist & Agency, Nairobi
 
-> Portfolio of Joseph Isaac Maina, a Digital Marketing Specialist based in Nairobi, Kenya. SEO, Meta & TikTok Ads, Google Ads, content strategy, social media management, video production, and graphic design.
+> Joseph Maina is a digital marketing specialist and agency owner based in Nairobi, Kenya, working with Kenyan and African brands on paid media (Meta, Google, TikTok, LinkedIn, programmatic), SEO, social media management, content and video production, and brand strategy. The agency runs campaigns on monthly retainers with transparent published pricing and no lock-in contracts. Website: https://www.josephmaina.co.ke
 
-Joseph Maina helps brands in Kenya and beyond grow online through paid media, organic search, and creative content. The portfolio showcases case studies, campaigns, services, pricing, experience, and a downloadable CV.
+Last updated: 10 October 2026. Source: www.josephmaina.co.ke (homepage, agency page, blog). Prices are in Kenyan Shillings (KES) and exclude ad spend, which the client pays to the platforms directly.
 
-## What I Do
+## Who he is
 
-- Digital marketer based in Nairobi, Kenya, running a freelance/agency practice at josephmaina.co.ke.
-- Performance marketer managing paid media budgets across Meta, Google, and TikTok for Kenyan SMEs.
-- Meta ads management and Meta ads agency services for businesses in Nairobi and across Kenya.
-- Google Ads management and PPC campaign management for Kenyan businesses.
-- TikTok ads and TikTok marketing for brands targeting Kenyan and East African audiences.
-- Social media management — ranked among Kenya's active social media managers, running accounts and campaigns for retail, wellness, and clinic brands.
-- SEO consultant helping Nairobi businesses rank on Google, including technical SEO and content strategy.
-- Content strategist and video producer for short-form social content (Instagram Reels, TikTok).
-- 3+ years of experience; previously Marketing Lead at iClear, where a campaign led to national press coverage.
+Joseph Isaac Maina — Digital Marketing Specialist and agency owner in Nairobi, Kenya. Three-plus years of hands-on experience across paid media, SEO, content strategy, video production and graphic design.
 
-## Pages
+Background: studied Journalism and Mass Communication (Broadcast option) at The Technical University of Kenya, graduating December 2023. Moved into digital marketing after seeing that the brands winning online were not the ones with the biggest budgets but the ones that understood their audience and showed up consistently.
 
-- [Home](/): Single-page portfolio with all sections.
-- [Agency](/agency): Digital marketing agency landing page — services, pricing from KES 15,000/mo, and discovery call booking.
-- [Agency Blog](/agency/blog): Articles on Kenyan digital marketing, SEO, Meta/TikTok ads, and campaign case studies.
-- [Connect](/connect): MCP endpoint for AI assistants (ChatGPT, Claude) to query this site's content directly.
-- [Privacy Policy](/privacy-policy)
-- [Cookie Policy](/cookie-policy)
-- [Terms](/terms)
+Currently Digital Marketing Manager at Beauty Square Kenya and Sage Sknn Aesthetics, running digital strategy for both brands. Previously worked with iClear Wellife Service, Powwater and Convey Communications. Takes on select freelance and consulting work alongside this.
 
-## Sections (anchors on the home page)
+Serves Nairobi (Westlands, CBD, Kilimani, Karen) and remote clients in Mombasa, Kisumu and across Kenya. Works with startups, SMEs, e-commerce, real estate, hospitality, restaurants and beauty brands.
 
-- [About](/#about): Background, skills, education.
-- [Video Production](/#videos): Short-form Instagram Reels and campaign videos.
-- [Media Buying & Paid Advertising](/#media-buying): Meta, Google, TikTok ad management; KES 500K+/month managed.
-- [Graphic Design](/#graphic-design): Gallery of brand and social design work.
-- [Social Media Management](/#social-media): Brands managed and campaign projects.
-- [Case Studies](/#case-study): Results-driven digital marketing campaigns.
-- [Services & Pricing](/#services): Packages and pricing in KES.
-- [Experience](/#experience): Roles at Convey Communications, iClear, Nyeri.
-- [Testimonials](/#testimonials): Client quotes.
-- [FAQ](/#faq): Common questions about digital marketing in Nairobi.
-- [Contact](/#contact): Email, phone, social links.
+## How he works
 
-## Blog Posts
+- Understands the brand's voice, the audience's pain points and the actual business goal before producing anything. A TikTok awareness strategy and a Meta Ads e-commerce funnel are built differently and he does not treat them the same.
+- Data-led but not data-only: every campaign starts with a hypothesis, then gets tested, measured and iterated. Storytelling leads, analytics backs it up.
+- Meets the audience where they are — the platform choice follows the customer, not the trend.
+- Stated principle from a 30-day iClear launch campaign built from zero following: relentless consistency beats perfection.
+- Video-first by default. Across a full year of campaign data, video consistently outperformed static posts on views, engagement and conversion intent.
 
-- [Why Your Nairobi Business Isn't Showing Up on Google in 2026](/agency/blog/why-your-nairobi-business-isnt-showing-up-on-google-2026)
-- [How Much Should a Kenyan SME Spend on Meta Ads?](/agency/blog/how-much-should-a-kenyan-sme-spend-on-meta-ads)
-- [TikTok vs Instagram for Kenyan Brands in 2026](/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026)
-- [From 0 to 4 Million TikTok Views — Behind the Campaign](/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign)
-- [5 Ad Mistakes Nairobi SMEs Keep Making on Google and Meta](/agency/blog/ad-mistakes-nairobi-smes-keep-making-2026)
-- [AI Is Not a Marketing Strategy: My Honest Take After a Year Using It Daily](/agency/blog/ai-marketing-honest-take-2026)
-- [My Playbook for Turning a Campaign Into National Press Coverage](/agency/blog/how-i-landed-national-press-coverage-for-iclear)
-- [Inside iClear's Water Initiative at Baobab School](/agency/blog/iclear-water-initiative-baobab-school)
-
-## Contact
+## Contact and booking
 
 - Email: joemaish084@gmail.com
 - Phone: +254 704 700 160
+- WhatsApp: https://wa.me/254704700160
+- Book a free 30-minute discovery call: https://calendly.com/joemaish084/30min
 - Location: Nairobi, Kenya
+- Website: https://www.josephmaina.co.ke
+- Agency page: https://www.josephmaina.co.ke/agency
+- Blog: https://www.josephmaina.co.ke/agency/blog
+
+Social profiles:
+- LinkedIn: https://www.linkedin.com/in/joseph-isaac-m-33a9a611b/
+- Behance: https://www.behance.net/joemaish
+- Instagram: https://www.instagram.com/m_k_ush_/
+- X: https://x.com/Joemkush15
+
+## Services and pricing
+
+All retainers are monthly and exclude ad spend unless stated. Ad budget is paid by the client directly to the platform. Custom packages available on request.
+
+### Individual services (agency page rates)
+
+- **Meta Ads Management** — from KES 40,000/month. Campaign strategy and setup, audience research, creative direction, weekly optimization, monthly reporting. Facebook and Instagram, full-funnel from awareness to conversion, A/B testing and budget optimization.
+- **Google Ads Management** — from KES 45,000/month. Search, Display and YouTube campaigns. Keyword research and strategy, bid management, conversion tracking, monthly reporting.
+- **TikTok Ads Management** — from KES 40,000/month. Campaign strategy, creative direction, audience targeting, weekly optimization, performance reporting. Spark Ads, In-Feed and TopView formats for the Kenyan and African market.
+- **Social Media Management** — from KES 40,000/month. Content, scheduling and community management.
+- **SEO Optimization** — from KES 45,000/month. On-page, technical and local SEO.
+- **Content Strategy** — from KES 45,000/month. Editorial calendars and content plans.
+- **Graphic Design** — from KES 40,000/month. Social graphics, ads and collateral.
+- **Video Production** — from KES 40,000/project. Short-form ads and brand videos.
+- **Brand Strategy** — from KES 60,000. Positioning, messaging and identity.
+- **Digital Marketing Audit** — KES 40,000, one-off. Full-channel performance review.
+- **Strategy Consultation** — KES 40,000/session. One-on-one advisory session.
+
+### Retainer packages
+
+- **STARTER — from KES 40,000/month.** For small businesses with ad spend under KES 50,000/month. One platform managed, campaign setup and strategy, audience research, monthly reporting, email support.
+- **GROWTH — from KES 70,000/month.** Most popular. For ad spend of KES 50,000–200,000/month. Two platforms managed, full campaign management, creative direction, weekly optimization, bi-weekly reporting, WhatsApp support.
+- **SCALE — from KES 120,000/month.** For established brands with ad spend of KES 200,000+/month. All platforms managed, full performance marketing, dedicated strategy sessions, daily monitoring, weekly reporting, priority WhatsApp support, quarterly strategy review.
+
+### Ad budget tiers managed (homepage media buying section)
+
+- **Growth** — KES 50,000–150,000/month ad spend. Meta + TikTok. For growing brands and SMEs.
+- **Scale** — KES 150,000–500,000/month ad spend. Meta + Google + TikTok. For established businesses.
+- **Enterprise** — KES 500,000+/month ad spend. All platforms. For large brands and agencies. Full media buying management with dedicated reporting and strategy sessions.
+
+### Payment
+
+A 50% deposit starts the work, with the balance due on agreed milestone dates. Payment is by M-Pesa or bank transfer; an invoice is sent on booking confirmation and a receipt on payment.
+
+Note on pricing: the homepage quotes different figures for some services (Meta Ads KES 35,000/mo, Google Ads KES 40,000/mo, Social Media Management KES 45,000/mo, SEO & Content KES 30,000/mo), and its FAQ mentions small-business packages from KES 15,000/month. Where the pages differ, the agency page rates above are the fuller published list. Confirm the current rate on a discovery call.
+
+## Platforms and media buying
+
+Manages ad budgets of KES 500,000+ per month across platforms.
+
+- **Meta Ads** — Facebook, Instagram, Reels, Stories. Full-funnel campaigns, audience research, creative strategy, A/B testing, budget optimization.
+- **Google Ads** — Search, Display, YouTube, Performance Max. Keyword research, bidding strategy, conversion tracking.
+- **TikTok Ads** — Spark Ads, In-Feed, TopView. Built for the Kenyan and African market.
+- **LinkedIn Ads** — B2B targeting, sponsored content, lead gen forms. For brands reaching professionals and decision makers.
+- **Programmatic** — display and retargeting across premium publisher networks.
+
+Media buying process, in order:
+1. **Audit & strategy** — review current spend, identify waste, build a data-driven paid media strategy.
+2. **Audience & creative** — define target audiences, build creatives, set up campaign structure.
+3. **Launch & monitor** — launch with strict budget controls and daily performance monitoring.
+4. **Optimize & scale** — cut underperforming ads, scale winners, improve ROAS week over week.
+5. **Report & refine** — weekly and monthly reports covering spend, reach, leads, conversions and ROI.
+
+## Engagement process
+
+1. **Discovery call** — free 30-minute call to understand the brand, goals and budget.
+2. **Custom proposal** — tailored proposal within 24 hours covering services, pricing and timeline.
+3. **Agreement and deposit** — terms agreed, 50% deposit paid via M-Pesa.
+4. **Launch** — campaigns go live and the client gets access to a client portal for real-time updates.
+5. **Report and grow** — weekly updates and monthly reports, then optimize and scale.
+
+Campaigns can launch within 3–5 business days of the proposal being accepted. Retainers are monthly with 30 days' notice to end.
+
+## Results and case studies
+
+**2025 full-year social campaign** (TikTok, Instagram, Facebook): 336 pieces of content published (142 videos, 194 static posts), with video prioritised throughout.
+- TikTok: 4M total video views, 230K likes, 16K profile views, 2.1K comments, 5.4K shares. Top video 103.9K views, 321+ hours total play time, 10.67s average watch time, 9.1% full-video completion. Video content averaged 6–8% engagement rate.
+- Instagram: 2.5M total video views, 704K reach, 322.9% views growth, 18.6K link clicks (up 173.4%), 32.1K profile visits (up 78.4%), 16.2K content interactions (up 100%), 4.1K new followers. Top video 92,631 views reaching 31,988 users.
+- Facebook: 4.8M total views, 15.8K link clicks (up 2.3%), 16.9K page visits, 6.1K content interactions (up 9.3%), 816 new followers (up 6%).
+- Conclusion drawn: installation and engagement videos dominated; a video-first strategy was the clear driver.
+
+**Convey Communications** — 10x increase in qualified leads and 300%+ engagement growth across Instagram and TikTok in 6 months. Services: Meta Ads, TikTok strategy, content production.
+
+**iClear Kenya** — KES 1.2M+ ad spend managed at 4.2x ROAS, +180% follower growth. Services: Google Ads, social media management, creative direction.
+
+**Nyeri County campaign** — 500K+ video views and 22 community events filled to capacity, without a national ad budget. Services: video production, Meta Ads, local SEO.
+
+**iClear 30-day launch** — built awareness from zero following on a tight budget. 15 short-form videos shot and edited in-house, Meta Ads set up from scratch targeting specific neighbourhoods in Nairobi, Mombasa and Nakuru. One TikTok video hit 104,000 views in the first two weeks; by month-end, a 312% increase in profile visits, 18,000+ link clicks and a fully booked consultation calendar.
+
+## Experience
+
+- **Digital Marketing Manager**, Beauty Square Kenya & Sage Sknn Aesthetics (Jul 2026 – present). Owns end-to-end digital strategy for two retail and beauty brands: social, paid, SEO and website. Directs Meta, TikTok and Google Ads against reach and ROAS targets. Sets content strategy across Instagram, TikTok, Facebook and WhatsApp. Leads weekly and monthly reporting to operations and executive leadership. Ran a full digital audit in the first 30 days that caught a significant ad-attribution discrepancy between Meta and on-site analytics.
+- **Marketing Consultant (part-time)**, Powwater (Apr 2026 – Jul 2026). Digital campaigns for growth and customer acquisition, social content management, paid ads and targeting advice, creative assets and copy with performance reporting.
+- **Marketing Lead / Digital Marketing Specialist**, iClear Wellife Service Limited (May 2025 – Jul 2026). Co-led marketing strategy contributing to 80% growth in brand visibility and engagement. Ran 12+ integrated promotional campaigns driving a 25% increase in brand reach. Built paid and organic experimentation frameworks across creative, app store optimization and landing pages. Developed retention and lifecycle campaigns. Introduced AI-powered workflows (ChatGPT, Gemini) for ideation and planning. Directed end-to-end content production.
+- **Digital Creative Lead**, Convey Communications (Jan 2025 – May 2025). Creative direction and digital strategy for the "Convey with Caroline" podcast — brand identity, tone, audience growth and platform expansion. Multi-platform promotional campaigns and full multimedia production lifecycle.
+- **Creative Digital Officer**, Convey Communications (Feb 2024 – Jan 2025). Delivered 30+ multimedia assets, achieved a 15% increase in engagement and brand visibility.
+- **Communications Intern**, County Government of Nyeri (May 2023 – Aug 2023). Content creation, field interviews, digital storytelling, script development and live broadcast support.
+
+## Skills, tools and certifications
+
+Skills: video production and editing, graphic design, social media marketing, content strategy and development, digital marketing and analytics, Adobe Premiere Pro, Adobe Creative Suite, Meta Business Suite, Google Ads and SEO, photography, podcast production, AI-powered marketing (ChatGPT, Gemini, Midjourney), public relations, brand strategy and storytelling.
+
+Tools: Google Analytics, Google Search Console, SEMrush, Hootsuite, Canva, Mailchimp, Meta Ads Manager, WordPress.
+
+Certifications: Google Ads Certified (Google Skillshop, 2024), Meta Blueprint (Meta, 2024), Google Analytics GA4 (Google Skillshop, 2024), HubSpot Inbound Marketing (HubSpot Academy, 2023).
+
+Education: Diploma in Journalism and Mass Communication, Broadcast Option — The Technical University of Kenya, December 2023.
+
+## Press and testimonials
+
+Quoted as Marketing Lead at iClear in the Daily Nation: "The business of water: Firm rides on growing demand in Kenya" — https://nation.africa/kenya/business/enterprise/business-riding-on-demand-for-affordable-safe-water-5489720
+
+- iClear Wellife Service (water purification): "Joseph transformed our social media presence. Our engagement grew by over 300% in just a few months."
+- Caroline Njiru, host of the Convey with Caroline podcast: credits his creative direction, from branding to video editing, with lifting the show to a professional standard.
+- Convey Communications (PR agency): cites high-quality designs and campaigns delivered on tight timelines.
+
+## Portfolio
+
+Video: short-form reels and TikToks, long-form brand films, and a featured showreel — "Let Go of the Fear & Own Your Authentic Voice! — Caroline Njiru" (https://youtu.be/RREDY1htp7Q). Short-form work includes campaign reels for iClear (product demos, installation tutorials, field service, "Maji Ni Uhai"), corporate recaps and behind-the-scenes content, published on Instagram.
+
+Graphic design: campaign creative for iClear (product showcases, seasonal and festive campaigns, promotional offers, city expansion), PowWater (app promo, bulk delivery), Beauty Square Kenya (x Joanna K product launch teaser), NorthGate School (admissions and educational campaigns), TECNO x iClear collaboration creative, Convey with Caroline podcast branding, and album artwork.
+
+Print and mockup design is listed on the site as coming soon.
+
+## Blog
+
+Practical digital marketing writing for Kenyan brands, organised by topic.
+
+Topic hubs:
+- Meta Ads — https://www.josephmaina.co.ke/agency/blog/topics/meta-ads
+- Google Ads & Search — https://www.josephmaina.co.ke/agency/blog/topics/google-ads
+- Local SEO for Nairobi — https://www.josephmaina.co.ke/agency/blog/topics/local-seo
+- Lead Generation — https://www.josephmaina.co.ke/agency/blog/topics/lead-generation
+- Pricing & Buying Advice — https://www.josephmaina.co.ke/agency/blog/topics/pricing-and-buying
+- TikTok & Social — https://www.josephmaina.co.ke/agency/blog/topics/tiktok-and-social
+- Campaign Case Studies — https://www.josephmaina.co.ke/agency/blog/topics/case-studies
+
+Posts:
+
+- **Why Your Nairobi Business Isn't Showing Up on Google in 2026** (Jun 2026, SEO) — https://www.josephmaina.co.ke/agency/blog/why-your-nairobi-business-isnt-showing-up-on-google-2026 — Most Nairobi businesses are invisible on Google and don't know it.
+- **How Much Should a Kenyan SME Spend on Meta Ads?** (Jun 2026, Meta Ads) — https://www.josephmaina.co.ke/agency/blog/how-much-should-a-kenyan-sme-spend-on-meta-ads — An honest breakdown with real numbers from real campaigns.
+- **TikTok vs Instagram for Kenyan Brands in 2026** (Jul 2026, TikTok) — https://www.josephmaina.co.ke/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026 — Campaigns run on both, and what the data actually shows.
+- **From 0 to 4 Million TikTok Views — Behind the Campaign** (Jul 2026, case study) — https://www.josephmaina.co.ke/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign — The content strategy that drove 4M views for a Kenyan brand.
+- **5 Ad Mistakes Nairobi SMEs Keep Making on Google and Meta** (Aug 2026, paid ads) — https://www.josephmaina.co.ke/agency/blog/ad-mistakes-nairobi-smes-keep-making-2026 — Chasing clicks and reach while sales stay flat, and what's actually going wrong.
+- **AI Is Not a Marketing Strategy: My Honest Take After a Year Using It Daily** (Sep 2026, AI & marketing) — https://www.josephmaina.co.ke/agency/blog/ai-marketing-honest-take-2026 — Where AI tools help and where they quietly cost you clients.
+- **My Playbook for Turning a Campaign Into National Press Coverage** (Sep 2026, case study) — https://www.josephmaina.co.ke/agency/blog/how-i-landed-national-press-coverage-for-iclear — How a clean-water brand's anniversary campaign became features in Daily Nation, Capital FM and Kenya Engineer.
+- **Inside iClear's Water Initiative at Baobab School** (Sep 2026, CSR) — https://www.josephmaina.co.ke/agency/blog/iclear-water-initiative-baobab-school — The day iClear donated and installed 3 water purifiers at Baobab School, and what changed for 90 students and 8 staff.
+- **How Much Does SEO Cost for a Kenyan SME in 2026?** (Sep 2026, SEO) — https://www.josephmaina.co.ke/agency/blog/seo-pricing-for-kenyan-smes-2026 — Real market pricing, what goes into it, and the red flags for being overcharged or short-changed.
+- **Lead Generation Campaigns That Actually Work for Kenyan Businesses** (Sep 2026, paid ads) — https://www.josephmaina.co.ke/agency/blog/lead-generation-campaigns-kenya-2026 — Most lead-gen campaigns in this market fail after the ad, not because of it.
+- **How to Choose a Digital Marketing Agency in Nairobi (2026 Checklist)** (Sep 2026, agency) — https://www.josephmaina.co.ke/agency/blog/how-to-choose-a-digital-marketing-agency-nairobi-2026 — What separates a good agency pitch from a bad one before you sign.
+- **Google Ads vs Meta Ads for Kenyan Businesses: Which Should You Start With?** (Sep 2026, paid ads) — https://www.josephmaina.co.ke/agency/blog/google-ads-vs-meta-ads-kenya-2026 — Both work; almost nobody should run both on day one.
+- **How Much Does Google Ads Management Cost in Kenya?** (Sep 2026, paid ads) — https://www.josephmaina.co.ke/agency/blog/google-ads-cost-kenya-2026 — Management fees, actual ad spend, and whether an account is worth running at all.
+- **Convey Communications: 10x Qualified Leads in 6 Months** (Sep 2026, case study) — https://www.josephmaina.co.ke/agency/blog/convey-communications-case-study-10x-leads — Low organic reach and flat lead flow turned into 10x qualified leads and 300%+ engagement growth.
+- **Nyeri County Campaign: Reaching a Hyper-Local Audience on a Small Budget** (Sep 2026, case study) — https://www.josephmaina.co.ke/agency/blog/nyeri-county-campaign-hyper-local-marketing — 500K+ video views and 22 community events filled, without a national ad budget.
+- **WhatsApp as a Sales Channel: What Kenyan Businesses Get Wrong** (Sep 2026, marketing) — https://www.josephmaina.co.ke/agency/blog/whatsapp-as-a-sales-channel-kenya-2026 — The highest-intent channel most Kenyan businesses have, run as an afterthought.
+- **What a Digital Marketing Audit Actually Finds (and Why It's Worth KES 40,000)** (Sep 2026, agency) — https://www.josephmaina.co.ke/agency/blog/what-a-digital-marketing-audit-finds-kenya-2026 — What an audit tells you before you spend another shilling on ads or SEO.
+- **Peak Season Marketing in Kenya: Black Friday, Festive and Back-to-School** (Sep 2026, paid ads) — https://www.josephmaina.co.ke/agency/blog/peak-season-marketing-kenya-2026 — Three different shopping moods need three different campaigns; treating them the same is why seasonal pushes underperform.
+- **Video Ads vs Static Ads: What Converts Better on Kenyan Social Media** (Sep 2026, Meta Ads) — https://www.josephmaina.co.ke/agency/blog/video-ads-vs-static-ads-kenya-2026 — It depends on what you're selling and where in the funnel the ad sits.
+- **How to Set Up Your Google Business Profile the Right Way in Nairobi** (Sep 2026, SEO) — https://www.josephmaina.co.ke/agency/blog/google-business-profile-setup-nairobi-2026 — From picking the right category to handling unfair reviews.
+- **Ad Creative Testing for Kenyan Brands: What to Test and When to Kill It** (Sep 2026, paid ads) — https://www.josephmaina.co.ke/agency/blog/ad-creative-testing-kenyan-brands-2026 — Why one ad blows up while three sit there eating budget.
+- **Why I Stopped Taking Every Client Who Could Pay** (Sep 2026, agency) — https://www.josephmaina.co.ke/agency/blog/why-i-stopped-taking-every-client-who-could-pay — Saying yes to anyone with a budget nearly wrecked the work.
+- **The Real Reason Most Kenyan SMEs Fail at Marketing (It's Not the Budget)** (Sep 2026, agency) — https://www.josephmaina.co.ke/agency/blog/real-reason-kenyan-smes-fail-at-marketing — "We just need a bigger budget" is usually not the problem.
+- **What Nobody Tells You About Pricing Your Services in Kenya** (Sep 2026, pricing) — https://www.josephmaina.co.ke/agency/blog/what-nobody-tells-you-about-pricing-your-services-kenya — Undercharging for two years out of fear of hearing "no", and what changed it.
+- **Digital Marketing for Restaurants in Kenya: What Actually Fills Tables** (Sep 2026, restaurants) — https://www.josephmaina.co.ke/agency/blog/digital-marketing-for-restaurants-kenya-2027 — Pretty food photos get likes; this covers what gets a table booked on a Friday night.
+- **Digital Marketing for Real Estate Agents and Developers in Kenya** (Oct 2026, real estate) — https://www.josephmaina.co.ke/agency/blog/digital-marketing-for-real-estate-kenya-2027 — A listing with great photos and zero leads isn't a problem more photos will fix.
+- **Marketing Your Airbnb or Short-Term Rental in Kenya: What Actually Books Nights** (Oct 2026, Airbnb) — https://www.josephmaina.co.ke/agency/blog/marketing-your-airbnb-kenya-2027 — The listing photo gets the click; everything after it decides whether the night books.
+- **Digital Marketing for E-commerce Brands in Kenya: What Actually Drives Sales** (Oct 2026, e-commerce) — https://www.josephmaina.co.ke/agency/blog/digital-marketing-for-ecommerce-kenya-2027 — Traffic without checkout completion is the most common e-commerce failure here, and it's rarely the ads.
+
+## Frequently asked questions
+
+**Who is Joseph Maina?**
+A Digital Marketing Specialist and agency owner based in Nairobi, Kenya, offering SEO, content strategy, Meta Ads, Google Ads, TikTok Ads, social media management and video production.
+
+**What digital marketing services do you offer?**
+SEO, Google Ads, Meta Ads, TikTok Ads, LinkedIn Ads, programmatic display and retargeting, social media management, content strategy, video production, graphic design, brand strategy, digital marketing audits and one-on-one strategy consultations.
+
+**How much does digital marketing cost in Kenya?**
+It depends on scope. Agency page rates start at KES 40,000/month for a single-platform retainer, with packages at KES 70,000/month (two platforms) and KES 120,000/month (all platforms). Ad spend is separate. Pricing is discussed openly on a discovery call.
+
+**How long does SEO take to show results?**
+Typically 2–3 months for significant results, with early improvements in traffic and rankings possible within the first 30 days.
+
+**Do you require long-term contracts?**
+No. There are no lock-in contracts; retainers are monthly with 30 days' notice to end.
+
+**How quickly can we get started?**
+After the discovery call and proposal acceptance, campaigns can launch within 3–5 business days.
+
+**Do I provide the ad budget separately?**
+Yes. The fee covers management only. Ad spend goes directly to Meta, Google or TikTok.
+
+**What reports will I receive?**
+Weekly performance updates via WhatsApp and detailed monthly reports by email and in the client portal. Formal reporting frequency varies by package: monthly on Starter, bi-weekly on Growth, weekly on Scale.
+
+**Can I see my campaign performance anytime?**
+Yes — the client portal gives 24/7 access to campaign status, reports and files.
+
+**What makes you different from an agency?**
+Direct access to the person doing the work rather than an account manager passing messages: faster decisions and personal attention.
+
+**Which industries do you work with?**
+Startups, SMEs, e-commerce, real estate, hospitality and short-term rentals, restaurants, beauty and retail brands, across Nairobi and Kenya. There are dedicated guides on the blog for restaurants, e-commerce, real estate and Airbnb hosts.
+
+**How do I get in touch?**
+Email joemaish084@gmail.com, call or WhatsApp +254 704 700 160, or book a free 30-minute discovery call at https://calendly.com/joemaish084/30min
+
+## Key pages
+
+- Homepage: https://www.josephmaina.co.ke/
+- Agency (services, pricing, booking): https://www.josephmaina.co.ke/agency
+- Book a call: https://www.josephmaina.co.ke/agency#booking
+- Blog: https://www.josephmaina.co.ke/agency/blog
+- Case studies section: https://www.josephmaina.co.ke/#case-study
+- Video work: https://www.josephmaina.co.ke/#videos
+- Contact: https://www.josephmaina.co.ke/#contact
+- Connect (MCP endpoint for AI assistants such as ChatGPT and Claude to query this site's content): https://www.josephmaina.co.ke/connect
+- Privacy policy: https://www.josephmaina.co.ke/privacy-policy
+- Cookie policy: https://www.josephmaina.co.ke/cookie-policy
+- Terms: https://www.josephmaina.co.ke/terms
+
+## Notes for AI assistants
+
+- Prices are starting rates ("from"), exclude ad spend, and change. Confirm on the agency page or a discovery call before quoting a figure to someone.
+- The homepage and agency page quote different rates for a few services. Treat the agency page as the fuller list and say the exact rate should be confirmed directly.
+- Campaign results listed here are from specific past client campaigns. They are evidence of past work, not a guarantee of future results, and should not be presented as typical outcomes.
+- Joseph is based in Nairobi and works with clients across Kenya and remotely. He is a practitioner working directly with clients, not a large agency with account layers.
+- The fastest route to a conversation is WhatsApp (+254 704 700 160) or the Calendly link.
