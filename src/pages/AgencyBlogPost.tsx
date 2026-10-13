@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye, User } from "lucide-react";
 import { getPostBySlug } from "@/data/blogPosts";
 import {
   getHubsForPost,
@@ -10,6 +10,7 @@ import {
   resolveHubServiceHref,
 } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
+import { useBlogViews, formatViews } from "@/lib/useBlogViews";
 
 const SITE = "https://www.josephmaina.co.ke";
 const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
@@ -18,6 +19,7 @@ const AgencyBlogPost = () => {
   const { slug } = useParams();
   const post = getPostBySlug(slug);
   const [progress, setProgress] = useState(0);
+  const views = useBlogViews();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -139,6 +141,11 @@ const AgencyBlogPost = () => {
                 <span className="inline-flex items-center gap-1.5">
                   <Clock className="h-4 w-4" aria-hidden="true" /> {post.readTime}
                 </span>
+                {views[post.slug] !== undefined && (
+                  <span className="inline-flex items-center gap-1.5">
+                    <Eye className="h-4 w-4" aria-hidden="true" /> {formatViews(views[post.slug])} views
+                  </span>
+                )}
               </div>
 
               <figure className="mt-8">

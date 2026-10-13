@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye } from "lucide-react";
 import { blogHubs, getHubBySlug, getHubPosts, resolveHubServiceHref } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
+import { useBlogViews, formatViews } from "@/lib/useBlogViews";
 
 const SITE = "https://www.josephmaina.co.ke";
 
 const AgencyBlogHub = () => {
   const { hub: hubSlug } = useParams();
   const hub = getHubBySlug(hubSlug);
+  const views = useBlogViews();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -122,6 +124,11 @@ const AgencyBlogHub = () => {
                     <span className="inline-flex items-center gap-1.5">
                       <Clock className="h-4 w-4" aria-hidden="true" /> {lead.readTime}
                     </span>
+                    {views[lead.slug] !== undefined && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <Eye className="h-4 w-4" aria-hidden="true" /> {formatViews(views[lead.slug])} views
+                      </span>
+                    )}
                   </div>
                   <Link
                     to={`/agency/blog/${lead.slug}`}
@@ -162,6 +169,9 @@ const AgencyBlogHub = () => {
                           </span>
                           <span>{post.dateLabel}</span>
                           <span>{post.readTime}</span>
+                          {views[post.slug] !== undefined && (
+                            <span>{formatViews(views[post.slug])} views</span>
+                          )}
                         </div>
                       </div>
                       <ArrowRight

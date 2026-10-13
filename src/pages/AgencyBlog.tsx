@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ArrowRight, CalendarDays, Clock, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Clock, Eye, User } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
+import { useBlogViews, formatViews } from "@/lib/useBlogViews";
 
 const SITE = "https://www.josephmaina.co.ke";
 
-const Meta = ({ dateLabel, readTime }: { dateLabel: string; readTime: string }) => (
+const Meta = ({
+  dateLabel,
+  readTime,
+  views,
+}: {
+  dateLabel: string;
+  readTime: string;
+  views?: number;
+}) => (
   <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-[#666666]">
     <span className="inline-flex items-center gap-1.5">
       <User className="h-4 w-4" aria-hidden="true" /> Joseph Maina
@@ -18,12 +27,18 @@ const Meta = ({ dateLabel, readTime }: { dateLabel: string; readTime: string }) 
     <span className="inline-flex items-center gap-1.5">
       <Clock className="h-4 w-4" aria-hidden="true" /> {readTime}
     </span>
+    {views !== undefined && (
+      <span className="inline-flex items-center gap-1.5">
+        <Eye className="h-4 w-4" aria-hidden="true" /> {formatViews(views)} views
+      </span>
+    )}
   </div>
 );
 
 const AgencyBlog = () => {
   const featured = blogPosts[0];
   const strays = getUnhubbedPosts();
+  const views = useBlogViews();
 
   const itemListSchema = {
     "@context": "https://schema.org",
@@ -150,7 +165,7 @@ const AgencyBlog = () => {
                       {featured.excerpt}
                     </p>
                     <div className="mt-6">
-                      <Meta dateLabel={featured.dateLabel} readTime={featured.readTime} />
+                      <Meta dateLabel={featured.dateLabel} readTime={featured.readTime} views={views[featured.slug]} />
                     </div>
                     <Link
                       to={`/agency/blog/${featured.slug}`}
@@ -214,7 +229,7 @@ const AgencyBlog = () => {
                             </h3>
                             <p className="mt-3 flex-1 text-sm leading-relaxed text-[#555555]">{post.excerpt}</p>
                             <div className="mt-5">
-                              <Meta dateLabel={post.dateLabel} readTime={post.readTime} />
+                              <Meta dateLabel={post.dateLabel} readTime={post.readTime} views={views[post.slug]} />
                             </div>
                             <Link
                               to={`/agency/blog/${post.slug}`}
@@ -264,7 +279,7 @@ const AgencyBlog = () => {
                           </h3>
                           <p className="mt-3 flex-1 text-sm leading-relaxed text-[#555555]">{post.excerpt}</p>
                           <div className="mt-5">
-                            <Meta dateLabel={post.dateLabel} readTime={post.readTime} />
+                            <Meta dateLabel={post.dateLabel} readTime={post.readTime} views={views[post.slug]} />
                           </div>
                           <Link
                             to={`/agency/blog/${post.slug}`}
