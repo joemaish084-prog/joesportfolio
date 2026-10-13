@@ -25,13 +25,13 @@ export function CaseStudy() {
               Case <span className="text-gradient">Studies</span>
             </h2>
             <p className="text-lg max-w-3xl mx-auto" style={{ color: "hsl(var(--case-study-muted))" }}>
-              As a <strong>Digital Marketing Specialist in Nairobi, Kenya</strong>, I run Meta Ads, TikTok and
+              As a <strong>Digital Marketing Specialist in Nairobi, Kenya</strong>, I run Google Ads, Meta Ads, TikTok and
               social media campaigns for Kenyan brands. These are the results, with the numbers behind them.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {caseStudies.map((cs, i) => (
             <ScrollReveal key={cs.id} direction="up" delay={i * 0.12} className="h-full">
               <Link
@@ -78,15 +78,17 @@ export function CaseStudy() {
                 </p>
 
                 <dl
-                  className="mt-6 grid grid-cols-3 gap-3 border-t pt-6"
+                  className="mt-6 space-y-3 border-t pt-6"
                   style={{ borderColor: "hsl(var(--case-study-card-border))" }}
                 >
                   {cs.stats.map((stat) => (
-                    <div key={stat.label} className="flex flex-col-reverse">
-                      <dt className="mt-1.5 text-xs leading-snug" style={{ color: "hsl(var(--case-study-muted))" }}>
+                    <div key={stat.label} className="flex items-baseline justify-between gap-4">
+                      <dt className="text-sm leading-snug" style={{ color: "hsl(var(--case-study-muted))" }}>
                         {stat.label}
                       </dt>
-                      <dd className="text-xl sm:text-3xl font-display font-bold text-gradient">{stat.value}</dd>
+                      <dd className="flex-shrink-0 text-xl sm:text-2xl font-display font-bold text-gradient">
+                        {stat.value}
+                      </dd>
                     </div>
                   ))}
                 </dl>

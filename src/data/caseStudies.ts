@@ -28,6 +28,40 @@ export interface CaseStudySummary {
  */
 export const caseStudies: CaseStudySummary[] = [
   {
+    id: "google-ads-launch",
+    tag: "Paid search",
+    period: "Aug to Oct 2026",
+    title: "Zero to KES 1.94M: a Google Ads launch in ten weeks",
+    summary:
+      "The business had never run Google Ads. I launched Search first, then Shopping, and tracked every order back to the campaign that drove it. The client is not named, the numbers are real.",
+    stats: [
+      { value: "KES 1.94M", label: "Tracked revenue" },
+      { value: "15.5x", label: "Return on ad spend" },
+      { value: "339", label: "Tracked orders" },
+    ],
+    cover: {
+      src: unsplash("1573804633927-bfcbcd909acd", 1600),
+      alt: "The Google logo as a multicoloured neon sign on a dark wall",
+    },
+    gallery: [
+      {
+        src: unsplash("1477013743164-ffc3a5e556da", 1200),
+        alt: "Phone showing a Google search results page",
+        caption: "Search: in front of buyers who are already looking",
+      },
+      {
+        src: unsplash("1522204523234-8729aa6e3d5f", 800),
+        alt: "Hands browsing an online shop on a tablet, surrounded by plants",
+        caption: "Shopping ads: 139 orders",
+      },
+      {
+        src: unsplash("1551288049-bebda4e38f71", 800),
+        alt: "Dark analytics dashboard with bar and line charts",
+        caption: "Every order tracked",
+      },
+    ],
+  },
+  {
     id: "meta-ads-turnaround",
     tag: "Paid media",
     period: "Jul to Oct 2026",

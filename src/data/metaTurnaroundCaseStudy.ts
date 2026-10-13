@@ -37,9 +37,51 @@ export interface TurnaroundCampaign {
   costPerPurchase: number;
 }
 
-export const metaTurnaround = {
+/** Shape shared by the paid-media case studies (Meta Ads, Google Ads). */
+export interface PaidCaseStudy {
+  /** Blog write-up, when there is one. */
+  slug?: string;
+  platform: string;
+  period: string;
+  attributionNote: string;
+  /** What one conversion is called on this platform. */
+  unit: string;
+  unitPlural: string;
+  before: { value: string; label: string };
+  after: { value: number; format: TurnaroundFormat; label: string };
+  stats: TurnaroundStat[];
+  steps: TurnaroundStep[];
+  months: TurnaroundMonth[];
+  monthlyNote: string;
+  campaignsTitle: string;
+  /** Returns under this multiple are marked amber. */
+  weakBelow: number;
+  campaigns: TurnaroundCampaign[];
+  best: TurnaroundHighlight;
+  weakest: TurnaroundHighlight;
+  comparisonNote: string;
+}
+
+export interface TurnaroundHighlight {
+  label: string;
+  name: string;
+  roas: number;
+  spend: number;
+  revenue: number;
+  costPerPurchase: number;
+}
+
+export const metaTurnaround: PaidCaseStudy = {
   slug: "meta-ads-turnaround-case-study-kenya-2026",
+  platform: "Meta Ads",
   period: "3 Jul to 8 Oct 2026",
+  unit: "purchase",
+  unitPlural: "purchases",
+  monthlyNote:
+    "Revenue in KES, from the monthly report. October covers eight days only, so its bar is dashed. July is in the campaign log but not the monthly report.",
+  campaignsTitle: "Sales campaigns by type, ranked by return on ad spend",
+  weakBelow: 30,
+  comparisonNote: "The strongest run earned 5x the return of the weakest campaign, on about 25% of the spend.",
   attributionNote:
     "Revenue as reported by Meta (7-day click, 1-day view). Platform-reported revenue usually runs higher than banked sales.",
 
@@ -47,7 +89,7 @@ export const metaTurnaround = {
   before: { value: "Under KES 10,000", label: "attributable Meta revenue a month" },
   after: {
     value: 5328094,
-    format: "kesM" as TurnaroundFormat,
+    format: "kesM",
     label: "revenue attributed by Meta in about three months",
   },
 
@@ -55,7 +97,7 @@ export const metaTurnaround = {
     { value: 129150, format: "kes", label: "Total Meta ad spend" },
     { value: 41.3, format: "x", label: "Return on ad spend", note: "43.7x on sales campaigns" },
     { value: 953, format: "int", label: "Tracked purchases", note: "KES 127 each on sales campaigns" },
-  ] satisfies TurnaroundStat[],
+  ],
 
   steps: [
     {
@@ -74,7 +116,7 @@ export const metaTurnaround = {
       title: "Review weekly, cut fast",
       body: "Check the numbers every week and move budget away from whatever is not earning it.",
     },
-  ] satisfies TurnaroundStep[],
+  ],
 
   // From the monthly report, which starts in August. July sits in the campaign
   // log only, so it is not charted here.
@@ -82,7 +124,7 @@ export const metaTurnaround = {
     { label: "Aug", revenue: 1375513, spend: 35208, roas: 39.1, purchases: 243 },
     { label: "Sep", revenue: 1518617, spend: 35982, roas: 42.2, purchases: 262 },
     { label: "Oct 1 to 8", revenue: 793400, spend: 15416, roas: 51.5, purchases: 130, partial: true },
-  ] satisfies TurnaroundMonth[],
+  ],
 
   // Sales campaigns grouped by type. Together: KES 120,810 spend, 949 purchases.
   campaigns: [
@@ -158,7 +200,7 @@ export const metaTurnaround = {
       roas: 15.4,
       costPerPurchase: 292,
     },
-  ] satisfies TurnaroundCampaign[],
+  ],
 
   best: {
     label: "Strongest single run",

@@ -4,6 +4,7 @@ import {
   formatKes,
   metaTurnaround,
   type MetaTurnaroundVisualKind,
+  type PaidCaseStudy,
   type TurnaroundFormat,
 } from "@/data/metaTurnaroundCaseStudy";
 
@@ -68,6 +69,10 @@ function useInView<T extends HTMLElement>() {
   return { ref, inView };
 }
 
+interface VisualProps {
+  data: PaidCaseStudy;
+}
+
 const FORMATTERS: Record<TurnaroundFormat, (n: number) => string> = {
   kes: (n) => formatKes(Math.round(n)),
   kesM: (n) => `KES ${(n / 1_000_000).toFixed(2)}M`,
@@ -105,9 +110,9 @@ function CountUp({ value, format, active }: { value: number; format: TurnaroundF
 }
 
 /** Results banner. Always dark, so it reads as the headline on both page styles. */
-function Hero() {
+function Hero({ data }: VisualProps) {
   const { ref, inView } = useInView<HTMLDivElement>();
-  const { before, after, stats, period, attributionNote } = metaTurnaround;
+  const { before, after, stats, period, attributionNote, platform } = data;
   return (
     <div
       ref={ref}
@@ -118,7 +123,7 @@ function Hero() {
       }}
     >
       <p className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/80">
-        Meta Ads · {period}
+        {platform} · {period}
       </p>
 
       <div className="mt-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:gap-8">
@@ -159,11 +164,11 @@ function Hero() {
   );
 }
 
-function Process() {
+function Process({ data }: VisualProps) {
   const { ref, inView } = useInView<HTMLOListElement>();
   return (
     <ol ref={ref} className="grid gap-4 sm:grid-cols-2">
-      {metaTurnaround.steps.map((step, i) => (
+      {data.steps.map((step, i) => (
         <li
           key={step.title}
           className={`${card} p-5 transition-all duration-500 ease-out motion-reduce:transition-none ${
@@ -182,9 +187,10 @@ function Process() {
   );
 }
 
-function Monthly() {
+function Monthly({ data }: VisualProps) {
   const { ref, inView } = useInView<HTMLElement>();
-  const max = Math.max(...metaTurnaround.months.map((m) => m.revenue));
+  const max = Math.max(...data.months.map((m) => m.revenue));
+  const columns = { gridTemplateColumns: `repeat(${data.months.length}, minmax(0, 1fr))` };
   return (
     <figure ref={ref} className={`${card} p-5 sm:p-7`}>
       <figcaption className={`text-sm font-semibold ${text}`}>
@@ -200,8 +206,11 @@ function Monthly() {
             style={{ top: `${line * 25}%` }}
           />
         ))}
-        <div className="absolute inset-0 grid grid-cols-3 items-end gap-4 border-b border-[color:var(--cs-border)] px-2 sm:gap-10 sm:px-8">
-          {metaTurnaround.months.map((m, i) => (
+        <div
+          className="absolute inset-0 grid items-end gap-4 border-b border-[color:var(--cs-border)] px-2 sm:gap-10 sm:px-8"
+          style={columns}
+        >
+          {data.months.map((m, i) => (
             <div
               key={m.label}
               className={`relative w-full rounded-t-xl transition-[height] duration-1000 ease-out motion-reduce:transition-none ${
@@ -225,37 +234,36 @@ function Monthly() {
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-3 gap-4 px-2 sm:gap-10 sm:px-8">
-        {metaTurnaround.months.map((m) => (
+      <div className="mt-3 grid gap-4 px-2 sm:gap-10 sm:px-8" style={columns}>
+        {data.months.map((m) => (
           <div key={m.label} className="text-center">
             <p className={`text-sm font-semibold ${text}`}>{m.label}</p>
             <p className="mt-1 text-sm font-bold tabular-nums text-[color:var(--cs-good)]">
               {m.roas.toFixed(1)}x
             </p>
-            <p className={`mt-0.5 text-xs tabular-nums ${muted}`}>{m.purchases} purchases</p>
+            <p className={`mt-0.5 text-xs tabular-nums ${muted}`}>{m.purchases} {data.unitPlural}</p>
           </div>
         ))}
       </div>
 
       <p className={`mt-6 text-xs leading-relaxed ${muted}`}>
-        Revenue in KES, from the monthly report. October covers eight days only, so its bar is
-        dashed. July is in the campaign log but not the monthly report.
+        {data.monthlyNote}
       </p>
     </figure>
   );
 }
 
-function Campaigns() {
+function Campaigns({ data }: VisualProps) {
   const { ref, inView } = useInView<HTMLElement>();
-  const max = Math.max(...metaTurnaround.campaigns.map((c) => c.roas));
+  const max = Math.max(...data.campaigns.map((c) => c.roas));
   return (
     <figure ref={ref} className={`${card} p-5 sm:p-7`}>
       <figcaption className={`text-sm font-semibold ${text}`}>
-        Sales campaigns by type, ranked by return on ad spend
+        {data.campaignsTitle}
       </figcaption>
       <ol className="mt-5 divide-y divide-[color:var(--cs-border)]">
-        {metaTurnaround.campaigns.map((c, i) => {
-          const weak = c.roas < 30;
+        {data.campaigns.map((c, i) => {
+          const weak = c.roas < data.weakBelow;
           return (
             <li key={c.label} className="flex gap-4 py-4 first:pt-0 last:pb-0">
               <span
@@ -291,7 +299,7 @@ function Campaigns() {
                 </div>
                 <p className={`mt-2 text-xs leading-relaxed tabular-nums ${muted}`}>
                   {formatKes(c.spend)} spent · {formatKes(c.revenue)} revenue · {c.purchases}{" "}
-                  purchases · {formatKes(c.costPerPurchase)} per purchase
+                  {data.unitPlural} · {formatKes(c.costPerPurchase)} per {data.unit}
                 </p>
               </div>
             </li>
@@ -299,20 +307,18 @@ function Campaigns() {
         })}
       </ol>
       <p className={`mt-5 text-xs leading-relaxed ${muted}`}>
-        Campaign names are replaced with generic descriptions. Amber marks a return under 30x.
+        Campaign names are replaced with generic descriptions. Amber marks a return under {data.weakBelow}x.
       </p>
     </figure>
   );
 }
 
-function Comparison() {
-  const { best, weakest } = metaTurnaround;
+function Comparison({ data }: VisualProps) {
+  const { best, weakest } = data;
   const sides = [
     { ...best, good: true },
     { ...weakest, good: false },
   ];
-  const multiple = Math.round(best.roas / weakest.roas);
-  const spendShare = Math.round((best.spend / weakest.spend) * 100);
   return (
     <div>
       <div className="grid gap-4 sm:grid-cols-2">
@@ -344,7 +350,7 @@ function Comparison() {
                   <dd className={`font-medium ${text}`}>{formatKes(s.revenue)}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <dt>Cost per purchase</dt>
+                  <dt>Cost per {data.unit}</dt>
                   <dd className={`font-medium ${text}`}>{formatKes(s.costPerPurchase)}</dd>
                 </div>
               </dl>
@@ -353,13 +359,13 @@ function Comparison() {
         })}
       </div>
       <p className={`mt-4 text-sm leading-relaxed ${muted}`}>
-        <strong className={text}>{multiple}x the return</strong> on about {spendShare}% of the spend.
+        {data.comparisonNote}
       </p>
     </div>
   );
 }
 
-const VISUALS: Record<MetaTurnaroundVisualKind, () => JSX.Element> = {
+const VISUALS: Record<MetaTurnaroundVisualKind, (props: VisualProps) => JSX.Element> = {
   hero: Hero,
   process: Process,
   monthly: Monthly,
@@ -371,15 +377,18 @@ export function MetaTurnaroundVisual({
   kind,
   tone = "light",
   className = "",
+  data = metaTurnaround,
 }: {
   kind: MetaTurnaroundVisualKind;
+  /** Which paid-media case study to draw. Defaults to the Meta Ads turnaround. */
+  data?: PaidCaseStudy;
   tone?: Tone;
   className?: string;
 }) {
   const Visual = VISUALS[kind];
   return (
     <div className={className} style={TONES[tone]}>
-      <Visual />
+      <Visual data={data} />
     </div>
   );
 }

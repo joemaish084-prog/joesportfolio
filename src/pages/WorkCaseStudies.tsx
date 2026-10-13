@@ -3,15 +3,17 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WorkPageLayout } from "@/components/WorkPageLayout";
-import { MetaTurnaroundDetail } from "@/components/case-studies/MetaTurnaroundDetail";
+import { PaidCaseStudyDetail } from "@/components/case-studies/PaidCaseStudyDetail";
 import { SocialCampaignDetail } from "@/components/case-studies/SocialCampaignDetail";
 import { CaseStudyGallery } from "@/components/case-studies/CaseStudyGallery";
 import { caseStudies } from "@/data/caseStudies";
 import { getHubBySlug, getHubPosts } from "@/data/blogHubs";
 import { metaTurnaround } from "@/data/metaTurnaroundCaseStudy";
+import { googleAdsLaunch } from "@/data/googleAdsCaseStudy";
 
 const DETAILS: Record<string, () => ReactNode> = {
-  "meta-ads-turnaround": () => <MetaTurnaroundDetail />,
+  "google-ads-launch": () => <PaidCaseStudyDetail data={googleAdsLaunch} />,
+  "meta-ads-turnaround": () => <PaidCaseStudyDetail data={metaTurnaround} />,
   "social-media-2025": () => <SocialCampaignDetail />,
 };
 
@@ -39,7 +41,7 @@ const WorkCaseStudies = () => {
       seo={{
         title: "Digital Marketing Case Studies | Joseph Maina, Nairobi",
         description:
-          "Campaign case studies with real numbers: a Meta Ads turnaround, a year of video-first social media and more work for Kenyan brands. Newest first.",
+          "Campaign case studies with real numbers: a Google Ads launch from zero, a Meta Ads turnaround, a year of video-first social media and more work for Kenyan brands. Newest first.",
         path: "/work/case-studies",
       }}
       backHref="/#case-study"
@@ -52,7 +54,7 @@ const WorkCaseStudies = () => {
       intro="Campaigns with the numbers behind them, including what did not work. The newest is always first."
       meta={[`${caseStudies.length} in-depth`, `${writeUps.length} written breakdowns`, "Newest first"]}
     >
-      <nav aria-label="Case studies on this page" className="mt-8 grid gap-3 sm:grid-cols-2">
+      <nav aria-label="Case studies on this page" className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {caseStudies.map((cs, i) => (
           <a
             key={cs.id}
