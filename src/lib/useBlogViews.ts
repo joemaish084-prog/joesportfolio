@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 
 const BLOG_VIEWS_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/blog-views`;
 
+/** Set to true to show view counts on the blog again. Data collection is unaffected either way. */
+export const SHOW_BLOG_VIEWS = false;
+
 let cache: Record<string, number> | null = null;
 let inFlight: Promise<Record<string, number>> | null = null;
 

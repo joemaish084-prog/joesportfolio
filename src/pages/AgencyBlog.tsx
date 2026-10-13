@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, CalendarDays, Clock, Eye, User } from "lucide-re
 import { blogPosts } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
-import { useBlogViews, formatViews } from "@/lib/useBlogViews";
+import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
 
 const SITE = "https://www.josephmaina.co.ke";
 
@@ -27,7 +27,7 @@ const Meta = ({
     <span className="inline-flex items-center gap-1.5">
       <Clock className="h-4 w-4" aria-hidden="true" /> {readTime}
     </span>
-    {views !== undefined && (
+    {SHOW_BLOG_VIEWS && views !== undefined && (
       <span className="inline-flex items-center gap-1.5">
         <Eye className="h-4 w-4" aria-hidden="true" /> {formatViews(views)} views
       </span>

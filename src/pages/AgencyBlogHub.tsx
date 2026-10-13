@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye } from "lucide-react";
 import { blogHubs, getHubBySlug, getHubPosts, resolveHubServiceHref } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
-import { useBlogViews, formatViews } from "@/lib/useBlogViews";
+import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
 
 const SITE = "https://www.josephmaina.co.ke";
 
@@ -124,7 +124,7 @@ const AgencyBlogHub = () => {
                     <span className="inline-flex items-center gap-1.5">
                       <Clock className="h-4 w-4" aria-hidden="true" /> {lead.readTime}
                     </span>
-                    {views[lead.slug] !== undefined && (
+                    {SHOW_BLOG_VIEWS && views[lead.slug] !== undefined && (
                       <span className="inline-flex items-center gap-1.5">
                         <Eye className="h-4 w-4" aria-hidden="true" /> {formatViews(views[lead.slug])} views
                       </span>
@@ -169,7 +169,7 @@ const AgencyBlogHub = () => {
                           </span>
                           <span>{post.dateLabel}</span>
                           <span>{post.readTime}</span>
-                          {views[post.slug] !== undefined && (
+                          {SHOW_BLOG_VIEWS && views[post.slug] !== undefined && (
                             <span>{formatViews(views[post.slug])} views</span>
                           )}
                         </div>
