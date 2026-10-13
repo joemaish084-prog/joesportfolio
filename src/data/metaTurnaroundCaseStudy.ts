@@ -2,12 +2,20 @@
 // deliberately not named: campaign labels here are generic descriptions, never
 // the real campaign names.
 
-export type MetaTurnaroundVisualKind = "stats" | "monthly" | "campaigns" | "comparison";
+export type MetaTurnaroundVisualKind = "hero" | "process" | "monthly" | "campaigns" | "comparison";
+
+export type TurnaroundFormat = "kes" | "kesM" | "x" | "int";
 
 export interface TurnaroundStat {
-  value: string;
+  value: number;
+  format: TurnaroundFormat;
   label: string;
   note?: string;
+}
+
+export interface TurnaroundStep {
+  title: string;
+  body: string;
 }
 
 export interface TurnaroundMonth {
@@ -35,12 +43,38 @@ export const metaTurnaround = {
   attributionNote:
     "Revenue as reported by Meta (7-day click, 1-day view). Platform-reported revenue usually runs higher than banked sales.",
 
+  // The starting point is the account owner's own figure, not from the ad reports.
+  before: { value: "Under KES 10,000", label: "attributable Meta revenue a month" },
+  after: {
+    value: 5328094,
+    format: "kesM" as TurnaroundFormat,
+    label: "revenue attributed by Meta in about three months",
+  },
+
   stats: [
-    { value: "KES 129,150", label: "Total Meta ad spend" },
-    { value: "KES 5.33M", label: "Revenue attributed by Meta" },
-    { value: "41.3x", label: "Return on ad spend", note: "43.7x on sales campaigns" },
-    { value: "953", label: "Tracked purchases", note: "KES 127 each on sales campaigns" },
+    { value: 129150, format: "kes", label: "Total Meta ad spend" },
+    { value: 41.3, format: "x", label: "Return on ad spend", note: "43.7x on sales campaigns" },
+    { value: 953, format: "int", label: "Tracked purchases", note: "KES 127 each on sales campaigns" },
   ] satisfies TurnaroundStat[],
+
+  steps: [
+    {
+      title: "Fix the measurement",
+      body: "Install and verify the Meta Pixel so every purchase is recorded against the campaign that drove it.",
+    },
+    {
+      title: "Restructure the account",
+      body: "Replace boosted posts with sales campaigns that each have one clear objective.",
+    },
+    {
+      title: "Build around offers",
+      body: "Restocks, a product-day push, a clearance sale: one specific, trackable offer per campaign.",
+    },
+    {
+      title: "Review weekly, cut fast",
+      body: "Check the numbers every week and move budget away from whatever is not earning it.",
+    },
+  ] satisfies TurnaroundStep[],
 
   // From the monthly report, which starts in August. July sits in the campaign
   // log only, so it is not charted here.

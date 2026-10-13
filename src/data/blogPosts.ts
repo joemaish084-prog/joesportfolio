@@ -33,6 +33,8 @@ export interface BlogPost {
   sections: BlogSection[];
   thumbnail: string;
   thumbnailAlt: string;
+  /** Results banner shown under the cover image (case studies). */
+  heroVisual?: MetaTurnaroundVisualKind;
 }
 
 export const AUTHOR = "Joseph Maina";
@@ -51,6 +53,7 @@ export const blogPosts: BlogPost[] = [
     intro: "Before we started managing this account, Meta ads were bringing in next to nothing for this business, under KES 10,000 a month in anything you could actually trace back to an ad. Three months later, the same account had produced over KES 5.3 million in tracked revenue. Here's what changed, with the real numbers, not a rounded-up summary.",
     thumbnail: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
     thumbnailAlt: "Shelves of beauty and skincare products in a retail store",
+    heroVisual: "hero",
 
     sections: [
       {
@@ -68,6 +71,7 @@ export const blogPosts: BlogPost[] = [
           "The first fix was conversion tracking, properly installing and verifying the Meta Pixel so purchases were actually being recorded against the campaigns that drove them. Without this, every decision after it would have been a guess.",
           "The second was campaign structure. Instead of one broad 'boost everything' approach, we split spend into clearly defined Sales campaigns built around specific offers, restocks, a lipstick-focused push, a mid-year clearance sale, rather than one undifferentiated stream of ads competing with each other for the same budget.",
         ],
+        visuals: ["process"],
       },
       {
         id: "the-numbers",
@@ -77,7 +81,7 @@ export const blogPosts: BlogPost[] = [
           "Monthly revenue held and grew rather than spiking once and fading: KES 1,375,513 in August and KES 1,518,617 in September, with ROAS moving from 39.1x to 42.2x, then 51.5x across the first eight days of October. Steady month-on-month improvement, not a single lucky campaign, is what built that total.",
           "One caveat worth stating plainly: these are revenue figures as Meta reports them, on a 7-day click and 1-day view window. Platform-reported revenue usually runs higher than what lands in the bank, so I treat it as a consistent yardstick for comparing campaigns, not as an audited sales figure.",
         ],
-        visuals: ["stats", "monthly"],
+        visuals: ["monthly"],
       },
       {
         id: "what-worked-best",

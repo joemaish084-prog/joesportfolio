@@ -208,8 +208,7 @@ export function CaseStudy() {
                 className="mt-3 text-2xl sm:text-3xl font-display font-bold"
                 style={{ color: "hsl(var(--case-study-text))" }}
               >
-                Meta Ads turnaround: under KES 10,000 a month to{" "}
-                <span className="text-gradient">KES 5.3 million</span>
+                Meta Ads turnaround for a <span className="text-gradient">Nairobi beauty retailer</span>
               </h3>
               <p className="mt-4 text-base sm:text-lg leading-relaxed" style={{ color: "hsl(var(--case-study-muted))" }}>
                 A Nairobi beauty retailer was running Meta ads with no conversion tracking and no campaign
@@ -220,7 +219,7 @@ export function CaseStudy() {
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.1}>
-            <MetaTurnaroundVisual kind="stats" tone="dark" />
+            <MetaTurnaroundVisual kind="hero" tone="dark" />
           </ScrollReveal>
 
           <div className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -231,6 +230,10 @@ export function CaseStudy() {
               <MetaTurnaroundVisual kind="comparison" tone="dark" />
             </ScrollReveal>
           </div>
+
+          <ScrollReveal direction="up" delay={0.1}>
+            <MetaTurnaroundVisual kind="process" tone="dark" className="mt-6" />
+          </ScrollReveal>
 
           <ScrollReveal direction="up" delay={0.1}>
             <MetaTurnaroundVisual kind="campaigns" tone="dark" className="mt-6" />

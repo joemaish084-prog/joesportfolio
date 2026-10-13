@@ -160,6 +160,10 @@ const AgencyBlogPost = () => {
                 />
               </figure>
 
+              {post.heroVisual && (
+                <MetaTurnaroundVisual kind={post.heroVisual} tone="light" className="mt-8" />
+              )}
+
               <p className="mt-10 text-xl leading-relaxed text-[#333333]">{post.intro}</p>
 
               {post.sections.map((section) => (
