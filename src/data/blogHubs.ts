@@ -55,6 +55,8 @@ export const blogHubs: BlogHub[] = [
       "video-ads-vs-static-ads-kenya-2026",
       "ad-creative-testing-kenyan-brands-2026",
       "google-ads-vs-meta-ads-kenya-2026",
+      "meta-advantage-plus-ai-campaigns-kenya-2026",
+      "meta-ads-manager-setup-guide-kenya-2026",
     ],
     service: {
       name: "Meta Ads Management",
@@ -206,6 +208,8 @@ export const blogHubs: BlogHub[] = [
       "what-nobody-tells-you-about-pricing-your-services-kenya",
       "why-i-stopped-taking-every-client-who-could-pay",
       "ai-marketing-honest-take-2026",
+      "freelance-digital-marketer-vs-agency-kenya-2026",
+      "what-does-a-digital-marketing-specialist-do-kenya-2026",
     ],
     service: {
       name: "Digital Marketing Audit",
@@ -245,6 +249,9 @@ export const blogHubs: BlogHub[] = [
       "how-to-develop-social-media-marketing-strategy-kenya-2026",
       "best-social-media-platforms-for-marketing-kenya-2026",
       "best-social-media-marketing-tools-kenya-2026",
+      "tiktok-marketing-strategy-brand-awareness-kenya-2026",
+      "instagram-reels-vs-tiktok-for-business-kenya-2026",
+      "video-production-for-small-businesses-kenya-2026",
     ],
     service: {
       name: "TikTok Ads & Social Media Management",
