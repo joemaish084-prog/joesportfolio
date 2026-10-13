@@ -283,6 +283,7 @@ export const blogHubs: BlogHub[] = [
       "If you want to know how I actually work before you hire me, read these rather than the services page.",
     ],
     postSlugs: [
+      "meta-ads-turnaround-case-study-kenya-2026",
       "convey-communications-case-study-10x-leads",
       "0-to-4-million-tiktok-views-behind-the-campaign",
       "nyeri-county-campaign-hyper-local-marketing",

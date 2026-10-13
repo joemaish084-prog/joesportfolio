@@ -36,6 +36,71 @@ export const AUTHOR = "Joseph Maina";
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "meta-ads-turnaround-case-study-kenya-2026",
+    category: "Case Study",
+    title: "From Under KES 10,000 to KES 5.3 Million: A Meta Ads Turnaround",
+    excerpt: "How a Nairobi beauty retailer went from Meta ads that barely moved the needle to over KES 5.3 million in tracked revenue, and what actually changed.",
+    date: "2026-10-13",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "From Under KES 10,000 to KES 5.3 Million: A Meta Ads Turnaround",
+    metaDescription: "A real Meta Ads case study: how a Nairobi beauty retailer's ad account went from under KES 10,000 in monthly attributable revenue to over KES 5.3 million in tracked sales, with the actual numbers.",
+    intro: "Before we started managing this account, Meta ads were bringing in next to nothing for this business, under KES 10,000 a month in anything you could actually trace back to an ad. Three months later, the same account had produced over KES 5.3 million in tracked revenue. Here's what changed, with the real numbers, not a rounded-up summary.",
+    thumbnail: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shelves of beauty and skincare products in a retail store",
+
+    sections: [
+      {
+        id: "the-starting-point",
+        heading: "The starting point: ads running, nothing to show for it",
+        paragraphs: [
+          "The business, a beauty and skincare retailer in Nairobi, was already boosting posts and running occasional promotions on Meta before we took over the account. The problem wasn't a lack of activity, it was a lack of structure: no consistent conversion tracking, no clear campaign objective, and no real distinction between what was working and what was quietly burning budget.",
+          "Attributable monthly revenue from Meta sat under KES 10,000, which for a retail business spending anything meaningful on ads is close to a rounding error. The ads were technically running. They weren't doing a job.",
+        ],
+      },
+      {
+        id: "what-we-changed",
+        heading: "What we actually changed first",
+        paragraphs: [
+          "The first fix was conversion tracking, properly installing and verifying the Meta Pixel so purchases were actually being recorded against the campaigns that drove them. Without this, every decision after it would have been a guess.",
+          "The second was campaign structure. Instead of one broad 'boost everything' approach, we split spend into clearly defined Sales campaigns built around specific offers, restocks, a lipstick-focused push, a mid-year clearance sale, rather than one undifferentiated stream of ads competing with each other for the same budget.",
+        ],
+      },
+      {
+        id: "the-numbers",
+        heading: "The numbers, over roughly three months",
+        paragraphs: [
+          "Across the full tracked period, the account spent KES 129,150 on Meta ads and generated KES 5,328,094 in revenue, a blended return of 43.7x on ad spend, from 953 purchases and 21,877 clicks. Cost per purchase landed at KES 127, with a 4.7% purchase rate on clicks.",
+          "Monthly revenue climbed steadily rather than spiking once and fading: from KES 1,375,513 in the first full month to KES 1,518,617 the next, with ROAS improving alongside it, from 39.1x to 42.2x to over 51x in the most recent month tracked. Consistent month-on-month improvement, not a single lucky campaign, is what actually built that total.",
+        ],
+      },
+      {
+        id: "what-worked-best",
+        heading: "What worked best, specifically",
+        paragraphs: [
+          "The single strongest campaign in the account, a targeted lipstick restock push, returned 76.8x on ad spend, spending just KES 4,607 to generate KES 354,050 in revenue. Tightly scoped, offer-specific campaigns like this consistently outperformed broader, less focused ones.",
+          "Short, repeatable restock campaigns, re-announcing a specific product back in stock to an audience already familiar with the brand, became one of the most reliable formats in the account, several of them independently cleared 50x to 98x ROAS on modest budgets.",
+        ],
+      },
+      {
+        id: "what-didnt-work",
+        heading: "What didn't work, stated honestly",
+        paragraphs: [
+          "Not every campaign performed. A broader video-led sales campaign spent KES 18,077 and returned 15.4x, the weakest result of any Sales campaign in the account, and a cost per purchase nearly three times the account average. We flagged it, reduced its budget, and shifted spend toward the formats already proving themselves.",
+          "A pure reach-and-awareness campaign run alongside the sales campaigns spent over KES 1,400 for very little directly attributable revenue, which was expected given its objective, but it's a reminder that not every campaign in an account should be judged by the same yardstick, covered in more depth in my piece on Meta's Advantage+ automation and how much to trust it.",
+        ],
+      },
+      {
+        id: "the-takeaway",
+        heading: "The actual takeaway",
+        paragraphs: [
+          "None of this came from a secret targeting trick or a single breakout ad. It came from fixing the measurement first, structuring campaigns around specific, trackable offers second, and then doing the unglamorous work of checking the numbers weekly and cutting what wasn't earning its budget.",
+          "The account that was producing under KES 10,000 a month wasn't short on product or audience, it was short on structure. That gap is the same one I see in most Meta accounts I audit, and it's almost always fixable faster than business owners expect.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "why-your-nairobi-business-isnt-showing-up-on-google-2026",
     category: "SEO",
     title: "Why Your Nairobi Business Isn't Showing Up on Google in 2026",
