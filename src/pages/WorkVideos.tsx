@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WorkPageLayout } from "@/components/WorkPageLayout";
@@ -17,8 +17,16 @@ const filters: { label: Filter; count: number }[] = [
   { label: "Long form", count: longVideos.length },
 ];
 
+// The filter lives in the URL (?type=long) so the nav dropdown can link straight to one.
+const TYPE_PARAM: Record<string, Filter> = { short: "Short form", long: "Long form" };
+
 const WorkVideos = () => {
-  const [filter, setFilter] = useState<Filter>("All");
+  const [params, setParams] = useSearchParams();
+  const filter: Filter = TYPE_PARAM[params.get("type") ?? ""] ?? "All";
+  const setFilter = (next: Filter) => {
+    const type = Object.keys(TYPE_PARAM).find((key) => TYPE_PARAM[key] === next);
+    setParams(type ? { type } : {}, { replace: true });
+  };
   const showLong = filter !== "Short form";
   const showShort = filter !== "Long form";
 

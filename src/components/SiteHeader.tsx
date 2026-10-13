@@ -1,23 +1,103 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
-import { FileText, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowRight, ChevronDown, FileText, Menu, X } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { caseStudies } from "@/data/caseStudies";
 
 const CVViewer = lazy(() => import("./CVViewer").then((m) => ({ default: m.CVViewer })));
 
-const navLinks = [
+interface NavChild {
+  label: string;
+  href: string;
+  /** Small label above the title (case study tag). */
+  eyebrow?: string;
+  description?: string;
+  badge?: string;
+}
+
+interface NavLink {
+  label: string;
+  href: string;
+  children?: NavChild[];
+  /** "View all" link at the bottom of the dropdown. */
+  footer?: { label: string; href: string };
+}
+
+const navLinks: NavLink[] = [
   { label: "Home", href: "/#home" },
-  { label: "Videos", href: "/#videos" },
-  { label: "Design", href: "/#graphic-design" },
-  { label: "Cases", href: "/#case-study" },
+  {
+    label: "Videos",
+    href: "/#videos",
+    children: [
+      { label: "Long form", description: "Brand films, interviews and documentaries", href: "/work/videos?type=long" },
+      { label: "Short form", description: "Reels and social clips", href: "/work/videos?type=short" },
+    ],
+    footer: { label: "All videos", href: "/work/videos" },
+  },
+  {
+    label: "Design",
+    href: "/#graphic-design",
+    children: [
+      { label: "Graphics", description: "Campaign creatives and social designs", href: "/work/design" },
+      { label: "Branding", description: "Brand artwork and identity pieces", href: "/work/design?group=more" },
+      { label: "Mockups", description: "Print and packaging", badge: "Soon", href: "/#mockups" },
+    ],
+  },
+  {
+    label: "Cases",
+    href: "/#case-study",
+    children: caseStudies.map((cs) => ({
+      label: cs.title,
+      eyebrow: cs.tag,
+      href: `/work/case-studies#${cs.id}`,
+    })),
+    footer: { label: "All case studies", href: "/work/case-studies" },
+  },
   { label: "Experience", href: "/#experience" },
-  { label: "About", href: "/#about" },
+  {
+    label: "About",
+    href: "/#about",
+    children: [
+      { label: "My story", description: "Who I am and how I work", href: "/#about" },
+      { label: "Skills & tools", description: "What I do and what I use", href: "/#skills" },
+      { label: "Certifications", description: "Courses and achievements", href: "/#certifications" },
+      { label: "Press coverage", description: "Featured in the Daily Nation", href: "/#press" },
+      { label: "Testimonials", description: "What people I've worked with say", href: "/#testimonials" },
+    ],
+  },
   { label: "Contact", href: "/#contact" },
 ];
 
 const getHash = (href: string) => "#" + href.split("#")[1];
+const isHomeAnchor = (href: string) => href.startsWith("/#");
+
+/** Homepage anchors smooth-scroll in place; everything else is a router link. */
+function NavAnchor({
+  href,
+  onAnchor,
+  onClick,
+  ...props
+}: Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+  href: string;
+  onAnchor: (e: React.MouseEvent, href: string) => void;
+}) {
+  if (isHomeAnchor(href)) {
+    return (
+      <a
+        href={href}
+        onClick={(e) => {
+          onAnchor(e, href);
+          onClick?.(e);
+        }}
+        {...props}
+      />
+    );
+  }
+  return <Link to={href} onClick={onClick} {...props} />;
+}
 
 function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
@@ -35,7 +115,20 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeHref, setActiveHref] = useState("#home");
+  const [menu, setMenu] = useState<string | null>(null);
+  const menuCloseTimer = useRef<number>();
   const reduceMotion = useReducedMotion();
+
+  // Desktop dropdowns: the short close delay lets the pointer cross the gap to the panel
+  const openMenu = useCallback((label: string) => {
+    window.clearTimeout(menuCloseTimer.current);
+    setMenu(label);
+  }, []);
+  const closeMenuSoon = useCallback(() => {
+    window.clearTimeout(menuCloseTimer.current);
+    menuCloseTimer.current = window.setTimeout(() => setMenu(null), 140);
+  }, []);
+  useEffect(() => () => window.clearTimeout(menuCloseTimer.current), []);
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -145,23 +238,110 @@ export function SiteHeader() {
           <nav className="hidden lg:flex items-center gap-7" aria-label="Primary">
             {navLinks.map((link) => {
               const isActive = activeHref === getHash(link.href);
-              return (
+              const isOpen = menu === link.label;
+              const anchor = (
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={(e) => handleAnchor(e, link.href)}
+                  onClick={(e) => {
+                    setMenu(null);
+                    handleAnchor(e, link.href);
+                  }}
                   aria-current={isActive ? "true" : undefined}
-                  className={`relative ${navLinkClass} ${
+                  aria-haspopup={link.children ? "true" : undefined}
+                  aria-expanded={link.children ? isOpen : undefined}
+                  className={`relative inline-flex items-center gap-1 ${navLinkClass} ${
                     isActive ? "text-primary" : "text-foreground/70 hover:text-foreground"
                   }`}
                 >
                   {link.label}
+                  {link.children && (
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      aria-hidden="true"
+                    />
+                  )}
                   <span
                     className={`pointer-events-none absolute -bottom-1.5 left-0 h-[2px] bg-primary origin-left transition-transform duration-[250ms] ease-out w-full ${
                       isActive ? "scale-x-100" : "scale-x-0"
                     }`}
                   />
                 </a>
+              );
+              if (!link.children) return anchor;
+
+              return (
+                <div
+                  key={link.href}
+                  className="relative"
+                  onMouseEnter={() => openMenu(link.label)}
+                  onMouseLeave={closeMenuSoon}
+                  onFocus={() => openMenu(link.label)}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setMenu(null);
+                  }}
+                  onKeyDown={(e) => e.key === "Escape" && setMenu(null)}
+                >
+                  {anchor}
+                  <AnimatePresence>
+                    {isOpen && (
+                      <div className="absolute left-1/2 top-full -translate-x-1/2 pt-5">
+                        <motion.div
+                          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                          animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                          transition={{ duration: 0.16, ease: "easeOut" }}
+                          className={`rounded-2xl border border-border bg-popover text-popover-foreground shadow-elegant p-2 ${
+                            link.children.some((c) => c.eyebrow) ? "w-[25rem]" : "w-72"
+                          }`}
+                        >
+                          <ul>
+                            {link.children.map((child) => (
+                              <li key={child.href}>
+                                <NavAnchor
+                                  href={child.href}
+                                  onAnchor={handleAnchor}
+                                  onClick={() => setMenu(null)}
+                                  className="group/item block rounded-xl px-3 py-2.5 transition-colors hover:bg-primary/10 focus-visible:bg-primary/10 focus-visible:outline-none"
+                                >
+                                  {child.eyebrow && (
+                                    <span className="mono-accent block text-[10px] uppercase tracking-[0.16em] text-primary">
+                                      {child.eyebrow}
+                                    </span>
+                                  )}
+                                  <span className="flex items-center gap-2 text-sm font-semibold text-foreground group-hover/item:text-primary">
+                                    {child.label}
+                                    {child.badge && (
+                                      <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                                        {child.badge}
+                                      </span>
+                                    )}
+                                  </span>
+                                  {child.description && (
+                                    <span className="mt-0.5 block text-xs text-muted-foreground">{child.description}</span>
+                                  )}
+                                </NavAnchor>
+                              </li>
+                            ))}
+                          </ul>
+                          {link.footer && (
+                            <div className="mt-1 border-t border-border pt-1">
+                              <NavAnchor
+                                href={link.footer.href}
+                                onAnchor={handleAnchor}
+                                onClick={() => setMenu(null)}
+                                className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-primary/10 focus-visible:bg-primary/10 focus-visible:outline-none"
+                              >
+                                {link.footer.label}
+                                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                              </NavAnchor>
+                            </div>
+                          )}
+                        </motion.div>
+                      </div>
+                    )}
+                  </AnimatePresence>
+                </div>
               );
             })}
           </nav>
@@ -225,19 +405,43 @@ export function SiteHeader() {
 
               <div className="px-6 pt-4 pb-10">
                 {navLinks.map((link, i) => (
-                  <motion.a
+                  <motion.div
                     key={link.href}
-                    href={link.href}
-                    onClick={(e) => handleAnchor(e, link.href)}
                     initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                     animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                     transition={reduceMotion ? undefined : { delay: i * 0.04, duration: 0.2 }}
-                    className={`block py-3 min-h-[44px] text-2xl font-display font-semibold ${
-                      activeHref === getHash(link.href) ? "text-primary" : "text-foreground"
-                    }`}
                   >
-                    {link.label}
-                  </motion.a>
+                    <a
+                      href={link.href}
+                      onClick={(e) => handleAnchor(e, link.href)}
+                      className={`block py-3 min-h-[44px] text-2xl font-display font-semibold ${
+                        activeHref === getHash(link.href) ? "text-primary" : "text-foreground"
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                    {link.children && (
+                      <ul className="mb-2 ml-1 border-l border-border pl-4">
+                        {(link.footer ? [...link.children, link.footer as NavChild] : link.children).map((child) => (
+                          <li key={child.href}>
+                            <NavAnchor
+                              href={child.href}
+                              onAnchor={handleAnchor}
+                              onClick={() => setOpen(false)}
+                              className="flex min-h-[40px] items-center gap-2 py-1.5 text-base text-muted-foreground"
+                            >
+                              {child.label}
+                              {child.badge && (
+                                <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                                  {child.badge}
+                                </span>
+                              )}
+                            </NavAnchor>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </motion.div>
                 ))}
 
                 <div className="border-t border-border my-4" />

@@ -1,4 +1,5 @@
 import { useMemo, useState, type KeyboardEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,12 @@ type Filter = "All" | DesignGroup;
 const latest = new Set(designs.slice(0, LATEST_COUNT).map((d) => d.title));
 
 const WorkDesign = () => {
-  const [filter, setFilter] = useState<Filter>("All");
+  // The filter lives in the URL (?group=more) so the nav dropdown can link straight to one.
+  const [params, setParams] = useSearchParams();
+  const groupParam = params.get("group")?.toLowerCase();
+  const filter: Filter = DESIGN_GROUPS.find((g) => g.toLowerCase() === groupParam) ?? "All";
+  const setFilter = (next: Filter) =>
+    setParams(next === "All" ? {} : { group: next.toLowerCase() }, { replace: true });
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   // Filtering keeps the list order, so the newest work stays on top.

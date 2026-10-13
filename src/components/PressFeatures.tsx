@@ -19,6 +19,7 @@ const publications = [
 export function PressFeatures() {
   return (
     <section
+      id="press"
       className="relative overflow-hidden scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32"
       aria-labelledby="press-heading"
     >
