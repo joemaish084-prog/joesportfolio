@@ -1903,6 +1903,348 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "google-ads-account-setup-guide-kenya-2026",
+    category: "Google Ads",
+    title: "How to Create a Google Ads Account: A Step-by-Step Setup Guide for Kenyan Businesses",
+    excerpt: "The account setup decisions you make in the first ten minutes quietly shape every campaign you'll ever run on it.",
+    date: "2026-10-11",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "How to Create a Google Ads Account: A Step-by-Step Setup Guide for Kenyan Businesses",
+    metaDescription: "A step-by-step guide to creating a Google Ads account in Kenya: billing setup, conversion tracking, linking Google Analytics, and the setup mistakes to avoid from day one.",
+    intro: "Creating a Google Ads account takes about ten minutes. Setting it up correctly, in a way that won't need fixing three months in, takes a bit more care. Here's the setup I actually walk clients through, not just the signup form.",
+    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person setting up an online advertising account on a laptop",
+
+    sections: [
+      {
+        id: "before-you-start",
+        heading: "Before you even open the signup page",
+        paragraphs: [
+          "Have your business name, website, and a working payment method ready, Google Ads in Kenya accepts most major cards and, depending on your billing country settings, M-Pesa-linked cards through most Kenyan banks. Decide this upfront so the account isn't sitting unusable waiting on a payment method days later.",
+          "Know your actual goal before you start, calls, website visits, form submissions, or in-store visits, since Google will ask you to pick a campaign goal during setup, and picking the wrong one skews the account's structure from the very first click.",
+        ],
+      },
+      {
+        id: "account-structure",
+        heading: "Get the account structure right from day one",
+        paragraphs: [
+          "Use a business email you'll have access to permanently, not a personal Gmail tied to one staff member, since account recovery when the wrong person leaves the business is a genuine headache I've helped clients untangle more than once.",
+          "If you plan to ever run more than one brand or sub-business, consider a Google Ads Manager (MCC) account structure from the start rather than retrofitting it later, which I cover in more detail separately.",
+        ],
+      },
+      {
+        id: "conversion-tracking-setup",
+        heading: "Set up conversion tracking before your first campaign, not after",
+        paragraphs: [
+          "Install the Google Ads conversion tag, or better, use Google Tag Manager, and confirm it's firing correctly using Google's own Tag Assistant before spending a shilling. This is the single most skipped step and the most common reason I see businesses unable to judge their own campaigns months later.",
+          "Link Google Analytics to your new Ads account during setup. It costs nothing and gives you a second, independent view of what's actually happening after the click, which matters when the numbers in Ads Manager and your actual sales don't seem to agree.",
+        ],
+      },
+      {
+        id: "billing-and-budget",
+        heading: "Billing settings worth getting right immediately",
+        paragraphs: [
+          "Set a daily budget you're genuinely comfortable testing with for at least two to three weeks, not the maximum you could theoretically spend. A new account needs time to gather data regardless of budget size, and panicking at day three wastes the learning period entirely.",
+          "Double check your billing currency and country settings match your actual business location. An incorrectly set billing country can complicate tax handling and payment method compatibility down the line.",
+        ],
+      },
+      {
+        id: "first-campaign-mistake",
+        heading: "The mistake almost everyone makes with their first campaign",
+        paragraphs: [
+          "Launching a broad Search campaign covering every service you offer in one ad group is the most common first-campaign mistake. Start narrow, one tightly defined service or product, one clear goal, then expand once you understand what's actually converting.",
+          "If this is genuinely your first time setting up an ad account for a business, it's worth having someone experienced review the structure before you turn spend on, a quick sense check costs far less than three months of an account quietly misconfigured.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "google-ads-manager-mcc-explained-kenya-2026",
+    category: "Google Ads",
+    title: "What Is Google Ads Manager (MCC) and Do You Need One in Kenya?",
+    excerpt: "If you run more than one brand, or work with an agency, this one account setting changes how much control and visibility you actually have.",
+    date: "2026-10-11",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "What Is Google Ads Manager (MCC) and Do You Need One in Kenya?",
+    metaDescription: "A plain-language explanation of Google Ads Manager accounts (MCC) for Kenyan businesses: what they do, who actually needs one, and how agencies use them.",
+    intro: "Google Ads Manager, often called an MCC account, confuses almost everyone the first time they hear the term. It's not a different ad product, it's a management layer, and whether you need one depends entirely on how many accounts you're actually juggling.",
+    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Multiple browser tabs and dashboards open on a desktop monitor",
+
+    sections: [
+      {
+        id: "what-it-actually-is",
+        heading: "What a Manager account actually is",
+        paragraphs: [
+          "A Google Ads Manager account doesn't run ads itself, it sits above one or more individual Ads accounts and lets you view, manage and move between them without separate logins for each. Think of it as a dashboard that sits on top of your actual advertising accounts, not a replacement for them.",
+          "This is exactly how agencies, including mine, manage multiple clients' accounts without needing a separate password for every single one, while keeping each client's billing and data fully separate.",
+        ],
+      },
+      {
+        id: "who-needs-one",
+        heading: "Who actually needs one, and who doesn't",
+        paragraphs: [
+          "If you run a single business with one Google Ads account, you don't need an MCC, it adds a layer of complexity with no real benefit at that scale. A standard account is the right tool.",
+          "If you run multiple brands, manage ad accounts for clients, or want an agency to manage your account without ever having your actual login credentials, a Manager account is the right structure, and it's the standard, safer way agencies should be accessing your account in the first place.",
+        ],
+      },
+      {
+        id: "the-agency-access-question",
+        heading: "Why this matters when you're hiring an agency",
+        paragraphs: [
+          "A properly set up agency should request access to your Google Ads account through their Manager account, giving them account-level access without ever needing your actual email and password. If an agency asks for your direct login credentials instead, that's a legitimate question to ask about, not just a convenience shortcut.",
+          "This access model also means you can revoke an agency's access instantly from your own account if the relationship ends, without having to change passwords or worry about what else that login might reach.",
+        ],
+      },
+      {
+        id: "setting-one-up",
+        heading: "Setting one up, briefly",
+        paragraphs: [
+          "Creating a Manager account is free and separate from creating an actual ad-running account, Google walks you through linking existing accounts or creating new ones underneath it during setup.",
+          "If you're setting this up for the first time to manage multiple brands yourself, keep each underlying account's billing and conversion tracking fully separate, the Manager layer is for visibility and control, not for merging data that should stay distinct.",
+        ],
+      },
+      {
+        id: "the-bottom-line",
+        heading: "The bottom line",
+        paragraphs: [
+          "Most single-business owners will never need to think about this beyond understanding why their agency is asking for Manager-level access rather than a password. For anyone running multiple brands, it's worth setting up correctly from the start rather than retrofitting it once things get messy.",
+          "Either way, understanding what this access model actually is makes you a better judge of how professionally any agency, mine included, is handling your account.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "google-local-services-ads-kenya-2026",
+    category: "Google Ads",
+    title: "Google Local Services Ads: What They Are and Whether They've Reached Kenya Yet",
+    excerpt: "A \"Google Guaranteed\" badge and pay-per-lead pricing sound ideal for local service businesses. Here's what's actually available in this market right now.",
+    date: "2026-10-12",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "Google Local Services Ads: What They Are and Whether They've Reached Kenya Yet",
+    metaDescription: "An honest explanation of Google Local Services Ads, how the pay-per-lead model works, which markets currently have access, and what Kenyan service businesses should do in the meantime.",
+    intro: "Local Services Ads show up at the very top of Google's results, above regular Search ads, with a green 'Google Guaranteed' badge and pricing based on leads rather than clicks. It's a genuinely different product from standard Google Ads, and the honest first question for a Kenyan business is simply whether it's available here yet.",
+    thumbnail: "https://images.unsplash.com/photo-1562564055-71e051d33c19?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Local tradesperson reviewing job details on a tablet at a work site",
+
+    sections: [
+      {
+        id: "what-it-is",
+        heading: "What Local Services Ads actually are",
+        paragraphs: [
+          "Unlike standard Google Ads, which charges per click regardless of whether that click turns into anything, Local Services Ads charge per lead, a call or message from someone actually looking to hire. For trades and home services businesses, that pricing model alone is a meaningful difference.",
+          "Listings also carry a 'Google Guaranteed' or 'Google Screened' badge once a business passes background checks and licensing verification where applicable, which functions as a trust signal Google itself is vouching for, something no amount of ad copy in a standard campaign can replicate.",
+        ],
+      },
+      {
+        id: "availability-reality",
+        heading: "The honest availability picture",
+        paragraphs: [
+          "Local Services Ads rolled out market by market, starting in the US, and has expanded gradually to a growing list of countries and service categories over time. Availability in any specific country and city depends on Google's own rollout schedule, which changes, so the only reliable way to know current status for Kenya is checking directly within your own Google Ads account or Google's official Local Services Ads page.",
+          "I'd rather tell a client honestly 'check this yourself, it may have changed since I last looked' than confidently promise availability that may not hold by the time you read this. Rollout timing is entirely Google's decision, not something any agency can influence.",
+        ],
+      },
+      {
+        id: "what-to-do-meanwhile",
+        heading: "What to do if it isn't available in your area yet",
+        paragraphs: [
+          "A strong Google Business Profile, covered in more detail in my setup guide for Nairobi businesses, captures much of the same 'trusted local provider' intent that Local Services Ads targets, reviews, verified categories, and service area listings all build toward the same kind of trust signal.",
+          "Standard Search campaigns targeting high-intent local keywords, 'plumber near me,' 'electrician Westlands,' still work well in the meantime and give you full control over targeting and messaging that Local Services Ads deliberately limits in exchange for simplicity.",
+        ],
+      },
+      {
+        id: "preparing-for-it",
+        heading: "How to be ready if and when it does roll out here",
+        paragraphs: [
+          "Keep your business licensing, insurance, and any required certifications documented and current, since the verification process for 'Google Guaranteed' status typically requires exactly this kind of paperwork, and having it organised in advance speeds up onboarding considerably.",
+          "A strong existing base of Google reviews won't transfer automatically, but a business already disciplined about collecting them will have an easier time meeting whatever reputation threshold the program requires once it's available to apply for.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "average-cost-per-click-google-ads-kenya-2026",
+    category: "Google Ads",
+    title: "Average Cost Per Click in Kenya: What Google Ads Actually Costs by Industry",
+    excerpt: "There's no single CPC number for Kenya. The honest answer depends entirely on who else is bidding on the same keyword.",
+    date: "2026-10-12",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "Average Cost Per Click in Kenya: What Google Ads Actually Costs by Industry",
+    metaDescription: "A realistic breakdown of what cost per click actually looks like for Google Ads in Kenya across different industries, and the factors that move it up or down.",
+    intro: "Every business owner wants a single number: what does a click cost in Kenya? The honest answer is that it depends entirely on who else wants that exact keyword, which makes the real answer a range, not a figure, and the range differs enormously by industry.",
+    thumbnail: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Calculator and graphs showing cost analysis on a desk",
+
+    sections: [
+      {
+        id: "why-no-single-number",
+        heading: "Why there's no single honest answer",
+        paragraphs: [
+          "Cost per click is set by an auction, every time your ad could show, you're bidding against every other advertiser who wants that same search, in that same moment, in that same location. A keyword with three interested advertisers nationally behaves completely differently from one with thirty.",
+          "This is why any blog post, including this one, giving you a single flat 'average CPC for Kenya' number is giving you something close to meaningless. The only number that matters is what your specific keywords cost, which you can only see once a campaign is actually running.",
+        ],
+      },
+      {
+        id: "what-moves-it",
+        heading: "What actually moves cost per click up or down",
+        paragraphs: [
+          "Competitive, high-value industries, legal services, financial services, insurance, consistently see higher CPCs than local, lower-competition services, because more businesses are chasing the same customer and are willing to pay more per click to win them, a pattern I cover in more depth in my piece on what Google Ads management actually costs.",
+          "Keyword specificity matters as much as industry. A broad term like 'lawyer' typically costs more per click than a specific one like 'conveyancing lawyer Kilimani,' because the broad term draws in every competitor chasing every type of legal client, while the specific one narrows the competition to businesses actually relevant to that exact search.",
+        ],
+      },
+      {
+        id: "relative-ranges",
+        heading: "Roughly where different industries tend to sit, relative to each other",
+        paragraphs: [
+          "Local, low-competition services, small repair trades, local retail, tend to sit at the lower end of the CPC range in Kenya. Niche local searches with little competition can be genuinely cheap to rank for with paid search.",
+          "Professional services with a high customer lifetime value, law, finance, specialised medical care, real estate, sit meaningfully higher, since a single new client can be worth far more than the cost of the clicks it took to win them, which is exactly why those industries are willing to bid more.",
+        ],
+      },
+      {
+        id: "the-right-question",
+        heading: "The question worth asking instead of 'what's the average CPC'",
+        paragraphs: [
+          "Ask what a converted customer is actually worth to your business, then work backward to what you can afford to pay per click and still be profitable. A KES 150 click is expensive if it never converts and cheap if one in twenty becomes a KES 20,000 sale.",
+          "This is the same logic behind judging any paid campaign by cost per qualified result rather than cost per click in isolation, a click is only ever a means, never the actual thing you're paying for.",
+        ],
+      },
+      {
+        id: "getting-a-real-number",
+        heading: "How to actually find out what your clicks will cost",
+        paragraphs: [
+          "Google's Keyword Planner, free inside any Ads account, gives a bid range estimate for your specific keywords before you spend anything, which is a far more useful number than any general industry average.",
+          "A short, deliberately small test campaign, even a few thousand shillings over a week, will tell you more about your real cost per click than any blog post or benchmark report, because it reflects your actual market, your actual keywords, and your actual competition.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-create-successful-ppc-campaign-kenya-2026",
+    category: "Google Ads",
+    title: "How to Create a Successful PPC Campaign in Kenya: A Step-by-Step Guide",
+    excerpt: "Most 'unsuccessful' PPC campaigns were never actually given a fair chance to succeed. Here's the setup that gives one a real shot.",
+    date: "2026-10-13",
+    dateLabel: "October 2026",
+    readTime: "7 min read",
+    metaTitle: "How to Create a Successful PPC Campaign in Kenya: A Step-by-Step Guide",
+    metaDescription: "A practical, step-by-step guide to building a successful PPC campaign in Kenya: keyword research, ad structure, landing pages, budget, and what to check before scaling.",
+    intro: "'Our PPC campaign didn't work' is usually, on closer inspection, a campaign that was never actually set up to succeed in the first place. Here's the full sequence I walk through when building a campaign I expect to actually perform.",
+    thumbnail: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Marketing professional planning a campaign strategy on a whiteboard",
+
+    sections: [
+      {
+        id: "step-one-keyword-research",
+        heading: "Step one: keyword research built on intent, not guesswork",
+        paragraphs: [
+          "Start with Google's Keyword Planner and actual search terms your customers would realistically type, not the internal language your business uses to describe itself. The gap between how a business talks about itself and how customers search is the same gap that sinks a lot of SEO content too.",
+          "Separate keywords by intent. 'Digital marketing tips' is someone researching, not buying. 'Digital marketing agency Nairobi pricing' is someone much closer to a decision. A PPC budget should weight heavily toward the second kind.",
+        ],
+      },
+      {
+        id: "step-two-structure",
+        heading: "Step two: structure the campaign around tight ad groups",
+        paragraphs: [
+          "Group closely related keywords into their own tight ad groups, each with ad copy written specifically for those terms, rather than one broad ad group covering everything with generic copy. A tightly matched ad consistently gets a better click-through rate and a lower cost per click than a generic one.",
+          "Three to five ad groups per campaign, each with a clear, narrow theme, is a reasonable starting structure for most small business campaigns, wide enough to cover your offering, narrow enough to stay relevant.",
+        ],
+      },
+      {
+        id: "step-three-ad-copy",
+        heading: "Step three: write ad copy that matches what the searcher actually wants",
+        paragraphs: [
+          "Lead with the specific thing being searched for, then follow with a concrete reason to choose you, price, speed, a guarantee, rather than vague claims every competitor could equally make. 'Same-day plumber in Kilimani, KES 1,500 call-out' beats 'Your trusted plumbing experts' in almost every test I've run.",
+          "Use every ad extension available, sitelinks, callouts, call extensions, structured snippets. They cost nothing extra and give your ad more visual space and more reasons to click, at zero additional cost per click.",
+        ],
+      },
+      {
+        id: "step-four-landing-page",
+        heading: "Step four: match the landing page to the ad, exactly",
+        paragraphs: [
+          "Someone who clicked an ad for 'emergency plumber Nairobi' should land on a page about emergency plumbing, not your homepage. A mismatched landing page is one of the most common reasons a campaign gets clicks but no conversions.",
+          "Keep the page fast, mobile-friendly, and built around one clear action, call, WhatsApp, or a short form, following the same principle covered in my piece on lead generation campaigns that actually work.",
+        ],
+      },
+      {
+        id: "step-five-tracking-and-budget",
+        heading: "Step five: confirm tracking works, then set a realistic budget",
+        paragraphs: [
+          "Before turning spend on, confirm conversion tracking is actually firing, a call, a form submission, a WhatsApp click, using Google's own testing tools. Launching without this means you're flying blind regardless of how well everything else was built.",
+          "Set a daily budget you can sustain for at least two to three weeks without touching it, since campaigns need that runway to gather enough data to judge fairly, the same patience required across every paid platform I work with.",
+        ],
+      },
+      {
+        id: "step-six-review-and-refine",
+        heading: "Step six: review on a schedule, not out of anxiety",
+        paragraphs: [
+          "Check in weekly, not daily, for the first month. Daily checking leads to premature changes that reset the campaign's learning before it's had a fair chance, the same discipline that matters in ad creative testing on any platform.",
+          "After three to four weeks of real data, pause the keywords and ad groups that clearly aren't working, and shift budget toward what is. That's when a PPC campaign actually starts to become genuinely successful, not at launch.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "best-tools-managing-google-ads-kenya-2026",
+    category: "Google Ads",
+    title: "Best Tools for Managing and Optimizing Google Ads Campaigns",
+    excerpt: "Google gives you most of what you need for free, inside the platform itself. Here's what's actually worth adding on top.",
+    date: "2026-10-13",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "Best Tools for Managing and Optimizing Google Ads Campaigns",
+    metaDescription: "A practical, honest roundup of the tools worth using to manage and optimize Google Ads campaigns, from Google's own free tools to third-party options worth the cost.",
+    intro: "Every 'best tools for Google Ads' list online seems to assume you need to buy ten different subscriptions. In practice, most of what a small or mid-sized Kenyan business needs is already free, inside the platform Google gives you. Here's what I actually use, and when the paid tools genuinely earn their cost.",
+    thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Dashboard software showing advertising performance metrics on a screen",
+
+    sections: [
+      {
+        id: "free-tools-first",
+        heading: "Start with what Google already gives you for free",
+        paragraphs: [
+          "Keyword Planner for research and bid estimates, Google Analytics for understanding what happens after the click, and Google Tag Manager for installing tracking without touching code directly, cover the genuine fundamentals most businesses need, at zero additional cost.",
+          "The built-in recommendations tab inside Google Ads is worth a skeptical look, not blind acceptance, some suggestions genuinely help, others are Google nudging you toward broader targeting and higher spend that benefits Google more than it benefits you.",
+        ],
+      },
+      {
+        id: "tracking-and-attribution",
+        heading: "Where it's worth spending on tracking and attribution",
+        paragraphs: [
+          "For a WhatsApp or call-heavy business, a call tracking tool that ties phone enquiries back to the specific ad and keyword that generated them closes a real visibility gap that standard web-based conversion tracking can't see on its own.",
+          "This matters disproportionately in the Kenyan market, where a huge share of genuine leads happen over a phone call or WhatsApp message rather than a web form, exactly the pattern I cover in my piece on WhatsApp as a sales channel.",
+        ],
+      },
+      {
+        id: "competitive-intelligence",
+        heading: "Competitive intelligence tools, used sparingly",
+        paragraphs: [
+          "Tools that estimate competitor ad spend and keyword overlap can be genuinely useful for a quick competitive snapshot before entering a new market or keyword space, but their estimates are approximations, not verified numbers, and shouldn't be treated as more reliable than they are.",
+          "I use these occasionally for a directional read on how contested a space is, never as the deciding factor in a budget or bidding decision.",
+        ],
+      },
+      {
+        id: "landing-page-and-speed-tools",
+        heading: "Tools for the part most 'Google Ads tools' lists ignore",
+        paragraphs: [
+          "Google's own PageSpeed Insights, free, tells you exactly how slow your landing page is on a real mobile connection, which matters enormously for Kenyan traffic and is directly tied to both your Quality Score and your actual conversion rate.",
+          "A simple heatmap or session recording tool, several have workable free tiers, shows you where people actually drop off on a landing page, often revealing a fixable problem no amount of bid optimisation would ever solve.",
+        ],
+      },
+      {
+        id: "the-honest-recommendation",
+        heading: "My honest recommendation on where to start",
+        paragraphs: [
+          "Master the free tools first, Keyword Planner, Analytics, Tag Manager, PageSpeed Insights, before paying for anything else. Most accounts I audit aren't underperforming because of a missing paid tool, they're underperforming because the free fundamentals were never set up properly.",
+          "Add a paid tool only once you've identified a specific, recurring problem that a free tool genuinely can't solve, call tracking being the most common example I actually recommend paying for in this market.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

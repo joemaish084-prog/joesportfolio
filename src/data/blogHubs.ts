@@ -90,6 +90,13 @@ export const blogHubs: BlogHub[] = [
       "google-ads-vs-meta-ads-kenya-2026",
       "ad-mistakes-nairobi-smes-keep-making-2026",
       "peak-season-marketing-kenya-2026",
+      "google-performance-max-kenya-2026",
+      "google-ads-account-setup-guide-kenya-2026",
+      "google-ads-manager-mcc-explained-kenya-2026",
+      "google-local-services-ads-kenya-2026",
+      "average-cost-per-click-google-ads-kenya-2026",
+      "how-to-create-successful-ppc-campaign-kenya-2026",
+      "best-tools-managing-google-ads-kenya-2026",
     ],
     service: {
       name: "Google Ads Management",
