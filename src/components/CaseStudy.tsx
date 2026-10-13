@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
 import { CollapsibleSection } from "./CollapsibleSection";
 import { SectionLabel } from "@/components/SectionLabel";
+import { Link } from "react-router-dom";
+import { MetaTurnaroundVisual } from "@/components/MetaTurnaroundVisual";
+import { metaTurnaround } from "@/data/metaTurnaroundCaseStudy";
 
 const stats = [
   { value: "704K", label: "Instagram Reach" },
@@ -192,6 +195,60 @@ export function CaseStudy() {
             </p>
           </div>
         </ScrollReveal>
+
+        <Separator className="mb-16 opacity-20" />
+
+        <div id="meta-ads-turnaround" className="mb-16 scroll-mt-24">
+          <ScrollReveal>
+            <div className="mb-10 max-w-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                Paid media · {metaTurnaround.period}
+              </p>
+              <h3
+                className="mt-3 text-2xl sm:text-3xl font-display font-bold"
+                style={{ color: "hsl(var(--case-study-text))" }}
+              >
+                Meta Ads turnaround: under KES 10,000 a month to{" "}
+                <span className="text-gradient">KES 5.3 million</span>
+              </h3>
+              <p className="mt-4 text-base sm:text-lg leading-relaxed" style={{ color: "hsl(var(--case-study-muted))" }}>
+                A Nairobi beauty retailer was running Meta ads with no conversion tracking and no campaign
+                structure. I rebuilt the account around tracked, offer-specific sales campaigns. The client is
+                not named, the numbers are real.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={0.1}>
+            <MetaTurnaroundVisual kind="stats" tone="dark" />
+          </ScrollReveal>
+
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <ScrollReveal direction="up" delay={0.15}>
+              <MetaTurnaroundVisual kind="monthly" tone="dark" />
+            </ScrollReveal>
+            <ScrollReveal direction="up" delay={0.2}>
+              <MetaTurnaroundVisual kind="comparison" tone="dark" />
+            </ScrollReveal>
+          </div>
+
+          <ScrollReveal direction="up" delay={0.1}>
+            <MetaTurnaroundVisual kind="campaigns" tone="dark" className="mt-6" />
+          </ScrollReveal>
+
+          <p className="mt-5 text-xs leading-relaxed" style={{ color: "hsl(var(--case-study-muted))" }}>
+            {metaTurnaround.attributionNote}
+          </p>
+
+          <div className="mt-8">
+            <Button variant="outline" size="lg" asChild>
+              <Link to={`/agency/blog/${metaTurnaround.slug}`} className="gap-2">
+                Read the full case study
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
 
         <ScrollReveal direction="up">
           <div className="text-center">

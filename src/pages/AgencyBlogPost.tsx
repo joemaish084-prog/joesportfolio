@@ -10,6 +10,7 @@ import {
   resolveHubServiceHref,
 } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
+import { MetaTurnaroundVisual } from "@/components/MetaTurnaroundVisual";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
 
 const SITE = "https://www.josephmaina.co.ke";
@@ -168,6 +169,9 @@ const AgencyBlogPost = () => {
                     <p key={i} className="mt-5 text-lg leading-[1.85] text-[#444444]">
                       {p}
                     </p>
+                  ))}
+                  {section.visuals?.map((kind) => (
+                    <MetaTurnaroundVisual key={kind} kind={kind} tone="light" className="mt-8" />
                   ))}
                   {section.image && (
                     <figure className="mt-8">

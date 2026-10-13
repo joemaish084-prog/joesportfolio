@@ -2,6 +2,7 @@ import csrBaobabGroupPhoto from "@/assets/csr-baobab-group-photo.jpg";
 import csrBaobabInstalledUnits from "@/assets/csr-baobab-installed-units.jpg";
 import csrBaobabHandover from "@/assets/csr-baobab-handover.jpg";
 import csrBaobabTeamHoodie from "@/assets/csr-baobab-team-hoodie.jpg";
+import type { MetaTurnaroundVisualKind } from "@/data/metaTurnaroundCaseStudy";
 
 export interface BlogSectionImage {
   src: string;
@@ -14,6 +15,8 @@ export interface BlogSection {
   heading: string;
   paragraphs: string[];
   image?: BlogSectionImage;
+  /** Data visuals rendered after the paragraphs (Meta turnaround case study). */
+  visuals?: MetaTurnaroundVisualKind[];
 }
 
 export interface BlogPost {
@@ -70,25 +73,29 @@ export const blogPosts: BlogPost[] = [
         id: "the-numbers",
         heading: "The numbers, over roughly three months",
         paragraphs: [
-          "Across the full tracked period, the account spent KES 129,150 on Meta ads and generated KES 5,328,094 in revenue, a blended return of 43.7x on ad spend, from 953 purchases and 21,877 clicks. Cost per purchase landed at KES 127, with a 4.7% purchase rate on clicks.",
-          "Monthly revenue climbed steadily rather than spiking once and fading: from KES 1,375,513 in the first full month to KES 1,518,617 the next, with ROAS improving alongside it, from 39.1x to 42.2x to over 51x in the most recent month tracked. Consistent month-on-month improvement, not a single lucky campaign, is what actually built that total.",
+          "Across the full tracked period, 3 July to 8 October, the account spent KES 129,150 on Meta ads and Meta attributed KES 5,328,094 in revenue to them: 953 purchases at an overall return of 41.3x on ad spend. The sales campaigns on their own returned 43.7x, at KES 127 per purchase and a 4.7% purchase rate on clicks.",
+          "Monthly revenue held and grew rather than spiking once and fading: KES 1,375,513 in August and KES 1,518,617 in September, with ROAS moving from 39.1x to 42.2x, then 51.5x across the first eight days of October. Steady month-on-month improvement, not a single lucky campaign, is what built that total.",
+          "One caveat worth stating plainly: these are revenue figures as Meta reports them, on a 7-day click and 1-day view window. Platform-reported revenue usually runs higher than what lands in the bank, so I treat it as a consistent yardstick for comparing campaigns, not as an audited sales figure.",
         ],
+        visuals: ["stats", "monthly"],
       },
       {
         id: "what-worked-best",
         heading: "What worked best, specifically",
         paragraphs: [
-          "The single strongest campaign in the account, a targeted lipstick restock push, returned 76.8x on ad spend, spending just KES 4,607 to generate KES 354,050 in revenue. Tightly scoped, offer-specific campaigns like this consistently outperformed broader, less focused ones.",
-          "Short, repeatable restock campaigns, re-announcing a specific product back in stock to an audience already familiar with the brand, became one of the most reliable formats in the account, several of them independently cleared 50x to 98x ROAS on modest budgets.",
+          "The single strongest run in the account was a product-day promotion built around one product range. It returned 76.8x on ad spend, spending just KES 4,607 to generate KES 354,050 in revenue. Tightly scoped, offer-specific campaigns like this consistently outperformed broader, less focused ones.",
+          "Short, repeatable restock campaigns, re-announcing a specific product back in stock to an audience already familiar with the brand, became one of the most reliable formats in the account. The three one-week runs returned between 50x and 98x on modest budgets.",
         ],
+        visuals: ["campaigns"],
       },
       {
         id: "what-didnt-work",
         heading: "What didn't work, stated honestly",
         paragraphs: [
           "Not every campaign performed. A broader video-led sales campaign spent KES 18,077 and returned 15.4x, the weakest result of any Sales campaign in the account, and a cost per purchase nearly three times the account average. We flagged it, reduced its budget, and shifted spend toward the formats already proving themselves.",
-          "A pure reach-and-awareness campaign run alongside the sales campaigns spent over KES 1,400 for very little directly attributable revenue, which was expected given its objective, but it's a reminder that not every campaign in an account should be judged by the same yardstick, covered in more depth in my piece on Meta's Advantage+ automation and how much to trust it.",
+          "Four reach and awareness campaigns ran alongside the sales campaigns and spent KES 8,255 between them for just 4 tracked purchases. That was expected given their objective, but it's a reminder that not every campaign in an account should be judged by the same yardstick, covered in more depth in my piece on Meta's Advantage+ automation and how much to trust it.",
         ],
+        visuals: ["comparison"],
       },
       {
         id: "the-takeaway",
