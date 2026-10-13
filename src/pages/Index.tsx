@@ -65,7 +65,7 @@ const Index = () => {
         <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
         <ExpandCollapseAll />
         <Suspense fallback={null}>
-          <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="9+ Videos" defaultOpenOnMobile>
+          <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="15 Videos" defaultOpenOnMobile>
             <Videos />
           </CollapsibleWrapper>
           <CollapsibleWrapper id="graphic-design" title="Graphic Design" Icon={Palette} count="Gallery">
