@@ -1,3 +1,14 @@
+export interface CaseStudyImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+// Same source as the blog thumbnails. These are stock photos used for
+// illustration, not pictures of the client or the campaign itself.
+const unsplash = (id: string, width: number) =>
+  `https://images.unsplash.com/photo-${id}?q=80&w=${width}&auto=format&fit=crop`;
+
 export interface CaseStudySummary {
   /** Anchor on /work/case-studies. */
   id: string;
@@ -6,6 +17,9 @@ export interface CaseStudySummary {
   title: string;
   summary: string;
   stats: { value: string; label: string }[];
+  cover: CaseStudyImage;
+  /** Three supporting photos: the first is shown large. */
+  gallery: CaseStudyImage[];
 }
 
 /**
@@ -25,6 +39,27 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "41.3x", label: "Return on ad spend" },
       { value: "953", label: "Tracked purchases" },
     ],
+    cover: {
+      src: unsplash("1596462502278-27bfdc403348", 1600),
+      alt: "Makeup brushes, lipstick, mascara and powder compacts laid out on a beige surface",
+    },
+    gallery: [
+      {
+        src: unsplash("1460925895917-afdab827c52f", 1200),
+        alt: "Laptop showing an analytics dashboard with charts and traffic figures",
+        caption: "Measurement first: every purchase tracked back to its campaign",
+      },
+      {
+        src: unsplash("1607083206968-13611e3d76db", 800),
+        alt: "Red sale tags scattered on a dark surface",
+        caption: "One clear offer per campaign",
+      },
+      {
+        src: unsplash("1563013544-824ae1b704d3", 800),
+        alt: "Person holding a bank card while shopping on a laptop",
+        caption: "953 tracked purchases",
+      },
+    ],
   },
   {
     id: "social-media-2025",
@@ -37,6 +72,27 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "4M", label: "TikTok video views" },
       { value: "2.5M", label: "Instagram video views" },
       { value: "336", label: "Pieces of content" },
+    ],
+    cover: {
+      src: unsplash("1744135995241-3afc337786fd", 1600),
+      alt: "Smartphone on a tripod recording a video",
+    },
+    gallery: [
+      {
+        src: unsplash("1574717024653-61fd2cf4d44d", 1200),
+        alt: "Video editing timeline with clips and audio tracks on a screen",
+        caption: "142 videos planned, shot and edited",
+      },
+      {
+        src: unsplash("1611262588024-d12430b98920", 800),
+        alt: "Instagram logo as a glossy 3D icon on a dark background",
+        caption: "Instagram: 2.5M video views",
+      },
+      {
+        src: unsplash("1432888622747-4eb9a8efeb07", 800),
+        alt: "Phone showing the Facebook login screen next to letter tiles spelling social media",
+        caption: "Facebook: 4.8M views",
+      },
     ],
   },
 ];

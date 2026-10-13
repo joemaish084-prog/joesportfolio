@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { WorkPageLayout } from "@/components/WorkPageLayout";
 import { MetaTurnaroundDetail } from "@/components/case-studies/MetaTurnaroundDetail";
 import { SocialCampaignDetail } from "@/components/case-studies/SocialCampaignDetail";
+import { CaseStudyGallery } from "@/components/case-studies/CaseStudyGallery";
 import { caseStudies } from "@/data/caseStudies";
 import { getHubBySlug, getHubPosts } from "@/data/blogHubs";
 import { metaTurnaround } from "@/data/metaTurnaroundCaseStudy";
@@ -77,9 +78,27 @@ const WorkCaseStudies = () => {
           <section
             key={cs.id}
             id={cs.id}
-            className="on-dark dot-grid scroll-mt-24 rounded-3xl border p-5 sm:p-10"
+            className="on-dark scroll-mt-24 overflow-hidden rounded-3xl border"
             style={{ background: "hsl(var(--case-study-bg))", borderColor: "hsl(var(--case-study-card-border))" }}
           >
+            <div className="relative h-52 sm:h-80">
+              <img
+                src={cs.cover.src}
+                alt={cs.cover.alt}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(180deg, hsl(var(--case-study-bg) / 0.25) 0%, hsl(var(--case-study-bg) / 0.75) 60%, hsl(var(--case-study-bg)) 100%)",
+                }}
+              />
+            </div>
+            <div className="relative -mt-20 p-5 sm:-mt-28 sm:p-10">
             <header className="mb-8 max-w-3xl sm:mb-10">
               <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                 <span>
@@ -101,7 +120,11 @@ const WorkCaseStudies = () => {
                 {cs.summary}
               </p>
             </header>
+            <div className="mb-8 sm:mb-10">
+              <CaseStudyGallery images={cs.gallery} />
+            </div>
             {DETAILS[cs.id]?.()}
+            </div>
           </section>
         ))}
       </div>

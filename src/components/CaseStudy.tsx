@@ -36,9 +36,27 @@ export function CaseStudy() {
             <ScrollReveal key={cs.id} direction="up" delay={i * 0.12} className="h-full">
               <Link
                 to={`/work/case-studies#${cs.id}`}
-                className="corner-brackets group flex h-full flex-col rounded-2xl border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-elegant"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-elegant"
                 style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}
               >
+                <div className="relative h-44 sm:h-56 overflow-hidden">
+                  <img
+                    src={cs.cover.src}
+                    alt={cs.cover.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, hsl(var(--case-study-card) / 0) 40%, hsl(var(--case-study-card)) 100%)",
+                    }}
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-6 pt-2 sm:p-8 sm:pt-2">
                 <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                   <span>
                     {cs.tag} · {cs.period}
@@ -77,6 +95,7 @@ export function CaseStudy() {
                   View case study
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </span>
+                </div>
               </Link>
             </ScrollReveal>
           ))}

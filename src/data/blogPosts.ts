@@ -51,8 +51,8 @@ export const blogPosts: BlogPost[] = [
     metaTitle: "From Under KES 10,000 to KES 5.3 Million: A Meta Ads Turnaround",
     metaDescription: "A real Meta Ads case study: how a Nairobi beauty retailer's ad account went from under KES 10,000 in monthly attributable revenue to over KES 5.3 million in tracked sales, with the actual numbers.",
     intro: "Before we started managing this account, Meta ads were bringing in next to nothing for this business, under KES 10,000 a month in anything you could actually trace back to an ad. Three months later, the same account had produced over KES 5.3 million in tracked revenue. Here's what changed, with the real numbers, not a rounded-up summary.",
-    thumbnail: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Shelves of beauty and skincare products in a retail store",
+    thumbnail: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Makeup brushes, lipstick, mascara and powder compacts laid out on a beige surface",
     heroVisual: "hero",
 
     sections: [
