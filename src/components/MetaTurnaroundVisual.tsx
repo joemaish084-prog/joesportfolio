@@ -43,7 +43,7 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /** True once the element has scrolled into view. Immediately true when motion is reduced. */
-function useInView<T extends HTMLElement>() {
+export function useInView<T extends HTMLElement>() {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
 
@@ -307,7 +307,8 @@ function Campaigns({ data }: VisualProps) {
         })}
       </ol>
       <p className={`mt-5 text-xs leading-relaxed ${muted}`}>
-        Campaign names are replaced with generic descriptions. Amber marks a return under {data.weakBelow}x.
+        {data.campaignsNote ?? "Campaign names are replaced with generic descriptions."} Amber marks a return
+        under {data.weakBelow}x.
       </p>
     </figure>
   );

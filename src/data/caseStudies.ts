@@ -28,6 +28,40 @@ export interface CaseStudySummary {
  */
 export const caseStudies: CaseStudySummary[] = [
   {
+    id: "meta-google-combined",
+    tag: "Paid media",
+    period: "Aug to Oct 2026",
+    title: "KES 5.43M from two platforms: Meta and Google Ads together",
+    summary:
+      "One beauty retailer, two ad platforms, one monthly report. Meta created the demand, Google caught the people already searching. The client is not named, the numbers are real.",
+    stats: [
+      { value: "KES 5.43M", label: "Tracked revenue" },
+      { value: "26.4x", label: "Blended return on ad spend" },
+      { value: "938", label: "Tracked orders" },
+    ],
+    cover: {
+      src: unsplash("1519389950473-47ba0277781c", 1600),
+      alt: "Desk seen from above with several laptops, phones and notebooks in use",
+    },
+    gallery: [
+      {
+        src: unsplash("1504868584819-f8e8b4b6d7e3", 1200),
+        alt: "Laptop on a sofa showing a report with bar charts, a map and a ring chart",
+        caption: "Both platforms in one monthly report",
+      },
+      {
+        src: unsplash("1512941937669-90a1b58e7e9c", 800),
+        alt: "Phone home screen showing Google Maps, Instagram, Facebook and other apps",
+        caption: "Meta for demand, Google for intent",
+      },
+      {
+        src: unsplash("1556155092-490a1ba16284", 800),
+        alt: "Person at a laptop reviewing a list of transactions",
+        caption: "938 tracked orders",
+      },
+    ],
+  },
+  {
     id: "google-ads-launch",
     tag: "Paid search",
     period: "Aug to Oct 2026",
@@ -92,6 +126,74 @@ export const caseStudies: CaseStudySummary[] = [
         src: unsplash("1563013544-824ae1b704d3", 800),
         alt: "Person holding a bank card while shopping on a laptop",
         caption: "953 tracked purchases",
+      },
+    ],
+  },
+  {
+    id: "instagram-spike",
+    tag: "Instagram",
+    period: "Sep 2026",
+    title: "577,300 views in one week: an Instagram spike for a skincare clinic",
+    summary:
+      "The Instagram account of a Nairobi skincare clinic went from about 52,700 views a week to 577,300 in one. Here is what the spike brought in, what stayed afterwards and what faded.",
+    stats: [
+      { value: "577,300", label: "Views in one week" },
+      { value: "239,000", label: "People reached" },
+      { value: "345", label: "New followers that week" },
+    ],
+    cover: {
+      src: unsplash("1570172619644-dfd03ed5d881", 1600),
+      alt: "Therapist brushing a clay mask onto the face of a client during a facial",
+    },
+    gallery: [
+      {
+        src: unsplash("1611162616305-c69b3fa7fbe0", 1200),
+        alt: "Instagram logo as a glossy 3D icon on a pink background",
+        caption: "577,300 views in a single week",
+      },
+      {
+        src: unsplash("1616394584738-fc6e612e71b9", 800),
+        alt: "Client with a white face mask being applied in a treatment room",
+        caption: "345 new followers",
+      },
+      {
+        src: unsplash("1515377905703-c4788e51af15", 800),
+        alt: "Hands dripping serum from a small amber bottle",
+        caption: "Link clicks up six-fold",
+      },
+    ],
+  },
+  {
+    id: "awareness-campaigns",
+    tag: "Brand awareness",
+    period: "Aug to Oct 2026",
+    title: "514,000 people reached for KES 8,255: awareness on a small budget",
+    summary:
+      "Four small reach campaigns ran beside the sales campaigns of a beauty retailer: a creator collaboration, two launches and an in-store push. What they bought, and what they did not.",
+    stats: [
+      { value: "513,902", label: "People reached" },
+      { value: "KES 8,255", label: "Total spend" },
+      { value: "KES 13.67", label: "Per 1,000 impressions" },
+    ],
+    cover: {
+      src: unsplash("1541535650810-10d26f5c2ab3", 1600),
+      alt: "City square surrounded by large illuminated advertising billboards",
+    },
+    gallery: [
+      {
+        src: unsplash("1483985988355-763728e1935b", 1200),
+        alt: "Woman in sunglasses carrying several shopping bags",
+        caption: "Reach first, so the sales campaigns land on warm audiences",
+      },
+      {
+        src: unsplash("1441986300917-64674bd600d8", 800),
+        alt: "Interior of a clothing shop with shelves and hanging rails",
+        caption: "In-store awareness: 85,052 reached",
+      },
+      {
+        src: unsplash("1472851294608-062f824d29cc", 800),
+        alt: "Open sign hanging in a shop window",
+        caption: "KES 13.67 per 1,000 impressions",
       },
     ],
   },

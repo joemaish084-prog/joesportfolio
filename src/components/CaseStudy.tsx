@@ -5,6 +5,9 @@ import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 import { caseStudies } from "@/data/caseStudies";
 
+// Only the newest few appear on the homepage; the rest are on the full page.
+const preview = caseStudies.slice(0, 3);
+
 // The homepage shows a short preview; the full breakdowns live at /work/case-studies.
 export function CaseStudy() {
   return (
@@ -32,7 +35,7 @@ export function CaseStudy() {
         </ScrollReveal>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {caseStudies.map((cs, i) => (
+          {preview.map((cs, i) => (
             <ScrollReveal key={cs.id} direction="up" delay={i * 0.12} className="h-full">
               <Link
                 to={`/work/case-studies#${cs.id}`}
@@ -107,7 +110,7 @@ export function CaseStudy() {
           <div className="mt-10 sm:mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button variant="gradient" size="lg" asChild>
               <Link to="/work/case-studies" className="gap-2">
-                View all case studies
+                View all {caseStudies.length} case studies
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>

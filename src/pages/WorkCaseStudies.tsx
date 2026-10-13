@@ -10,8 +10,14 @@ import { caseStudies } from "@/data/caseStudies";
 import { getHubBySlug, getHubPosts } from "@/data/blogHubs";
 import { metaTurnaround } from "@/data/metaTurnaroundCaseStudy";
 import { googleAdsLaunch } from "@/data/googleAdsCaseStudy";
+import { combinedAds } from "@/data/combinedAdsCaseStudy";
+import { awarenessCampaigns, instagramSpike } from "@/data/insightCaseStudies";
+import { InsightCaseStudyDetail } from "@/components/case-studies/InsightCaseStudyDetail";
 
 const DETAILS: Record<string, () => ReactNode> = {
+  "meta-google-combined": () => <PaidCaseStudyDetail data={combinedAds} />,
+  "instagram-spike": () => <InsightCaseStudyDetail data={instagramSpike} />,
+  "awareness-campaigns": () => <InsightCaseStudyDetail data={awarenessCampaigns} />,
   "google-ads-launch": () => <PaidCaseStudyDetail data={googleAdsLaunch} />,
   "meta-ads-turnaround": () => <PaidCaseStudyDetail data={metaTurnaround} />,
   "social-media-2025": () => <SocialCampaignDetail />,

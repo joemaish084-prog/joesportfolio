@@ -54,6 +54,8 @@ export interface PaidCaseStudy {
   months: TurnaroundMonth[];
   monthlyNote: string;
   campaignsTitle: string;
+  /** Replaces the default note under the ranking. */
+  campaignsNote?: string;
   /** Returns under this multiple are marked amber. */
   weakBelow: number;
   campaigns: TurnaroundCampaign[];
