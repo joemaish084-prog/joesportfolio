@@ -81,9 +81,11 @@ const AgencyBlogPost = () => {
         <meta property="og:description" content={post.metaDescription} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={url} />
+        <meta property="og:image" content={post.thumbnail} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.metaTitle} />
         <meta name="twitter:description" content={post.metaDescription} />
+        <meta name="twitter:image" content={post.thumbnail} />
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
       </Helmet>
 
@@ -138,6 +140,17 @@ const AgencyBlogPost = () => {
                   <Clock className="h-4 w-4" aria-hidden="true" /> {post.readTime}
                 </span>
               </div>
+
+              <figure className="mt-8">
+                <img
+                  src={post.thumbnail}
+                  alt={post.thumbnailAlt}
+                  loading="eager"
+                  width={1200}
+                  height={630}
+                  className="h-56 w-full rounded-2xl border border-[#EAEAEA] object-cover sm:h-80"
+                />
+              </figure>
 
               <p className="mt-10 text-xl leading-relaxed text-[#333333]">{post.intro}</p>
 
