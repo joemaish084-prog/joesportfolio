@@ -1,265 +1,97 @@
-import { BarChart3, Zap, ArrowRight } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
-import { CollapsibleSection } from "./CollapsibleSection";
 import { SectionLabel } from "@/components/SectionLabel";
-import { Link } from "react-router-dom";
-import { MetaTurnaroundVisual } from "@/components/MetaTurnaroundVisual";
-import { metaTurnaround } from "@/data/metaTurnaroundCaseStudy";
+import { caseStudies } from "@/data/caseStudies";
 
-const stats = [
-  { value: "704K", label: "Instagram Reach" },
-  { value: "336", label: "Pieces of Content Published" },
-  { value: "104K", label: "Top Single Video Views (TikTok)" },
-  { value: "4M", label: "Total TikTok Video Views" },
-  { value: "2.5M", label: "Total Instagram Video Views" },
-];
-
-const platforms = [
-  {
-    name: "TikTok",
-    subtitle: "Brand Awareness Champion",
-    accentVar: "--tiktok",
-    metrics: [
-      { text: "4M total video views", bold: true },
-      { text: "16K profile views", bold: false },
-      { text: "230K total likes", bold: true },
-      { text: "2.1K comments", bold: false },
-      { text: "5.4K shares", bold: false },
-    ],
-    topVideo: "103.9K views, 321+ hours total play time, 10.67s avg watch time, 9.1% full-video completion rate",
-    insight: "Best platform for viral reach and watch time. Video content averaged 6–8% engagement rate.",
-  },
-  {
-    name: "Instagram",
-    subtitle: "Lead Generation Powerhouse",
-    accentVar: "--instagram",
-    metrics: [
-      { text: "2.5M total video views", bold: true },
-      { text: "322.9% views growth", bold: true },
-      { text: "173.4% link clicks growth", bold: true },
-      { text: "18.6K link clicks", bold: false },
-      { text: "32.1K profile visits (↑78.4%)", bold: false },
-      { text: "16.2K content interactions (↑100%)", bold: false },
-      { text: "4.1K new followers", bold: false },
-    ],
-    topVideo: "92,631 views reaching 31,988 users — 375 likes, 188 saves, 96 shares, 62 comments",
-    insight: "Strongest platform for high-intent traffic and lead generation.",
-  },
-  {
-    name: "Facebook",
-    subtitle: "Steady Supplemental Channel",
-    accentVar: "--facebook",
-    metrics: [
-      { text: "4.8M total views", bold: true },
-      { text: "15.8K link clicks (↑2.3%)", bold: false },
-      { text: "16.9K page visits", bold: false },
-      { text: "6.1K content interactions (↑9.3%)", bold: false },
-      { text: "816 new followers (↑6%)", bold: false },
-    ],
-    topVideo: null,
-    insight: "Reliable channel for consistent audience touchpoints and link sharing.",
-  },
-];
-
-
+// The homepage shows a short preview; the full breakdowns live at /work/case-studies.
 export function CaseStudy() {
   return (
     <section
       id="case-study"
       className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider on-dark py-20 sm:py-32"
       style={{ background: "hsl(var(--case-study-bg))" }}
-      aria-label="Digital marketing case study showcasing results from 2025 campaigns in Nairobi, Kenya"
+      aria-label="Digital marketing case studies with campaign results from Nairobi, Kenya"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <ScrollReveal>
-          <div className="text-center mb-16 space-y-4">
+          <div className="text-center mb-12 sm:mb-16 space-y-4">
             <SectionLabel>CASE STUDIES</SectionLabel>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
               style={{ color: "hsl(var(--case-study-text))" }}
             >
-              Case <span className="text-gradient">Study</span>: Digital Marketing Results 2025
+              Case <span className="text-gradient">Studies</span>
             </h2>
             <p className="text-lg max-w-3xl mx-auto" style={{ color: "hsl(var(--case-study-muted))" }}>
-              As a <strong>Digital Marketing Specialist in Nairobi, Kenya</strong>, I planned and executed a full-year campaign
-              across TikTok, Instagram, and Facebook — driving brand awareness, engagement, and lead
-              generation through a video-first SEO strategy. This case study showcases results from{" "}
-              <strong>TikTok marketing in Nairobi</strong>, Meta Ads management, and content strategy across Kenya.
+              As a <strong>Digital Marketing Specialist in Nairobi, Kenya</strong>, I run Meta Ads, TikTok and
+              social media campaigns for Kenyan brands. These are the results, with the numbers behind them.
             </p>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal direction="scale" delay={0.1}>
-          <div
-            className="corner-brackets rounded-xl p-6 sm:p-8 mb-12 border"
-            style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}
-          >
-            <p className="text-base sm:text-lg leading-relaxed italic" style={{ color: "hsl(var(--case-study-text) / 0.85)" }}>
-              "In 2025, I planned and executed a comprehensive social media marketing strategy across
-              three platforms, producing <strong>336 pieces of content</strong> (142 videos + 194 static posts). The
-              campaign prioritised video content, which consistently outperformed static posts across
-              all platforms in views, engagement, and conversion metrics."
-            </p>
-          </div>
-        </ScrollReveal>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mb-16">
-          {stats.map((stat, i) => (
-            <ScrollReveal
-              key={i}
-              direction="up"
-              delay={i * 0.1}
-              // odd count in a 2-column phone grid: let the last tile fill the row
-              className={i === stats.length - 1 && stats.length % 2 === 1 ? "col-span-2 sm:col-span-1" : ""}
-            >
-              <div
-                className="corner-brackets rounded-xl p-5 text-center border transition-all duration-300 hover:-translate-y-1"
+        <div className="grid gap-6 lg:grid-cols-2">
+          {caseStudies.map((cs, i) => (
+            <ScrollReveal key={cs.id} direction="up" delay={i * 0.12} className="h-full">
+              <Link
+                to={`/work/case-studies#${cs.id}`}
+                className="corner-brackets group flex h-full flex-col rounded-2xl border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-elegant"
                 style={{ background: "hsl(var(--case-study-card))", borderColor: "hsl(var(--case-study-card-border))" }}
               >
-                <p className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-gradient">
-                  <strong>{stat.value}</strong>
+                <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                  <span>
+                    {cs.tag} · {cs.period}
+                  </span>
+                  {i === 0 && (
+                    <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold tracking-wider text-primary-foreground">
+                      Latest
+                    </span>
+                  )}
                 </p>
-                <p className="text-xs sm:text-sm mt-2 font-medium" style={{ color: "hsl(var(--case-study-muted))" }}>
-                  {stat.label}
+                <h3
+                  className="mt-4 text-xl sm:text-2xl font-display font-bold leading-snug"
+                  style={{ color: "hsl(var(--case-study-text))" }}
+                >
+                  {cs.title}
+                </h3>
+                <p className="mt-3 flex-1 text-sm sm:text-base leading-relaxed" style={{ color: "hsl(var(--case-study-muted))" }}>
+                  {cs.summary}
                 </p>
-              </div>
+
+                <dl
+                  className="mt-6 grid grid-cols-3 gap-3 border-t pt-6"
+                  style={{ borderColor: "hsl(var(--case-study-card-border))" }}
+                >
+                  {cs.stats.map((stat) => (
+                    <div key={stat.label} className="flex flex-col-reverse">
+                      <dt className="mt-1.5 text-xs leading-snug" style={{ color: "hsl(var(--case-study-muted))" }}>
+                        {stat.label}
+                      </dt>
+                      <dd className="text-xl sm:text-3xl font-display font-bold text-gradient">{stat.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                  View case study
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+              </Link>
             </ScrollReveal>
           ))}
         </div>
 
-        <Separator className="mb-16 opacity-20" />
-
-        <CollapsibleSection
-          id="platform-breakdown"
-          title={<span style={{ color: "hsl(var(--case-study-text))" }}>Platform Breakdown</span>}
-          defaultOpen
-          className="mb-16"
-        >
-          <div className="grid md:grid-cols-3 gap-6">
-            {platforms.map((platform, i) => (
-              <ScrollReveal key={i} direction="up" delay={i * 0.15}>
-                <article
-                  className="corner-brackets rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-lg flex flex-col"
-                  style={{
-                    background: "hsl(var(--case-study-card))",
-                    borderColor: "hsl(var(--case-study-card-border))",
-                    borderTopWidth: "3px",
-                    borderTopColor: `hsl(var(${platform.accentVar}))`,
-                  }}
-                >
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h4 className="text-xl font-display font-bold mb-1" style={{ color: `hsl(var(${platform.accentVar}))` }}>
-                      {platform.name}
-                    </h4>
-                    <p className="text-sm font-medium mb-5" style={{ color: "hsl(var(--case-study-muted))" }}>
-                      {platform.subtitle}
-                    </p>
-                    <ul className="space-y-2 mb-5 flex-1">
-                      {platform.metrics.map((m, j) => (
-                        <li key={j} className="flex items-start gap-2 text-sm" style={{ color: "hsl(var(--case-study-text) / 0.8)" }}>
-                          <BarChart3 className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-primary" />
-                          {m.bold ? <strong>{m.text}</strong> : m.text}
-                        </li>
-                      ))}
-                    </ul>
-                    {platform.topVideo && (
-                      <div className="rounded-lg p-3 mb-4 text-xs" style={{ background: `hsl(var(${platform.accentVar}) / 0.1)`, color: "hsl(var(--case-study-text) / 0.7)" }}>
-                        <span className="font-semibold" style={{ color: `hsl(var(${platform.accentVar}))` }}>Top Video:</span>{" "}
-                        {platform.topVideo}
-                      </div>
-                    )}
-                    <div className="rounded-lg p-3 text-sm italic border" style={{ borderColor: `hsl(var(${platform.accentVar}) / 0.2)`, color: "hsl(var(--case-study-text) / 0.75)" }}>
-                      "{platform.insight}"
-                    </div>
-                  </div>
-                </article>
-              </ScrollReveal>
-            ))}
-          </div>
-        </CollapsibleSection>
-
-        <Separator className="mb-16 opacity-20" />
-
-        <ScrollReveal direction="left">
-          <div
-            className="corner-brackets rounded-xl p-6 sm:p-8 mb-12 border-l-4"
-            style={{ background: "hsl(var(--case-study-card))", borderLeftColor: "hsl(var(--primary))" }}
-          >
-            <Zap className="h-6 w-6 text-primary mb-3" />
-            <p className="text-base sm:text-lg leading-relaxed font-medium" style={{ color: "hsl(var(--case-study-text) / 0.9)" }}>
-              "Installation and engagement videos dominated performance across all platforms. Video
-              content consistently outperformed static posts in views, engagement, and conversion
-              intent — making a <strong>video-first strategy the clear driver of campaign success</strong>."
-            </p>
-          </div>
-        </ScrollReveal>
-
-        <Separator className="mb-16 opacity-20" />
-
-        <div id="meta-ads-turnaround" className="mb-16 scroll-mt-24">
-          <ScrollReveal>
-            <div className="mb-10 max-w-3xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                Paid media · {metaTurnaround.period}
-              </p>
-              <h3
-                className="mt-3 text-2xl sm:text-3xl font-display font-bold"
-                style={{ color: "hsl(var(--case-study-text))" }}
-              >
-                Meta Ads turnaround for a <span className="text-gradient">Nairobi beauty retailer</span>
-              </h3>
-              <p className="mt-4 text-base sm:text-lg leading-relaxed" style={{ color: "hsl(var(--case-study-muted))" }}>
-                A Nairobi beauty retailer was running Meta ads with no conversion tracking and no campaign
-                structure. I rebuilt the account around tracked, offer-specific sales campaigns. The client is
-                not named, the numbers are real.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal direction="up" delay={0.1}>
-            <MetaTurnaroundVisual kind="hero" tone="dark" />
-          </ScrollReveal>
-
-          <div className="mt-6 grid gap-6 lg:grid-cols-2">
-            <ScrollReveal direction="up" delay={0.15}>
-              <MetaTurnaroundVisual kind="monthly" tone="dark" />
-            </ScrollReveal>
-            <ScrollReveal direction="up" delay={0.2}>
-              <MetaTurnaroundVisual kind="comparison" tone="dark" />
-            </ScrollReveal>
-          </div>
-
-          <ScrollReveal direction="up" delay={0.1}>
-            <MetaTurnaroundVisual kind="process" tone="dark" className="mt-6" />
-          </ScrollReveal>
-
-          <ScrollReveal direction="up" delay={0.1}>
-            <MetaTurnaroundVisual kind="campaigns" tone="dark" className="mt-6" />
-          </ScrollReveal>
-
-          <p className="mt-5 text-xs leading-relaxed" style={{ color: "hsl(var(--case-study-muted))" }}>
-            {metaTurnaround.attributionNote}
-          </p>
-
-          <div className="mt-8">
-            <Button variant="outline" size="lg" asChild>
-              <Link to={`/agency/blog/${metaTurnaround.slug}`} className="gap-2">
-                Read the full case study
+        <ScrollReveal direction="up">
+          <div className="mt-10 sm:mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Button variant="gradient" size="lg" asChild>
+              <Link to="/work/case-studies" className="gap-2">
+                View all case studies
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
-          </div>
-        </div>
-
-        <ScrollReveal direction="up">
-          <div className="text-center">
-            <Button variant="gradient" size="lg" asChild>
-              <a href="#contact" className="gap-2">
-                Impressed? Let's Work Together
-                <ArrowRight className="h-5 w-5" />
-              </a>
+            <Button variant="outline" size="lg" asChild>
+              <a href="#contact">Let's Work Together</a>
             </Button>
           </div>
         </ScrollReveal>

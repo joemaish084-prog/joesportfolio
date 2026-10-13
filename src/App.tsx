@@ -18,6 +18,7 @@ import CookiePolicy from "./pages/CookiePolicy";
 import Terms from "./pages/Terms";
 import Connect from "./pages/Connect";
 import WorkDesign from "./pages/WorkDesign";
+import WorkCaseStudies from "./pages/WorkCaseStudies";
 import NotFound from "./pages/NotFound";
 import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/connect" element={<Connect />} />
             <Route path="/work/design" element={<WorkDesign />} />
+            <Route path="/work/case-studies" element={<WorkCaseStudies />} />
             <Route
               path="/admin"
               element={

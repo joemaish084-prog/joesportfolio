@@ -804,7 +804,7 @@ const Agency = () => {
           </div>
           <div className="text-center mt-8">
             <Button variant="outline" asChild>
-              <Link to="/#case-study">See All Case Studies</Link>
+              <Link to="/work/case-studies">See All Case Studies</Link>
             </Button>
           </div>
         </section>
