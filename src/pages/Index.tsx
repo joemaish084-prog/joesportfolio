@@ -73,6 +73,7 @@ const Index = () => {
           </CollapsibleWrapper>
           <PrintMockup />
           <About />
+          <PressFeatures />
           <ServicesPricing />
           <AgencyPromo />
           <MediaBuying />
@@ -85,7 +86,6 @@ const Index = () => {
           </CollapsibleWrapper>
           <Certifications />
           <BrandsLogoMarquee />
-          <PressFeatures />
           <Testimonials />
           <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
             <FAQ />
