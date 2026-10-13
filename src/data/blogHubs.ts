@@ -240,6 +240,11 @@ export const blogHubs: BlogHub[] = [
       "0-to-4-million-tiktok-views-behind-the-campaign",
       "video-ads-vs-static-ads-kenya-2026",
       "whatsapp-as-a-sales-channel-kenya-2026",
+      "tiktok-ads-manager-setup-guide-kenya-2026",
+      "social-media-marketing-services-kenya-cost-2026",
+      "how-to-develop-social-media-marketing-strategy-kenya-2026",
+      "best-social-media-platforms-for-marketing-kenya-2026",
+      "best-social-media-marketing-tools-kenya-2026",
     ],
     service: {
       name: "TikTok Ads & Social Media Management",

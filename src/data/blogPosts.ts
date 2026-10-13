@@ -2245,6 +2245,234 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "social-media-marketing-services-kenya-cost-2026",
+    category: "Social Media",
+    title: "What's Included in Social Media Marketing Services in Kenya (and What It Costs)",
+    excerpt: "\"Social media management\" means something different at every agency. Here's what the service should actually include before you pay for it.",
+    date: "2026-10-13",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "What's Included in Social Media Marketing Services in Kenya (and What It Costs)",
+    metaDescription: "A clear breakdown of what social media marketing services should include in Kenya, typical pricing, and the questions to ask before hiring someone to run your pages.",
+    intro: "\"Social media marketing services\" is one of the vaguest things you can buy in this market. For one business it means three posts a month, for another it means a full content calendar with paid boosting and community management. Here's what the service should actually cover, and what it reasonably costs.",
+    thumbnail: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person scheduling social media posts on a laptop and phone side by side",
+
+    sections: [
+      {
+        id: "whats-actually-in-it",
+        heading: "What a proper social media marketing service actually includes",
+        paragraphs: [
+          "At minimum: a content calendar planned in advance, original graphics or video rather than recycled stock content, consistent posting across the platforms that actually matter for your audience, and basic community management, replying to comments and messages, not just publishing and disappearing.",
+          "A fuller service adds paid boosting or ads layered on top of organic content, monthly performance reporting with actual numbers, and some level of strategy, deciding what to post and why, not just filling a calendar with whatever's easiest to produce that week.",
+        ],
+      },
+      {
+        id: "what-it-costs",
+        heading: "What it actually costs in Kenya",
+        paragraphs: [
+          "Social media management in Kenya commonly starts from around KES 40,000 a month for a single business covering content, scheduling and community management, my own Social Media Management service sits at this starting point.",
+          "Price moves up from there based on platform count, posting frequency, and whether paid ad management is bundled in or billed separately. A package covering three platforms with weekly video content costs meaningfully more than a single-platform, graphics-only package, and that difference should be visible in the proposal, not hidden in vague language.",
+        ],
+      },
+      {
+        id: "questions-to-ask",
+        heading: "Questions worth asking before you sign anything",
+        paragraphs: [
+          "Ask exactly how many posts per platform per month, who creates the content, and whether revisions are included. A vague answer here is the clearest sign the scope was never properly defined on their end either.",
+          "Ask who owns the content and the account access once the engagement ends. A business should always retain full admin access to its own pages, an agency unwilling to confirm that plainly is a red flag worth taking seriously.",
+        ],
+      },
+      {
+        id: "the-content-trap",
+        heading: "The trap of paying for volume instead of results",
+        paragraphs: [
+          "A package promising daily posting across five platforms sounds impressive and is often a sign of thin, low-effort content spread too wide to be good anywhere. Consistent, well-made content on two platforms usually outperforms a scattered daily grind across five.",
+          "Judge the service by engagement quality and, where relevant, actual enquiries generated, not by post count. Post count is the easiest number for an agency to inflate and the least connected to whether it's actually working for your business.",
+        ],
+      },
+      {
+        id: "where-to-start",
+        heading: "Where to start if you're not sure what you need yet",
+        paragraphs: [
+          "If you're unsure what scope actually fits your business, a short strategy call before committing to a retainer is worth having, most agencies, including mine, offer this for free, and it's the cheapest way to find out whether the package being pitched to you actually matches what your business needs.",
+          "Starting with a single platform done properly, rather than a broad package you can't yet judge, is a reasonable way to test an agency's actual quality before expanding the scope.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-develop-social-media-marketing-strategy-kenya-2026",
+    category: "Social Media",
+    title: "How to Develop an Effective Social Media Marketing Strategy for a Kenyan Business",
+    excerpt: "Posting consistently isn't a strategy. Here's the actual sequence I use before a single piece of content gets made.",
+    date: "2026-10-13",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "How to Develop an Effective Social Media Marketing Strategy for a Kenyan Business",
+    metaDescription: "A step-by-step guide to building a social media marketing strategy for a Kenyan business: goals, platform choice, content pillars, and how to actually measure it.",
+    intro: "Most businesses skip straight to posting without ever deciding what the social media presence is actually for. That's how you end up with a page that's active for months and still isn't moving the business forward. Here's the sequence worth working through first.",
+    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Marketing strategy notes and a content calendar laid out on a desk",
+
+    sections: [
+      {
+        id: "start-with-the-goal",
+        heading: "Start with one specific goal, not \"more engagement\"",
+        paragraphs: [
+          "Decide whether this strategy exists to drive direct sales, build brand awareness for a longer sales cycle, or support customer service and retention. Each goal changes what you should actually post and how you judge whether it's working.",
+          "\"Engagement\" is not a business goal on its own, it's a means to one. A page with high engagement and no sales lift is a sign the strategy needs revisiting, not a sign it's succeeding.",
+        ],
+      },
+      {
+        id: "choose-platforms-deliberately",
+        heading: "Choose platforms based on where your actual customer is, not habit",
+        paragraphs: [
+          "Don't default to running every platform because that's what competitors do. A B2B consultancy likely gets more from a focused LinkedIn and Twitter/X presence than from TikTok, while a fashion or food brand likely gets more from Instagram and TikTok than from LinkedIn.",
+          "I cover platform choice in more depth separately, but the short version is: pick two platforms you can genuinely sustain well rather than five you'll maintain poorly.",
+        ],
+      },
+      {
+        id: "build-content-pillars",
+        heading: "Build three or four content pillars, not an empty calendar",
+        paragraphs: [
+          "Define three or four recurring content themes, behind-the-scenes, customer results, education, promotions, so you're never starting from a blank page deciding what to post. This is what turns a content calendar from a source of stress into a repeatable system.",
+          "Weight pillars toward what your actual audience engages with, not what's easiest for you to produce. Track which pillar performs best after a month of consistent posting and shift more effort toward it.",
+        ],
+      },
+      {
+        id: "plan-the-funnel",
+        heading: "Plan for the whole funnel, not just the top of it",
+        paragraphs: [
+          "Awareness content brings people in, but the strategy also needs content built for people who already know you and are deciding whether to buy, testimonials, pricing clarity, comparisons, FAQs answered directly.",
+          "Most small business social strategies are almost entirely top-of-funnel. Adding even a small amount of consideration and decision-stage content usually produces a disproportionate lift in actual enquiries.",
+        ],
+      },
+      {
+        id: "measure-and-adjust",
+        heading: "Measure against the original goal, monthly",
+        paragraphs: [
+          "Review performance against the goal you set at the start, not against vanity metrics that happened to look good that month. If the goal was sales, track enquiries and conversions attributable to social, not just likes and shares.",
+          "A strategy is not a document you write once. Revisit it monthly, keep what's working, and be willing to cut a content pillar or platform that consistently underperforms, even if it was a reasonable bet when you started.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "best-social-media-platforms-for-marketing-kenya-2026",
+    category: "Social Media",
+    title: "Best Social Media Platforms for Marketing in Kenya: Where to Actually Focus",
+    excerpt: "Every platform claims to be essential. Here's an honest read on where a Kenyan business's time and budget are actually well spent.",
+    date: "2026-10-13",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "Best Social Media Platforms for Marketing in Kenya: Where to Actually Focus",
+    metaDescription: "An honest comparison of Facebook, Instagram, TikTok, LinkedIn and X for marketing a Kenyan business, and how to decide where your limited time and budget belong.",
+    intro: "No business has the time to run every platform well, and trying to is how you end up with five mediocre pages instead of two strong ones. Here's how I actually think about platform choice for Kenyan businesses, by audience and by what each platform is genuinely good for.",
+    thumbnail: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Several social media app icons displayed on a smartphone screen",
+
+    sections: [
+      {
+        id: "facebook",
+        heading: "Facebook: still underrated for reach in Kenya",
+        paragraphs: [
+          "Facebook's user base in Kenya skews broader and slightly older than Instagram or TikTok's, and Marketplace plus Groups still drive genuine local commerce that a lot of younger-skewing agencies dismiss too quickly.",
+          "It's particularly strong for local service businesses and anything selling to a 30-plus audience, where Instagram and TikTok reach thins out noticeably.",
+        ],
+      },
+      {
+        id: "instagram",
+        heading: "Instagram: the strongest for visual products and direct sales",
+        paragraphs: [
+          "For fashion, food, beauty and any visually driven product, Instagram remains the platform that converts attention into direct messages and sales most reliably, Shopping tags and a clean, consistent grid still do real commercial work here.",
+          "It's also the platform where a polished aesthetic genuinely helps rather than feeling like it's trying too hard, unlike TikTok, where over-production actively hurts performance.",
+        ],
+      },
+      {
+        id: "tiktok",
+        heading: "TikTok: cheapest reach, if you can commit to native content",
+        paragraphs: [
+          "TikTok still delivers the cheapest organic reach available to Kenyan brands, covered in more depth in my TikTok vs Instagram piece, but it punishes anything that looks repurposed from another platform.",
+          "It's the right platform if you can commit to genuinely native, fast-hook video regularly. It's the wrong one if you're only going to post occasionally or recycle Instagram content onto it.",
+        ],
+      },
+      {
+        id: "linkedin-and-x",
+        heading: "LinkedIn and X: narrow but valuable for the right business",
+        paragraphs: [
+          "LinkedIn is genuinely underused by Kenyan B2B businesses, professional services, consultancies, anything selling to other businesses rather than consumers gets disproportionate value from a consistent LinkedIn presence most competitors have ignored.",
+          "X (Twitter) still matters in Kenya for real-time engagement, customer service, and reaching a specific, vocal, often younger professional audience, but it rarely drives direct sales the way Instagram or TikTok can for a product-based business.",
+        ],
+      },
+      {
+        id: "how-to-choose",
+        heading: "How to actually choose, instead of trying to run everything",
+        paragraphs: [
+          "Pick based on two things: where your specific customer already spends time, and which platform's content style you can genuinely sustain well, not occasionally. Two platforms done consistently outperform five done sporadically, every time I've tested this across client accounts.",
+          "Start with one primary platform, prove you can sustain quality content there for two to three months, then add a second rather than launching all of them on day one.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "best-social-media-marketing-tools-kenya-2026",
+    category: "Social Media",
+    title: "Best Tools for Social Media Marketing (What's Actually Worth Paying For)",
+    excerpt: "Most 'best tools' lists are affiliate link bait. Here's what I actually use, and what's genuinely worth a subscription.",
+    date: "2026-10-13",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "Best Tools for Social Media Marketing (What's Actually Worth Paying For)",
+    metaDescription: "An honest roundup of social media marketing tools worth using in Kenya: scheduling, design, analytics, and the paid tools that genuinely earn their subscription cost.",
+    intro: "Every 'best social media tools' article online reads like a sponsored list. Here's an honest version: what's genuinely free and good, and where I think a paid subscription actually earns its monthly cost for a Kenyan business.",
+    thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone and laptop showing social media analytics dashboards side by side",
+
+    sections: [
+      {
+        id: "scheduling",
+        heading: "Scheduling: where a paid tool genuinely saves real time",
+        paragraphs: [
+          "Each platform's own native scheduler (Meta Business Suite, TikTok's scheduling tool) is free and handles the basics fine for a single business managing its own pages. It's a perfectly reasonable starting point.",
+          "A dedicated scheduling tool earns its cost once you're managing multiple platforms or multiple client accounts, bulk scheduling, approval workflows and a single calendar view across platforms save hours a week that are genuinely worth paying for at that scale.",
+        ],
+      },
+      {
+        id: "design-tools",
+        heading: "Design: free tools now cover most of what a small business needs",
+        paragraphs: [
+          "A free design tool with ready-made social templates handles the vast majority of what a small business needs for consistent, decent-looking graphics without hiring a designer for every single post.",
+          "Paid design tools or a human designer earn their place once brand consistency and quality genuinely matter at a scale a founder juggling ten other things can't maintain alone, a growing brand with a reputation to protect, not a brand new page testing what resonates.",
+        ],
+      },
+      {
+        id: "analytics",
+        heading: "Analytics: use what's native before buying a dashboard",
+        paragraphs: [
+          "Each platform's own built-in analytics, Meta Insights, TikTok Analytics, are genuinely sufficient for a single-platform business to judge what's working. Most businesses never fully use what's already free in front of them.",
+          "A third-party analytics dashboard earns its cost mainly for comparing performance across multiple platforms in one view, which matters more once you're running three or more platforms seriously rather than one.",
+        ],
+      },
+      {
+        id: "listening-and-trends",
+        heading: "Social listening and trend tracking, used sparingly",
+        paragraphs: [
+          "A basic social listening tool, even a saved search on the platform itself, helps catch when your brand is mentioned without being tagged, and catching a complaint early is worth more than almost any other use of these tools.",
+          "Trend-tracking tools for TikTok specifically can shortcut the research of what's currently working in your niche, but they're a starting point for ideas, not a replacement for understanding your own audience directly.",
+        ],
+      },
+      {
+        id: "the-honest-take",
+        heading: "The honest take on tools overall",
+        paragraphs: [
+          "Most Kenyan SMEs I work with are underperforming on social media for reasons no tool fixes, inconsistent posting, weak hooks, no clear strategy, not because they're missing a paid subscription. Fix those fundamentals before spending on tooling.",
+          "Add a paid tool only once you can name the specific, recurring problem it solves that a free equivalent genuinely can't, the same discipline I recommend for Google Ads tools too.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
