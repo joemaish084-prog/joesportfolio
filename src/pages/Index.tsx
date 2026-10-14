@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
 import { PressFeatures } from "@/components/PressFeatures";
-import { Video, Palette, DollarSign, BarChart3, Briefcase, HelpCircle } from "lucide-react";
+import { Video, Palette, BarChart3, Briefcase, HelpCircle } from "lucide-react";
 import { Seo } from "@/components/Seo";
 
 // Lazy-load Hero to split framer-motion out of the critical path and reduce longest task
@@ -65,6 +65,9 @@ const Index = () => {
         <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
         <ExpandCollapseAll />
         <Suspense fallback={null}>
+          <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured" defaultOpenOnMobile>
+            <CaseStudy />
+          </CollapsibleWrapper>
           <CollapsibleWrapper id="videos" title="Video Production" Icon={Video} count="15 Videos" defaultOpenOnMobile>
             <Videos />
           </CollapsibleWrapper>
@@ -78,16 +81,13 @@ const Index = () => {
           <AgencyPromo />
           <MediaBuying />
           <SkillsStats />
-          <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured">
-            <CaseStudy />
-          </CollapsibleWrapper>
           <CollapsibleWrapper id="experience" title="Experience" Icon={Briefcase} count="Timeline">
             <Experience />
           </CollapsibleWrapper>
           <Certifications />
           <BrandsLogoMarquee />
           <Testimonials />
-          <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="7 Questions">
+          <CollapsibleWrapper id="faq" title="FAQ" Icon={HelpCircle} count="15 Questions">
             <FAQ />
           </CollapsibleWrapper>
           <Contact />

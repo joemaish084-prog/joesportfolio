@@ -89,7 +89,7 @@ export function About() {
               </ScrollReveal>
               <ScrollReveal direction="left" delay={0.3}>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I also believe in meeting the audience where they are. If your customers are on TikTok at 10 PM, that's where we show up. If they're searching Google for "best real estate agent in Kilimani," we make sure you rank. Whether it's <span className="text-primary font-semibold">TikTok marketing in Nairobi</span>, crafting podcast content, or running Meta Ads as a <strong className="text-foreground">Meta Ads Specialist in Kenya</strong>, my strategy is always tailored to the platform and the people on it.
+                  I also believe in meeting the audience where they are. If your customers are on TikTok at 10 PM, that's where we show up. If they're searching Google for "best real estate agent in Kilimani," we work on making your business easier to find. Whether I'm producing a podcast, planning TikTok content or running Meta Ads, the strategy starts with the platform and the people using it.
                 </p>
               </ScrollReveal>
             </article>
@@ -101,7 +101,7 @@ export function About() {
                   I grew up seeing small Kenyan businesses with incredible products and services struggle simply because no one knew they existed. That frustration stuck with me. Today, I get out of bed knowing that the work I do — a well-timed Instagram post, a carefully targeted Google Ad, a viral TikTok video — can be the difference between a business surviving and thriving.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm currently a <span className="text-primary font-semibold">Digital Marketing Manager at Beauty Square Kenya and Sage Sknn Aesthetics</span>, and I also take on select freelance and consulting work in Nairobi (2026) — covering Westlands, CBD, Kilimani and Karen, plus remote clients in Mombasa and Kisumu. I work with startups, SMEs, ecommerce, real estate and hospitality brands as a <strong className="text-foreground">digital marketing consultant Nairobi</strong> focused on performance marketing Kenya 2026, AI digital marketing Nairobi workflows and full funnel marketing Kenya. Open to select freelance and consulting projects — let's build something impactful together.
+                  I'm currently a <span className="text-primary font-semibold">Digital Marketing Manager at Beauty Square Kenya and Sage Sknn Aesthetics</span>. I also take on select freelance and consulting projects for startups, small businesses and established brands in Nairobi, with remote clients in Mombasa and Kisumu. If you need help connecting your content, advertising and sales goals, let's talk.
                 </p>
               </div>
             </ScrollReveal>

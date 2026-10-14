@@ -96,7 +96,7 @@ export function Contact() {
                 Let's <span className="text-gradient">Connect</span>
               </h2>
               <p className="text-lg text-muted-foreground">
-                Looking to <strong className="text-foreground">hire a digital marketing specialist in Nairobi</strong>? Whether you need a freelance Meta Ads manager Kenya, Google Ads expert for hire Kenya, TikTok ads specialist Nairobi, or a social media manager for SMEs Nairobi — I'm a digital marketing consultant Nairobi available for projects across Westlands, Kilimani, CBD, Karen, Mombasa and Kisumu. Let's discuss how we can work together.
+                Have a campaign in mind? I help brands in Nairobi and across Kenya with paid ads, SEO and social media. Tell me about your business, your goals and the support you need — let's find the right approach together.
               </p>
             </div>
           </ScrollReveal>

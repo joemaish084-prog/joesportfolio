@@ -11,37 +11,37 @@ const faqs = [
   {
     question: "Who is the best digital marketer in Nairobi?",
     answer:
-      "If you're searching for the best digital marketer in Nairobi or a top social media manager Nairobi brands trust, Joseph Maina is a results-driven Digital Marketing Specialist Nairobi Kenya with 3+ years running paid media, SEO and content across Meta, Google and TikTok. From Westlands and Kilimani to CBD, Karen and beyond — including clients in Mombasa and Kisumu — I deliver ROI-focused, data-driven marketing in Kenya.",
+      "The right marketer depends on your goals. I bring 3+ years of experience running paid ads, SEO and content campaigns for Kenyan brands. My case studies show the work, the results and how they were measured, so you can decide whether we're a good fit.",
   },
   {
     question: "Where can I find a digital marketer in Nairobi available for hire?",
     answer:
-      "Right here. I'm a freelance Meta Ads manager Kenya, Google Ads expert for hire Kenya and TikTok ads specialist for hire Nairobi — available for project-based, retainer or full-time engagements. Hire a digital marketing specialist Nairobi who handles strategy, creative, media buying and reporting end-to-end.",
+      "I'm based in Nairobi and available for select freelance and consulting projects, including monthly retainers. I handle strategy, creative, campaign management and reporting. Get in touch with your goals and timeline to check availability.",
   },
   {
     question: "What digital marketing services do you offer?",
     answer:
-      "Full-funnel marketing Kenya: SEO, content strategy, social media management, Meta Ads for ecommerce Kenya, Google Ads for real estate Nairobi, TikTok marketing for fashion brands Kenya, plus AI digital marketing Nairobi workflows. Whether you're a startup, SME or established brand in hospitality, retail or services, I tailor every campaign to your goals.",
+      "I offer Meta, Google and TikTok Ads management, SEO, social media management, content strategy, video production, graphic design and brand strategy. I also provide marketing audits and consultations. The mix depends on your audience, goals and budget.",
   },
   {
     question: "How long does SEO take to show results?",
     answer:
-      "SEO typically takes 2–3 months to show significant results. My clients in Nairobi have seen measurable improvements in traffic and rankings within the first 30 days through targeted keyword strategies and on-page optimization rooted in data-driven marketing Kenya.",
+      "SEO takes time, and the timeline depends on your website, competition and starting point. Targeted fixes can produce early improvements, while sustained growth needs ongoing work. I'll explain what to expect after reviewing your site.",
   },
   {
     question: "How much does digital marketing cost in Kenya?",
     answer:
-      "Digital marketing cost in Kenya depends on scope. Social-only packages start lower, while full performance marketing Kenya 2026 retainers (Meta + Google + TikTok with creative and reporting) scale with your ad budget. I manage KES 500,000+/month in ad spend and offer transparent pricing — contact me for a free consultation and custom quote.",
+      "Meta Ads and social media management start at KES 40,000/month; Google Ads and SEO start at KES 45,000/month. Multi-platform retainers start at KES 70,000/month. Advertising spend is separate from management fees. Book a free call for a quote based on your scope.",
   },
   {
     question: "Who is the best Meta Ads manager in Kenya?",
     answer:
-      "As a Meta Ads Specialist in Kenya and one of the best media buyers in Kenya for SMEs and ecommerce, I run full-funnel Facebook and Instagram campaigns — from audience research and creative testing to budget scaling and ROAS reporting. Ideal for ecommerce, real estate, hospitality and fashion brands across Nairobi, Mombasa and Kisumu.",
+      "Look for someone who can explain their campaign structure, tracking and results. I manage Facebook and Instagram campaigns from audience research and creative testing through to optimization and reporting. You can see recent examples in my case studies.",
   },
   {
     question: "Why hire a Digital Marketing Specialist in Kenya?",
     answer:
-      "A local digital marketing consultant Nairobi understands the Kenyan consumer, the platforms that convert here, and the pricing realities of the market. You get a ROI focused digital marketer Nairobi who speaks the language of your audience — not a generic overseas agency.",
+      "Local experience helps with understanding how your customers search, shop and communicate, including the role of WhatsApp and M-Pesa. I use that knowledge to plan campaigns around your audience and business goals.",
   },
   {
     question: "How do I get in touch with you?",
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: "Do you offer affordable digital marketing packages for small businesses in Kenya?",
     answer:
-      "Yes. I offer flexible packages starting from KES 15,000/month designed specifically for Kenyan SMEs and small businesses that want professional digital marketing without agency-level pricing.",
+      "Yes. Monthly retainers start at KES 40,000, with the scope agreed around your business needs. Advertising spend is separate from management fees. Book a free discovery call to find the right fit for your budget.",
   },
   {
     question: "Can you manage YouTube marketing and video campaigns in Kenya?",

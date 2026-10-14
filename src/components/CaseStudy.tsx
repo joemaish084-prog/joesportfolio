@@ -28,8 +28,8 @@ export function CaseStudy() {
               Case <span className="text-gradient">Studies</span>
             </h2>
             <p className="text-lg max-w-3xl mx-auto" style={{ color: "hsl(var(--case-study-muted))" }}>
-              As a <strong>Digital Marketing Specialist in Nairobi, Kenya</strong>, I run Google Ads, Meta Ads, TikTok and
-              social media campaigns for Kenyan brands. These are the results, with the numbers behind them.
+              Recent Meta and Google Ads campaigns for Kenyan brands, with the strategy, tracked results and
+              attribution details behind each one.
             </p>
           </div>
         </ScrollReveal>

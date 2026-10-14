@@ -180,7 +180,7 @@ export function Hero() {
               <a href="/agency#booking">Book a Free Strategy Call</a>
             </Button>
             <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild>
-              <a href="#videos">See My Work</a>
+              <a href="#case-study">See My Work</a>
             </Button>
           </motion.div>
 
@@ -209,7 +209,7 @@ export function Hero() {
       </div>
 
       <motion.a
-        href="#videos"
+        href="#case-study"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}

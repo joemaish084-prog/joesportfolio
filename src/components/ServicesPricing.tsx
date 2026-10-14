@@ -8,25 +8,25 @@ const services = [
   {
     icon: Target,
     title: "Meta Ads",
-    description: "KES 35,000/mo + ad spend — Facebook & Instagram campaigns optimized for ROAS: creative, targeting, retargeting, A/B testing.",
+    description: "From KES 40,000/mo + ad spend — Facebook & Instagram campaigns: strategy, audience research, creative direction, weekly optimization and monthly reporting.",
     className: "md:col-span-2",
   },
   {
     icon: Search,
     title: "Google Ads",
-    description: "KES 40,000/mo + ad spend — Search, Performance Max & YouTube campaigns: keyword strategy, conversion tracking, weekly optimization.",
+    description: "From KES 45,000/mo + ad spend — Search, Display & YouTube campaigns: keyword strategy, bid management, conversion tracking and monthly reporting.",
     className: "md:col-span-1",
   },
   {
     icon: Share2,
     title: "Social Media Management",
-    description: "KES 45,000/mo — Strategy, content calendar, posting, community management, monthly reporting across 3–4 platforms.",
+    description: "From KES 40,000/mo — Content planning, scheduling and community management for your social channels.",
     className: "md:col-span-1",
   },
   {
     icon: FileText,
-    title: "SEO & Content",
-    description: "KES 30,000/mo — Keyword research, on-page SEO, technical audits, blog content built to rank in Kenyan SERPs.",
+    title: "SEO Optimization",
+    description: "From KES 45,000/mo — Keyword research, on-page optimization, technical audits and local SEO to help customers find your business.",
     className: "md:col-span-1",
   },
 ];
@@ -41,7 +41,7 @@ export function ServicesPricing() {
             Services & Pricing
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Transparent monthly retainers for brands in Nairobi & across Kenya. Custom packages available on request.
+            Monthly retainers for brands in Nairobi and across Kenya. Management fees are separate from your advertising budget. Custom packages available on request.
           </p>
         </div>
 

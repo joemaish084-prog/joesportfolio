@@ -111,7 +111,7 @@ export function MediaBuying() {
               Media Buying & <span className="text-gradient">Paid Advertising</span>
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground">
-              Managing ad budgets of <strong className="text-foreground">KES 500,000+ per month</strong> across Meta, Google, TikTok and more — every shilling accountable. The <strong className="text-foreground">best media buyer in Kenya</strong> for brands that want a <strong className="text-foreground">freelance Meta Ads manager Kenya</strong>, <strong className="text-foreground">Google Ads expert for hire Kenya</strong> or <strong className="text-foreground">TikTok ads specialist for hire Nairobi</strong> — ROI focused, data-driven, full funnel marketing Kenya.
+              I manage <strong className="text-foreground">KES 500,000+ in monthly ad spend</strong> across Meta, Google, TikTok and other platforms. From audience research and creative testing to tracking and reporting, I help Kenyan brands turn their advertising budget into leads and sales.
             </p>
           </div>
         </ScrollReveal>
@@ -251,7 +251,7 @@ export function MediaBuying() {
             <TrendingUp className="w-10 h-10 mx-auto mb-4 text-primary" />
             <h3 className="text-2xl sm:text-3xl font-display font-bold mb-3">Ready to Make Your Ad Budget Work Harder?</h3>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-              Let's audit your current spend and find where you're leaving money on the table. Trusted <strong className="text-foreground">Google Ads specialist in Kenya</strong> and <strong className="text-foreground">Meta Ads manager in Nairobi</strong> for results-driven <strong className="text-foreground">digital ad agency Nairobi</strong> work.
+              Let's review your current campaigns, find where spend is being wasted and build a clear plan for improving results.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="bg-gradient-to-r from-[#FF6A00] to-[#FF9E2C] text-white shadow-elegant btn-hover">
