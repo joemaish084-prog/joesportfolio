@@ -25,10 +25,10 @@ export function CaseStudy() {
               className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-underline pb-4"
               style={{ color: "hsl(var(--case-study-text))" }}
             >
-              Case <span className="text-gradient">Studies</span>
+              Digital Marketing <span className="text-gradient">Case Studies</span> in Kenya
             </h2>
             <p className="text-lg max-w-3xl mx-auto" style={{ color: "hsl(var(--case-study-muted))" }}>
-              Recent Meta and Google Ads campaigns for Kenyan brands, with the strategy, tracked results and
+              Recent Meta Ads and Google Ads campaigns for Kenyan brands, with the strategy, tracked results and
               attribution details behind each one.
             </p>
           </div>

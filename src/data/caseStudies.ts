@@ -31,9 +31,9 @@ export const caseStudies: CaseStudySummary[] = [
     id: "meta-google-combined",
     tag: "Paid media",
     period: "Aug to Oct 2026",
-    title: "KES 5.43M from two platforms: Meta and Google Ads together",
+    title: "Meta Ads and Google Ads Case Study: KES 5.43M in Attributed Revenue",
     summary:
-      "One beauty retailer, two ad platforms, one monthly report. Meta created the demand, Google caught the people already searching. The client is not named, the numbers are real.",
+      "One Kenyan beauty retailer, two ad platforms, one monthly report. Meta Ads created the demand, Google Ads caught the people already searching. The client is not named, the numbers are real.",
     stats: [
       { value: "KES 5.43M", label: "Tracked revenue" },
       { value: "26.4x", label: "Blended return on ad spend" },
@@ -65,9 +65,9 @@ export const caseStudies: CaseStudySummary[] = [
     id: "google-ads-launch",
     tag: "Paid search",
     period: "Aug to Oct 2026",
-    title: "Zero to KES 1.94M: a Google Ads launch in ten weeks",
+    title: "Google Ads Case Study in Kenya: From Zero to KES 1.94M",
     summary:
-      "The business had never run Google Ads. I launched Search first, then Shopping, and tracked every order back to the campaign that drove it. The client is not named, the numbers are real.",
+      "The Kenyan business had never run Google Ads. I launched Search ads first, then Shopping ads, and tracked every order back to the campaign that drove it. The client is not named, the numbers are real.",
     stats: [
       { value: "KES 1.94M", label: "Tracked revenue" },
       { value: "15.5x", label: "Return on ad spend" },
@@ -99,7 +99,7 @@ export const caseStudies: CaseStudySummary[] = [
     id: "meta-ads-turnaround",
     tag: "Paid media",
     period: "Jul to Oct 2026",
-    title: "Meta Ads turnaround for a Nairobi beauty retailer",
+    title: "Meta Ads Case Study: KES 5.33M in Attributed Revenue for a Nairobi Beauty Retailer",
     summary:
       "The account was running Meta ads with no conversion tracking and no campaign structure. I rebuilt it around tracked, offer-specific sales campaigns. The client is not named, the numbers are real.",
     stats: [

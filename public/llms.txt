@@ -2,7 +2,7 @@
 
 > Joseph Maina is a digital marketing specialist and agency owner based in Nairobi, Kenya, working with Kenyan and African brands on paid media (Meta, Google, TikTok, LinkedIn, programmatic), SEO, social media management, content and video production, and brand strategy. The agency runs campaigns on monthly retainers with transparent published pricing and no lock-in contracts. Website: https://www.josephmaina.co.ke
 
-Last updated: 10 October 2026. Source: www.josephmaina.co.ke (homepage, agency page, blog). Prices are in Kenyan Shillings (KES) and exclude ad spend, which the client pays to the platforms directly.
+Last updated: 14 October 2026. Source: www.josephmaina.co.ke (homepage, agency page, case studies, blog). Prices are in Kenyan Shillings (KES) and exclude ad spend, which the client pays to the platforms directly.
 
 ## Who he is
 
@@ -31,6 +31,7 @@ Serves Nairobi (Westlands, CBD, Kilimani, Karen) and remote clients in Mombasa, 
 - Location: Nairobi, Kenya
 - Website: https://www.josephmaina.co.ke
 - Agency page: https://www.josephmaina.co.ke/agency
+- Digital marketing case studies in Kenya: https://www.josephmaina.co.ke/work/case-studies
 - Blog: https://www.josephmaina.co.ke/agency/blog
 
 Social profiles:
@@ -103,6 +104,30 @@ Media buying process, in order:
 Campaigns can launch within 3–5 business days of the proposal being accepted. Retainers are monthly with 30 days' notice to end.
 
 ## Results and case studies
+
+### Recent Meta Ads and Google Ads case studies in Kenya
+
+The latest paid media case studies describe work for an anonymous beauty retailer. Revenue and orders are attributed by the advertising platforms. The studies cover overlapping periods and must not be added together to estimate total sales.
+
+**Meta Ads and Google Ads Case Study: KES 5.43M in Attributed Revenue** — 1 August to 8 October 2026.
+- Results: KES 5,427,357 in combined platform-attributed revenue, KES 205,601 in ad spend, 26.4x blended return on ad spend (ROAS), and 938 platform-tracked orders.
+- Strategy: Meta Ads creates demand; Google Search and Shopping capture purchase intent. Both platforms are compared in one monthly report in KES.
+- Attribution: Meta uses a 7-day click and 1-day view window; Google figures come from the weekly log at KES 129.89 per US dollar. Both platforms can claim the same order, so combined revenue and order totals may overstate actual sales.
+- Full case study: https://www.josephmaina.co.ke/work/case-studies#meta-google-combined
+
+**Google Ads Case Study in Kenya: From Zero to KES 1.94M** — 1 August to 8 October 2026.
+- Results: KES 1,942,243 in tracked revenue, KES 125,422 in ad spend, 15.5x ROAS, and 339 tracked orders in the first ten weeks.
+- Strategy: launched Google Search ads first, then added Shopping ads, with conversion tracking and ongoing campaign optimization.
+- Attribution: orders and revenue are recorded in Google Ads reports and converted from US dollars at KES 129.89. Ads were paused in early October.
+- Full case study: https://www.josephmaina.co.ke/work/case-studies#google-ads-launch
+
+**Meta Ads Case Study: KES 5.33M in Attributed Revenue for a Nairobi Beauty Retailer** — 3 July to 8 October 2026.
+- Results: KES 5,328,094 in revenue attributed by Meta, KES 129,150 in ad spend, 41.3x ROAS, and 953 tracked purchases.
+- Strategy: verified Meta Pixel conversion tracking, replaced boosted posts with structured sales campaigns, tested specific offers, and reviewed performance weekly to shift budget toward stronger campaigns.
+- Attribution: Meta reports revenue on a 7-day click and 1-day view window. These are platform-attributed figures, not audited or banked sales.
+- Full case study: https://www.josephmaina.co.ke/work/case-studies#meta-ads-turnaround
+
+### Social media and other campaign results
 
 **2025 full-year social campaign** (TikTok, Instagram, Facebook): 336 pieces of content published (142 videos, 194 static posts), with video prioritised throughout.
 - TikTok: 4M total video views, 230K likes, 16K profile views, 2.1K comments, 5.4K shares. Top video 103.9K views, 321+ hours total play time, 10.67s average watch time, 9.1% full-video completion. Video content averaged 6–8% engagement rate.

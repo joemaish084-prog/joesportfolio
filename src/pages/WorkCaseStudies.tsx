@@ -45,19 +45,19 @@ const WorkCaseStudies = () => {
   return (
     <WorkPageLayout
       seo={{
-        title: "Digital Marketing Case Studies | Joseph Maina, Nairobi",
+        title: "Digital Marketing Case Studies in Kenya | Joseph Maina",
         description:
-          "Campaign case studies with real numbers: a Google Ads launch from zero, a Meta Ads turnaround, a year of video-first social media and more work for Kenyan brands. Newest first.",
+          "Meta Ads, Google Ads and social media case studies for Nairobi and Kenyan brands. Explore tracked revenue, ROAS, conversion tracking and campaign strategy.",
         path: "/work/case-studies",
       }}
       backHref="/#case-study"
       eyebrow="Case studies"
       title={
         <>
-          Case <span className="text-gradient">Studies</span>
+          Digital Marketing <span className="text-gradient">Case Studies</span> in Kenya
         </>
       }
-      intro="Campaigns with the numbers behind them, including what did not work. The newest is always first."
+      intro="Meta Ads, Google Ads and social media campaigns for brands in Nairobi and across Kenya, with tracked results, campaign strategy and attribution details."
       meta={[`${caseStudies.length} in-depth`, `${writeUps.length} written breakdowns`, "Newest first"]}
     >
       <nav aria-label="Case studies on this page" className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
