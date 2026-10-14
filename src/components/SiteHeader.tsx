@@ -116,6 +116,7 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [activeHref, setActiveHref] = useState("#home");
   const [menu, setMenu] = useState<string | null>(null);
+  const [mobileSub, setMobileSub] = useState<string | null>(null);
   const menuCloseTimer = useRef<number>();
   const reduceMotion = useReducedMotion();
 
@@ -129,6 +130,11 @@ export function SiteHeader() {
     menuCloseTimer.current = window.setTimeout(() => setMenu(null), 140);
   }, []);
   useEffect(() => () => window.clearTimeout(menuCloseTimer.current), []);
+
+  // Reopening the mobile menu starts with every group folded
+  useEffect(() => {
+    if (!open) setMobileSub(null);
+  }, [open]);
 
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -411,36 +417,66 @@ export function SiteHeader() {
                     animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                     transition={reduceMotion ? undefined : { delay: i * 0.04, duration: 0.2 }}
                   >
-                    <a
-                      href={link.href}
-                      onClick={(e) => handleAnchor(e, link.href)}
-                      className={`block py-3 min-h-[44px] text-2xl font-display font-semibold ${
-                        activeHref === getHash(link.href) ? "text-primary" : "text-foreground"
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                    {link.children && (
-                      <ul className="mb-2 ml-1 border-l border-border pl-4">
-                        {(link.footer ? [...link.children, link.footer as NavChild] : link.children).map((child) => (
-                          <li key={child.href}>
-                            <NavAnchor
-                              href={child.href}
-                              onAnchor={handleAnchor}
-                              onClick={() => setOpen(false)}
-                              className="flex min-h-[40px] items-center gap-2 py-1.5 text-base text-muted-foreground"
-                            >
-                              {child.label}
-                              {child.badge && (
-                                <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
-                                  {child.badge}
-                                </span>
-                              )}
-                            </NavAnchor>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    <div className="flex items-center justify-between gap-2">
+                      <a
+                        href={link.href}
+                        onClick={(e) => handleAnchor(e, link.href)}
+                        className={`flex-1 block py-3 min-h-[44px] text-2xl font-display font-semibold ${
+                          activeHref === getHash(link.href) ? "text-primary" : "text-foreground"
+                        }`}
+                      >
+                        {link.label}
+                      </a>
+                      {link.children && (
+                        <button
+                          type="button"
+                          onClick={() => setMobileSub((s) => (s === link.label ? null : link.label))}
+                          aria-expanded={mobileSub === link.label}
+                          aria-controls={`mobile-sub-${i}`}
+                          aria-label={`${mobileSub === link.label ? "Hide" : "Show"} ${link.label} links`}
+                          className="h-11 w-11 shrink-0 rounded-full inline-flex items-center justify-center text-muted-foreground hover:text-foreground"
+                        >
+                          <ChevronDown
+                            className={`h-5 w-5 transition-transform duration-200 ${
+                              mobileSub === link.label ? "rotate-180 text-primary" : ""
+                            }`}
+                          />
+                        </button>
+                      )}
+                    </div>
+                    {/* Sub-links stay folded until their chevron is tapped, one group at a time */}
+                    <AnimatePresence initial={false}>
+                      {link.children && mobileSub === link.label && (
+                        <motion.ul
+                          id={`mobile-sub-${i}`}
+                          initial={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                          animate={reduceMotion ? { opacity: 1 } : { height: "auto", opacity: 1 }}
+                          exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                          className="overflow-hidden ml-1 border-l border-border pl-4"
+                        >
+                          {(link.footer ? [...link.children, link.footer as NavChild] : link.children).map((child) => (
+                            <li key={child.href}>
+                              <NavAnchor
+                                href={child.href}
+                                onAnchor={handleAnchor}
+                                onClick={() => setOpen(false)}
+                                className={`flex min-h-[40px] items-center gap-2 py-1.5 text-[15px] ${
+                                  child === link.footer ? "font-semibold text-primary" : "text-muted-foreground"
+                                }`}
+                              >
+                                <span className="truncate">{child.label}</span>
+                                {child.badge && (
+                                  <span className="shrink-0 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+                                    {child.badge}
+                                  </span>
+                                )}
+                              </NavAnchor>
+                            </li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
                   </motion.div>
                 ))}
 
