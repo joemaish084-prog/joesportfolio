@@ -17,8 +17,8 @@ export function BrandCard({ brand }: { brand: Brand }) {
     >
       <div className="flex flex-col justify-between gap-8 p-6 sm:p-10">
         <div>
-          <img src={brand.logos.horizontal} alt={`${brand.name} logo`} className="h-10 w-auto sm:h-12" />
-          <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: colors.primary }}>
+          <img src={brand.cover.logo === "white" ? brand.logos.horizontalWhite : brand.logos.horizontal} alt={`${brand.name} logo`} className="h-10 w-auto sm:h-12" />
+          <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: colors.label }}>
             Brand identity · {brand.sector}
           </p>
           <h3 className="mt-2 text-2xl font-display font-bold leading-tight sm:text-3xl">{brand.tagline}</h3>
@@ -36,7 +36,7 @@ export function BrandCard({ brand }: { brand: Brand }) {
               </li>
             ))}
           </ul>
-          <span className="mt-6 inline-flex items-center gap-2 font-bold" style={{ color: colors.primary }}>
+          <span className="mt-6 inline-flex items-center gap-2 font-bold" style={{ color: colors.label }}>
             Open the brand book
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </span>

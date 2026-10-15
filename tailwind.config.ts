@@ -16,10 +16,15 @@ export default {
       colors: {
         brand: {
           bg: "rgb(var(--brand-bg) / <alpha-value>)",
+          surface: "rgb(var(--brand-surface) / <alpha-value>)",
           ink: "rgb(var(--brand-ink) / <alpha-value>)",
           primary: "rgb(var(--brand-primary) / <alpha-value>)",
+          "on-primary": "rgb(var(--brand-on-primary) / <alpha-value>)",
           accent: "rgb(var(--brand-accent) / <alpha-value>)",
+          "on-accent": "rgb(var(--brand-on-accent) / <alpha-value>)",
           highlight: "rgb(var(--brand-highlight) / <alpha-value>)",
+          "on-highlight": "rgb(var(--brand-on-highlight) / <alpha-value>)",
+          label: "rgb(var(--brand-label) / <alpha-value>)",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

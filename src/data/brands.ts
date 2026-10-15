@@ -1,51 +1,32 @@
-import duaraLogoStacked from "@/assets/branding/duara/logo-stacked.webp";
-import duaraLogoHorizontal from "@/assets/branding/duara/logo-horizontal.webp";
-import duaraLogoMark from "@/assets/branding/duara/logo-mark.webp";
-import duara01 from "@/assets/branding/duara/poster-01.webp";
-import duara01Thumb from "@/assets/branding/duara/poster-01-thumb.webp";
-import duara01Mini from "@/assets/branding/duara/poster-01-mini.webp";
-import duara02 from "@/assets/branding/duara/poster-02.webp";
-import duara02Thumb from "@/assets/branding/duara/poster-02-thumb.webp";
-import duara02Mini from "@/assets/branding/duara/poster-02-mini.webp";
-import duara03 from "@/assets/branding/duara/poster-03.webp";
-import duara03Thumb from "@/assets/branding/duara/poster-03-thumb.webp";
-import duara03Mini from "@/assets/branding/duara/poster-03-mini.webp";
-import duara04 from "@/assets/branding/duara/poster-04.webp";
-import duara04Thumb from "@/assets/branding/duara/poster-04-thumb.webp";
-import duara04Mini from "@/assets/branding/duara/poster-04-mini.webp";
-import duara05 from "@/assets/branding/duara/poster-05.webp";
-import duara05Thumb from "@/assets/branding/duara/poster-05-thumb.webp";
-import duara05Mini from "@/assets/branding/duara/poster-05-mini.webp";
-import duara06 from "@/assets/branding/duara/poster-06.webp";
-import duara06Thumb from "@/assets/branding/duara/poster-06-thumb.webp";
-import duara06Mini from "@/assets/branding/duara/poster-06-mini.webp";
-import duara07 from "@/assets/branding/duara/poster-07.webp";
-import duara07Thumb from "@/assets/branding/duara/poster-07-thumb.webp";
-import duara07Mini from "@/assets/branding/duara/poster-07-mini.webp";
-import duara08 from "@/assets/branding/duara/poster-08.webp";
-import duara08Thumb from "@/assets/branding/duara/poster-08-thumb.webp";
-import duara08Mini from "@/assets/branding/duara/poster-08-mini.webp";
-import duara09 from "@/assets/branding/duara/poster-09.webp";
-import duara09Thumb from "@/assets/branding/duara/poster-09-thumb.webp";
-import duara09Mini from "@/assets/branding/duara/poster-09-mini.webp";
-import duara10 from "@/assets/branding/duara/poster-10.webp";
-import duara10Thumb from "@/assets/branding/duara/poster-10-thumb.webp";
-import duara10Mini from "@/assets/branding/duara/poster-10-mini.webp";
-import duara11 from "@/assets/branding/duara/poster-11.webp";
-import duara11Thumb from "@/assets/branding/duara/poster-11-thumb.webp";
-import duara11Mini from "@/assets/branding/duara/poster-11-mini.webp";
-import duara12 from "@/assets/branding/duara/poster-12.webp";
-import duara12Thumb from "@/assets/branding/duara/poster-12-thumb.webp";
-import duara12Mini from "@/assets/branding/duara/poster-12-mini.webp";
-import duara13 from "@/assets/branding/duara/poster-13.webp";
-import duara13Thumb from "@/assets/branding/duara/poster-13-thumb.webp";
-import duara13Mini from "@/assets/branding/duara/poster-13-mini.webp";
-import duara14 from "@/assets/branding/duara/poster-14.webp";
-import duara14Thumb from "@/assets/branding/duara/poster-14-thumb.webp";
-import duara14Mini from "@/assets/branding/duara/poster-14-mini.webp";
-import duara15 from "@/assets/branding/duara/poster-15.webp";
-import duara15Thumb from "@/assets/branding/duara/poster-15-thumb.webp";
-import duara15Mini from "@/assets/branding/duara/poster-15-mini.webp";
+/**
+ * Brand identity case studies shown at /work/branding.
+ *
+ * Images live in src/assets/branding/<folder>/ and are picked up by the glob below:
+ *   logo-*.webp                       transparent logo files
+ *   poster-NN.webp                    1080px, only for the lightbox
+ *   poster-NN-thumb.webp              540px, for grids and cards
+ *   poster-NN-mini.webp               240px, for tiny tiles like the phone mockup
+ * Visual pieces that differ per brand (elements, mockups, rules) live in
+ * src/components/branding/kits/.
+ */
+const assets = import.meta.glob<string>("/src/assets/branding/*/*.webp", { eager: true, import: "default" });
+
+function asset(folder: string, file: string) {
+  const url = assets[`/src/assets/branding/${folder}/${file}.webp`];
+  if (!url) throw new Error(`Missing brand asset: ${folder}/${file}.webp`);
+  return url;
+}
+
+function post(folder: string, n: number, title: string, template: string): BrandPost {
+  const base = `poster-${String(n).padStart(2, "0")}`;
+  return {
+    title,
+    template,
+    image: asset(folder, base),
+    thumb: asset(folder, `${base}-thumb`),
+    mini: asset(folder, `${base}-mini`),
+  };
+}
 
 export interface BrandColor {
   name: string;
@@ -65,6 +46,8 @@ export interface BrandFont {
   family: string;
   weight: number;
   italic?: boolean;
+  /** Sample colour; defaults to the page ink. */
+  color?: string;
   sample: string;
 }
 
@@ -79,6 +62,40 @@ export interface BrandPost {
   template: string;
 }
 
+/** The page theme. Every brand book is painted in its own brand's colours. */
+export interface BrandTheme {
+  background: string;
+  /** Cards sitting on the background. */
+  surface: string;
+  ink: string;
+  primary: string;
+  onPrimary: string;
+  accent: string;
+  onAccent: string;
+  highlight: string;
+  onHighlight: string;
+  /** Small uppercase chapter labels. */
+  label: string;
+}
+
+/** How the brand sets a two-part headline: a main line plus one accent phrase. */
+export interface HeadlineStyle {
+  lineFont: string;
+  lineWeight: number;
+  lineColor: string;
+  accentFont: string;
+  accentWeight: number;
+  accentItalic: boolean;
+  /** A colour, or a CSS gradient painted into the text. */
+  accentPaint: string;
+  /** Colour of the hand-drawn underline, if the brand uses one. */
+  underline?: string;
+  tracking: string;
+  /** Background of the "try the headline" panel. */
+  panel: string;
+  sample: { line: string; accent: string };
+}
+
 export interface Brand {
   slug: string;
   name: string;
@@ -90,23 +107,69 @@ export interface Brand {
   approach: string[];
   /** Google Fonts css2 query, loaded only on the brand page. */
   fontsHref: string;
-  colors: {
-    background: string;
-    ink: string;
-    primary: string;
-    accent: string;
-    highlight: string;
-  };
+  type: { display: string; displayWeight: number; displayTracking: string; body: string };
+  colors: BrandTheme;
   palette: BrandColor[];
   fonts: BrandFont[];
-  /** Transparent PNGs; `mark` is the sunflower without the wordmark. */
-  logos: { stacked: string; horizontal: string; mark: string };
+  headline: HeadlineStyle;
+  /** Page cover: the name set in the brand's headline style, and the logo on a disc. */
+  cover: { line: string; accent: string; accentPaint: string; disc: string; logo: "color" | "white" };
+  logos: { stacked: string; white: string; horizontal: string; horizontalWhite: string; mark: string };
+  /** Background options for the interactive logo viewer. */
+  logoStages: { label: string; bg: string; logo: "color" | "white"; filter?: string }[];
+  /** Copy for each chapter of the brand book. */
+  book: {
+    logo: { title: string; intro: string; clearSpace: string };
+    colour: { title: string; intro: string };
+    type: { title: string; intro: string };
+    elements: { title: string; intro: string };
+    anatomy: { intro: string };
+    templates: { title: string; intro: string };
+    mockups: { title: string; intro: string };
+    rules: { intro: string };
+  };
   templates: { name: string; description: string }[];
   posts: BrandPost[];
   /** Poster used for the annotated "anatomy" breakdown, with callouts in % of the image. */
   anatomy: { image: string; callouts: { x: number; y: number; label: string; note: string }[] };
+  instagram: { bio: string[]; avatarBg: string; avatarLogo: "color" | "white" };
   contact: { phone: string; web: string; handle: string };
 }
+
+const duaraPosts = [
+  post("duara", 1, "Education for the world", "Admissions"),
+  post("duara", 2, "Come visit our school", "Admissions"),
+  post("duara", 3, "Quality education. Within reach.", "Admissions"),
+  post("duara", 4, "Teachers you can trust", "Admissions"),
+  post("duara", 5, "I feel at peace. I feel safe.", "Parent Voices"),
+  post("duara", 6, "My daughter comes home singing", "Parent Voices"),
+  post("duara", 7, "Tomorrow's problem-solvers start here", "Admissions"),
+  post("duara", 8, "Duara School Gathiga", "Admissions"),
+  post("duara", 9, "Community Day", "Events"),
+  post("duara", 10, "Little steps. Big milestones.", "Events"),
+  post("duara", 11, "A school your family can trust", "Admissions"),
+  post("duara", 12, "Big ideas begin here", "Admissions"),
+  post("duara", 13, "Intentional teachers. Inspired learning.", "Admissions"),
+  post("duara", 14, "A school that feels like home", "Admissions"),
+  post("duara", 15, "Meet the teachers. Discover Duara.", "Admissions"),
+];
+
+const iclearPosts = [
+  post("iclear", 1, "Desktop water purifier, 20% off", "Promotions"),
+  post("iclear", 2, "A healthier home starts here", "Product"),
+  post("iclear", 3, "Your workout water buddy", "Lifestyle"),
+  post("iclear", 4, "Ditch the bottles. Drink iClear.", "Lifestyle"),
+  post("iclear", 5, "Fuel your grind with iClear", "Lifestyle"),
+  post("iclear", 6, "Unveil a better way to drink", "Product"),
+  post("iclear", 7, "Roll-up banners", "Print"),
+  post("iclear", 8, "Ramadhan special package", "Promotions"),
+  post("iclear", 9, "iClear, water is sweet", "Product"),
+];
+
+const jakarta = "'Plus Jakarta Sans', sans-serif";
+const lato = "'Lato', sans-serif";
+const abril = "'Abril Fatface', serif";
+const poppins = "'Poppins', sans-serif";
 
 export const brands: Brand[] = [
   {
@@ -126,12 +189,18 @@ export const brands: Brand[] = [
     ],
     fontsHref:
       "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,800&family=Lato:wght@400;700&family=Oswald:wght@600&display=swap",
+    type: { display: jakarta, displayWeight: 800, displayTracking: "-0.035em", body: lato },
     colors: {
       background: "#FDFAEE",
+      surface: "#FFFFFF",
       ink: "#05321E",
       primary: "#035C40",
+      onPrimary: "#FDFAEE",
       accent: "#EE850B",
+      onAccent: "#FFFFFF",
       highlight: "#F9C71D",
+      onHighlight: "#05321E",
+      label: "#035C40",
     },
     palette: [
       { name: "Chalk Cream", hex: "#FDFAEE", role: "Canvas for every post", share: 44, on: "#05321E" },
@@ -142,61 +211,76 @@ export const brands: Brand[] = [
       { name: "Earth", hex: "#6D3920", role: "Logo wordmark only", share: 3, on: "#FDFAEE" },
     ],
     fonts: [
-      {
-        name: "Plus Jakarta Sans ExtraBold",
-        role: "Headlines",
-        family: "'Plus Jakarta Sans', sans-serif",
-        weight: 800,
-        sample: "Teachers you",
-      },
-      {
-        name: "Plus Jakarta Sans ExtraBold Italic",
-        role: "Accent phrase",
-        family: "'Plus Jakarta Sans', sans-serif",
-        weight: 800,
-        italic: true,
-        sample: "can trust.",
-      },
-      {
-        name: "Lato",
-        role: "Subheads, quotes and contact details",
-        family: "'Lato', sans-serif",
-        weight: 700,
-        sample: "Kind. Patient. Encouraging.",
-      },
-      {
-        name: "Oswald SemiBold",
-        role: "Event dates and times",
-        family: "'Oswald', sans-serif",
-        weight: 600,
-        sample: "THURSDAY, 31 JULY",
-      },
+      { name: "Plus Jakarta Sans ExtraBold", role: "Headlines", family: jakarta, weight: 800, sample: "Teachers you" },
+      { name: "Plus Jakarta Sans ExtraBold Italic", role: "Accent phrase", family: jakarta, weight: 800, italic: true, color: "#EE850B", sample: "can trust." },
+      { name: "Lato", role: "Subheads, quotes and contact details", family: lato, weight: 700, sample: "Kind. Patient. Encouraging." },
+      { name: "Oswald SemiBold", role: "Event dates and times", family: "'Oswald', sans-serif", weight: 600, sample: "THURSDAY, 31 JULY" },
     ],
-    logos: { stacked: duaraLogoStacked, horizontal: duaraLogoHorizontal, mark: duaraLogoMark },
+    headline: {
+      lineFont: jakarta,
+      lineWeight: 800,
+      lineColor: "#05321E",
+      accentFont: jakarta,
+      accentWeight: 800,
+      accentItalic: true,
+      accentPaint: "#EE850B",
+      underline: "#EE850B",
+      tracking: "-0.035em",
+      panel: "#FDFAEE",
+      sample: { line: "A school that", accent: "feels like home." },
+    },
+    cover: { line: "Duara", accent: "Schools.", accentPaint: "#EE850B", disc: "#FFFFFF", logo: "color" },
+    logos: {
+      stacked: asset("duara", "logo-stacked"),
+      // Duara's reversed logo is drawn with a CSS filter, so the white slots reuse the colour files.
+      white: asset("duara", "logo-stacked"),
+      horizontal: asset("duara", "logo-horizontal"),
+      horizontalWhite: asset("duara", "logo-horizontal"),
+      mark: asset("duara", "logo-mark"),
+    },
+    logoStages: [
+      { label: "Full colour", bg: "#FDFAEE", logo: "color" },
+      { label: "On white", bg: "#FFFFFF", logo: "color" },
+      { label: "Reversed", bg: "#035C40", logo: "color", filter: "brightness(0) invert(1)" },
+      { label: "One colour", bg: "#F9C71D", logo: "color", filter: "brightness(0)" },
+    ],
+    book: {
+      logo: {
+        title: "The sunflower mark",
+        intro: "The dotted spiral grows outward like a sunflower head: many small parts becoming one community. It keeps its colours wherever the background allows.",
+        clearSpace: "Clear space: keep one dot-ring (x) free on every side",
+      },
+      colour: {
+        title: "Pulled from the logo",
+        intro: "Every colour comes from the sunflower mark, so posts feel related to the logo even before you see it. Tap a swatch to copy its code.",
+      },
+      type: {
+        title: "One loud voice, one warm accent",
+        intro: "Headlines are heavy and tightly set in Forest Ink. One phrase per headline switches to the italic in Marigold. That one phrase is where the feeling goes.",
+      },
+      elements: {
+        title: "Pieces that repeat everywhere",
+        intro: "A small kit of shapes that shows up on every post. They are what make the feed read as one family.",
+      },
+      anatomy: { intro: "Every Admissions post is built on the same skeleton. Tap a number to see what each part does." },
+      templates: {
+        title: "One system, three templates",
+        intro: "Admissions, Parent Voices and Events. Each has its own job, and all of them are built from the same parts.",
+      },
+      mockups: {
+        title: "Beyond the feed",
+        intro: "The same system carried onto the profile, print and uniforms, so the brand looks the same online and at the school gate.",
+      },
+      rules: { intro: "A few rules that keep the system intact when the school's own team makes posts." },
+    },
     templates: [
       { name: "Admissions", description: "Headline, wave-framed photo, green footer with a pill button." },
       { name: "Parent Voices", description: "A real parent quote set big, framed by the logo bar and footer." },
       { name: "Events", description: "Date-led layouts for open days and celebrations." },
     ],
-    posts: [
-      { title: "Education for the world", image: duara01, thumb: duara01Thumb, mini: duara01Mini, template: "Admissions" },
-      { title: "Come visit our school", image: duara02, thumb: duara02Thumb, mini: duara02Mini, template: "Admissions" },
-      { title: "Quality education. Within reach.", image: duara03, thumb: duara03Thumb, mini: duara03Mini, template: "Admissions" },
-      { title: "Teachers you can trust", image: duara04, thumb: duara04Thumb, mini: duara04Mini, template: "Admissions" },
-      { title: "I feel at peace. I feel safe.", image: duara05, thumb: duara05Thumb, mini: duara05Mini, template: "Parent Voices" },
-      { title: "My daughter comes home singing", image: duara06, thumb: duara06Thumb, mini: duara06Mini, template: "Parent Voices" },
-      { title: "Tomorrow's problem-solvers start here", image: duara07, thumb: duara07Thumb, mini: duara07Mini, template: "Admissions" },
-      { title: "Duara School Gathiga", image: duara08, thumb: duara08Thumb, mini: duara08Mini, template: "Admissions" },
-      { title: "Community Day", image: duara09, thumb: duara09Thumb, mini: duara09Mini, template: "Events" },
-      { title: "Little steps. Big milestones.", image: duara10, thumb: duara10Thumb, mini: duara10Mini, template: "Events" },
-      { title: "A school your family can trust", image: duara11, thumb: duara11Thumb, mini: duara11Mini, template: "Admissions" },
-      { title: "Big ideas begin here", image: duara12, thumb: duara12Thumb, mini: duara12Mini, template: "Admissions" },
-      { title: "Intentional teachers. Inspired learning.", image: duara13, thumb: duara13Thumb, mini: duara13Mini, template: "Admissions" },
-      { title: "A school that feels like home", image: duara14, thumb: duara14Thumb, mini: duara14Mini, template: "Admissions" },
-      { title: "Meet the teachers. Discover Duara.", image: duara15, thumb: duara15Thumb, mini: duara15Mini, template: "Admissions" },
-    ],
+    posts: duaraPosts,
     anatomy: {
-      image: duara04,
+      image: duaraPosts[3].image,
       callouts: [
         { x: 30, y: 7, label: "Logo", note: "Stacked lockup, always top left on cream." },
         { x: 68, y: 11, label: "Headline", note: "ExtraBold in Forest Ink, tight tracking." },
@@ -207,7 +291,145 @@ export const brands: Brand[] = [
         { x: 66, y: 96, label: "Contact strip", note: "Phone, web and handle, divided by thin rules." },
       ],
     },
+    instagram: {
+      bio: ["Community microschools. Quality learning, affordably.", "CBC • IB • Montessori"],
+      avatarBg: "#FDFAEE",
+      avatarLogo: "color",
+    },
     contact: { phone: "0758 013970", web: "duara.education", handle: "@duaraschools" },
+  },
+  {
+    slug: "iclear",
+    name: "iClear",
+    tagline: "A clean, premium look for home water purification.",
+    sector: "Home water purification",
+    year: "2025",
+    scope: ["Social campaigns", "Product promos", "Seasonal campaigns", "Roll-up banners", "9 designs"],
+    brief:
+      "iClear sells home and office water purifiers in Nairobi and Nakuru. The brand needed social and print work that makes a technical product feel premium and easy to trust, and stays recognisable across promotions, lifestyle posts and in-store print.",
+    approach: [
+      "Built the look on deep navy and aqua, taken straight from the drop logo.",
+      "Paired a heavy, high-contrast serif for headlines with light Poppins for details: premium, but easy to read.",
+      "Lit every purifier like a hero product, with a spotlight glow behind the white unit.",
+      "Fixed the logo top left and the same contact strip at the bottom of every post, then carried the system onto roll-up banners.",
+    ],
+    fontsHref:
+      "https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:ital,wght@0,300;0,400;0,600;1,800&family=Great+Vibes&display=swap",
+    type: { display: abril, displayWeight: 400, displayTracking: "-0.01em", body: poppins },
+    colors: {
+      background: "#021A47",
+      surface: "#08296A",
+      ink: "#EEF5FF",
+      primary: "#0653B1",
+      onPrimary: "#FFFFFF",
+      accent: "#08E6BE",
+      onAccent: "#021A47",
+      highlight: "#60D4E3",
+      onHighlight: "#021A47",
+      label: "#60D4E3",
+    },
+    palette: [
+      { name: "Midnight", hex: "#022967", role: "Backgrounds of hero and product posts", share: 34, on: "#FFFFFF" },
+      { name: "Royal Blue", hex: "#0653B1", role: "Gradients, sky and depth", share: 18, on: "#FFFFFF" },
+      { name: "Sky Cyan", hex: "#60D4E3", role: "Spotlight glow and gradient start", share: 12, on: "#021A47" },
+      { name: "Aqua Drop", hex: "#08E6BE", role: "The logo mark, checks and highlights", share: 8, on: "#021A47" },
+      { name: "Mist", hex: "#EAF2FA", role: "Canvas for lifestyle posts", share: 20, on: "#01227B" },
+      { name: "Pure White", hex: "#FFFFFF", role: "Headlines on dark, the product itself", share: 8, on: "#01227B" },
+    ],
+    fonts: [
+      { name: "Abril Fatface", role: "Headlines", family: abril, weight: 400, sample: "A healthier home" },
+      { name: "Poppins Light", role: "Subheads, details and contact strip", family: poppins, weight: 300, sample: "Trusted purification for homes that care." },
+      { name: "Poppins ExtraBold Italic", role: "Punchy lifestyle lines", family: poppins, weight: 800, italic: true, color: "#60D4E3", sample: "Ditch The Bottles" },
+      { name: "Great Vibes", role: "Seasonal campaigns", family: "'Great Vibes', cursive", weight: 400, color: "#60D4E3", sample: "Ramadhan" },
+    ],
+    headline: {
+      lineFont: abril,
+      lineWeight: 400,
+      lineColor: "#FFFFFF",
+      accentFont: abril,
+      accentWeight: 400,
+      accentItalic: false,
+      accentPaint: "linear-gradient(90deg, #60D4E3, #FFFFFF)",
+      tracking: "-0.01em",
+      panel: "radial-gradient(ellipse at 50% 120%, #1E7BD8 0%, #0A3A8C 45%, #022967 80%)",
+      sample: { line: "A healthier home", accent: "starts here." },
+    },
+    cover: {
+      line: "iClear,",
+      accent: "water is sweet.",
+      accentPaint: "linear-gradient(90deg, #60D4E3, #08E6BE)",
+      disc: "radial-gradient(circle, #2C8FE0 0%, #0A3A8C 50%, #021A47 72%)",
+      logo: "white",
+    },
+    logos: {
+      stacked: asset("iclear", "logo-stacked"),
+      white: asset("iclear", "logo-white"),
+      horizontal: asset("iclear", "logo-horizontal"),
+      horizontalWhite: asset("iclear", "logo-horizontal-white"),
+      mark: asset("iclear", "logo-mark"),
+    },
+    logoStages: [
+      { label: "Full colour", bg: "#EAF2FA", logo: "color" },
+      { label: "On white", bg: "#FFFFFF", logo: "color" },
+      { label: "Reversed", bg: "#022967", logo: "white" },
+      { label: "On blue", bg: "#0653B1", logo: "white" },
+    ],
+    book: {
+      logo: {
+        title: "The living drop",
+        intro: "A water drop that curls into itself. On light backgrounds it's an aqua mark with a navy wordmark. On the deep navy posts it turns all white.",
+        clearSpace: "Clear space: keep the inner drop's height (x) free on every side",
+      },
+      colour: {
+        title: "Deep water, clear light",
+        intro: "Midnight navy carries the premium feel. Aqua and sky cyan bring the freshness of clean water. Tap a swatch to copy its code.",
+      },
+      type: {
+        title: "A heavy serif, a light sans",
+        intro: "Headlines use a fat, high-contrast serif that feels premium. Everything else is light Poppins, so the details stay calm and readable.",
+      },
+      elements: {
+        title: "Pieces that repeat everywhere",
+        intro: "The parts that make a post recognisably iClear: the spotlight, the feature bar, the price line and the contact strip.",
+      },
+      anatomy: { intro: "Promotion posts follow one skeleton. Tap a number to see what each part does." },
+      templates: {
+        title: "One system, four formats",
+        intro: "Promotions, product, lifestyle and print. Different jobs, built from the same parts.",
+      },
+      mockups: {
+        title: "Beyond the feed",
+        intro: "The same system carried onto the profile, stationery and in-store print.",
+      },
+      rules: { intro: "A few rules that keep iClear posts consistent from one campaign to the next." },
+    },
+    templates: [
+      { name: "Promotions", description: "Offer-led: serif headline, feature bar, then-and-now price, deadline." },
+      { name: "Product", description: "The purifier as hero, lit by a spotlight on deep navy." },
+      { name: "Lifestyle", description: "People and moments: workouts, commutes, everyday hydration." },
+      { name: "Print", description: "Roll-up banners for shops and events, same colours and type." },
+    ],
+    posts: iclearPosts,
+    anatomy: {
+      image: iclearPosts[0].image,
+      callouts: [
+        { x: 18, y: 4, label: "Logo", note: "Stacked lockup in white, always top left." },
+        { x: 80, y: 5, label: "Anniversary badge", note: "The 4-year mark sits top right during the campaign." },
+        { x: 13, y: 18, label: "Headline", note: "One heavy serif word carries the post." },
+        { x: 25, y: 23, label: "Subline", note: "Light Poppins underneath names the product." },
+        { x: 86, y: 32, label: "Feature bar", note: "Three short benefits, the middle one filled." },
+        { x: 74, y: 40.5, label: "Price line", note: "Then struck through, now in large type." },
+        { x: 95, y: 47, label: "Offer", note: "Big silver numerals for the discount." },
+        { x: 27, y: 62, label: "Hero product", note: "The white unit lit by a soft spotlight." },
+        { x: 20, y: 91, label: "Contact strip", note: "Website, phone and handle on every post." },
+      ],
+    },
+    instagram: {
+      bio: ["Home & office water purifiers.", "Nairobi • Nakuru  #Waterissweet"],
+      avatarBg: "#022967",
+      avatarLogo: "white",
+    },
+    contact: { phone: "+254 768 488 274", web: "iclear.co.ke", handle: "@iclear_water" },
   },
 ];
 
