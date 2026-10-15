@@ -1,3 +1,4 @@
+import { unsplashImageProps } from "@/lib/responsiveImage";
 import type { CaseStudyImage } from "@/data/caseStudies";
 
 /** One large photo with two smaller ones beside it. Expects a dark case-study background. */
@@ -15,6 +16,7 @@ export function CaseStudyGallery({ images }: { images: CaseStudyImage[] }) {
           >
             <img
               src={image.src}
+                    {...unsplashImageProps(image.src, "(min-width: 1024px) 720px, 100vw")}
               alt={image.alt}
               loading="lazy"
               decoding="async"

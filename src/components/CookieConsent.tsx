@@ -62,8 +62,8 @@ export function CookieConsent() {
           <div className="flex-1">
             <p className="text-sm text-foreground leading-relaxed">
               We use cookies to improve your experience and analyze site traffic.{" "}
-              <Link to="/cookie-policy" className="text-primary hover:underline">
-                Learn more
+              <Link to="/cookie-policy" className="text-primary underline underline-offset-4">
+                Read our cookie policy
               </Link>
               .
             </p>

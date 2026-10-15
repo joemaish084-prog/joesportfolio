@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { videoImageProps } from "@/lib/videoImages";
+import { useEffect, useRef, useState } from "react";
 import { Play, Volume2, Film, Clock, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -87,6 +88,7 @@ export function ShortCard({ v, showDate = false }: { v: ShortVideo; showDate?: b
       <div className="relative aspect-[9/16] overflow-hidden">
         <img
           src={v.thumbnail}
+          {...videoImageProps(v.thumbnail, "(min-width: 1400px) 320px, (min-width: 1024px) 25vw, 50vw")}
           alt={`${v.title} — ${v.platform} short-form video thumbnail by Joseph Maina, Digital Marketing Specialist in Nairobi`}
           loading="lazy"
           width={400}
@@ -145,6 +147,7 @@ export function LongCard({ v }: { v: LongVideo }) {
           <>
             <img
               src={v.thumbnail}
+              {...videoImageProps(v.thumbnail, "(min-width: 1024px) 50vw, 100vw")}
               alt={`${v.title} — ${v.platform} long-form brand film thumbnail by Joseph Maina, Nairobi Kenya`}
               loading="lazy"
               width={1280}
@@ -196,6 +199,21 @@ export function LongCard({ v }: { v: LongVideo }) {
 
 export function FeaturedVideo() {
   const [playing, setPlaying] = useState(false);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setPreviewVisible(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "200px" });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   const featuredSchema = {
     "@context": "https://schema.org",
@@ -215,7 +233,7 @@ export function FeaturedVideo() {
   };
 
   return (
-    <div className="corner-brackets relative overflow-hidden rounded-2xl border border-border shadow-elegant group">
+    <div ref={containerRef} className="corner-brackets relative overflow-hidden rounded-2xl border border-border shadow-elegant group">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredSchema) }} />
       <div className="relative aspect-video bg-black">
         {playing ? (
@@ -228,22 +246,25 @@ export function FeaturedVideo() {
           />
         ) : (
           <>
-            {/* Muted autoplay preview via YouTube embed (desktop) */}
-            <iframe
-              src={`https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&playlist=${FEATURED_VIDEO.youtubeId}`}
-              title={`${FEATURED_VIDEO.title} — muted preview`}
-              allow="autoplay; encrypted-media; picture-in-picture"
-              className="absolute inset-0 h-full w-full hidden md:block pointer-events-none"
-              tabIndex={-1}
-              aria-hidden="true"
-            />
-            {/* Mobile poster fallback */}
             <img
               src={featuredThumbnail}
-              alt={`${FEATURED_VIDEO.title} — featured brand film thumbnail by Joseph Maina, Video Production Nairobi Kenya`}
-              className="absolute inset-0 h-full w-full object-cover md:hidden"
+              {...videoImageProps(featuredThumbnail, "(min-width: 1280px) 1200px, 100vw")}
+              alt={`${FEATURED_VIDEO.title} ? featured brand film thumbnail`}
+              width={1280}
+              height={720}
+              className="absolute inset-0 h-full w-full object-cover"
               loading="lazy"
+              decoding="async"
             />
+            {/* Only the featured film autoplays, once it approaches the viewport. */}
+            {previewVisible && <iframe
+              src={`https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=${FEATURED_VIDEO.youtubeId}`}
+              title={`${FEATURED_VIDEO.title} ? muted preview`}
+              allow="autoplay; encrypted-media; picture-in-picture"
+              className="absolute inset-0 h-full w-full pointer-events-none"
+              tabIndex={-1}
+              aria-hidden="true"
+            />}
             {/* Overlay gradient — desktop only so mobile thumbnail stays clean */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40 pointer-events-none hidden md:block" />
 

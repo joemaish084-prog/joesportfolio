@@ -1,28 +1,13 @@
-import { useState, lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
 import { PressFeatures } from "@/components/PressFeatures";
 import { Video, Palette, BarChart3, Briefcase, HelpCircle } from "lucide-react";
+import { Hero } from "@/components/Hero";
 import { Seo } from "@/components/Seo";
 
-// Lazy-load Hero to split framer-motion out of the critical path and reduce longest task
-const Hero = lazy(() => import("@/components/Hero").then(m => ({ default: m.Hero })));
-
-// Lightweight placeholder matching Hero dimensions to avoid layout shift
-const HeroFallback = () => (
-  <section id="home" className="relative w-full min-h-screen supports-[min-height:100svh]:min-h-svh bg-background flex items-center px-6 sm:px-10 lg:px-16">
-    <div className="max-w-xl">
-      <p className="text-xs font-medium text-muted-foreground mb-6 tracking-wide uppercase">Digital Marketing Specialist · Nairobi, Kenya</p>
-      <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-foreground">
-        Digital Marketing That Turns Attention Into<span className="text-primary"> Real Growth</span>
-      </h1>
-    </div>
-  </section>
-);
-
 // Lazy-load non-critical above-the-fold utilities
-const SplashScreen = lazy(() => import("@/components/SplashScreen").then(m => ({ default: m.SplashScreen })));
 const ScrollProgress = lazy(() => import("@/components/ScrollProgress").then(m => ({ default: m.ScrollProgress })));
 const BackToTop = lazy(() => import("@/components/BackToTop").then(m => ({ default: m.BackToTop })));
 const WhatsAppButton = lazy(() => import("@/components/WhatsAppButton").then(m => ({ default: m.WhatsAppButton })));
@@ -47,9 +32,6 @@ const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.
 const ChatAssistant = lazy(() => import("@/components/ChatAssistant").then(m => ({ default: m.ChatAssistant })));
 
 const Index = () => {
-  const [splashDone, setSplashDone] = useState(
-    !!sessionStorage.getItem("splash-seen")
-  );
 
   return (
     <>
@@ -58,11 +40,10 @@ const Index = () => {
         description="Digital Marketing Specialist in Nairobi, Kenya. Expert in Meta Ads, Google Ads, TikTok, SEO & Social Media. Real results for Kenyan brands. Book a free strategy call today."
         path="/"
       />
-      {!splashDone && <Suspense fallback={null}><SplashScreen onComplete={() => setSplashDone(true)} /></Suspense>}
       <Suspense fallback={null}><ScrollProgress /></Suspense>
       <SiteHeader />
-      <main className={`min-h-screen ${splashDone ? "animate-fade-in" : "opacity-0"}`}>
-        <Suspense fallback={<HeroFallback />}><Hero /></Suspense>
+      <main className="min-h-screen">
+        <Hero />
         <ExpandCollapseAll />
         <Suspense fallback={null}>
           <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured" defaultOpenOnMobile>

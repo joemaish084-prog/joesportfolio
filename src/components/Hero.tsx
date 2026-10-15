@@ -142,7 +142,7 @@ export function Hero() {
       <div className="relative z-10 min-h-screen supports-[min-height:100svh]:min-h-svh grid lg:grid-cols-2 gap-16 items-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto pt-20 pb-28 sm:py-32 lg:py-20">
         <div className="text-left">
           <motion.span
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: appleEase }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-border/60 bg-card/80 backdrop-blur-md text-xs font-medium text-muted-foreground mb-6"
@@ -152,7 +152,7 @@ export function Hero() {
           </motion.span>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5, ease: appleEase }}
             className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight text-foreground max-w-xl"
@@ -162,7 +162,7 @@ export function Hero() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.22, duration: 0.5, ease: appleEase }}
             className="mt-6 text-lg text-muted-foreground max-w-md"
@@ -171,7 +171,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.34, duration: 0.5, ease: appleEase }}
             className="mt-10 flex flex-col sm:flex-row gap-4"
@@ -185,7 +185,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.6, ease: appleEase }}
             className="mt-10 sm:mt-14 grid grid-cols-[1.2fr_1fr_1fr] gap-x-4 sm:flex sm:flex-wrap sm:gap-x-8 gap-y-3 border-t border-border/60 pt-6"

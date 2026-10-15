@@ -1,3 +1,4 @@
+import { unsplashImageProps } from "@/lib/responsiveImage";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,7 @@ export function CaseStudy() {
                 <div className="relative h-44 sm:h-56 overflow-hidden">
                   <img
                     src={cs.cover.src}
+                    {...unsplashImageProps(cs.cover.src, "(min-width: 1280px) 360px, (min-width: 768px) 50vw, 100vw")}
                     alt={cs.cover.alt}
                     loading="lazy"
                     decoding="async"

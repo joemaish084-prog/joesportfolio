@@ -8,23 +8,23 @@ import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Index from "./pages/Index";
-import Agency from "./pages/Agency";
-import AgencyBlog from "./pages/AgencyBlog";
-import AgencyBlogHub from "./pages/AgencyBlogHub";
-import AgencyService from "./pages/AgencyService";
-import AgencyBlogPost from "./pages/AgencyBlogPost";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import CookiePolicy from "./pages/CookiePolicy";
-import Terms from "./pages/Terms";
-import Connect from "./pages/Connect";
-import WorkDesign from "./pages/WorkDesign";
-import WorkVideos from "./pages/WorkVideos";
-import WorkCaseStudies from "./pages/WorkCaseStudies";
-import NotFound from "./pages/NotFound";
 import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
 import { ConversionTracker } from "@/components/ConversionTracker";
 import { PulseTracker } from "@/components/PulseTracker";
+const Agency = lazy(() => import("./pages/Agency"));
+const AgencyBlog = lazy(() => import("./pages/AgencyBlog"));
+const AgencyBlogHub = lazy(() => import("./pages/AgencyBlogHub"));
+const AgencyService = lazy(() => import("./pages/AgencyService"));
+const AgencyBlogPost = lazy(() => import("./pages/AgencyBlogPost"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Connect = lazy(() => import("./pages/Connect"));
+const WorkDesign = lazy(() => import("./pages/WorkDesign"));
+const WorkVideos = lazy(() => import("./pages/WorkVideos"));
+const WorkCaseStudies = lazy(() => import("./pages/WorkCaseStudies"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 const Admin = lazy(() => import("./pages/Admin"));
 // Image-heavy brand books load on demand so they stay out of the main bundle.
 const WorkBranding = lazy(() => import("./pages/WorkBranding"));
@@ -44,6 +44,7 @@ const App = () => (
           <MetaPixelRouteTracker />
           <ConversionTracker />
           <PulseTracker />
+          <Suspense fallback={pageFallback}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/agency" element={<Agency />} />
@@ -72,6 +73,7 @@ const App = () => (
             />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
           <CookieConsent />
         </BrowserRouter>
         <Analytics />

@@ -54,7 +54,7 @@ export function ServicesPricing() {
                 description={s.description}
                 Icon={s.icon}
                 href="/agency"
-                cta="Learn more"
+                cta={`Explore ${s.title} services`}
                 className={s.className}
                 background={
                   <s.icon className="pointer-events-none absolute -right-6 -top-6 h-40 w-40 text-primary/5" />
@@ -73,7 +73,7 @@ export function ServicesPricing() {
           </Button>
           <p className="mt-3 text-sm text-muted-foreground">
             See full packages on the{" "}
-            <a href="/agency" className="text-primary hover:underline">Agency page</a>.
+            <a href="/agency" className="text-primary underline underline-offset-4">Agency page</a>.
           </p>
         </div>
       </div>

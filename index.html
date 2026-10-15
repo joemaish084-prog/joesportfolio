@@ -16,12 +16,25 @@
       var c='denied';try{if(localStorage.getItem('cookie-consent-v1')==='accepted')c='granted';}catch(e){}
       gtag('consent','default',{analytics_storage:c,ad_storage:c,ad_user_data:c,ad_personalization:c});
     </script>
+    <!-- Queue tracking immediately; download vendors after the initial render. -->
+    <script>
+      function afterInitialRender(callback) {
+        function schedule() {
+          setTimeout(function () {
+            if ('requestIdleCallback' in window) requestIdleCallback(callback, {timeout: 2000});
+            else callback();
+          }, 1500);
+        }
+        if (document.readyState === 'complete') schedule();
+        else window.addEventListener('load', schedule, {once: true});
+      }
+    </script>
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script>afterInitialRender(function(){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K789XFXX');</script>
+    })(window,document,'script','dataLayer','GTM-K789XFXX');});</script>
     <!-- End Google Tag Manager -->
     <!-- Meta Pixel Code -->
     <script>
@@ -29,9 +42,9 @@
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
+    n.queue=[];afterInitialRender(function(){t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    s.parentNode.insertBefore(t,s);});}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1700479915418949');
     fbq('track', 'PageView');
@@ -68,7 +81,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript>
 
     <script type="application/ld+json">
     {
