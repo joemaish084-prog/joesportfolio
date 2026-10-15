@@ -71,3 +71,17 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Prospect agent setup
+
+The admin dashboard's **Prospect agent** searches public web results with Brave Search and uses the configured Lovable AI gateway to assess fit and prepare editable email drafts. It does not send email. Add a publicly listed business email to a prospect to open the draft in your email app.
+
+Apply the `supabase/migrations/20261014000000_add_agency_prospects.sql` migration, add a Brave Search API key as a Supabase function secret, and deploy the `prospect-agent` function:
+
+```sh
+supabase db push
+supabase secrets set BRAVE_SEARCH_API_KEY=<your-brave-search-api-key>
+supabase functions deploy prospect-agent
+```
+
+AI drafting also requires the existing `LOVABLE_API_KEY` Supabase function secret used by the site's chat assistant.

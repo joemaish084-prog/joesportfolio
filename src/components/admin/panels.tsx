@@ -74,6 +74,8 @@ export interface PanelProps {
   density: Density;
   rangeLabel: string;
   includeBots: boolean;
+  passcode: string;
+  onAuthFailure: () => void;
 }
 
 const TRAFFIC_SERIES = [

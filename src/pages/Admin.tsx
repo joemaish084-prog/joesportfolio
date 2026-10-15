@@ -22,6 +22,7 @@ import {
   Play,
   RefreshCw,
   Rows3,
+  Search,
   Sparkles,
   Sun,
   Users,
@@ -60,6 +61,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/use-toast";
 import { RANGE_OPTIONS, relativeTime } from "@/components/admin/format";
+import { ProspectAgentPanel } from "@/components/admin/ProspectAgentPanel";
 import { Segmented, type Density } from "@/components/admin/ui";
 import {
   AcquisitionPanel,
@@ -93,7 +95,8 @@ interface TabDef {
   group: string;
   /** Shown under the page title in the header. */
   blurb: string;
-  Panel: (props: PanelProps) => JSX.Element;
+  Panel?: (props: PanelProps) => JSX.Element;
+  CustomPanel?: (props: { passcode: string; onAuthFailure: () => void }) => JSX.Element;
 }
 
 const TABS: TabDef[] = [
@@ -176,6 +179,14 @@ const TABS: TabDef[] = [
     group: "People",
     blurb: "Search and AI bots reaching your pages",
     Panel: CrawlersPanel,
+  },
+  {
+    id: "prospects",
+    label: "Prospect agent",
+    icon: Search,
+    group: "Business",
+    blurb: "Find, qualify and prepare outreach for potential clients",
+    CustomPanel: ProspectAgentPanel,
   },
   {
     id: "leads",
@@ -519,6 +530,7 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
 
   const rangeLabel = prefs.rangeDays === 1 ? "the last 24 hours" : `the last ${prefs.rangeDays} days`;
   const ActivePanel = activeTab.Panel;
+  const CustomPanel = activeTab.CustomPanel;
 
   return (
     <SidebarProvider>
@@ -703,9 +715,21 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
             </div>
           )}
 
-          {!data && !error && <DashboardSkeleton />}
+          {!data && !error && !CustomPanel && <DashboardSkeleton />}
 
-          {data && (
+          {CustomPanel ? (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <CustomPanel passcode={passcode} onAuthFailure={onAuthFailure} />
+              </motion.div>
+            </AnimatePresence>
+          ) : data && ActivePanel ? (
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab.id}
@@ -719,12 +743,14 @@ function Dashboard({ passcode, onAuthFailure }: { passcode: string; onAuthFailur
                   density={prefs.density}
                   rangeLabel={rangeLabel}
                   includeBots={prefs.includeBots}
+                  passcode={passcode}
+                  onAuthFailure={onAuthFailure}
                 />
               </motion.div>
             </AnimatePresence>
-          )}
+          ) : null}
 
-          {data && (
+          {data && !CustomPanel && (
             <p className="pt-6 text-[11px] leading-relaxed text-muted-foreground">
               Generated {new Date(data.generated_at).toLocaleString()} · hour-of-day figures bucketed in{" "}
               {data.timezone} · dwell times are heartbeat-derived and include time an open tab spends idle.
