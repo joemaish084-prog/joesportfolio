@@ -28,6 +28,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.josephmaina.co.ke/work/branding</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.josephmaina.co.ke/work/branding/duara-schools</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.josephmaina.co.ke/agency/blog</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

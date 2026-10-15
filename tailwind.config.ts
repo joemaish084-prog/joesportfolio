@@ -14,6 +14,13 @@ export default {
     },
     extend: {
       colors: {
+        brand: {
+          bg: "rgb(var(--brand-bg) / <alpha-value>)",
+          ink: "rgb(var(--brand-ink) / <alpha-value>)",
+          primary: "rgb(var(--brand-primary) / <alpha-value>)",
+          accent: "rgb(var(--brand-accent) / <alpha-value>)",
+          highlight: "rgb(var(--brand-highlight) / <alpha-value>)",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

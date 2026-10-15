@@ -30,7 +30,7 @@ const WhatsAppButton = lazy(() => import("@/components/WhatsAppButton").then(m =
 // Lazy-load below-the-fold components to reduce main-thread blocking
 const Videos = lazy(() => import("@/components/Videos").then(m => ({ default: m.Videos })));
 const GraphicDesign = lazy(() => import("@/components/GraphicDesign").then(m => ({ default: m.GraphicDesign })));
-const PrintMockup = lazy(() => import("@/components/PrintMockup").then(m => ({ default: m.PrintMockup })));
+const BrandIdentity = lazy(() => import("@/components/BrandIdentity").then(m => ({ default: m.BrandIdentity })));
 const About = lazy(() => import("@/components/About").then(m => ({ default: m.About })));
 const ServicesPricing = lazy(() => import("@/components/ServicesPricing").then(m => ({ default: m.ServicesPricing })));
 const AgencyPromo = lazy(() => import("@/components/AgencyPromo").then(m => ({ default: m.AgencyPromo })));
@@ -74,7 +74,7 @@ const Index = () => {
           <CollapsibleWrapper id="graphic-design" title="Graphic Design" Icon={Palette} count="Gallery">
             <GraphicDesign />
           </CollapsibleWrapper>
-          <PrintMockup />
+          <BrandIdentity />
           <About />
           <PressFeatures />
           <ServicesPricing />

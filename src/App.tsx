@@ -20,6 +20,8 @@ import Connect from "./pages/Connect";
 import WorkDesign from "./pages/WorkDesign";
 import WorkVideos from "./pages/WorkVideos";
 import WorkCaseStudies from "./pages/WorkCaseStudies";
+import WorkBranding from "./pages/WorkBranding";
+import WorkBrand from "./pages/WorkBrand";
 import NotFound from "./pages/NotFound";
 import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
@@ -56,6 +58,8 @@ const App = () => (
             <Route path="/work/design" element={<WorkDesign />} />
             <Route path="/work/videos" element={<WorkVideos />} />
             <Route path="/work/case-studies" element={<WorkCaseStudies />} />
+            <Route path="/work/branding" element={<WorkBranding />} />
+            <Route path="/work/branding/:slug" element={<WorkBrand />} />
             <Route
               path="/admin"
               element={
