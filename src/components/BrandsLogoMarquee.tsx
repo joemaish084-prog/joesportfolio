@@ -7,6 +7,7 @@ import logoNorthgate from "@/assets/logo-northgate.webp";
 import logoPowwater from "@/assets/logo-powwater.webp";
 import logoGlowskin from "@/assets/logo-glowskin.jpg";
 import logoBeautysquare from "@/assets/logo-beautysquare.jpg";
+import logoDuara from "@/assets/logo-duara.webp";
 
 const brands = [
   { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },
@@ -14,6 +15,7 @@ const brands = [
   { name: "Joan Mbesya", industry: "Personal Brand", logo: logoJoan },
   { name: "TechMindset Africa", industry: "AI Company", logo: logoTechmindset },
   { name: "NorthGate School", industry: "Education", logo: logoNorthgate },
+  { name: "Duara Schools", industry: "Education", logo: logoDuara },
   { name: "PowWater", industry: "Water Services", logo: logoPowwater },
   { name: "Glow Skin Cosmetics", industry: "Skincare Retailer", logo: logoGlowskin },
   { name: "Beauty Square Kenya", industry: "Skincare Retail", logo: logoBeautysquare },
