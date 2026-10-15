@@ -20,14 +20,16 @@ import Connect from "./pages/Connect";
 import WorkDesign from "./pages/WorkDesign";
 import WorkVideos from "./pages/WorkVideos";
 import WorkCaseStudies from "./pages/WorkCaseStudies";
-import WorkBranding from "./pages/WorkBranding";
-import WorkBrand from "./pages/WorkBrand";
 import NotFound from "./pages/NotFound";
 import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
 import { ConversionTracker } from "@/components/ConversionTracker";
 import { PulseTracker } from "@/components/PulseTracker";
 const Admin = lazy(() => import("./pages/Admin"));
+// Image-heavy brand books load on demand so they stay out of the main bundle.
+const WorkBranding = lazy(() => import("./pages/WorkBranding"));
+const WorkBrand = lazy(() => import("./pages/WorkBrand"));
+const pageFallback = <div className="min-h-screen bg-background" />;
 
 
 const queryClient = new QueryClient();
@@ -58,8 +60,8 @@ const App = () => (
             <Route path="/work/design" element={<WorkDesign />} />
             <Route path="/work/videos" element={<WorkVideos />} />
             <Route path="/work/case-studies" element={<WorkCaseStudies />} />
-            <Route path="/work/branding" element={<WorkBranding />} />
-            <Route path="/work/branding/:slug" element={<WorkBrand />} />
+            <Route path="/work/branding" element={<Suspense fallback={pageFallback}><WorkBranding /></Suspense>} />
+            <Route path="/work/branding/:slug" element={<Suspense fallback={pageFallback}><WorkBrand /></Suspense>} />
             <Route
               path="/admin"
               element={

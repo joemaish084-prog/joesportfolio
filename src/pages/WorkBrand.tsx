@@ -256,7 +256,7 @@ function AnatomySection({ brand }: { brand: Brand }) {
     <Chapter n="05" label="Layout" title="Anatomy of a post" intro="Every Admissions post is built on the same skeleton. Tap a number to see what each part does.">
       <div className="grid items-start gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div className="relative overflow-hidden rounded-2xl shadow-xl ring-1 ring-brand-ink/10">
-          <img src={image} alt="Annotated Duara post" className="block w-full" />
+          <img src={image} alt="Annotated Duara post" width={1080} height={1350} loading="lazy" decoding="async" className="block h-auto w-full" />
           {callouts.map((c, i) => (
             <button
               key={c.label}
@@ -344,7 +344,7 @@ function TemplatesSection({ brand }: { brand: Brand }) {
               aria-label={`View ${p.title}`}
               className="group block w-full overflow-hidden rounded-xl ring-1 ring-brand-ink/10 transition-all hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
             >
-              <img src={p.image} alt={`${p.title}, ${p.template} template`} loading="lazy" decoding="async" className="aspect-[4/5] w-full object-cover" />
+              <img src={p.thumb} alt={`${p.title}, ${p.template} template`} width={540} height={675} loading="lazy" decoding="async" className="aspect-[4/5] w-full object-cover" />
             </button>
           </li>
         ))}

@@ -48,8 +48,10 @@ export function BrandCard({ brand }: { brand: Brand }) {
         {fan.map((p, i) => (
           <img
             key={p.title}
-            src={p.image}
+            src={p.thumb}
             alt=""
+            width={540}
+            height={675}
             loading="lazy"
             decoding="async"
             className="absolute top-1/2 w-[38%] rounded-lg shadow-2xl ring-1 ring-black/20 transition-transform duration-500"

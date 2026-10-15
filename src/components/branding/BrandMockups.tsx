@@ -40,7 +40,7 @@ export function InstagramMockup({ brand }: { brand: Brand }) {
         </div>
         <div className="grid grid-cols-3 gap-px bg-neutral-200">
           {brand.posts.slice(0, 9).map((p) => (
-            <img key={p.title} src={p.image} alt="" loading="lazy" className="aspect-[4/5] w-full object-cover" />
+            <img key={p.title} src={p.mini} alt="" width={240} height={300} loading="lazy" decoding="async" className="aspect-[4/5] w-full object-cover" />
           ))}
         </div>
       </div>
