@@ -13,7 +13,7 @@ import { ProgressBar } from "./ui";
 
 // React Bits Stepper, laid out vertically: each step has an indicator
 // (inactive / active / complete, with the drawn check) and a connector to the
-// next step that fills in mint once the step is done.
+// next step that fills in orange once the step is done.
 
 type StepStatus = "inactive" | "active" | "complete";
 

@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 // Magic UI Animated Circular Progress Bar. Same two-arc SVG and CSS-variable
-// geometry; colours default to the mint primary and the neutral track, and
+// geometry; colours default to the orange primary and the neutral track, and
 // the arc transition is 300ms instead of 1s.
 
 interface AnimatedCircularProgressBarProps {

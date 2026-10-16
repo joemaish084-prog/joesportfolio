@@ -7,7 +7,8 @@
  * Keying to <html> rather than a wrapper div lets portalled dialogs, menus and
  * toasts inherit the hub look too.
  *
- * One accent: mint #3EB489, tint #E8F7F1, deep mint #1F7A5C for text on tint.
+ * One accent, the site's orange (hsl 25 100% 50%), with a soft peach tint and
+ * deep orange for text on that tint. Red is kept for warnings like overdue steps.
  */
 html.hub-active {
   --hub-font:
@@ -20,34 +21,29 @@ html.hub-active {
   --card-foreground: 240 3% 12%;
   --popover: 0 0% 100%;
   --popover-foreground: 240 3% 12%;
-  --primary: 155 49% 48%;
+  --primary: 25 100% 50%;
   --primary-foreground: 0 0% 100%;
   --secondary: 240 6% 93%;
   --secondary-foreground: 240 3% 12%;
   --muted: 240 6% 94%;
   --muted-foreground: 240 2% 44%;
-  --accent: 156 54% 94%;
-  --accent-foreground: 160 60% 30%;
+  --accent: 27 100% 95%;
+  --accent-foreground: 22 90% 34%;
   --destructive: 3 86% 56%;
   --destructive-foreground: 0 0% 100%;
   --border: 240 6% 89%;
   --input: 240 6% 86%;
-  --ring: 155 49% 48%;
+  --ring: 25 100% 50%;
   --radius: 1rem;
 
-  /* The shared Button's default variant paints with the site's orange gradient
-     tokens; inside the hub they become flat mint. */
-  --orange: 155 49% 48%;
-  --orange-light: 155 49% 56%;
-  --orange-dark: 160 60% 30%;
-  --gradient-orange-start: 155 49% 48%;
-  --gradient-orange-end: 155 49% 48%;
-  --shadow-orange-glow: 0 1px 2px hsl(160 60% 20% / 0.18);
+  /* The shared Button keeps the site's orange gradient; only its glow is
+     toned down to a soft shadow to suit a work screen. */
+  --shadow-orange-glow: 0 1px 2px hsl(25 100% 30% / 0.18);
 
-  --hub-tint: 156 54% 94%;
-  --hub-on-tint: 160 60% 30%;
-  --hub-warning: 32 95% 44%;
-  --hub-warning-soft: 38 100% 94%;
+  --hub-tint: 27 100% 95%;
+  --hub-on-tint: 22 90% 34%;
+  --hub-warning: 3 80% 48%;
+  --hub-warning-soft: 3 100% 96%;
   --hub-glass: 0 0% 100%;
   --hub-shadow: 0 1px 2px hsl(240 10% 10% / 0.04), 0 4px 16px hsl(240 10% 10% / 0.04);
   --hub-shadow-lg: 0 2px 6px hsl(240 10% 10% / 0.05), 0 16px 40px hsl(240 10% 10% / 0.08);
@@ -62,24 +58,24 @@ html.hub-active.hub-dark {
   --card-foreground: 0 0% 96%;
   --popover: 240 4% 12%;
   --popover-foreground: 0 0% 96%;
-  --primary: 155 49% 48%;
+  --primary: 25 100% 50%;
   --primary-foreground: 0 0% 100%;
   --secondary: 240 4% 16%;
   --secondary-foreground: 0 0% 96%;
   --muted: 240 4% 15%;
   --muted-foreground: 240 4% 62%;
-  --accent: 157 38% 14%;
-  --accent-foreground: 155 52% 62%;
+  --accent: 24 45% 13%;
+  --accent-foreground: 28 100% 62%;
   --destructive: 3 90% 60%;
   --destructive-foreground: 0 0% 100%;
   --border: 240 4% 18%;
   --input: 240 4% 22%;
-  --ring: 155 49% 48%;
+  --ring: 25 100% 50%;
 
-  --hub-tint: 157 38% 14%;
-  --hub-on-tint: 155 52% 62%;
-  --hub-warning: 36 100% 58%;
-  --hub-warning-soft: 32 60% 14%;
+  --hub-tint: 24 45% 13%;
+  --hub-on-tint: 28 100% 62%;
+  --hub-warning: 3 90% 62%;
+  --hub-warning-soft: 3 50% 14%;
   --hub-glass: 240 4% 10%;
   --hub-shadow: 0 1px 2px hsl(0 0% 0% / 0.3), 0 4px 16px hsl(0 0% 0% / 0.25);
   --hub-shadow-lg: 0 2px 6px hsl(0 0% 0% / 0.35), 0 16px 40px hsl(0 0% 0% / 0.45);
