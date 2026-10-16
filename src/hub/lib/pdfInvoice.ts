@@ -2,6 +2,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toNumberOrNull } from "./format";
 import { parseDate, parseMethod } from "./invoiceImport";
 import type { InvoiceLineItem, PaymentMethod } from "./types";
+import type { ReadRequest, ReadResponse } from "./pdfReader.worker";
 
 // Reads past invoices from PDFs. The text (or, for scanned PDFs, page images)
 // is pulled out in the browser with pdf.js, then the hub-read-invoice function
@@ -114,6 +115,70 @@ async function renderPages(doc: Awaited<ReturnType<typeof extractPdf>>["doc"], m
   return images;
 }
 
+// ---------------------------------------------------------------- background reader
+
+const WORKER_TIMEOUT_MS = 60_000;
+let readerWorker: Worker | null = null;
+const waiting = new Map<string, { resolve: (r: ReadResponse) => void; reject: (e: Error) => void }>();
+
+function getReaderWorker() {
+  if (readerWorker) return readerWorker;
+  const w = new Worker(new URL("./pdfReader.worker.ts", import.meta.url), { type: "module" });
+  w.onmessage = (e: MessageEvent<ReadResponse>) => {
+    waiting.get(e.data.id)?.resolve(e.data);
+    waiting.delete(e.data.id);
+  };
+  w.onerror = (e) => {
+    // A crashed worker fails everything in flight; the next file gets a fresh one.
+    waiting.forEach((p) => p.reject(new Error(e.message || "PDF reader stopped")));
+    waiting.clear();
+    readerWorker?.terminate();
+    readerWorker = null;
+  };
+  readerWorker = w;
+  return w;
+}
+
+/** Text (and page images for scans), read in a background thread. */
+async function pullFromPdf(file: File): Promise<{ text: string; images: string[] }> {
+  const supported = typeof Worker !== "undefined" && typeof OffscreenCanvas !== "undefined";
+  if (!supported) {
+    // Older browsers: read on the page (may pause it briefly on heavy files).
+    const { doc, text } = await extractPdf(file);
+    const images = text.replace(/\s/g, "").length < 40 ? await renderPages(doc) : [];
+    await doc.destroy();
+    return { text, images };
+  }
+  const buffer = await file.arrayBuffer();
+  const id = crypto.randomUUID();
+  const worker = getReaderWorker();
+  const result = await new Promise<ReadResponse>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      waiting.delete(id);
+      // Stop a runaway file so it can't keep the reader busy; start fresh next time.
+      worker.terminate();
+      if (readerWorker === worker) readerWorker = null;
+      waiting.forEach((p) => p.reject(new Error("PDF reader restarted")));
+      waiting.clear();
+      reject(new Error("This PDF took too long to open"));
+    }, WORKER_TIMEOUT_MS);
+    waiting.set(id, {
+      resolve: (r) => {
+        clearTimeout(timer);
+        resolve(r);
+      },
+      reject: (e) => {
+        clearTimeout(timer);
+        reject(e);
+      },
+    });
+    const request: ReadRequest = { id, buffer, maxTextPages: 4, maxImagePages: 2, maxPx: MAX_RENDER_PX };
+    worker.postMessage(request, [buffer]);
+  });
+  if ("error" in result) throw new Error(result.error);
+  return { text: result.text, images: result.images };
+}
+
 // ---------------------------------------------------------------- built-in reader
 
 const DATE = String.raw`(\d{4}-\d{2}-\d{2}|\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}|\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]{3,9},?\s+\d{4}|[A-Za-z]{3,9}\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{4})`;
@@ -208,10 +273,8 @@ export async function readInvoicePdf(
   file: File,
   knownClients: string[],
 ): Promise<{ invoice: ReadInvoice; aiError: string | null }> {
-  const { doc, text } = await extractPdf(file);
-  const scanned = text.replace(/\s/g, "").length < 40;
-  const images = scanned ? await renderPages(doc) : [];
-  await doc.destroy();
+  const { text, images } = await pullFromPdf(file);
+  const scanned = images.length > 0 || text.replace(/\s/g, "").length < 40;
 
   try {
     const { data, error } = await supabase.functions.invoke("hub-read-invoice", {
