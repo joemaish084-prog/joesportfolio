@@ -11,6 +11,7 @@ import {
   Crown,
   Download,
   FileSpreadsheet,
+  FileUp,
   FileText,
   MoreHorizontal,
   Pencil,
@@ -61,6 +62,7 @@ import { KesTicker } from "../motion/number-ticker";
 import { EmptyState, Pill, SkeletonBlock, StatTile, TableCard } from "../ui";
 import type { Insight } from "./FinanceDashboard";
 import { ExpenseDialog, InvoiceDialog, PaymentDialog, RetainerRunDialog } from "./FinanceDialogs";
+import { ImportInvoicesDialog } from "./ImportInvoicesDialog";
 import { PrivacyToggle } from "../privacy";
 
 // All charts live in one lazy chunk so recharts loads only with Finance.
@@ -71,6 +73,7 @@ type DialogState =
   | { kind: "payment"; payment?: Payment | null; invoice?: Invoice | null }
   | { kind: "expense"; expense?: Expense | null }
   | { kind: "retainers" }
+  | { kind: "import" }
   | null;
 
 /**
@@ -96,6 +99,13 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
   // ⌘K actions arrive as ?new=invoice|payment|expense.
   useEffect(() => {
     const next = params.get("new");
+    if (next === "import") {
+      setDialog({ kind: "import" });
+      const rest = new URLSearchParams(params);
+      rest.delete("new");
+      setParams(rest, { replace: true });
+      return;
+    }
     if (next === "invoice" || next === "payment" || next === "expense") {
       setDialog({ kind: next });
       setTab(next === "invoice" ? "invoices" : next === "payment" ? "payments" : "expenses");
@@ -373,6 +383,9 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "import" })}>
+            <FileUp className="mr-1.5 h-4 w-4" /> Import past invoices
+          </Button>
           {!clientId && (
             <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "retainers" })}>
               <Repeat className="mr-1.5 h-4 w-4" /> Bill retainers
@@ -451,11 +464,21 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
               <EmptyState
                 icon={FileText}
                 title="No invoices yet"
-                description="Create an invoice, then print it or save it as a PDF to send."
+                description="Create an invoice, or bring in your past invoices so the numbers catch up."
                 action={
-                  <Button size="sm" className="rounded-full" onClick={() => setDialog({ kind: "invoice" })}>
-                    New invoice
-                  </Button>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    <Button size="sm" className="rounded-full" onClick={() => setDialog({ kind: "invoice" })}>
+                      New invoice
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="rounded-full"
+                      onClick={() => setDialog({ kind: "import" })}
+                    >
+                      Import past invoices
+                    </Button>
+                  </div>
                 }
               />
             </div>
@@ -771,6 +794,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
         clientId={clientId}
       />
       <RetainerRunDialog open={dialog?.kind === "retainers"} onOpenChange={(o) => !o && setDialog(null)} />
+      <ImportInvoicesDialog open={dialog?.kind === "import"} onOpenChange={(o) => !o && setDialog(null)} />
       <PaymentDialog
         open={dialog?.kind === "payment"}
         onOpenChange={(o) => !o && setDialog(null)}

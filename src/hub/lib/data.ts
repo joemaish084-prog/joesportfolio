@@ -88,36 +88,7 @@ export type UploadInput = {
 export function useUploadDocument() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (input: UploadInput) => {
-      const path = storagePath(input.clientId, input.isTemplate, input.file.name);
-      const { error: uploadError } = await storage().upload(path, input.file, {
-        contentType: input.file.type || undefined,
-        upsert: false,
-      });
-      if (uploadError) throw new Error(uploadError.message);
-      const { data, error } = await raw
-        .from("documents")
-        .insert({
-          client_id: input.isTemplate ? null : input.clientId,
-          kind: input.kind,
-          status: input.status,
-          title: input.title.trim(),
-          is_template: input.isTemplate,
-          storage_path: path,
-          file_name: input.file.name,
-          mime_type: input.file.type || null,
-          size_bytes: input.file.size,
-          notes: input.notes,
-        })
-        .select()
-        .single();
-      if (error) {
-        // Don't leave an orphaned file behind if the record couldn't be saved.
-        await storage().remove([path]);
-        throw new Error(error.message);
-      }
-      return data as HubDocument;
-    },
+    mutationFn: (input: UploadInput) => uploadDocumentFile(input),
     onSuccess: () => qc.invalidateQueries({ queryKey: tableKey("documents") }),
   });
 }
@@ -255,4 +226,53 @@ export function useSaveReport() {
       qc.invalidateQueries({ queryKey: tableKey("report_metrics") });
     },
   });
+}
+
+// ---------------------------------------------------------------- bulk import
+
+/** Inserts many rows in one request and returns them. Used by the invoice importer. */
+export async function insertMany<T extends TableName>(table: T, rows: Insert<T>[]) {
+  if (!rows.length) return [] as Row<T>[];
+  return unwrap(
+    await raw
+      .from(table)
+      .insert(rows as Record<string, unknown>[])
+      .select(),
+  ) as Row<T>[];
+}
+
+export async function deleteWhereIn(table: TableName, column: string, values: string[]) {
+  if (!values.length) return;
+  unwrap(await raw.from(table).delete().in(column, values));
+}
+
+/** Uploads a file to the private bucket and records it as a document. */
+export async function uploadDocumentFile(input: UploadInput) {
+  const path = storagePath(input.clientId, input.isTemplate, input.file.name);
+  const { error: uploadError } = await storage().upload(path, input.file, {
+    contentType: input.file.type || undefined,
+    upsert: false,
+  });
+  if (uploadError) throw new Error(uploadError.message);
+  const { data, error } = await raw
+    .from("documents")
+    .insert({
+      client_id: input.isTemplate ? null : input.clientId,
+      kind: input.kind,
+      status: input.status,
+      title: input.title.trim(),
+      is_template: input.isTemplate,
+      storage_path: path,
+      file_name: input.file.name,
+      mime_type: input.file.type || null,
+      size_bytes: input.file.size,
+      notes: input.notes,
+    })
+    .select()
+    .single();
+  if (error) {
+    await storage().remove([path]);
+    throw new Error(error.message);
+  }
+  return data as HubDocument;
 }
