@@ -26,7 +26,13 @@ export default function FinanceChart({ data }: { data: { month: string; revenue:
       <BarChart data={data} margin={{ top: 8, right: 4, bottom: 0, left: 0 }} barGap={4}>
         <CartesianGrid vertical={false} strokeDasharray="3 3" />
         <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} fontSize={12} />
-        <YAxis tickLine={false} axisLine={false} width={48} fontSize={11} tickFormatter={(v: number) => compact.format(v)} />
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          width={48}
+          fontSize={11}
+          tickFormatter={(v: number) => compact.format(v)}
+        />
         <ChartTooltip
           cursor={{ fill: "hsl(var(--secondary))", radius: 8 }}
           content={
@@ -41,8 +47,22 @@ export default function FinanceChart({ data }: { data: { month: string; revenue:
           }
         />
         <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="revenue" fill="var(--color-revenue)" radius={[6, 6, 0, 0]} maxBarSize={28} isAnimationActive={!reduce} animationDuration={300} />
-        <Bar dataKey="expenses" fill="var(--color-expenses)" radius={[6, 6, 0, 0]} maxBarSize={28} isAnimationActive={!reduce} animationDuration={300} />
+        <Bar
+          dataKey="revenue"
+          fill="var(--color-revenue)"
+          radius={[6, 6, 0, 0]}
+          maxBarSize={28}
+          isAnimationActive={!reduce}
+          animationDuration={300}
+        />
+        <Bar
+          dataKey="expenses"
+          fill="var(--color-expenses)"
+          radius={[6, 6, 0, 0]}
+          maxBarSize={28}
+          isAnimationActive={!reduce}
+          animationDuration={300}
+        />
       </BarChart>
     </ChartContainer>
   );

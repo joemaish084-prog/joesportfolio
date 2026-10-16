@@ -1,7 +1,18 @@
 import { Suspense, lazy, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
-import { ArrowDownRight, ArrowUpRight, FileText, LineChart, Minus, MoreHorizontal, Pencil, Plus, Target, Trash2 } from "lucide-react";
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  FileText,
+  LineChart,
+  Minus,
+  MoreHorizontal,
+  Pencil,
+  Plus,
+  Target,
+  Trash2,
+} from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -60,7 +71,10 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
   const [editing, setEditing] = useState<Report | null>(null);
 
   const clientReports = useMemo(
-    () => (reports.data ?? []).filter((r) => r.client_id === clientId).sort((a, b) => a.period_end.localeCompare(b.period_end)),
+    () =>
+      (reports.data ?? [])
+        .filter((r) => r.client_id === clientId)
+        .sort((a, b) => a.period_end.localeCompare(b.period_end)),
     [reports.data, clientId],
   );
 
@@ -75,7 +89,8 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
     setDialogOpen(true);
   };
 
-  if (kpis.isLoading || reports.isLoading || metrics.isLoading) return <SkeletonBlock className="h-64 rounded-[20px]" />;
+  if (kpis.isLoading || reports.isLoading || metrics.isLoading)
+    return <SkeletonBlock className="h-64 rounded-[20px]" />;
 
   if (!kpis.data?.length) {
     return (
@@ -140,7 +155,9 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
                         {latest ? formatKpi(latest.value, kpi.unit) : "—"}
                       </p>
                     </div>
-                    <div className="pt-1">{latest && <Delta current={latest.value} previous={previous?.value} name={kpi.name} />}</div>
+                    <div className="pt-1">
+                      {latest && <Delta current={latest.value} previous={previous?.value} name={kpi.name} />}
+                    </div>
                   </div>
                   <div className="mt-3">
                     {series.length >= 2 ? (
@@ -197,7 +214,9 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
                             </button>
                           )}
                         </span>
-                        {r.summary && <span className="mt-0.5 line-clamp-1 block text-xs text-muted-foreground">{r.summary}</span>}
+                        {r.summary && (
+                          <span className="mt-0.5 line-clamp-1 block text-xs text-muted-foreground">{r.summary}</span>
+                        )}
                       </TableCell>
                       {kpis.data.slice(0, 4).map((k) => (
                         <TableCell key={k.id} className="hub-tabular whitespace-nowrap text-right">
@@ -207,7 +226,12 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg" aria-label={`Actions for ${r.title}`}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 rounded-lg"
+                              aria-label={`Actions for ${r.title}`}
+                            >
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
@@ -223,7 +247,10 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
                             <DropdownMenuItem
                               className="text-destructive focus:text-destructive"
                               onSelect={() =>
-                                remove.mutate(r.id, { onSuccess: () => toast.success("Report deleted"), onError: (e) => toast.error(e.message) })
+                                remove.mutate(r.id, {
+                                  onSuccess: () => toast.success("Report deleted"),
+                                  onError: (e) => toast.error(e.message),
+                                })
                               }
                             >
                               <Trash2 className="mr-2 h-4 w-4" /> Delete

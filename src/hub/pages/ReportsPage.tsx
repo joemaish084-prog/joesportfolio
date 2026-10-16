@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ClientPicker } from "../components/form";
+import { ClientPicker } from "../components/pickers";
 import { BlurFade } from "../components/motion/blur-fade";
 import { NumberTicker } from "../components/motion/number-ticker";
 import { ReportDialog } from "../components/reports/ReportDialog";
@@ -60,11 +60,16 @@ export default function ReportsPage() {
   const due = useMemo(() => {
     const active = (clients.data ?? []).filter((c) => !c.archived_at && c.status === "active");
     return active.filter(
-      (c) => !(reports.data ?? []).some((r) => r.client_id === c.id && r.period_end >= lastMonthStart && r.period_start <= lastMonthEnd),
+      (c) =>
+        !(reports.data ?? []).some(
+          (r) => r.client_id === c.id && r.period_end >= lastMonthStart && r.period_start <= lastMonthEnd,
+        ),
     );
   }, [clients.data, reports.data, lastMonthStart, lastMonthEnd]);
 
-  const thisMonthCount = (reports.data ?? []).filter((r) => r.created_at.slice(0, 7) === format(new Date(), "yyyy-MM")).length;
+  const thisMonthCount = (reports.data ?? []).filter(
+    (r) => r.created_at.slice(0, 7) === format(new Date(), "yyyy-MM"),
+  ).length;
 
   return (
     <>
@@ -106,7 +111,12 @@ export default function ReportsPage() {
               <div key={c.id} className="flex items-center gap-3 px-5 py-3">
                 <ClientAvatar name={c.name} className="h-8 w-8 rounded-lg text-xs" />
                 <span className="flex-1 truncate font-medium">{c.name}</span>
-                <Button size="sm" variant="secondary" className="rounded-full" onClick={() => setDialog({ open: true, clientId: c.id })}>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="rounded-full"
+                  onClick={() => setDialog({ open: true, clientId: c.id })}
+                >
                   Add report
                 </Button>
               </div>
@@ -118,7 +128,13 @@ export default function ReportsPage() {
       <BlurFade delay={0.1}>
         <div className="mb-3 flex items-center justify-between gap-3">
           <h2 className="hub-section-title p-0">All reports</h2>
-          <ClientPicker value={clientFilter} onChange={setClientFilter} allowNone noneLabel="All clients" className="h-10 w-52 border-transparent bg-secondary" />
+          <ClientPicker
+            value={clientFilter}
+            onChange={setClientFilter}
+            allowNone
+            noneLabel="All clients"
+            className="h-10 w-52 border-transparent bg-secondary"
+          />
         </div>
         {reports.isLoading ? (
           <SkeletonBlock className="h-56 rounded-[20px]" />
@@ -129,7 +145,11 @@ export default function ReportsPage() {
               title={clientFilter ? "No reports for this client" : "No reports yet"}
               description="Add a report with each KPI's numbers for the month."
               action={
-                <Button size="sm" className="rounded-full" onClick={() => setDialog({ open: true, clientId: clientFilter ?? undefined })}>
+                <Button
+                  size="sm"
+                  className="rounded-full"
+                  onClick={() => setDialog({ open: true, clientId: clientFilter ?? undefined })}
+                >
                   New report
                 </Button>
               }
@@ -149,7 +169,11 @@ export default function ReportsPage() {
               </TableHeader>
               <TableBody>
                 {rows.map((r) => (
-                  <TableRow key={r.id} className="cursor-pointer" onClick={() => navigate(`/hub/clients/${r.client_id}?tab=progress`)}>
+                  <TableRow
+                    key={r.id}
+                    className="cursor-pointer"
+                    onClick={() => navigate(`/hub/clients/${r.client_id}?tab=progress`)}
+                  >
                     <TableCell>
                       <Link
                         to={`/hub/clients/${r.client_id}?tab=progress`}
@@ -161,25 +185,37 @@ export default function ReportsPage() {
                     </TableCell>
                     <TableCell>
                       {r.title}
-                      {r.summary && <span className="mt-0.5 line-clamp-1 block text-xs text-muted-foreground">{r.summary}</span>}
+                      {r.summary && (
+                        <span className="mt-0.5 line-clamp-1 block text-xs text-muted-foreground">{r.summary}</span>
+                      )}
                     </TableCell>
                     <TableCell className="whitespace-nowrap text-muted-foreground">{periodLabel(r)}</TableCell>
                     <TableCell className="hub-tabular text-right">{metricCount.get(r.id) ?? 0}</TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg" aria-label={`Actions for ${r.title}`}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 rounded-lg"
+                            aria-label={`Actions for ${r.title}`}
+                          >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="rounded-xl">
-                          <DropdownMenuItem onSelect={() => setDialog({ open: true, report: r, clientId: r.client_id })}>
+                          <DropdownMenuItem
+                            onSelect={() => setDialog({ open: true, report: r, clientId: r.client_id })}
+                          >
                             <Pencil className="mr-2 h-4 w-4" /> Edit
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             className="text-destructive focus:text-destructive"
                             onSelect={() =>
-                              remove.mutate(r.id, { onSuccess: () => toast.success("Report deleted"), onError: (e) => toast.error(e.message) })
+                              remove.mutate(r.id, {
+                                onSuccess: () => toast.success("Report deleted"),
+                                onError: (e) => toast.error(e.message),
+                              })
                             }
                           >
                             <Trash2 className="mr-2 h-4 w-4" /> Delete

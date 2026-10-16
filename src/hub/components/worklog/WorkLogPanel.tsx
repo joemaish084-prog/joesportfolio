@@ -15,7 +15,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useDeleteRow, useRows, useSaveRow } from "../../lib/data";
 import { WORK_CATEGORIES, WORK_CATEGORY_LABEL, type WorkCategory, type WorkLogEntry } from "../../lib/types";
 import { BlurFade } from "../motion/blur-fade";
-import { DatePicker, Field, FormDialog, inputClass } from "../form";
+import { Field, FormDialog, inputClass } from "../form";
+import { DatePicker } from "../pickers";
 import { EmptyState, Pill, SkeletonBlock, StatTile } from "../ui";
 
 export function formatMinutes(minutes: number) {
@@ -129,11 +130,23 @@ function EntryDialog({
           </Select>
         </Field>
         <Field label="Time spent" htmlFor="wl-time">
-          <Input id="wl-time" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="1h 30m" className={inputClass} />
+          <Input
+            id="wl-time"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            placeholder="1h 30m"
+            className={inputClass}
+          />
         </Field>
       </div>
       <Field label="Details" htmlFor="wl-details">
-        <Textarea id="wl-details" rows={3} value={details} onChange={(e) => setDetails(e.target.value)} className="rounded-xl bg-background" />
+        <Textarea
+          id="wl-details"
+          rows={3}
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+          className="rounded-xl bg-background"
+        />
       </Field>
     </FormDialog>
   );
@@ -180,7 +193,11 @@ export function WorkLogPanel({ clientId }: { clientId: string }) {
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-        <StatTile label="This month" icon={NotebookPen} hint={`${thisMonth.length} ${thisMonth.length === 1 ? "entry" : "entries"}`}>
+        <StatTile
+          label="This month"
+          icon={NotebookPen}
+          hint={`${thisMonth.length} ${thisMonth.length === 1 ? "entry" : "entries"}`}
+        >
           {formatMinutes(monthMinutes)}
         </StatTile>
         <StatTile label="All time" icon={Clock} hint={`${entries.length} entries`}>
@@ -212,13 +229,17 @@ export function WorkLogPanel({ clientId }: { clientId: string }) {
             <section>
               <div className="flex items-baseline justify-between px-1 pb-2">
                 <h3 className="hub-section-title p-0">{group.month}</h3>
-                {group.minutes > 0 && <span className="hub-tabular text-xs text-muted-foreground">{formatMinutes(group.minutes)}</span>}
+                {group.minutes > 0 && (
+                  <span className="hub-tabular text-xs text-muted-foreground">{formatMinutes(group.minutes)}</span>
+                )}
               </div>
               <ol className="hub-card relative py-2">
                 {group.items.map((e, i) => (
                   <li key={e.id} className="relative flex gap-4 px-5 py-3">
                     {/* timeline rail */}
-                    {i < group.items.length - 1 && <span aria-hidden className="absolute bottom-0 left-[35px] top-9 w-px bg-border" />}
+                    {i < group.items.length - 1 && (
+                      <span aria-hidden className="absolute bottom-0 left-[35px] top-9 w-px bg-border" />
+                    )}
                     <span className="relative mt-1.5 flex h-2.5 w-2.5 shrink-0 translate-x-[5px] rounded-full bg-primary ring-4 ring-tint" />
                     <div className="min-w-0 flex-1 pl-2">
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -229,11 +250,18 @@ export function WorkLogPanel({ clientId }: { clientId: string }) {
                         {format(parseISO(e.worked_on), "EEE d MMM")}
                         {e.minutes ? ` · ${formatMinutes(e.minutes)}` : ""}
                       </p>
-                      {e.details && <p className="mt-1.5 whitespace-pre-wrap text-sm text-muted-foreground">{e.details}</p>}
+                      {e.details && (
+                        <p className="mt-1.5 whitespace-pre-wrap text-sm text-muted-foreground">{e.details}</p>
+                      )}
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 rounded-lg" aria-label={`Actions for ${e.title}`}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 shrink-0 rounded-lg"
+                          aria-label={`Actions for ${e.title}`}
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -249,7 +277,10 @@ export function WorkLogPanel({ clientId }: { clientId: string }) {
                         <DropdownMenuItem
                           className="text-destructive focus:text-destructive"
                           onSelect={() =>
-                            remove.mutate(e.id, { onSuccess: () => toast.success("Entry removed"), onError: (err) => toast.error(err.message) })
+                            remove.mutate(e.id, {
+                              onSuccess: () => toast.success("Entry removed"),
+                              onError: (err) => toast.error(err.message),
+                            })
                           }
                         >
                           <Trash2 className="mr-2 h-4 w-4" /> Delete

@@ -17,7 +17,22 @@ const url = env.VITE_SUPABASE_URL;
 const key = env.VITE_SUPABASE_PUBLISHABLE_KEY;
 const headers = { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" };
 
-const tables = ["user_roles", "client_types", "clients", "client_kpis", "onboarding_templates", "onboarding_items"];
+const tables = [
+  "user_roles",
+  "client_types",
+  "clients",
+  "client_kpis",
+  "onboarding_templates",
+  "onboarding_items",
+  "documents",
+  "work_log",
+  "reports",
+  "report_metrics",
+  "invoices",
+  "payments",
+  "expenses",
+  "leads",
+];
 let leaks = 0;
 
 for (const table of tables) {

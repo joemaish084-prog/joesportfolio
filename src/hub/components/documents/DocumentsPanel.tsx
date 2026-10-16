@@ -64,7 +64,8 @@ import {
   type DocumentStatus,
   type HubDocument,
 } from "../../lib/types";
-import { ClientPicker, Field, FormDialog, inputClass } from "../form";
+import { Field, FormDialog, inputClass } from "../form";
+import { ClientPicker } from "../pickers";
 import { EmptyState, Pill, SkeletonBlock, TableCard, type PillTone } from "../ui";
 
 const MAX_BYTES = 25 * 1024 * 1024;
@@ -249,7 +250,9 @@ function UploadDialog({
       <label className="flex items-center justify-between gap-4 rounded-xl bg-secondary/60 px-4 py-3">
         <span>
           <span className="block text-sm font-medium">Save as a template</span>
-          <span className="block text-xs text-muted-foreground">Reusable for any client, e.g. your standard contract.</span>
+          <span className="block text-xs text-muted-foreground">
+            Reusable for any client, e.g. your standard contract.
+          </span>
         </span>
         <Switch checked={isTemplate} onCheckedChange={setIsTemplate} />
       </label>
@@ -259,7 +262,13 @@ function UploadDialog({
         </Field>
       )}
       <Field label="Notes" htmlFor="doc-notes">
-        <Textarea id="doc-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} className="rounded-xl bg-background" />
+        <Textarea
+          id="doc-notes"
+          rows={2}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          className="rounded-xl bg-background"
+        />
       </Field>
     </FormDialog>
   );
@@ -292,7 +301,13 @@ function EditDialog({ doc, onClose }: { doc: HubDocument | null; onClose: () => 
     save.mutate(
       {
         id: doc.id,
-        values: { title: title.trim(), kind, status, client_id: doc.is_template ? null : client, notes: notes.trim() || null },
+        values: {
+          title: title.trim(),
+          kind,
+          status,
+          client_id: doc.is_template ? null : client,
+          notes: notes.trim() || null,
+        },
       },
       {
         onSuccess: () => {
@@ -305,7 +320,14 @@ function EditDialog({ doc, onClose }: { doc: HubDocument | null; onClose: () => 
   };
 
   return (
-    <FormDialog open={!!doc} onOpenChange={(o) => !o && onClose()} title="Edit document" onSubmit={submit} pending={save.isPending} error={error}>
+    <FormDialog
+      open={!!doc}
+      onOpenChange={(o) => !o && onClose()}
+      title="Edit document"
+      onSubmit={submit}
+      pending={save.isPending}
+      error={error}
+    >
       <Field label="Title" htmlFor="edit-title">
         <Input id="edit-title" value={title} onChange={(e) => setTitle(e.target.value)} className={inputClass} />
       </Field>
@@ -345,13 +367,27 @@ function EditDialog({ doc, onClose }: { doc: HubDocument | null; onClose: () => 
         </Field>
       )}
       <Field label="Notes" htmlFor="edit-notes">
-        <Textarea id="edit-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} className="rounded-xl bg-background" />
+        <Textarea
+          id="edit-notes"
+          rows={2}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          className="rounded-xl bg-background"
+        />
       </Field>
     </FormDialog>
   );
 }
 
-function UseTemplateDialog({ template, clientId, onClose }: { template: HubDocument | null; clientId?: string; onClose: () => void }) {
+function UseTemplateDialog({
+  template,
+  clientId,
+  onClose,
+}: {
+  template: HubDocument | null;
+  clientId?: string;
+  onClose: () => void;
+}) {
   const create = useCreateFromTemplate();
   const clients = useClients();
   const [client, setClient] = useState<string | null>(clientId ?? null);
@@ -464,7 +500,10 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
   const setStatus = (doc: HubDocument, status: DocumentStatus) =>
     save.mutate(
       { id: doc.id, values: { status } },
-      { onSuccess: () => toast.success(`Marked ${DOCUMENT_STATUS_LABEL[status].toLowerCase()}`), onError: (e) => toast.error(e.message) },
+      {
+        onSuccess: () => toast.success(`Marked ${DOCUMENT_STATUS_LABEL[status].toLowerCase()}`),
+        onError: (e) => toast.error(e.message),
+      },
     );
 
   return (
@@ -473,10 +512,16 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
         {!clientId && (
           <Tabs value={view} onValueChange={(v) => setView(v as "files" | "templates")}>
             <TabsList className="h-auto rounded-xl bg-secondary p-1">
-              <TabsTrigger value="files" className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub">
+              <TabsTrigger
+                value="files"
+                className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              >
                 Client files
               </TabsTrigger>
-              <TabsTrigger value="templates" className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub">
+              <TabsTrigger
+                value="templates"
+                className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              >
                 Templates
                 <span className="hub-tabular ml-1.5 text-xs text-muted-foreground">{templates.length}</span>
               </TabsTrigger>
@@ -524,7 +569,9 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
       </div>
 
       {docs.error && (
-        <p className="rounded-2xl bg-destructive/10 px-4 py-3 text-sm text-destructive">Couldn't load documents: {docs.error.message}</p>
+        <p className="rounded-2xl bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          Couldn't load documents: {docs.error.message}
+        </p>
       )}
 
       {docs.isLoading ? (
@@ -533,7 +580,13 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
         <div className="hub-card">
           <EmptyState
             icon={FolderOpen}
-            title={query || kind !== "all" || clientFilter ? "No matches" : showTemplates ? "No templates yet" : "No documents yet"}
+            title={
+              query || kind !== "all" || clientFilter
+                ? "No matches"
+                : showTemplates
+                  ? "No templates yet"
+                  : "No documents yet"
+            }
             description={
               showTemplates
                 ? "Upload your standard contract, proposal or quotation once, then copy it for each client."
@@ -566,18 +619,28 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
                 return (
                   <TableRow key={doc.id} className="group">
                     <TableCell>
-                      <button type="button" onClick={() => open(doc)} className="flex min-w-0 items-center gap-3 text-left">
+                      <button
+                        type="button"
+                        onClick={() => open(doc)}
+                        className="flex min-w-0 items-center gap-3 text-left"
+                      >
                         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-tint text-on-tint">
                           <Icon className="h-4 w-4" />
                         </span>
                         <span className="min-w-0">
-                          <span className="block max-w-[18rem] truncate font-medium group-hover:text-primary">{doc.title}</span>
-                          <span className="block max-w-[18rem] truncate text-xs text-muted-foreground">{doc.file_name}</span>
+                          <span className="block max-w-[18rem] truncate font-medium group-hover:text-primary">
+                            {doc.title}
+                          </span>
+                          <span className="block max-w-[18rem] truncate text-xs text-muted-foreground">
+                            {doc.file_name}
+                          </span>
                         </span>
                       </button>
                     </TableCell>
                     {!clientId && !showTemplates && (
-                      <TableCell className="text-muted-foreground">{doc.client_id ? clientName.get(doc.client_id) ?? "—" : "General"}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {doc.client_id ? (clientName.get(doc.client_id) ?? "—") : "General"}
+                      </TableCell>
                     )}
                     <TableCell>
                       <Pill tone="outline">{DOCUMENT_KIND_LABEL[doc.kind]}</Pill>
@@ -587,12 +650,21 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
                         <Pill tone={STATUS_TONE[doc.status]}>{DOCUMENT_STATUS_LABEL[doc.status]}</Pill>
                       </TableCell>
                     )}
-                    <TableCell className="hub-tabular text-right text-muted-foreground">{formatBytes(doc.size_bytes)}</TableCell>
-                    <TableCell className="whitespace-nowrap text-muted-foreground">{formatDate(doc.created_at, "d MMM yyyy")}</TableCell>
+                    <TableCell className="hub-tabular text-right text-muted-foreground">
+                      {formatBytes(doc.size_bytes)}
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap text-muted-foreground">
+                      {formatDate(doc.created_at, "d MMM yyyy")}
+                    </TableCell>
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg" aria-label={`Actions for ${doc.title}`}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 rounded-lg"
+                            aria-label={`Actions for ${doc.title}`}
+                          >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -614,7 +686,11 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
                               <DropdownMenuSubContent className="rounded-xl">
                                 <DropdownMenuLabel className="text-xs text-muted-foreground">Status</DropdownMenuLabel>
                                 {DOCUMENT_STATUSES.map((s) => (
-                                  <DropdownMenuItem key={s} disabled={s === doc.status} onSelect={() => setStatus(doc, s)}>
+                                  <DropdownMenuItem
+                                    key={s}
+                                    disabled={s === doc.status}
+                                    onSelect={() => setStatus(doc, s)}
+                                  >
                                     {DOCUMENT_STATUS_LABEL[s]}
                                   </DropdownMenuItem>
                                 ))}
@@ -625,7 +701,10 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
                             <Pencil className="mr-2 h-4 w-4" /> Edit details
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem onSelect={() => setDeleting(doc)} className="text-destructive focus:text-destructive">
+                          <DropdownMenuItem
+                            onSelect={() => setDeleting(doc)}
+                            className="text-destructive focus:text-destructive"
+                          >
                             <Trash2 className="mr-2 h-4 w-4" /> Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -660,15 +739,17 @@ export function DocumentsPanel({ clientId }: { clientId?: string }) {
       <UseTemplateDialog template={usingTemplate} clientId={clientId} onClose={() => setUsingTemplate(null)} />
 
       <AlertDialog open={!!deleting} onOpenChange={(o) => !o && setDeleting(null)}>
-        <AlertDialogContent className="hub-root rounded-3xl">
+        <AlertDialogContent className="rounded-3xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Delete “{deleting?.title}”?</AlertDialogTitle>
-            <AlertDialogDescription>The file is removed from storage for good. This can't be undone.</AlertDialogDescription>
+            <AlertDialogDescription>
+              The file is removed from storage for good. This can't be undone.
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel className="rounded-full">Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="rounded-full bg-destructive bg-none text-destructive-foreground shadow-none hover:bg-destructive/90"
               onClick={() =>
                 deleting &&
                 remove.mutate(deleting, {

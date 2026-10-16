@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { Chips, Field, inputClass } from "../components/form";
 import { PageHeader, SkeletonBlock } from "../components/ui";
 import { toNumberOrNull } from "../lib/format";
 import {
@@ -72,30 +73,6 @@ const blankToNull = (v: string) => (v.trim() === "" ? null : v.trim());
 
 // ---------------------------------------------------------------- small form pieces
 
-function Field({
-  label,
-  htmlFor,
-  hint,
-  children,
-  className,
-}: {
-  label: string;
-  htmlFor?: string;
-  hint?: string;
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={cn("space-y-1.5", className)}>
-      <label htmlFor={htmlFor} className="hub-label block">
-        {label}
-      </label>
-      {children}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-    </div>
-  );
-}
-
 function FormSection({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
   return (
     <section>
@@ -105,43 +82,6 @@ function FormSection({ title, description, children }: { title: string; descript
         {children}
       </div>
     </section>
-  );
-}
-
-const inputClass = "h-11 rounded-xl bg-background";
-
-function Chips({
-  options,
-  value,
-  onChange,
-}: {
-  options: readonly string[];
-  value: string[];
-  onChange: (next: string[]) => void;
-}) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((option) => {
-        const on = value.includes(option);
-        return (
-          <button
-            key={option}
-            type="button"
-            aria-pressed={on}
-            onClick={() => onChange(on ? value.filter((v) => v !== option) : [...value, option])}
-            className={cn(
-              "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors duration-150",
-              on
-                ? "border-primary/40 bg-tint font-medium text-on-tint"
-                : "border-border bg-background text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {on && <Check className="h-3.5 w-3.5" />}
-            {option}
-          </button>
-        );
-      })}
-    </div>
   );
 }
 

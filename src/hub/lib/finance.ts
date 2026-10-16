@@ -57,7 +57,8 @@ export const sumAmounts = (rows: { amount: number }[]) => rows.reduce((s, r) => 
 /** Revenue (payments received) and expenses per month for the last `months` months, oldest first. */
 export function monthlyTotals(payments: Payment[], expenses: Expense[], months = 6, now = new Date()) {
   const keys: string[] = [];
-  for (let i = months - 1; i >= 0; i--) keys.push(format(new Date(now.getFullYear(), now.getMonth() - i, 1), "yyyy-MM"));
+  for (let i = months - 1; i >= 0; i--)
+    keys.push(format(new Date(now.getFullYear(), now.getMonth() - i, 1), "yyyy-MM"));
   return keys.map((key) => {
     const revenue = sumAmounts(payments.filter((p) => p.paid_on.startsWith(key)));
     const spent = sumAmounts(expenses.filter((e) => e.spent_on.startsWith(key)));

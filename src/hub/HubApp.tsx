@@ -1,4 +1,4 @@
-import { useCallback, type ReactNode } from "react";
+import { Suspense, lazy, useCallback, type ReactNode } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { MotionConfig } from "framer-motion";
@@ -14,6 +14,22 @@ import ClientsPage from "./pages/ClientsPage";
 import ClientDetailPage from "./pages/ClientDetailPage";
 import ClientFormPage from "./pages/ClientFormPage";
 import OnboardingPage from "./pages/OnboardingPage";
+import { SkeletonBlock } from "./components/ui";
+
+// Heavier sections (charts, tables, dialogs) load on first visit.
+const DocumentsPage = lazy(() => import("./pages/DocumentsPage"));
+const ReportsPage = lazy(() => import("./pages/ReportsPage"));
+const FinancePage = lazy(() => import("./pages/FinancePage"));
+const InvoicePage = lazy(() => import("./pages/InvoicePage"));
+const PipelinePage = lazy(() => import("./pages/PipelinePage"));
+
+const sectionFallback = (
+  <div className="space-y-6">
+    <SkeletonBlock className="h-12 w-64" />
+    <SkeletonBlock className="h-72 rounded-[20px]" />
+  </div>
+);
+const section = (node: ReactNode) => <Suspense fallback={sectionFallback}>{node}</Suspense>;
 
 const IDLE_TIMEOUT_MS = 30 * 60 * 1000;
 
@@ -61,6 +77,11 @@ export default function HubApp() {
             <Route path="clients/:id" element={<ClientDetailPage />} />
             <Route path="clients/:id/edit" element={<ClientFormPage />} />
             <Route path="onboarding" element={<OnboardingPage />} />
+            <Route path="documents" element={section(<DocumentsPage />)} />
+            <Route path="reports" element={section(<ReportsPage />)} />
+            <Route path="finance" element={section(<FinancePage />)} />
+            <Route path="finance/invoices/:id" element={section(<InvoicePage />)} />
+            <Route path="pipeline" element={section(<PipelinePage />)} />
             <Route path="*" element={<Navigate to="/hub" replace />} />
           </Route>
         </Routes>

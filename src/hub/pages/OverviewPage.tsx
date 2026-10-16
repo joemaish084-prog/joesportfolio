@@ -19,7 +19,9 @@ import {
   SkeletonBlock,
   StatusBadge,
 } from "../components/ui";
-import { formatDate, greeting, isOverdue } from "../lib/format";
+import { useRows } from "../lib/data";
+import { invoiceState, paidByInvoice } from "../lib/finance";
+import { formatDate, formatKES, greeting, isOverdue } from "../lib/format";
 import { useClients, useClientTypes, useOnboardingByClient } from "../lib/queries";
 
 // The shared BentoCard renders plain <a href> links; route them through the
@@ -58,6 +60,9 @@ export default function OverviewPage() {
   const clients = useClients();
   const types = useClientTypes();
   const onboarding = useOnboardingByClient();
+  const invoices = useRows("invoices", "issue_date");
+  const payments = useRows("payments", "paid_on");
+  const leads = useRows("leads", "position", true);
   const routeLinks = useRouterLinks();
 
   const live = useMemo(() => (clients.data ?? []).filter((c) => !c.archived_at), [clients.data]);
@@ -76,7 +81,6 @@ export default function OverviewPage() {
       retainer: active.reduce((sum, c) => sum + (c.monthly_fee ?? 0), 0),
       onboarding: live.filter((c) => c.status === "onboarding").length,
       openTasks: openItems.length,
-      attentionClients: new Set(overdueItems.map((i) => i.client_id)).size,
       overdueItems,
     };
   }, [clients.data, onboarding.data, live]);
@@ -86,7 +90,49 @@ export default function OverviewPage() {
   const recent = live.slice(0, 5).reverse();
   const loading = clients.isLoading || onboarding.isLoading;
   const loadError = clients.error ?? onboarding.error;
-  const attention = stats?.attentionClients ?? 0;
+  // Everything that needs action, oldest first: overdue steps, overdue invoices, due follow-ups.
+  const attentionItems = useMemo(() => {
+    if (!stats || !invoices.data || !payments.data || !leads.data) return null;
+    const paid = paidByInvoice(payments.data);
+    const today = format(new Date(), "yyyy-MM-dd");
+    const items: { id: string; title: string; detail: string; to: string; date: string }[] = [
+      ...stats.overdueItems.map((i) => ({
+        id: i.id,
+        title: i.title,
+        detail: `${clientName(i.client_id)} · due ${formatDate(i.due_date, "d MMM")}`,
+        to: `/hub/clients/${i.client_id}?tab=onboarding`,
+        date: i.due_date ?? "",
+      })),
+      ...invoices.data
+        .filter((i) => invoiceState(i, paid.get(i.id) ?? 0) === "overdue")
+        .map((i) => ({
+          id: i.id,
+          title: `${i.number} overdue`,
+          detail: `${clientName(i.client_id)} · ${formatKES(Number(i.amount) - (paid.get(i.id) ?? 0))} due ${formatDate(i.due_date, "d MMM")}`,
+          to: `/hub/finance/invoices/${i.id}`,
+          date: i.due_date ?? "",
+        })),
+      ...leads.data
+        .filter(
+          (l) =>
+            !l.archived_at &&
+            ["new", "contacted", "meeting", "proposal"].includes(l.stage) &&
+            l.next_follow_up &&
+            l.next_follow_up <= today,
+        )
+        .map((l) => ({
+          id: l.id,
+          title: `Follow up with ${l.name}`,
+          detail: `Lead · ${formatDate(l.next_follow_up, "d MMM")}`,
+          to: "/hub/pipeline",
+          date: l.next_follow_up ?? "",
+        })),
+    ];
+    return items.sort((a, b) => a.date.localeCompare(b.date));
+    // clientName reads `live`, which is already a dependency through stats.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stats, invoices.data, payments.data, leads.data]);
+  const attention = attentionItems?.length ?? 0;
 
   return (
     <>
@@ -166,7 +212,7 @@ export default function OverviewPage() {
           />
           <BentoCard
             name="Needs attention"
-            description={attention ? "Clients with overdue steps" : "Nothing overdue. All caught up."}
+            description={attention ? "Overdue steps, invoices and follow-ups" : "Nothing overdue. All caught up."}
             Icon={AlertTriangle}
             href="/hub/onboarding"
             cta="Review onboarding"
@@ -178,21 +224,19 @@ export default function OverviewPage() {
                   duration={16}
                   shineColor={["hsl(var(--primary) / 0.45)", "hsl(var(--primary) / 0.15)"]}
                 />
-                <Stat value={stats?.attentionClients} warn={attention > 0} delay={0.2} />
-                {!!stats?.overdueItems.length && (
+                <Stat value={attentionItems?.length} warn={attention > 0} delay={0.2} />
+                {!!attentionItems?.length && (
                   <ul className="relative z-10 mt-4 hidden space-y-1 px-2 lg:block">
-                    {stats.overdueItems.slice(0, 3).map((item) => (
+                    {attentionItems.slice(0, 4).map((item) => (
                       <li key={item.id}>
                         <Link
-                          to={`/hub/clients/${item.client_id}?tab=onboarding`}
+                          to={item.to}
                           className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 transition-colors duration-150 hover:bg-secondary"
                         >
                           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-warning" />
                           <span className="min-w-0">
                             <span className="block truncate text-sm font-medium">{item.title}</span>
-                            <span className="block truncate text-xs text-muted-foreground">
-                              {clientName(item.client_id)} · due {formatDate(item.due_date, "d MMM")}
-                            </span>
+                            <span className="block truncate text-xs text-muted-foreground">{item.detail}</span>
                           </span>
                         </Link>
                       </li>

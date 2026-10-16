@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Suspense, lazy, type ReactNode } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Archive, ArchiveRestore, ChevronDown, ChevronLeft, Pencil, Target, UserX } from "lucide-react";
 import { toast } from "sonner";
@@ -37,13 +37,28 @@ import {
   type FieldDefinition,
 } from "../lib/types";
 
+// Tab panels load on first open.
+const DocumentsPanel = lazy(() =>
+  import("../components/documents/DocumentsPanel").then((m) => ({ default: m.DocumentsPanel })),
+);
+const ProgressPanel = lazy(() =>
+  import("../components/reports/ProgressPanel").then((m) => ({ default: m.ProgressPanel })),
+);
+const WorkLogPanel = lazy(() =>
+  import("../components/worklog/WorkLogPanel").then((m) => ({ default: m.WorkLogPanel })),
+);
+const FinancePanel = lazy(() =>
+  import("../components/finance/FinancePanel").then((m) => ({ default: m.FinancePanel })),
+);
+const tabFallback = <SkeletonBlock className="h-64 rounded-[20px]" />;
+
 const TABS = [
   { value: "overview", label: "Overview" },
   { value: "onboarding", label: "Onboarding" },
-  { value: "documents", label: "Documents", soon: true },
-  { value: "progress", label: "Progress", soon: true },
-  { value: "worklog", label: "Work log", soon: true },
-  { value: "finance", label: "Finance", soon: true },
+  { value: "documents", label: "Documents" },
+  { value: "progress", label: "Progress" },
+  { value: "worklog", label: "Work log" },
+  { value: "finance", label: "Finance" },
 ] as const;
 
 /** Kenyan local numbers (07…, 01…) become 2547…/2541… for wa.me links. */
@@ -233,7 +248,7 @@ export default function ClientDetailPage() {
   const onboarding = useOnboardingByClient();
   const updateClient = useUpdateClient();
 
-  const tab = TABS.some((t) => t.value === params.get("tab") && !("soon" in t)) ? params.get("tab")! : "overview";
+  const tab = TABS.some((t) => t.value === params.get("tab")) ? params.get("tab")! : "overview";
   const items = id ? onboarding.itemsFor(id) : [];
   const progress = id ? onboarding.progressFor(id) : null;
 
@@ -386,9 +401,7 @@ export default function ClientDetailPage() {
               <TabsTrigger
                 key={t.value}
                 value={t.value}
-                disabled={"soon" in t}
                 className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
-                title={"soon" in t ? "Coming soon" : undefined}
               >
                 {t.label}
                 {t.value === "onboarding" && progress && progress.total > 0 && (
@@ -412,6 +425,28 @@ export default function ClientDetailPage() {
               <OnboardingChecklist client={client} items={items} />
             </div>
           )}
+        </TabsContent>
+        <TabsContent value="documents" className="mt-0">
+          <Suspense fallback={tabFallback}>
+            <DocumentsPanel clientId={client.id} />
+          </Suspense>
+        </TabsContent>
+        <TabsContent value="progress" className="mt-0">
+          <Suspense fallback={tabFallback}>
+            <ProgressPanel clientId={client.id} />
+          </Suspense>
+        </TabsContent>
+        <TabsContent value="worklog" className="mt-0">
+          <Suspense fallback={tabFallback}>
+            <div className="max-w-3xl">
+              <WorkLogPanel clientId={client.id} />
+            </div>
+          </Suspense>
+        </TabsContent>
+        <TabsContent value="finance" className="mt-0">
+          <Suspense fallback={tabFallback}>
+            <FinancePanel clientId={client.id} />
+          </Suspense>
         </TabsContent>
       </Tabs>
 

@@ -9,7 +9,8 @@ import { useRows, useSaveReport } from "../../lib/data";
 import { toNumberOrNull } from "../../lib/format";
 import { useClientKpis } from "../../lib/queries";
 import { KPI_UNIT_LABEL, type Report } from "../../lib/types";
-import { ClientPicker, DatePicker, Field, FormDialog, inputClass } from "../form";
+import { Field, FormDialog, inputClass } from "../form";
+import { ClientPicker, DatePicker } from "../pickers";
 
 /** Create or edit a report: the period, a value per KPI, a summary and an optional attached file. */
 export function ReportDialog({
@@ -152,7 +153,13 @@ export function ReportDialog({
       )}
 
       <Field label="Summary" htmlFor="rp-summary" hint="What happened, what worked, what's next.">
-        <Textarea id="rp-summary" rows={4} value={summary} onChange={(e) => setSummary(e.target.value)} className="rounded-xl bg-background" />
+        <Textarea
+          id="rp-summary"
+          rows={4}
+          value={summary}
+          onChange={(e) => setSummary(e.target.value)}
+          className="rounded-xl bg-background"
+        />
       </Field>
       {client && clientDocs.length > 0 && (
         <Field label="Attach a document">

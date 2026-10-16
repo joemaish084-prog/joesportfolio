@@ -1,5 +1,12 @@
 import { useRef, type ReactNode } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion, type UseInViewOptions, type Variants } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+  type UseInViewOptions,
+  type Variants,
+} from "framer-motion";
 
 // Magic UI Blur Fade, tuned shorter for a work tool: 6px travel, 6px blur, 250ms.
 

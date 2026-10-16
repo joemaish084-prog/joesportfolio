@@ -176,7 +176,15 @@ const PILL_TONE: Record<PillTone, string> = {
   outline: "bg-transparent text-muted-foreground ring-1 ring-inset ring-border",
 };
 
-export function Pill({ tone = "neutral", children, className }: { tone?: PillTone; children: ReactNode; className?: string }) {
+export function Pill({
+  tone = "neutral",
+  children,
+  className,
+}: {
+  tone?: PillTone;
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <span
       className={cn(
@@ -221,7 +229,12 @@ export function StatTile({
           </span>
         )}
       </div>
-      <div className={cn("mt-2 text-[1.5rem] font-bold leading-tight tracking-tight md:text-[1.75rem]", warn && "text-warning")}>
+      <div
+        className={cn(
+          "mt-2 text-[1.5rem] font-bold leading-tight tracking-tight md:text-[1.75rem]",
+          warn && "text-warning",
+        )}
+      >
         {children}
       </div>
       {hint && <p className="mt-1 text-xs text-muted-foreground">{hint}</p>}

@@ -134,7 +134,16 @@ export type OnboardingItem = {
 
 // ---------------------------------------------------------------- phase 2
 
-export const DOCUMENT_KINDS = ["contract", "proposal", "quotation", "invoice", "report", "brief", "receipt", "other"] as const;
+export const DOCUMENT_KINDS = [
+  "contract",
+  "proposal",
+  "quotation",
+  "invoice",
+  "report",
+  "brief",
+  "receipt",
+  "other",
+] as const;
 export type DocumentKind = (typeof DOCUMENT_KINDS)[number];
 export const DOCUMENT_KIND_LABEL: Record<DocumentKind, string> = {
   contract: "Contract",
@@ -174,7 +183,17 @@ export type HubDocument = {
   updated_at: string;
 };
 
-export const WORK_CATEGORIES = ["ads", "content", "seo", "design", "web", "meeting", "reporting", "admin", "other"] as const;
+export const WORK_CATEGORIES = [
+  "ads",
+  "content",
+  "seo",
+  "design",
+  "web",
+  "meeting",
+  "reporting",
+  "admin",
+  "other",
+] as const;
 export type WorkCategory = (typeof WORK_CATEGORIES)[number];
 export const WORK_CATEGORY_LABEL: Record<WorkCategory, string> = {
   ads: "Ads",

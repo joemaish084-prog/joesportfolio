@@ -24,8 +24,7 @@ export const tableKey = (table: TableName) => ["hub", table] as const;
 export function useRows<T extends TableName>(table: T, orderBy = "created_at", ascending = false) {
   return useQuery({
     queryKey: tableKey(table),
-    queryFn: async () =>
-      unwrap(await raw.from(table).select("*").order(orderBy, { ascending })) as Row<T>[],
+    queryFn: async () => unwrap(await raw.from(table).select("*").order(orderBy, { ascending })) as Row<T>[],
   });
 }
 
@@ -35,8 +34,21 @@ export function useSaveRow<T extends TableName>(table: T, alsoInvalidate: TableN
   return useMutation({
     mutationFn: async ({ id, values }: { id?: string; values: Insert<T> | Update<T> }) =>
       (id
-        ? unwrap(await raw.from(table).update(values).eq("id", id).select().single())
-        : unwrap(await raw.from(table).insert(values).select().single())) as Row<T>,
+        ? unwrap(
+            await raw
+              .from(table)
+              .update(values as Record<string, unknown>)
+              .eq("id", id)
+              .select()
+              .single(),
+          )
+        : unwrap(
+            await raw
+              .from(table)
+              .insert(values as Record<string, unknown>)
+              .select()
+              .single(),
+          )) as Row<T>,
     onSuccess: () => [table, ...alsoInvalidate].forEach((t) => qc.invalidateQueries({ queryKey: tableKey(t) })),
   });
 }
@@ -55,7 +67,11 @@ const storage = () => supabase.storage.from(DOCUMENTS_BUCKET);
 
 function storagePath(clientId: string | null, isTemplate: boolean, fileName: string) {
   const folder = isTemplate ? "templates" : (clientId ?? "general");
-  const safe = fileName.normalize("NFKD").replace(/[^\w.-]+/g, "-").replace(/-+/g, "-").slice(-80);
+  const safe = fileName
+    .normalize("NFKD")
+    .replace(/[^\w.-]+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(-80);
   return `${folder}/${crypto.randomUUID()}-${safe}`;
 }
 

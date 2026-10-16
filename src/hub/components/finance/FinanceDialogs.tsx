@@ -23,7 +23,8 @@ import {
   type Payment,
   type PaymentMethod,
 } from "../../lib/types";
-import { ClientPicker, DatePicker, Field, FormDialog, MoneyInput, inputClass } from "../form";
+import { Field, FormDialog, MoneyInput, inputClass } from "../form";
+import { ClientPicker, DatePicker } from "../pickers";
 
 const today = () => format(new Date(), "yyyy-MM-dd");
 
@@ -65,7 +66,11 @@ export function InvoiceDialog({
     setDueDate(invoice?.due_date ?? format(addDays(new Date(), 14), "yyyy-MM-dd"));
     setLines(
       invoice?.line_items.length
-        ? invoice.line_items.map((l) => ({ description: l.description, quantity: String(l.quantity), unit_price: String(l.unit_price) }))
+        ? invoice.line_items.map((l) => ({
+            description: l.description,
+            quantity: String(l.quantity),
+            unit_price: String(l.unit_price),
+          }))
         : [emptyLine()],
     );
     setStatus(invoice?.status ?? "draft");
@@ -81,7 +86,13 @@ export function InvoiceDialog({
     if (!open || invoice || !selectedClient?.monthly_fee) return;
     setLines((current) =>
       current.length === 1 && !current[0].description && !current[0].unit_price
-        ? [{ description: `Monthly retainer – ${format(new Date(), "MMMM yyyy")}`, quantity: "1", unit_price: String(selectedClient.monthly_fee) }]
+        ? [
+            {
+              description: `Monthly retainer – ${format(new Date(), "MMMM yyyy")}`,
+              quantity: "1",
+              unit_price: String(selectedClient.monthly_fee),
+            },
+          ]
         : current,
     );
   }, [open, invoice, selectedClient]);
@@ -93,7 +104,8 @@ export function InvoiceDialog({
   }));
   const total = parsed.reduce((s, l) => s + l.quantity * l.unit_price, 0);
 
-  const setLine = (i: number, patch: Partial<LineDraft>) => setLines((ls) => ls.map((l, j) => (j === i ? { ...l, ...patch } : l)));
+  const setLine = (i: number, patch: Partial<LineDraft>) =>
+    setLines((ls) => ls.map((l, j) => (j === i ? { ...l, ...patch } : l)));
 
   const submit = () => {
     if (!client) return setError("Choose a client.");
@@ -121,7 +133,8 @@ export function InvoiceDialog({
           toast.success(invoice ? "Invoice updated" : `Invoice ${number} created`);
           onOpenChange(false);
         },
-        onError: (e) => setError(e.message.includes("invoices_number_key") ? "That invoice number is already used." : e.message),
+        onError: (e) =>
+          setError(e.message.includes("invoices_number_key") ? "That invoice number is already used." : e.message),
       },
     );
   };
@@ -143,7 +156,12 @@ export function InvoiceDialog({
           <ClientPicker value={client} onChange={setClient} />
         </Field>
         <Field label="Invoice number" htmlFor="inv-number">
-          <Input id="inv-number" value={number} onChange={(e) => setNumber(e.target.value)} className={cn(inputClass, "hub-tabular")} />
+          <Input
+            id="inv-number"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            className={cn(inputClass, "hub-tabular")}
+          />
         </Field>
         <Field label="Issue date">
           <DatePicker value={issueDate} onChange={setIssueDate} clearable={false} />
@@ -153,14 +171,23 @@ export function InvoiceDialog({
         </Field>
       </div>
       <Field label="Title (optional)" htmlFor="inv-title">
-        <Input id="inv-title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. October Meta Ads management" className={inputClass} />
+        <Input
+          id="inv-title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="e.g. October Meta Ads management"
+          className={inputClass}
+        />
       </Field>
 
       <div>
         <p className="hub-label mb-1.5">Line items</p>
         <div className="space-y-2">
           {lines.map((line, i) => (
-            <div key={i} className="grid grid-cols-[1fr_auto] gap-2 rounded-xl bg-secondary/50 p-2 sm:grid-cols-[1fr_5rem_9rem_auto] sm:items-center">
+            <div
+              key={i}
+              className="grid grid-cols-[1fr_auto] gap-2 rounded-xl bg-secondary/50 p-2 sm:grid-cols-[1fr_5rem_9rem_auto] sm:items-center"
+            >
               <Input
                 value={line.description}
                 onChange={(e) => setLine(i, { description: e.target.value })}
@@ -194,7 +221,13 @@ export function InvoiceDialog({
             </div>
           ))}
         </div>
-        <Button type="button" variant="ghost" size="sm" className="mt-2 rounded-full text-primary" onClick={() => setLines((ls) => [...ls, emptyLine()])}>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="mt-2 rounded-full text-primary"
+          onClick={() => setLines((ls) => [...ls, emptyLine()])}
+        >
           <Plus className="mr-1 h-4 w-4" /> Add line
         </Button>
       </div>
@@ -262,7 +295,9 @@ export function PaymentDialog({
     const inv = invoice ?? null;
     setClient(payment?.client_id ?? inv?.client_id ?? clientId ?? null);
     setInvoiceId(payment?.invoice_id ?? inv?.id ?? null);
-    setAmount(payment ? String(payment.amount) : inv ? String(Math.max(0, Number(inv.amount) - (paid.get(inv.id) ?? 0))) : "");
+    setAmount(
+      payment ? String(payment.amount) : inv ? String(Math.max(0, Number(inv.amount) - (paid.get(inv.id) ?? 0))) : "",
+    );
     setPaidOn(payment?.paid_on ?? today());
     setMethod(payment?.method ?? "mpesa");
     setReference(payment?.reference ?? "");
@@ -378,7 +413,13 @@ export function PaymentDialog({
         </Field>
       </div>
       <Field label="Notes" htmlFor="pay-notes">
-        <Textarea id="pay-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} className="rounded-xl bg-background" />
+        <Textarea
+          id="pay-notes"
+          rows={2}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          className="rounded-xl bg-background"
+        />
       </Field>
     </FormDialog>
   );
@@ -457,7 +498,13 @@ export function ExpenseDialog({
       error={error}
     >
       <Field label="Description" htmlFor="exp-desc">
-        <Input id="exp-desc" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="e.g. Canva Pro" className={inputClass} />
+        <Input
+          id="exp-desc"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="e.g. Canva Pro"
+          className={inputClass}
+        />
       </Field>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Amount" htmlFor="exp-amount">
@@ -481,14 +528,26 @@ export function ExpenseDialog({
           </Select>
         </Field>
         <Field label="Vendor" htmlFor="exp-vendor">
-          <Input id="exp-vendor" value={vendor} onChange={(e) => setVendor(e.target.value)} placeholder="e.g. Safaricom" className={inputClass} />
+          <Input
+            id="exp-vendor"
+            value={vendor}
+            onChange={(e) => setVendor(e.target.value)}
+            placeholder="e.g. Safaricom"
+            className={inputClass}
+          />
         </Field>
       </div>
       <Field label="Client" hint="Link costs like ad spend or a freelancer to the client they were for.">
         <ClientPicker value={client} onChange={setClient} allowNone noneLabel="General business cost" />
       </Field>
       <Field label="Notes" htmlFor="exp-notes">
-        <Textarea id="exp-notes" rows={2} value={notes} onChange={(e) => setNotes(e.target.value)} className="rounded-xl bg-background" />
+        <Textarea
+          id="exp-notes"
+          rows={2}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          className="rounded-xl bg-background"
+        />
       </Field>
     </FormDialog>
   );

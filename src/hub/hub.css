@@ -167,3 +167,26 @@ html.hub-active body {
   font-family: var(--hub-font);
   letter-spacing: -0.01em;
 }
+
+/* Printing (invoices): always a light page, whatever the hub theme. */
+@media print {
+  html.hub-active,
+  html.hub-active.hub-dark {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+    --secondary: 0 0% 95%;
+    --muted-foreground: 0 0% 38%;
+    --border: 0 0% 85%;
+    color-scheme: light;
+  }
+
+  html.hub-active body {
+    background: #fff;
+  }
+
+  @page {
+    margin: 16mm;
+  }
+}
