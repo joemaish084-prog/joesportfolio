@@ -6,12 +6,23 @@ import { InvoiceDialog, PaymentDialog } from "../components/finance/FinanceDialo
 import { EmptyState, Pill, SkeletonBlock } from "../components/ui";
 import { useRows } from "../lib/data";
 import { BUSINESS, INVOICE_STATE, invoiceState, paidByInvoice } from "../lib/finance";
-import { formatDate, formatKES } from "../lib/format";
+import { formatDate } from "../lib/format";
+import { useKes } from "../lib/privacy";
+import { RevealWhilePrinting } from "../components/privacy";
 import { useClients } from "../lib/queries";
 import { PAYMENT_METHOD_LABEL } from "../lib/types";
 
 /** One invoice laid out as a document. "Print / Save PDF" uses the browser's print dialog. */
-export default function InvoicePage() {
+export default function InvoicePageWithPrintReveal() {
+  return (
+    <RevealWhilePrinting>
+      <InvoicePage />
+    </RevealWhilePrinting>
+  );
+}
+
+function InvoicePage() {
+  const kes = useKes();
   const { id } = useParams();
   const navigate = useNavigate();
   const invoices = useRows("invoices", "issue_date");
@@ -128,8 +139,8 @@ export default function InvoicePage() {
               <tr key={i} className="border-b border-border/60">
                 <td className="py-3 pr-4">{l.description}</td>
                 <td className="hub-tabular py-3 text-right">{l.quantity}</td>
-                <td className="hub-tabular py-3 text-right">{formatKES(Number(l.unit_price))}</td>
-                <td className="hub-tabular py-3 text-right">{formatKES(Number(l.quantity) * Number(l.unit_price))}</td>
+                <td className="hub-tabular py-3 text-right">{kes(Number(l.unit_price))}</td>
+                <td className="hub-tabular py-3 text-right">{kes(Number(l.quantity) * Number(l.unit_price))}</td>
               </tr>
             ))}
           </tbody>
@@ -139,17 +150,17 @@ export default function InvoicePage() {
           <dl className="w-full max-w-xs space-y-1.5 text-sm">
             <div className="flex justify-between">
               <dt className="text-muted-foreground">Total</dt>
-              <dd className="hub-tabular font-semibold">{formatKES(Number(invoice.amount))}</dd>
+              <dd className="hub-tabular font-semibold">{kes(Number(invoice.amount))}</dd>
             </div>
             {paid > 0 && (
               <div className="flex justify-between">
                 <dt className="text-muted-foreground">Paid</dt>
-                <dd className="hub-tabular">−{formatKES(paid)}</dd>
+                <dd className="hub-tabular">−{kes(paid)}</dd>
               </div>
             )}
             <div className="flex justify-between border-t border-border pt-2 text-base">
               <dt className="font-semibold">Balance due</dt>
-              <dd className="hub-tabular font-bold">{formatKES(invoice.status === "void" ? 0 : balance)}</dd>
+              <dd className="hub-tabular font-bold">{kes(invoice.status === "void" ? 0 : balance)}</dd>
             </div>
           </dl>
         </div>
@@ -174,7 +185,7 @@ export default function InvoicePage() {
                   {formatDate(p.paid_on)} · {PAYMENT_METHOD_LABEL[p.method]}
                   {p.reference && <span className="hub-tabular ml-1 text-muted-foreground">({p.reference})</span>}
                 </span>
-                <span className="hub-tabular font-medium text-on-tint">+{formatKES(Number(p.amount))}</span>
+                <span className="hub-tabular font-medium text-on-tint">+{kes(Number(p.amount))}</span>
               </li>
             ))}
           </ul>

@@ -21,7 +21,8 @@ import {
 } from "../components/ui";
 import { useRows } from "../lib/data";
 import { invoiceState, paidByInvoice } from "../lib/finance";
-import { formatDate, formatKES, greeting, isOverdue } from "../lib/format";
+import { formatDate, greeting, isOverdue } from "../lib/format";
+import { useKes } from "../lib/privacy";
 import { useClients, useClientTypes, useOnboardingByClient } from "../lib/queries";
 
 // The shared BentoCard renders plain <a href> links; route them through the
@@ -64,6 +65,7 @@ export default function OverviewPage() {
   const payments = useRows("payments", "paid_on");
   const leads = useRows("leads", "position", true);
   const routeLinks = useRouterLinks();
+  const kes = useKes();
 
   const live = useMemo(() => (clients.data ?? []).filter((c) => !c.archived_at), [clients.data]);
   const typeName = useMemo(() => new Map((types.data ?? []).map((t) => [t.id, t.name])), [types.data]);
@@ -108,7 +110,7 @@ export default function OverviewPage() {
         .map((i) => ({
           id: i.id,
           title: `${i.number} overdue`,
-          detail: `${clientName(i.client_id)} · ${formatKES(Number(i.amount) - (paid.get(i.id) ?? 0))} due ${formatDate(i.due_date, "d MMM")}`,
+          detail: `${clientName(i.client_id)} · ${kes(Number(i.amount) - (paid.get(i.id) ?? 0))} due ${formatDate(i.due_date, "d MMM")}`,
           to: `/hub/finance/invoices/${i.id}`,
           date: i.due_date ?? "",
         })),
@@ -131,7 +133,7 @@ export default function OverviewPage() {
     return items.sort((a, b) => a.date.localeCompare(b.date));
     // clientName reads `live`, which is already a dependency through stats.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stats, invoices.data, payments.data, leads.data]);
+  }, [stats, invoices.data, payments.data, leads.data, kes]);
   const attention = attentionItems?.length ?? 0;
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ComponentPropsWithoutRef } from "react";
 import { useInView, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { MASK, usePrivacy } from "../../lib/privacy";
 
 // Magic UI Number Ticker. Same structure: a motion value set once in view, a
 // spring following it, and textContent written on change so React doesn't
@@ -72,7 +73,9 @@ export function KesTicker({
   className?: string;
   delay?: number;
 }) {
+  const { hidden } = usePrivacy();
   if (value === null || value === undefined || Number.isNaN(value)) return <span className={className}>—</span>;
+  if (hidden) return <span className={cn("hub-tabular whitespace-nowrap", className)}>{MASK}</span>;
   return (
     <span className={cn("hub-tabular whitespace-nowrap", className)}>
       KES <NumberTicker value={value} delay={delay} className="tracking-normal" />

@@ -6,12 +6,17 @@ import {
   Ban,
   Banknote,
   CircleDollarSign,
+  Copy,
+  Download,
+  FileSpreadsheet,
   FileText,
   MoreHorizontal,
   Pencil,
   Plus,
   Printer,
   Receipt,
+  Repeat,
+  Search,
   Send,
   Trash2,
   TrendingUp,
@@ -23,20 +28,25 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { downloadCsv, toCsv } from "../../lib/csv";
 import { useDeleteRow, useRows, useSaveRow } from "../../lib/data";
 import { INVOICE_STATE, invoiceState, monthlyTotals, outstanding, paidByInvoice, sumAmounts } from "../../lib/finance";
-import { formatDate, formatKES } from "../../lib/format";
+import { formatDate } from "../../lib/format";
+import { useKes } from "../../lib/privacy";
 import { useClients } from "../../lib/queries";
 import {
   EXPENSE_CATEGORY_LABEL,
   PAYMENT_METHOD_LABEL,
+  type ExpenseCategory,
   type Expense,
   type Invoice,
   type Payment,
@@ -44,9 +54,11 @@ import {
 import { BlurFade } from "../motion/blur-fade";
 import { KesTicker } from "../motion/number-ticker";
 import { EmptyState, Pill, SkeletonBlock, StatTile, TableCard } from "../ui";
-import { ExpenseDialog, InvoiceDialog, PaymentDialog } from "./FinanceDialogs";
+import { ExpenseDialog, InvoiceDialog, PaymentDialog, RetainerRunDialog } from "./FinanceDialogs";
+import { PrivacyToggle, PrivateBlur } from "../privacy";
 
 const FinanceChart = lazy(() => import("./FinanceChart"));
+const ExpenseBreakdownChart = lazy(() => import("./ExpenseBreakdownChart"));
 
 type Period = "this_month" | "last_month" | "this_year" | "all";
 const PERIOD_LABEL: Record<Period, string> = {
@@ -71,9 +83,10 @@ function periodRange(period: Period): [string, string] | null {
 const inRange = (date: string, range: [string, string] | null) => !range || (date >= range[0] && date <= range[1]);
 
 type DialogState =
-  | { kind: "invoice"; invoice?: Invoice | null }
+  | { kind: "invoice"; invoice?: Invoice | null; copyFrom?: Invoice | null }
   | { kind: "payment"; payment?: Payment | null; invoice?: Invoice | null }
   | { kind: "expense"; expense?: Expense | null }
+  | { kind: "retainers" }
   | null;
 
 /**
@@ -81,6 +94,7 @@ type DialogState =
  * with one it's that client's invoices, payments and costs (client Finance tab).
  */
 export function FinancePanel({ clientId }: { clientId?: string }) {
+  const kes = useKes();
   const invoices = useRows("invoices", "issue_date");
   const payments = useRows("payments", "paid_on");
   const expenses = useRows("expenses", "spent_on");
@@ -93,6 +107,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
   const [period, setPeriod] = useState<Period>("this_month");
   const [tab, setTab] = useState("invoices");
   const [dialog, setDialog] = useState<DialogState>(null);
+  const [query, setQuery] = useState("");
 
   // ⌘K actions arrive as ?new=invoice|payment|expense.
   useEffect(() => {
@@ -113,6 +128,30 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
   const inv = mine(invoices.data);
   const pay = mine(payments.data);
   const exp = mine(expenses.data);
+
+  // Search narrows the tables below (not the totals above).
+  const q = query.trim().toLowerCase();
+  const match = (...values: (string | null | undefined)[]) => !q || values.some((v) => v?.toLowerCase().includes(q));
+  const invoiceNumber = (id: string | null) => (id ? invoices.data?.find((i) => i.id === id)?.number : undefined);
+  const invShown = inv.filter((i) => match(i.number, i.title, clientName.get(i.client_id)));
+  const payShown = pay.filter((p) =>
+    match(
+      p.reference,
+      p.notes,
+      clientName.get(p.client_id),
+      invoiceNumber(p.invoice_id),
+      PAYMENT_METHOD_LABEL[p.method],
+    ),
+  );
+  const expShown = exp.filter((e) =>
+    match(
+      e.description,
+      e.vendor,
+      e.notes,
+      EXPENSE_CATEGORY_LABEL[e.category],
+      e.client_id ? clientName.get(e.client_id) : "General",
+    ),
+  );
   const paid = useMemo(() => paidByInvoice(payments.data ?? []), [payments.data]);
 
   const range = periodRange(period);
@@ -136,6 +175,69 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
       .map(([id, v]) => ({ id, ...v, profit: v.received - v.spent }))
       .sort((a, b) => b.profit - a.profit);
   }, [clientId, pay, exp, inv, paid, range]);
+
+  const breakdown = useMemo(() => {
+    const totals = new Map<ExpenseCategory, number>();
+    for (const e of exp)
+      if (inRange(e.spent_on, range)) totals.set(e.category, (totals.get(e.category) ?? 0) + Number(e.amount));
+    return [...totals.entries()]
+      .map(([key, amount]) => ({ key, label: EXPENSE_CATEGORY_LABEL[key], amount }))
+      .sort((a, b) => b.amount - a.amount);
+  }, [exp, range]);
+
+  const fileSuffix = () => {
+    const who = clientId ? `${(clientName.get(clientId) ?? "client").replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-` : "";
+    return `${who}${period.replace("_", "-")}`;
+  };
+
+  // Exports what the table shows (search applied) for the chosen period.
+  const exportCsv = (kind: "invoices" | "payments" | "expenses") => {
+    if (kind === "invoices") {
+      const rows = invShown.filter((i) => inRange(i.issue_date, range));
+      downloadCsv(
+        `invoices-${fileSuffix()}.csv`,
+        toCsv(rows, [
+          { header: "Number", value: (i) => i.number },
+          { header: "Client", value: (i) => clientName.get(i.client_id) },
+          { header: "Title", value: (i) => i.title },
+          { header: "Issued", value: (i) => i.issue_date },
+          { header: "Due", value: (i) => i.due_date },
+          { header: "Amount (KES)", value: (i) => Number(i.amount) },
+          { header: "Paid (KES)", value: (i) => paid.get(i.id) ?? 0 },
+          { header: "Status", value: (i) => INVOICE_STATE[invoiceState(i, paid.get(i.id) ?? 0)].label },
+        ]),
+      );
+      return rows.length;
+    }
+    if (kind === "payments") {
+      const rows = payShown.filter((p) => inRange(p.paid_on, range));
+      downloadCsv(
+        `payments-${fileSuffix()}.csv`,
+        toCsv(rows, [
+          { header: "Date", value: (p) => p.paid_on },
+          { header: "Client", value: (p) => clientName.get(p.client_id) },
+          { header: "Invoice", value: (p) => invoiceNumber(p.invoice_id) },
+          { header: "Method", value: (p) => PAYMENT_METHOD_LABEL[p.method] },
+          { header: "Reference", value: (p) => p.reference },
+          { header: "Amount (KES)", value: (p) => Number(p.amount) },
+        ]),
+      );
+      return rows.length;
+    }
+    const rows = expShown.filter((e) => inRange(e.spent_on, range));
+    downloadCsv(
+      `expenses-${fileSuffix()}.csv`,
+      toCsv(rows, [
+        { header: "Date", value: (e) => e.spent_on },
+        { header: "Description", value: (e) => e.description },
+        { header: "Vendor", value: (e) => e.vendor },
+        { header: "Category", value: (e) => EXPENSE_CATEGORY_LABEL[e.category] },
+        { header: "Client", value: (e) => (e.client_id ? clientName.get(e.client_id) : "General") },
+        { header: "Amount (KES)", value: (e) => Number(e.amount) },
+      ]),
+    );
+    return rows.length;
+  };
 
   const loading = invoices.isLoading || payments.isLoading || expenses.isLoading;
   const loadError = invoices.error ?? payments.error ?? expenses.error;
@@ -162,26 +264,51 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
       )}
 
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <Select value={period} onValueChange={(v) => setPeriod(v as Period)}>
-          <SelectTrigger className="h-10 w-40 rounded-xl border-transparent bg-secondary" aria-label="Period">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {(Object.keys(PERIOD_LABEL) as Period[]).map((p) => (
-              <SelectItem key={p} value={p}>
-                {PERIOD_LABEL[p]}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex flex-wrap items-center gap-2">
+          <Select value={period} onValueChange={(v) => setPeriod(v as Period)}>
+            <SelectTrigger className="h-10 w-40 rounded-xl border-transparent bg-secondary" aria-label="Period">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.keys(PERIOD_LABEL) as Period[]).map((p) => (
+                <SelectItem key={p} value={p}>
+                  {PERIOD_LABEL[p]}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <PrivacyToggle className="h-10" />
+        </div>
         <div className="flex flex-wrap gap-2">
-          <Button variant="secondary" className="rounded-full" onClick={() => setDialog({ kind: "expense" })}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" className="h-10 rounded-full">
+                <Download className="mr-1.5 h-4 w-4" /> Export
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 rounded-xl">
+              <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
+                CSV for {PERIOD_LABEL[period].toLowerCase()}
+              </DropdownMenuLabel>
+              {(["invoices", "payments", "expenses"] as const).map((k) => (
+                <DropdownMenuItem key={k} onSelect={() => toast.success(`Exported ${exportCsv(k)} ${k}`)}>
+                  <FileSpreadsheet className="mr-2 h-4 w-4" /> {k[0].toUpperCase() + k.slice(1)}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {!clientId && (
+            <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "retainers" })}>
+              <Repeat className="mr-1.5 h-4 w-4" /> Bill retainers
+            </Button>
+          )}
+          <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "expense" })}>
             <Receipt className="mr-1.5 h-4 w-4" /> Expense
           </Button>
-          <Button variant="secondary" className="rounded-full" onClick={() => setDialog({ kind: "payment" })}>
+          <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "payment" })}>
             <Banknote className="mr-1.5 h-4 w-4" /> Payment
           </Button>
-          <Button className="rounded-full px-4" onClick={() => setDialog({ kind: "invoice" })}>
+          <Button className="h-10 rounded-full px-4" onClick={() => setDialog({ kind: "invoice" })}>
             <Plus className="mr-1.5 h-4 w-4" /> Invoice
           </Button>
         </div>
@@ -215,42 +342,82 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
         </StatTile>
       </BlurFade>
 
-      <BlurFade delay={0.05}>
-        <div className="hub-card p-5">
-          <div className="mb-2 flex items-baseline justify-between">
+      <BlurFade delay={0.05} className="grid gap-4 lg:grid-cols-3">
+        <div className="hub-card p-5 lg:col-span-2">
+          <div className="mb-2 flex items-baseline justify-between gap-3">
             <h3 className="font-semibold">Last 6 months</h3>
-            <span className="text-xs text-muted-foreground">Payments received vs expenses</span>
+            <span className="text-right text-xs text-muted-foreground">Payments received vs expenses</span>
           </div>
           {chartData.every((m) => !m.revenue && !m.expenses) ? (
             <p className="flex h-40 items-center justify-center text-sm text-muted-foreground">
               Record payments and expenses to see the trend.
             </p>
           ) : (
-            <Suspense fallback={<SkeletonBlock className="h-64" />}>
-              <FinanceChart data={chartData} />
-            </Suspense>
+            <PrivateBlur>
+              <Suspense fallback={<SkeletonBlock className="h-64" />}>
+                <FinanceChart data={chartData} />
+              </Suspense>
+            </PrivateBlur>
+          )}
+        </div>
+        <div className="hub-card p-5">
+          <div className="mb-3 flex items-baseline justify-between gap-3">
+            <h3 className="font-semibold">Where it went</h3>
+            <span className="text-xs text-muted-foreground">{PERIOD_LABEL[period]}</span>
+          </div>
+          {breakdown.length === 0 ? (
+            <p className="flex h-40 items-center justify-center text-center text-sm text-muted-foreground">
+              No expenses in this period.
+            </p>
+          ) : (
+            <PrivateBlur>
+              <Suspense fallback={<SkeletonBlock className="h-44" />}>
+                <ExpenseBreakdownChart data={breakdown} />
+              </Suspense>
+            </PrivateBlur>
           )}
         </div>
       </BlurFade>
 
       <Tabs value={tab} onValueChange={setTab}>
-        <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-          <TabsList className="h-auto rounded-xl bg-secondary p-1">
-            {[
-              ["invoices", `Invoices (${inv.length})`],
-              ["payments", `Payments (${pay.length})`],
-              ["expenses", `Expenses (${exp.length})`],
-              ...(clientId ? [] : [["clients", "By client"]]),
-            ].map(([value, label]) => (
-              <TabsTrigger
-                key={value}
-                value={value}
-                className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
-              >
-                {label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+            <TabsList className="h-auto rounded-xl bg-secondary p-1">
+              {[
+                ["invoices", `Invoices (${inv.length})`],
+                ["payments", `Payments (${pay.length})`],
+                ["expenses", `Expenses (${exp.length})`],
+                ...(clientId ? [] : [["clients", "By client"]]),
+              ].map(([value, label]) => (
+                <TabsTrigger
+                  key={value}
+                  value={value}
+                  className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+                >
+                  {label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+          {tab !== "clients" && (
+            <div className="relative md:w-72">
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={
+                  tab === "invoices"
+                    ? "Search number or client"
+                    : tab === "payments"
+                      ? "Search M-Pesa code or client"
+                      : "Search description or vendor"
+                }
+                aria-label="Search"
+                className="h-10 rounded-xl border-transparent bg-secondary pl-10 focus-visible:bg-card"
+              />
+            </div>
+          )}
         </div>
 
         <TabsContent value="invoices" className="mt-4">
@@ -283,7 +450,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {inv.map((i) => {
+                  {invShown.map((i) => {
                     const p = paid.get(i.id) ?? 0;
                     const state = INVOICE_STATE[invoiceState(i, p)];
                     const hasPayments = (payments.data ?? []).some((x) => x.invoice_id === i.id);
@@ -312,10 +479,10 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                           {formatDate(i.due_date, "d MMM yyyy")}
                         </TableCell>
                         <TableCell className="hub-tabular whitespace-nowrap text-right font-medium">
-                          {formatKES(Number(i.amount))}
+                          {kes(Number(i.amount))}
                         </TableCell>
                         <TableCell className="hub-tabular whitespace-nowrap text-right text-muted-foreground">
-                          {p ? formatKES(p) : "—"}
+                          {p ? kes(p) : "—"}
                         </TableCell>
                         <TableCell>
                           <Pill tone={state.tone}>{state.label}</Pill>
@@ -348,6 +515,9 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                                   <Send className="mr-2 h-4 w-4" /> Mark as sent
                                 </DropdownMenuItem>
                               )}
+                              <DropdownMenuItem onSelect={() => setDialog({ kind: "invoice", copyFrom: i })}>
+                                <Copy className="mr-2 h-4 w-4" /> Duplicate
+                              </DropdownMenuItem>
                               <DropdownMenuItem onSelect={() => setDialog({ kind: "invoice", invoice: i })}>
                                 <Pencil className="mr-2 h-4 w-4" /> Edit
                               </DropdownMenuItem>
@@ -410,7 +580,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {pay.map((p) => {
+                  {payShown.map((p) => {
                     const invoice = invoices.data?.find((i) => i.id === p.invoice_id);
                     return (
                       <TableRow key={p.id}>
@@ -426,11 +596,11 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                           )}
                         </TableCell>
                         <TableCell className="hub-tabular whitespace-nowrap text-right font-medium text-on-tint">
-                          +{formatKES(Number(p.amount))}
+                          +{kes(Number(p.amount))}
                         </TableCell>
                         <TableCell>
                           <RowActions
-                            label={`payment of ${formatKES(Number(p.amount))}`}
+                            label={`payment of ${kes(Number(p.amount))}`}
                             onEdit={() => setDialog({ kind: "payment", payment: p })}
                             onDelete={() =>
                               deletePayment.mutate(p.id, {
@@ -477,7 +647,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {exp.map((e) => (
+                  {expShown.map((e) => (
                     <TableRow key={e.id}>
                       <TableCell className="whitespace-nowrap">{formatDate(e.spent_on, "d MMM yyyy")}</TableCell>
                       <TableCell>
@@ -493,7 +663,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                         </TableCell>
                       )}
                       <TableCell className="hub-tabular whitespace-nowrap text-right font-medium">
-                        −{formatKES(Number(e.amount))}
+                        −{kes(Number(e.amount))}
                       </TableCell>
                       <TableCell>
                         <RowActions
@@ -546,19 +716,17 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                             {clientName.get(r.id) ?? "Client"}
                           </Link>
                         </TableCell>
-                        <TableCell className="hub-tabular text-right">{formatKES(r.received)}</TableCell>
-                        <TableCell className="hub-tabular text-right text-muted-foreground">
-                          {formatKES(r.spent)}
-                        </TableCell>
+                        <TableCell className="hub-tabular text-right">{kes(r.received)}</TableCell>
+                        <TableCell className="hub-tabular text-right text-muted-foreground">{kes(r.spent)}</TableCell>
                         <TableCell className={cn("hub-tabular text-right font-medium", r.profit < 0 && "text-warning")}>
                           {r.profit < 0 ? "−" : ""}
-                          {formatKES(Math.abs(r.profit))}
+                          {kes(Math.abs(r.profit))}
                         </TableCell>
                         <TableCell className="hub-tabular text-right text-muted-foreground">
                           {r.received ? `${Math.round((r.profit / r.received) * 100)}%` : "—"}
                         </TableCell>
                         <TableCell className="hub-tabular text-right text-muted-foreground">
-                          {r.owed ? formatKES(r.owed) : "—"}
+                          {r.owed ? kes(r.owed) : "—"}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -574,8 +742,10 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
         open={dialog?.kind === "invoice"}
         onOpenChange={(o) => !o && setDialog(null)}
         invoice={dialog?.kind === "invoice" ? dialog.invoice : null}
+        copyFrom={dialog?.kind === "invoice" ? dialog.copyFrom : null}
         clientId={clientId}
       />
+      <RetainerRunDialog open={dialog?.kind === "retainers"} onOpenChange={(o) => !o && setDialog(null)} />
       <PaymentDialog
         open={dialog?.kind === "payment"}
         onOpenChange={(o) => !o && setDialog(null)}

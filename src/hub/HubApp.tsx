@@ -7,6 +7,7 @@ import { HubAuthProvider, useHubAuth } from "./auth/HubAuthProvider";
 import { useIdleSignOut } from "./auth/useIdleSignOut";
 import { HubNoIndex } from "./components/HubNoIndex";
 import { HubShell } from "./components/HubShell";
+import { PrivacyProvider } from "./components/privacy";
 import { useHubTheme } from "./theme/useHubTheme";
 import LoginPage from "./pages/LoginPage";
 import OverviewPage from "./pages/OverviewPage";
@@ -61,30 +62,32 @@ export default function HubApp() {
     // people who ask the OS for less motion; components handle the rest.
     <MotionConfig reducedMotion="user">
       <HubAuthProvider>
-        <HubNoIndex />
-        <Routes>
-          <Route path="login" element={<LoginPage />} />
-          <Route
-            element={
-              <RequireAdmin>
-                <HubShell theme={theme} onThemeChange={setTheme} />
-              </RequireAdmin>
-            }
-          >
-            <Route index element={<OverviewPage />} />
-            <Route path="clients" element={<ClientsPage />} />
-            <Route path="clients/new" element={<ClientFormPage />} />
-            <Route path="clients/:id" element={<ClientDetailPage />} />
-            <Route path="clients/:id/edit" element={<ClientFormPage />} />
-            <Route path="onboarding" element={<OnboardingPage />} />
-            <Route path="documents" element={section(<DocumentsPage />)} />
-            <Route path="reports" element={section(<ReportsPage />)} />
-            <Route path="finance" element={section(<FinancePage />)} />
-            <Route path="finance/invoices/:id" element={section(<InvoicePage />)} />
-            <Route path="pipeline" element={section(<PipelinePage />)} />
-            <Route path="*" element={<Navigate to="/hub" replace />} />
-          </Route>
-        </Routes>
+        <PrivacyProvider>
+          <HubNoIndex />
+          <Routes>
+            <Route path="login" element={<LoginPage />} />
+            <Route
+              element={
+                <RequireAdmin>
+                  <HubShell theme={theme} onThemeChange={setTheme} />
+                </RequireAdmin>
+              }
+            >
+              <Route index element={<OverviewPage />} />
+              <Route path="clients" element={<ClientsPage />} />
+              <Route path="clients/new" element={<ClientFormPage />} />
+              <Route path="clients/:id" element={<ClientDetailPage />} />
+              <Route path="clients/:id/edit" element={<ClientFormPage />} />
+              <Route path="onboarding" element={<OnboardingPage />} />
+              <Route path="documents" element={section(<DocumentsPage />)} />
+              <Route path="reports" element={section(<ReportsPage />)} />
+              <Route path="finance" element={section(<FinancePage />)} />
+              <Route path="finance/invoices/:id" element={section(<InvoicePage />)} />
+              <Route path="pipeline" element={section(<PipelinePage />)} />
+              <Route path="*" element={<Navigate to="/hub" replace />} />
+            </Route>
+          </Routes>
+        </PrivacyProvider>
       </HubAuthProvider>
     </MotionConfig>
   );

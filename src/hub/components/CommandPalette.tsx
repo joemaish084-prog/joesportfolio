@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Banknote,
+  Eye,
+  EyeOff,
   BarChart3,
   FileText,
   Filter,
@@ -27,6 +29,7 @@ import {
 } from "@/components/ui/command";
 import { DialogTitle } from "@/components/ui/dialog";
 import { useRows } from "../lib/data";
+import { usePrivacy } from "../lib/privacy";
 import { useClients } from "../lib/queries";
 import { LEAD_STAGE_LABEL } from "../lib/types";
 
@@ -61,6 +64,7 @@ export default function CommandPalette({
   const navigate = useNavigate();
   const clients = useClients();
   const leads = useRows("leads", "position", true);
+  const privacy = usePrivacy();
 
   const liveClients = useMemo(() => (clients.data ?? []).filter((c) => !c.archived_at), [clients.data]);
   const liveLeads = useMemo(
@@ -86,6 +90,17 @@ export default function CommandPalette({
               {label}
             </CommandItem>
           ))}
+          <CommandItem
+            value="action hide show amounts privacy money"
+            onSelect={() => {
+              privacy.toggle();
+              onOpenChange(false);
+            }}
+          >
+            {privacy.hidden ? <Eye className="mr-2" /> : <EyeOff className="mr-2" />}
+            {privacy.hidden ? "Show amounts" : "Hide amounts"}
+            <CommandShortcut>Ctrl Shift H</CommandShortcut>
+          </CommandItem>
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Go to">

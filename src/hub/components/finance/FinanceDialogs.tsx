@@ -3,6 +3,7 @@ import { addDays, format } from "date-fns";
 import { Plus, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -37,11 +38,14 @@ export function InvoiceDialog({
   open,
   onOpenChange,
   invoice,
+  copyFrom,
   clientId,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   invoice?: Invoice | null;
+  /** Start a new invoice from this one's client, lines and notes (Duplicate). */
+  copyFrom?: Invoice | null;
   clientId?: string;
 }) {
   const save = useSaveRow("invoices");
@@ -59,14 +63,15 @@ export function InvoiceDialog({
 
   useEffect(() => {
     if (!open) return;
-    setClient(invoice?.client_id ?? clientId ?? null);
+    const source = invoice ?? copyFrom;
+    setClient(source?.client_id ?? clientId ?? null);
     setNumber(invoice?.number ?? nextInvoiceNumber(invoices.data ?? []));
-    setTitle(invoice?.title ?? "");
+    setTitle(source?.title ?? "");
     setIssueDate(invoice?.issue_date ?? today());
     setDueDate(invoice?.due_date ?? format(addDays(new Date(), 14), "yyyy-MM-dd"));
     setLines(
-      invoice?.line_items.length
-        ? invoice.line_items.map((l) => ({
+      source?.line_items.length
+        ? source.line_items.map((l) => ({
             description: l.description,
             quantity: String(l.quantity),
             unit_price: String(l.unit_price),
@@ -74,16 +79,16 @@ export function InvoiceDialog({
         : [emptyLine()],
     );
     setStatus(invoice?.status ?? "draft");
-    setNotes(invoice?.notes ?? "");
+    setNotes(source?.notes ?? "");
     setError(null);
     // invoices.data omitted: the number is only suggested when the dialog opens.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, invoice, clientId]);
+  }, [open, invoice, copyFrom, clientId]);
 
   // New invoice for a client on a retainer: start with their monthly fee as the first line.
   const selectedClient = clients.data?.find((c) => c.id === client);
   useEffect(() => {
-    if (!open || invoice || !selectedClient?.monthly_fee) return;
+    if (!open || invoice || copyFrom || !selectedClient?.monthly_fee) return;
     setLines((current) =>
       current.length === 1 && !current[0].description && !current[0].unit_price
         ? [
@@ -95,7 +100,7 @@ export function InvoiceDialog({
           ]
         : current,
     );
-  }, [open, invoice, selectedClient]);
+  }, [open, invoice, copyFrom, selectedClient]);
 
   const parsed = lines.map((l) => ({
     description: l.description.trim(),
@@ -143,7 +148,7 @@ export function InvoiceDialog({
     <FormDialog
       open={open}
       onOpenChange={onOpenChange}
-      title={invoice ? `Edit ${invoice.number}` : "New invoice"}
+      title={invoice ? `Edit ${invoice.number}` : copyFrom ? `Duplicate ${copyFrom.number}` : "New invoice"}
       onSubmit={submit}
       submitLabel={invoice ? "Save" : "Create invoice"}
       pending={save.isPending}
@@ -546,6 +551,183 @@ export function ExpenseDialog({
           rows={2}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
+          className="rounded-xl bg-background"
+        />
+      </Field>
+    </FormDialog>
+  );
+}
+
+// ---------------------------------------------------------------- retainer run
+
+/**
+ * Creates this month's retainer invoice for every active client with a monthly
+ * fee, in one go. Clients already invoiced this month start unticked.
+ */
+export function RetainerRunDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  const save = useSaveRow("invoices");
+  const invoices = useRows("invoices", "issue_date");
+  const clients = useClients();
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [status, setStatus] = useState<InvoiceStatus>("draft");
+  const [dueDays, setDueDays] = useState("14");
+  const [notes, setNotes] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [running, setRunning] = useState(false);
+
+  const month = format(new Date(), "yyyy-MM");
+  const monthLabel = format(new Date(), "MMMM yyyy");
+  const eligible = useMemo(
+    () =>
+      (clients.data ?? [])
+        .filter((c) => !c.archived_at && c.status === "active" && Number(c.monthly_fee) > 0)
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    [clients.data],
+  );
+  const alreadyBilled = useMemo(
+    () =>
+      new Set(
+        (invoices.data ?? [])
+          .filter((i) => i.status !== "void" && i.issue_date.startsWith(month))
+          .map((i) => i.client_id),
+      ),
+    [invoices.data, month],
+  );
+
+  useEffect(() => {
+    if (!open) return;
+    setSelected(new Set(eligible.filter((c) => !alreadyBilled.has(c.id)).map((c) => c.id)));
+    setStatus("draft");
+    setDueDays("14");
+    // Reuse the payment details from the latest invoice.
+    const latest = [...(invoices.data ?? [])]
+      .sort((a, b) => b.created_at.localeCompare(a.created_at))
+      .find((i) => i.notes);
+    setNotes(latest?.notes ?? "");
+    setError(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const total = eligible.filter((c) => selected.has(c.id)).reduce((s, c) => s + Number(c.monthly_fee), 0);
+
+  const submit = async () => {
+    const chosen = eligible.filter((c) => selected.has(c.id));
+    if (!chosen.length) return setError("Tick at least one client.");
+    setRunning(true);
+    setError(null);
+    const created: string[] = [];
+    let all = invoices.data ?? [];
+    try {
+      for (const c of chosen) {
+        const number = nextInvoiceNumber(all);
+        const fee = Number(c.monthly_fee);
+        const row = await save.mutateAsync({
+          values: {
+            client_id: c.id,
+            number,
+            title: `${monthLabel} retainer`,
+            issue_date: today(),
+            due_date: format(addDays(new Date(), Number(dueDays)), "yyyy-MM-dd"),
+            line_items: [{ description: `Monthly retainer – ${monthLabel}`, quantity: 1, unit_price: fee }],
+            amount: fee,
+            status,
+            notes: notes.trim() || null,
+          },
+        });
+        all = [...all, row];
+        created.push(number);
+      }
+      toast.success(
+        `Created ${created.length} ${created.length === 1 ? "invoice" : "invoices"} (${created[0]}${created.length > 1 ? `–${created[created.length - 1]}` : ""})`,
+      );
+      onOpenChange(false);
+    } catch (e) {
+      setError(`${created.length ? `Created ${created.length}, then stopped: ` : ""}${(e as Error).message}`);
+    } finally {
+      setRunning(false);
+    }
+  };
+
+  const toggle = (id: string) =>
+    setSelected((s) => {
+      const next = new Set(s);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+  return (
+    <FormDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={`Bill ${monthLabel} retainers`}
+      description="One invoice per ticked client for their monthly fee."
+      onSubmit={submit}
+      submitLabel={selected.size ? `Create ${selected.size} ${selected.size === 1 ? "invoice" : "invoices"}` : "Create"}
+      pending={running}
+      error={error}
+      footerExtra={<span className="hub-tabular text-sm font-semibold">Total {formatKES(total)}</span>}
+    >
+      {eligible.length === 0 ? (
+        <p className="rounded-xl bg-secondary/60 px-4 py-6 text-center text-sm text-muted-foreground">
+          No active clients with a monthly fee yet. Set a fee on the client's profile first.
+        </p>
+      ) : (
+        <ul className="divide-y divide-border/60 overflow-hidden rounded-2xl border border-border/70">
+          {eligible.map((c) => (
+            <li key={c.id}>
+              <label className="flex cursor-pointer items-center gap-3 px-4 py-3 hover:bg-secondary/50">
+                <Checkbox
+                  checked={selected.has(c.id)}
+                  onCheckedChange={() => toggle(c.id)}
+                  aria-label={`Bill ${c.name}`}
+                />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-medium">{c.name}</span>
+                  {alreadyBilled.has(c.id) && (
+                    <span className="block text-xs text-warning">Already invoiced this month</span>
+                  )}
+                </span>
+                <span className="hub-tabular text-sm">{formatKES(Number(c.monthly_fee))}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Create as">
+          <Select value={status} onValueChange={(v) => setStatus(v as InvoiceStatus)}>
+            <SelectTrigger className={inputClass}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="draft">Drafts (review first)</SelectItem>
+              <SelectItem value="sent">Sent</SelectItem>
+            </SelectContent>
+          </Select>
+        </Field>
+        <Field label="Due in">
+          <Select value={dueDays} onValueChange={setDueDays}>
+            <SelectTrigger className={inputClass}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {["7", "14", "30"].map((d) => (
+                <SelectItem key={d} value={d}>
+                  {d} days
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Field>
+      </div>
+      <Field label="Payment details" htmlFor="run-notes">
+        <Textarea
+          id="run-notes"
+          rows={2}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="e.g. Pay via M-Pesa Till 123456"
           className="rounded-xl bg-background"
         />
       </Field>

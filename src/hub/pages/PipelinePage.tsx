@@ -34,7 +34,8 @@ import { SpotlightCard } from "../components/motion/spotlight-card";
 import { LeadDialog } from "../components/pipeline/LeadDialog";
 import { EmptyState, PageHeader, Pill, SkeletonBlock, StatTile } from "../components/ui";
 import { tableKey, useMoveLead, useRows, useSaveRow } from "../lib/data";
-import { formatDate, formatKES, isOverdue } from "../lib/format";
+import { formatDate, isOverdue } from "../lib/format";
+import { useKes } from "../lib/privacy";
 import { useClientTypes, useSaveClient } from "../lib/queries";
 import { LEAD_SOURCE_LABEL, LEAD_STAGES, LEAD_STAGE_LABEL, type Lead, type LeadStage } from "../lib/types";
 import { useQueryClient } from "@tanstack/react-query";
@@ -54,6 +55,7 @@ function LeadCard({
   onConvert: () => void;
   onArchive: () => void;
 }) {
+  const kes = useKes();
   const due =
     lead.next_follow_up &&
     OPEN_STAGES.includes(lead.stage) &&
@@ -122,7 +124,7 @@ function LeadCard({
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
           {lead.estimated_value != null && (
             <span className="hub-tabular text-sm font-semibold">
-              {formatKES(Number(lead.estimated_value))}
+              {kes(Number(lead.estimated_value))}
               <span className="text-xs font-normal text-muted-foreground">/mo</span>
             </span>
           )}
@@ -155,6 +157,7 @@ function LeadCard({
 }
 
 export default function PipelinePage() {
+  const kes = useKes();
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [params, setParams] = useSearchParams();
@@ -275,7 +278,7 @@ export default function PipelinePage() {
         <StatTile
           label="Won this month"
           icon={Trophy}
-          hint={formatKES(wonThisMonth.reduce((s, l) => s + Number(l.estimated_value ?? 0), 0)) + "/mo"}
+          hint={kes(wonThisMonth.reduce((s, l) => s + Number(l.estimated_value ?? 0), 0)) + "/mo"}
         >
           <NumberTicker value={wonThisMonth.length} />
         </StatTile>
@@ -352,7 +355,7 @@ export default function PipelinePage() {
                       <h2 className="text-sm font-semibold">{LEAD_STAGE_LABEL[stage]}</h2>
                       <span className="hub-tabular text-xs text-muted-foreground">{list.length}</span>
                     </div>
-                    {value > 0 && <span className="hub-tabular text-xs text-muted-foreground">{formatKES(value)}</span>}
+                    {value > 0 && <span className="hub-tabular text-xs text-muted-foreground">{kes(value)}</span>}
                   </header>
                   <div className="flex min-h-24 flex-1 flex-col gap-2">
                     {list.map((lead) => (

@@ -11,6 +11,8 @@ import {
   Moon,
   MoreHorizontal,
   Search,
+  Eye,
+  EyeOff,
   Sun,
   Users,
   Wallet,
@@ -20,6 +22,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useHubAuth } from "../auth/HubAuthProvider";
+import { usePrivacy } from "../lib/privacy";
 import type { HubTheme } from "../theme/useHubTheme";
 import { Dock, DockIcon, DockSeparator } from "./motion/dock";
 
@@ -201,6 +204,7 @@ export function HubShell(props: ShellProps) {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
   const isActive = useIsActive();
+  const privacy = usePrivacy();
   const { signOut } = useHubAuth();
   const theme = THEMES.find((t) => t.value === props.theme) ?? THEMES[2];
 
@@ -235,6 +239,36 @@ export function HubShell(props: ShellProps) {
               </TooltipTrigger>
               <TooltipContent side="right" className="rounded-lg">
                 Search <kbd className="ml-1 rounded bg-secondary px-1 text-[0.625rem]">Ctrl K</kbd>
+              </TooltipContent>
+            </Tooltip>
+          </DockIcon>
+          <DockIcon
+            className={cn(
+              dockIconClass,
+              privacy.hidden
+                ? "bg-tint text-on-tint"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+            )}
+          >
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={privacy.toggle}
+                  aria-pressed={privacy.hidden}
+                  aria-label={privacy.hidden ? "Show amounts" : "Hide amounts"}
+                  className="flex size-full items-center justify-center"
+                >
+                  {privacy.hidden ? (
+                    <EyeOff className="size-full" strokeWidth={1.75} />
+                  ) : (
+                    <Eye className="size-full" strokeWidth={1.75} />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="rounded-lg">
+                {privacy.hidden ? "Show amounts" : "Hide amounts"}{" "}
+                <kbd className="ml-1 rounded bg-secondary px-1 text-[0.625rem]">Ctrl Shift H</kbd>
               </TooltipContent>
             </Tooltip>
           </DockIcon>
@@ -279,14 +313,32 @@ export function HubShell(props: ShellProps) {
       {/* Mobile top bar */}
       <header className="hub-glass sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border/70 px-4 md:hidden print:hidden">
         <Brand />
-        <button
-          type="button"
-          onClick={() => setPaletteOpen(true)}
-          aria-label="Search"
-          className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary"
-        >
-          <Search className="h-5 w-5" strokeWidth={1.75} />
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={privacy.toggle}
+            aria-pressed={privacy.hidden}
+            aria-label={privacy.hidden ? "Show amounts" : "Hide amounts"}
+            className={cn(
+              "flex h-9 w-9 items-center justify-center rounded-full",
+              privacy.hidden ? "bg-tint text-on-tint" : "text-muted-foreground hover:bg-secondary",
+            )}
+          >
+            {privacy.hidden ? (
+              <EyeOff className="h-5 w-5" strokeWidth={1.75} />
+            ) : (
+              <Eye className="h-5 w-5" strokeWidth={1.75} />
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setPaletteOpen(true)}
+            aria-label="Search"
+            className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary"
+          >
+            <Search className="h-5 w-5" strokeWidth={1.75} />
+          </button>
+        </div>
       </header>
 
       <main className="md:pl-24 print:p-0">
@@ -325,10 +377,7 @@ export function HubShell(props: ShellProps) {
       )}
 
       <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-        <SheetContent
-          side="bottom"
-          className="max-h-[85dvh] overflow-y-auto rounded-t-3xl border-border/70 bg-card"
-        >
+        <SheetContent side="bottom" className="max-h-[85dvh] overflow-y-auto rounded-t-3xl border-border/70 bg-card">
           <SheetHeader className="mb-4 text-left">
             <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
