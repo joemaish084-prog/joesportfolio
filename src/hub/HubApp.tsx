@@ -24,6 +24,7 @@ const FinancePage = lazy(() => import("./pages/FinancePage"));
 const InvoicePage = lazy(() => import("./pages/InvoicePage"));
 const PipelinePage = lazy(() => import("./pages/PipelinePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
 
 const sectionFallback = (
   <div className="space-y-6">
@@ -67,6 +68,7 @@ export default function HubApp() {
           <HubNoIndex />
           <Routes>
             <Route path="login" element={<LoginPage />} />
+            <Route path="reset-password" element={section(<ResetPasswordPage />)} />
             <Route
               element={
                 <RequireAdmin>
