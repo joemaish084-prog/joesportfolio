@@ -1,9 +1,9 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -29,7 +29,18 @@ const Admin = lazy(() => import("./pages/Admin"));
 // Image-heavy brand books load on demand so they stay out of the main bundle.
 const WorkBranding = lazy(() => import("./pages/WorkBranding"));
 const WorkBrand = lazy(() => import("./pages/WorkBrand"));
+// Private back office. Lazy, unlinked and noindexed; see src/hub.
+const HubApp = lazy(() => import("./hub/HubApp"));
 const pageFallback = <div className="min-h-screen bg-background" />;
+
+const isHubPath = (path: string) => path === "/hub" || path.startsWith("/hub/");
+
+// Keeps analytics, the pixel and the cookie banner off the private hub.
+const PublicOnly = ({ children }: { children: ReactNode }) =>
+  isHubPath(useLocation().pathname) ? null : <>{children}</>;
+
+const skipHubEvents = <T extends { url: string }>(event: T) =>
+  isHubPath(new URL(event.url, window.location.origin).pathname) ? null : event;
 
 
 const queryClient = new QueryClient();
@@ -41,9 +52,11 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <MetaPixelRouteTracker />
-          <ConversionTracker />
-          <PulseTracker />
+          <PublicOnly>
+            <MetaPixelRouteTracker />
+            <ConversionTracker />
+            <PulseTracker />
+          </PublicOnly>
           <Suspense fallback={pageFallback}>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -71,13 +84,16 @@ const App = () => (
                 </Suspense>
               }
             />
+            <Route path="/hub/*" element={<HubApp />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           </Suspense>
-          <CookieConsent />
+          <PublicOnly>
+            <CookieConsent />
+          </PublicOnly>
         </BrowserRouter>
-        <Analytics />
-        <SpeedInsights />
+        <Analytics beforeSend={skipHubEvents} />
+        <SpeedInsights beforeSend={skipHubEvents} />
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

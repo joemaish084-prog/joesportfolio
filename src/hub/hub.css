@@ -1,0 +1,173 @@
+@config "./tailwind.hub.config.ts";
+@tailwind utilities;
+
+/*
+ * Client Hub design tokens. Everything is keyed to html.hub-active, which only
+ * exists while the hub is mounted, so the public site's tokens are untouched.
+ * Keying to <html> rather than a wrapper div lets portalled dialogs, menus and
+ * toasts inherit the hub look too.
+ *
+ * One accent: mint #3EB489, tint #E8F7F1, deep mint #1F7A5C for text on tint.
+ */
+html.hub-active {
+  --hub-font:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+
+  --background: 240 11% 96%;
+  --foreground: 240 3% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 3% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 3% 12%;
+  --primary: 155 49% 48%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 6% 93%;
+  --secondary-foreground: 240 3% 12%;
+  --muted: 240 6% 94%;
+  --muted-foreground: 240 2% 44%;
+  --accent: 156 54% 94%;
+  --accent-foreground: 160 60% 30%;
+  --destructive: 3 86% 56%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 6% 89%;
+  --input: 240 6% 86%;
+  --ring: 155 49% 48%;
+  --radius: 1rem;
+
+  /* The shared Button's default variant paints with the site's orange gradient
+     tokens; inside the hub they become flat mint. */
+  --orange: 155 49% 48%;
+  --orange-light: 155 49% 56%;
+  --orange-dark: 160 60% 30%;
+  --gradient-orange-start: 155 49% 48%;
+  --gradient-orange-end: 155 49% 48%;
+  --shadow-orange-glow: 0 1px 2px hsl(160 60% 20% / 0.18);
+
+  --hub-tint: 156 54% 94%;
+  --hub-on-tint: 160 60% 30%;
+  --hub-warning: 32 95% 44%;
+  --hub-warning-soft: 38 100% 94%;
+  --hub-glass: 0 0% 100%;
+  --hub-shadow: 0 1px 2px hsl(240 10% 10% / 0.04), 0 4px 16px hsl(240 10% 10% / 0.04);
+  --hub-shadow-lg: 0 2px 6px hsl(240 10% 10% / 0.05), 0 16px 40px hsl(240 10% 10% / 0.08);
+
+  color-scheme: light;
+}
+
+html.hub-active.hub-dark {
+  --background: 240 5% 4%;
+  --foreground: 0 0% 96%;
+  --card: 240 4% 10%;
+  --card-foreground: 0 0% 96%;
+  --popover: 240 4% 12%;
+  --popover-foreground: 0 0% 96%;
+  --primary: 155 49% 48%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 4% 16%;
+  --secondary-foreground: 0 0% 96%;
+  --muted: 240 4% 15%;
+  --muted-foreground: 240 4% 62%;
+  --accent: 157 38% 14%;
+  --accent-foreground: 155 52% 62%;
+  --destructive: 3 90% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 4% 18%;
+  --input: 240 4% 22%;
+  --ring: 155 49% 48%;
+
+  --hub-tint: 157 38% 14%;
+  --hub-on-tint: 155 52% 62%;
+  --hub-warning: 36 100% 58%;
+  --hub-warning-soft: 32 60% 14%;
+  --hub-glass: 240 4% 10%;
+  --hub-shadow: 0 1px 2px hsl(0 0% 0% / 0.3), 0 4px 16px hsl(0 0% 0% / 0.25);
+  --hub-shadow-lg: 0 2px 6px hsl(0 0% 0% / 0.35), 0 16px 40px hsl(0 0% 0% / 0.45);
+
+  color-scheme: dark;
+}
+
+html.hub-active body {
+  font-family: var(--hub-font);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+}
+
+.hub-root {
+  min-height: 100dvh;
+  font-family: var(--hub-font);
+}
+
+.hub-root ::selection {
+  background: hsl(var(--primary) / 0.25);
+}
+
+/* Frosted surfaces: sidebar, tab bar, sticky headers. */
+.hub-glass {
+  background: hsl(var(--hub-glass) / 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.hub-card {
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border: 1px solid hsl(var(--border) / 0.7);
+  border-radius: 20px;
+  box-shadow: var(--hub-shadow);
+}
+
+.hub-card-interactive {
+  transition:
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 200ms ease;
+}
+
+.hub-card-interactive:hover {
+  box-shadow: var(--hub-shadow-lg);
+  border-color: hsl(var(--border));
+}
+
+.hub-card-interactive:active {
+  transform: scale(0.995);
+}
+
+/* Small gray uppercase-free labels, iOS Settings style. */
+.hub-label {
+  font-size: 0.8125rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.hub-section-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: hsl(var(--muted-foreground));
+  padding: 0 0.25rem 0.5rem;
+}
+
+.hub-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Bottom tab bar sits above the iPhone home indicator. */
+.hub-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-card-interactive,
+  .hub-card-interactive:active {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* The shared BentoCard titles use the public display face; the hub keeps one type family. */
+.hub-root .font-display {
+  font-family: var(--hub-font);
+  letter-spacing: -0.01em;
+}
