@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { addDays, format } from "date-fns";
-import { AlertTriangle, CheckCircle2, Download, FileSpreadsheet, FileUp, Paperclip, UserPlus, X } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  Download,
+  FileSpreadsheet,
+  FileText,
+  FileUp,
+  Paperclip,
+  UserPlus,
+  X,
+} from "lucide-react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -26,6 +36,7 @@ import {
 import { Field, MoneyInput, inputClass } from "../form";
 import { ClientPicker, DatePicker } from "../pickers";
 import { Pill } from "../ui";
+import { PdfImport } from "./PdfImport";
 
 const IMPORT_NOTE = "Imported past invoice";
 const chunk = <T,>(list: T[], size: number) =>
@@ -597,10 +608,10 @@ function SingleImport({ onDone }: { onDone: () => void }) {
 
 /** Bring past invoices (and what was paid on them) into the hub so the numbers catch up. */
 export function ImportInvoicesDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
-  const [tab, setTab] = useState("sheet");
+  const [tab, setTab] = useState("pdf");
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92dvh] gap-0 overflow-y-auto rounded-3xl border-border/70 bg-card p-0 sm:max-w-3xl sm:rounded-3xl">
+      <DialogContent className="max-h-[92dvh] gap-0 overflow-y-auto rounded-3xl border-border/70 bg-card p-0 sm:max-w-4xl sm:rounded-3xl">
         <DialogHeader className="px-6 pb-2 pt-6 text-left">
           <DialogTitle className="text-xl">Import past invoices</DialogTitle>
           <DialogDescription>
@@ -610,6 +621,12 @@ export function ImportInvoicesDialog({ open, onOpenChange }: { open: boolean; on
         </DialogHeader>
         <Tabs value={tab} onValueChange={setTab} className="px-6 pb-6 pt-2">
           <TabsList className="mb-5 h-auto rounded-xl bg-secondary p-1">
+            <TabsTrigger
+              value="pdf"
+              className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+            >
+              <FileText className="mr-1.5 h-4 w-4" /> From PDFs
+            </TabsTrigger>
             <TabsTrigger
               value="sheet"
               className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
@@ -623,6 +640,9 @@ export function ImportInvoicesDialog({ open, onOpenChange }: { open: boolean; on
               <FileUp className="mr-1.5 h-4 w-4" /> One at a time
             </TabsTrigger>
           </TabsList>
+          <TabsContent value="pdf" className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0">
+            {open && <PdfImport onDone={() => onOpenChange(false)} />}
+          </TabsContent>
           <TabsContent value="sheet" className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0">
             {open && <SpreadsheetImport onDone={() => onOpenChange(false)} />}
           </TabsContent>
