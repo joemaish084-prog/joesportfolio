@@ -11,6 +11,7 @@ import {
   Moon,
   MoreHorizontal,
   Search,
+  Settings,
   Eye,
   EyeOff,
   Sun,
@@ -44,7 +45,9 @@ const RECORDS_NAV: NavItem[] = [
   { to: "/hub/finance", label: "Finance", icon: Wallet },
 ];
 
-const NAV = [...WORK_NAV, ...RECORDS_NAV];
+const SETTINGS_NAV: NavItem = { to: "/hub/settings", label: "Settings", icon: Settings };
+
+const NAV = [...WORK_NAV, ...RECORDS_NAV, SETTINGS_NAV];
 // Phones get the four most-used sections in the dock; the rest live under More.
 const MOBILE_NAV = [NAV[0], NAV[1], NAV[3], RECORDS_NAV[2]];
 
@@ -273,6 +276,7 @@ export function HubShell(props: ShellProps) {
             </Tooltip>
           </DockIcon>
           <DockSeparator />
+          <DockNavItem item={SETTINGS_NAV} side="right" active={isActive(SETTINGS_NAV)} />
           <DockIcon className={cn(dockIconClass, "text-muted-foreground hover:bg-secondary hover:text-foreground")}>
             <Tooltip>
               <TooltipTrigger asChild>

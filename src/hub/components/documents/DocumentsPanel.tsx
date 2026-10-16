@@ -282,6 +282,7 @@ function EditDialog({ doc, onClose }: { doc: HubDocument | null; onClose: () => 
   const [kind, setKind] = useState<DocumentKind>("other");
   const [status, setStatus] = useState<DocumentStatus>("draft");
   const [client, setClient] = useState<string | null>(null);
+  const [isTemplate, setIsTemplate] = useState(false);
   const [notes, setNotes] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -291,6 +292,7 @@ function EditDialog({ doc, onClose }: { doc: HubDocument | null; onClose: () => 
     setKind(doc.kind);
     setStatus(doc.status);
     setClient(doc.client_id);
+    setIsTemplate(doc.is_template);
     setNotes(doc.notes ?? "");
     setError(null);
   }, [doc]);
@@ -305,7 +307,8 @@ function EditDialog({ doc, onClose }: { doc: HubDocument | null; onClose: () => 
           title: title.trim(),
           kind,
           status,
-          client_id: doc.is_template ? null : client,
+          is_template: isTemplate,
+          client_id: isTemplate ? null : client,
           notes: notes.trim() || null,
         },
       },
@@ -361,7 +364,16 @@ function EditDialog({ doc, onClose }: { doc: HubDocument | null; onClose: () => 
           </Select>
         </Field>
       </div>
-      {!doc?.is_template && (
+      <label className="flex items-center justify-between gap-4 rounded-xl bg-secondary/60 px-4 py-3">
+        <span>
+          <span className="block text-sm font-medium">Saved as a template</span>
+          <span className="block text-xs text-muted-foreground">
+            Turn off to file it under a client instead (e.g. an invoice saved as a template by mistake).
+          </span>
+        </span>
+        <Switch checked={isTemplate} onCheckedChange={setIsTemplate} />
+      </label>
+      {!isTemplate && (
         <Field label="Client">
           <ClientPicker value={client} onChange={setClient} allowNone noneLabel="General (no client)" />
         </Field>

@@ -12,6 +12,7 @@ import {
   ListChecks,
   Plus,
   Receipt,
+  Settings,
   Target,
   Upload,
   User,
@@ -42,6 +43,8 @@ const PAGES = [
   { label: "Reports", to: "/hub/reports", icon: BarChart3 },
   { label: "Finance", to: "/hub/finance", icon: Wallet },
   { label: "Pipeline", to: "/hub/pipeline", icon: Filter },
+  { label: "Settings", to: "/hub/settings", icon: Settings },
+  { label: "Clean up duplicates", to: "/hub/settings?tab=cleanup", icon: Users },
 ];
 
 const ACTIONS = [

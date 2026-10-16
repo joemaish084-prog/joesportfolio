@@ -12,6 +12,8 @@ import {
   Download,
   FileSpreadsheet,
   FileUp,
+  Mail,
+  MessageCircle,
   FileText,
   MoreHorizontal,
   Pencil,
@@ -49,6 +51,8 @@ import { PERIOD_LABEL, buildDashboard, inRange, monthlySeries, periodRange, type
 import { formatDate } from "../../lib/format";
 import { useKes } from "../../lib/privacy";
 import { useClients } from "../../lib/queries";
+import { invoiceReminder } from "../../lib/reminders";
+import { useSettings } from "../../lib/settings";
 import {
   EXPENSE_CATEGORY_LABEL,
   PAYMENT_METHOD_LABEL,
@@ -86,6 +90,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
   const payments = useRows("payments", "paid_on");
   const expenses = useRows("expenses", "spent_on");
   const clients = useClients();
+  const { settings } = useSettings();
   const saveInvoice = useSaveRow("invoices");
   const deleteInvoice = useDeleteRow("invoices", ["payments"]);
   const deletePayment = useDeleteRow("payments");
@@ -558,6 +563,34 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                                   <Banknote className="mr-2 h-4 w-4" /> Record payment
                                 </DropdownMenuItem>
                               )}
+                              {i.status === "sent" &&
+                                p < Number(i.amount) &&
+                                (() => {
+                                  const r = invoiceReminder({
+                                    invoice: i,
+                                    client: (clients.data ?? []).find((c) => c.id === i.client_id),
+                                    balance: Number(i.amount) - p,
+                                    business: settings.business,
+                                  });
+                                  return (
+                                    <>
+                                      {r.whatsapp && (
+                                        <DropdownMenuItem asChild>
+                                          <a href={r.whatsapp} target="_blank" rel="noreferrer">
+                                            <MessageCircle className="mr-2 h-4 w-4" /> Remind on WhatsApp
+                                          </a>
+                                        </DropdownMenuItem>
+                                      )}
+                                      {r.email && (
+                                        <DropdownMenuItem asChild>
+                                          <a href={r.email}>
+                                            <Mail className="mr-2 h-4 w-4" /> Remind by email
+                                          </a>
+                                        </DropdownMenuItem>
+                                      )}
+                                    </>
+                                  );
+                                })()}
                               {i.status === "draft" && (
                                 <DropdownMenuItem onSelect={() => markSent(i)}>
                                   <Send className="mr-2 h-4 w-4" /> Mark as sent

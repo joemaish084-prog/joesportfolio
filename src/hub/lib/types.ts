@@ -383,6 +383,41 @@ export type Lead = {
   updated_at: string;
 };
 
+// ---------------------------------------------------------------- phase 3
+
+export type BusinessProfile = {
+  name?: string;
+  tagline?: string;
+  location?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  website?: string;
+  kra_pin?: string;
+  mpesa_till?: string;
+  mpesa_paybill?: string;
+  mpesa_account?: string;
+  bank_name?: string;
+  bank_account_name?: string;
+  bank_account_number?: string;
+  bank_branch?: string;
+};
+
+export type InvoiceDefaults = {
+  due_days?: number;
+  /** Extra line under the payment details, e.g. "Thank you for your business". */
+  footer?: string;
+};
+
+export type HubSettings = {
+  id: boolean;
+  business: BusinessProfile;
+  invoice_defaults: InvoiceDefaults;
+  revenue_goal: number | null;
+  created_at: string;
+  updated_at: string;
+};
+
 type Generated = "id" | "created_at" | "updated_at";
 
 type TableDef<Row, Required extends keyof Row> = {
@@ -408,11 +443,18 @@ export type HubDatabase = {
       payments: TableDef<Payment, "client_id" | "amount">;
       expenses: TableDef<Expense, "description" | "amount">;
       leads: TableDef<Lead, "name">;
+      hub_settings: {
+        Row: HubSettings;
+        Insert: Partial<HubSettings>;
+        Update: Partial<Omit<HubSettings, "id" | "created_at" | "updated_at">>;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
       is_hub_admin: { Args: never; Returns: boolean };
       hub_apply_onboarding_template: { Args: { p_client_id: string }; Returns: number };
+      hub_merge_clients: { Args: { p_keep: string; p_drop: string }; Returns: undefined };
     };
     Enums: Record<string, never>;
     CompositeTypes: Record<string, never>;

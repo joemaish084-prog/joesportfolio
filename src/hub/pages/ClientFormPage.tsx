@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Check, ChevronLeft, Loader2, Plus, X } from "lucide-react";
+import { AlertTriangle, Check, ChevronLeft, Loader2, Plus, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,10 +9,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { Chips, Field, inputClass } from "../components/form";
 import { PageHeader, SkeletonBlock } from "../components/ui";
+import { findSimilarClients } from "../lib/duplicates";
 import { toNumberOrNull } from "../lib/format";
 import {
   useClient,
   useClientKpis,
+  useClients,
   useClientTypes,
   useSaveClient,
   type ClientDraft,
@@ -284,6 +286,7 @@ export default function ClientFormPage() {
   const { data: existing, isLoading } = useClient(id);
   const existingKpis = useClientKpis(id);
   const save = useSaveClient();
+  const allClients = useClients();
 
   const [form, setForm] = useState<FormState>(EMPTY);
   const [kpis, setKpis] = useState<KpiDraft[]>([]);
@@ -316,6 +319,12 @@ export default function ClientFormPage() {
   }, [isEdit, loaded, existing, existingKpis.data]);
 
   const type = types.data?.find((t) => t.id === form.client_type_id);
+  // Warn while typing if this client (by name, phone or email) is already in the hub.
+  const similar = findSimilarClients(
+    allClients.data ?? [],
+    { name: form.name, phone: form.phone, email: form.email },
+    id,
+  );
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) => setForm((f) => ({ ...f, [key]: value }));
 
   const setType = (typeId: string | null) => {
@@ -414,6 +423,21 @@ export default function ClientFormPage() {
                 autoFocus={!isEdit}
               />
             </Field>
+            {similar.length > 0 && (
+              <p className="flex flex-wrap items-center gap-x-1 rounded-xl bg-warning-soft px-3 py-2 text-sm text-warning sm:col-span-2">
+                <AlertTriangle className="h-4 w-4 shrink-0" />
+                Looks like you already have
+                {similar.slice(0, 3).map((c, i) => (
+                  <span key={c.id}>
+                    {i > 0 && ", "}
+                    <Link to={`/hub/clients/${c.id}`} className="font-semibold underline underline-offset-2">
+                      {c.name}
+                    </Link>
+                  </span>
+                ))}
+                . Open it instead of adding a duplicate?
+              </p>
+            )}
             <Field label="Business name" htmlFor="business_name">
               <Input
                 id="business_name"

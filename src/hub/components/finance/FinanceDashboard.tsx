@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import type { Dashboard, MonthPoint, Ranked } from "../../lib/financeStats";
 import { toNumberOrNull } from "../../lib/format";
 import { useKes, usePrivacy } from "../../lib/privacy";
+import { useSaveSettings, useSettings } from "../../lib/settings";
 import { MoneyInput } from "../form";
 import { AnimatedCircularProgressBar } from "../motion/animated-circular-progress-bar";
 import { BlurFade } from "../motion/blur-fade";
@@ -535,19 +536,33 @@ function AgingCard({ dash }: { dash: Dashboard }) {
 function GoalCard({ monthIn }: { monthIn: number }) {
   const kes = useKes();
   const { hidden } = usePrivacy();
-  const [goal, setGoal] = useState<number | null>(readGoal);
+  // Saved in Settings (same on every device); this device only until the settings table exists.
+  const { settings } = useSettings();
+  const saveSettings = useSaveSettings();
+  const [localGoal, setLocalGoal] = useState<number | null>(readGoal);
+  const goal = settings.revenueGoal ?? localGoal;
   const [draft, setDraft] = useState("");
   const [open, setOpen] = useState(false);
   const pct = goal ? Math.min(100, Math.round((monthIn / goal) * 100)) : 0;
 
   const save = () => {
     const n = toNumberOrNull(draft);
-    setGoal(n && n > 0 ? n : null);
-    try {
-      if (n && n > 0) localStorage.setItem(GOAL_KEY, String(n));
-      else localStorage.removeItem(GOAL_KEY);
-    } catch {
-      // not remembered
+    const next = n && n > 0 ? n : null;
+    if (settings.available) {
+      saveSettings.mutate({ revenue_goal: next });
+      try {
+        localStorage.removeItem(GOAL_KEY);
+      } catch {
+        // ignore
+      }
+    } else {
+      setLocalGoal(next);
+      try {
+        if (next) localStorage.setItem(GOAL_KEY, String(next));
+        else localStorage.removeItem(GOAL_KEY);
+      } catch {
+        // not remembered
+      }
     }
     setOpen(false);
   };
@@ -579,7 +594,9 @@ function GoalCard({ monthIn }: { monthIn: number }) {
             >
               <p className="text-sm font-medium">Monthly revenue goal</p>
               <MoneyInput value={draft} onChange={setDraft} placeholder="e.g. 300,000" />
-              <p className="text-xs text-muted-foreground">Saved on this device. Leave empty to remove.</p>
+              <p className="text-xs text-muted-foreground">
+                {settings.available ? "Saved to your settings." : "Saved on this device."} Leave empty to remove.
+              </p>
               <Button type="submit" size="sm" className="w-full rounded-full">
                 Save
               </Button>

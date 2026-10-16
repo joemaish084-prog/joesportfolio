@@ -1,11 +1,20 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Banknote, ChevronLeft, FileX, Pencil, Printer } from "lucide-react";
+import { Banknote, BellRing, ChevronLeft, Copy, FileX, Mail, MessageCircle, Pencil, Printer } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { InvoiceDialog, PaymentDialog } from "../components/finance/FinanceDialogs";
 import { EmptyState, Pill, SkeletonBlock } from "../components/ui";
 import { useRows } from "../lib/data";
-import { BUSINESS, INVOICE_STATE, invoiceState, paidByInvoice } from "../lib/finance";
+import { INVOICE_STATE, invoiceState, paidByInvoice } from "../lib/finance";
+import { invoiceReminder } from "../lib/reminders";
+import { paymentLines, useSettings } from "../lib/settings";
 import { formatDate } from "../lib/format";
 import { useKes } from "../lib/privacy";
 import { RevealWhilePrinting } from "../components/privacy";
@@ -33,6 +42,8 @@ function InvoicePage() {
 
   const invoice = invoices.data?.find((i) => i.id === id);
   const client = clients.data?.find((c) => c.id === invoice?.client_id);
+  const { settings } = useSettings();
+  const business = settings.business;
   const invoicePayments = useMemo(() => (payments.data ?? []).filter((p) => p.invoice_id === id), [payments.data, id]);
   const paid = invoice ? (paidByInvoice(payments.data ?? []).get(invoice.id) ?? 0) : 0;
 
@@ -57,6 +68,14 @@ function InvoicePage() {
 
   const state = INVOICE_STATE[invoiceState(invoice, paid)];
   const balance = Math.max(0, Number(invoice.amount) - paid);
+  const payLines = paymentLines(business);
+  // Import markers are for you, not the client: keep them off the printed invoice.
+  const notes = (invoice.notes ?? "")
+    .split(" · ")
+    .filter((part) => part.trim() && !/^Imported past invoice/i.test(part.trim()))
+    .join(" · ");
+  const reminder =
+    invoice.status === "sent" && balance > 0 ? invoiceReminder({ invoice, client, balance, business }) : null;
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -72,6 +91,49 @@ function InvoicePage() {
           <Button variant="secondary" className="rounded-full" onClick={() => setEditing(true)}>
             <Pencil className="mr-1.5 h-4 w-4" /> Edit
           </Button>
+          {reminder && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="secondary" className="rounded-full">
+                  <BellRing className="mr-1.5 h-4 w-4" /> Remind
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-60 rounded-xl">
+                <DropdownMenuItem disabled={!reminder.whatsapp} asChild={!!reminder.whatsapp}>
+                  {reminder.whatsapp ? (
+                    <a href={reminder.whatsapp} target="_blank" rel="noreferrer">
+                      <MessageCircle className="mr-2 h-4 w-4" /> Send on WhatsApp
+                    </a>
+                  ) : (
+                    <span>
+                      <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp (no phone on client)
+                    </span>
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled={!reminder.email} asChild={!!reminder.email}>
+                  {reminder.email ? (
+                    <a href={reminder.email}>
+                      <Mail className="mr-2 h-4 w-4" /> Send by email
+                    </a>
+                  ) : (
+                    <span>
+                      <Mail className="mr-2 h-4 w-4" /> Email (no email on client)
+                    </span>
+                  )}
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onSelect={() =>
+                    navigator.clipboard
+                      .writeText(reminder.text)
+                      .then(() => toast.success("Reminder copied"))
+                      .catch(() => toast.error("Couldn't copy"))
+                  }
+                >
+                  <Copy className="mr-2 h-4 w-4" /> Copy message
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
           {invoice.status !== "void" && balance > 0 && (
             <Button variant="secondary" className="rounded-full" onClick={() => setPaying(true)}>
               <Banknote className="mr-1.5 h-4 w-4" /> Record payment
@@ -89,10 +151,15 @@ function InvoicePage() {
             <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground print:[-webkit-print-color-adjust:exact] print:[print-color-adjust:exact]">
               JM
             </div>
-            <p className="text-lg font-bold">{BUSINESS.name}</p>
-            <p className="text-sm text-muted-foreground">{BUSINESS.tagline}</p>
-            <p className="text-sm text-muted-foreground">{BUSINESS.location}</p>
-            <p className="text-sm text-muted-foreground">{BUSINESS.website}</p>
+            <p className="text-lg font-bold">{business.name}</p>
+            {[business.tagline, business.address, business.location, business.phone, business.email, business.website]
+              .filter(Boolean)
+              .map((line) => (
+                <p key={line} className="text-sm text-muted-foreground">
+                  {line}
+                </p>
+              ))}
+            {business.kra_pin && <p className="text-sm text-muted-foreground">KRA PIN: {business.kra_pin}</p>}
           </div>
           <div className="sm:text-right">
             <p className="text-3xl font-bold tracking-tight">Invoice</p>
@@ -165,14 +232,31 @@ function InvoicePage() {
           </dl>
         </div>
 
-        {invoice.notes && (
-          <section className="mt-8 rounded-2xl bg-secondary/60 p-4 print:bg-transparent print:p-0">
-            <p className="hub-label mb-1">Payment details & notes</p>
-            <p className="whitespace-pre-wrap text-sm">{invoice.notes}</p>
+        {(payLines.length > 0 || notes) && (
+          <section className="mt-8 grid gap-4 rounded-2xl bg-secondary/60 p-4 sm:grid-cols-2 print:bg-transparent print:p-0">
+            {payLines.length > 0 && (
+              <div>
+                <p className="hub-label mb-1">How to pay</p>
+                {payLines.map((l) => (
+                  <p key={l} className="hub-tabular text-sm">
+                    {l}
+                  </p>
+                ))}
+                <p className="mt-1 text-xs text-muted-foreground">Please use {invoice.number} as the reference.</p>
+              </div>
+            )}
+            {notes && (
+              <div>
+                <p className="hub-label mb-1">Notes</p>
+                <p className="whitespace-pre-wrap text-sm">{notes}</p>
+              </div>
+            )}
           </section>
         )}
 
-        <p className="mt-10 text-center text-xs text-muted-foreground">Thank you for your business.</p>
+        <p className="mt-10 text-center text-xs text-muted-foreground">
+          {settings.invoice.footer || "Thank you for your business."}
+        </p>
       </article>
 
       {invoicePayments.length > 0 && (

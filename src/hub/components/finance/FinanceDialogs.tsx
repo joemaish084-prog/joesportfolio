@@ -12,6 +12,7 @@ import { useRows, useSaveRow } from "../../lib/data";
 import { invoiceState, nextInvoiceNumber, paidByInvoice } from "../../lib/finance";
 import { formatKES, toNumberOrNull } from "../../lib/format";
 import { useClients } from "../../lib/queries";
+import { useSettings } from "../../lib/settings";
 import {
   EXPENSE_CATEGORIES,
   EXPENSE_CATEGORY_LABEL,
@@ -51,6 +52,7 @@ export function InvoiceDialog({
   const save = useSaveRow("invoices");
   const invoices = useRows("invoices", "issue_date");
   const clients = useClients();
+  const { settings } = useSettings();
   const [client, setClient] = useState<string | null>(null);
   const [number, setNumber] = useState("");
   const [title, setTitle] = useState("");
@@ -68,7 +70,7 @@ export function InvoiceDialog({
     setNumber(invoice?.number ?? nextInvoiceNumber(invoices.data ?? []));
     setTitle(source?.title ?? "");
     setIssueDate(invoice?.issue_date ?? today());
-    setDueDate(invoice?.due_date ?? format(addDays(new Date(), 14), "yyyy-MM-dd"));
+    setDueDate(invoice?.due_date ?? format(addDays(new Date(), settings.invoice.due_days), "yyyy-MM-dd"));
     setLines(
       source?.line_items.length
         ? source.line_items.map((l) => ({
@@ -568,6 +570,7 @@ export function RetainerRunDialog({ open, onOpenChange }: { open: boolean; onOpe
   const save = useSaveRow("invoices");
   const invoices = useRows("invoices", "issue_date");
   const clients = useClients();
+  const { settings } = useSettings();
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [status, setStatus] = useState<InvoiceStatus>("draft");
   const [dueDays, setDueDays] = useState("14");
@@ -598,7 +601,7 @@ export function RetainerRunDialog({ open, onOpenChange }: { open: boolean; onOpe
     if (!open) return;
     setSelected(new Set(eligible.filter((c) => !alreadyBilled.has(c.id)).map((c) => c.id)));
     setStatus("draft");
-    setDueDays("14");
+    setDueDays(String(settings.invoice.due_days));
     // Reuse the payment details from the latest invoice.
     const latest = [...(invoices.data ?? [])]
       .sort((a, b) => b.created_at.localeCompare(a.created_at))
@@ -712,11 +715,13 @@ export function RetainerRunDialog({ open, onOpenChange }: { open: boolean; onOpe
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {["7", "14", "30"].map((d) => (
-                <SelectItem key={d} value={d}>
-                  {d} days
-                </SelectItem>
-              ))}
+              {[...new Set(["7", "14", "30", String(settings.invoice.due_days)])]
+                .sort((a, b) => Number(a) - Number(b))
+                .map((d) => (
+                  <SelectItem key={d} value={d}>
+                    {d} days
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </Field>

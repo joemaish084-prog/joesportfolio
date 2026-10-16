@@ -2,14 +2,6 @@ import { format, isBefore, parseISO, startOfToday } from "date-fns";
 import type { PillTone } from "../components/ui";
 import type { Invoice, Payment } from "./types";
 
-/** Shown on printed invoices. Edit to change your letterhead. */
-export const BUSINESS = {
-  name: "Joseph Maina",
-  tagline: "Digital Marketing",
-  location: "Nairobi, Kenya",
-  website: "josephmaina.co.ke",
-};
-
 export type InvoiceState = "draft" | "sent" | "part_paid" | "paid" | "overdue" | "void";
 
 export const INVOICE_STATE: Record<InvoiceState, { label: string; tone: PillTone }> = {
