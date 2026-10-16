@@ -29,6 +29,8 @@ export type ReadInvoice = {
 type PdfJs = typeof import("pdfjs-dist");
 let pdfjsPromise: Promise<PdfJs> | null = null;
 
+const AI_TIMEOUT_MS = 45_000;
+
 /** pdf.js (and its worker) load only when the first PDF is read. */
 function loadPdfJs() {
   pdfjsPromise ??= Promise.all([import("pdfjs-dist"), import("pdfjs-dist/build/pdf.worker.min.mjs?url")]).then(
@@ -72,19 +74,42 @@ export async function extractPdf(file: File, maxPages = 4) {
   return { doc, text: pages.join("\n\n").trim(), pageCount: doc.numPages };
 }
 
+// Longest side of a page image sent for reading. Enough for invoice text; much
+// larger and drawing/encoding the page stalls the browser (scans often have
+// huge page sizes).
+const MAX_RENDER_PX = 1600;
+
+const nextFrame = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+function blobToDataUrl(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
 /** First pages as JPEG data URLs, for scanned invoices with no text layer. */
 async function renderPages(doc: Awaited<ReturnType<typeof extractPdf>>["doc"], maxPages = 2) {
   const images: string[] = [];
   for (let p = 1; p <= Math.min(doc.numPages, maxPages); p++) {
     const page = await doc.getPage(p);
-    const viewport = page.getViewport({ scale: 1.6 });
+    const base = page.getViewport({ scale: 1 });
+    const scale = Math.min(1.6, MAX_RENDER_PX / Math.max(base.width, base.height));
+    const viewport = page.getViewport({ scale });
     const canvas = document.createElement("canvas");
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
     const ctx = canvas.getContext("2d");
     if (!ctx) break;
     await page.render({ canvasContext: ctx, viewport }).promise;
-    images.push(canvas.toDataURL("image/jpeg", 0.8));
+    // toBlob encodes off the main thread; toDataURL would block the page.
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.8));
+    canvas.width = canvas.height = 0; // free the bitmap right away
+    page.cleanup();
+    if (blob) images.push(await blobToDataUrl(blob));
+    await nextFrame();
   }
   return images;
 }
@@ -191,6 +216,8 @@ export async function readInvoicePdf(
   try {
     const { data, error } = await supabase.functions.invoke("hub-read-invoice", {
       body: { text: scanned ? "" : text, images, fileName: file.name, clients: knownClients },
+      // A stuck request shouldn't leave the card "Reading…" forever.
+      timeout: AI_TIMEOUT_MS,
     });
     if (error) throw error;
     const ai = (data as { invoice?: AiInvoice })?.invoice;

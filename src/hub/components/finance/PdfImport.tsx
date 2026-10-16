@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { addDays, format } from "date-fns";
 import {
   AlertTriangle,
@@ -97,8 +97,12 @@ export function PdfImport({ onDone }: { onDone: () => void }) {
   const urls = useRef<string[]>([]);
   useEffect(() => () => urls.current.forEach((u) => URL.revokeObjectURL(u)), []);
 
-  const update = (id: string, patch: Partial<Draft>) =>
-    setDrafts((ds) => ds.map((d) => (d.id === id ? { ...d, ...patch } : d)));
+  // Stable callbacks so each card only re-renders when its own draft changes.
+  const update = useCallback(
+    (id: string, patch: Partial<Draft>) => setDrafts((ds) => ds.map((d) => (d.id === id ? { ...d, ...patch } : d))),
+    [],
+  );
+  const remove = useCallback((id: string) => setDrafts((ds) => ds.filter((x) => x.id !== id)), []);
 
   const matchClient = (name: string | null) => {
     if (!name) return null;
@@ -403,9 +407,9 @@ export function PdfImport({ onDone }: { onDone: () => void }) {
           <DraftCard
             key={d.id}
             draft={d}
-            problems={draftProblems.get(d.id) ?? []}
-            onChange={(patch) => update(d.id, patch)}
-            onRemove={() => setDrafts((ds) => ds.filter((x) => x.id !== d.id))}
+            problems={(draftProblems.get(d.id) ?? []).join("|")}
+            onChange={update}
+            onRemove={remove}
           />
         ))}
       </ul>
@@ -442,17 +446,21 @@ export function PdfImport({ onDone }: { onDone: () => void }) {
 
 // ---------------------------------------------------------------- one PDF
 
-function DraftCard({
+const DraftCard = memo(function DraftCard({
   draft: d,
-  problems,
-  onChange,
-  onRemove,
+  problems: problemText,
+  onChange: onChangeById,
+  onRemove: onRemoveById,
 }: {
   draft: Draft;
-  problems: string[];
-  onChange: (patch: Partial<Draft>) => void;
-  onRemove: () => void;
+  /** "|"-joined, so an unchanged list doesn't break memoisation. */
+  problems: string;
+  onChange: (id: string, patch: Partial<Draft>) => void;
+  onRemove: (id: string) => void;
 }) {
+  const problems = problemText ? problemText.split("|") : [];
+  const onChange = (patch: Partial<Draft>) => onChangeById(d.id, patch);
+  const onRemove = () => onRemoveById(d.id);
   const [pickExisting, setPickExisting] = useState(false);
   const isNew = !d.clientId;
   const busy = d.status !== "ready";
@@ -643,4 +651,4 @@ function DraftCard({
       )}
     </li>
   );
-}
+});
