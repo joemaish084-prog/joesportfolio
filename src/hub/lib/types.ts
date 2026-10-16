@@ -132,6 +132,238 @@ export type OnboardingItem = {
   updated_at: string;
 };
 
+// ---------------------------------------------------------------- phase 2
+
+export const DOCUMENT_KINDS = ["contract", "proposal", "quotation", "invoice", "report", "brief", "receipt", "other"] as const;
+export type DocumentKind = (typeof DOCUMENT_KINDS)[number];
+export const DOCUMENT_KIND_LABEL: Record<DocumentKind, string> = {
+  contract: "Contract",
+  proposal: "Proposal",
+  quotation: "Quotation",
+  invoice: "Invoice",
+  report: "Report",
+  brief: "Brief",
+  receipt: "Receipt",
+  other: "Other",
+};
+
+export const DOCUMENT_STATUSES = ["draft", "sent", "signed", "approved", "declined", "final"] as const;
+export type DocumentStatus = (typeof DOCUMENT_STATUSES)[number];
+export const DOCUMENT_STATUS_LABEL: Record<DocumentStatus, string> = {
+  draft: "Draft",
+  sent: "Sent",
+  signed: "Signed",
+  approved: "Approved",
+  declined: "Declined",
+  final: "Final",
+};
+
+export type HubDocument = {
+  id: string;
+  client_id: string | null;
+  kind: DocumentKind;
+  title: string;
+  status: DocumentStatus;
+  is_template: boolean;
+  storage_path: string;
+  file_name: string;
+  mime_type: string | null;
+  size_bytes: number | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const WORK_CATEGORIES = ["ads", "content", "seo", "design", "web", "meeting", "reporting", "admin", "other"] as const;
+export type WorkCategory = (typeof WORK_CATEGORIES)[number];
+export const WORK_CATEGORY_LABEL: Record<WorkCategory, string> = {
+  ads: "Ads",
+  content: "Content",
+  seo: "SEO",
+  design: "Design",
+  web: "Web",
+  meeting: "Meeting",
+  reporting: "Reporting",
+  admin: "Admin",
+  other: "Other",
+};
+
+export type WorkLogEntry = {
+  id: string;
+  client_id: string;
+  worked_on: string;
+  title: string;
+  details: string | null;
+  category: WorkCategory;
+  minutes: number | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Report = {
+  id: string;
+  client_id: string;
+  title: string;
+  period_start: string;
+  period_end: string;
+  summary: string | null;
+  document_id: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ReportMetric = {
+  id: string;
+  report_id: string;
+  client_kpi_id: string;
+  value: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type InvoiceLineItem = { description: string; quantity: number; unit_price: number };
+export const INVOICE_STATUSES = ["draft", "sent", "void"] as const;
+export type InvoiceStatus = (typeof INVOICE_STATUSES)[number];
+
+export type Invoice = {
+  id: string;
+  client_id: string;
+  number: string;
+  title: string | null;
+  issue_date: string;
+  due_date: string | null;
+  line_items: InvoiceLineItem[];
+  amount: number;
+  currency: string;
+  status: InvoiceStatus;
+  notes: string | null;
+  document_id: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const PAYMENT_METHODS = ["mpesa", "bank", "cash", "card", "cheque", "other"] as const;
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
+  mpesa: "M-Pesa",
+  bank: "Bank transfer",
+  cash: "Cash",
+  card: "Card",
+  cheque: "Cheque",
+  other: "Other",
+};
+
+export type Payment = {
+  id: string;
+  client_id: string;
+  invoice_id: string | null;
+  amount: number;
+  paid_on: string;
+  method: PaymentMethod;
+  reference: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const EXPENSE_CATEGORIES = [
+  "ad_spend",
+  "software",
+  "contractor",
+  "equipment",
+  "internet",
+  "transport",
+  "marketing",
+  "office",
+  "other",
+] as const;
+export type ExpenseCategory = (typeof EXPENSE_CATEGORIES)[number];
+export const EXPENSE_CATEGORY_LABEL: Record<ExpenseCategory, string> = {
+  ad_spend: "Ad spend",
+  software: "Software",
+  contractor: "Contractor",
+  equipment: "Equipment",
+  internet: "Internet & phone",
+  transport: "Transport",
+  marketing: "Marketing",
+  office: "Office",
+  other: "Other",
+};
+
+export type Expense = {
+  id: string;
+  client_id: string | null;
+  spent_on: string;
+  category: ExpenseCategory;
+  description: string;
+  vendor: string | null;
+  amount: number;
+  receipt_document_id: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const LEAD_STAGES = ["new", "contacted", "meeting", "proposal", "won", "lost"] as const;
+export type LeadStage = (typeof LEAD_STAGES)[number];
+export const LEAD_STAGE_LABEL: Record<LeadStage, string> = {
+  new: "New",
+  contacted: "Contacted",
+  meeting: "Meeting",
+  proposal: "Proposal",
+  won: "Won",
+  lost: "Lost",
+};
+
+export const LEAD_SOURCES = [
+  "referral",
+  "website",
+  "instagram",
+  "facebook",
+  "tiktok",
+  "linkedin",
+  "whatsapp",
+  "google",
+  "event",
+  "other",
+] as const;
+export type LeadSource = (typeof LEAD_SOURCES)[number];
+export const LEAD_SOURCE_LABEL: Record<LeadSource, string> = {
+  referral: "Referral",
+  website: "Website",
+  instagram: "Instagram",
+  facebook: "Facebook",
+  tiktok: "TikTok",
+  linkedin: "LinkedIn",
+  whatsapp: "WhatsApp",
+  google: "Google",
+  event: "Event",
+  other: "Other",
+};
+
+export type Lead = {
+  id: string;
+  name: string;
+  contact_person: string | null;
+  email: string | null;
+  phone: string | null;
+  website: string | null;
+  industry: string | null;
+  client_type_id: string | null;
+  source: LeadSource;
+  stage: LeadStage;
+  estimated_value: number | null;
+  services: string[];
+  next_follow_up: string | null;
+  lost_reason: string | null;
+  notes: string | null;
+  converted_client_id: string | null;
+  position: number;
+  archived_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 type Generated = "id" | "created_at" | "updated_at";
 
 type TableDef<Row, Required extends keyof Row> = {
@@ -149,6 +381,14 @@ export type HubDatabase = {
       client_kpis: TableDef<ClientKpi, "client_id" | "name">;
       onboarding_templates: TableDef<OnboardingTemplate, "title">;
       onboarding_items: TableDef<OnboardingItem, "client_id" | "title">;
+      documents: TableDef<HubDocument, "title" | "storage_path" | "file_name">;
+      work_log: TableDef<WorkLogEntry, "client_id" | "title">;
+      reports: TableDef<Report, "client_id" | "title" | "period_start" | "period_end">;
+      report_metrics: TableDef<ReportMetric, "report_id" | "client_kpi_id" | "value">;
+      invoices: TableDef<Invoice, "client_id" | "number" | "amount">;
+      payments: TableDef<Payment, "client_id" | "amount">;
+      expenses: TableDef<Expense, "description" | "amount">;
+      leads: TableDef<Lead, "name">;
     };
     Views: Record<string, never>;
     Functions: {

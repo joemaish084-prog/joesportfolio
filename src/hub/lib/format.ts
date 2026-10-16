@@ -39,3 +39,18 @@ export function toNumberOrNull(value: string) {
   const n = Number(cleaned);
   return Number.isFinite(n) ? n : null;
 }
+
+const kpiNumber = new Intl.NumberFormat("en-KE", { maximumFractionDigits: 2 });
+
+/** A KPI value in its unit: "4.2", "KES 12,000", "3.5%". */
+export function formatKpi(value: number | null | undefined, unit: "number" | "kes" | "percent") {
+  if (value === null || value === undefined || Number.isNaN(value)) return "—";
+  if (unit === "kes") return formatKES(value);
+  if (unit === "percent") return `${kpiNumber.format(value)}%`;
+  return kpiNumber.format(value);
+}
+
+/** Cost-type KPIs (cost per lead, CPA…) improve when they go down. */
+export function lowerIsBetter(kpiName: string) {
+  return /\b(cost|cpa|cpl|cpc|cpm|cost per|spend|bounce|churn)\b/i.test(kpiName);
+}

@@ -165,3 +165,77 @@ export function Row({ label, children }: { label: string; children: ReactNode })
 export function SkeletonBlock({ className }: { className?: string }) {
   return <div className={cn("animate-pulse rounded-xl bg-secondary", className)} />;
 }
+
+export type PillTone = "neutral" | "accent" | "warning" | "muted" | "outline";
+
+const PILL_TONE: Record<PillTone, string> = {
+  neutral: "bg-secondary text-secondary-foreground",
+  accent: "bg-tint text-on-tint",
+  warning: "bg-warning-soft text-warning",
+  muted: "bg-secondary text-muted-foreground",
+  outline: "bg-transparent text-muted-foreground ring-1 ring-inset ring-border",
+};
+
+export function Pill({ tone = "neutral", children, className }: { tone?: PillTone; children: ReactNode; className?: string }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-medium",
+        PILL_TONE[tone],
+        className,
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+/** Small summary tile: label, big value, optional hint. */
+export function StatTile({
+  label,
+  children,
+  hint,
+  icon: Icon,
+  warn,
+  className,
+}: {
+  label: string;
+  children: ReactNode;
+  hint?: ReactNode;
+  icon?: LucideIcon;
+  warn?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={cn("hub-card p-4 md:p-5", className)}>
+      <div className="flex items-start justify-between gap-2">
+        <span className="hub-label">{label}</span>
+        {Icon && (
+          <span
+            className={cn(
+              "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg",
+              warn ? "bg-warning-soft text-warning" : "bg-tint text-on-tint",
+            )}
+          >
+            <Icon className="h-3.5 w-3.5" strokeWidth={2} />
+          </span>
+        )}
+      </div>
+      <div className={cn("mt-2 text-[1.5rem] font-bold leading-tight tracking-tight md:text-[1.75rem]", warn && "text-warning")}>
+        {children}
+      </div>
+      {hint && <p className="mt-1 text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
+}
+
+/** Card frame around a shadcn Table that scrolls sideways on small screens. */
+export function TableCard({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div className={cn("hub-card overflow-hidden", className)}>
+      <div className="overflow-x-auto [&_td]:px-4 [&_td]:py-3 [&_th]:h-10 [&_th]:px-4 [&_th]:text-xs [&_th]:font-medium [&_tr]:border-border/60">
+        {children}
+      </div>
+    </div>
+  );
+}
