@@ -10,25 +10,10 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.4"
   }
   public: {
     Tables: {
-      admin_settings: {
-        Row: {
-          id: boolean
-          passcode_hash: string
-        }
-        Insert: {
-          id?: boolean
-          passcode_hash: string
-        }
-        Update: {
-          id?: boolean
-          passcode_hash?: string
-        }
-        Relationships: []
-      }
       agency_leads: {
         Row: {
           budget_range: string | null
@@ -71,99 +56,6 @@ export type Database = {
         }
         Relationships: []
       }
-      blog_posts: {
-        Row: {
-          content: string
-          created_at: string
-          id: string
-          meta_description: string
-          read_time: number
-          title: string
-          topic: string
-        }
-        Insert: {
-          content: string
-          created_at?: string
-          id?: string
-          meta_description: string
-          read_time?: number
-          title: string
-          topic: string
-        }
-        Update: {
-          content?: string
-          created_at?: string
-          id?: string
-          meta_description?: string
-          read_time?: number
-          title?: string
-          topic?: string
-        }
-        Relationships: []
-      }
-      chat_leads: {
-        Row: {
-          booked: boolean
-          budget_range: string | null
-          business_name: string | null
-          created_at: string
-          email: string | null
-          id: string
-          industry: string | null
-          name: string | null
-          need: string | null
-          page_path: string | null
-          source: string | null
-          start_timeframe: string | null
-          status: string
-          step: string
-          updated_at: string
-          website_or_social: string | null
-          what_they_sell: string | null
-          whatsapp: string | null
-        }
-        Insert: {
-          booked?: boolean
-          budget_range?: string | null
-          business_name?: string | null
-          created_at?: string
-          email?: string | null
-          id?: string
-          industry?: string | null
-          name?: string | null
-          need?: string | null
-          page_path?: string | null
-          source?: string | null
-          start_timeframe?: string | null
-          status?: string
-          step?: string
-          updated_at?: string
-          website_or_social?: string | null
-          what_they_sell?: string | null
-          whatsapp?: string | null
-        }
-        Update: {
-          booked?: boolean
-          budget_range?: string | null
-          business_name?: string | null
-          created_at?: string
-          email?: string | null
-          id?: string
-          industry?: string | null
-          name?: string | null
-          need?: string | null
-          page_path?: string | null
-          source?: string | null
-          start_timeframe?: string | null
-          status?: string
-          step?: string
-          updated_at?: string
-          website_or_social?: string | null
-          what_they_sell?: string | null
-          whatsapp?: string | null
-        }
-        Relationships: []
-      }
       contact_messages: {
         Row: {
           created_at: string
@@ -194,107 +86,12 @@ export type Database = {
         }
         Relationships: []
       }
-      pulses: {
-        Row: {
-          created_at: string
-          duration_ms: number | null
-          element_selector: string | null
-          element_text: string | null
-          event_type: string
-          id: number
-          page_path: string
-          page_title: string | null
-          referrer: string | null
-          session_id: string
-          visitor_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          duration_ms?: number | null
-          element_selector?: string | null
-          element_text?: string | null
-          event_type: string
-          id?: never
-          page_path: string
-          page_title?: string | null
-          referrer?: string | null
-          session_id: string
-          visitor_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          duration_ms?: number | null
-          element_selector?: string | null
-          element_text?: string | null
-          event_type?: string
-          id?: never
-          page_path?: string
-          page_title?: string | null
-          referrer?: string | null
-          session_id?: string
-          visitor_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "pulses_visitor_id_fkey"
-            columns: ["visitor_id"]
-            isOneToOne: false
-            referencedRelation: "visitors"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      visitors: {
-        Row: {
-          browser: string | null
-          device_id: string | null
-          device_type: string | null
-          first_seen: string
-          id: string
-          ip_hash: string
-          is_bot: boolean
-          last_seen: string
-          os: string | null
-          user_agent: string | null
-          visit_count: number
-        }
-        Insert: {
-          browser?: string | null
-          device_id?: string | null
-          device_type?: string | null
-          first_seen?: string
-          id?: string
-          ip_hash: string
-          is_bot?: boolean
-          last_seen?: string
-          os?: string | null
-          user_agent?: string | null
-          visit_count?: number
-        }
-        Update: {
-          browser?: string | null
-          device_id?: string | null
-          device_type?: string | null
-          first_seen?: string
-          id?: string
-          ip_hash?: string
-          is_bot?: boolean
-          last_seen?: string
-          os?: string | null
-          user_agent?: string | null
-          visit_count?: number
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      get_admin_analytics: { Args: { p_days?: number }; Returns: Json }
-      pulse_bot_name: { Args: { ua: string }; Returns: string }
-      pulse_channel: { Args: { ref: string }; Returns: string }
-      touch_visitor: { Args: { p_visitor_id: string }; Returns: undefined }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
