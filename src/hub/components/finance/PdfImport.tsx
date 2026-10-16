@@ -77,7 +77,14 @@ function problemsOf(d: Draft, takenNumbers: Set<string>) {
   return out;
 }
 
-export function PdfImport({ onDone }: { onDone: () => void }) {
+export function PdfImport({
+  onDone,
+  onPendingChange,
+}: {
+  onDone: () => void;
+  /** How many PDFs are on screen but not imported yet (to warn before closing). */
+  onPendingChange?: (count: number) => void;
+}) {
   const qc = useQueryClient();
   const clients = useClients();
   const invoices = useRows("invoices", "issue_date");
@@ -95,6 +102,18 @@ export function PdfImport({ onDone }: { onDone: () => void }) {
 
   // Release the PDF preview links when the dialog closes.
   const urls = useRef<string[]>([]);
+
+  // Nothing here is saved until Import: tell the dialog, and warn before the tab is closed or reloaded.
+  useEffect(() => {
+    onPendingChange?.(drafts.length);
+    if (!drafts.length) return;
+    const warn = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [drafts.length, onPendingChange]);
   useEffect(() => () => urls.current.forEach((u) => URL.revokeObjectURL(u)), []);
 
   // Stable callbacks so each card only re-renders when its own draft changes.
@@ -315,6 +334,8 @@ export function PdfImport({ onDone }: { onDone: () => void }) {
       [tableKey("invoices"), tableKey("payments"), tableKey("documents"), hubKeys.clients, hubKeys.onboarding].forEach(
         (key) => qc.invalidateQueries({ queryKey: key }),
       );
+      setDrafts([]);
+      onPendingChange?.(0);
       toast.success(
         `Imported ${done} ${done === 1 ? "invoice" : "invoices"}${ids.size ? `, added ${ids.size} new ${ids.size === 1 ? "client" : "clients"}` : ""}`,
       );

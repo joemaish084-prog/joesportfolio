@@ -13,6 +13,16 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -609,48 +619,97 @@ function SingleImport({ onDone }: { onDone: () => void }) {
 /** Bring past invoices (and what was paid on them) into the hub so the numbers catch up. */
 export function ImportInvoicesDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const [tab, setTab] = useState("pdf");
+  const [pendingPdfs, setPendingPdfs] = useState(0);
+  const [confirmClose, setConfirmClose] = useState(false);
+
+  // Closing with PDFs read but not imported would throw that work away, so ask first.
+  const requestOpenChange = (next: boolean) => {
+    if (!next && pendingPdfs > 0) setConfirmClose(true);
+    else onOpenChange(next);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92dvh] gap-0 overflow-y-auto rounded-3xl border-border/70 bg-card p-0 sm:max-w-4xl sm:rounded-3xl">
-        <DialogHeader className="px-6 pb-2 pt-6 text-left">
-          <DialogTitle className="text-xl">Import past invoices</DialogTitle>
-          <DialogDescription>
-            Bring in invoices from before the hub, with what was paid on them, so your totals, charts and balances catch
-            up.
-          </DialogDescription>
-        </DialogHeader>
-        <Tabs value={tab} onValueChange={setTab} className="px-6 pb-6 pt-2">
-          <TabsList className="mb-5 h-auto rounded-xl bg-secondary p-1">
-            <TabsTrigger
+    <>
+      <Dialog open={open} onOpenChange={requestOpenChange}>
+        <DialogContent className="max-h-[92dvh] gap-0 overflow-y-auto rounded-3xl border-border/70 bg-card p-0 sm:max-w-4xl sm:rounded-3xl">
+          <DialogHeader className="px-6 pb-2 pt-6 text-left">
+            <DialogTitle className="text-xl">Import past invoices</DialogTitle>
+            <DialogDescription>
+              Bring in invoices from before the hub, with what was paid on them, so your totals, charts and balances
+              catch up.
+            </DialogDescription>
+          </DialogHeader>
+          <Tabs value={tab} onValueChange={setTab} className="px-6 pb-6 pt-2">
+            <TabsList className="mb-5 h-auto rounded-xl bg-secondary p-1">
+              <TabsTrigger
+                value="pdf"
+                className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              >
+                <FileText className="mr-1.5 h-4 w-4" /> From PDFs
+              </TabsTrigger>
+              <TabsTrigger
+                value="sheet"
+                className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              >
+                <FileSpreadsheet className="mr-1.5 h-4 w-4" /> From a spreadsheet
+              </TabsTrigger>
+              <TabsTrigger
+                value="single"
+                className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              >
+                <FileUp className="mr-1.5 h-4 w-4" /> One at a time
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent
+              forceMount
               value="pdf"
-              className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0 data-[state=inactive]:hidden"
             >
-              <FileText className="mr-1.5 h-4 w-4" /> From PDFs
-            </TabsTrigger>
-            <TabsTrigger
+              {open && <PdfImport onDone={() => onOpenChange(false)} onPendingChange={setPendingPdfs} />}
+            </TabsContent>
+            <TabsContent
+              forceMount
               value="sheet"
-              className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0 data-[state=inactive]:hidden"
             >
-              <FileSpreadsheet className="mr-1.5 h-4 w-4" /> From a spreadsheet
-            </TabsTrigger>
-            <TabsTrigger
+              {open && <SpreadsheetImport onDone={() => onOpenChange(false)} />}
+            </TabsContent>
+            <TabsContent
+              forceMount
               value="single"
-              className="rounded-lg px-3.5 py-1.5 data-[state=active]:bg-card data-[state=active]:shadow-hub"
+              className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0 data-[state=inactive]:hidden"
             >
-              <FileUp className="mr-1.5 h-4 w-4" /> One at a time
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="pdf" className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0">
-            {open && <PdfImport onDone={() => onOpenChange(false)} />}
-          </TabsContent>
-          <TabsContent value="sheet" className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0">
-            {open && <SpreadsheetImport onDone={() => onOpenChange(false)} />}
-          </TabsContent>
-          <TabsContent value="single" className="mt-0 focus-visible:ring-0 focus-visible:ring-offset-0">
-            {open && <SingleImport onDone={() => onOpenChange(false)} />}
-          </TabsContent>
-        </Tabs>
-      </DialogContent>
-    </Dialog>
+              {open && <SingleImport onDone={() => onOpenChange(false)} />}
+            </TabsContent>
+          </Tabs>
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={confirmClose} onOpenChange={setConfirmClose}>
+        <AlertDialogContent className="rounded-3xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {pendingPdfs} {pendingPdfs === 1 ? "invoice isn't" : "invoices aren't"} imported yet
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Nothing is saved until you click Import. If you close now, the details read from your PDFs and any edits
+              you made will be lost.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-full">Keep reviewing</AlertDialogCancel>
+            <AlertDialogAction
+              className="rounded-full bg-destructive bg-none text-destructive-foreground shadow-none hover:bg-destructive/90"
+              onClick={() => {
+                setPendingPdfs(0);
+                onOpenChange(false);
+              }}
+            >
+              Close without importing
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
