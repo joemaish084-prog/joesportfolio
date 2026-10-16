@@ -58,7 +58,16 @@ export function Money({ value, className }: { value: number | null | undefined; 
 }
 
 /** Blurs a chart (or anything) while amounts are hidden. */
-export function PrivateBlur({ children, className }: { children: ReactNode; className?: string }) {
+export function PrivateBlur({
+  children,
+  className,
+  quiet,
+}: {
+  children: ReactNode;
+  className?: string;
+  /** Blur only, no "show" button (for small sparklines). */
+  quiet?: boolean;
+}) {
   const { hidden, setHidden } = usePrivacy();
   return (
     <div className={cn("relative", className)}>
@@ -68,7 +77,7 @@ export function PrivateBlur({ children, className }: { children: ReactNode; clas
       >
         {children}
       </div>
-      {hidden && (
+      {hidden && !quiet && (
         <button
           type="button"
           onClick={() => setHidden(false)}

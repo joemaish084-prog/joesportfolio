@@ -45,6 +45,12 @@ html.hub-active {
   --hub-warning: 3 80% 48%;
   --hub-warning-soft: 3 100% 96%;
   --hub-glass: 0 0% 100%;
+
+  /* Chart series, validated with the dataviz palette checker (light surface):
+     money in = orange, money out = blue, profit = neutral ink. */
+  --chart-in: #e65c00;
+  --chart-out: #3366cc;
+  --chart-ink: hsl(240 3% 12%);
   --hub-shadow: 0 1px 2px hsl(240 10% 10% / 0.04), 0 4px 16px hsl(240 10% 10% / 0.04);
   --hub-shadow-lg: 0 2px 6px hsl(240 10% 10% / 0.05), 0 16px 40px hsl(240 10% 10% / 0.08);
 
@@ -77,6 +83,11 @@ html.hub-active.hub-dark {
   --hub-warning: 3 90% 62%;
   --hub-warning-soft: 3 50% 14%;
   --hub-glass: 240 4% 10%;
+
+  /* Dark-surface steps of the same series, validated separately. */
+  --chart-in: #e8650e;
+  --chart-out: #5580d8;
+  --chart-ink: hsl(0 0% 92%);
   --hub-shadow: 0 1px 2px hsl(0 0% 0% / 0.3), 0 4px 16px hsl(0 0% 0% / 0.25);
   --hub-shadow-lg: 0 2px 6px hsl(0 0% 0% / 0.35), 0 16px 40px hsl(0 0% 0% / 0.45);
 

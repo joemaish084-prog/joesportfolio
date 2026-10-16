@@ -1,6 +1,6 @@
 import { format, isBefore, parseISO, startOfToday } from "date-fns";
 import type { PillTone } from "../components/ui";
-import type { Expense, Invoice, Payment } from "./types";
+import type { Invoice, Payment } from "./types";
 
 /** Shown on printed invoices. Edit to change your letterhead. */
 export const BUSINESS = {
@@ -53,15 +53,3 @@ export function nextInvoiceNumber(invoices: Invoice[], date = new Date()) {
 }
 
 export const sumAmounts = (rows: { amount: number }[]) => rows.reduce((s, r) => s + Number(r.amount), 0);
-
-/** Revenue (payments received) and expenses per month for the last `months` months, oldest first. */
-export function monthlyTotals(payments: Payment[], expenses: Expense[], months = 6, now = new Date()) {
-  const keys: string[] = [];
-  for (let i = months - 1; i >= 0; i--)
-    keys.push(format(new Date(now.getFullYear(), now.getMonth() - i, 1), "yyyy-MM"));
-  return keys.map((key) => {
-    const revenue = sumAmounts(payments.filter((p) => p.paid_on.startsWith(key)));
-    const spent = sumAmounts(expenses.filter((e) => e.spent_on.startsWith(key)));
-    return { month: format(parseISO(`${key}-01`), "MMM"), key, revenue, expenses: spent, profit: revenue - spent };
-  });
-}

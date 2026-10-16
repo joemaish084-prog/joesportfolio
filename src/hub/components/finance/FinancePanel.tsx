@@ -6,12 +6,15 @@ import {
   Ban,
   Banknote,
   CircleDollarSign,
+  Clock,
   Copy,
+  Crown,
   Download,
   FileSpreadsheet,
   FileText,
   MoreHorizontal,
   Pencil,
+  PiggyBank,
   Plus,
   Printer,
   Receipt,
@@ -19,6 +22,7 @@ import {
   Search,
   Send,
   Trash2,
+  TrendingDown,
   TrendingUp,
   Wallet,
 } from "lucide-react";
@@ -39,7 +43,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { downloadCsv, toCsv } from "../../lib/csv";
 import { useDeleteRow, useRows, useSaveRow } from "../../lib/data";
-import { INVOICE_STATE, invoiceState, monthlyTotals, outstanding, paidByInvoice, sumAmounts } from "../../lib/finance";
+import { INVOICE_STATE, invoiceState, outstanding, paidByInvoice } from "../../lib/finance";
+import { PERIOD_LABEL, buildDashboard, inRange, monthlySeries, periodRange, type Period } from "../../lib/financeStats";
 import { formatDate } from "../../lib/format";
 import { useKes } from "../../lib/privacy";
 import { useClients } from "../../lib/queries";
@@ -54,33 +59,12 @@ import {
 import { BlurFade } from "../motion/blur-fade";
 import { KesTicker } from "../motion/number-ticker";
 import { EmptyState, Pill, SkeletonBlock, StatTile, TableCard } from "../ui";
+import type { Insight } from "./FinanceDashboard";
 import { ExpenseDialog, InvoiceDialog, PaymentDialog, RetainerRunDialog } from "./FinanceDialogs";
-import { PrivacyToggle, PrivateBlur } from "../privacy";
+import { PrivacyToggle } from "../privacy";
 
-const FinanceChart = lazy(() => import("./FinanceChart"));
-const ExpenseBreakdownChart = lazy(() => import("./ExpenseBreakdownChart"));
-
-type Period = "this_month" | "last_month" | "this_year" | "all";
-const PERIOD_LABEL: Record<Period, string> = {
-  this_month: "This month",
-  last_month: "Last month",
-  this_year: "This year",
-  all: "All time",
-};
-
-function periodRange(period: Period): [string, string] | null {
-  const now = new Date();
-  const iso = (d: Date) => format(d, "yyyy-MM-dd");
-  if (period === "this_month") return [iso(startOfMonth(now)), iso(endOfMonth(now))];
-  if (period === "last_month") {
-    const last = subMonths(now, 1);
-    return [iso(startOfMonth(last)), iso(endOfMonth(last))];
-  }
-  if (period === "this_year") return [iso(startOfYear(now)), "9999-12-31"];
-  return null;
-}
-
-const inRange = (date: string, range: [string, string] | null) => !range || (date >= range[0] && date <= range[1]);
+// All charts live in one lazy chunk so recharts loads only with Finance.
+const FinanceDashboard = lazy(() => import("./FinanceDashboard"));
 
 type DialogState =
   | { kind: "invoice"; invoice?: Invoice | null; copyFrom?: Invoice | null }
@@ -105,7 +89,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
   const deleteExpense = useDeleteRow("expenses");
   const [params, setParams] = useSearchParams();
   const [period, setPeriod] = useState<Period>("this_month");
-  const [tab, setTab] = useState("invoices");
+  const [tab, setTab] = useState("dashboard");
   const [dialog, setDialog] = useState<DialogState>(null);
   const [query, setQuery] = useState("");
 
@@ -155,11 +139,112 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
   const paid = useMemo(() => paidByInvoice(payments.data ?? []), [payments.data]);
 
   const range = periodRange(period);
-  const received = sumAmounts(pay.filter((p) => inRange(p.paid_on, range)));
-  const spent = sumAmounts(exp.filter((e) => inRange(e.spent_on, range)));
-  const owed = inv.reduce((s, i) => s + outstanding(i, paid.get(i.id) ?? 0), 0);
-  const overdueCount = inv.filter((i) => invoiceState(i, paid.get(i.id) ?? 0) === "overdue").length;
-  const chartData = useMemo(() => monthlyTotals(pay, exp), [pay, exp]);
+  const dash = useMemo(
+    () =>
+      buildDashboard({
+        invoices: inv,
+        payments: pay,
+        expenses: exp,
+        period,
+        clientName: (id) => clientName.get(id) ?? "Client",
+        categoryLabel: (c) => EXPENSE_CATEGORY_LABEL[c],
+        methodLabel: (m) => PAYMENT_METHOD_LABEL[m],
+      }),
+    // inv/pay/exp are re-filtered each render; their sources are the real inputs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [invoices.data, payments.data, expenses.data, clientId, period, clientName],
+  );
+  const series6 = useMemo(
+    () => monthlySeries(pay, exp, 6),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [payments.data, expenses.data, clientId],
+  );
+  const series12 = useMemo(
+    () => monthlySeries(pay, exp, 12),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [payments.data, expenses.data, clientId],
+  );
+
+  // Plain-language summary at the top of the dashboard.
+  const insights: Insight[] = [];
+  const when = PERIOD_LABEL[period].toLowerCase();
+  if (dash.moneyIn > 0) {
+    insights.push({
+      icon: Wallet,
+      text: (
+        <>
+          You received <b>{kes(dash.moneyIn)}</b> {when}
+          {dash.inChange !== null && dash.compareLabel
+            ? `, ${Math.abs(dash.inChange)}% ${dash.inChange >= 0 ? "more" : "less"} than at this point before.`
+            : "."}
+        </>
+      ),
+      tone: dash.inChange !== null && dash.inChange < 0 ? "bad" : "good",
+    });
+    insights.push({
+      icon: dash.profit >= 0 ? PiggyBank : TrendingDown,
+      text:
+        dash.profit >= 0 ? (
+          <>
+            After <b>{kes(dash.moneyOut)}</b> in costs you kept <b>{kes(dash.profit)}</b> ({dash.margin}% of what came
+            in).
+          </>
+        ) : (
+          <>
+            Costs were <b>{kes(dash.moneyOut)}</b>, more than came in. You're <b>{kes(-dash.profit)}</b> down {when}.
+          </>
+        ),
+      tone: dash.profit >= 0 ? "good" : "bad",
+    });
+  } else {
+    insights.push({ icon: Wallet, text: <>No payments recorded {when} yet.</> });
+  }
+  if (!clientId && dash.clients[0] && dash.clients[0].key !== "__other") {
+    insights.push({
+      icon: Crown,
+      text: (
+        <>
+          <b>{dash.clients[0].label}</b> brought in {Math.round(dash.clients[0].share * 100)}% of the money {when}.
+        </>
+      ),
+    });
+  }
+  insights.push(
+    dash.overdueCount
+      ? {
+          icon: AlertTriangle,
+          text: (
+            <>
+              <b>
+                {dash.overdueCount} {dash.overdueCount === 1 ? "invoice is" : "invoices are"} overdue
+              </b>{" "}
+              ({kes(dash.overdueAmount)}). Worth a reminder.
+            </>
+          ),
+          tone: "bad",
+        }
+      : { icon: CircleDollarSign, text: <>Nothing is overdue. Everyone's paying on time.</> },
+  );
+  if (dash.avgDaysToPay !== null) {
+    insights.push({
+      icon: Clock,
+      text: (
+        <>
+          Invoices take <b>{dash.avgDaysToPay} days</b> on average to be paid in full.
+        </>
+      ),
+    });
+  }
+  if (dash.categories[0]) {
+    insights.push({
+      icon: Receipt,
+      text: (
+        <>
+          Your biggest cost was <b>{dash.categories[0].label}</b> ({kes(dash.categories[0].amount)}).
+        </>
+      ),
+    });
+  }
 
   const byClient = useMemo(() => {
     if (clientId) return [];
@@ -175,15 +260,6 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
       .map(([id, v]) => ({ id, ...v, profit: v.received - v.spent }))
       .sort((a, b) => b.profit - a.profit);
   }, [clientId, pay, exp, inv, paid, range]);
-
-  const breakdown = useMemo(() => {
-    const totals = new Map<ExpenseCategory, number>();
-    for (const e of exp)
-      if (inRange(e.spent_on, range)) totals.set(e.category, (totals.get(e.category) ?? 0) + Number(e.amount));
-    return [...totals.entries()]
-      .map(([key, amount]) => ({ key, label: EXPENSE_CATEGORY_LABEL[key], amount }))
-      .sort((a, b) => b.amount - a.amount);
-  }, [exp, range]);
 
   const fileSuffix = () => {
     const who = clientId ? `${(clientName.get(clientId) ?? "client").replace(/[^a-z0-9]+/gi, "-").toLowerCase()}-` : "";
@@ -314,76 +390,12 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
         </div>
       </div>
 
-      <BlurFade className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile label="Received" icon={Wallet} hint={PERIOD_LABEL[period]}>
-          <KesTicker value={received} />
-        </StatTile>
-        <StatTile label="Expenses" icon={Receipt} hint={PERIOD_LABEL[period]}>
-          <KesTicker value={spent} />
-        </StatTile>
-        <StatTile
-          label="Profit"
-          icon={TrendingUp}
-          warn={received - spent < 0}
-          hint={received > 0 ? `${Math.round(((received - spent) / received) * 100)}% margin` : PERIOD_LABEL[period]}
-        >
-          {received - spent < 0 && "−"}
-          <KesTicker value={Math.abs(received - spent)} />
-        </StatTile>
-        <StatTile
-          label="Outstanding"
-          icon={overdueCount ? AlertTriangle : CircleDollarSign}
-          warn={overdueCount > 0}
-          hint={
-            overdueCount ? `${overdueCount} overdue ${overdueCount === 1 ? "invoice" : "invoices"}` : "On sent invoices"
-          }
-        >
-          <KesTicker value={owed} />
-        </StatTile>
-      </BlurFade>
-
-      <BlurFade delay={0.05} className="grid gap-4 lg:grid-cols-3">
-        <div className="hub-card p-5 lg:col-span-2">
-          <div className="mb-2 flex items-baseline justify-between gap-3">
-            <h3 className="font-semibold">Last 6 months</h3>
-            <span className="text-right text-xs text-muted-foreground">Payments received vs expenses</span>
-          </div>
-          {chartData.every((m) => !m.revenue && !m.expenses) ? (
-            <p className="flex h-40 items-center justify-center text-sm text-muted-foreground">
-              Record payments and expenses to see the trend.
-            </p>
-          ) : (
-            <PrivateBlur>
-              <Suspense fallback={<SkeletonBlock className="h-64" />}>
-                <FinanceChart data={chartData} />
-              </Suspense>
-            </PrivateBlur>
-          )}
-        </div>
-        <div className="hub-card p-5">
-          <div className="mb-3 flex items-baseline justify-between gap-3">
-            <h3 className="font-semibold">Where it went</h3>
-            <span className="text-xs text-muted-foreground">{PERIOD_LABEL[period]}</span>
-          </div>
-          {breakdown.length === 0 ? (
-            <p className="flex h-40 items-center justify-center text-center text-sm text-muted-foreground">
-              No expenses in this period.
-            </p>
-          ) : (
-            <PrivateBlur>
-              <Suspense fallback={<SkeletonBlock className="h-44" />}>
-                <ExpenseBreakdownChart data={breakdown} />
-              </Suspense>
-            </PrivateBlur>
-          )}
-        </div>
-      </BlurFade>
-
       <Tabs value={tab} onValueChange={setTab}>
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
             <TabsList className="h-auto rounded-xl bg-secondary p-1">
               {[
+                ["dashboard", "Dashboard"],
                 ["invoices", `Invoices (${inv.length})`],
                 ["payments", `Payments (${pay.length})`],
                 ["expenses", `Expenses (${exp.length})`],
@@ -399,7 +411,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
               ))}
             </TabsList>
           </div>
-          {tab !== "clients" && (
+          {tab !== "clients" && tab !== "dashboard" && (
             <div className="relative md:w-72">
               <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -419,6 +431,19 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
             </div>
           )}
         </div>
+
+        <TabsContent value="dashboard" className="mt-4">
+          <Suspense fallback={<SkeletonBlock className="h-[36rem] rounded-[20px]" />}>
+            <FinanceDashboard
+              dash={dash}
+              series6={series6}
+              series12={series12}
+              periodLabel={PERIOD_LABEL[period]}
+              insights={insights}
+              showClients={!clientId}
+            />
+          </Suspense>
+        </TabsContent>
 
         <TabsContent value="invoices" className="mt-4">
           {inv.length === 0 ? (
