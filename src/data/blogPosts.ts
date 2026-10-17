@@ -2891,6 +2891,120 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "digital-marketing-for-schools-kenya-2026",
+    category: "Education",
+    title: "Digital Marketing for Schools and Colleges in Kenya: Filling the Next Intake",
+    excerpt: "Admissions are decided months before the term starts. Here is how schools and colleges get in front of parents and students early enough to matter.",
+    date: "2026-10-16",
+    dateLabel: "October 2026",
+    readTime: "6 min read",
+    metaTitle: "Digital Marketing for Schools and Colleges in Kenya: Filling the Next Intake",
+    metaDescription: "A practical marketing guide for Kenyan schools, colleges and training institutes: planning around the intake calendar, reaching parents and students, proof that builds trust, and following up enquiries.",
+    intro: "Most schools start marketing when they notice empty seats, which is usually a term too late. Parents shortlist schools months before a January intake, and college applicants compare options long before they pay a deposit. The schools that fill their intakes are the ones that show up during that research, not after it.",
+    thumbnail: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Stack of books with a red apple on top, coloured pencils and ABC blocks on a wooden desk",
+
+    sections: [
+      {
+        id: "plan-around-intake",
+        heading: "Plan around the intake calendar, not the week you notice empty seats",
+        paragraphs: [
+          "For a January intake, the real decision window for most parents runs from around September to November. Open days, fee structures and visits all happen then. A campaign that starts in December is competing for the parents who have not decided yet, which is the smallest and most price-sensitive group.",
+          "Colleges and training institutes with several intakes a year, commonly January, May and September, should treat each one as its own short campaign, starting six to eight weeks before the intake rather than running one vague campaign all year.",
+        ],
+      },
+      {
+        id: "two-audiences",
+        heading: "Parents and students decide on different things",
+        paragraphs: [
+          "Parents choosing a primary or secondary school are weighing safety, results, fees, transport and the feel of the place. They are mostly on Facebook, WhatsApp and Google, and they read reviews closely.",
+          "Students choosing a college or course are weighing what the course leads to, what it costs and what student life looks like. They are on TikTok and Instagram, and they trust current students far more than a prospectus. Running one message for both audiences usually reaches neither of them well.",
+        ],
+      },
+      {
+        id: "proof-that-builds-trust",
+        heading: "Show proof, and handle it carefully",
+        paragraphs: [
+          "The content that works is concrete: a short walkthrough video of classrooms, labs and transport, real teachers introducing themselves, results presented honestly, and parents speaking for themselves. Polished stock imagery reads as an advert; your own compound and your own staff read as a place.",
+          "Be careful with pupils. Under Kenya's Data Protection Act, using a child's image or details needs a parent's consent, so get written permission before any child appears in an advert, and default to content that does not show identifiable children when in doubt.",
+        ],
+      },
+      {
+        id: "channels",
+        heading: "Where to show up",
+        paragraphs: [
+          "Start with Google. Parents search for things like 'schools near me' or 'best primary school in Kitengela', so a complete Google Business Profile with photos, fees guidance and recent reviews does a lot of quiet work, the same local search basics I cover in my Google Business Profile guide.",
+          "Then add Meta ads aimed at parents within a realistic commuting distance, and for colleges, short-form video on TikTok and Instagram featuring current students. I designed the 2026 admissions creative for NorthGate School in exactly this spirit: one clear message about the intake, not a list of everything the school offers.",
+        ],
+      },
+      {
+        id: "follow-up",
+        heading: "Treat every enquiry as the start of an admission",
+        paragraphs: [
+          "Most admissions are lost between the enquiry and the visit. Reply to WhatsApp enquiries within the hour, send the fee structure and the open day details straight away, and follow up anyone who asked but did not book a visit.",
+          "Track three numbers for each intake: enquiries, visits and admissions. If enquiries are high and visits are low, the problem is follow-up, not advertising. If visits are high and admissions are low, the problem is the visit itself, and no ad budget will fix that.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "brand-strategy-before-running-ads-kenya-2026",
+    category: "Brand Strategy",
+    title: "Do You Need a Brand Strategy Before You Run Ads?",
+    excerpt: "You do not need a forty-page brand book. You do need four decisions made before you spend money on ads.",
+    date: "2026-10-17",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "Do You Need a Brand Strategy Before You Run Ads?",
+    metaDescription: "When a Kenyan business needs a brand strategy before advertising, the four decisions to make first, what goes wrong without them, and when a full brand strategy is worth paying for.",
+    intro: "Business owners ask me this in two opposite moods: some want to skip branding entirely and just run ads, others want a full brand strategy before they spend a shilling on media. Both usually waste money. What you actually need before running ads is a handful of decisions, made clearly and written down.",
+    thumbnail: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand moving a card on a wall-mounted planning board covered in printed plans and notes",
+
+    sections: [
+      {
+        id: "short-answer",
+        heading: "The short answer: decisions, not a document",
+        paragraphs: [
+          "Ads multiply whatever message you give them. If the message is unclear, they multiply the confusion, and you pay for every impression of it. A brand strategy, at its most useful, is simply the set of decisions that make the message clear.",
+          "That does not have to be a long document. For most small and mid-sized Kenyan businesses, one page that the owner, the team and whoever runs the ads all agree on is enough to start.",
+        ],
+      },
+      {
+        id: "four-decisions",
+        heading: "The four decisions to make before you spend on ads",
+        paragraphs: [
+          "First, who exactly you are selling to: not 'everyone in Nairobi', but a specific kind of customer with a specific budget and a specific reason to buy. Second, the one problem you solve for them, said in their words rather than yours.",
+          "Third, why they should choose you over the alternatives, backed by proof: results, reviews, a guarantee, a price advantage. Fourth, how you look and sound, consistently, so that the third time someone sees your ad they recognise it before they read it.",
+        ],
+      },
+      {
+        id: "without-it",
+        heading: "What goes wrong without those decisions",
+        paragraphs: [
+          "Ads get tested at random, so you learn nothing that lasts. Creative looks like everyone else in the category, so nobody remembers it. Cost per result creeps up because nothing builds recognition between one campaign and the next.",
+          "The pattern I see most is a business changing its message every two weeks because the last ad did not work, when the real problem was that no message was ever given long enough to work.",
+        ],
+      },
+      {
+        id: "when-worth-it",
+        heading: "When a full brand strategy is worth paying for",
+        paragraphs: [
+          "A proper brand strategy earns its cost when you are launching something new, rebranding, entering a crowded category where you need to stand apart, or trying to charge more than your competitors. In those cases the positioning work is the foundation everything else sits on.",
+          "My own brand strategy service starts from KES 60,000 and covers positioning, messaging and identity direction. It is worth that for a launch or a repositioning. For a business that just needs its first campaign to work, it usually is not.",
+        ],
+      },
+      {
+        id: "use-ads-to-test",
+        heading: "When to let the ads answer the question",
+        paragraphs: [
+          "If you are early, with a small budget and no clear winner yet, use your first month of ads to test two or three positioning angles against each other: the same offer, framed around price, around results, around convenience. The data will tell you which story your market responds to.",
+          "That is how the strongest campaigns in my Meta Ads case study were found: one clear, specific offer per campaign, measured properly, with budget moved towards whatever earned it. Make the four decisions first, then let real results sharpen them.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

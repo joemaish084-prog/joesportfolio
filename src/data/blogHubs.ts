@@ -210,6 +210,7 @@ export const blogHubs: BlogHub[] = [
       "ai-marketing-honest-take-2026",
       "freelance-digital-marketer-vs-agency-kenya-2026",
       "what-does-a-digital-marketing-specialist-do-kenya-2026",
+      "brand-strategy-before-running-ads-kenya-2026",
     ],
     service: {
       name: "Digital Marketing Audit",
