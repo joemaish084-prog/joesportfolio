@@ -4,6 +4,7 @@ import {
   BarChart3,
   FileText,
   Filter,
+  Globe,
   LayoutGrid,
   ListChecks,
   LogOut,
@@ -43,6 +44,7 @@ const RECORDS_NAV: NavItem[] = [
   { to: "/hub/documents", label: "Documents", icon: FileText },
   { to: "/hub/reports", label: "Reports", icon: BarChart3 },
   { to: "/hub/finance", label: "Finance", icon: Wallet },
+  { to: "/hub/website", label: "Website", icon: Globe },
 ];
 
 const SETTINGS_NAV: NavItem = { to: "/hub/settings", label: "Settings", icon: Settings };

@@ -24,6 +24,7 @@ const FinancePage = lazy(() => import("./pages/FinancePage"));
 const InvoicePage = lazy(() => import("./pages/InvoicePage"));
 const PipelinePage = lazy(() => import("./pages/PipelinePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const WebsitePage = lazy(() => import("./pages/WebsitePage"));
 const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
 
 const sectionFallback = (
@@ -88,6 +89,7 @@ export default function HubApp() {
               <Route path="finance/invoices/:id" element={section(<InvoicePage />)} />
               <Route path="pipeline" element={section(<PipelinePage />)} />
               <Route path="settings" element={section(<SettingsPage />)} />
+          <Route path="website" element={section(<WebsitePage />)} />
               <Route path="*" element={<Navigate to="/hub" replace />} />
             </Route>
           </Routes>

@@ -8,8 +8,18 @@ import { ClientAvatar } from "../ui";
 // Small visuals that sit beside the big numbers on the Overview cards.
 // One series colour (--chart-in) throughout, like the rest of the hub's charts.
 
-/** Six months of money in as a soft area line; the last point is marked. */
-export function Sparkline({ values, className }: { values: number[]; className?: string }) {
+/** A short series as a soft area line; the last point is marked. Money is blurred while amounts are hidden. */
+export function Sparkline({
+  values,
+  className,
+  label = "Money in, last 6 months",
+  isMoney = true,
+}: {
+  values: number[];
+  className?: string;
+  label?: string;
+  isMoney?: boolean;
+}) {
   const gradient = useId();
   const w = 112;
   const h = 44;
@@ -21,9 +31,8 @@ export function Sparkline({ values, className }: { values: number[]; className?:
   ]);
   const line = points.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
   const [lx, ly] = points[points.length - 1];
-  return (
-    <PrivateBlur quiet className={className}>
-      <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} role="img" aria-label="Money in, last 6 months">
+  const chart = (
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} role="img" aria-label={label}>
         <defs>
           <linearGradient id={gradient} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--chart-in)" stopOpacity={0.28} />
@@ -34,7 +43,13 @@ export function Sparkline({ values, className }: { values: number[]; className?:
         <path d={line} fill="none" stroke="var(--chart-in)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={lx} cy={ly} r={3.5} fill="var(--chart-in)" stroke="hsl(var(--card))" strokeWidth={2} />
       </svg>
+  );
+  return isMoney ? (
+    <PrivateBlur quiet className={className}>
+      {chart}
     </PrivateBlur>
+  ) : (
+    <div className={className}>{chart}</div>
   );
 }
 

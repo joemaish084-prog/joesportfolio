@@ -373,13 +373,22 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
         <div className="flex flex-wrap gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="secondary" className="h-10 rounded-full">
-                <Download className="mr-1.5 h-4 w-4" /> Export
+              <Button variant="secondary" className="h-10 rounded-full bg-card shadow-hub hover:bg-secondary">
+                <MoreHorizontal className="mr-1.5 h-4 w-4" /> More
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 rounded-xl">
-              <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
-                CSV for {PERIOD_LABEL[period].toLowerCase()}
+            <DropdownMenuContent align="start" className="w-60 rounded-xl">
+              <DropdownMenuItem onSelect={() => setDialog({ kind: "import" })}>
+                <FileUp className="mr-2 h-4 w-4" /> Import past invoices
+              </DropdownMenuItem>
+              {!clientId && (
+                <DropdownMenuItem onSelect={() => setDialog({ kind: "retainers" })}>
+                  <Repeat className="mr-2 h-4 w-4" /> Bill retainers
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel className="flex items-center gap-1.5 text-xs font-normal text-muted-foreground">
+                <Download className="h-3.5 w-3.5" /> Export CSV for {PERIOD_LABEL[period].toLowerCase()}
               </DropdownMenuLabel>
               {(["invoices", "payments", "expenses"] as const).map((k) => (
                 <DropdownMenuItem key={k} onSelect={() => toast.success(`Exported ${exportCsv(k)} ${k}`)}>
@@ -388,20 +397,23 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "import" })}>
-            <FileUp className="mr-1.5 h-4 w-4" /> Import past invoices
-          </Button>
-          {!clientId && (
-            <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "retainers" })}>
-              <Repeat className="mr-1.5 h-4 w-4" /> Bill retainers
+          <div className="flex items-center rounded-full bg-card p-1 shadow-hub">
+            <Button
+              variant="ghost"
+              className="h-8 rounded-full px-3 hover:bg-secondary"
+              onClick={() => setDialog({ kind: "expense" })}
+            >
+              <Receipt className="mr-1.5 h-4 w-4" /> Expense
             </Button>
-          )}
-          <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "expense" })}>
-            <Receipt className="mr-1.5 h-4 w-4" /> Expense
-          </Button>
-          <Button variant="secondary" className="h-10 rounded-full" onClick={() => setDialog({ kind: "payment" })}>
-            <Banknote className="mr-1.5 h-4 w-4" /> Payment
-          </Button>
+            <span className="h-5 w-px bg-border" aria-hidden />
+            <Button
+              variant="ghost"
+              className="h-8 rounded-full px-3 hover:bg-secondary"
+              onClick={() => setDialog({ kind: "payment" })}
+            >
+              <Banknote className="mr-1.5 h-4 w-4" /> Payment
+            </Button>
+          </div>
           <Button className="h-10 rounded-full px-4" onClick={() => setDialog({ kind: "invoice" })}>
             <Plus className="mr-1.5 h-4 w-4" /> Invoice
           </Button>

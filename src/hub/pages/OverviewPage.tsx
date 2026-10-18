@@ -57,6 +57,7 @@ import {
 import { useKes } from "../lib/privacy";
 import { useClients, useClientTypes, useOnboardingByClient } from "../lib/queries";
 import { useSettings } from "../lib/settings";
+import { pctChange, useSiteAnalytics } from "../lib/website";
 import { LEAD_STAGE_LABEL, STATUS_LABEL, type ClientStatus, type LeadStage } from "../lib/types";
 
 // The shared BentoCard renders plain <a href> links; route them through the
@@ -102,7 +103,7 @@ function Card({
   className?: string;
 }) {
   return (
-    <section className={cn("hub-card flex flex-col p-5", className)}>
+    <section className={cn("hub-card flex min-w-0 flex-col p-5", className)}>
       <header className="mb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
           <h2 className="font-semibold leading-snug">{title}</h2>
@@ -608,7 +609,7 @@ export default function OverviewPage() {
 
       {/* ---- activity + clients */}
       <BlurFade delay={0.15} className="mt-4 grid gap-4 lg:grid-cols-3">
-        <Card title="Recent activity" hint="The latest things that happened." className="lg:col-span-2">
+        <Card title="Recent activity" hint="The latest things that happened." className="lg:col-span-2 lg:row-span-2">
           {activity.length === 0 ? (
             <p className="py-8 text-center text-sm text-muted-foreground">Activity shows up here as you work.</p>
           ) : (
@@ -642,6 +643,8 @@ export default function OverviewPage() {
             </AnimatedList>
           )}
         </Card>
+
+        <WebsiteCard />
 
         <Card
           title="Clients at a glance"
@@ -732,6 +735,58 @@ export default function OverviewPage() {
 }
 
 // ---------------------------------------------------------------- pieces
+
+/** Last 7 days on the website: visitors trend and enquiries. */
+function WebsiteCard() {
+  const site = useSiteAnalytics(7);
+  const data = site.data?.status === "ok" ? site.data.data : null;
+  if (site.data?.status === "missing") return null;
+  const change = data ? pctChange(data.period.visitors, data.period.prev_visitors) : null;
+  return (
+    <Card
+      title="Website"
+      hint="Last 7 days."
+      action={
+        <Link to="/hub/website" className="text-xs font-medium text-primary hover:underline">
+          Details
+        </Link>
+      }
+    >
+      {!data ? (
+        <SkeletonBlock className="h-24" />
+      ) : (
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="hub-tabular text-[2rem] font-bold leading-none tracking-tight">
+              {data.period.visitors.toLocaleString()}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              visitors
+              {change !== null && change !== 0 && (
+                <span className={cn("ml-1 font-medium", change > 0 ? "text-foreground" : "text-warning")}>
+                  {change > 0 ? "+" : "−"}
+                  {Math.abs(change)}%
+                </span>
+              )}
+            </p>
+            <p className="mt-3 text-sm">
+              <span className="font-semibold">{data.period.leads}</span>{" "}
+              <span className="text-muted-foreground">{data.period.leads === 1 ? "enquiry" : "enquiries"}</span>
+            </p>
+          </div>
+          {data.visits_by_day.some((d) => d.unique_visitors > 0) && (
+            <Sparkline
+              values={data.visits_by_day.map((d) => d.unique_visitors)}
+              label="Visitors per day, last 7 days"
+              isMoney={false}
+              className="pb-1"
+            />
+          )}
+        </div>
+      )}
+    </Card>
+  );
+}
 
 function AgendaRow({ item, kes, highlight }: { item: AgendaItem; kes: (v: number) => string; highlight?: boolean }) {
   const Icon = AGENDA_ICON[item.kind];
