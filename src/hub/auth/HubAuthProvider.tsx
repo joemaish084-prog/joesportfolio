@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import type { Session } from "@supabase/supabase-js";
+import type { AuthError, Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { db } from "../lib/db";
@@ -20,6 +20,13 @@ type HubAuth = {
 };
 
 const HubAuthContext = createContext<HubAuth | null>(null);
+
+/** Only a wrong email or password should read as one; anything else is a setup or network problem. */
+function signInMessage(error: AuthError) {
+  if (error.code === "invalid_credentials") return "That email and password don't match.";
+  if (error.status === 429) return "Too many attempts. Wait a few minutes, then try again.";
+  return "Sign-in isn't working right now. Try again in a minute.";
+}
 
 export function useHubAuth() {
   const ctx = useContext(HubAuthContext);
@@ -85,7 +92,7 @@ export function HubAuthProvider({ children }: { children: ReactNode }) {
     // Before the call, so the idle check that mounts with the session sees it.
     markActive();
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
-    return { error: error ? "That email and password don't match." : null };
+    return { error: error ? signInMessage(error) : null };
   }, []);
 
   const status: Status = !sessionLoaded
