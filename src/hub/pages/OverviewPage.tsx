@@ -1,6 +1,14 @@
 import { useMemo, type MouseEvent, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { format, formatDistanceToNowStrict, isToday, isTomorrow, parseISO } from "date-fns";
+import {
+  differenceInCalendarDays,
+  endOfMonth,
+  format,
+  formatDistanceToNowStrict,
+  isToday,
+  isTomorrow,
+  parseISO,
+} from "date-fns";
 import {
   AlertTriangle,
   BarChart3,
@@ -29,6 +37,7 @@ import { ShineBorder } from "@/components/ui/shine-border";
 import { cn } from "@/lib/utils";
 import { AnimatedList } from "../components/motion/animated-list";
 import { BlurFade } from "../components/motion/blur-fade";
+import { AvatarStack, GoalCard, Ring, Sparkline, StageColumns } from "../components/overview/visuals";
 import { KesTicker, NumberTicker } from "../components/motion/number-ticker";
 import { SpotlightCard } from "../components/motion/spotlight-card";
 import { PrivateBlur } from "../components/privacy";
@@ -47,6 +56,7 @@ import {
 } from "../lib/overview";
 import { useKes } from "../lib/privacy";
 import { useClients, useClientTypes, useOnboardingByClient } from "../lib/queries";
+import { useSettings } from "../lib/settings";
 import { LEAD_STAGE_LABEL, STATUS_LABEL, type ClientStatus, type LeadStage } from "../lib/types";
 
 // The shared BentoCard renders plain <a href> links; route them through the
@@ -65,14 +75,15 @@ function useRouterLinks() {
 const bentoCardClass =
   "col-span-1 rounded-[20px] border border-border/70 bg-card shadow-hub [&_h3]:text-base [&_h3]:leading-snug [&_p]:text-xs md:[&_h3]:text-lg md:[&_p]:text-sm [&_svg.h-12]:h-9 [&_svg.h-12]:w-9";
 
-function Stat({ children, loading }: { children: ReactNode; loading?: boolean }) {
+function Stat({ children, loading, aside }: { children: ReactNode; loading?: boolean; aside?: ReactNode }) {
   return (
-    <div className="p-4 pb-0">
+    <div className="flex items-start justify-between gap-3 p-4 pb-0">
       {loading ? (
         <SkeletonBlock className="h-10 w-20" />
       ) : (
-        <div className="text-[2.25rem] font-bold leading-none tracking-tight">{children}</div>
+        <div className="min-w-0 text-[2.25rem] font-bold leading-none tracking-tight">{children}</div>
       )}
+      {!loading && aside && <div className="hidden shrink-0 sm:block">{aside}</div>}
     </div>
   );
 }
@@ -154,6 +165,7 @@ export default function OverviewPage() {
   const documents = useRows("documents");
   const routeLinks = useRouterLinks();
   const kes = useKes();
+  const { settings } = useSettings();
 
   const live = useMemo(() => (clients.data ?? []).filter((c) => !c.archived_at), [clients.data]);
   const typeName = useMemo(() => new Map((types.data ?? []).map((t) => [t.id, t.name])), [types.data]);
@@ -169,8 +181,12 @@ export default function OverviewPage() {
     const liveIds = new Set(live.map((c) => c.id));
     const openItems = onboarding.data.filter((i) => liveIds.has(i.client_id) && !i.is_done);
     const active = live.filter((c) => c.status === "active");
+    const allItems = onboarding.data.filter((i) => liveIds.has(i.client_id));
     return {
       active: active.length,
+      activeNames: active.map((c) => c.name),
+      stepsDone: allItems.length - openItems.length,
+      stepsTotal: allItems.length,
       retainer: active.reduce((sum, c) => sum + Number(c.monthly_fee ?? 0), 0),
       onboarding: live.filter((c) => c.status === "onboarding").length,
       openTasks: openItems.length,
@@ -306,19 +322,36 @@ export default function OverviewPage() {
   return (
     <>
       <BlurFade>
-        <header className="mb-6 md:mb-8">
-          <h1 className="text-[1.75rem] font-bold leading-tight tracking-tight md:text-[2.125rem]">
-            {greeting()}, Joseph
-          </h1>
-          <p className="mt-1 text-[0.9375rem] text-muted-foreground">
-            {format(new Date(), "EEEE, d MMMM")}
-            {summary && (
-              <>
-                {" · "}
-                <span className={cn(attention ? "font-medium text-warning" : "text-foreground")}>{summary}</span>
-              </>
-            )}
-          </p>
+        <header className="relative mb-6 md:mb-8">
+          {/* A soft warm glow behind the greeting. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -left-16 -top-24 -z-10 h-56 w-full max-w-xl rounded-full bg-primary/10 blur-3xl dark:bg-primary/[0.07]"
+          />
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div className="min-w-0">
+              <h1 className="text-[1.75rem] font-bold leading-tight tracking-tight md:text-[2.125rem]">
+                {greeting()}, Joseph
+              </h1>
+              <p className="mt-1 text-[0.9375rem] text-muted-foreground">
+                {format(new Date(), "EEEE, d MMMM")}
+                {summary && (
+                  <>
+                    {" · "}
+                    <span className={cn(attention ? "font-medium text-warning" : "text-foreground")}>{summary}</span>
+                  </>
+                )}
+              </p>
+            </div>
+            <div className="lg:w-80">
+              <GoalCard
+                received={money?.thisMonth ?? null}
+                goal={settings.revenueGoal}
+                daysLeft={differenceInCalendarDays(endOfMonth(new Date()), new Date())}
+                kes={kes}
+              />
+            </div>
+          </div>
           <div className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
             {QUICK_ACTIONS.map(({ label, to, icon: Icon }, i) => (
               <Button
@@ -355,7 +388,7 @@ export default function OverviewPage() {
             cta="View clients"
             className={bentoCardClass}
             background={
-              <Stat loading={!stats}>
+              <Stat loading={!stats} aside={stats && <AvatarStack names={stats.activeNames} />}>
                 <NumberTicker value={stats?.active ?? 0} />
               </Stat>
             }
@@ -373,7 +406,10 @@ export default function OverviewPage() {
             cta="Open finance"
             className={bentoCardClass}
             background={
-              <Stat loading={!money}>
+              <Stat
+                loading={!money}
+                aside={money?.series.some((m) => m.amount > 0) && <Sparkline values={money.series.map((m) => m.amount)} />}
+              >
                 <KesTicker value={money?.thisMonth ?? 0} className="text-[1.375rem] sm:text-[1.75rem] md:text-[2rem]" />
               </Stat>
             }
@@ -389,7 +425,16 @@ export default function OverviewPage() {
             cta="Open pipeline"
             className={bentoCardClass}
             background={
-              <Stat loading={!pipeline}>
+              <Stat
+                loading={!pipeline}
+                aside={
+                  !!pipeline?.count && (
+                    <StageColumns
+                      stages={pipeline.stages.map((s) => ({ label: LEAD_STAGE_LABEL[s.stage], count: s.count }))}
+                    />
+                  )
+                }
+              >
                 <KesTicker value={pipeline?.value ?? 0} className="text-[1.375rem] sm:text-[1.75rem] md:text-[2rem]" />
               </Stat>
             }
@@ -407,7 +452,17 @@ export default function OverviewPage() {
             cta="Work through them"
             className={bentoCardClass}
             background={
-              <Stat loading={!stats}>
+              <Stat
+                loading={!stats}
+                aside={
+                  !!stats?.stepsTotal && (
+                    <div className="flex flex-col items-center gap-1">
+                      <Ring value={stats.stepsDone} total={stats.stepsTotal} size={48} />
+                      <span className="text-[0.6875rem] text-muted-foreground">done</span>
+                    </div>
+                  )
+                }
+              >
                 <NumberTicker value={stats?.openTasks ?? 0} />
               </Stat>
             }
