@@ -97,7 +97,7 @@ export async function createChatLead(fields: ChatLeadFields): Promise<string | n
     source: "chat_widget",
     page_path: typeof window !== "undefined" ? window.location.pathname : null,
   };
-  const { data, error } = await supabase.from("chat_leads").insert(insert).select("id").single();
+  const { data, error } = await (supabase as any).from("chat_leads").insert(insert).select("id").single();
   if (error) {
     console.error("createChatLead error:", error);
     return null;
@@ -113,7 +113,7 @@ export async function updateChatLead(id: string, fields: ChatLeadFields, step: s
     step,
     updated_at: new Date().toISOString(),
   };
-  const { error } = await supabase.from("chat_leads").update(update).eq("id", id);
+  const { error } = await (supabase as any).from("chat_leads").update(update).eq("id", id);
   if (error) console.error("updateChatLead error:", error);
 }
 
