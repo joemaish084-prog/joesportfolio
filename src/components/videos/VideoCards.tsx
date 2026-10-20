@@ -1,11 +1,12 @@
 import { videoImageProps } from "@/lib/videoImages";
 import { useEffect, useRef, useState } from "react";
-import { Play, Volume2, Film, Clock, ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, ExternalLink, Film, Pause, Play, Volume2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   FEATURED_VIDEO,
   featuredThumbnail,
+  longVideos,
   type LongVideo,
   type Platform,
   type ShortVideo,
@@ -73,6 +74,35 @@ function VideoSchema({ v }: { v: ShortVideo | LongVideo }) {
   if (iso) schema.duration = iso;
   if (ytId) schema.embedUrl = `https://www.youtube.com/embed/${ytId}`;
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}
+
+export interface FeaturedFilm {
+  youtubeId: string;
+  title: string;
+  description: string;
+  watchUrl: string;
+  thumbnail: string;
+  uploadDate: string;
+  duration: string;
+}
+
+const defaultFeaturedFilm: FeaturedFilm = {
+  ...FEATURED_VIDEO,
+  thumbnail: featuredThumbnail,
+  uploadDate: "2024-11-20",
+  duration: "12:18",
+};
+
+function toFeaturedFilm(v: LongVideo): FeaturedFilm {
+  return {
+    youtubeId: getYouTubeId(v.link) ?? "",
+    title: v.title,
+    description: v.description,
+    watchUrl: v.link,
+    thumbnail: v.thumbnail,
+    uploadDate: v.uploadDate,
+    duration: v.duration,
+  };
 }
 
 export function ShortCard({ v, showDate = false }: { v: ShortVideo; showDate?: boolean }) {
@@ -197,8 +227,20 @@ export function LongCard({ v }: { v: LongVideo }) {
   );
 }
 
-export function FeaturedVideo() {
+export function FeaturedVideo({
+  video = defaultFeaturedFilm,
+  onPlay,
+}: {
+  video?: FeaturedFilm;
+  /** Called once the visitor starts the film with sound. */
+  onPlay?: () => void;
+} = {}) {
   const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    if (playing) onPlay?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing]);
   const [previewVisible, setPreviewVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -218,13 +260,13 @@ export function FeaturedVideo() {
   const featuredSchema = {
     "@context": "https://schema.org",
     "@type": "VideoObject",
-    name: FEATURED_VIDEO.title,
-    description: FEATURED_VIDEO.description,
-    thumbnailUrl: [absUrl(featuredThumbnail)],
-    uploadDate: "2024-11-20",
-    duration: "PT12M18S",
-    contentUrl: FEATURED_VIDEO.watchUrl,
-    embedUrl: `https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}`,
+    name: video.title,
+    description: video.description,
+    thumbnailUrl: [absUrl(video.thumbnail)],
+    uploadDate: video.uploadDate,
+    duration: durationToISO8601(video.duration),
+    contentUrl: video.watchUrl,
+    embedUrl: `https://www.youtube.com/embed/${video.youtubeId}`,
     publisher: {
       "@type": "Person",
       name: "Joseph Maina",
@@ -238,8 +280,8 @@ export function FeaturedVideo() {
       <div className="relative aspect-video bg-black">
         {playing ? (
           <iframe
-            src={`https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
-            title={FEATURED_VIDEO.title}
+            src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+            title={video.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             className="absolute inset-0 h-full w-full"
@@ -247,9 +289,9 @@ export function FeaturedVideo() {
         ) : (
           <>
             <img
-              src={featuredThumbnail}
-              {...videoImageProps(featuredThumbnail, "(min-width: 1280px) 1200px, 100vw")}
-              alt={`${FEATURED_VIDEO.title} ? featured brand film thumbnail`}
+              src={video.thumbnail}
+              {...videoImageProps(video.thumbnail, "(min-width: 1280px) 1200px, 100vw")}
+              alt={`${video.title}: featured brand film thumbnail`}
               width={1280}
               height={720}
               className="absolute inset-0 h-full w-full object-cover"
@@ -258,8 +300,8 @@ export function FeaturedVideo() {
             />
             {/* Only the featured film autoplays, once it approaches the viewport. */}
             {previewVisible && <iframe
-              src={`https://www.youtube.com/embed/${FEATURED_VIDEO.youtubeId}?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=${FEATURED_VIDEO.youtubeId}`}
-              title={`${FEATURED_VIDEO.title} ? muted preview`}
+              src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=${video.youtubeId}`}
+              title={`${video.title}: muted preview`}
               allow="autoplay; encrypted-media; picture-in-picture"
               className="absolute inset-0 h-full w-full pointer-events-none"
               tabIndex={-1}
@@ -288,7 +330,7 @@ export function FeaturedVideo() {
             <button
               onClick={() => setPlaying(true)}
               className="absolute inset-0 z-10 flex items-center justify-center group/play"
-              aria-label={`Play ${FEATURED_VIDEO.title}`}
+              aria-label={`Play ${video.title}`}
             >
               <span className="flex h-12 w-12 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-primary shadow-elegant group-hover/play:scale-110" style={{ transition: "transform 0.3s" }}>
                 <Play className="ml-0.5 h-6 w-6 sm:h-10 sm:w-10 md:h-12 md:w-12 text-primary-foreground" fill="currentColor" />
@@ -298,10 +340,10 @@ export function FeaturedVideo() {
             {/* Desktop overlay title (hidden on mobile) */}
             <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 z-10 pointer-events-none hidden md:block">
               <h3 className="font-display text-2xl sm:text-4xl font-bold text-white drop-shadow-2xl max-w-3xl">
-                {FEATURED_VIDEO.title}
+                {video.title}
               </h3>
               <a
-                href={FEATURED_VIDEO.watchUrl}
+                href={video.watchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex items-center gap-1.5 text-sm sm:text-base text-white/80 hover:text-primary pointer-events-auto"
@@ -317,10 +359,10 @@ export function FeaturedVideo() {
       {!playing && (
         <div className="md:hidden p-5 space-y-1 bg-card border-t border-border">
           <h3 className="font-display text-lg font-bold leading-snug">
-            {FEATURED_VIDEO.title}
+            {video.title}
           </h3>
           <a
-            href={FEATURED_VIDEO.watchUrl}
+            href={video.watchUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 min-h-11 text-sm font-medium text-primary hover:underline"
@@ -329,6 +371,110 @@ export function FeaturedVideo() {
           </a>
         </div>
       )}
+    </div>
+  );
+}
+
+const FILM_ROTATE_SECONDS = 30;
+
+/**
+ * Rotates the featured film through every long-form video: the pinned
+ * featured film first, then the rest newest first. Stops for good once a
+ * visitor plays one with sound.
+ */
+export function FeaturedVideoRotator() {
+  const [films] = useState(() => {
+    const pinned = longVideos.filter((v) => v.link === FEATURED_VIDEO.watchUrl);
+    const rest = longVideos.filter((v) => v.link !== FEATURED_VIDEO.watchUrl);
+    return [...pinned, ...rest].filter((v) => getYouTubeId(v.link)).map(toFeaturedFilm);
+  });
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [hovering, setHovering] = useState(false);
+  const [tabHidden, setTabHidden] = useState(false);
+  const [watching, setWatching] = useState(false);
+
+  useEffect(() => {
+    const onVisibility = () => setTabHidden(document.visibilityState === "hidden");
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
+  const film = films[index];
+  const stopped = paused || watching;
+  const running = !stopped && !hovering && !tabHidden;
+  const go = (delta: number) => {
+    setWatching(false);
+    setIndex((i) => (i + delta + films.length) % films.length);
+  };
+
+  if (films.length < 2) return <FeaturedVideo />;
+
+  return (
+    <div
+      aria-roledescription="carousel"
+      aria-label="Featured films"
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      onFocus={() => setHovering(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setHovering(false);
+      }}
+    >
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Featured films</p>
+        <div className="flex items-center gap-1">
+          <span className="mr-2 text-xs tabular-nums text-muted-foreground">
+            {index + 1} / {films.length}
+          </span>
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            aria-label="Previous featured film"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setPaused((v) => !v)}
+            disabled={watching}
+            aria-label={paused ? "Resume rotating featured films" : "Pause rotating featured films"}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:opacity-40"
+          >
+            {stopped ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            aria-label="Next featured film"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* The bar is the timer: when its animation finishes, the next film shows. */}
+      <div className="mb-4 h-1 overflow-hidden rounded-full bg-border" aria-hidden="true">
+        {!stopped && (
+          <div
+            key={film.youtubeId}
+            className="h-full origin-left rounded-full bg-primary"
+            style={{
+              animation: `featured-progress ${FILM_ROTATE_SECONDS}s linear forwards`,
+              animationPlayState: running ? "running" : "paused",
+            }}
+            onAnimationEnd={() => go(1)}
+          />
+        )}
+      </div>
+
+      <div key={film.youtubeId} className="animate-fade-in" aria-live={running ? "off" : "polite"}>
+        <FeaturedVideo video={film} onPlay={() => setWatching(true)} />
+      </div>
     </div>
   );
 }

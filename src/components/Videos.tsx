@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
-import { FeaturedVideo, ShortCard } from "@/components/videos/VideoCards";
+import { FeaturedVideoRotator, ShortCard } from "@/components/videos/VideoCards";
 import { HOME_SHORTS_COUNT, longVideos, shortVideos } from "@/data/videos";
 
 // The homepage shows the featured film and the newest shorts; the full
@@ -56,7 +56,7 @@ export function Videos() {
         {/* Featured video */}
         <ScrollReveal>
           <div className="mb-12 sm:mb-16">
-            <FeaturedVideo />
+            <FeaturedVideoRotator />
           </div>
         </ScrollReveal>
 
