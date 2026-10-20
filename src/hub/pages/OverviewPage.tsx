@@ -24,6 +24,8 @@ import {
   NotebookPen,
   Plus,
   Receipt,
+  Rocket,
+  FileSignature,
   SquareKanban,
   Target,
   UserCheck,
@@ -57,6 +59,7 @@ import {
 } from "../lib/overview";
 import { useKes } from "../lib/privacy";
 import { useClients, useClientTypes, useOnboardingByClient } from "../lib/queries";
+import { billsMonthly } from "../lib/engagement";
 import { useSettings } from "../lib/settings";
 import { pctChange, useSiteAnalytics } from "../lib/website";
 import { LEAD_STAGE_LABEL, STATUS_LABEL, type ClientStatus, type LeadStage } from "../lib/types";
@@ -133,6 +136,8 @@ const AGENDA_ICON: Record<AgendaKind, LucideIcon> = {
   invoice: FileText,
   followup: Target,
   report: BarChart3,
+  deadline: Rocket,
+  contract: FileSignature,
 };
 
 const ACTIVITY_ICON: Record<ActivityKind, LucideIcon> = {
@@ -190,7 +195,9 @@ export default function OverviewPage() {
       activeNames: active.map((c) => c.name),
       stepsDone: allItems.length - openItems.length,
       stepsTotal: allItems.length,
-      retainer: active.reduce((sum, c) => sum + Number(c.monthly_fee ?? 0), 0),
+      // Monthly income only: retainers and contracts still in term. Projects are one-off.
+      retainer: active.filter((c) => billsMonthly(c)).reduce((sum, c) => sum + Number(c.monthly_fee ?? 0), 0),
+      projects: live.filter((c) => c.engagement_type === "project" && c.status !== "ended").length,
       onboarding: live.filter((c) => c.status === "onboarding").length,
       openTasks: openItems.length,
       overdueSteps: openItems
@@ -262,6 +269,16 @@ export default function OverviewPage() {
           detail: `Lead · was due ${formatDate(l.next_follow_up, "d MMM")}`,
           to: "/hub/pipeline",
           date: l.next_follow_up ?? "",
+        })),
+      // Projects past their deadline and not marked done.
+      ...live
+        .filter((c) => c.engagement_type === "project" && c.status !== "ended" && c.end_date && c.end_date < today)
+        .map((c) => ({
+          id: `deadline-${c.id}`,
+          title: `${c.name} project is past its deadline`,
+          detail: `Was due ${formatDate(c.end_date, "d MMM")} · mark it done or move the date`,
+          to: `/hub/clients/${c.id}`,
+          date: c.end_date ?? "",
         })),
     ];
     return items.sort((a, b) => a.date.localeCompare(b.date));
@@ -385,7 +402,13 @@ export default function OverviewPage() {
         <BentoGrid className="auto-rows-[15rem] grid-cols-2 gap-3 md:auto-rows-[15.5rem] md:gap-4 lg:grid-cols-3">
           <BentoCard
             name="Active clients"
-            description={stats ? `${kes(stats.retainer)}/mo in retainers` : "Currently retained"}
+            description={
+              stats
+                ? `${kes(stats.retainer)}/mo recurring${
+                    stats.projects ? ` · ${stats.projects} ${stats.projects === 1 ? "project" : "projects"} running` : ""
+                  }`
+                : "Currently retained"
+            }
             Icon={UserCheck}
             href="/hub/clients?status=active"
             cta="View clients"

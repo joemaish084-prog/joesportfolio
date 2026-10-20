@@ -102,7 +102,12 @@ export function useOnboardingByClient() {
 
 // ---------------------------------------------------------------- client writes
 
-export type ClientDraft = Omit<Client, "id" | "created_at" | "updated_at" | "archived_at" | "currency">;
+export type ClientDraft = Omit<
+  Client,
+  "id" | "created_at" | "updated_at" | "archived_at" | "currency" | "engagement_type" | "end_date" | "project_fee"
+> &
+  // Left out = retainer with no end date (the database defaults).
+  Partial<Pick<Client, "engagement_type" | "end_date" | "project_fee">>;
 export type KpiDraft = { id?: string; name: string; unit: KpiUnit };
 
 export function useSaveClient() {

@@ -10,8 +10,17 @@ import { BlurFade } from "../components/motion/blur-fade";
 import { KesTicker } from "../components/motion/number-ticker";
 import { SpotlightCard } from "../components/motion/spotlight-card";
 import { ClientAvatar, EmptyState, PageHeader, ProgressBar, SkeletonBlock, StatusBadge } from "../components/ui";
+import { EngagementBadge, TimeLeft } from "../components/engagement";
+import { ENGAGEMENT, feeOf, isMonthly, timeLeft } from "../lib/engagement";
 import { useClients, useClientTypes, useOnboardingByClient } from "../lib/queries";
-import { CLIENT_STATUSES, STATUS_LABEL, type Client, type ClientStatus } from "../lib/types";
+import {
+  CLIENT_STATUSES,
+  ENGAGEMENT_TYPES,
+  STATUS_LABEL,
+  type Client,
+  type ClientStatus,
+  type EngagementType,
+} from "../lib/types";
 
 type View = "cards" | "table";
 const VIEW_KEY = "hub:clients-view";
@@ -37,6 +46,9 @@ export default function ClientsPage() {
     ? (params.get("status") as ClientStatus)
     : "all";
   const typeFilter = params.get("type") ?? "all";
+  const workFilter = (ENGAGEMENT_TYPES as readonly string[]).includes(params.get("work") ?? "")
+    ? (params.get("work") as EngagementType)
+    : "all";
   const showArchived = params.get("archived") === "1";
 
   const setParam = (key: string, value: string | null) => {
@@ -63,15 +75,16 @@ export default function ClientsPage() {
       if (showArchived ? !c.archived_at : c.archived_at) return false;
       if (status !== "all" && c.status !== status) return false;
       if (typeFilter !== "all" && c.client_type_id !== typeFilter) return false;
+      if (workFilter !== "all" && (c.engagement_type ?? "retainer") !== workFilter) return false;
       if (!q) return true;
       return [c.name, c.business_name, c.contact_person, c.email, c.phone, c.industry]
         .filter(Boolean)
         .some((v) => v!.toLowerCase().includes(q));
     });
-  }, [clients.data, query, status, typeFilter, showArchived]);
+  }, [clients.data, query, status, typeFilter, workFilter, showArchived]);
 
   const archivedCount = (clients.data ?? []).filter((c) => c.archived_at).length;
-  const hasFilters = !!query || status !== "all" || typeFilter !== "all";
+  const hasFilters = !!query || status !== "all" || typeFilter !== "all" || workFilter !== "all";
   const typeLabel = (c: Client) => (c.client_type_id && typeName.get(c.client_type_id)) || "No type";
 
   return (
@@ -108,6 +121,22 @@ export default function ClientsPage() {
             />
           </div>
           <div className="flex gap-2">
+            <Select value={workFilter} onValueChange={(v) => setParam("work", v === "all" ? null : v)}>
+              <SelectTrigger
+                className="h-10 w-full rounded-xl border-transparent bg-secondary sm:w-44"
+                aria-label="How you work together"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All engagements</SelectItem>
+                {ENGAGEMENT_TYPES.map((t) => (
+                  <SelectItem key={t} value={t}>
+                    {ENGAGEMENT[t].label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <Select value={typeFilter} onValueChange={(v) => setParam("type", v === "all" ? null : v)}>
               <SelectTrigger
                 className="h-10 w-full rounded-xl border-transparent bg-secondary sm:w-52"
@@ -226,7 +255,10 @@ export default function ClientsPage() {
                       <div className="min-w-0 flex-1">
                         <p className="truncate font-semibold">{client.name}</p>
                         <p className="truncate text-xs text-muted-foreground">{typeLabel(client)}</p>
-                        <StatusBadge status={client.status} className="mt-2" />
+                        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                          <StatusBadge status={client.status} />
+                          <EngagementBadge type={client.engagement_type} />
+                        </div>
                       </div>
                       <AnimatedCircularProgressBar
                         value={progress.done}
@@ -264,9 +296,17 @@ export default function ClientsPage() {
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Monthly fee</span>
-                        <KesTicker value={client.monthly_fee} className="font-medium" />
+                        <span className="text-muted-foreground">{feeOf(client).label}</span>
+                        <KesTicker value={feeOf(client).amount} className="font-medium" />
                       </div>
+                      {timeLeft(client) && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">
+                            {client.engagement_type === "project" ? "Deadline" : "Contract ends"}
+                          </span>
+                          <TimeLeft client={client} />
+                        </div>
+                      )}
                     </div>
                   </Link>
                 </SpotlightCard>
@@ -279,7 +319,7 @@ export default function ClientsPage() {
           <table className="w-full min-w-[720px] text-sm">
             <thead>
               <tr className="border-b border-border/60 text-left">
-                {["Client", "Type", "Status", "Onboarding", "Monthly fee"].map((h) => (
+                {["Client", "Type", "Status", "Onboarding", "Fee"].map((h) => (
                   <th key={h} className="px-5 py-3 text-xs font-medium text-muted-foreground">
                     {h}
                   </th>
@@ -314,7 +354,10 @@ export default function ClientsPage() {
                     </td>
                     <td className="px-5 py-3 text-muted-foreground">{typeLabel(client)}</td>
                     <td className="px-5 py-3">
-                      <StatusBadge status={client.status} />
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <StatusBadge status={client.status} />
+                        <EngagementBadge type={client.engagement_type} />
+                      </div>
                     </td>
                     <td className="w-48 px-5 py-3">
                       <ProgressBar done={progress.done} total={progress.total} showLabel={false} />
@@ -329,7 +372,11 @@ export default function ClientsPage() {
                       </span>
                     </td>
                     <td className="px-5 py-3">
-                      <KesTicker value={client.monthly_fee} />
+                      <KesTicker value={feeOf(client).amount} />
+                      <span className="block text-xs text-muted-foreground">
+                        {isMonthly(client) ? "per month" : "project total"}
+                      </span>
+                      <TimeLeft client={client} className="mt-0.5" />
                     </td>
                   </tr>
                 );

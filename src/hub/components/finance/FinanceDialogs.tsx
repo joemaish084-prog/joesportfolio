@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useRows, useSaveRow } from "../../lib/data";
+import { billsMonthly } from "../../lib/engagement";
 import { invoiceState, nextInvoiceNumber, paidByInvoice } from "../../lib/finance";
 import { formatKES, toNumberOrNull } from "../../lib/format";
 import { useClients } from "../../lib/queries";
@@ -87,19 +88,19 @@ export function InvoiceDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, invoice, copyFrom, clientId]);
 
-  // New invoice for a client on a retainer: start with their monthly fee as the first line.
+  // New invoice: start with the client's fee as the first line, monthly or project.
   const selectedClient = clients.data?.find((c) => c.id === client);
   useEffect(() => {
-    if (!open || invoice || copyFrom || !selectedClient?.monthly_fee) return;
+    if (!open || invoice || copyFrom || !selectedClient) return;
+    const project = selectedClient.engagement_type === "project";
+    const amount = project ? selectedClient.project_fee : selectedClient.monthly_fee;
+    if (!amount) return;
+    const description = project
+      ? `Project fee – ${selectedClient.name}`
+      : `${selectedClient.engagement_type === "contract" ? "Monthly contract fee" : "Monthly retainer"} – ${format(new Date(), "MMMM yyyy")}`;
     setLines((current) =>
       current.length === 1 && !current[0].description && !current[0].unit_price
-        ? [
-            {
-              description: `Monthly retainer – ${format(new Date(), "MMMM yyyy")}`,
-              quantity: "1",
-              unit_price: String(selectedClient.monthly_fee),
-            },
-          ]
+        ? [{ description, quantity: "1", unit_price: String(amount) }]
         : current,
     );
   }, [open, invoice, copyFrom, selectedClient]);
@@ -583,7 +584,8 @@ export function RetainerRunDialog({ open, onOpenChange }: { open: boolean; onOpe
   const eligible = useMemo(
     () =>
       (clients.data ?? [])
-        .filter((c) => !c.archived_at && c.status === "active" && Number(c.monthly_fee) > 0)
+        // Retainers and contracts still in term; one-off projects are invoiced on their own.
+        .filter((c) => !c.archived_at && c.status === "active" && billsMonthly(c) && Number(c.monthly_fee) > 0)
         .sort((a, b) => a.name.localeCompare(b.name)),
     [clients.data],
   );

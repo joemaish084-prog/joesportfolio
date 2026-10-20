@@ -1,6 +1,9 @@
 // Types for the Client Hub tables. Kept here rather than in the generated
 // integrations/supabase/types.ts so regenerating that file never breaks the hub.
 
+export const ENGAGEMENT_TYPES = ["retainer", "contract", "project"] as const;
+export type EngagementType = (typeof ENGAGEMENT_TYPES)[number];
+
 export const CLIENT_STATUSES = ["prospect", "onboarding", "active", "paused", "ended"] as const;
 export type ClientStatus = (typeof CLIENT_STATUSES)[number];
 
@@ -85,7 +88,13 @@ export type Client = {
   industry: string | null;
   status: ClientStatus;
   start_date: string | null;
+  /** Monthly amount for retainers and contracts. */
   monthly_fee: number | null;
+  engagement_type: EngagementType;
+  /** Contract end, or project deadline. */
+  end_date: string | null;
+  /** Total for a one-off project. */
+  project_fee: number | null;
   currency: string;
   services: string[];
   main_goal: MainGoal | null;

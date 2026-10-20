@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { format, parseISO } from "date-fns";
 import { AlertTriangle, Check, ChevronLeft, Loader2, Plus, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -7,9 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { ENGAGEMENT_ICON } from "../components/engagement";
 import { Chips, Field, inputClass } from "../components/form";
 import { PageHeader, SkeletonBlock } from "../components/ui";
 import { findSimilarClients } from "../lib/duplicates";
+import { DURATION_PRESETS, ENGAGEMENT, durationLabel } from "../lib/engagement";
 import { toNumberOrNull } from "../lib/format";
 import {
   useClient,
@@ -22,6 +25,7 @@ import {
 } from "../lib/queries";
 import {
   CLIENT_STATUSES,
+  ENGAGEMENT_TYPES,
   GOAL_LABEL,
   KPI_UNITS,
   KPI_UNIT_LABEL,
@@ -30,7 +34,9 @@ import {
   STATUS_LABEL,
   type ClientStatus,
   type CustomFields,
+  type EngagementType,
   type FieldDefinition,
+
   type KpiUnit,
   type MainGoal,
 } from "../lib/types";
@@ -47,6 +53,9 @@ type FormState = {
   status: ClientStatus;
   start_date: string;
   monthly_fee: string;
+  engagement_type: EngagementType;
+  end_date: string;
+  project_fee: string;
   services: string[];
   main_goal: MainGoal | null;
   notes: string;
@@ -65,6 +74,9 @@ const EMPTY: FormState = {
   status: "onboarding",
   start_date: "",
   monthly_fee: "",
+  engagement_type: "retainer",
+  end_date: "",
+  project_fee: "",
   services: [],
   main_goal: null,
   notes: "",
@@ -72,6 +84,7 @@ const EMPTY: FormState = {
 };
 
 const blankToNull = (v: string) => (v.trim() === "" ? null : v.trim());
+
 
 // ---------------------------------------------------------------- small form pieces
 
@@ -309,6 +322,9 @@ export default function ClientFormPage() {
       status: existing.status,
       start_date: existing.start_date ?? "",
       monthly_fee: existing.monthly_fee === null ? "" : String(existing.monthly_fee),
+      engagement_type: existing.engagement_type ?? "retainer",
+      end_date: existing.end_date ?? "",
+      project_fee: existing.project_fee == null ? "" : String(existing.project_fee),
       services: existing.services,
       main_goal: existing.main_goal,
       notes: existing.notes ?? "",
@@ -346,9 +362,20 @@ export default function ClientFormPage() {
       setError("Give the client a name.");
       return;
     }
-    const fee = toNumberOrNull(form.monthly_fee);
-    if (form.monthly_fee.trim() && fee === null) {
+    const monthly = form.engagement_type !== "project";
+    const fee = monthly ? toNumberOrNull(form.monthly_fee) : null;
+    if (monthly && form.monthly_fee.trim() && fee === null) {
       setError("Monthly fee should be a number, e.g. 45000.");
+      return;
+    }
+    const projectFee = monthly ? null : toNumberOrNull(form.project_fee);
+    if (!monthly && form.project_fee.trim() && projectFee === null) {
+      setError("Project fee should be a number, e.g. 25000.");
+      return;
+    }
+    const endDate = form.engagement_type === "retainer" ? null : form.end_date || null;
+    if (endDate && form.start_date && endDate < form.start_date) {
+      setError(`The ${form.engagement_type === "project" ? "deadline" : "end date"} is before the start date.`);
       return;
     }
     const client: ClientDraft = {
@@ -363,6 +390,9 @@ export default function ClientFormPage() {
       status: form.status,
       start_date: form.start_date || null,
       monthly_fee: fee,
+      engagement_type: form.engagement_type,
+      end_date: endDate,
+      project_fee: projectFee,
       services: form.services,
       main_goal: form.main_goal,
       notes: blankToNull(form.notes),
@@ -516,6 +546,44 @@ export default function ClientFormPage() {
         </FormSection>
 
         <FormSection title="Engagement">
+          <Field label="How you work together">
+            <div className="grid gap-2 sm:grid-cols-3" role="radiogroup" aria-label="How you work together">
+              {ENGAGEMENT_TYPES.map((t) => {
+                const Icon = ENGAGEMENT_ICON[t];
+                const on = form.engagement_type === t;
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    onClick={() => set("engagement_type", t)}
+                    className={cn(
+                      "relative flex flex-col items-start gap-2 rounded-2xl border p-4 text-left transition-[border-color,background-color,box-shadow] duration-150",
+                      on
+                        ? "border-primary/50 bg-tint/40 shadow-hub ring-1 ring-primary/30"
+                        : "border-border bg-background hover:border-foreground/20",
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "flex h-9 w-9 items-center justify-center rounded-xl",
+                        on ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground",
+                      )}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span>
+                      <span className="block text-sm font-semibold">{ENGAGEMENT[t].label}</span>
+                      <span className="block text-xs text-muted-foreground">{ENGAGEMENT[t].description}</span>
+                    </span>
+                    {on && <Check className="absolute right-3 top-3 h-4 w-4 text-primary" />}
+                  </button>
+                );
+              })}
+            </div>
+          </Field>
+
           <div className="grid gap-5 sm:grid-cols-3">
             <Field label="Status" htmlFor="status">
               <Select value={form.status} onValueChange={(v) => set("status", v as ClientStatus)}>
@@ -540,22 +608,85 @@ export default function ClientFormPage() {
                 className={inputClass}
               />
             </Field>
-            <Field label="Monthly fee" htmlFor="monthly_fee">
-              <div className="relative">
-                <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-                  KES
-                </span>
-                <Input
-                  id="monthly_fee"
-                  inputMode="decimal"
-                  value={form.monthly_fee}
-                  onChange={(e) => set("monthly_fee", e.target.value)}
-                  className={cn(inputClass, "hub-tabular pl-12")}
-                  placeholder="45,000"
-                />
-              </div>
-            </Field>
+            {form.engagement_type === "project" ? (
+              <Field label="Project fee" htmlFor="project_fee" hint="The total for the whole job.">
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                    KES
+                  </span>
+                  <Input
+                    id="project_fee"
+                    inputMode="decimal"
+                    value={form.project_fee}
+                    onChange={(e) => set("project_fee", e.target.value)}
+                    className={cn(inputClass, "hub-tabular pl-12")}
+                    placeholder="25,000"
+                  />
+                </div>
+              </Field>
+            ) : (
+              <Field label="Monthly fee" htmlFor="monthly_fee">
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                    KES
+                  </span>
+                  <Input
+                    id="monthly_fee"
+                    inputMode="decimal"
+                    value={form.monthly_fee}
+                    onChange={(e) => set("monthly_fee", e.target.value)}
+                    className={cn(inputClass, "hub-tabular pl-12")}
+                    placeholder="45,000"
+                  />
+                </div>
+              </Field>
+            )}
           </div>
+
+          {form.engagement_type !== "retainer" && (
+            <div className="rounded-2xl bg-secondary/50 p-4">
+              <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+                <Field label={ENGAGEMENT[form.engagement_type].endLabel} htmlFor="end_date">
+                  <Input
+                    id="end_date"
+                    type="date"
+                    value={form.end_date}
+                    min={form.start_date || undefined}
+                    onChange={(e) => set("end_date", e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+                <div className="flex flex-wrap gap-1.5">
+                  {DURATION_PRESETS[form.engagement_type].map((p) => (
+                    <button
+                      key={p.label}
+                      type="button"
+                      onClick={() => {
+                        const start = form.start_date ? parseISO(form.start_date) : new Date();
+                        setForm((f) => ({
+                          ...f,
+                          start_date: f.start_date || format(start, "yyyy-MM-dd"),
+                          end_date: format(p.apply(start), "yyyy-MM-dd"),
+                        }));
+                      }}
+                      className="h-9 rounded-full border border-border bg-background px-3 text-xs font-medium text-muted-foreground transition-colors duration-150 hover:border-foreground/20 hover:text-foreground"
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {durationLabel(form.start_date || null, form.end_date || null)
+                  ? `${durationLabel(form.start_date || null, form.end_date || null)} from start to ${
+                      form.engagement_type === "project" ? "deadline" : "end"
+                    }. You'll see it on the Overview as the date gets close.`
+                  : form.engagement_type === "project"
+                    ? "Pick a deadline, or tap a length. Short jobs of a few days are fine."
+                    : "Pick when the contract ends, or tap a length."}
+              </p>
+            </div>
+          )}
           <Field label="Services">
             <Chips options={SERVICES} value={form.services} onChange={(v) => set("services", v)} />
           </Field>

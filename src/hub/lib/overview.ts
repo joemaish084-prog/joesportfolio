@@ -5,7 +5,7 @@ import type { Client, HubDocument, Invoice, Lead, OnboardingItem, Payment, Repor
 // Data shaping for the Overview page: the agenda (what's coming up) and the
 // activity feed (what just happened). Pure functions over rows already loaded.
 
-export type AgendaKind = "step" | "invoice" | "followup" | "report";
+export type AgendaKind = "step" | "invoice" | "followup" | "report" | "deadline" | "contract";
 
 export type AgendaItem = {
   id: string;
@@ -93,12 +93,28 @@ export function buildAgenda({
     });
   }
 
-  // Active clients without a report covering last month.
+  // Project deadlines and contracts coming to an end.
+  for (const c of live.values()) {
+    if (!c.end_date || c.status === "ended" || c.engagement_type === "retainer" || !c.engagement_type) continue;
+    if (c.end_date < today || c.end_date > horizon) continue;
+    const project = c.engagement_type === "project";
+    all.push({
+      id: `e-${c.id}`,
+      kind: project ? "deadline" : "contract",
+      title: project ? `${c.name} project due` : `${c.name} contract ends`,
+      detail: project ? "Project deadline" : "Renew, or wrap up and hand over",
+      date: c.end_date,
+      to: `/hub/clients/${c.id}`,
+      amount: project ? (c.project_fee ?? undefined) : undefined,
+    });
+  }
+
+  // Active monthly clients without a report covering last month (one-off projects don't get monthly reports).
   const last = subMonths(now, 1);
   const lastStart = format(startOfMonth(last), "yyyy-MM-dd");
   const lastEnd = format(endOfMonth(last), "yyyy-MM-dd");
   const todo: AgendaItem[] = [...live.values()]
-    .filter((c) => c.status === "active")
+    .filter((c) => c.status === "active" && c.engagement_type !== "project")
     .filter((c) => !reports.some((r) => r.client_id === c.id && r.period_end >= lastStart && r.period_start <= lastEnd))
     .map((c) => ({
       id: `r-${c.id}`,

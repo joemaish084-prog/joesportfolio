@@ -1,6 +1,6 @@
 import { Suspense, lazy, type ReactNode } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Archive, ArchiveRestore, ChevronDown, ChevronLeft, Pencil, Target, UserX } from "lucide-react";
+import { Archive, ArchiveRestore, CheckCircle2, ChevronDown, ChevronLeft, Pencil, Target, UserX } from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -25,6 +25,8 @@ import { OnboardingChecklist } from "../components/OnboardingChecklist";
 import { BlurFade } from "../components/motion/blur-fade";
 import { KesTicker } from "../components/motion/number-ticker";
 import { ClientAvatar, EmptyState, ProgressBar, Row, Section, SkeletonBlock, StatusBadge } from "../components/ui";
+import { EngagementBadge, TimeLeft } from "../components/engagement";
+import { ENGAGEMENT, durationLabel, feeOf } from "../lib/engagement";
 import { formatDate } from "../lib/format";
 import { useClient, useClientKpis, useClientTypes, useOnboardingByClient, useUpdateClient } from "../lib/queries";
 import {
@@ -157,9 +159,30 @@ function OverviewTab({ client }: { client: Client }) {
             <Row label="Status">
               <StatusBadge status={client.status} />
             </Row>
+            <Row label="Works as">
+              <span className="flex flex-wrap items-center gap-2">
+                <EngagementBadge type={client.engagement_type} />
+                <span className="text-sm text-muted-foreground">
+                  {ENGAGEMENT[client.engagement_type ?? "retainer"].description}
+                </span>
+              </span>
+            </Row>
             <Row label="Start date">{formatDate(client.start_date)}</Row>
-            <Row label="Monthly fee">
-              <KesTicker value={client.monthly_fee} />
+            {client.engagement_type && client.engagement_type !== "retainer" && (
+              <Row label={ENGAGEMENT[client.engagement_type].endLabel}>
+                <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  {formatDate(client.end_date)}
+                  {durationLabel(client.start_date, client.end_date) && (
+                    <span className="text-sm text-muted-foreground">
+                      {durationLabel(client.start_date, client.end_date)} in total
+                    </span>
+                  )}
+                  <TimeLeft client={client} />
+                </span>
+              </Row>
+            )}
+            <Row label={feeOf(client).label}>
+              <KesTicker value={feeOf(client).amount} />
             </Row>
             <Row label="Main goal">{client.main_goal ? GOAL_LABEL[client.main_goal] : "—"}</Row>
             <Row label="Services">
@@ -323,9 +346,21 @@ export default function ClientDetailPage() {
                 {[client.business_name !== client.name && client.business_name, typeName].filter(Boolean).join(" · ") ||
                   "No type"}
               </p>
+              <div className="mt-1.5 flex flex-wrap items-center gap-2">
+                <EngagementBadge type={client.engagement_type} />
+                <TimeLeft client={client} />
+              </div>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            {client.engagement_type === "project" && client.status !== "ended" && !client.archived_at && (
+              <Button
+                className="rounded-full"
+                onClick={() => patch({ status: "ended" }, "Project marked done. Nice work.")}
+              >
+                <CheckCircle2 className="mr-1.5 h-4 w-4" /> Mark project done
+              </Button>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
