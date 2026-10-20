@@ -25,9 +25,7 @@ const InvoicePage = lazy(() => import("./pages/InvoicePage"));
 const PipelinePage = lazy(() => import("./pages/PipelinePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 const WebsitePage = lazy(() => import("./pages/WebsitePage"));
-const TasksPage = lazy(() => import("./pages/TasksPage"));
-const ClientPresentPage = lazy(() => import("./pages/ClientPresentPage"));
-const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
+const TasksPage = lazy(() => import("./pages/TasksPage"));const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
 
 const sectionFallback = (
   <div className="space-y-6">
@@ -72,11 +70,6 @@ export default function HubApp() {
           <Routes>
             <Route path="login" element={<LoginPage />} />
             <Route path="reset-password" element={section(<ResetPasswordPage />)} />
-            {/* Full-screen client presentation: no dock, still behind the admin login. */}
-            <Route
-              path="clients/:id/present"
-              element={<RequireAdmin>{section(<ClientPresentPage />)}</RequireAdmin>}
-            />
             <Route
               element={
                 <RequireAdmin>

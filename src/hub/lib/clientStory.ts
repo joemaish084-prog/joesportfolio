@@ -51,6 +51,19 @@ export function kpiStories(kpis: ClientKpi[], reports: Report[], metrics: Report
     });
 }
 
+/**
+ * The KPI that says how much money the client's business brings in: a KES KPI
+ * named like revenue/sales/income first, otherwise the first KES KPI with numbers.
+ */
+export function revenueStory(stories: KpiStory[]) {
+  const money = stories.filter((s) => s.kpi.unit === "kes" && s.points.length > 0);
+  return (
+    money.find((s) => /revenue|sales|income|turnover|gmv|takings/i.test(s.kpi.name)) ??
+    money.find((s) => !/cost|spend|cpa|cpl|budget/i.test(s.kpi.name)) ??
+    null
+  );
+}
+
 /** The single best improvement, for the headline. */
 export function bestStory(stories: KpiStory[]) {
   return stories
@@ -86,9 +99,11 @@ export function billing(invoices: Invoice[], payments: Payment[]) {
     .sort((a, b) => b.invoice.issue_date.localeCompare(a.invoice.issue_date));
   // Every payment counts, including ones recorded without an invoice.
   const received = payments.reduce((s, p) => s + Number(p.amount), 0);
+  const year = String(new Date().getFullYear());
+  const thisYear = payments.filter((p) => p.paid_on.startsWith(year)).reduce((s, p) => s + Number(p.amount), 0);
   const outstanding = sent.reduce((s, r) => s + r.balance, 0);
   const overdue = sent.filter((r) => r.state === "overdue").reduce((s, r) => s + r.balance, 0);
-  return { rows: sent, received, outstanding, overdue };
+  return { rows: sent, received, thisYear, outstanding, overdue };
 }
 
 /** "7 months" since the start date (or since the first record we have). */

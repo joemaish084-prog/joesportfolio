@@ -7,7 +7,6 @@ import {
   ChevronDown,
   ChevronLeft,
   Pencil,
-  Presentation,
   Target,
   UserX,
 } from "lucide-react";
@@ -62,10 +61,14 @@ const WorkLogPanel = lazy(() =>
 const FinancePanel = lazy(() =>
   import("../components/finance/FinancePanel").then((m) => ({ default: m.FinancePanel })),
 );
+const ClientPortal = lazy(() =>
+  import("../components/clients/ClientPortal").then((m) => ({ default: m.ClientPortal })),
+);
 const tabFallback = <SkeletonBlock className="h-64 rounded-[20px]" />;
 
 const TABS = [
-  { value: "overview", label: "Overview" },
+  { value: "dashboard", label: "Dashboard" },
+  { value: "profile", label: "Profile" },
   { value: "onboarding", label: "Onboarding" },
   { value: "documents", label: "Documents" },
   { value: "progress", label: "Progress" },
@@ -281,7 +284,9 @@ export default function ClientDetailPage() {
   const onboarding = useOnboardingByClient();
   const updateClient = useUpdateClient();
 
-  const tab = TABS.some((t) => t.value === params.get("tab")) ? params.get("tab")! : "overview";
+  // Old links used ?tab=overview for what is now Profile.
+  const requested = params.get("tab") === "overview" ? "profile" : params.get("tab");
+  const tab = TABS.some((t) => t.value === requested) ? requested! : "dashboard";
   const items = id ? onboarding.itemsFor(id) : [];
   const progress = id ? onboarding.progressFor(id) : null;
 
@@ -395,11 +400,6 @@ export default function ClientDetailPage() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button asChild variant="secondary" className="rounded-full bg-foreground text-background hover:bg-foreground/90">
-              <Link to={`/hub/clients/${client.id}/present`} title="A clean full-screen view for client meetings">
-                <Presentation className="mr-1.5 h-4 w-4" /> Present
-              </Link>
-            </Button>
             <Button asChild variant="secondary" className="rounded-full">
               <Link to={`/hub/clients/${client.id}/edit`}>
                 <Pencil className="mr-1.5 h-4 w-4" /> Edit
@@ -440,7 +440,7 @@ export default function ClientDetailPage() {
         value={tab}
         onValueChange={(v) => {
           const next = new URLSearchParams(params);
-          if (v === "overview") next.delete("tab");
+          if (v === "dashboard") next.delete("tab");
           else next.set("tab", v);
           setParams(next, { replace: true });
         }}
@@ -464,7 +464,12 @@ export default function ClientDetailPage() {
           </TabsList>
         </div>
 
-        <TabsContent value="overview" className="mt-0">
+        <TabsContent value="dashboard" className="mt-0">
+          <Suspense fallback={tabFallback}>
+            <ClientPortal client={client} />
+          </Suspense>
+        </TabsContent>
+        <TabsContent value="profile" className="mt-0">
           <OverviewTab client={client} />
         </TabsContent>
         <TabsContent value="onboarding" className="mt-0">
@@ -500,7 +505,7 @@ export default function ClientDetailPage() {
         </TabsContent>
       </Tabs>
 
-      {progress && progress.total > 0 && tab === "overview" && (
+      {progress && progress.total > 0 && tab === "profile" && (
         <button
           type="button"
           onClick={() => setParams({ tab: "onboarding" }, { replace: true })}
