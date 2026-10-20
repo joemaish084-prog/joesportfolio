@@ -8,9 +8,10 @@ import {
   type TurnaroundFormat,
 } from "@/data/metaTurnaroundCaseStudy";
 
-type Tone = "light" | "dark";
+type Tone = "light" | "dark" | "theme";
 
-// "light" matches the white blog pages, "dark" the portfolio case-study section.
+// "light" is a fixed white palette, "dark" the portfolio case-study section, and
+// "theme" follows the site's light/dark mode (used on blog posts).
 const TONES: Record<Tone, CSSProperties> = {
   light: {
     "--cs-card": "#FAFAFA",
@@ -31,6 +32,16 @@ const TONES: Record<Tone, CSSProperties> = {
     "--cs-accent": "hsl(var(--primary))",
     "--cs-good": "#4ADE80",
     "--cs-warn": "#FBBF24",
+  } as CSSProperties,
+  theme: {
+    "--cs-card": "hsl(var(--card))",
+    "--cs-border": "hsl(var(--border))",
+    "--cs-text": "hsl(var(--foreground))",
+    "--cs-muted": "hsl(var(--muted-foreground))",
+    "--cs-track": "hsl(var(--muted))",
+    "--cs-accent": "hsl(var(--primary))",
+    "--cs-good": "hsl(var(--chart-good))",
+    "--cs-warn": "hsl(var(--chart-warn))",
   } as CSSProperties,
 };
 
