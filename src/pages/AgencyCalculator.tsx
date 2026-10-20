@@ -75,7 +75,7 @@ function NumberField({
         {label}
       </Label>
       <div className="mt-2 flex items-center rounded-lg border border-input bg-background focus-within:ring-2 focus-within:ring-ring">
-        {prefix && <span className="pl-3 text-sm text-muted-foreground">{prefix}</span>}
+        {prefix && <span className="whitespace-nowrap pl-3 text-sm text-muted-foreground">{prefix}</span>}
         <input
           id={id}
           inputMode="numeric"
@@ -97,7 +97,7 @@ function NumberField({
             setDraft(formatNumber(clamped));
           }}
         />
-        {suffix && <span className="pr-3 text-sm text-muted-foreground">{suffix}</span>}
+        {suffix && <span className="whitespace-nowrap pr-3 text-sm text-muted-foreground">{suffix}</span>}
       </div>
       {hint && <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{hint}</p>}
     </div>
@@ -108,7 +108,7 @@ function Stat({ label, value, sub }: { label: string; value: string; sub?: strin
   return (
     <div className="rounded-xl border border-border bg-background/50 p-4">
       <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
-      <p className="mt-1 font-display text-xl font-bold sm:text-2xl">{value}</p>
+      <p className="mt-1 font-display text-lg font-bold xl:text-xl">{value}</p>
       {sub && <p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>}
     </div>
   );
@@ -355,8 +355,7 @@ const AgencyCalculator = () => {
                   Estimated net profit per month
                 </p>
                 <p className={cn("mt-1 font-display text-4xl font-bold sm:text-5xl", verdict.text)}>
-                  {result.net < 0 ? "−" : ""}
-                  {formatKes(Math.abs(result.net))}
+                  {formatKes(result.net)}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
                   After {formatKes(inputs.budget)} ad spend
@@ -364,7 +363,7 @@ const AgencyCalculator = () => {
                 </p>
               </div>
 
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
                 <Stat label="Leads" value={formatOne(result.leads)} sub="per month" />
                 <Stat label="Customers" value={formatOne(result.sales)} sub="per month" />
                 <Stat label="Revenue" value={formatKes(result.revenue)} sub="per month" />
@@ -406,10 +405,17 @@ const AgencyCalculator = () => {
                   </li>
                   <li className="flex gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                    <span>
-                      At least <strong className="text-foreground">1 in {formatOne(result.breakEvenLeadsPerSale)}</strong>{" "}
-                      leads buying
-                    </span>
+                    {result.breakEvenLeadsPerSale >= 1 ? (
+                      <span>
+                        At least <strong className="text-foreground">1 in {formatOne(result.breakEvenLeadsPerSale)}</strong>{" "}
+                        leads buying
+                      </span>
+                    ) : (
+                      <span>
+                        A better close rate alone won't fix it: even if{" "}
+                        <strong className="text-foreground">every lead bought</strong>, sales wouldn't cover the cost
+                      </span>
+                    )}
                   </li>
                   <li className="flex gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />

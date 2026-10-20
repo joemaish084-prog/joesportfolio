@@ -150,4 +150,5 @@ export function inputsToSearch(input: CalcInputs): string {
   }).toString();
 }
 
-export const formatKes = (n: number) => `KES ${Math.round(n).toLocaleString("en-KE")}`;
+export const formatKes = (n: number) =>
+  `${Math.round(n) < 0 ? "−" : ""}KES ${Math.abs(Math.round(n)).toLocaleString("en-KE")}`;
