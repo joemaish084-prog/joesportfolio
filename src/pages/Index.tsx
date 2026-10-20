@@ -6,6 +6,7 @@ import { PressFeatures } from "@/components/PressFeatures";
 import { Video, Palette, BarChart3, Briefcase, HelpCircle } from "lucide-react";
 import { Hero } from "@/components/Hero";
 import { Seo } from "@/components/Seo";
+import { STATIC_HEADS } from "@/seo/heads";
 
 // Lazy-load non-critical above-the-fold utilities
 const ScrollProgress = lazy(() => import("@/components/ScrollProgress").then(m => ({ default: m.ScrollProgress })));
@@ -35,11 +36,7 @@ const Index = () => {
 
   return (
     <>
-      <Seo
-        title="Joseph Maina | Digital Marketing Specialist Nairobi | Meta Ads, Google Ads & SEO Kenya"
-        description="Digital Marketing Specialist in Nairobi, Kenya. Expert in Meta Ads, Google Ads, TikTok, SEO & Social Media. Real results for Kenyan brands. Book a free strategy call today."
-        path="/"
-      />
+      <Seo {...STATIC_HEADS.home} />
       <Suspense fallback={null}><ScrollProgress /></Suspense>
       <SiteHeader />
       <main className="min-h-screen">

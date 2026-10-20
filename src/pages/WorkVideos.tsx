@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { WorkPageLayout } from "@/components/WorkPageLayout";
 import { FeaturedVideo, LongCard, ShortCard } from "@/components/videos/VideoCards";
 import { FEATURED_VIDEO, longVideos, shortVideos } from "@/data/videos";
+import { STATIC_HEADS } from "@/seo/heads";
 
 type Filter = "All" | "Short form" | "Long form";
 
@@ -32,12 +33,7 @@ const WorkVideos = () => {
 
   return (
     <WorkPageLayout
-      seo={{
-        title: "Video Production Portfolio | Joseph Maina, Nairobi",
-        description:
-          "Short-form reels and long-form brand films produced by Joseph Maina for Kenyan brands. Newest work first.",
-        path: "/work/videos",
-      }}
+      seo={STATIC_HEADS.workVideos}
       backHref="/#videos"
       eyebrow="Video production"
       title={

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Seo } from "@/components/Seo";
+import { serviceHead } from "@/seo/heads";
 import { AlertTriangle, ArrowLeft, ArrowRight, Check, ChevronRight, Quote, X } from "lucide-react";
 import {
   SERVICE_PROCESS,
@@ -10,8 +11,6 @@ import {
 import { getHubBySlug } from "@/data/blogHubs";
 import { blogPosts } from "@/data/blogPosts";
 import { Footer } from "@/components/Footer";
-
-const SITE = "https://www.josephmaina.co.ke";
 
 const AgencyService = () => {
   const { service: slug } = useParams();
@@ -23,7 +22,6 @@ const AgencyService = () => {
 
   if (!page) return <Navigate to="/agency" replace />;
 
-  const url = `${SITE}/agency/${page.slug}`;
   const hub = getHubBySlug(page.hubSlug);
   const related = page.relatedPosts
     .map((s) => blogPosts.find((p) => p.slug === s))
@@ -33,67 +31,9 @@ const AgencyService = () => {
     : undefined;
   const otherServices = servicePages.filter((s) => s.slug !== page.slug);
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: page.name,
-    description: page.metaDescription,
-    url,
-    serviceType: page.navLabel,
-    areaServed: { "@type": "Country", name: "Kenya" },
-    provider: {
-      "@type": "Person",
-      name: "Joseph Maina",
-      url: SITE,
-    },
-    offers: {
-      "@type": "Offer",
-      price: page.price.amount,
-      priceCurrency: "KES",
-      description: page.price.note,
-    },
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: page.faqs
-      // Unanswered questions must not reach structured data.
-      .filter((f) => !f.a.includes("[CONFIRM]"))
-      .map((f) => ({
-        "@type": "Question",
-        name: f.q,
-        acceptedAnswer: { "@type": "Answer", text: f.a },
-      })),
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Agency", item: `${SITE}/agency` },
-      { "@type": "ListItem", position: 2, name: page.navLabel, item: url },
-    ],
-  };
-
   return (
     <>
-      <Helmet>
-        <title>{page.metaTitle}</title>
-        <meta name="description" content={page.metaDescription} />
-        <link rel="canonical" href={url} />
-        {page.draft && <meta name="robots" content="noindex, nofollow" />}
-        <meta property="og:title" content={page.metaTitle} />
-        <meta property="og:description" content={page.metaDescription} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={url} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-        {faqSchema.mainEntity.length > 0 && (
-          <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
-        )}
-        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
-      </Helmet>
+      <Seo {...serviceHead(page)} />
 
       <div className="min-h-screen bg-white text-[#111111]">
         <div className="mx-auto max-w-5xl px-5 pb-24 pt-16 sm:px-8">

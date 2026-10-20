@@ -1,23 +1,22 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Seo } from "@/components/Seo";
+import type { PageHead } from "@/seo/heads";
 import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 
 interface LegalPageProps {
-  title: string;
-  description: string;
-  path: string;
+  head: PageHead;
   heading: string;
   lastUpdated: string;
   children: ReactNode;
 }
 
-export function LegalPage({ title, description, path, heading, lastUpdated, children }: LegalPageProps) {
+export function LegalPage({ head, heading, lastUpdated, children }: LegalPageProps) {
   return (
     <>
-      <Seo title={title} description={description} path={path} />
+      <Seo {...head} />
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <SiteHeader />
         <main className="flex-1 pt-28 pb-16">

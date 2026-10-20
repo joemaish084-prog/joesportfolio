@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { Seo } from "@/components/Seo";
+import { brandHead } from "@/seo/heads";
 import { Swoosh } from "@/components/branding/BrandArt";
 import { displayFont, kits, paintText } from "@/components/branding/kits";
 import { getBrand, type Brand } from "@/data/brands";
@@ -375,11 +376,7 @@ const WorkBrand = () => {
 
   return (
     <>
-      <Seo
-        title={`${brand.name} Brand Identity | Joseph Maina`}
-        description={`${brand.name}: ${brand.tagline} Logo system, colour palette, typography, social templates and mockups by Joseph Maina.`}
-        path={`/work/branding/${brand.slug}`}
-      />
+      <Seo {...brandHead(brand)} />
       <SiteHeader />
       <main className="min-h-screen" style={{ ...vars, background: colors.background, color: colors.ink, fontFamily: type.body }}>
         {/* The site header is transparent at the top; this strip keeps its links readable over the cover. */}

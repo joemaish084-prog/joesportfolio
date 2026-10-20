@@ -1,10 +1,9 @@
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { STATIC_HEADS } from "@/seo/heads";
 
 const CookiePolicy = () => (
   <LegalPage
-    title="Cookie Policy | Joseph Maina"
-    description="How josephmaina.co.ke uses cookies and analytics to improve your browsing experience."
-    path="/cookie-policy"
+    head={STATIC_HEADS.cookies}
     heading="Cookie Policy"
     lastUpdated="June 2026"
   >

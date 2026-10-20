@@ -1,10 +1,9 @@
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { STATIC_HEADS } from "@/seo/heads";
 
 const PrivacyPolicy = () => (
   <LegalPage
-    title="Privacy Policy | Joseph Maina"
-    description="How Joseph Maina Digital Marketing collects, uses and protects your personal information."
-    path="/privacy-policy"
+    head={STATIC_HEADS.privacy}
     heading="Privacy Policy"
     lastUpdated="June 2026"
   >

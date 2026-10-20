@@ -25,6 +25,7 @@ import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { track } from "@/lib/track";
 import { Seo } from "@/components/Seo";
+import { STATIC_HEADS } from "@/seo/heads";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
@@ -331,11 +332,7 @@ const Agency = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Seo
-        title="Digital Marketing Agency Nairobi | Joseph Maina"
-        description="Meta Ads, Google Ads and SEO for Kenyan businesses. See services and pricing, then book a free discovery call with Joseph Maina."
-        path="/agency"
-      />
+      <Seo {...STATIC_HEADS.agency} />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",

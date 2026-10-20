@@ -1,15 +1,11 @@
 import { WorkPageLayout } from "@/components/WorkPageLayout";
 import { BrandCard } from "@/components/BrandCard";
 import { brands } from "@/data/brands";
+import { STATIC_HEADS } from "@/seo/heads";
 
 const WorkBranding = () => (
   <WorkPageLayout
-    seo={{
-      title: "Brand Identity Portfolio | Joseph Maina, Nairobi",
-      description:
-        "Brand identity work by Joseph Maina: logo systems, colour palettes, typography, social templates and mockups for Kenyan brands.",
-      path: "/work/branding",
-    }}
+    seo={STATIC_HEADS.workBranding}
     backHref="/#branding"
     eyebrow="Branding"
     title={

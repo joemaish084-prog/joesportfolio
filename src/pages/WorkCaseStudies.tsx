@@ -13,6 +13,7 @@ import { googleAdsLaunch } from "@/data/googleAdsCaseStudy";
 import { combinedAds } from "@/data/combinedAdsCaseStudy";
 import { awarenessCampaigns, instagramSpike } from "@/data/insightCaseStudies";
 import { InsightCaseStudyDetail } from "@/components/case-studies/InsightCaseStudyDetail";
+import { STATIC_HEADS } from "@/seo/heads";
 
 const DETAILS: Record<string, () => ReactNode> = {
   "meta-google-combined": () => <PaidCaseStudyDetail data={combinedAds} />,
@@ -44,12 +45,7 @@ const WorkCaseStudies = () => {
 
   return (
     <WorkPageLayout
-      seo={{
-        title: "Digital Marketing Case Studies in Kenya | Joseph Maina",
-        description:
-          "Meta Ads, Google Ads and social media case studies for Nairobi and Kenyan brands. Explore tracked revenue, ROAS, conversion tracking and campaign strategy.",
-        path: "/work/case-studies",
-      }}
+      seo={STATIC_HEADS.workCaseStudies}
       backHref="/#case-study"
       eyebrow="Case studies"
       title={

@@ -1,10 +1,9 @@
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { STATIC_HEADS } from "@/seo/heads";
 
 const Terms = () => (
   <LegalPage
-    title="Terms of Service | Joseph Maina"
-    description="Terms of Service for Joseph Maina Digital Marketing — payments, IP, cancellation and liability."
-    path="/terms"
+    head={STATIC_HEADS.terms}
     heading="Terms of Service"
     lastUpdated="June 2026"
   >

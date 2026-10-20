@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { Button } from "@/components/ui/button";
 import { WorkPageLayout } from "@/components/WorkPageLayout";
 import { DESIGN_GROUPS, LATEST_COUNT, designs, type DesignGroup } from "@/data/designs";
+import { STATIC_HEADS } from "@/seo/heads";
 
 type Filter = "All" | DesignGroup;
 
@@ -42,12 +43,7 @@ const WorkDesign = () => {
 
   return (
     <WorkPageLayout
-      seo={{
-        title: "Graphic Design Portfolio | Joseph Maina, Nairobi",
-        description:
-          "Campaign creatives, social media designs and brand artwork by Joseph Maina for Kenyan brands. Newest work first.",
-        path: "/work/design",
-      }}
+      seo={STATIC_HEADS.workDesign}
       backHref="/#graphic-design"
       eyebrow="Design"
       title={

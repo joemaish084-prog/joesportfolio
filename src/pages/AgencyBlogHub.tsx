@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Seo } from "@/components/Seo";
+import { blogHubHead } from "@/seo/heads";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye } from "lucide-react";
 import { blogHubs, getHubBySlug, getHubPosts, resolveHubServiceHref } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
-
-const SITE = "https://www.josephmaina.co.ke";
 
 const AgencyBlogHub = () => {
   const { hub: hubSlug } = useParams();
@@ -24,46 +23,11 @@ const AgencyBlogHub = () => {
 
   const posts = getHubPosts(hub);
   const [lead, ...others] = posts;
-  const url = `${SITE}/agency/blog/topics/${hub.slug}`;
   const otherHubs = blogHubs.filter((h) => h.slug !== hub.slug);
-
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: hub.metaTitle,
-    description: hub.metaDescription,
-    url,
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Blog", item: `${SITE}/agency/blog` },
-        { "@type": "ListItem", position: 2, name: hub.name, item: url },
-      ],
-    },
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: posts.map((p, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: p.title,
-        url: `${SITE}/agency/blog/${p.slug}`,
-      })),
-    },
-  };
 
   return (
     <>
-      <Helmet>
-        <title>{`${hub.metaTitle} | Joseph Maina`}</title>
-        <meta name="description" content={hub.metaDescription} />
-        <link rel="canonical" href={url} />
-        <meta property="og:title" content={hub.metaTitle} />
-        <meta property="og:description" content={hub.metaDescription} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={url} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
+      <Seo {...blogHubHead(hub)} />
 
       <SiteHeader />
       <div className="min-h-screen bg-background text-foreground">

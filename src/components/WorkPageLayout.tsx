@@ -4,9 +4,10 @@ import { ArrowLeft } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { Seo } from "@/components/Seo";
+import type { PageHead } from "@/seo/heads";
 
 interface WorkPageLayoutProps {
-  seo: { title: string; description: string; path: string };
+  seo: PageHead;
   /** Where "Back to portfolio" returns to, e.g. "/#graphic-design". */
   backHref: string;
   eyebrow: string;

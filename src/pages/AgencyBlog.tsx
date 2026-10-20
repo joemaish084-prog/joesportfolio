@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Seo } from "@/components/Seo";
+import { blogIndexHead } from "@/seo/heads";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock, Eye, Pause, Play, User } from "lucide-react";
 import { blogPosts, type BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
-
-const SITE = "https://www.josephmaina.co.ke";
 
 const Meta = ({
   dateLabel,
@@ -36,7 +35,6 @@ const Meta = ({
     )}
   </div>
 );
-
 
 const ROTATE_SECONDS = 30;
 
@@ -176,53 +174,9 @@ const AgencyBlog = () => {
   const strays = getUnhubbedPosts();
   const views = useBlogViews();
 
-  const itemListSchema = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    name: "Joseph Maina Agency Blog",
-    url: `${SITE}/agency/blog`,
-    blogPost: blogPosts.map((p) => ({
-      "@type": "BlogPosting",
-      headline: p.title,
-      description: p.excerpt,
-      datePublished: p.date,
-      author: { "@type": "Person", name: "Joseph Maina" },
-      url: `${SITE}/agency/blog/${p.slug}`,
-    })),
-  };
-
-  const hubListSchema = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Blog topic hubs",
-    itemListElement: blogHubs.map((h, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: h.name,
-      url: `${SITE}/agency/blog/topics/${h.slug}`,
-    })),
-  };
-
   return (
     <>
-      <Helmet>
-        <title>Digital Marketing Blog Kenya | Joseph Maina Agency</title>
-        <meta
-          name="description"
-          content="Practical digital marketing insights for Kenyan brands, organised by topic: SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies."
-        />
-        <link rel="canonical" href={`${SITE}/agency/blog`} />
-        <meta property="og:title" content="Digital Marketing Blog Kenya | Joseph Maina Agency" />
-        <meta
-          property="og:description"
-          content="SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies for Kenyan brands."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${SITE}/agency/blog`} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <script type="application/ld+json">{JSON.stringify(itemListSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(hubListSchema)}</script>
-      </Helmet>
+      <Seo {...blogIndexHead()} />
 
       <SiteHeader />
       <div className="min-h-screen bg-background text-foreground">

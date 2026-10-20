@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { Seo } from "@/components/Seo";
+import { blogPostHead } from "@/seo/heads";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye, User } from "lucide-react";
 import { getPostBySlug } from "@/data/blogPosts";
 import {
@@ -14,7 +15,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { MetaTurnaroundVisual } from "@/components/MetaTurnaroundVisual";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
 
-const SITE = "https://www.josephmaina.co.ke";
 const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
 
 const AgencyBlogPost = () => {
@@ -39,59 +39,13 @@ const AgencyBlogPost = () => {
 
   if (!post) return <Navigate to="/agency/blog" replace />;
 
-  const url = `${SITE}/agency/blog/${post.slug}`;
   const related = getRelatedByHub(post.slug);
   const hubs = getHubsForPost(post.slug);
   const primaryHub = getPrimaryHubForPost(post.slug);
 
-  const breadcrumb = {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Blog", item: `${SITE}/agency/blog` },
-      ...(primaryHub
-        ? [
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: primaryHub.name,
-              item: `${SITE}/agency/blog/topics/${primaryHub.slug}`,
-            },
-          ]
-        : []),
-      { "@type": "ListItem", position: primaryHub ? 3 : 2, name: post.title, item: url },
-    ],
-  };
-
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.metaDescription,
-    datePublished: post.date,
-    author: { "@type": "Person", name: "Joseph Maina", url: SITE },
-    publisher: { "@type": "Organization", name: "Joseph Maina Agency", url: SITE },
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-    articleSection: primaryHub?.name ?? post.category,
-    breadcrumb,
-  };
-
   return (
     <>
-      <Helmet>
-        <title>{`${post.metaTitle} | Joseph Maina`}</title>
-        <meta name="description" content={post.metaDescription} />
-        <link rel="canonical" href={url} />
-        <meta property="og:title" content={post.metaTitle} />
-        <meta property="og:description" content={post.metaDescription} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={url} />
-        <meta property="og:image" content={post.thumbnail} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.metaTitle} />
-        <meta name="twitter:description" content={post.metaDescription} />
-        <meta name="twitter:image" content={post.thumbnail} />
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      </Helmet>
+      <Seo {...blogPostHead(post)} />
 
       {/* Reading progress */}
       <div className="fixed inset-x-0 top-0 z-[60] h-1 bg-transparent">
