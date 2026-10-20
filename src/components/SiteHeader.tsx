@@ -55,6 +55,20 @@ const navLinks: NavLink[] = [
     })),
     footer: { label: "All case studies", href: "/work/case-studies" },
   },
+  // Topic hubs are listed by hand rather than imported from the blog data, which
+  // is too large to load with the header on every page.
+  {
+    label: "Blog",
+    href: "/agency/blog",
+    children: [
+      { label: "Meta Ads", description: "Budgets, creative testing and costly mistakes", href: "/agency/blog/topics/meta-ads" },
+      { label: "Google Ads & Search", description: "Costs, setup and when search beats social", href: "/agency/blog/topics/google-ads" },
+      { label: "Local SEO for Nairobi", description: "Getting found on Google and Maps", href: "/agency/blog/topics/local-seo" },
+      { label: "Lead Generation", description: "Turning clicks into enquiries and sales", href: "/agency/blog/topics/lead-generation" },
+      { label: "TikTok & Social", description: "Short-form video and platform choice", href: "/agency/blog/topics/tiktok-and-social" },
+    ],
+    footer: { label: "All articles", href: "/agency/blog" },
+  },
   { label: "Experience", href: "/#experience" },
   {
     label: "About",
@@ -216,6 +230,7 @@ export function SiteHeader() {
   }, []);
 
   const handleAnchor = useCallback((e: React.MouseEvent, href: string) => {
+    if (!isHomeAnchor(href)) return;
     const hash = getHash(href);
     // Off the homepage, let the browser do a normal navigation to "/#id"
     if (window.location.pathname !== "/") return;
@@ -240,7 +255,7 @@ export function SiteHeader() {
           <Logo onClick={(e) => handleAnchor(e, "/#home")} />
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-7" aria-label="Primary">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-7" aria-label="Primary">
             {navLinks.map((link) => {
               const isActive = activeHref === getHash(link.href);
               const isOpen = menu === link.label;

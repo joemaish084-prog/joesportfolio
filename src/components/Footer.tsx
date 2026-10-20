@@ -13,6 +13,7 @@ const portfolioLinks = [
   { name: "Experience", href: "/#experience" },
   { name: "Videos", href: "/#videos" },
   { name: "Design Work", href: "/#graphic-design" },
+  { name: "Blog", href: "/agency/blog" },
   { name: "Testimonials", href: "/#testimonials" },
 ];
 
