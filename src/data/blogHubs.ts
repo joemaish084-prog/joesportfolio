@@ -165,6 +165,7 @@ export const blogHubs: BlogHub[] = [
     ],
     postSlugs: [
       "lead-generation-campaigns-kenya-2026",
+      "dm-for-price-is-costing-you-sales-kenya-2026",
       "whatsapp-as-a-sales-channel-kenya-2026",
       "ad-mistakes-nairobi-smes-keep-making-2026",
       "ad-creative-testing-kenyan-brands-2026",
@@ -252,6 +253,7 @@ export const blogHubs: BlogHub[] = [
       "best-social-media-marketing-tools-kenya-2026",
       "tiktok-marketing-strategy-brand-awareness-kenya-2026",
       "instagram-reels-vs-tiktok-for-business-kenya-2026",
+      "sheng-in-ads-when-it-sells-kenya-2026",
       "video-production-for-small-businesses-kenya-2026",
     ],
     service: {

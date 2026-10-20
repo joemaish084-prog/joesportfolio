@@ -3005,6 +3005,177 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "dm-for-price-is-costing-you-sales-kenya-2026",
+    category: "Sales",
+    title: "\"DM for Price\" Is Costing You Sales. Here's Why.",
+    excerpt: "Every \"bei gani?\" in your comments is a buyer who had to ask. For every one who asked, more scrolled past without bothering.",
+    date: "2026-10-18",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "\"DM for Price\" Is Costing You Sales. Here's Why.",
+    metaDescription: "Why hiding your price behind \"DM for price\" loses sales for Kenyan businesses on Instagram, TikTok and Facebook, when it makes sense, and how to show price without losing your edge.",
+    intro: "Scroll through almost any Kenyan seller's Instagram and the comments look the same: \"bei gani?\", \"how much?\", \"price please\", answered with \"check your DM\". It feels like a sales tactic. Most of the time it is a leak, and the people it loses are the ones you never see.",
+    thumbnail: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person in a white shirt tapping on a smartphone",
+
+    sections: [
+      {
+        id: "the-comment-section",
+        heading: "The comment section is only the visible part",
+        paragraphs: [
+          "Every \"bei gani?\" is a buyer interested enough to ask. What you never see are the people who wanted to know, did not feel like asking a stranger, and kept scrolling. On a busy feed, the effort of asking is enough to lose them.",
+          "And the ones who do ask now wait for you. If the reply comes three hours later, many of them have already found the same product on another page that put the price in the caption.",
+        ],
+      },
+      {
+        id: "why-sellers-hide-it",
+        heading: "The reasons sellers hide the price, and why they rarely hold up",
+        paragraphs: [
+          "\"Competitors will copy my price.\" They can DM you too, and they do. \"I want room to negotiate.\" A starting price still leaves room; it just starts the conversation in the right place. \"My prices change.\" Then say \"from KES 2,500\" and update it when it changes.",
+          "\"The price will scare people off.\" It will scare off the people who were never going to pay it, which saves you the hour you would have spent chatting with them. That is not a lost sale, it is a filter.",
+        ],
+      },
+      {
+        id: "what-it-costs",
+        heading: "What hiding the price really costs",
+        paragraphs: [
+          "It adds a step between interest and purchase, and every extra step loses people. It makes your reply speed the bottleneck for every single sale. And publicly answering \"check DM\" to a price question reads as evasive to everyone else watching the thread.",
+          "If you are running ads, it costs real money. You pay for the click or the view, and then the person leaves at the exact moment they wanted the one fact you would not give them. In my experience, ads that show the price get fewer clicks but more serious enquiries, which is the trade you want.",
+        ],
+      },
+      {
+        id: "when-it-makes-sense",
+        heading: "When not showing a fixed price is fair",
+        paragraphs: [
+          "Custom work is different. Events, interior design, construction, branding and most services genuinely depend on scope, and a single price would mislead people.",
+          "Even then, give a range and explain what moves it: \"wedding packages from KES 80,000, depending on guest numbers and venue\". That answers the real question, which is usually \"can I afford this?\", without pretending every job costs the same.",
+        ],
+      },
+      {
+        id: "how-to-show-it",
+        heading: "How to show price well",
+        paragraphs: [
+          "Put the price on the creative itself or in the first line of the caption, not buried at the bottom. Pair it with the reason it is worth it, so the number lands with context. Pin a comment with prices on popular posts, and set up a WhatsApp Business catalog with prices so the conversation starts with an order, not a question.",
+          "Then answer price comments in public with the actual number. It takes ten seconds, it shows everyone else you have nothing to hide, and it turns your comment section into a sales page instead of a waiting room, the same principle behind my piece on WhatsApp as a sales channel.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "sheng-in-ads-when-it-sells-kenya-2026",
+    category: "Content",
+    title: "Sheng in Your Ads: When It Sells and When It Backfires",
+    excerpt: "Done right, Sheng makes a brand sound like a person. Done wrong, it sounds like a bank trying to be cool.",
+    date: "2026-10-19",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "Sheng in Your Ads: When It Sells and When It Backfires",
+    metaDescription: "When using Sheng in Kenyan ads and social content works, when it backfires, who should write it, and how to test it against English before committing your budget.",
+    intro: "A caption that opens with \"Sasa\" can outperform a polished English one by a mile, and the same idea in the wrong brand's mouth can get roasted in the comments within the hour. Sheng is one of the strongest tools a Kenyan brand has on social media. It is also one of the easiest to get embarrassingly wrong.",
+    thumbnail: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Group of young friends laughing and talking around a café table",
+
+    sections: [
+      {
+        id: "why-it-works",
+        heading: "Why Sheng works when it works",
+        paragraphs: [
+          "It sounds like a person talking, not a company announcing. On TikTok and Instagram, where people scroll past anything that looks like an advert, sounding like a friend is half the battle.",
+          "It also tells a specific audience \"this is for us\". For a brand selling to young, urban Kenyans, that sense of belonging does more than any line of clever copywriting.",
+        ],
+      },
+      {
+        id: "when-it-backfires",
+        heading: "When it backfires",
+        paragraphs: [
+          "Sheng moves fast. Words that were everywhere a few years ago now mark you as out of touch, and nothing reads more like a brand trying too hard than yesterday's slang used confidently today.",
+          "It also backfires with the wrong audience or the wrong category. If your buyers are older professionals, or you sell something where trust depends on clarity, such as healthcare, insurance, legal services or loans, playful slang can make you look unserious exactly where you need to look careful.",
+        ],
+      },
+      {
+        id: "who-writes-it",
+        heading: "Who should write it",
+        paragraphs: [
+          "Someone who actually speaks it every day, with the people you are trying to reach. Sheng written by translating an English script word for word is instantly recognisable, and the audience will tell you so in the comments.",
+          "Read every line out loud before it goes live. If it sounds like something your customer would say to a friend at a stage, keep it. If it sounds like a marketing department's idea of how young people talk, rewrite it.",
+        ],
+      },
+      {
+        id: "mix-it",
+        heading: "Mix it, and keep the important parts plain",
+        paragraphs: [
+          "Most Kenyans switch between English, Swahili and Sheng in the same sentence, and the best ads do the same. Use the familiar voice for the hook and the feeling: \"Sasa, hii deal ni fiti\". Then keep the facts in plain language anyone can follow.",
+          "The price, the terms, the delivery details and the call to action should never be ambiguous. A clever line that leaves someone unsure what it costs or how to order has cost you the sale it was meant to win.",
+        ],
+      },
+      {
+        id: "test-it",
+        heading: "Do not guess, test it",
+        paragraphs: [
+          "Run the same offer twice, one version in mostly English and one in a natural Sheng and English mix, with the same budget and audience, and compare the cost per enquiry or sale, not just the likes.",
+          "Sometimes the Sheng version wins comfortably, sometimes the plain one does, and the answer often differs between platforms. Let the numbers decide, the same way I recommend in my guide to ad creative testing.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "what-matatus-teach-brands-about-getting-noticed",
+    category: "Brand Strategy",
+    title: "What Nairobi's Matatus Can Teach Your Brand About Getting Noticed",
+    excerpt: "On a road full of identical vehicles, people wait for one particular matatu. That is the whole lesson of branding, on wheels.",
+    date: "2026-10-20",
+    dateLabel: "October 2026",
+    readTime: "5 min read",
+    metaTitle: "What Nairobi's Matatus Can Teach Your Brand About Getting Noticed",
+    metaDescription: "Branding and marketing lessons from Nairobi matatu culture: standing out in a crowded feed, building a recognisable identity, the perfect three-word pitch, and knowing your audience.",
+    intro: "Stand at any busy stage in Nairobi and you will see something most brands never achieve: people letting a half-empty matatu pass so they can wait for a particular one. Same route, same fare, often a longer wait. They choose it anyway. Matatu culture has been quietly teaching marketing lessons on our roads for decades.",
+    thumbnail: "https://images.unsplash.com/photo-1531913764164-f85c52e6e654?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Bold abstract painting in bright red, yellow and blue",
+
+    sections: [
+      {
+        id: "stand-out",
+        heading: "Stand out on the most crowded road in town",
+        paragraphs: [
+          "The fully decorated matatus, the ones covered in airbrushed art, lights and screens, exist because the road is crowded with vehicles that all do the same job. The one that looks like nothing else is the one people notice, photograph and talk about.",
+          "Your social media feed is that road. If your posts look like every other business in your category, the same templates, the same stock photos, the same captions, you are a plain white van in a jam of plain white vans. Nobody waits for you.",
+        ],
+      },
+      {
+        id: "name-and-personality",
+        heading: "Give people something to recognise",
+        paragraphs: [
+          "The best-known matatus have names, a look and a personality that regulars recognise from across the street. People follow them online and wait for them at the stage. That is brand recognition in its purest form.",
+          "For a business, it means a consistent look, a consistent voice and a few signature things you always do, kept steady long enough for people to learn them. Recognition comes from repetition, not from changing your style every month.",
+        ],
+      },
+      {
+        id: "makanga-pitch",
+        heading: "The makanga has the perfect pitch",
+        paragraphs: [
+          "Listen to a makanga calling passengers: \"Town, mia, tunaenda!\" Destination, price and urgency in three words. Everyone within earshot knows exactly what is on offer and whether it is for them.",
+          "Most adverts take a paragraph to say less. Before your next campaign, try writing the offer the way a makanga would: what it is, what it costs, why now. If you cannot, the ad is not ready.",
+        ],
+      },
+      {
+        id: "experience-is-the-product",
+        heading: "The ride is part of the product",
+        paragraphs: [
+          "Two matatus on the same route charge the same fare, yet one is full and the other waits. The difference is the experience: the music, the screens, the energy. People pay for the ride, not just the trip.",
+          "The same is true for your business. How fast you reply, how an order arrives, how a complaint is handled: all of it is marketing. A great advert that leads to a dull or frustrating experience is a decorated matatu with a rude crew. People ride once.",
+        ],
+      },
+      {
+        id: "know-your-passenger",
+        heading: "But know who you are carrying",
+        paragraphs: [
+          "Not everyone wants the loudest matatu on the road. Plenty of commuters choose the quiet shuttle with the calm driver, and they are just as loyal to it.",
+          "Loud, bold branding suits a youth fashion label or a nightlife brand. A clinic, a law firm or a school wins with calm, clear and reliable. The lesson is not to be louder, it is to be unmistakably yourself, for the people you actually want on board.",
+        ],
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>
