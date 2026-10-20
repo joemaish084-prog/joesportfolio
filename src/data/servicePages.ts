@@ -282,7 +282,7 @@ export const servicePages: ServicePage[] = [
         a: "[CONFIRM] Whether you take Shopping / Performance Max work and want to advertise it. Your current service copy mentions Search, Display and YouTube only.",
       },
     ],
-    hubSlug: "google-ads",
+    hubSlug: "paid-search",
     relatedPosts: [
       "google-ads-cost-kenya-2026",
       "google-ads-vs-meta-ads-kenya-2026",

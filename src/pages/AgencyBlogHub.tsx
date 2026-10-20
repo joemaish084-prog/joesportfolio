@@ -19,6 +19,8 @@ const AgencyBlogHub = () => {
   }, [hubSlug]);
 
   if (!hub) return <Navigate to="/agency/blog" replace />;
+  // Old topic addresses (for example /topics/google-ads) move to the current one.
+  if (hub.slug !== hubSlug) return <Navigate to={`/agency/blog/topics/${hub.slug}`} replace />;
 
   const posts = getHubPosts(hub);
   const [lead, ...others] = posts;

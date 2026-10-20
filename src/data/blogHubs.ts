@@ -23,6 +23,8 @@ export interface HubCta {
 
 export interface BlogHub {
   slug: string;
+  /** Old slugs that should still resolve to this hub (and redirect to `slug`). */
+  aliases?: string[];
   name: string;
   icon: LucideIcon;
   /** One line used on hub cards and in the blog index. */
@@ -79,7 +81,10 @@ export const blogHubs: BlogHub[] = [
       "Everything I've written about running Meta Ads in Kenya: what to spend, which creative converts, how to test, and the mistakes Nairobi SMEs keep repeating.",
   },
   {
-    slug: "google-ads",
+    // Not "google-ads": ad blockers hide any element with that id, which made
+    // this whole section disappear from the blog page for many visitors.
+    slug: "paid-search",
+    aliases: ["google-ads"],
     name: "Google Ads & Search",
     icon: BarChart3,
     tagline: "What management actually costs, and when search beats social.",
@@ -314,7 +319,8 @@ export const blogHubs: BlogHub[] = [
   },
 ];
 
-export const getHubBySlug = (slug?: string) => blogHubs.find((h) => h.slug === slug);
+export const getHubBySlug = (slug?: string) =>
+  blogHubs.find((h) => h.slug === slug || (slug !== undefined && h.aliases?.includes(slug)));
 
 /**
  * Where a hub's "related service" link should point. Prefers the dedicated

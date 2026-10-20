@@ -67,7 +67,7 @@ const singlePlatform = [
     price: "From KES 45,000/month",
     features: ["Search, Display and YouTube campaigns", "Keyword research and strategy", "Bid management", "Conversion tracking", "Monthly reporting"],
     proof: { label: "Read: what Google Ads management costs in Kenya", to: "/agency/blog/google-ads-cost-kenya-2026" },
-    hub: { label: "All Google Ads guides", to: "/agency/blog/topics/google-ads" },
+    hub: { label: "All Google Ads guides", to: "/agency/blog/topics/paid-search" },
   },
   {
     icon: Video,

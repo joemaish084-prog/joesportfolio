@@ -62,7 +62,7 @@ const navLinks: NavLink[] = [
     href: "/agency/blog",
     children: [
       { label: "Meta Ads", description: "Budgets, creative testing and costly mistakes", href: "/agency/blog/topics/meta-ads" },
-      { label: "Google Ads & Search", description: "Costs, setup and when search beats social", href: "/agency/blog/topics/google-ads" },
+      { label: "Google Ads & Search", description: "Costs, setup and when search beats social", href: "/agency/blog/topics/paid-search" },
       { label: "Local SEO for Nairobi", description: "Getting found on Google and Maps", href: "/agency/blog/topics/local-seo" },
       { label: "Lead Generation", description: "Turning clicks into enquiries and sales", href: "/agency/blog/topics/lead-generation" },
       { label: "TikTok & Social", description: "Short-form video and platform choice", href: "/agency/blog/topics/tiktok-and-social" },
