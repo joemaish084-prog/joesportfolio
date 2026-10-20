@@ -13,6 +13,7 @@ import {
   MoreHorizontal,
   Search,
   Settings,
+  SquareKanban,
   Eye,
   EyeOff,
   Sun,
@@ -35,6 +36,7 @@ type NavItem = { to: string; label: string; icon: LucideIcon; end?: boolean };
 
 const WORK_NAV: NavItem[] = [
   { to: "/hub", label: "Overview", icon: LayoutGrid, end: true },
+  { to: "/hub/tasks", label: "Tasks", icon: SquareKanban },
   { to: "/hub/clients", label: "Clients", icon: Users },
   { to: "/hub/onboarding", label: "Onboarding", icon: ListChecks },
   { to: "/hub/pipeline", label: "Pipeline", icon: Filter },
@@ -51,7 +53,9 @@ const SETTINGS_NAV: NavItem = { to: "/hub/settings", label: "Settings", icon: Se
 
 const NAV = [...WORK_NAV, ...RECORDS_NAV, SETTINGS_NAV];
 // Phones get the four most-used sections in the dock; the rest live under More.
-const MOBILE_NAV = [NAV[0], NAV[1], NAV[3], RECORDS_NAV[2]];
+const MOBILE_NAV = ["/hub", "/hub/tasks", "/hub/clients", "/hub/finance"].map(
+  (to) => NAV.find((n) => n.to === to) as NavItem,
+);
 
 const THEMES: { value: HubTheme; label: string; icon: LucideIcon }[] = [
   { value: "light", label: "Light", icon: Sun },

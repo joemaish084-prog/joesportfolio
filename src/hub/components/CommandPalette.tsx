@@ -8,11 +8,13 @@ import {
   FileText,
   FileUp,
   Filter,
+  Globe,
   LayoutGrid,
   ListChecks,
   Plus,
   Receipt,
   Settings,
+  SquareKanban,
   Target,
   Upload,
   User,
@@ -37,17 +39,20 @@ import { LEAD_STAGE_LABEL } from "../lib/types";
 
 const PAGES = [
   { label: "Overview", to: "/hub", icon: LayoutGrid },
+  { label: "Tasks", to: "/hub/tasks", icon: SquareKanban },
   { label: "Clients", to: "/hub/clients", icon: Users },
   { label: "Onboarding", to: "/hub/onboarding", icon: ListChecks },
   { label: "Documents", to: "/hub/documents", icon: FileText },
   { label: "Reports", to: "/hub/reports", icon: BarChart3 },
   { label: "Finance", to: "/hub/finance", icon: Wallet },
   { label: "Pipeline", to: "/hub/pipeline", icon: Filter },
+  { label: "Website", to: "/hub/website", icon: Globe },
   { label: "Settings", to: "/hub/settings", icon: Settings },
   { label: "Clean up duplicates", to: "/hub/settings?tab=cleanup", icon: Users },
 ];
 
 const ACTIONS = [
+  { label: "New task", to: "/hub/tasks?new=task", icon: SquareKanban },
   { label: "New client", to: "/hub/clients/new", icon: Plus },
   { label: "New lead", to: "/hub/pipeline?new=lead", icon: Target },
   { label: "New invoice", to: "/hub/finance?new=invoice", icon: FileText },

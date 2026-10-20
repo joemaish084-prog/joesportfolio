@@ -418,6 +418,45 @@ export type HubSettings = {
   updated_at: string;
 };
 
+// ---------------------------------------------------------------- tasks
+
+export const TASK_STATUSES = ["todo", "in_progress", "review", "done"] as const;
+export type TaskStatus = (typeof TASK_STATUSES)[number];
+export const TASK_STATUS_LABEL: Record<TaskStatus, string> = {
+  todo: "To do",
+  in_progress: "In progress",
+  review: "In review",
+  done: "Done",
+};
+
+export const TASK_PRIORITIES = ["urgent", "high", "medium", "low"] as const;
+export type TaskPriority = (typeof TASK_PRIORITIES)[number];
+export const TASK_PRIORITY_LABEL: Record<TaskPriority, string> = {
+  urgent: "Urgent",
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+};
+
+export type ChecklistItem = { id: string; text: string; done: boolean };
+
+export type Task = {
+  id: string;
+  title: string;
+  notes: string | null;
+  status: TaskStatus;
+  priority: TaskPriority;
+  client_id: string | null;
+  due_date: string | null;
+  labels: string[];
+  checklist: ChecklistItem[];
+  position: number;
+  completed_at: string | null;
+  archived_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 type Generated = "id" | "created_at" | "updated_at";
 
 type TableDef<Row, Required extends keyof Row> = {
@@ -443,6 +482,7 @@ export type HubDatabase = {
       payments: TableDef<Payment, "client_id" | "amount">;
       expenses: TableDef<Expense, "description" | "amount">;
       leads: TableDef<Lead, "name">;
+      tasks: TableDef<Task, "title">;
       hub_settings: {
         Row: HubSettings;
         Insert: Partial<HubSettings>;

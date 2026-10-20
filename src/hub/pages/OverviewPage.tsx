@@ -24,6 +24,7 @@ import {
   NotebookPen,
   Plus,
   Receipt,
+  SquareKanban,
   Target,
   UserCheck,
   UserPlus,
@@ -117,6 +118,7 @@ function Card({
 }
 
 const QUICK_ACTIONS: { label: string; to: string; icon: LucideIcon }[] = [
+  { label: "New task", to: "/hub/tasks?new=task", icon: SquareKanban },
   { label: "New client", to: "/hub/clients/new", icon: UserPlus },
   { label: "New invoice", to: "/hub/finance?new=invoice", icon: FileText },
   { label: "Record payment", to: "/hub/finance?new=payment", icon: Banknote },
