@@ -17,6 +17,7 @@ const AgencyBlog = lazy(() => import("./pages/AgencyBlog"));
 const AgencyBlogHub = lazy(() => import("./pages/AgencyBlogHub"));
 const AgencyService = lazy(() => import("./pages/AgencyService"));
 const AgencyBlogPost = lazy(() => import("./pages/AgencyBlogPost"));
+const AgencyCalculator = lazy(() => import("./pages/AgencyCalculator"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -64,6 +65,7 @@ const App = () => (
             <Route path="/agency/blog" element={<AgencyBlog />} />
             <Route path="/agency/blog/topics/:hub" element={<AgencyBlogHub />} />
             <Route path="/agency/blog/:slug" element={<AgencyBlogPost />} />
+            <Route path="/agency/ad-budget-calculator" element={<AgencyCalculator />} />
             {/* Service "money pages". Declared after the blog routes, which are
                 more specific, so /agency/blog is never captured by :service. */}
             <Route path="/agency/:service" element={<AgencyService />} />

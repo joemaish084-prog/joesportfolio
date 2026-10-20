@@ -2,6 +2,7 @@ import { blogPosts, type BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getPrimaryHubForPost, type BlogHub } from "@/data/blogHubs";
 import type { ServicePage } from "@/data/servicePages";
 import type { Brand } from "@/data/brands";
+import { CALCULATOR_FAQS, CALCULATOR_INTRO, CALCULATOR_PATH, CALCULATOR_TITLE } from "@/data/adCalculatorContent";
 
 /**
  * Every public page's <head>: title, description, social card and JSON-LD.
@@ -327,6 +328,49 @@ export function serviceHead(page: ServicePage): PageHead {
         ...breadcrumbs([
           { name: "Agency", path: "/agency" },
           { name: page.navLabel, path },
+        ]),
+      },
+    ],
+  };
+}
+
+export function calculatorHead(): PageHead {
+  const path = CALCULATOR_PATH;
+  return {
+    title: `${CALCULATOR_TITLE} | Joseph Maina`,
+    ogTitle: CALCULATOR_TITLE,
+    description:
+      "Free ad budget calculator for Kenyan businesses. See how many leads and customers a Meta or Google Ads budget buys, and the cost per lead you can afford to break even.",
+    ogDescription: CALCULATOR_INTRO,
+    path,
+    ...ogCardImage(path, CALCULATOR_TITLE),
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: CALCULATOR_TITLE,
+        url: canonicalUrl(path),
+        description: CALCULATOR_INTRO,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Any",
+        isAccessibleForFree: true,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "KES" },
+        author: person,
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: CALCULATOR_FAQS.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+      {
+        "@context": "https://schema.org",
+        ...breadcrumbs([
+          { name: "Agency", path: "/agency" },
+          { name: "Ad Budget Calculator", path },
         ]),
       },
     ],

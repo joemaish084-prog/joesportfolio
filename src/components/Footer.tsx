@@ -24,6 +24,7 @@ const agencyServices = [
   { name: "SEO Services", href: "/agency#services" },
   { name: "Social Media Management", href: "/agency#services" },
   { name: "Media Buying", href: "/agency#services" },
+  { name: "Ad Budget Calculator", href: "/agency/ad-budget-calculator" },
   { name: "Book Discovery Call", href: "/agency#contact" },
 ];
 

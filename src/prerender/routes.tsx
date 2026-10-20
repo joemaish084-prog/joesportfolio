@@ -11,9 +11,17 @@ import {
   blogIndexHead,
   blogPostHead,
   brandHead,
+  calculatorHead,
   serviceHead,
   type PageHead,
 } from "@/seo/heads";
+import {
+  CALCULATOR_FAQS,
+  CALCULATOR_INTRO,
+  CALCULATOR_METHOD,
+  CALCULATOR_READING,
+  CALCULATOR_TITLE,
+} from "@/data/adCalculatorContent";
 
 /**
  * Build-time only. scripts/prerender.mjs bundles this file and writes one HTML
@@ -420,6 +428,51 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       sitemap: { priority: 0.7, changefreq: "yearly" },
     });
   }
+
+  const calculator = calculatorHead();
+  routes.push({
+    path: calculator.path,
+    head: calculator,
+    body: html(
+      <Shell>
+        <p>
+          <a href="/agency">Agency</a> › Ad Budget Calculator
+        </p>
+        <h1>{CALCULATOR_TITLE}</h1>
+        <p>{CALCULATOR_INTRO}</p>
+        <p>
+          Enter your monthly ad budget, cost per lead, how many leads it takes to win a customer, your average sale
+          and your margin. The calculator shows the leads, customers, revenue and net profit to expect, and the cost
+          per lead you can afford to break even.
+        </p>
+        <h2>How the calculator works</h2>
+        {CALCULATOR_METHOD.map((p) => (
+          <p key={p}>{p}</p>
+        ))}
+        <h2>Questions</h2>
+        {CALCULATOR_FAQS.map((f) => (
+          <div key={f.q}>
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+        <h2>Go deeper on the numbers</h2>
+        <ul>
+          {CALCULATOR_READING.map((slug) => blogPosts.find((p) => p.slug === slug))
+            .filter((p): p is BlogPost => Boolean(p))
+            .map((p) => (
+              <PostLink key={p.slug} post={p} />
+            ))}
+        </ul>
+      </Shell>,
+    ),
+    card: {
+      eyebrow: "Free tool",
+      title: CALCULATOR_TITLE,
+      meta: "See the cost per lead you can afford before you spend",
+    },
+    sitemap: { priority: 0.8, changefreq: "monthly" },
+  });
 
   for (const head of [STATIC_HEADS.connect, STATIC_HEADS.privacy, STATIC_HEADS.cookies, STATIC_HEADS.terms]) {
     routes.push({

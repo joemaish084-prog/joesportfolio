@@ -17,7 +17,7 @@ import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
   CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
-  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare, Menu, X,
+  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare, Menu, X, Calculator,
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
 import { getLiveServicePages } from "@/data/servicePages";
@@ -733,6 +733,29 @@ const Agency = () => {
               </div>
             </div>
           )}
+
+          {/* Free tool: lets visitors test whether a budget pays for itself before booking. */}
+          <Link
+            to="/agency/ad-budget-calculator"
+            className="corner-brackets surface-card group mx-auto mb-16 flex max-w-4xl flex-col gap-5 p-6 transition-all duration-300 hover:border-primary/40 sm:flex-row sm:items-center sm:p-8"
+          >
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-orange">
+              <Calculator className="h-7 w-7 text-white" aria-hidden />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Free tool</p>
+              <h3 className="mt-1 font-display text-xl font-semibold group-hover:text-primary transition-colors">
+                Will your ad budget pay for itself?
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Enter your budget, sale value and close rate to see the leads, customers and profit to expect, and the
+                cost per lead you can afford.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+              Try the calculator <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+            </span>
+          </Link>
 
           {/* Closing CTA */}
           <div className="text-center max-w-2xl mx-auto space-y-6">

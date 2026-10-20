@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
 import { blogPostHead } from "@/seo/heads";
-import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calculator, CalendarDays, ChevronRight, Clock, Eye, User } from "lucide-react";
+import { CALCULATOR_HUBS, CALCULATOR_PATH } from "@/data/adCalculatorContent";
 import { getPostBySlug } from "@/data/blogPosts";
 import {
   getHubsForPost,
@@ -151,9 +152,31 @@ const AgencyBlogPost = () => {
                 </section>
               ))}
 
+              {/* Budget calculator, for posts about paid acquisition and pricing */}
+              {primaryHub && CALCULATOR_HUBS.includes(primaryHub.slug) && (
+                <Link
+                  to={CALCULATOR_PATH}
+                  className="group mt-20 flex items-center gap-4 rounded-2xl border border-primary/30 bg-primary/5 p-6 transition-colors hover:border-primary/60"
+                >
+                  <Calculator className="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+                  <span className="flex-1">
+                    <span className="block font-semibold">Will your ad budget pay for itself?</span>
+                    <span className="mt-0.5 block text-sm text-muted-foreground">
+                      Run your own numbers in the free ad budget calculator.
+                    </span>
+                  </span>
+                  <ArrowRight
+                    className="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </Link>
+              )}
+
               {/* Related service for this topic */}
               {primaryHub && (
-                <section className="mt-20 rounded-2xl border border-border p-7 sm:p-9">
+                <section
+                  className={`${CALCULATOR_HUBS.includes(primaryHub.slug) ? "mt-6" : "mt-20"} rounded-2xl border border-border p-7 sm:p-9`}
+                >
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                     Related service
                   </p>
