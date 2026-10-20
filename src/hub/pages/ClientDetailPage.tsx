@@ -1,6 +1,16 @@
 import { Suspense, lazy, type ReactNode } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Archive, ArchiveRestore, CheckCircle2, ChevronDown, ChevronLeft, Pencil, Target, UserX } from "lucide-react";
+import {
+  Archive,
+  ArchiveRestore,
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  Pencil,
+  Presentation,
+  Target,
+  UserX,
+} from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -385,6 +395,11 @@ export default function ClientDetailPage() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button asChild variant="secondary" className="rounded-full bg-foreground text-background hover:bg-foreground/90">
+              <Link to={`/hub/clients/${client.id}/present`} title="A clean full-screen view for client meetings">
+                <Presentation className="mr-1.5 h-4 w-4" /> Present
+              </Link>
+            </Button>
             <Button asChild variant="secondary" className="rounded-full">
               <Link to={`/hub/clients/${client.id}/edit`}>
                 <Pencil className="mr-1.5 h-4 w-4" /> Edit

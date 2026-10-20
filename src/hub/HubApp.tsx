@@ -26,6 +26,7 @@ const PipelinePage = lazy(() => import("./pages/PipelinePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 const WebsitePage = lazy(() => import("./pages/WebsitePage"));
 const TasksPage = lazy(() => import("./pages/TasksPage"));
+const ClientPresentPage = lazy(() => import("./pages/ClientPresentPage"));
 const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
 
 const sectionFallback = (
@@ -71,6 +72,11 @@ export default function HubApp() {
           <Routes>
             <Route path="login" element={<LoginPage />} />
             <Route path="reset-password" element={section(<ResetPasswordPage />)} />
+            {/* Full-screen client presentation: no dock, still behind the admin login. */}
+            <Route
+              path="clients/:id/present"
+              element={<RequireAdmin>{section(<ClientPresentPage />)}</RequireAdmin>}
+            />
             <Route
               element={
                 <RequireAdmin>
@@ -90,8 +96,8 @@ export default function HubApp() {
               <Route path="finance/invoices/:id" element={section(<InvoicePage />)} />
               <Route path="pipeline" element={section(<PipelinePage />)} />
               <Route path="settings" element={section(<SettingsPage />)} />
-          <Route path="website" element={section(<WebsitePage />)} />
-          <Route path="tasks" element={section(<TasksPage />)} />
+              <Route path="website" element={section(<WebsitePage />)} />
+              <Route path="tasks" element={section(<TasksPage />)} />
               <Route path="*" element={<Navigate to="/hub" replace />} />
             </Route>
           </Routes>
