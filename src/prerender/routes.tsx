@@ -21,13 +21,18 @@ import {
  * loads it: the React app replaces #root as soon as it mounts.
  */
 
+import type { OgCard } from "@/prerender/ogCard";
+
 export { SITE_URL, headTags } from "@/seo/heads";
+export { renderOgCard } from "@/prerender/ogCard";
 
 export interface PrerenderRoute {
   path: string;
   head: PageHead;
   /** Markup placed in #root. Omitted for the homepage, which has its own <noscript> summary. */
   body?: string;
+  /** Text for the generated social card at /og/<path>.png (see ogCardImage). */
+  card?: OgCard;
   sitemap?: { priority: number; changefreq: "weekly" | "monthly" | "yearly"; lastmod?: string };
 }
 
@@ -291,6 +296,11 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
           )}
         </SimplePage>,
       ),
+      card: {
+        eyebrow: "The Blog",
+        title: "Digital marketing for Kenyan brands, written plainly.",
+        meta: `${blogPosts.length} articles on Meta Ads, Google Ads, SEO and TikTok`,
+      },
       sitemap: { priority: 0.8, changefreq: "weekly", lastmod: newest(blogPosts) },
     },
   ];
@@ -320,6 +330,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
           </p>
         </Shell>,
       ),
+      card: { eyebrow: "Topic guide", title: hub.name, meta: hub.tagline },
       sitemap: { priority: 0.8, changefreq: "weekly", lastmod: newest(posts) },
     });
   }
@@ -330,6 +341,11 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       path: head.path,
       head,
       body: html(<PostPage post={post} />),
+      card: {
+        eyebrow: getPrimaryHubForPost(post.slug)?.name ?? post.category,
+        title: post.title,
+        meta: `${post.readTime} · ${post.dateLabel}`,
+      },
       sitemap: { priority: 0.7, changefreq: "monthly", lastmod: post.date },
     });
   }
@@ -340,6 +356,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       path: head.path,
       head,
       body: html(<ServicePageBody page={page} />),
+      card: { eyebrow: page.navLabel, title: page.name, meta: page.price.amount },
       // Drafts stay noindex and out of the sitemap until their [CONFIRM] markers are cleared.
       sitemap: page.draft ? undefined : { priority: 0.9, changefreq: "monthly" },
     });
@@ -399,6 +416,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       path: head.path,
       head,
       body: html(<BrandPageBody brand={brand} />),
+      card: { eyebrow: "Brand identity", title: brand.name, meta: brand.tagline },
       sitemap: { priority: 0.7, changefreq: "yearly" },
     });
   }

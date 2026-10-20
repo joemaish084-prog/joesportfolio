@@ -30,7 +30,7 @@ await build({
   },
 });
 
-const { getPrerenderRoutes, headTags, SITE_URL } = await import(
+const { getPrerenderRoutes, headTags, renderOgCard, SITE_URL } = await import(
   pathToFileURL(path.join(cacheDir, "routes.mjs")).href
 );
 
@@ -60,7 +60,9 @@ function renderHead(head) {
 function replaceRegion(html, name, replacement) {
   const pattern = new RegExp(`<!-- prerender:${name} -->[\\s\\S]*?<!-- /prerender:${name} -->`);
   if (!pattern.test(html)) throw new Error(`prerender: marker "${name}" missing from dist/index.html`);
-  return html.replace(pattern, () => replacement);
+  // Markers are kept so dist/index.html (the homepage) still works as the
+  // template if this script runs again without a fresh `vite build`.
+  return html.replace(pattern, () => `<!-- prerender:${name} -->${replacement}<!-- /prerender:${name} -->`);
 }
 
 // Homepage-only structured data and its <noscript> summary.
@@ -92,6 +94,30 @@ for (const route of routes) {
   fs.writeFileSync(file, renderPage(route));
 }
 
+// Social cards. Each head that points at /og/<path>.png must have a card to draw.
+const font = (pkg, file) => fs.readFileSync(path.join(root, "node_modules", "@fontsource", pkg, "files", file));
+const ogAssets = {
+  fonts: [
+    { name: "Space Grotesk", data: font("space-grotesk", "space-grotesk-latin-700-normal.woff"), weight: 700, style: "normal" },
+    { name: "Inter", data: font("inter", "inter-latin-500-normal.woff"), weight: 500, style: "normal" },
+    { name: "Inter", data: font("inter", "inter-latin-600-normal.woff"), weight: 600, style: "normal" },
+  ],
+  logo: `data:image/png;base64,${fs.readFileSync(path.join(root, "public", "icon-512.png")).toString("base64")}`,
+};
+let cards = 0;
+for (const route of routes) {
+  const expected = `/og${route.path}.png`;
+  if (route.head.image === expected && !route.card) {
+    throw new Error(`prerender: ${route.path} uses ${expected} but has no card`);
+  }
+  if (!route.card) continue;
+  if (route.head.image !== expected) throw new Error(`prerender: ${route.path} has a card its head does not use`);
+  const file = path.join(dist, expected.slice(1));
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, await renderOgCard(route.card, ogAssets));
+  cards++;
+}
+
 // Fallback for routes that are not prerendered (the private hub, admin, 404s).
 // Same app, generic head, never indexed.
 const home = routes.find((r) => r.path === "/");
@@ -112,4 +138,4 @@ fs.writeFileSync(
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries.join("\n")}\n</urlset>\n`,
 );
 
-console.log(`prerender: ${routes.length} routes, ${sitemapEntries.length} sitemap entries`);
+console.log(`prerender: ${routes.length} routes, ${cards} social cards, ${sitemapEntries.length} sitemap entries`);

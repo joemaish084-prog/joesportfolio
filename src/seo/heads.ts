@@ -27,6 +27,8 @@ export interface PageHead {
   /** Absolute URL or site path. Falls back to the default social card. */
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   noindex?: boolean;
   jsonLd?: object[];
 }
@@ -40,6 +42,18 @@ export const absoluteUrl = (pathOrUrl: string) =>
   /^https?:\/\//.test(pathOrUrl) ? pathOrUrl : `${SITE_URL}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
 
 export const canonicalUrl = (path: string) => `${SITE_URL}${path.replace(/\/+$/, "") || "/"}`;
+
+/**
+ * The page's generated social card. scripts/prerender.mjs draws one for every
+ * route that has a `card` in src/prerender/routes.tsx and fails the build if a
+ * head points at a card that was not drawn.
+ */
+export const ogCardImage = (path: string, alt: string) => ({
+  image: `/og${path}.png`,
+  imageAlt: alt,
+  imageWidth: 1200,
+  imageHeight: 630,
+});
 
 /** The meta and link tags for a page, shared by <Seo> and the prerender script. */
 export function headTags(head: PageHead): HeadTag[] {
@@ -65,9 +79,13 @@ export function headTags(head: PageHead): HeadTag[] {
     meta("property", "og:type", head.ogType ?? "website"),
     meta("property", "og:url", url),
     meta("property", "og:image", image),
-    // Dimensions are only known for the default card.
     ...(head.image
-      ? []
+      ? head.imageWidth && head.imageHeight
+        ? [
+            meta("property", "og:image:width", String(head.imageWidth)),
+            meta("property", "og:image:height", String(head.imageHeight)),
+          ]
+        : []
       : [meta("property", "og:image:width", "1216"), meta("property", "og:image:height", "640")]),
     ...(head.imageAlt ? [meta("property", "og:image:alt", head.imageAlt)] : []),
     meta("name", "twitter:card", "summary_large_image"),
@@ -158,6 +176,7 @@ export function brandHead(brand: Brand): PageHead {
     title: `${brand.name} Brand Identity | Joseph Maina`,
     description: `${brand.name}: ${brand.tagline} Logo system, colour palette, typography, social templates and mockups by Joseph Maina.`,
     path: `/work/branding/${brand.slug}`,
+    ...ogCardImage(`/work/branding/${brand.slug}`, `${brand.name} brand identity by Joseph Maina`),
   };
 }
 
@@ -169,6 +188,7 @@ export function blogIndexHead(): PageHead {
       "Practical digital marketing insights for Kenyan brands, organised by topic: SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies.",
     ogDescription: "SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies for Kenyan brands.",
     path,
+    ...ogCardImage(path, "Joseph Maina's digital marketing blog for Kenyan brands"),
     jsonLd: [
       {
         "@context": "https://schema.org",
@@ -207,9 +227,7 @@ export function blogHubHead(hub: BlogHub): PageHead {
     ogTitle: hub.metaTitle,
     description: hub.metaDescription,
     path,
-    // The lead article's cover makes a better share card than the generic one.
-    image: posts[0]?.thumbnail,
-    imageAlt: posts[0]?.thumbnailAlt,
+    ...ogCardImage(path, `${hub.name} guides by Joseph Maina`),
     jsonLd: [
       {
         "@context": "https://schema.org",
@@ -245,15 +263,14 @@ export function blogPostHead(post: BlogPost): PageHead {
     description: post.metaDescription,
     path,
     ogType: "article",
-    image: post.thumbnail,
-    imageAlt: post.thumbnailAlt,
+    ...ogCardImage(path, post.title),
     jsonLd: [
       {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         headline: post.title,
         description: post.metaDescription,
-        image: absoluteUrl(post.thumbnail),
+        image: [absoluteUrl(post.thumbnail), absoluteUrl(`/og${path}.png`)],
         datePublished: post.date,
         dateModified: post.date,
         author: person,
@@ -286,6 +303,7 @@ export function serviceHead(page: ServicePage): PageHead {
     description: page.metaDescription,
     path,
     noindex: page.draft,
+    ...ogCardImage(path, page.name),
     jsonLd: [
       {
         "@context": "https://schema.org",
