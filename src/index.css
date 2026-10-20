@@ -387,3 +387,13 @@
     backdrop-filter: none;
   }
 }
+
+/* Progress bar for the rotating featured article on the blog. */
+@keyframes featured-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

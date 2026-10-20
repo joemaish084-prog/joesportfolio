@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ArrowRight, CalendarDays, Clock, Eye, User } from "lucide-react";
-import { blogPosts } from "@/data/blogPosts";
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock, Eye, Pause, Play, User } from "lucide-react";
+import { blogPosts, type BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
@@ -35,8 +36,142 @@ const Meta = ({
   </div>
 );
 
+
+const ROTATE_SECONDS = 30;
+
+/** The pinned post first, then every other post in a fresh random order each visit. */
+function featuredOrder(): BlogPost[] {
+  const [pinned, ...rest] = blogPosts;
+  for (let i = rest.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rest[i], rest[j]] = [rest[j], rest[i]];
+  }
+  return [pinned, ...rest];
+}
+
+function FeaturedRotator({ views }: { views: Record<string, number> }) {
+  const [order] = useState(featuredOrder);
+  const [index, setIndex] = useState(0);
+  // Visitors who prefer reduced motion start paused; the arrows still work.
+  const [paused, setPaused] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [hovering, setHovering] = useState(false);
+  const [tabHidden, setTabHidden] = useState(false);
+
+  useEffect(() => {
+    const onVisibility = () => setTabHidden(document.visibilityState === "hidden");
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
+  const running = !paused && !hovering && !tabHidden;
+  const post = order[index];
+  const go = (delta: number) => setIndex((i) => (i + delta + order.length) % order.length);
+
+  return (
+    <section
+      className="mb-20"
+      aria-roledescription="carousel"
+      aria-label="Featured articles"
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      onFocus={() => setHovering(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setHovering(false);
+      }}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#999999]">Featured</h2>
+        <div className="flex items-center gap-1">
+          <span className="mr-2 text-xs tabular-nums text-[#999999]">
+            {index + 1} / {order.length}
+          </span>
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            aria-label="Previous featured article"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#EAEAEA] text-[#555555] transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setPaused((v) => !v)}
+            aria-label={paused ? "Resume rotating featured articles" : "Pause rotating featured articles"}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#EAEAEA] text-[#555555] transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+          >
+            {paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            aria-label="Next featured article"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#EAEAEA] text-[#555555] transition-colors hover:border-[#F97316] hover:text-[#F97316]"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* The bar is the timer: when its animation finishes, the next article shows. */}
+      <div className="mt-4 h-1 overflow-hidden rounded-full bg-[#F1F1F1]" aria-hidden="true">
+        {!paused && (
+          <div
+            key={post.slug}
+            className="h-full origin-left rounded-full bg-[#F97316]"
+            style={{
+              animation: `featured-progress ${ROTATE_SECONDS}s linear forwards`,
+              animationPlayState: running ? "running" : "paused",
+            }}
+            onAnimationEnd={() => go(1)}
+          />
+        )}
+      </div>
+
+      <article
+        key={post.slug}
+        aria-live={running ? "off" : "polite"}
+        className="mt-4 overflow-hidden rounded-2xl border border-[#EAEAEA] animate-fade-in"
+      >
+        <div className="relative h-56 sm:h-80">
+          <img
+            src={post.thumbnail}
+            alt={post.thumbnailAlt}
+            loading="eager"
+            width={1200}
+            height={630}
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+          <span className="absolute bottom-6 left-6 rounded-full bg-[#F97316] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+            {post.category}
+          </span>
+        </div>
+        <div className="p-7 sm:p-10">
+          <h3 className="max-w-3xl text-2xl font-bold leading-snug tracking-tight sm:text-4xl">
+            <Link to={`/agency/blog/${post.slug}`} className="hover:text-[#F97316]">
+              {post.title}
+            </Link>
+          </h3>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#555555] sm:text-lg">{post.excerpt}</p>
+          <div className="mt-6">
+            <Meta dateLabel={post.dateLabel} readTime={post.readTime} views={views[post.slug]} />
+          </div>
+          <Link
+            to={`/agency/blog/${post.slug}`}
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#F97316] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          >
+            Read Article
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+      </article>
+    </section>
+  );
+}
+
 const AgencyBlog = () => {
-  const featured = blogPosts[0];
   const strays = getUnhubbedPosts();
   const views = useBlogViews();
 
@@ -137,46 +272,7 @@ const AgencyBlog = () => {
 
           <div className="lg:flex lg:gap-14">
             <div className="min-w-0 flex-1">
-              {/* Latest */}
-              <section className="mb-20">
-                <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#999999]">Latest</h2>
-                <article className="mt-5 overflow-hidden rounded-2xl border border-[#EAEAEA]">
-                  <div className="relative h-56 sm:h-80">
-                    <img
-                      src={featured.thumbnail}
-                      alt={featured.thumbnailAlt}
-                      loading="eager"
-                      width={1200}
-                      height={630}
-                      className="h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                    <span className="absolute bottom-6 left-6 rounded-full bg-[#F97316] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
-                      {featured.category}
-                    </span>
-                  </div>
-                  <div className="p-7 sm:p-10">
-                    <h3 className="max-w-3xl text-2xl font-bold leading-snug tracking-tight sm:text-4xl">
-                      <Link to={`/agency/blog/${featured.slug}`} className="hover:text-[#F97316]">
-                        {featured.title}
-                      </Link>
-                    </h3>
-                    <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#555555] sm:text-lg">
-                      {featured.excerpt}
-                    </p>
-                    <div className="mt-6">
-                      <Meta dateLabel={featured.dateLabel} readTime={featured.readTime} views={views[featured.slug]} />
-                    </div>
-                    <Link
-                      to={`/agency/blog/${featured.slug}`}
-                      className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#F97316] px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                    >
-                      Read Article
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </Link>
-                  </div>
-                </article>
-              </section>
+              <FeaturedRotator views={views} />
 
               {/* Every article, grouped under its hub */}
               {blogHubs.map((hub) => {
