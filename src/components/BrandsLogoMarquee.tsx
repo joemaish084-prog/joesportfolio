@@ -1,13 +1,15 @@
 import { Marquee } from "@/components/ui/marquee";
-import logoConvey from "@/assets/logo-convey.webp";
-import logoTechmindset from "@/assets/logo-techmindset.webp";
-import logoJoan from "@/assets/logo-joan.webp";
-import logoIclear from "@/assets/logo-iclear.webp";
-import logoNorthgate from "@/assets/logo-northgate.webp";
-import logoPowwater from "@/assets/logo-powwater.webp";
-import logoGlowskin from "@/assets/logo-glowskin.jpg";
-import logoBeautysquare from "@/assets/logo-beautysquare.jpg";
-import logoDuara from "@/assets/logo-duara.webp";
+// Background-stripped, trimmed and size-balanced copies on a shared 480×320 canvas,
+// so every logo sits the same way on the white tiles below.
+import logoConvey from "@/assets/marquee/convey.webp";
+import logoTechmindset from "@/assets/marquee/techmindset.webp";
+import logoJoan from "@/assets/marquee/joan.webp";
+import logoIclear from "@/assets/marquee/iclear.webp";
+import logoNorthgate from "@/assets/marquee/northgate.webp";
+import logoPowwater from "@/assets/marquee/powwater.webp";
+import logoGlowskin from "@/assets/marquee/glowskin.webp";
+import logoBeautysquare from "@/assets/marquee/beautysquare.webp";
+import logoDuara from "@/assets/marquee/duara.webp";
 
 const brands = [
   { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },
@@ -33,15 +35,17 @@ export function BrandsLogoMarquee() {
         <Marquee pauseOnHover>
           {brands.map((brand) => (
             <div key={brand.name} className="mx-8 sm:mx-12 flex flex-col items-center gap-2">
-              <img
-                src={brand.logo}
-                alt={`${brand.name} logo - ${brand.industry}`}
-                width={112}
-                height={112}
-                loading="lazy"
-                className="h-16 sm:h-20 w-auto object-contain"
-                title={brand.name}
-              />
+              <div className="flex h-20 w-[7.5rem] sm:h-24 sm:w-36 items-center justify-center rounded-2xl bg-white p-2 ring-1 ring-black/5 shadow-sm">
+                <img
+                  src={brand.logo}
+                  alt={`${brand.name} logo - ${brand.industry}`}
+                  width={480}
+                  height={320}
+                  loading="lazy"
+                  className="h-full w-full object-contain"
+                  title={brand.name}
+                />
+              </div>
               <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
                 {brand.name}
               </span>
