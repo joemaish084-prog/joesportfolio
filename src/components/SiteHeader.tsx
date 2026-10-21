@@ -114,11 +114,14 @@ function NavAnchor({
 
 function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
-    <a href="/#home" onClick={onClick} className="flex items-center gap-2.5 shrink-0">
-      <span className="h-8 w-8 rounded-full bg-foreground text-background flex items-center justify-center text-xs font-bold tracking-wide">
-        JM
-      </span>
-      <span className="font-display font-semibold text-base text-foreground">Joseph Maina</span>
+    <a href="/#home" onClick={onClick} aria-label="Joseph Maina — home" className="flex items-center shrink-0">
+      <img
+        src="/logo/jm-lockup.png"
+        alt="JM Creative"
+        width={352}
+        height={134}
+        className="h-10 w-auto sm:h-11"
+      />
     </a>
   );
 }

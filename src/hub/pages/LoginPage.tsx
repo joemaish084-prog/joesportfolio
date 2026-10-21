@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { KeyRound, Loader2, Lock, MailCheck } from "lucide-react";
+import { KeyRound, Loader2, MailCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -98,15 +98,17 @@ export default function LoginPage() {
     <div className="hub-root flex items-center justify-center bg-background px-4 py-12">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-hub-lg">
-            {mode === "sign-in" ? (
-              <Lock className="h-6 w-6" strokeWidth={2} />
-            ) : mode === "forgot" ? (
-              <KeyRound className="h-6 w-6" strokeWidth={2} />
-            ) : (
-              <MailCheck className="h-6 w-6" strokeWidth={2} />
-            )}
-          </div>
+          {mode === "sign-in" ? (
+            <img src="/logo/jm-mark.png" alt="JM Creative" width={260} height={260} className="mb-5 h-20 w-20" />
+          ) : (
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-hub-lg">
+              {mode === "forgot" ? (
+                <KeyRound className="h-6 w-6" strokeWidth={2} />
+              ) : (
+                <MailCheck className="h-6 w-6" strokeWidth={2} />
+              )}
+            </div>
+          )}
           <h1 className="text-2xl font-bold tracking-tight">
             {mode === "sign-in" ? "Client Hub" : mode === "forgot" ? "Reset your password" : "Check your email"}
           </h1>

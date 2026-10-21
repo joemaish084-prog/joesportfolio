@@ -78,9 +78,7 @@ type ShellProps = { theme: HubTheme; onThemeChange: (theme: HubTheme) => void };
 function Brand() {
   return (
     <div className="flex items-center gap-2.5 px-3">
-      <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-primary text-[0.8125rem] font-bold text-primary-foreground shadow-hub">
-        JM
-      </div>
+      <img src="/logo/jm-mark.png" alt="" width={260} height={260} className="h-9 w-9" />
       <div className="leading-tight">
         <p className="text-[0.9375rem] font-semibold">Client Hub</p>
         <p className="text-[0.6875rem] text-muted-foreground">Joseph Maina</p>
