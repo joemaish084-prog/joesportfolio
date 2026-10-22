@@ -1,9 +1,28 @@
 # SEO audit — josephmaina.co.ke
 
-Audited 22 October 2026 against the 20 checks in your screenshot. The technical foundation is mostly in place. The highest-value remaining work is publishing the seven service pages after confirming their content, submitting the sitemap, and measuring mobile performance.
+Audited 22 October 2026 against the 20 checks in your screenshot. The initial technical fixes are deployed and the sitemap is submitted. All seven service pages have now been reviewed and cleared for indexing locally. Next: deploy the reviewed content, recheck the live pages and canonical warning, and measure mobile performance.
 
-## What was actually checked
+## Deployment follow-up
 
+After deployment, verified the live homepage uses the updated title; unknown URLs return HTTP 404; the apex domain returns HTTP 308 to `www` while preserving the path and query; hub/login and admin return HTTP 200 with noindex headers; and the live sitemap returns HTTP 200 with 76 URLs.
+
+Submitted `https://www.josephmaina.co.ke/sitemap.xml` through the domain property's Search Console Sitemaps report. Google confirmed **“Sitemap submitted successfully.”** This confirms submission, not indexing of every URL. Deployment and sitemap submission are complete; the observations below describe the original audit unless otherwise stated.
+
+## Service-page review progress
+
+- **Digital Marketing for Kenyan SMEs:** approved the results-timeline FAQ and softened the suitability wording. Removed the outstanding review notes and cleared the draft flag locally. The next deployment will add `/agency/digital-marketing-kenya` to the sitemap and allow indexing. Six service drafts remain.
+- **Meta Ads Management:** confirmed minimum ad spend of KSh 30,000/month, separate from the management fee starting at KSh 40,000/month. Also confirmed the existing iClear figures: KSh 1.2M+ ad spend managed, 4.2x ROAS, and 180% follower growth. FAQ updated and draft flag cleared locally. The next deployment will add `/agency/meta-ads-management` to the sitemap and allow indexing. Five service drafts remain.
+- **Google Ads Management:** confirmed Shopping and Performance Max management. Updated the FAQ, campaign list and metadata. Replaced the mixed-channel iClear example with the existing published Google Ads launch case study (KSh 1.94M attributed revenue, 339 orders, 15.5x ROAS), preserving client anonymity and linking to the portfolio breakdown. Cleared the draft flag locally; the next deployment will add `/agency/google-ads-management` to the sitemap. Four service drafts remain.
+
+- **SEO Services:** confirmed a typical 3–6 month timeframe for meaningful progress. Replaced the Nyeri example with the owner-supplied Beauty Square result: search positions improved from 20 to 14 to 9; around 2,000 monthly active users; more than 20 DM enquiries. No keyword, measurement period, organic-only user count or SEO attribution for the DMs was supplied, so the copy does not invent those details or claim traffic growth from a baseline. No testimonial was invented. Cleared the draft flag locally; the next deployment will add `/agency/seo-services-nairobi` to the sitemap. Three service drafts remain.
+
+- **Social Media Management:** confirmed four posts weekly on two client-selected platforms at the base KSh 40,000/month tier. Light social video shoots are included; larger video productions are charged separately. Updated pricing notes, inclusions, FAQs and metadata, then cleared the draft flag locally. No per-platform multiplication, fixed monthly post total or shoot-day allowance was invented. The next deployment will add `/agency/social-media-management` to the sitemap. Two service drafts remain.
+
+- **Lead Generation:** confirmed a starting price of KSh 50,000/month with landing pages included; the client's team handles lead follow-up and sales. Updated page copy, FAQs, inclusions and the related blog topic hub's displayed price, then cleared the draft flag locally. Ad spend remains separate. The next deployment will add `/agency/lead-generation` to the sitemap. Only the marketing audit service remains a draft.
+
+- **Marketing Audit:** free for now, with a written report or verbal walkthrough on a call in 1–2 days. Removed the fee-credit question, paid-audit prices and the unsupported claim that an audit preceded Convey's campaign results. Clarified the existing Convey article and AI-readable summary: employment first, consultancy later. No audit case study or testimonial was invented. Updated the agency page, service pages, blog topic hubs, audit article and llms.txt to match the free offer. Cleared the final draft flag locally; all seven service pages are ready for the next deployment.
+
+## What was actually checked in the original audit
 - Fetched all **76 live sitemap URLs** and **72 additional linked site resources**. No request failures, accidental noindex directives, or incorrect canonical URLs were found among those sitemap pages. This checks linked resources in the initial HTML; it is not a full audit of every external link or interactive state.
 - Confirmed that HTTP redirects to HTTPS. The apex domain (`https://josephmaina.co.ke/`) currently serves the same content without redirecting to the canonical `www` host.
 - Confirmed that an invented URL currently returns **HTTP 200** with an SPA shell and noindex. It should return HTTP 404.

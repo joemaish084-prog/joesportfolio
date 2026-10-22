@@ -150,7 +150,7 @@ export const blogHubs: BlogHub[] = [
     cta: {
       heading: "Find out why you are not ranking",
       body:
-        "A free call, or a full KES 40,000 audit if you want the whole picture in writing. Either way you'll know what is holding the site back.",
+        "Start with a free audit. I'll share what needs attention in a written report or a call within 1-2 days.",
       label: "Book an SEO Review Call",
       href: CALENDLY_URL,
       external: true,
@@ -178,7 +178,7 @@ export const blogHubs: BlogHub[] = [
     ],
     service: {
       name: "GROWTH Retainer — Lead Generation",
-      price: "From KES 70,000/month",
+      price: "From KES 50,000/month",
       blurb:
         "Two platforms managed end to end: full campaign management, creative direction, weekly optimization, bi-weekly reporting and WhatsApp support.",
       href: "/agency#services",
@@ -220,16 +220,16 @@ export const blogHubs: BlogHub[] = [
     ],
     service: {
       name: "Digital Marketing Audit",
-      price: "KES 40,000",
+      price: "Free for now",
       blurb:
-        "A full-channel review of your ads, site, search presence and tracking, delivered in writing with a prioritised fix list and honest pricing guidance.",
+        "A review of your ads, site, search presence and tracking. Findings shared in a written report or a call within 1-2 days.",
       href: "/agency#service-digital-marketing-audit",
       pageSlug: "digital-marketing-audit",
     },
     cta: {
       heading: "Start with an audit, not a retainer",
       body:
-        "If you are not sure what you need yet, the audit is the cheapest way to find out. Or book a free call and I'll tell you if it is even worth it.",
+        "Not sure what needs fixing? The audit is free for now, with clear next steps and no obligation to book ongoing work.",
       label: "Request an Audit",
       href: "/agency#booking",
     },

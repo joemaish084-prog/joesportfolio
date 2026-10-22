@@ -26,8 +26,8 @@ const AgencyService = () => {
   const related = page.relatedPosts
     .map((s) => blogPosts.find((p) => p.slug === s))
     .filter((p): p is (typeof blogPosts)[number] => Boolean(p));
-  const caseStudyPost = page.caseStudy.readMore
-    ? blogPosts.find((p) => p.slug === page.caseStudy.readMore)
+  const caseStudyPost = page.caseStudy?.readMore
+    ? blogPosts.find((p) => p.slug === page.caseStudy?.readMore)
     : undefined;
   const otherServices = servicePages.filter((s) => s.slug !== page.slug);
 
@@ -116,6 +116,7 @@ const AgencyService = () => {
                 </li>
               ))}
             </ul>
+            {page.fitNote && <p className="mt-7 text-base leading-relaxed text-[#666666]">{page.fitNote}</p>}
             {page.notFor && page.notFor.length > 0 && (
               <>
                 <h3 className="mt-10 text-lg font-bold tracking-tight">Who it is not for</h3>
@@ -168,6 +169,7 @@ const AgencyService = () => {
           </section>
 
           {/* Case study */}
+          {page.caseStudy && (
           <section className="mt-20 rounded-2xl border border-[#EAEAEA] p-8 sm:p-10">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#999999]">Case study</p>
             <h2 className="mt-4 text-2xl font-bold tracking-tight">{page.caseStudy.name}</h2>
@@ -183,9 +185,9 @@ const AgencyService = () => {
                 </dd>
               </div>
             </dl>
-            {caseStudyPost && (
+            {(caseStudyPost || page.caseStudy.href) && (
               <Link
-                to={`/agency/blog/${caseStudyPost.slug}`}
+                to={page.caseStudy.href ?? `/agency/blog/${caseStudyPost!.slug}`}
                 className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3"
               >
                 Read the full breakdown
@@ -194,6 +196,7 @@ const AgencyService = () => {
             )}
           </section>
 
+          )}
           {/* Testimonial */}
           {page.testimonial && (
             <figure className="mt-8 rounded-2xl bg-[#FAFAFA] p-8 sm:p-10">

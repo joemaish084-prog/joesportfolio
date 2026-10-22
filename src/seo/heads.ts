@@ -337,7 +337,7 @@ export function serviceHead(page: ServicePage): PageHead {
           priceSpecification: {
             "@type": "UnitPriceSpecification",
             [page.price.amount.startsWith("From ") ? "minPrice" : "price"]:
-              Number(page.price.amount.match(/[\d,]+/)![0].replace(/,/g, "")),
+              page.price.value ?? Number(page.price.amount.match(/[\d,]+/)![0].replace(/,/g, "")),
             priceCurrency: "KES",
             ...(page.price.amount.includes("/month") ? { unitText: "month" } : {}),
           },

@@ -182,6 +182,7 @@ function ServicePageBody({ page }: { page: ServicePage }) {
           <li key={w}>{w}</li>
         ))}
       </ul>
+      {page.fitNote && <p>{page.fitNote}</p>}
       <h2>What's included</h2>
       <ul>
         {page.included.map((item) => (
@@ -198,9 +199,12 @@ function ServicePageBody({ page }: { page: ServicePage }) {
           </li>
         ))}
       </ol>
+      {page.caseStudy && <>
       <h2>Case study: {page.caseStudy.name}</h2>
       <p>{page.caseStudy.challenge}</p>
       <p>{page.caseStudy.results}</p>
+      {page.caseStudy.href && <p><a href={page.caseStudy.href}>Read the full breakdown</a></p>}
+      </>}
       {answered.length > 0 && (
         <>
           <h2>Frequently asked questions</h2>

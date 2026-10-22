@@ -123,7 +123,7 @@ const supportingServices = [
   { icon: Video, slug: "video-production", name: "Video Production", price: "from KES 40,000/project", desc: "Short-form ads and brand videos.", proof: { label: "Read: video ads vs static ads in Kenya", to: "/agency/blog/video-ads-vs-static-ads-kenya-2026" } },
   { icon: Lightbulb, slug: "brand-strategy", name: "Brand Strategy", price: "from KES 60,000", desc: "Positioning, messaging and identity.", proof: { label: "Read: why most Kenyan SMEs fail at marketing", to: "/agency/blog/real-reason-kenyan-smes-fail-at-marketing" } },
   { icon: Palette, slug: "graphic-design", name: "Graphic Design", price: "from KES 40,000/mo", desc: "Social graphics, ads and collateral.", proof: { label: "Read: ad creative testing for Kenyan brands", to: "/agency/blog/ad-creative-testing-kenyan-brands-2026" } },
-  { icon: ClipboardList, slug: "digital-marketing-audit", name: "Digital Marketing Audit", price: "KES 40,000", desc: "Full-channel performance review.", proof: { label: "Read: what an audit actually finds", to: "/agency/blog/what-a-digital-marketing-audit-finds-kenya-2026" } },
+  { icon: ClipboardList, slug: "digital-marketing-audit", name: "Digital Marketing Audit", price: "Free for now", desc: "Performance review, with findings in a written report or call within 1-2 days.", proof: { label: "Read: what an audit actually finds", to: "/agency/blog/what-a-digital-marketing-audit-finds-kenya-2026" } },
   { icon: MessageSquare, slug: "strategy-consultation", name: "Strategy Consultation", price: "KES 40,000/session", desc: "One-on-one advisory session.", proof: { label: "Read: how to choose an agency in Nairobi", to: "/agency/blog/how-to-choose-a-digital-marketing-agency-nairobi-2026" } },
 ];
 

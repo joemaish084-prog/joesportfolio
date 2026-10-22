@@ -28,6 +28,8 @@ export interface ServiceCaseStudy {
   results: string;
   /** Blog post slug for the full write-up, when one exists. */
   readMore?: string;
+  /** Direct portfolio link when the case study is not a blog post. */
+  href?: string;
 }
 
 export interface ServiceTestimonial {
@@ -47,11 +49,12 @@ export interface ServicePage {
   metaDescription: string;
   /** One-sentence positioning under the H1. */
   standfirst: string;
-  price: { amount: string; note: string };
+  price: { amount: string; note: string; value?: number };
   whoFor: string[];
   notFor?: string[];
+  fitNote?: string;
   included: ServiceInclusion[];
-  caseStudy: ServiceCaseStudy;
+  caseStudy?: ServiceCaseStudy;
   testimonial?: ServiceTestimonial;
   faqs: ServiceFaq[];
   /** Topic hub slug this service reads alongside. */
@@ -110,10 +113,7 @@ export const servicePages: ServicePage[] = [
       "Owners tired of paying a retainer and receiving screenshots instead of results",
       "Brands ready to commit at least three months — nothing meaningful happens in four weeks",
     ],
-    notFor: [
-      "Anyone looking for the cheapest option in the market",
-      "Businesses wanting guaranteed rankings or guaranteed lead numbers",
-    ],
+    fitNote: "Best suited to businesses that value steady growth over the lowest price. Results vary, so I don’t promise fixed rankings or lead numbers.",
     included: [
       { title: "Channel strategy", desc: "Which platforms deserve your budget, and which ones do not. Usually fewer than you expect." },
       { title: "Campaign management", desc: "Setup, audience research, creative direction and weekly optimization across the platforms we agree on." },
@@ -145,7 +145,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "How long before I see results?",
-        a: "[CONFIRM] Typical timeline you want to promise for paid channels versus SEO. I have deliberately left this blank rather than inventing a number.",
+        a: "Paid ads give us early signs of what’s working, while SEO takes longer. After reviewing your business and goals, I’ll walk you through what to expect and when.",
       },
     ],
     hubSlug: "pricing-and-buying",
@@ -161,11 +161,8 @@ export const servicePages: ServicePage[] = [
       href: CALENDLY_URL,
       external: true,
     },
-    draft: true,
-    reviewNotes: [
-      "Results-timeline FAQ left blank — give me the window you are comfortable committing to.",
-      "Confirm the 'not for' list reads how you want it to. It filters leads but it also turns some away.",
-    ],
+    draft: false,
+    reviewNotes: [],
   },
   {
     slug: "meta-ads-management",
@@ -207,7 +204,7 @@ export const servicePages: ServicePage[] = [
       ...SHARED_FAQS,
       {
         q: "What is the minimum ad spend worth starting with?",
-        a: "[CONFIRM] Your recommended monthly minimum. The STARTER retainer is scoped to ad spend under KES 50,000/month, which implies a floor — confirm the number you want stated publicly.",
+        a: "I recommend at least KSh 30,000 a month for your Meta ads budget. This goes directly to Meta and is separate from my management fee, which starts at KSh 40,000 a month.",
       },
       {
         q: "Do you produce the creative as well?",
@@ -231,20 +228,17 @@ export const servicePages: ServicePage[] = [
       href: CALENDLY_URL,
       external: true,
     },
-    draft: true,
-    reviewNotes: [
-      "Minimum ad spend figure needed for the FAQ.",
-      "The iClear ROAS and spend figures are copied from your agency page case study — confirm they are still the numbers you want published.",
-    ],
+    draft: false,
+    reviewNotes: [],
   },
   {
     slug: "google-ads-management",
     icon: BarChart3,
     name: "Google Ads Management in Kenya",
     navLabel: "Google Ads",
-    metaTitle: "Google Ads Management Kenya | Search, Display & YouTube",
+    metaTitle: "Google Ads Management Kenya | Shopping & Performance Max",
     metaDescription:
-      "Google Ads management for Kenyan businesses from KES 45,000/month. Search, Display and YouTube campaigns with keyword research, bid management and conversion tracking.",
+      "Google Ads management in Kenya from KES 45,000/month. Search, Shopping, Performance Max, Display and YouTube campaigns with conversion tracking and reporting.",
     standfirst:
       "Google works best when someone is already looking for what you sell. If that is your business, it is usually the cheapest lead you will ever buy — once the account stops wasting clicks.",
     price: { amount: "From KES 45,000/month", note: "Management fee only. Ad spend goes directly to Google." },
@@ -255,17 +249,17 @@ export const servicePages: ServicePage[] = [
       "Anyone who has never had conversion tracking set up correctly",
     ],
     included: [
-      { title: "Search, Display and YouTube campaigns", desc: "The campaign types that suit your intent, not all of them at once." },
+      { title: "Search, Shopping, Performance Max, Display and YouTube", desc: "I recommend the campaign types that fit your business, budget and goals." },
       { title: "Keyword research and strategy", desc: "Built around the phrases Kenyan customers actually type, including negatives to stop waste." },
       { title: "Bid management", desc: "Ongoing bid and budget control so you are not paying premium prices for low-intent clicks." },
       { title: "Conversion tracking", desc: "Calls, forms and WhatsApp enquiries measured properly — this is the step most accounts are missing." },
       { title: "Monthly reporting", desc: "What you spent, what it returned, and what changes next month." },
     ],
     caseStudy: {
-      name: "iClear Kenya",
-      challenge: "Limited brand awareness in a saturated FMCG market.",
-      results: "KES 1.2M+ ad spend managed at 4.2x ROAS across Google Ads and social media management.",
-      readMore: "how-i-landed-national-press-coverage-for-iclear",
+      name: "Google Ads launch for a Kenyan beauty retailer",
+      challenge: "The business had never run Google Ads. I launched Search campaigns, then added Shopping ads.",
+      results: "KSh 1.94M in revenue attributed by Google Ads, 339 tracked orders and 15.5x return on ad spend from 1 August to 8 October 2026. The client is not named.",
+      href: "/work/case-studies#google-ads-launch",
     },
     faqs: [
       ...SHARED_FAQS,
@@ -279,7 +273,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Do you handle Google Ads for e-commerce and Shopping campaigns?",
-        a: "[CONFIRM] Whether you take Shopping / Performance Max work and want to advertise it. Your current service copy mentions Search, Display and YouTube only.",
+        a: "Yes. I manage Google Shopping and Performance Max campaigns for e-commerce businesses. I’ll recommend the right setup for your products, budget and goals.",
       },
     ],
     hubSlug: "paid-search",
@@ -295,11 +289,8 @@ export const servicePages: ServicePage[] = [
       href: CALENDLY_URL,
       external: true,
     },
-    draft: true,
-    reviewNotes: [
-      "Confirm whether you take Shopping / Performance Max work — the FAQ is blank on it.",
-      "This page reuses the iClear case study because it is the only one naming Google Ads. A search-specific result would make the page much stronger if you have one.",
-    ],
+    draft: false,
+    reviewNotes: [],
   },
   {
     slug: "seo-services-nairobi",
@@ -311,7 +302,7 @@ export const servicePages: ServicePage[] = [
       "SEO services for Nairobi and Kenyan businesses from KES 45,000/month. On-page, technical and local SEO including Google Business Profile and Maps visibility.",
     standfirst:
       "Most Nairobi businesses are invisible in local search and nobody has ever told them why. The fixes are usually unglamorous, and they compound for years after you stop paying for clicks.",
-    price: { amount: "From KES 45,000/month", note: "Ongoing retainer. A one-off audit is KES 40,000 if you want the diagnosis first." },
+    price: { amount: "From KES 45,000/month", note: "Ongoing retainer. An initial audit is free for now if you want to understand what needs fixing first." },
     whoFor: [
       "Businesses with a physical location or service area in Nairobi and beyond",
       "Companies that rank for their own name and nothing else",
@@ -326,16 +317,15 @@ export const servicePages: ServicePage[] = [
       { title: "Monthly reporting", desc: "Rankings, traffic and — more importantly — enquiries attributable to search." },
     ],
     caseStudy: {
-      name: "Nyeri County Campaign",
-      challenge: "Reaching a hyper-local audience with a limited budget.",
-      results: "500K+ video views and 22 community events filled to capacity, using local SEO alongside Meta Ads and video.",
-      readMore: "nyeri-county-campaign-hyper-local-marketing",
+      name: "Beauty Square Kenya",
+      challenge: "Improving Beauty Square’s visibility in organic search.",
+      results: "Search rankings improved from position 20 to 14, then 9. The site recorded around 2,000 monthly active users, and the business received more than 20 DM enquiries.",
     },
     faqs: [
       ...SHARED_FAQS.filter((f) => !f.q.includes("ad budget")),
       {
         q: "How long does SEO take to work in Kenya?",
-        a: "[CONFIRM] The honest window you want to state. Local and Google Business Profile wins usually land far sooner than competitive organic rankings — give me the two timeframes you are willing to commit to.",
+        a: "I usually recommend allowing 3–6 months to see meaningful progress. The pace depends on your website, competition and starting point.",
       },
       {
         q: "Can you guarantee first-page rankings?",
@@ -354,17 +344,13 @@ export const servicePages: ServicePage[] = [
     ],
     cta: {
       heading: "Find out why you are not ranking",
-      body: "Book a free call, or start with the KES 40,000 audit if you want the whole picture in writing before committing to a retainer.",
+      body: "Start with a free audit. I’ll explain what needs attention in a written report or a call before you decide on ongoing work.",
       label: "Book an SEO Review Call",
       href: CALENDLY_URL,
       external: true,
     },
-    draft: true,
-    reviewNotes: [
-      "SEO timeline FAQ needs your numbers — this is the question every prospect asks.",
-      "The Nyeri case study lists 'Local SEO' among its services on your agency page, but the headline results are video and events. A cleaner SEO result would serve this page better.",
-      "No testimonial on this page — none of your three published testimonials mention SEO.",
-    ],
+    draft: false,
+    reviewNotes: [],
   },
   {
     slug: "social-media-management",
@@ -373,10 +359,10 @@ export const servicePages: ServicePage[] = [
     navLabel: "Social Media",
     metaTitle: "Social Media Management Kenya | Content & Community for SMEs",
     metaDescription:
-      "Social media management for Kenyan small businesses from KES 40,000/month. Content, scheduling, community management and short-form video across Instagram and TikTok.",
+      "Social media management in Kenya from KES 40,000/month. Four posts a week on two platforms you choose, with community management and light video shoots.",
     standfirst:
       "Posting consistently is not the hard part. Posting things people actually stop for, on the platform where your buyers already are, is — and that is what this covers.",
-    price: { amount: "From KES 40,000/month", note: "Content, scheduling and community management. Ad spend is separate if we also run paid." },
+    price: { amount: "From KES 40,000/month", note: "Four posts a week on two platforms of your choice. Light video shoots included; larger productions and ad spend are separate." },
     whoFor: [
       "Businesses whose accounts have gone quiet or inconsistent",
       "Brands getting reach but no enquiries from social",
@@ -385,9 +371,10 @@ export const servicePages: ServicePage[] = [
     ],
     included: [
       { title: "Content strategy", desc: "What to post, on which platform and why — built around your buyers rather than trends for their own sake." },
-      { title: "Content production and scheduling", desc: "Graphics and short-form video planned, produced and posted on a calendar you can see." },
+      { title: "Four posts a week", desc: "Graphics and short-form content planned and scheduled on a calendar you can see." },
+      { title: "Light video shoots", desc: "Simple social media video shoots are included. Larger productions are quoted separately through my video production service." },
       { title: "Community management", desc: "Comments and DMs answered, because that is where most Kenyan social enquiries actually convert." },
-      { title: "Platform focus", desc: "Usually one or two platforms done properly instead of five done badly." },
+      { title: "Two platforms of your choice", desc: "Choose the two platforms you want me to manage. I can help you decide where your audience is most active." },
       { title: "Monthly reporting", desc: "Reach and engagement, plus the enquiries that came from it." },
     ],
     caseStudy: {
@@ -405,12 +392,12 @@ export const servicePages: ServicePage[] = [
     faqs: [
       ...SHARED_FAQS.filter((f) => !f.q.includes("ad budget")),
       {
-        q: "How many posts a month do I get?",
-        a: "[CONFIRM] Your actual deliverable volume per platform at the KES 40,000 tier. This is the first question every prospect asks and I do not want to invent it.",
+        q: "How often will you post?",
+        a: "The base package includes four posts a week, shared on two platforms of your choice. It starts at KSh 40,000 a month.",
       },
       {
         q: "Do you shoot the video, or do I?",
-        a: "[CONFIRM] Whether shooting is included at this price or falls under Video Production (from KES 40,000/project). Your current service descriptions do not make the boundary clear.",
+        a: "Simple social media video shoots are included. Bigger or more involved productions are quoted separately through my video production service.",
       },
       {
         q: "Should my business be on TikTok or Instagram?",
@@ -430,11 +417,8 @@ export const servicePages: ServicePage[] = [
       href: CALENDLY_URL,
       external: true,
     },
-    draft: true,
-    reviewNotes: [
-      "Post volume per month — needed, and the most common objection.",
-      "Clarify where Social Media Management ends and Video Production begins. Two FAQs depend on it.",
-    ],
+    draft: false,
+    reviewNotes: [],
   },
   {
     slug: "lead-generation",
@@ -443,10 +427,10 @@ export const servicePages: ServicePage[] = [
     navLabel: "Lead Generation",
     metaTitle: "Lead Generation Campaigns Kenya | Leads for Kenyan SMEs",
     metaDescription:
-      "Lead generation campaigns for Kenyan businesses from KES 70,000/month. Offer, landing page, creative, targeting and proper tracking of calls, forms and WhatsApp enquiries.",
+      "Lead generation campaigns in Kenya from KES 50,000/month. Landing pages included, with campaign management and tracking. Your team follows up with leads.",
     standfirst:
       "Traffic is rarely the problem. The gap is between the click and the enquiry, and then between the enquiry and someone actually following it up.",
-    price: { amount: "From KES 70,000/month", note: "Scoped as the GROWTH retainer: two platforms managed end to end. Ad spend is separate." },
+    price: { amount: "From KES 50,000/month", note: "Landing pages and campaign management across two platforms included. Ad spend is separate. Your team follows up with leads." },
     whoFor: [
       "Businesses getting clicks and impressions but few real enquiries",
       "Services and B2B companies where one client is worth a lot",
@@ -456,9 +440,10 @@ export const servicePages: ServicePage[] = [
     included: [
       { title: "Offer and message", desc: "What you are actually asking people to do, which is where most campaigns fail before the ad even runs." },
       { title: "Campaign management across two platforms", desc: "Full management on the two channels that suit your buyer, with weekly optimization." },
+      { title: "Landing pages", desc: "Landing pages are included, giving visitors a clear place to enquire about your offer." },
       { title: "Creative direction", desc: "Ads built to produce enquiries rather than applause." },
       { title: "Lead tracking", desc: "Calls, forms and WhatsApp enquiries attributed to source, so you can see what is working." },
-      { title: "Follow-up handover", desc: "A clear process for what happens in the first hour after a lead lands. [CONFIRM] how far into your clients' sales process you are willing to go here." },
+      { title: "Lead handover", desc: "I manage the campaigns and lead tracking. Your team handles enquiries, follows up with leads and closes sales." },
       { title: "Bi-weekly reporting", desc: "Cost per qualified lead, not cost per click." },
     ],
     caseStudy: {
@@ -485,7 +470,11 @@ export const servicePages: ServicePage[] = [
       },
       {
         q: "Do you build the landing page?",
-        a: "[CONFIRM] Whether landing page build is included at this tier, or quoted separately. Your published service list does not include landing pages.",
+        a: "Yes, landing pages are included in the lead generation package, which starts at KSh 50,000 a month. Ad spend is separate.",
+      },
+      {
+        q: "Who follows up with the leads?",
+        a: "Your team handles the follow-up and sales conversations. I manage the campaigns, landing pages and tracking that bring the enquiries in.",
       },
     ],
     hubSlug: "lead-generation",
@@ -501,24 +490,20 @@ export const servicePages: ServicePage[] = [
       href: CALENDLY_URL,
       external: true,
     },
-    draft: true,
-    reviewNotes: [
-      "This page presents lead generation as a productised version of the GROWTH retainer at KES 70,000/month. Confirm you want it sold that way, or give it its own price.",
-      "Landing page build: included or quoted separately?",
-      "How far into the client's follow-up process do you actually go? The 'follow-up handover' inclusion needs your boundary.",
-    ],
+    draft: false,
+    reviewNotes: [],
   },
   {
     slug: "digital-marketing-audit",
     icon: ClipboardList,
     name: "Digital Marketing Audit in Nairobi",
     navLabel: "Marketing Audit",
-    metaTitle: "Digital Marketing Audit Nairobi | Full-Channel Review, KES 40,000",
+    metaTitle: "Free Digital Marketing Audit Nairobi | Joseph Maina",
     metaDescription:
-      "A KES 40,000 full-channel digital marketing audit for Kenyan businesses — ads, website, search presence and tracking, delivered in writing with a prioritised fix list.",
+      "Free digital marketing audit for Kenyan businesses. Review your ads, website, SEO and tracking, with findings in a written report or call within 1–2 days.",
     standfirst:
-      "The cheapest way to find out what is actually wrong before committing to a retainer with anyone, including me. One fixed fee, written findings, no obligation to continue.",
-    price: { amount: "KES 40,000", note: "One-off fee. Not a retainer, and there is no requirement to work with me afterwards." },
+      "Find out what needs fixing before spending more on marketing. The audit is free for now, with findings shared in a written report or a call within 1–2 days.",
+    price: { amount: "Free for now", value: 0, note: "No audit fee and no obligation to book ongoing services." },
     whoFor: [
       "Businesses paying for marketing and unsure what they are getting",
       "Owners about to hire an agency who want to know what to ask for",
@@ -530,26 +515,20 @@ export const servicePages: ServicePage[] = [
       { title: "Website and conversion review", desc: "Speed on Kenyan mobile networks, and whether the site converts the traffic it already gets." },
       { title: "Search presence review", desc: "Rankings, Google Business Profile and local visibility versus your actual competitors." },
       { title: "Tracking audit", desc: "Whether your conversions, calls and WhatsApp enquiries are being measured correctly. They often are not." },
-      { title: "Prioritised fix list", desc: "Written findings ordered by impact, so you know what to do first and what can wait." },
+      { title: "Clear next steps", desc: "Findings shared in a written report or over a call within 1–2 days, with priorities for what to fix first." },
     ],
-    caseStudy: {
-      name: "Convey Communications",
-      challenge: "Low organic reach and stagnant lead flow — diagnosed before any campaign work began.",
-      results: "10x increase in qualified leads over the following 6 months once the fixes were implemented.",
-      readMore: "what-a-digital-marketing-audit-finds-kenya-2026",
-    },
     faqs: [
       {
         q: "What do I actually receive?",
-        a: "[CONFIRM] Format and length of the deliverable — written document, call walkthrough, or both — and your turnaround time. I've described it as written findings with a prioritised fix list, which matches your existing copy.",
+        a: "I’ll share the findings in a written report or talk you through them on a call, usually within 1–2 days. You’ll know what needs attention and where to start.",
       },
       {
         q: "Do I have to hire you afterwards?",
         a: "No. The audit is a standalone piece of work and the fix list is yours to implement yourself or hand to whoever you like.",
       },
       {
-        q: "Is the fee credited if I take a retainer?",
-        a: "[CONFIRM] Whether you credit the KES 40,000 against a first retainer month. This is a strong closing incentive if you are willing to offer it.",
+        q: "How much does the audit cost?",
+        a: "It’s free for now. If you decide to work with me afterwards, we’ll agree on the scope and price separately.",
       },
       {
         q: "What access do you need from me?",
@@ -568,12 +547,8 @@ export const servicePages: ServicePage[] = [
       label: "Request an Audit",
       href: "/agency#booking",
     },
-    draft: true,
-    reviewNotes: [
-      "Deliverable format and turnaround time needed.",
-      "Decide whether the KES 40,000 is credited against a first retainer month.",
-      "The Convey case study is used here as a 'diagnosis first' example — confirm an audit genuinely preceded that work, otherwise I'll swap it out.",
-    ],
+    draft: false,
+    reviewNotes: [],
   },
 ];
 

@@ -828,7 +828,7 @@ export const blogPosts: BlogPost[] = [
         id: "sensible-start",
         heading: "A sensible way to start if you're unsure",
         paragraphs: [
-          "If you are not sure whether Google Ads fits your business at all, a one-off Digital Marketing Audit (from KES 40,000) can tell you whether your site and offer are even ready for paid traffic before you commit to a monthly retainer.",
+          "If you are not sure whether Google Ads fits your business at all, a Digital Marketing Audit (free for now) can tell you whether your site and offer are even ready for paid traffic before you commit to a monthly retainer.",
           "From there, start with one focused campaign, one clear offer, and a full month of data before deciding whether to scale the budget up.",
         ],
       },
@@ -844,7 +844,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "5 min read",
     metaTitle: "Convey Communications: 10x Qualified Leads in 6 Months",
     metaDescription: "How a combination of Meta Ads, TikTok strategy and content production took Convey Communications from stagnant lead flow to a 10x increase in qualified leads.",
-    intro: "Convey Communications came to me with a familiar problem: decent brand recognition, but organic reach had flatlined and the lead pipeline had gone quiet. Six months later, qualified leads were up 10x and engagement across Instagram and TikTok had grown more than 300%. Here's what changed.",
+    intro: "I first worked at Convey Communications as an employee and later returned as a consultant. The business faced a familiar problem: decent brand recognition, but organic reach had flatlined and the lead pipeline had gone quiet. Six months later, qualified leads were up 10x and engagement across Instagram and TikTok had grown more than 300%. Here's what changed.",
     thumbnail: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop",
     thumbnailAlt: "Team reviewing marketing performance charts on a screen in an office",
 
@@ -992,14 +992,14 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "what-a-digital-marketing-audit-finds-kenya-2026",
     category: "Agency",
-    title: "What a Digital Marketing Audit Actually Finds (and Why It's Worth KES 40,000)",
+    title: "What a Digital Marketing Audit Actually Finds",
     excerpt: "Before you spend another shilling on ads or SEO, an audit tells you exactly what's broken and what to fix first.",
     date: "2026-09-23",
     dateLabel: "September 2026",
     readTime: "5 min read",
-    metaTitle: "What a Digital Marketing Audit Actually Finds (and Why It's Worth KES 40,000)",
+    metaTitle: "What a Digital Marketing Audit Actually Finds",
     metaDescription: "What's inside a full-channel digital marketing audit for a Kenyan business: what gets checked, what usually turns up, and why it's worth doing before spending on ads or SEO.",
-    intro: "Most businesses come to me wanting to spend money on ads or SEO before anyone has checked whether the site, the tracking, or the offer can actually support that spend. An audit is the KES 40,000 conversation that prevents a much more expensive mistake.",
+    intro: "Most businesses come to me wanting to spend money on ads or SEO before anyone has checked whether the site, the tracking, or the offer can actually support that spend. An audit helps you find those gaps before they become expensive mistakes. Mine is free for now, with findings shared in a written report or a call within 1-2 days.",
     thumbnail: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1600&auto=format&fit=crop",
     thumbnailAlt: "Person annotating a printed report with a red pen next to a laptop",
 
