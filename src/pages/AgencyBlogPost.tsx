@@ -138,6 +138,9 @@ const AgencyBlogPost = () => {
                     <figure className="mt-8">
                       <img
                         src={section.image.src}
+                        width={section.image.width}
+                        height={section.image.height}
+                        decoding="async"
                         alt={section.image.alt}
                         loading="lazy"
                         className="w-full rounded-2xl border border-border object-cover"

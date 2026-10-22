@@ -1,11 +1,13 @@
-import csrBaobabGroupPhoto from "@/assets/csr-baobab-group-photo.jpg";
-import csrBaobabInstalledUnits from "@/assets/csr-baobab-installed-units.jpg";
-import csrBaobabHandover from "@/assets/csr-baobab-handover.jpg";
-import csrBaobabTeamHoodie from "@/assets/csr-baobab-team-hoodie.jpg";
+import csrBaobabGroupPhoto from "@/assets/csr-baobab-group-photo.webp";
+import csrBaobabInstalledUnits from "@/assets/csr-baobab-installed-units.webp";
+import csrBaobabHandover from "@/assets/csr-baobab-handover.webp";
+import csrBaobabTeamHoodie from "@/assets/csr-baobab-team-hoodie.webp";
 import type { MetaTurnaroundVisualKind } from "@/data/metaTurnaroundCaseStudy";
 
 export interface BlogSectionImage {
   src: string;
+  width?: number;
+  height?: number;
   alt: string;
   caption?: string;
 }
@@ -449,6 +451,8 @@ export const blogPosts: BlogPost[] = [
         ],
         image: {
           src: csrBaobabGroupPhoto,
+          width: 1280,
+          height: 1280,
           alt: "The iClear team with students and staff at Baobab School on the day of the water purifier handover",
           caption: "The iClear team with Baobab School students and staff, July 8, 2026.",
         },
@@ -494,6 +498,8 @@ export const blogPosts: BlogPost[] = [
         ],
         image: {
           src: csrBaobabTeamHoodie,
+          width: 1280,
+          height: 1280,
           alt: "iClear team members on-site at Baobab School, wearing branded hoodies reading 'Water is Sweet'",
           caption: "On-site at Baobab School for the installation.",
         },
@@ -507,6 +513,8 @@ export const blogPosts: BlogPost[] = [
         ],
         image: {
           src: csrBaobabGroupPhoto,
+          width: 1280,
+          height: 1280,
           alt: "The iClear team with students and staff at Baobab School on the day of the water purifier handover",
           caption: "The team with Baobab School's students and staff after the handover.",
         },
@@ -519,6 +527,8 @@ export const blogPosts: BlogPost[] = [
         ],
         image: {
           src: csrBaobabInstalledUnits,
+          width: 1280,
+          height: 1280,
           alt: "Three iClear Premier water purifier units installed and running at Baobab School",
           caption: "The 3 Premier purifier units, installed and running.",
         },
@@ -531,6 +541,8 @@ export const blogPosts: BlogPost[] = [
         ],
         image: {
           src: csrBaobabHandover,
+          width: 1280,
+          height: 1280,
           alt: "iClear team members handing over water purifier units at Baobab School",
           caption: "Handing over the units on-site at Baobab School.",
         },

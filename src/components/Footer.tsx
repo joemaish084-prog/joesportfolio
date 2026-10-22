@@ -85,9 +85,9 @@ export function Footer() {
 
           {/* Column 2 — Portfolio */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
               Portfolio
-            </h3>
+            </h2>
             <ul className="space-y-2.5">
               {portfolioLinks.map((l) => (
                 <li key={l.name}>
@@ -104,9 +104,9 @@ export function Footer() {
 
           {/* Column 3 — Agency Services */}
           <div>
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
               Agency Services
-            </h3>
+            </h2>
             <ul className="space-y-2.5">
               {agencyServices.map((l) => (
                 <li key={l.name}>
@@ -123,9 +123,9 @@ export function Footer() {
 
           {/* Column 4 — Legal & Contact */}
           <div className="col-span-2 md:col-span-1">
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
               Legal &amp; Contact
-            </h3>
+            </h2>
             <ul className="space-y-2.5 mb-5">
               <li>
                 <Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-primary transition-colors">

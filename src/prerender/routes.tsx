@@ -5,6 +5,9 @@ import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost, getUnhubbedPosts } from "@/data/blogHubs";
 import { servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
 import { brands, type Brand } from "@/data/brands";
+import { designs } from "@/data/designs";
+import { shortVideos, longVideos } from "@/data/videos";
+import { faqs } from "@/data/faqs";
 import {
   STATIC_HEADS,
   blogHubHead,
@@ -37,7 +40,7 @@ export { renderOgCard } from "@/prerender/ogCard";
 export interface PrerenderRoute {
   path: string;
   head: PageHead;
-  /** Markup placed in #root. Omitted for the homepage, which has its own <noscript> summary. */
+  /** Markup placed in #root, readable before JavaScript loads. */
   body?: string;
   /** Text for the generated social card at /og/<path>.png (see ogCardImage). */
   card?: OgCard;
@@ -132,7 +135,7 @@ function PostPage({ post }: { post: BlogPost }) {
             ))}
             {section.image && (
               <figure>
-                <img src={section.image.src} alt={section.image.alt} width={800} />
+                <img src={section.image.src} alt={section.image.alt} width={section.image.width ?? 800} height={section.image.height} loading="lazy" />
                 {section.image.caption && <figcaption>{section.image.caption}</figcaption>}
               </figure>
             )}
@@ -253,12 +256,33 @@ const newest = (posts: BlogPost[]) => posts.map((p) => p.date).sort().pop();
 
 export function getPrerenderRoutes(): PrerenderRoute[] {
   const routes: PrerenderRoute[] = [
-    { path: "/", head: STATIC_HEADS.home, sitemap: { priority: 1.0, changefreq: "monthly" } },
+    {
+      path: "/",
+      head: STATIC_HEADS.home,
+      body: html(
+        <Shell>
+          <h1>Digital Marketing That Turns Attention Into Real Growth</h1>
+          <p>I'm Joseph Maina, a digital marketing specialist in Nairobi, Kenya. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content.</p>
+          <p><a href="/agency#booking">Book a Free Strategy Call</a></p>
+          <h2>Services</h2>
+          <ul>{servicePages.map((page) => <li key={page.slug}><a href={page.draft ? "/agency#services" : `/agency/${page.slug}`}>{page.name}</a> — {page.standfirst}</li>)}</ul>
+          <h2>Portfolio</h2>
+          <ul>{NAV.filter((item) => item.href.startsWith("/work/")).map((item) => <li key={item.href}><a href={item.href}>{item.label}</a></li>)}</ul>
+          <h2>Recent case studies and insights</h2>
+          <ul>{blogPosts.slice(0, 6).map((post) => <PostLink key={post.slug} post={post} />)}</ul>
+          <h2>Frequently asked questions</h2>
+          {faqs.map(({ question, answer }) => <section key={question}><h3>{question}</h3><p>{answer}</p></section>)}
+        </Shell>,
+      ),
+      sitemap: { priority: 1.0, changefreq: "monthly" },
+    },
     {
       path: "/agency",
       head: STATIC_HEADS.agency,
       body: html(
         <SimplePage head={STATIC_HEADS.agency}>
+          <h2>Marketing services</h2>
+          <ul>{servicePages.map((page) => <li key={page.slug}><a href={page.draft ? "/agency#services" : `/agency/${page.slug}`}>{page.name}</a> — {page.price.amount}</li>)}</ul>
           <h2>Read by topic</h2>
           <ul>
             {blogHubs.map((h) => (
@@ -391,13 +415,21 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     {
       path: STATIC_HEADS.workVideos.path,
       head: STATIC_HEADS.workVideos,
-      body: html(<SimplePage head={STATIC_HEADS.workVideos} />),
+      body: html(<SimplePage head={STATIC_HEADS.workVideos}>
+        <h2>Brand films and interviews</h2>
+        <ul>{longVideos.map((video) => <li key={video.link}><a href={video.link}>{video.title}</a><p>{video.description}</p></li>)}</ul>
+        <h2>Short-form videos</h2>
+        <ul>{shortVideos.map((video) => <li key={video.link}><a href={video.link}>{video.title}</a><p>{video.description}</p></li>)}</ul>
+      </SimplePage>),
       sitemap: { priority: 0.8, changefreq: "monthly" },
     },
     {
       path: STATIC_HEADS.workDesign.path,
       head: STATIC_HEADS.workDesign,
-      body: html(<SimplePage head={STATIC_HEADS.workDesign} />),
+      body: html(<SimplePage head={STATIC_HEADS.workDesign}>
+        <h2>Campaign and brand artwork</h2>
+        {designs.map((design) => <section key={design.title}><h3>{design.title}</h3><p>{design.description}</p><img src={design.image} alt={design.title} width={400} loading="lazy" /></section>)}
+      </SimplePage>),
       sitemap: { priority: 0.8, changefreq: "monthly" },
     },
     {

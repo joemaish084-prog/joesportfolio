@@ -2,6 +2,7 @@ import { blogPosts, type BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getPrimaryHubForPost, type BlogHub } from "@/data/blogHubs";
 import type { ServicePage } from "@/data/servicePages";
 import type { Brand } from "@/data/brands";
+import { faqs } from "@/data/faqs";
 import { CALCULATOR_FAQS, CALCULATOR_INTRO, CALCULATOR_PATH, CALCULATOR_TITLE } from "@/data/adCalculatorContent";
 
 /**
@@ -112,10 +113,19 @@ const breadcrumbs = (items: { name: string; path: string }[]) => ({
 
 export const STATIC_HEADS = {
   home: {
-    title: "Joseph Maina | Digital Marketing Specialist Nairobi | Meta Ads, Google Ads & SEO Kenya",
+    title: "Digital Marketing Specialist Nairobi | Joseph Maina",
     description:
-      "Digital Marketing Specialist in Nairobi, Kenya. Expert in Meta Ads, Google Ads, TikTok, SEO & Social Media. Real results for Kenyan brands. Book a free strategy call today.",
+      "Grow your Kenyan business with Joseph Maina, a digital marketing specialist in Nairobi. Explore Meta Ads, Google Ads, SEO and real campaign case studies.",
     path: "/",
+    jsonLd: [{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    }],
   },
   agency: {
     title: "Digital Marketing Agency Nairobi | Joseph Maina",
@@ -236,10 +246,6 @@ export function blogHubHead(hub: BlogHub): PageHead {
         name: hub.metaTitle,
         description: hub.metaDescription,
         url: canonicalUrl(path),
-        breadcrumb: breadcrumbs([
-          { name: "Blog", path: "/agency/blog" },
-          { name: hub.name, path },
-        ]),
         mainEntity: {
           "@type": "ItemList",
           itemListElement: posts.map((p, i) => ({
@@ -249,6 +255,13 @@ export function blogHubHead(hub: BlogHub): PageHead {
             url: canonicalUrl(`/agency/blog/${p.slug}`),
           })),
         },
+      },
+      {
+        "@context": "https://schema.org",
+        ...breadcrumbs([
+          { name: "Blog", path: "/agency/blog" },
+          { name: hub.name, path },
+        ]),
       },
     ],
   };
@@ -278,7 +291,10 @@ export function blogPostHead(post: BlogPost): PageHead {
         publisher: { "@type": "Organization", name: "Joseph Maina Agency", url: SITE_URL },
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         articleSection: primaryHub?.name ?? post.category,
-        breadcrumb: breadcrumbs([
+      },
+      {
+        "@context": "https://schema.org",
+        ...breadcrumbs([
           { name: "Blog", path: "/agency/blog" },
           ...(primaryHub ? [{ name: primaryHub.name, path: `/agency/blog/topics/${primaryHub.slug}` }] : []),
           { name: post.title, path },
@@ -317,9 +333,15 @@ export function serviceHead(page: ServicePage): PageHead {
         provider: person,
         offers: {
           "@type": "Offer",
-          price: page.price.amount,
-          priceCurrency: "KES",
-          description: page.price.note,
+          // Preserve "from" and monthly billing without putting display copy in a numeric price field.
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            [page.price.amount.startsWith("From ") ? "minPrice" : "price"]:
+              Number(page.price.amount.match(/[\d,]+/)![0].replace(/,/g, "")),
+            priceCurrency: "KES",
+            ...(page.price.amount.includes("/month") ? { unitText: "month" } : {}),
+          },
+          description: `${page.price.amount}. ${page.price.note}`,
         },
       },
       ...(faqs.length > 0 ? [{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs }] : []),

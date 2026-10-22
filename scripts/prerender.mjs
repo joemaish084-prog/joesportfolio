@@ -67,10 +67,12 @@ function replaceRegion(html, name, replacement) {
 
 // Homepage-only structured data and its <noscript> summary.
 const stripHomeOnly = (html) =>
-  ["home-schema", "home-schema-rating", "home-body"].reduce((out, name) => replaceRegion(out, name, ""), html);
+  ["home-schema", "home-body"].reduce((out, name) => replaceRegion(out, name, ""), html);
 
 function renderPage(route) {
   let html = replaceRegion(template, "head", renderHead(route.head));
+  // The homepage now has regular HTML in #root, just like every public route.
+  html = replaceRegion(html, "home-body", "");
   if (route.path !== "/") html = stripHomeOnly(html);
   if (route.body) {
     if (!html.includes('<div id="root"></div>')) throw new Error("prerender: empty #root not found");
@@ -125,6 +127,18 @@ fs.writeFileSync(
   path.join(dist, "spa-shell.html"),
   stripHomeOnly(replaceRegion(template, "head", renderHead({ ...home.head, noindex: true }))),
 );
+
+// Vercel serves this with HTTP 404 when no public file or private rewrite matches.
+fs.writeFileSync(path.join(dist, "404.html"), renderPage({
+  path: "/404",
+  head: {
+    title: "Page Not Found (404) | Joseph Maina",
+    description: "This page could not be found. Explore Joseph Maina's portfolio, services and blog.",
+    path: "/404",
+    noindex: true,
+  },
+  body: '<main style="max-width:880px;margin:auto;padding:24px;font-family:system-ui"><h1>Page not found</h1><p>This page may have moved or the address may be incorrect.</p><p><a href="/">Visit the portfolio</a> · <a href="/agency">Explore services</a> · <a href="/agency/blog">Read the blog</a></p></main>',
+}));
 
 const sitemapEntries = routes
   .filter((r) => r.sitemap && !r.head.noindex)

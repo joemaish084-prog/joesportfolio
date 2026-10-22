@@ -1,8 +1,20 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "josephmaina.co.ke" }],
+      "destination": "https://www.josephmaina.co.ke/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/hub/:path*",
+      "destination": "/spa-shell"
+    },
+    {
+      "source": "/admin",
       "destination": "/spa-shell"
     }
   ],
@@ -15,6 +27,14 @@
           "value": "noindex, nofollow, noarchive"
         }
       ]
+    },
+    {
+      "source": "/admin",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    },
+    {
+      "source": "/spa-shell",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
     },
     {
       "source": "/assets/(.*)",

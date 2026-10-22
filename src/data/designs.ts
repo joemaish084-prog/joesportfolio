@@ -1,4 +1,4 @@
-import beautySquareJoannaK from "@/assets/design-beauty-square-joanna-k.png";
+import beautySquareJoannaK from "@/assets/design-beauty-square-joanna-k.webp";
 import fuelGrind from "@/assets/design-fuel.webp";
 import standardPurifier from "@/assets/design-standard.webp";
 import powwaterApp from "@/assets/design-powwater-app.webp";
