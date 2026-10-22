@@ -96,7 +96,7 @@ export function headTags(head: PageHead): HeadTag[] {
   ];
 }
 
-const person = { "@type": "Person", name: "Joseph Maina", url: SITE_URL };
+const person = { "@type": "Person", name: "Joseph Maina", url: SITE_URL, image: `${SITE_URL}/joseph-maina.jpg` };
 
 const breadcrumbs = (items: { name: string; path: string }[]) => ({
   "@type": "BreadcrumbList",

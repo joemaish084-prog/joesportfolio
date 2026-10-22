@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { HeroBackground } from "@/components/HeroBackground";
 import { ChevronDown } from "lucide-react";
 import { HeroCollage, HeroCollageMobile, type CollageItem } from "@/components/agency/AgencyVisuals";
-import tecnoPoster from "@/assets/design-tecno-1.webp";
+import josephPortrait from "@/assets/joseph-maina-portrait.webp";
 import asdspDocumentary from "@/assets/longform-asdsp.webp";
 import majiNiUhaiShort from "@/assets/short-maji-ni-uhai.webp";
 
@@ -17,17 +17,9 @@ const proofStats = [
   { value: "3+", label: "Years in digital marketing" },
 ];
 
-// One piece per discipline, so the hero previews the range of work below it.
+// A real photo of Joseph leads, flanked by work, so visitors (and crawlers) see the actual person.
+// The portrait sits at index 1 so the mobile stack raises it to the centre.
 const collageItems: CollageItem[] = [
-  {
-    src: tecnoPoster,
-    alt: "TECNO x iClear collaboration campaign poster",
-    tag: "Design",
-    className: "left-0 top-4 w-52 aspect-[4/5]",
-    rotate: -7,
-    depth: 14,
-    delay: 0.25,
-  },
   {
     src: asdspDocumentary,
     alt: "ASDSP Programme documentary title card for Nyeri farmers",
@@ -36,6 +28,15 @@ const collageItems: CollageItem[] = [
     rotate: 5,
     depth: 24,
     delay: 0.35,
+  },
+  {
+    src: josephPortrait,
+    alt: "Joseph Maina, digital marketing specialist in Nairobi, Kenya",
+    tag: "Joseph Maina",
+    className: "left-0 top-0 w-60 aspect-[4/5]",
+    rotate: -6,
+    depth: 14,
+    delay: 0.2,
   },
   {
     src: majiNiUhaiShort,
@@ -203,7 +204,7 @@ export function Hero() {
         </div>
 
         <div className="hidden lg:block">
-          <HeroCollage mouseX={mouseX} mouseY={mouseY} items={collageItems} panelClassName="left-[6%] top-[32%] w-[19rem]">
+          <HeroCollage mouseX={mouseX} mouseY={mouseY} items={collageItems} panelClassName="left-[10%] top-[44%] w-[19rem]">
             <ProofPanel mouseX={mouseX} mouseY={mouseY} />
           </HeroCollage>
         </div>

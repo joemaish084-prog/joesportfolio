@@ -3,6 +3,8 @@ import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
+import { motion } from "framer-motion";
+import josephPortrait from "@/assets/joseph-maina-portrait.webp";
 
 const skills = [
   "Video Production & Editing",
@@ -21,6 +23,53 @@ const skills = [
   "Brand Strategy & Storytelling",
 ];
 
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
+// The real photo of Joseph, kept in view beside the story so the person behind the work is never in doubt.
+function AboutPortrait() {
+  return (
+    <div className="mb-10 md:mb-0">
+      <div className="md:sticky md:top-28">
+        <div className="relative mx-auto w-56 sm:w-64 md:w-full">
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0, x: 0, y: 0 }}
+            whileInView={{ opacity: 1, x: 12, y: 12 }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ delay: 0.35, duration: 0.7, ease: easeOut }}
+            className="absolute inset-0 rounded-3xl bg-gradient-orange"
+          />
+          <motion.div
+            initial={{ clipPath: "inset(12% 12% 12% 12% round 24px)", opacity: 0 }}
+            whileInView={{ clipPath: "inset(0% 0% 0% 0% round 24px)", opacity: 1 }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ duration: 0.9, ease: easeOut }}
+            className="relative overflow-hidden rounded-3xl border border-border/60 bg-muted"
+          >
+            <motion.img
+              src={josephPortrait}
+              alt="Joseph Maina, digital marketing specialist in Nairobi, Kenya"
+              width={900}
+              height={900}
+              loading="lazy"
+              decoding="async"
+              initial={{ scale: 1.15 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 1.2, ease: easeOut }}
+              className="aspect-[4/5] w-full object-cover"
+            />
+          </motion.div>
+        </div>
+        <div className="mt-6 text-center md:text-left">
+          <p className="font-display font-semibold text-foreground">Joseph Isaac Maina</p>
+          <p className="text-sm text-muted-foreground">Digital Marketing Specialist · Nairobi, Kenya</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function About() {
   // Phones only: the full story is ~9 screens of text, so it starts clamped.
   // It stays in the DOM either way; md+ always shows everything.
@@ -29,7 +78,7 @@ export function About() {
   return (
     <section id="about" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-10 sm:mb-16 space-y-4">
               <SectionLabel>ABOUT</SectionLabel>
@@ -40,6 +89,9 @@ export function About() {
           </ScrollReveal>
 
           <div className="space-y-12">
+            <div className="md:grid md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-10 lg:gap-14">
+            <AboutPortrait />
+            <div>
             <div className="relative">
             <div
               id="about-story"
@@ -125,6 +177,8 @@ export function About() {
                 {storyOpen ? "Show less" : "Read my full story"}
                 <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${storyOpen ? "rotate-180" : ""}`} aria-hidden />
               </button>
+            </div>
+            </div>
             </div>
 
             <ScrollReveal direction="up" delay={0.2}>
