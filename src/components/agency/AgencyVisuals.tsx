@@ -16,7 +16,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 /* Hero collage: real client creative fanned behind the proof panel.  */
 /* ------------------------------------------------------------------ */
 
-type CollageItem = {
+export type CollageItem = {
   src: string;
   alt: string;
   tag: string;
@@ -98,22 +98,34 @@ function CollageCard({ item, mouseX, mouseY, index }: { item: CollageItem; mouse
   );
 }
 
-export function HeroCollage({ mouseX, mouseY, children }: { mouseX: MotionValue<number>; mouseY: MotionValue<number>; children: ReactNode }) {
+export function HeroCollage({
+  mouseX,
+  mouseY,
+  children,
+  items = collage,
+  panelClassName = "left-[6%] top-[30%] w-[19rem]",
+}: {
+  mouseX: MotionValue<number>;
+  mouseY: MotionValue<number>;
+  children: ReactNode;
+  items?: CollageItem[];
+  panelClassName?: string;
+}) {
   return (
     <div className="relative mx-auto h-[560px] w-full max-w-lg">
-      {collage.map((item, i) => (
+      {items.map((item, i) => (
         <CollageCard key={item.src} item={item} mouseX={mouseX} mouseY={mouseY} index={i} />
       ))}
-      <div className="absolute left-[6%] top-[30%] z-10 w-[19rem]">{children}</div>
+      <div className={`absolute z-10 ${panelClassName}`}>{children}</div>
     </div>
   );
 }
 
 /** Compact fanned stack for small screens, where the full collage would crowd the CTAs. */
-export function HeroCollageMobile() {
+export function HeroCollageMobile({ items = collage }: { items?: CollageItem[] }) {
   return (
     <div className="mt-12 flex justify-center lg:hidden" aria-hidden>
-      {collage.map((item, i) => (
+      {items.map((item, i) => (
         <motion.div
           key={item.src}
           initial={{ opacity: 0, y: 30, rotate: 0 }}

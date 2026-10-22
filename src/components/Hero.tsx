@@ -3,6 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroBackground } from "@/components/HeroBackground";
 import { ChevronDown } from "lucide-react";
+import { HeroCollage, HeroCollageMobile, type CollageItem } from "@/components/agency/AgencyVisuals";
+import tecnoPoster from "@/assets/design-tecno-1.webp";
+import asdspDocumentary from "@/assets/longform-asdsp.webp";
+import majiNiUhaiShort from "@/assets/short-maji-ni-uhai.webp";
 
 const appleEase = [0.22, 1, 0.36, 1] as const;
 
@@ -13,40 +17,37 @@ const proofStats = [
   { value: "3+", label: "Years in digital marketing" },
 ];
 
-type Tag = { label: string; top?: string; left?: string; right?: string; bottom?: string };
-
-const tags: Tag[] = [
-  { label: "Content Strategy", top: "-6%", left: "-10%" },
-  { label: "Meta Ads", top: "10%", right: "-14%" },
-  { label: "Google Ads", bottom: "12%", left: "-16%" },
-  { label: "SEO Optimization", bottom: "-6%", right: "-8%" },
+// One piece per discipline, so the hero previews the range of work below it.
+const collageItems: CollageItem[] = [
+  {
+    src: tecnoPoster,
+    alt: "TECNO x iClear collaboration campaign poster",
+    tag: "Design",
+    className: "left-0 top-4 w-52 aspect-[4/5]",
+    rotate: -7,
+    depth: 14,
+    delay: 0.25,
+  },
+  {
+    src: asdspDocumentary,
+    alt: "ASDSP Programme documentary title card for Nyeri farmers",
+    tag: "Video",
+    className: "right-0 top-2 w-60 aspect-video",
+    rotate: 5,
+    depth: 24,
+    delay: 0.35,
+  },
+  {
+    src: majiNiUhaiShort,
+    alt: "Still from an iClear 'Maji ni Uhai' short-form video",
+    tag: "Reels",
+    className: "right-4 bottom-0 w-40 aspect-[3/4]",
+    rotate: 5,
+    depth: 30,
+    delay: 0.45,
+    video: true,
+  },
 ];
-
-function FloatingTag({ tag, index, mouseX, mouseY }: { tag: Tag; index: number; mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
-  const moveX = useTransform(mouseX, (v) => v * 14);
-  const moveY = useTransform(mouseY, (v) => v * 14);
-  const smoothX = useSpring(moveX, { damping: 20, stiffness: 100 });
-  const smoothY = useSpring(moveY, { damping: 20, stiffness: 100 });
-  const { label, ...position } = tag;
-
-  return (
-    <motion.div
-      style={{ position: "absolute", ...position, x: smoothX, y: smoothY }}
-      className="hidden lg:block z-20"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.8 + index * 0.1, duration: 0.5, ease: appleEase }}
-    >
-      <motion.div
-        animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 3 + index * 0.2, repeat: Infinity, ease: appleEase }}
-        className="px-3.5 py-2 rounded-xl border border-border/60 bg-card/80 backdrop-blur-md text-xs font-medium text-foreground/80 shadow-lg whitespace-nowrap"
-      >
-        {label}
-      </motion.div>
-    </motion.div>
-  );
-}
 
 function ProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
   const [statIndex, setStatIndex] = useState(0);
@@ -63,16 +64,12 @@ function ProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
 
   return (
     <div className="relative mx-auto w-full max-w-sm" style={{ perspective: 1200 }}>
-      {tags.map((tag, i) => (
-        <FloatingTag key={tag.label} tag={tag} index={i} mouseX={mouseX} mouseY={mouseY} />
-      ))}
-
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         initial={{ opacity: 0, y: 24, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.4, duration: 0.6, ease: appleEase }}
-        className="relative z-10 rounded-3xl border border-border/60 bg-card/70 backdrop-blur-2xl p-8 sm:p-10 shadow-2xl"
+        className="relative z-10 rounded-3xl border border-border/60 bg-card/70 backdrop-blur-2xl p-8 shadow-2xl"
       >
         <div className="relative flex items-center gap-2 mb-8">
           <span className="relative flex h-2 w-2">
@@ -91,7 +88,7 @@ function ProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.4, ease: appleEase }}
             >
-              <p className="text-5xl sm:text-6xl font-display font-bold text-foreground tracking-tight">{stat.value}</p>
+              <p className="text-5xl font-display font-bold text-foreground tracking-tight whitespace-nowrap">{stat.value}</p>
               <p className="mt-2 text-sm text-muted-foreground max-w-[220px]">{stat.label}</p>
             </motion.div>
           </AnimatePresence>
@@ -201,10 +198,14 @@ export function Hero() {
               </div>
             ))}
           </motion.div>
+
+          <HeroCollageMobile items={collageItems} />
         </div>
 
         <div className="hidden lg:block">
-          <ProofPanel mouseX={mouseX} mouseY={mouseY} />
+          <HeroCollage mouseX={mouseX} mouseY={mouseY} items={collageItems} panelClassName="left-[6%] top-[32%] w-[19rem]">
+            <ProofPanel mouseX={mouseX} mouseY={mouseY} />
+          </HeroCollage>
         </div>
       </div>
 
