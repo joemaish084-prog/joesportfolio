@@ -5,8 +5,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.js";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Hero } from "@/components/Hero";
+import AgencyBlog from "@/pages/AgencyBlog";
+import { HelmetProvider } from "react-helmet-async";
 import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
-import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost, getUnhubbedPosts } from "@/data/blogHubs";
+import type { BlogSummary } from "@/data/blogSummaries";
+import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost } from "@/data/blogHubs";
 import { servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
 import { brands, type Brand } from "@/data/brands";
 import { designs } from "@/data/designs";
@@ -93,7 +96,7 @@ function Shell({ children, contentTag: Content = "main" }: { children: ReactNode
   );
 }
 
-const PostLink = ({ post }: { post: BlogPost }) => (
+const PostLink = ({ post }: { post: BlogSummary }) => (
   <li>
     <a href={`/agency/blog/${post.slug}`}>{post.title}</a> — {post.excerpt}
   </li>
@@ -256,7 +259,7 @@ function BrandPageBody({ brand }: { brand: Brand }) {
 
 const html = (node: ReactNode) => renderToStaticMarkup(<>{node}</>);
 
-const newest = (posts: BlogPost[]) => posts.map((p) => p.date).sort().pop();
+const newest = (posts: { date: string }[]) => posts.map((p) => p.date).sort().pop();
 
 // -------------------------------------------------------------------- routes
 
@@ -311,31 +314,9 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       path: "/agency/blog",
       head: blogIndexHead(),
       body: html(
-        <SimplePage head={{ ...blogIndexHead(), ogTitle: "Digital Marketing Blog Kenya" }}>
-          {blogHubs.map((h) => (
-            <section key={h.slug}>
-              <h2>
-                <a href={`/agency/blog/topics/${h.slug}`}>{h.name}</a>
-              </h2>
-              <p>{h.tagline}</p>
-              <ul>
-                {getHubPosts(h).map((p) => (
-                  <PostLink key={p.slug} post={p} />
-                ))}
-              </ul>
-            </section>
-          ))}
-          {getUnhubbedPosts().length > 0 && (
-            <section>
-              <h2>More articles</h2>
-              <ul>
-                {getUnhubbedPosts().map((p) => (
-                  <PostLink key={p.slug} post={p} />
-                ))}
-              </ul>
-            </section>
-          )}
-        </SimplePage>,
+        <HelmetProvider>
+          <StaticRouter location="/agency/blog"><AgencyBlog /></StaticRouter>
+        </HelmetProvider>,
       ),
       card: {
         eyebrow: "The Blog",

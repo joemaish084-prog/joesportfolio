@@ -1,6 +1,6 @@
 import { BarChart3, ClipboardList, Magnet, MapPin, Share2, Tag, Target, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { blogPosts, type BlogPost } from "@/data/blogPosts";
+import { blogSummaries as blogPosts, type BlogSummary as BlogPost } from "@/data/blogSummaries";
 import { getServicePageBySlug } from "@/data/servicePages";
 
 export interface HubService {

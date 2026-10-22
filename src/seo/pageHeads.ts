@@ -1,4 +1,5 @@
-import { blogPosts, type BlogPost } from "@/data/blogPosts";
+import { blogSummaries as blogPosts } from "@/data/blogSummaries";
+import type { BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getPrimaryHubForPost, type BlogHub } from "@/data/blogHubs";
 import type { ServicePage } from "@/data/servicePages";
 import type { Brand } from "@/data/brands";

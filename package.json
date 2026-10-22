@@ -4,6 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate:blog": "node scripts/generate-blog-summaries.mjs",
+    "predev": "npm run generate:blog",
+    "prebuild": "npm run generate:blog",
+    "prebuild:dev": "npm run generate:blog",
     "dev": "vite",
     "build": "vite build && node scripts/prerender.mjs",
     "check:seo": "node scripts/check-seo.mjs",

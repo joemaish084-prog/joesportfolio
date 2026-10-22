@@ -1,6 +1,6 @@
 # SEO audit — josephmaina.co.ke
 
-Audited 22 October 2026 against the 20 checks in your screenshot, with deployment follow-up on 23 October. All seven reviewed service pages are now live and indexable, and the live sitemap contains 83 URLs. The previously flagged article is indexed with the correct Google-selected canonical. Mobile performance has now been measured and is the main remaining improvement.
+Audited 22 October 2026 against the 20 checks in your screenshot, with deployment follow-up on 23 October. All seven reviewed service pages are now live and indexable, and the live sitemap contains 83 URLs. The previously flagged article is indexed with the correct Google-selected canonical. The performance batch is deployed and retested. Homepage speed improved, but mobile performance remains the main area to work on.
 
 ## Latest verification — 23 October 2026
 
@@ -20,16 +20,16 @@ These are single Lighthouse lab runs on an emulated Moto G Power with slow 4G, n
 | [Blog](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-agency-blog/ph1z4nlkj9?form_factor=mobile) | 77 | 100 | 4.1 s | 70 ms | 0 |
 | [Case studies](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-work-case-studies/enp1edwe4h?form_factor=mobile) | 75 | 100 | 4.1 s | 200 ms | 0.041 |
 
-Next performance work, grounded in these reports:
+Priorities identified by the baseline reports (the first batch below is now deployed):
 
 1. **Reduce startup rendering delay.** The homepage LCP element is its H1, with a reported 2,390 ms element render delay. It currently waits for app startup; investigate showing the real first-fold content in the initial HTML and deferring nonessential client work while preserving the existing layout.
 2. **Reduce unnecessary initial JavaScript.** Homepage unused-JS estimates total 271 KiB, including approximately 120 KiB of first-party code. Split/defer nonessential components and integrations based on what loads on the initial route; do not remove business tracking indiscriminately.
 3. **Serve images at appropriate sizes.** Reported image-delivery savings: homepage 211 KiB, blog 647 KiB, case studies 347 KiB. Homepage mobile collage images and small logos are specifically oversized for their displayed dimensions. Add responsive sources, intrinsic dimensions, and appropriately sized blog images.
-4. **Recheck after the next performance deployment.** The current deployed site has not yet received these additional performance changes. The 100/100 basic SEO scores do not establish ranking performance or full structured-data eligibility. Blog accessibility was 96, with contrast flagged; homepage and case studies were 100 in that automated category.
+4. **Recheck after the performance deployment.** Completed below on 23 October. The 100/100 basic SEO scores do not establish ranking performance or full structured-data eligibility. Blog accessibility was 96, with contrast flagged; homepage and case studies were 100 in that automated category.
 
-### Performance improvements prepared locally — 23 October 2026
+### Performance improvements deployed — 23 October 2026
 
-This batch is **ready for deployment**, not yet measured by PageSpeed on the live site.
+Deployment verified: the live entry bundle is 548,906 bytes, the actual homepage heading is present before the hidden fallback, and responsive hero sources are included. Fresh PageSpeed results follow.
 
 - Separated page-specific SEO functions and the full blog dataset from the common metadata module. Also separated the hero collage from the agency's larger visual module. The main entry bundle falls from **814,901 bytes to approximately 549 KB**, about **33% smaller**. The performance check reports **177 KiB gzip** for initial entry/preload JavaScript.
 - Prerendered the existing homepage header and hero using the same components as the interactive page. The real H1 is outside the hidden crawler fallback and visible before application JavaScript executes. The theme is applied before this first paint; hero visuals no longer start transparent.
@@ -40,7 +40,35 @@ This batch is **ready for deployment**, not yet measured by PageSpeed on the liv
 - TypeScript checking still reports only the previously documented `src/lib/chatLead.ts` / Supabase type errors. No new errors in the changed files were reported.
 - Review captures: [mobile homepage](site-review.local/performance-mobile-after.jpg), [desktop blog](site-review.local/performance-blog-desktop-after.jpg).
 
-**Next:** deploy this performance batch and rerun the same PageSpeed mobile reports. The homepage baseline is 56/100; no improved Lighthouse score or Core Web Vitals pass is claimed before a fresh live measurement.
+### Live mobile retest — 23 October 2026, 00:23–00:24 EAT
+
+Same emulated device, slow 4G and Lighthouse version as the baseline. These are single runs and can vary; the mixed results do not establish a sitewide speed improvement.
+
+| Page / fresh report | Performance before → after | LCP before → after | TBT before → after | CLS after | Basic SEO |
+|---|---:|---:|---:|---:|---:|
+| [Homepage](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke/9iqvnilltm?form_factor=mobile) | 56 → 63 | 5.7 → 5.0 s | 400 → 300 ms | 0 | 100 |
+| [Blog](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-agency-blog/tfdftwl1hf?form_factor=mobile) | 77 → 72 | 4.1 → 4.5 s | 70 → 160 ms | 0 | 100 |
+| [Case studies](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-work-case-studies/ojinh5x8su?form_factor=mobile) | 75 → 77 | 4.1 → 4.4 s | 200 → 50 ms | 0.041 | 100 |
+
+- Homepage FCP improved from 4.1 to 3.7 s. Its heading remains the LCP element, with 2,350 ms render delay (previously 2,390 ms). Serving visible HTML alone has not resolved that bottleneck; investigate fonts, render-blocking styles and replacement of prerendered content during startup.
+- Blog image-delivery savings fell from 647 to 23 KiB, but its overall performance score fell. Image improvement did not translate into a faster lab result. Check startup work and run-to-run variation before assigning a cause.
+- Remaining estimated image savings: homepage 301 KiB, case studies 182 KiB. Homepage examples include oversized poster thumbnails and Unsplash cards. These are different resources from the optimized hero images.
+- Homepage still reports 269 KiB unused JavaScript and 2.4 s main-thread work. Inspect first-party and third-party contributors before another targeted change; do not remove tracking without understanding its purpose.
+- Automated accessibility remains 100 / 96 / 100 for homepage / blog / case studies. The blog contrast finding remains open. All three basic SEO scores remain 100.
+- PageSpeed still has no real-user field data. No Core Web Vitals pass or ranking increase is claimed.
+
+### Second performance batch — ready for deployment
+
+- The blog listing, topic hubs and related cards now use generated summaries rather than downloading every article's body. Summaries regenerate before development/build commands from the existing editorial source. Full article pages retain their content.
+- In the local build, the blog's static JavaScript dependencies fall from 807,070 to 639,393 bytes after this summary split: **167,677 bytes less (20.8%)**. This comparison isolates the summary change within this batch; it is not a new PageSpeed score or a measurement of the entire page payload.
+- The homepage route loads separately, and the homepage/blog/case-study HTML preloads only its own route and static dependencies. The blog dependency graph excludes the homepage route and full article-body chunk.
+- The blog now prerenders its actual shared page, including its visible H1 and articles. Initial route loading keeps the build-generated content visible instead of replacing it with a blank fallback. It becomes interactive when the route loads; this is not full React hydration.
+- Inter and Space Grotesk are served locally with their licences. Two critical fonts preload directly; `font-display: optional` allows a system fallback on slow connections rather than a late font swap. Instrument Serif remains available through its existing Google stylesheet.
+- Blog orange buttons and category labels now use the dark primary-foreground colour instead of white. Checked the colour pair in both themes; the live automated accessibility score needs a post-deployment retest.
+- Local browser checks: no overflow at 390px, one H1, working featured-article controls, mobile menu, theme switching and navigation to the homepage. The full Meta Ads article opens with all eight section headings and no application console errors. A temporary script-free fixture showed the blog heading and articles without JavaScript; test fixtures are removed from the final build. [Mobile preview](site-review.local/performance-blog-round2-mobile.jpg).
+- Production build, SEO checks and the expanded performance checks pass. Homepage entry/preload JavaScript is **184 KiB gzip** (including the newly explicit route preloads), within the 220 KiB budget. SEO checks cover **84 pages, 83 sitemap entries, 1,208 internal link instances and 253 image tags**. TypeScript still reports the existing `chatLead.ts` / Supabase errors.
+
+**Next:** deploy this batch, then rerun mobile PageSpeed against the latest live scores: homepage 63, blog 72 and case studies 77. No score increase is claimed before that retest.
 
 ## Deployment follow-up
 
@@ -97,11 +125,13 @@ Submitted `https://www.josephmaina.co.ke/sitemap.xml` through the domain propert
 
 ## Remaining actions, in priority order
 
-1. **Deploy these local changes through the site's existing Vercel/Lovable workflow.** This audit did not publish, commit, or push the changes. After deployment, check that an unknown path returns 404, the apex host redirects permanently to `www` while preserving path/query, and `/hub/login` plus `/admin` still load with noindex. Vite preview does not validate Vercel's production routing rules.
-2. **Submit the existing sitemap.** In the open Search Console domain property, choose Sitemaps, enter `https://www.josephmaina.co.ke/sitemap.xml`, and submit. The file is already referenced from robots.txt, so crawlers can discover it without submission, too.
-3. **Finish the seven service drafts.** These are useful commercial landing pages that cannot currently rank. In `src/data/servicePages.ts`, confirm timelines, minimum ad budgets, deliverable volumes, filming scope, landing-page scope and audit terms. Remove every `[CONFIRM]` marker, set the reviewed page's `draft` to `false`, rebuild and redeploy. The sitemap and indexing directive follow that flag automatically. No prices, promises or deliverables were invented here.
-4. **Reinspect the canonical exclusion.** Search Console lists `https://www.josephmaina.co.ke/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign` as a duplicate without a selected canonical (last crawled 15 October). It currently returns a correct self-canonical in the live HTML. Use URL Inspection after deployment to compare Google's selected canonical with the declared canonical, then request indexing if appropriate. The report may reflect an older crawl; adding another canonical tag is not the fix.
-5. **Measure performance.** Check PageSpeed Insights on mobile for `/`, `/agency/blog`, and an image-heavy case study. Use field data when available. Investigate the large main bundle and third-party scripts against measured results; image savings alone do not prove a Core Web Vitals pass.
+Deployment, sitemap submission, all seven service approvals and the canonical inspection are complete. The original audit table above records the earlier state.
+
+1. **Reduce the homepage heading's remaining render delay.** Inspect font loading, blocking CSS and client startup against the fresh report. The deployed bundle reduction helped the score, but did not materially reduce the reported render-delay subpart.
+2. **Investigate the blog's lower mobile score.** Compare startup and third-party work; image savings alone are not enough. Use repeated controlled measurements when assessing the next change.
+3. **Resize the remaining image outliers.** Start with homepage poster thumbnails and the case-study images flagged in the new reports.
+4. **Recheck the blog contrast finding after deployment.** The second batch changes the orange-button/label text to dark in both themes; confirm the result in the next automated report.
+5. **Monitor Search Console.** Allow Google to reread the 83-URL sitemap and collect field data. Review service-page indexing and search performance as data becomes available; avoid unnecessary indexing requests for already indexed pages.
 
 ## Validation and limits
 

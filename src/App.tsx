@@ -1,4 +1,4 @@
-import { Suspense, lazy, type ReactNode } from "react";
+import { Suspense, lazy, useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,11 +7,11 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-import Index from "./pages/Index";
 import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
 import { ConversionTracker } from "@/components/ConversionTracker";
 import { PulseTracker } from "@/components/PulseTracker";
+const Index = lazy(() => import("./pages/Index"));
 const Agency = lazy(() => import("./pages/Agency"));
 const AgencyBlog = lazy(() => import("./pages/AgencyBlog"));
 const AgencyBlogHub = lazy(() => import("./pages/AgencyBlogHub"));
@@ -32,7 +32,18 @@ const WorkBranding = lazy(() => import("./pages/WorkBranding"));
 const WorkBrand = lazy(() => import("./pages/WorkBrand"));
 // Private back office. Lazy, unlinked and noindexed; see src/hub.
 const HubApp = lazy(() => import("./hub/HubApp"));
-const pageFallback = <div className="min-h-screen bg-background" />;
+// Retain the trusted build-generated page while its route chunk loads. The
+// initial createRoot render would otherwise replace visible HTML with a blank.
+const initialPath = window.location.pathname;
+let initialMarkup = document.getElementById("root")?.innerHTML ?? "";
+function RouteFallback() {
+  const { pathname } = useLocation();
+  useEffect(() => () => { initialMarkup = ""; }, []);
+  return pathname === initialPath && initialMarkup
+    ? <div style={{ display: "contents" }} dangerouslySetInnerHTML={{ __html: initialMarkup }} />
+    : <div className="min-h-screen bg-background" />;
+}
+const pageFallback = <RouteFallback />;
 
 const isHubPath = (path: string) => path === "/hub" || path.startsWith("/hub/");
 

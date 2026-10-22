@@ -35,6 +35,26 @@ const { getPrerenderRoutes, headTags, renderOgCard, SITE_URL } = await import(
 );
 
 const template = fs.readFileSync(path.join(dist, "index.html"), "utf8");
+const manifest = JSON.parse(fs.readFileSync(path.join(dist, ".vite/manifest.json"), "utf8"));
+const initialRouteModules = {
+  "/": "src/pages/Index.tsx",
+  "/agency/blog": "src/pages/AgencyBlog.tsx",
+  "/work/case-studies": "src/pages/WorkCaseStudies.tsx",
+};
+
+// Discover the initial route in parallel with the app, without preloading other
+// routes or their dynamic imports (CV, galleries and other optional features).
+function routePreloads(routePath) {
+  const files = new Set();
+  function visit(key) {
+    const chunk = manifest[key];
+    if (!chunk || files.has(chunk.file)) return;
+    files.add(chunk.file);
+    for (const dependency of chunk.imports ?? []) visit(dependency);
+  }
+  visit(initialRouteModules[routePath]);
+  return [...files].map(file => `<link rel="modulepreload" href="/${file}" crossorigin>`).join("\n");
+}
 
 const escapeAttr = (value) =>
   String(value).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -71,6 +91,7 @@ const stripHomeOnly = (html) =>
 
 function renderPage(route) {
   let html = replaceRegion(template, "head", renderHead(route.head));
+  html = html.replace("</head>", () => `${routePreloads(route.path)}\n</head>`);
   // The homepage now has regular HTML in #root, just like every public route.
   html = replaceRegion(html, "home-body", "");
   if (route.path !== "/") html = stripHomeOnly(html);

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Seo } from "@/components/Seo";
 import { blogIndexHead } from "@/seo/pageHeads";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock, Eye, Pause, Play, User } from "lucide-react";
-import { blogPosts, type BlogPost } from "@/data/blogPosts";
+import { blogSummaries as blogPosts, type BlogSummary as BlogPost } from "@/data/blogSummaries";
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -144,7 +144,7 @@ function FeaturedRotator({ views }: { views: Record<string, number> }) {
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          <span className="absolute bottom-6 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+          <span className="absolute bottom-6 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-foreground">
             {post.category}
           </span>
         </div>
@@ -160,7 +160,7 @@ function FeaturedRotator({ views }: { views: Record<string, number> }) {
           </div>
           <Link
             to={`/agency/blog/${post.slug}`}
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
             Read Article
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -270,7 +270,7 @@ const AgencyBlog = () => {
                               className="h-full w-full object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                            <span className="absolute bottom-4 left-4 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
+                            <span className="absolute bottom-4 left-4 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-foreground">
                               {post.category}
                             </span>
                           </div>
@@ -320,7 +320,7 @@ const AgencyBlog = () => {
                             className="h-full w-full object-cover"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                          <span className="absolute bottom-4 left-4 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
+                          <span className="absolute bottom-4 left-4 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-foreground">
                             {post.category}
                           </span>
                         </div>
