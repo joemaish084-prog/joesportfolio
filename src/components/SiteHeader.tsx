@@ -1,3 +1,4 @@
+import { localImageProps } from "@/lib/imageVariants";
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
@@ -116,7 +117,7 @@ function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
   return (
     <a href="/#home" onClick={onClick} aria-label="Joseph Maina — home" className="flex items-center shrink-0">
       <img
-        src="/logo/jm-lockup.png"
+        src="/logo/jm-lockup.png" {...localImageProps("/logo/jm-lockup.png", "(min-width: 640px) 116px, 105px")}
         alt="JM Creative"
         width={352}
         height={134}
@@ -396,7 +397,7 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {createPortal(
+      {typeof document !== "undefined" && createPortal(
         <AnimatePresence>
           {open && (
             <motion.div
@@ -526,9 +527,9 @@ export function SiteHeader() {
         document.body
       )}
 
-      <Suspense fallback={null}>
+      {cvOpen && <Suspense fallback={null}>
         <CVViewer open={cvOpen} onClose={() => setCvOpen(false)} />
-      </Suspense>
+      </Suspense>}
     </>
   );
 }

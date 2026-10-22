@@ -1,7 +1,8 @@
+import { contentImageProps } from "@/lib/responsiveImage";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
-import { blogPostHead } from "@/seo/heads";
+import { blogPostHead } from "@/seo/pageHeads";
 import { ArrowLeft, ArrowRight, Calculator, CalendarDays, ChevronRight, Clock, Eye, User } from "lucide-react";
 import { CALCULATOR_HUBS, CALCULATOR_PATH } from "@/data/adCalculatorContent";
 import { getPostBySlug } from "@/data/blogPosts";
@@ -108,7 +109,7 @@ const AgencyBlogPost = () => {
 
               <figure className="mt-8">
                 <img
-                  src={post.thumbnail}
+                  src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1024px) 760px, 100vw")}
                   alt={post.thumbnailAlt}
                   loading="eager"
                   width={1200}
@@ -137,7 +138,7 @@ const AgencyBlogPost = () => {
                   {section.image && (
                     <figure className="mt-8">
                       <img
-                        src={section.image.src}
+                        src={section.image.src} {...contentImageProps(section.image.src, "(min-width: 1024px) 760px, 100vw")}
                         width={section.image.width}
                         height={section.image.height}
                         decoding="async"
@@ -295,7 +296,7 @@ const AgencyBlogPost = () => {
                   <article key={r.slug} className="overflow-hidden rounded-2xl border border-border">
                     <div className="relative h-32">
                       <img
-                        src={r.thumbnail}
+                        src={r.thumbnail} {...contentImageProps(r.thumbnail, "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw")}
                         alt={r.thumbnailAlt}
                         loading="lazy"
                         width={400}

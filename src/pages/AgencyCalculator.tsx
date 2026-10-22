@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { calculatorHead } from "@/seo/heads";
+import { calculatorHead } from "@/seo/pageHeads";
 import { blogPosts, type BlogPost } from "@/data/blogPosts";
 import {
   CALCULATOR_FAQS,

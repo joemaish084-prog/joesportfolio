@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import type { Brand } from "@/data/brands";
+import { localImageProps } from "@/lib/imageVariants";
 
 /**
  * A brand shown as a cover in its own colours, so it reads as a brand book rather
@@ -17,7 +18,7 @@ export function BrandCard({ brand }: { brand: Brand }) {
     >
       <div className="flex flex-col justify-between gap-8 p-6 sm:p-10">
         <div>
-          <img src={brand.cover.logo === "white" ? brand.logos.horizontalWhite : brand.logos.horizontal} alt={`${brand.name} logo`} className="h-10 w-auto sm:h-12" />
+          <img src={brand.cover.logo === "white" ? brand.logos.horizontalWhite : brand.logos.horizontal} {...localImageProps(brand.cover.logo === "white" ? brand.logos.horizontalWhite : brand.logos.horizontal, "200px")} alt={`${brand.name} logo`} loading="lazy" decoding="async" className="h-10 w-auto sm:h-12" />
           <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: colors.label }}>
             Brand identity · {brand.sector}
           </p>

@@ -1,6 +1,10 @@
+import { STATIC_HEADS, type PageHead } from "@/seo/heads";
 /* eslint-disable react-refresh/only-export-components -- build-time module, never hot-reloaded */
 import type { ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { StaticRouter } from "react-router-dom/server.js";
+import { SiteHeader } from "@/components/SiteHeader";
+import { Hero } from "@/components/Hero";
 import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost, getUnhubbedPosts } from "@/data/blogHubs";
 import { servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
@@ -9,15 +13,13 @@ import { designs } from "@/data/designs";
 import { shortVideos, longVideos } from "@/data/videos";
 import { faqs } from "@/data/faqs";
 import {
-  STATIC_HEADS,
   blogHubHead,
   blogIndexHead,
   blogPostHead,
   brandHead,
   calculatorHead,
   serviceHead,
-  type PageHead,
-} from "@/seo/heads";
+} from "@/seo/pageHeads";
 import {
   CALCULATOR_FAQS,
   CALCULATOR_INTRO,
@@ -59,7 +61,7 @@ const NAV = [
   { href: "/work/branding", label: "Branding" },
 ];
 
-function Shell({ children }: { children: ReactNode }) {
+function Shell({ children, contentTag: Content = "main" }: { children: ReactNode; contentTag?: "main" | "div" }) {
   return (
     <div
       data-prerender=""
@@ -79,7 +81,7 @@ function Shell({ children }: { children: ReactNode }) {
           </span>
         ))}
       </nav>
-      <main>{children}</main>
+      <Content>{children}</Content>
       <footer>
         <p>
           Joseph Maina · Digital Marketing Specialist · Nairobi, Kenya ·{" "}
@@ -264,8 +266,10 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       path: "/",
       head: STATIC_HEADS.home,
       body: html(
-        <Shell>
-          <h1>Digital Marketing That Turns Attention Into Real Growth</h1>
+        <StaticRouter location="/">
+        <SiteHeader />
+        <main className="min-h-screen"><Hero /></main>
+        <Shell contentTag="div">
           <p>I'm Joseph Maina, a digital marketing specialist in Nairobi, Kenya. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content.</p>
           <p><a href="/agency#booking">Book a Free Strategy Call</a></p>
           <h2>Services</h2>
@@ -276,7 +280,8 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
           <ul>{blogPosts.slice(0, 6).map((post) => <PostLink key={post.slug} post={post} />)}</ul>
           <h2>Frequently asked questions</h2>
           {faqs.map(({ question, answer }) => <section key={question}><h3>{question}</h3><p>{answer}</p></section>)}
-        </Shell>,
+        </Shell>
+        </StaticRouter>,
       ),
       sitemap: { priority: 1.0, changefreq: "monthly" },
     },

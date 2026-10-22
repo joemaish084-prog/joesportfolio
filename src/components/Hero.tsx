@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroBackground } from "@/components/HeroBackground";
 import { ChevronDown } from "lucide-react";
-import { HeroCollage, HeroCollageMobile, type CollageItem } from "@/components/agency/AgencyVisuals";
+import { HeroCollage, HeroCollageMobile, type CollageItem } from "@/components/HeroCollage";
 import josephPortrait from "@/assets/joseph-maina-portrait.webp";
 import asdspDocumentary from "@/assets/longform-asdsp.webp";
 import majiNiUhaiShort from "@/assets/short-maji-ni-uhai.webp";
@@ -67,7 +67,7 @@ function ProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
     <div className="relative mx-auto w-full max-w-sm" style={{ perspective: 1200 }}>
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+        initial={false}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ delay: 0.4, duration: 0.6, ease: appleEase }}
         className="relative z-10 rounded-3xl border border-border/60 bg-card/70 backdrop-blur-2xl p-8 shadow-2xl"

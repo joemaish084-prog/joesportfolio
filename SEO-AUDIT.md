@@ -1,6 +1,46 @@
 # SEO audit — josephmaina.co.ke
 
-Audited 22 October 2026 against the 20 checks in your screenshot. The initial technical fixes are deployed and the sitemap is submitted. All seven service pages have now been reviewed and cleared for indexing locally. Next: deploy the reviewed content, recheck the live pages and canonical warning, and measure mobile performance.
+Audited 22 October 2026 against the 20 checks in your screenshot, with deployment follow-up on 23 October. All seven reviewed service pages are now live and indexable, and the live sitemap contains 83 URLs. The previously flagged article is indexed with the correct Google-selected canonical. Mobile performance has now been measured and is the main remaining improvement.
+
+## Latest verification — 23 October 2026
+
+- All seven service pages return HTTP 200, have a single correct self-canonical, allow indexing, appear in the 83-URL sitemap, and contain no `[CONFIRM]` placeholders.
+- Structured prices match the approved offers, including lead generation from KSh 50,000/month and the audit at zero cost, labelled "Free for now".
+- Search Console's sitemap detail reports **Sitemap processed successfully**, last read 22 October with 76 URLs discovered. The initial list view briefly showed "Couldn't fetch", but the detailed report provided a successful processing result. The live file now lists 83 URLs; the discovered count can update when Google reads it again.
+- URL Inspection for `/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign` reports **URL is on Google / Page is indexed**, last crawled 21 October. The declared canonical is the inspected URL and Google's selected canonical is **Inspected URL**. The older duplicate warning does not describe the current inspected indexing state.
+- The public PageSpeed API returned HTTP 429. The official PageSpeed Insights web interface successfully completed the mobile tests below.
+
+### Mobile performance baseline — 23 October 2026
+
+These are single Lighthouse lab runs on an emulated Moto G Power with slow 4G, not real-user Core Web Vitals. PageSpeed reports **No Data** for field experience. TBT is a lab metric, not an INP measurement.
+
+| Page | Performance | Basic SEO | LCP | TBT | CLS |
+|---|---:|---:|---:|---:|---:|
+| [Homepage](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke/w438tplnvc?form_factor=mobile) | 56 | 100 | 5.7 s | 400 ms | 0 |
+| [Blog](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-agency-blog/ph1z4nlkj9?form_factor=mobile) | 77 | 100 | 4.1 s | 70 ms | 0 |
+| [Case studies](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-work-case-studies/enp1edwe4h?form_factor=mobile) | 75 | 100 | 4.1 s | 200 ms | 0.041 |
+
+Next performance work, grounded in these reports:
+
+1. **Reduce startup rendering delay.** The homepage LCP element is its H1, with a reported 2,390 ms element render delay. It currently waits for app startup; investigate showing the real first-fold content in the initial HTML and deferring nonessential client work while preserving the existing layout.
+2. **Reduce unnecessary initial JavaScript.** Homepage unused-JS estimates total 271 KiB, including approximately 120 KiB of first-party code. Split/defer nonessential components and integrations based on what loads on the initial route; do not remove business tracking indiscriminately.
+3. **Serve images at appropriate sizes.** Reported image-delivery savings: homepage 211 KiB, blog 647 KiB, case studies 347 KiB. Homepage mobile collage images and small logos are specifically oversized for their displayed dimensions. Add responsive sources, intrinsic dimensions, and appropriately sized blog images.
+4. **Recheck after the next performance deployment.** The current deployed site has not yet received these additional performance changes. The 100/100 basic SEO scores do not establish ranking performance or full structured-data eligibility. Blog accessibility was 96, with contrast flagged; homepage and case studies were 100 in that automated category.
+
+### Performance improvements prepared locally — 23 October 2026
+
+This batch is **ready for deployment**, not yet measured by PageSpeed on the live site.
+
+- Separated page-specific SEO functions and the full blog dataset from the common metadata module. Also separated the hero collage from the agency's larger visual module. The main entry bundle falls from **814,901 bytes to approximately 549 KB**, about **33% smaller**. The performance check reports **177 KiB gzip** for initial entry/preload JavaScript.
+- Prerendered the existing homepage header and hero using the same components as the interactive page. The real H1 is outside the hidden crawler fallback and visible before application JavaScript executes. The theme is applied before this first paint; hero visuals no longer start transparent.
+- Generated responsive WebP variants for hero images, selected brand logos and blog photos. At the tested 390px viewport the mobile hero selects the 240px sources. Those three variants total **21,098 bytes versus 171,246 bytes** for the originals, an **87.7% reduction**. Higher-density/larger screens can select larger variants.
+- Added responsive Unsplash and local sources to blog covers, cards, related articles and section photos. Kept the established crops and layout dimensions.
+- The header now loads the CV viewer only when opened. Verified the mobile menu opens and the resume content still loads. Tracking and consent behavior were not changed by this performance batch.
+- Validation: production build and SEO checks pass (**84 routes / 83 sitemap entries**); the new `npm run check:performance` passes its initial-JS budget, visible first-fold heading and responsive-asset checks. Browser checks found one homepage H1, no horizontal overflow at 390px, a working menu/CV, and no application console errors. The blog was also checked at 1440px with responsive images and the correct canonical. A script-free local fixture confirmed that the header and hero remain visible without app execution; the temporary fixture was removed after testing.
+- TypeScript checking still reports only the previously documented `src/lib/chatLead.ts` / Supabase type errors. No new errors in the changed files were reported.
+- Review captures: [mobile homepage](site-review.local/performance-mobile-after.jpg), [desktop blog](site-review.local/performance-blog-desktop-after.jpg).
+
+**Next:** deploy this performance batch and rerun the same PageSpeed mobile reports. The homepage baseline is 56/100; no improved Lighthouse score or Core Web Vitals pass is claimed before a fresh live measurement.
 
 ## Deployment follow-up
 

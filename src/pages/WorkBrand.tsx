@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import { SiteHeader } from "@/components/SiteHeader";
 import { Footer } from "@/components/Footer";
 import { Seo } from "@/components/Seo";
-import { brandHead } from "@/seo/heads";
+import { brandHead } from "@/seo/pageHeads";
 import { Swoosh } from "@/components/branding/BrandArt";
 import { displayFont, kits, paintText } from "@/components/branding/kits";
 import { getBrand, type Brand } from "@/data/brands";

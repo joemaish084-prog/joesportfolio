@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
-import { serviceHead } from "@/seo/heads";
+import { serviceHead } from "@/seo/pageHeads";
 import { AlertTriangle, ArrowLeft, ArrowRight, Check, ChevronRight, Quote, X } from "lucide-react";
 import {
   SERVICE_PROCESS,

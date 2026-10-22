@@ -1,7 +1,8 @@
+import { contentImageProps } from "@/lib/responsiveImage";
 import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
-import { blogHubHead } from "@/seo/heads";
+import { blogHubHead } from "@/seo/pageHeads";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye } from "lucide-react";
 import { blogHubs, getHubBySlug, getHubPosts, resolveHubServiceHref } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
@@ -66,7 +67,7 @@ const AgencyBlogHub = () => {
               <article className="mt-5 overflow-hidden rounded-2xl border border-border sm:flex">
                 <div className="relative h-48 sm:h-auto sm:w-2/5 sm:flex-shrink-0">
                   <img
-                    src={lead.thumbnail}
+                    src={lead.thumbnail} {...contentImageProps(lead.thumbnail, "(min-width: 1024px) 760px, 100vw")}
                     alt={lead.thumbnailAlt}
                     loading="eager"
                     width={800}

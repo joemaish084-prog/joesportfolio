@@ -1,7 +1,8 @@
+import { contentImageProps } from "@/lib/responsiveImage";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Seo } from "@/components/Seo";
-import { blogIndexHead } from "@/seo/heads";
+import { blogIndexHead } from "@/seo/pageHeads";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock, Eye, Pause, Play, User } from "lucide-react";
 import { blogPosts, type BlogPost } from "@/data/blogPosts";
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
@@ -135,7 +136,7 @@ function FeaturedRotator({ views }: { views: Record<string, number> }) {
       >
         <div className="relative h-56 sm:h-80">
           <img
-            src={post.thumbnail}
+            src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1024px) 760px, 100vw")}
             alt={post.thumbnailAlt}
             loading="eager"
             width={1200}
@@ -261,7 +262,7 @@ const AgencyBlog = () => {
                         >
                           <div className="relative h-44">
                             <img
-                              src={post.thumbnail}
+                              src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw")}
                               alt={post.thumbnailAlt}
                               loading="lazy"
                               width={800}
@@ -311,7 +312,7 @@ const AgencyBlog = () => {
                       >
                         <div className="relative h-44">
                           <img
-                            src={post.thumbnail}
+                            src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw")}
                             alt={post.thumbnailAlt}
                             loading="lazy"
                             width={800}

@@ -13,3 +13,14 @@ export function unsplashImageProps(src: string, sizes: string) {
     height: 1040,
   };
 }
+import { localImageProps } from "./imageVariants";
+
+
+/** Responsive sources without changing the caller's chosen crop or layout. */
+export function contentImageProps(src: string, sizes: string) {
+  if (src.startsWith("https://images.unsplash.com/")) {
+    const { width: _width, height: _height, ...image } = unsplashImageProps(src, sizes);
+    return image;
+  }
+  return localImageProps(src, sizes);
+}
