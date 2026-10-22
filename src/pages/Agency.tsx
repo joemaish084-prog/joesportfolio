@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 import { supabase } from "@/integrations/supabase/client";
-import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform, MotionConfig, type MotionValue } from "framer-motion";
 import { Stepper } from "@/components/ui/stepper";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
@@ -26,6 +26,13 @@ import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection"
 import { track } from "@/lib/track";
 import { Seo } from "@/components/Seo";
 import { STATIC_HEADS } from "@/seo/heads";
+import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, CardCover } from "@/components/agency/AgencyVisuals";
+import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
+import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
+import iclearDishwashShort from "@/assets/short-iclear-dishwash.webp";
+import conveyYoutubeThumb from "@/assets/content-youtube-thumbnail.webp";
+import iclearPurifiersCampaign from "@/assets/design-water-purifiers.webp";
+import asdspDocumentary from "@/assets/longform-asdsp.webp";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
@@ -57,6 +64,7 @@ const singlePlatform = [
     slug: "meta-ads",
     name: "Meta Ads Management",
     price: "From KES 40,000/month",
+    image: { src: iclearFacebookBanner, alt: "iClear 'Water is Sweet' Facebook campaign banner", position: "object-[85%_center]" },
     features: ["Campaign strategy and setup", "Audience research", "Creative direction", "Weekly optimization", "Monthly reporting"],
     proof: { label: "Read: what Kenyan SMEs should spend on Meta Ads", to: "/agency/blog/how-much-should-a-kenyan-sme-spend-on-meta-ads" },
     hub: { label: "All Meta Ads guides", to: "/agency/blog/topics/meta-ads" },
@@ -66,6 +74,7 @@ const singlePlatform = [
     slug: "google-ads",
     name: "Google Ads Management",
     price: "From KES 45,000/month",
+    image: { src: iclearFilterPromo, alt: "iClear 'Buy standard, get a free filter' display ad", position: "object-[center_20%]" },
     features: ["Search, Display and YouTube campaigns", "Keyword research and strategy", "Bid management", "Conversion tracking", "Monthly reporting"],
     proof: { label: "Read: what Google Ads management costs in Kenya", to: "/agency/blog/google-ads-cost-kenya-2026" },
     hub: { label: "All Google Ads guides", to: "/agency/blog/topics/paid-search" },
@@ -75,6 +84,7 @@ const singlePlatform = [
     slug: "tiktok-ads",
     name: "TikTok Ads Management",
     price: "From KES 40,000/month",
+    image: { src: iclearDishwashShort, alt: "Still from an iClear short-form installation video", position: "object-[center_35%]" },
     features: ["Campaign strategy", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reporting"],
     proof: { label: "Case study: 0 to 4 million TikTok views", to: "/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign" },
     hub: { label: "All TikTok & social guides", to: "/agency/blog/topics/tiktok-and-social" },
@@ -143,9 +153,9 @@ const steps = [
 ];
 
 const caseStudies = [
-  { name: "Convey Communications", challenge: "Low organic reach and stagnant lead flow across digital channels.", results: "10x increase in qualified leads, 300%+ engagement growth across IG & TikTok in 6 months.", services: ["Meta Ads", "TikTok Strategy", "Content Production"] },
-  { name: "iClear Kenya", challenge: "Limited brand awareness in a saturated FMCG market.", results: "KES 1.2M+ ad spend managed at 4.2x ROAS, +180% follower growth.", services: ["Google Ads", "Social Media Management", "Creative Direction"] },
-  { name: "Nyeri County Campaign", challenge: "Reaching a hyper-local audience with limited budget.", results: "500K+ video views, 22 community events filled to capacity.", services: ["Video Production", "Meta Ads", "Local SEO"] },
+  { name: "Convey Communications", image: conveyYoutubeThumb, imageAlt: "Convey with Caroline podcast YouTube thumbnail", headline: "10x leads", challenge: "Low organic reach and stagnant lead flow across digital channels.", results: "10x increase in qualified leads, 300%+ engagement growth across IG & TikTok in 6 months.", services: ["Meta Ads", "TikTok Strategy", "Content Production"] },
+  { name: "iClear Kenya", image: iclearPurifiersCampaign, imageAlt: "iClear water purifiers campaign poster", headline: "4.2x ROAS", challenge: "Limited brand awareness in a saturated FMCG market.", results: "KES 1.2M+ ad spend managed at 4.2x ROAS, +180% follower growth.", services: ["Google Ads", "Social Media Management", "Creative Direction"] },
+  { name: "Nyeri County Campaign", image: asdspDocumentary, imageAlt: "ASDSP Programme documentary title card for Nyeri farmers", headline: "500K+ views", challenge: "Reaching a hyper-local audience with limited budget.", results: "500K+ video views, 22 community events filled to capacity.", services: ["Video Production", "Meta Ads", "Local SEO"] },
 ];
 
 const payments = [
@@ -331,6 +341,7 @@ const Agency = () => {
   };
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-background">
       <Seo {...STATIC_HEADS.agency} />
       <Helmet>
@@ -522,10 +533,14 @@ const Agency = () => {
                   View Pricing
                 </Button>
               </motion.div>
+
+              <HeroCollageMobile />
             </div>
 
             <div className="hidden lg:block">
-              <HeroProofPanel mouseX={heroMouseX} mouseY={heroMouseY} />
+              <HeroCollage mouseX={heroMouseX} mouseY={heroMouseY}>
+                <HeroProofPanel mouseX={heroMouseX} mouseY={heroMouseY} />
+              </HeroCollage>
             </div>
           </div>
         </section>
@@ -534,19 +549,33 @@ const Agency = () => {
 
         {/* WHY */}
         <section className="container mx-auto px-4 py-20">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">
-            Why Brands Choose <span className="text-gradient">Joseph Maina</span>
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {whyCards.map((c, i) => (
-              <motion.div key={c.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <Card className="p-6 h-full hover:border-primary/40 transition-colors">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-110"><c.icon className="h-6 w-6 text-primary" aria-hidden /></div>
-                  <h3 className="font-display text-lg font-semibold mb-2">{c.title}</h3>
-                  <p className="text-sm text-muted-foreground">{c.desc}</p>
-                </Card>
+          <div className="grid lg:grid-cols-[1fr_1.05fr] gap-12 lg:gap-16 items-center max-w-6xl mx-auto">
+            <FieldworkVisual />
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5 }}
+                className="mb-8 space-y-3"
+              >
+                <SectionLabel>WHY WORK WITH ME</SectionLabel>
+                <h2 className="text-3xl md:text-4xl font-display font-bold">
+                  Why Brands Choose <span className="text-gradient">Joseph Maina</span>
+                </h2>
               </motion.div>
-            ))}
+              <div className="grid sm:grid-cols-2 gap-4">
+                {whyCards.map((c, i) => (
+                  <motion.div key={c.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}>
+                    <Card className="group p-5 h-full hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
+                      <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-110"><c.icon className="h-5 w-5 text-primary" aria-hidden /></div>
+                      <h3 className="font-display text-base font-semibold mb-1.5">{c.title}</h3>
+                      <p className="text-sm text-muted-foreground">{c.desc}</p>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -582,9 +611,11 @@ const Agency = () => {
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                     id={`service-${s.slug}`}
-                    className="corner-brackets surface-card p-7 flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 scroll-mt-24"
+                    className="group corner-brackets surface-card flex flex-col overflow-hidden hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 scroll-mt-24"
                   >
-                    <div className="h-14 w-14 bg-gradient-orange flex items-center justify-center mb-5 shadow-[var(--shadow-orange-glow)]">
+                    <CardCover src={s.image.src} alt={s.image.alt} position={s.image.position} />
+                    <div className="px-7 pb-7 flex flex-col flex-1">
+                    <div className="relative z-10 -mt-7 h-14 w-14 bg-gradient-orange flex items-center justify-center mb-5 shadow-[var(--shadow-orange-glow)] ring-4 ring-background">
                       <Icon className="h-7 w-7 text-white" aria-hidden />
                     </div>
                     <h3 className="text-2xl font-display font-semibold mb-2">{s.name}</h3>
@@ -614,6 +645,7 @@ const Agency = () => {
                     <Button variant="outline" className="w-full" onClick={() => scrollTo("booking")}>
                       Get Custom Quote
                     </Button>
+                    </div>
                   </motion.div>
                 );
               })}
@@ -770,6 +802,8 @@ const Agency = () => {
           </div>
         </section>
 
+        <CreativeShowcase />
+
         {/* HOW IT WORKS */}
         <section id="how" className="container mx-auto px-4 py-20 scroll-mt-20">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-4">Working Together Is Simple</h2>
@@ -800,8 +834,19 @@ const Agency = () => {
         <section id="results" className="container mx-auto px-4 py-20 scroll-mt-20">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">Real Results for Real Brands</h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {caseStudies.map((c) => (
-              <Card key={c.name} className="p-6 flex flex-col">
+            {caseStudies.map((c, i) => (
+              <motion.div
+                key={c.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.55, delay: i * 0.12 }}
+              >
+              <Card className="group h-full overflow-hidden flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
+                <CardCover src={c.image} alt={c.imageAlt} className="aspect-video" position="object-top">
+                  <span className="absolute bottom-3 left-4 font-display text-2xl font-bold text-white drop-shadow">{c.headline}</span>
+                </CardCover>
+                <div className="p-6 flex flex-col flex-1">
                 <h3 className="font-display text-xl font-bold mb-3">{c.name}</h3>
                 <div className="mb-4">
                   <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Challenge</div>
@@ -819,7 +864,9 @@ const Agency = () => {
                     ))}
                   </div>
                 </div>
+                </div>
               </Card>
+              </motion.div>
             ))}
           </div>
           <div className="text-center mt-8">
@@ -1032,6 +1079,7 @@ const Agency = () => {
         <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-foreground" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       </footer>
     </div>
+    </MotionConfig>
   );
 };
 
