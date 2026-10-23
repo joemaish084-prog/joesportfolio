@@ -30,13 +30,11 @@ import { agencyHead } from "@/seo/agencyHeads";
 import { agencyPages, legacyAgencyTarget, type AgencyPageKey } from "@/data/agencyPages";
 import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 import { blogSummaries } from "@/data/blogSummaries";
+import { caseStudies } from "@/data/caseStudies";
 import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, CardCover } from "@/components/agency/AgencyVisuals";
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 import iclearDishwashShort from "@/assets/short-iclear-dishwash.webp";
-import conveyYoutubeThumb from "@/assets/content-youtube-thumbnail.webp";
-import iclearPurifiersCampaign from "@/assets/design-water-purifiers.webp";
-import asdspDocumentary from "@/assets/longform-asdsp.webp";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
@@ -188,11 +186,6 @@ const steps = [
   { icon: BarChart3, title: "Report & Grow", desc: "Weekly updates and monthly reports. We optimize, scale and keep growing." },
 ];
 
-const caseStudies = [
-  { name: "Convey Communications", image: conveyYoutubeThumb, imageAlt: "Convey with Caroline podcast YouTube thumbnail", headline: "10x leads", challenge: "Low organic reach and stagnant lead flow across digital channels.", results: "10x increase in qualified leads, 300%+ engagement growth across IG & TikTok in 6 months.", services: ["Meta Ads", "TikTok Strategy", "Content Production"] },
-  { name: "iClear Kenya", image: iclearPurifiersCampaign, imageAlt: "iClear water purifiers campaign poster", headline: "4.2x ROAS", challenge: "Limited brand awareness in a saturated FMCG market.", results: "KES 1.2M+ ad spend managed at 4.2x ROAS, +180% follower growth.", services: ["Google Ads", "Social Media Management", "Creative Direction"] },
-  { name: "Nyeri County Campaign", image: asdspDocumentary, imageAlt: "ASDSP Programme documentary title card for Nyeri farmers", headline: "500K+ views", challenge: "Reaching a hyper-local audience with limited budget.", results: "500K+ video views, 22 community events filled to capacity.", services: ["Video Production", "Meta Ads", "Local SEO"] },
-];
 
 const payments = [
   { icon: CreditCard, title: "M-Pesa", desc: "Pay instantly via M-Pesa STK push. Paybill or Till number provided on invoice." },
@@ -853,49 +846,45 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         {/* RESULTS */}
         <section id="results" className="container mx-auto px-4 py-20 scroll-mt-20">
           <div className="max-w-6xl mx-auto">
-          <SubHeading eyebrow="Selected campaigns" title="Real Results for Real Brands">The headline outcome, the challenge behind it and the channels used.</SubHeading>
-          <div className="grid md:grid-cols-3 gap-6">
-            {caseStudies.map((c, i) => {
-              const [metric, ...metricLabel] = c.headline.split(" ");
-              return (
+          <SubHeading eyebrow="Case studies" title="Real Results for Real Brands"
+            aside={<Link to="/work/case-studies" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">All case studies in full <ArrowRight className="h-4 w-4" aria-hidden /></Link>}>
+            Tracked campaigns with the numbers, strategy and attribution behind them. Clients are not named; the figures are real.
+          </SubHeading>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {caseStudies.map((cs, i) => (
               <motion.div
-                key={c.name}
+                key={cs.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: i * 0.12 }}
+                transition={{ duration: 0.55, delay: (i % 3) * 0.1 }}
               >
-              <Card onMouseMove={trackSpotlight} className="spotlight group h-full overflow-hidden rounded-2xl flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
-                <CardCover src={c.image} alt={c.imageAlt} className="aspect-video" position="object-top" />
-                <div className="p-6 flex flex-col flex-1">
-                <p className="flex items-baseline gap-2 font-display">
-                  <span className="text-4xl font-bold tracking-tight text-gradient tabular-nums">{metric}</span>
-                  <span className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{metricLabel.join(" ")}</span>
-                </p>
-                <h3 className="mt-1 mb-5 font-display text-xl font-semibold">{c.name}</h3>
-                <dl className="mb-5 space-y-4 border-t border-border/60 pt-5">
-                  <div>
-                    <dt className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Challenge</dt>
-                    <dd className="text-sm text-muted-foreground">{c.challenge}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-xs uppercase tracking-wider text-primary mb-1">Results</dt>
-                    <dd className="text-sm font-medium text-foreground">{c.results}</dd>
-                  </div>
-                </dl>
-                <div className="mt-auto">
-                  <div className="sr-only">Services</div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {c.services.map((sv) => (
-                      <span key={sv} className="text-xs px-2.5 py-1 rounded-full border border-primary/20 bg-primary/10 text-primary">{sv}</span>
+              <Link to={`/work/case-studies#${cs.id}`} onMouseMove={trackSpotlight}
+                className="spotlight surface-card group flex h-full flex-col overflow-hidden hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
+                {/* Stock illustration, not the client: request a card-sized crop. */}
+                <CardCover src={cs.cover.src.replace(/w=\d+/, "w=800")} alt={cs.cover.alt} className="aspect-[16/9]">
+                  {i === 0 && <span className="absolute left-4 top-4 rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">Latest</span>}
+                </CardCover>
+                <div className="flex flex-1 flex-col p-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{cs.tag} · {cs.period}</p>
+                  <h3 className="mt-2 font-display text-lg font-semibold leading-snug transition-colors group-hover:text-primary">{cs.title}</h3>
+                  <p className="mt-2 mb-5 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{cs.summary}</p>
+                  <dl className="mt-auto grid grid-cols-3 gap-3 border-t border-border/60 pt-5">
+                    {cs.stats.map((st) => (
+                      <div key={st.label} className="min-w-0">
+                        <dt className="sr-only">{st.label}</dt>
+                        <dd className="whitespace-nowrap font-display text-base font-bold leading-tight text-gradient tabular-nums xl:text-lg">{st.value}</dd>
+                        <dd className="mt-1 text-[11px] leading-snug text-muted-foreground">{st.label}</dd>
+                      </div>
                     ))}
-                  </div>
+                  </dl>
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+                    Read the full case study <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+                  </span>
                 </div>
-                </div>
-              </Card>
+              </Link>
               </motion.div>
-              );
-            })}
+            ))}
           </div>
           </div>
           <div className="max-w-6xl mx-auto mt-16">

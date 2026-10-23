@@ -21,7 +21,7 @@ export const agencyPages = {
     heading: "The work behind the results",
     description: "Explore Joseph Maina's Kenyan campaign results, including Convey Communications and iClear. Read the briefs, creative decisions and campaign breakdowns.",
     intro: "A result is more useful with the campaign behind it. See the challenges, channels and outcomes below, then read the full breakdowns. Past results are specific to each campaign.",
-    teaser: "Campaign outcomes for Convey, iClear and Nyeri County, with the full breakdowns.",
+    teaser: "Six tracked case studies covering revenue, return on ad spend and reach, plus written breakdowns.",
   },
   pricing: {
     path: "/agency/pricing", label: "Pricing",
