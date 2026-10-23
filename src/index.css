@@ -442,6 +442,38 @@ html:not(.js) .agency-counter-animated { display: none; }
   .hero-spotlight {
     background: radial-gradient(600px circle at var(--spot-x, 50%) var(--spot-y, 30%), hsl(25 100% 60% / 0.15), transparent 65%);
   }
+
+  /* 10. Card spotlight that follows the pointer (see lib/spotlight.ts).
+     Painted behind the card's content; skipped on touch and reduced motion. */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(420px circle at var(--spot-x, 50%) var(--spot-y, 50%), hsl(var(--primary) / 0.11), transparent 60%);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+  .spotlight:hover::before,
+  .spotlight:focus-visible::before {
+    opacity: 1;
+  }
+  @media (hover: none), (prefers-reduced-motion: reduce) {
+    .spotlight::before {
+      display: none;
+    }
+  }
+}
+
+/* Agency pages share one rounded card language; the portfolio keeps its own. */
+.agency-page .surface-card {
+  border-radius: 1rem;
 }
 
 @keyframes drift-a {

@@ -9,13 +9,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform, MotionConfig, type MotionValue } from "framer-motion";
+import type { ReactNode } from "react";
 import { Stepper } from "@/components/ui/stepper";
 import { useRef } from "react";
 import {
   Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
   CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
-  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare, Calculator,
+  Video, Search, Lightbulb, ArrowRight, Share2, FileText, Palette, MessageSquare, Calculator,
+  ChevronRight, Mail, ExternalLink, LayoutGrid, TrendingUp, Tag,
 } from "lucide-react";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { trackSpotlight } from "@/lib/spotlight";
 import { SectionLabel } from "@/components/SectionLabel";
 import { getLiveServicePages } from "@/data/servicePages";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
@@ -115,6 +119,38 @@ const retainerPackages = [
     features: ["All platforms managed", "Full performance marketing", "Dedicated strategy sessions", "Daily monitoring", "Weekly reporting", "Priority WhatsApp support", "Quarterly strategy review"],
   },
 ];
+
+// Every value restates a line from the package's own feature list or note.
+const packageComparison = [
+  { label: "Monthly ad spend", values: ["Under KES 50,000", "KES 50,000 – 200,000", "KES 200,000+"] },
+  { label: "Platforms managed", values: ["1", "2", "All"] },
+  { label: "Reporting", values: ["Monthly", "Bi-weekly", "Weekly"] },
+  { label: "Support", values: ["Email", "WhatsApp", "Priority WhatsApp"] },
+];
+
+const hubIcons = { services: LayoutGrid, results: TrendingUp, pricing: Tag, contact: MessageCircle } as const;
+
+// "From KES 40,000/month" -> qualifier, amount and period, so the amount can lead.
+function PriceTag({ price, size = "lg" }: { price: string; size?: "lg" | "sm" }) {
+  const [, from, amount, per] = price.match(/^(from\s+)?(.*?)(\/\w+)?$/i) ?? ["", "", price, ""];
+  return <p className="font-display leading-tight">
+    {from && <span className="block text-xs font-medium uppercase tracking-wider text-muted-foreground">From</span>}
+    <span className={`font-bold text-gradient tabular-nums ${size === "lg" ? "text-3xl sm:text-[2.1rem]" : "text-lg"}`}>{amount}</span>
+    {per && <span className={`ml-0.5 text-muted-foreground ${size === "lg" ? "text-base" : "text-xs"}`}>{per}</span>}
+  </p>;
+}
+
+/** Left-aligned heading row used to break up the inner agency pages. */
+function SubHeading({ eyebrow, title, children, aside }: { eyebrow?: string; title: ReactNode; children?: ReactNode; aside?: ReactNode }) {
+  return <div className="mb-8 flex flex-col gap-4 border-b border-border/60 pb-5 sm:flex-row sm:items-end sm:justify-between">
+    <div className="max-w-2xl">
+      {eyebrow && <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{eyebrow}</p>}
+      <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
+      {children && <p className="mt-2 text-sm text-muted-foreground sm:text-base">{children}</p>}
+    </div>
+    {aside}
+  </div>;
+}
 
 const supportingServices = [
   { icon: Share2, slug: "social-media-management", name: "Social Media Management", price: "from KES 40,000/mo", desc: "Content, scheduling and community management.", proof: { label: "Read: TikTok vs Instagram for Kenyan brands", to: "/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026" } },
@@ -240,7 +276,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const { toast } = useToast();
   const [form, setForm] = useState<{ name: string; email: string; phone: string; brand: string; service: string; budget: string; goals: string; source: string | null }>({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "", source: null });
   const [sending, setSending] = useState(false);
-  const [howStep, setHowStep] = useState(0);
   const [briefStep, setBriefStep] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
   const heroMouseX = useMotionValue(0);
@@ -332,18 +367,30 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
       <AgencyNavigation />
 
       <main>
-        {pageKey !== "home" && <header className="container mx-auto px-4 pt-12 sm:pt-20 pb-4">
-          <nav aria-label="Breadcrumb" className="flex gap-2 text-sm text-muted-foreground mb-6">
-            <Link to="/agency" className="hover:text-primary">Agency</Link><span aria-hidden="true">/</span><span aria-current="page">{page.label}</span>
-          </nav>
-          <SectionLabel>DIGITAL MARKETING AGENCY</SectionLabel>
-          <h1 className="mt-4 max-w-4xl text-4xl sm:text-5xl font-display font-bold tracking-tight">{page.heading}</h1>
-          <p className="mt-6 max-w-3xl text-lg text-muted-foreground leading-relaxed">{page.intro}</p>
-          {pageKey === "contact" && <p className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm">
-            <a className="text-primary hover:underline" href="mailto:joemaish084@gmail.com">joemaish084@gmail.com</a>
-            <a className="text-primary hover:underline" href="tel:+254704700160">+254 704 700 160</a>
-            <span className="text-muted-foreground">Nairobi, Kenya</span>
-          </p>}
+        {pageKey !== "home" && <header className="relative overflow-hidden border-b border-border/50">
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-40 right-[-10%] h-[28rem] w-[28rem] rounded-full bg-primary/[0.07] blur-[120px]" />
+            <div className="absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_80%_90%_at_70%_0%,black_30%,transparent_100%)]" />
+          </div>
+          <div className="relative container mx-auto px-4 pt-10 pb-12 sm:pt-16 sm:pb-16">
+            <div className="mx-auto max-w-6xl">
+              <nav aria-label="Breadcrumb" className="mb-8 text-sm text-muted-foreground">
+                <ol className="flex flex-wrap items-center gap-1.5">
+                  <li><Link to="/agency" className="hover:text-primary transition-colors">Agency</Link></li>
+                  <li aria-hidden="true"><ChevronRight className="h-3.5 w-3.5" /></li>
+                  <li><span aria-current="page" className="text-foreground">{page.label}</span></li>
+                </ol>
+              </nav>
+              <SectionLabel>DIGITAL MARKETING AGENCY</SectionLabel>
+              <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{page.intro}</p>
+              {pageKey === "contact" && <p className="mt-8 flex flex-wrap gap-2.5 text-sm">
+                <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="mailto:joemaish084@gmail.com"><Mail className="h-4 w-4 text-primary" aria-hidden />joemaish084@gmail.com</a>
+                <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="tel:+254704700160"><Phone className="h-4 w-4 text-primary" aria-hidden />+254 704 700 160</a>
+                <span className="inline-flex min-h-10 items-center gap-2 rounded-full px-2 text-muted-foreground"><MapPin className="h-4 w-4" aria-hidden />Nairobi, Kenya</span>
+              </p>}
+            </div>
+          </div>
         </header>}
 
 {pageKey === "home" && <>
@@ -421,12 +468,27 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
           </div>
         </section>
 
-        {pageKey === "home" && <section className="container mx-auto px-4 pt-12">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {Object.entries(agencyPages).filter(([key]) => key !== "home").map(([key, item]) => <Link key={key} to={item.path} className="corner-brackets surface-card p-6 group hover:border-primary/40 transition-colors">
-              <h2 className="font-display text-xl font-semibold group-hover:text-primary">{item.label} <ArrowRight className="inline h-4 w-4" aria-hidden /></h2>
-              <p className="mt-3 text-sm text-muted-foreground">{item.intro}</p>
-            </Link>)}
+        {pageKey === "home" && <section className="container mx-auto px-4 pt-4 sm:pt-8">
+          <div className="mx-auto grid max-w-7xl gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+            {(Object.entries(agencyPages) as [AgencyPageKey, (typeof agencyPages)[AgencyPageKey]][]).filter(([key]) => key !== "home").map(([key, item], i) => {
+              const Icon = hubIcons[key as keyof typeof hubIcons];
+              return <Link key={key} to={item.path} onMouseMove={trackSpotlight}
+                className="spotlight surface-card group flex items-center gap-4 p-4 hover:border-primary/40 sm:flex-col sm:items-start sm:gap-0 sm:p-6">
+                <div className="flex w-full items-center justify-between sm:mb-6 max-sm:w-auto">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20 transition-transform duration-300 group-hover:scale-105">
+                    <Icon className="h-5 w-5 text-primary" aria-hidden />
+                  </span>
+                  <span className="mono-accent hidden text-xs text-muted-foreground sm:block">{String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h2 className="font-display text-lg font-semibold transition-colors group-hover:text-primary sm:text-xl">{item.label}</h2>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground sm:mt-2">{item.teaser}</p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary sm:mt-5">
+                  <span className="hidden sm:inline">Explore</span><ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+                </span>
+              </Link>;
+            })}
           </div>
         </section>}
         <BrandsLogoMarquee />
@@ -469,26 +531,27 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 </>}
 {(pageKey === "services" || pageKey === "pricing") && <>
         {/* SERVICES / PRICING */}
-        <section id="services" className="container mx-auto px-4 py-20 scroll-mt-20">
+        <section id="services" className="container mx-auto px-4 py-16 sm:py-20 scroll-mt-20">
+          <div className="max-w-6xl mx-auto">
           {/* Positioning */}
-          <div className="text-center mb-16 space-y-4">
+          <div className="mb-10 max-w-3xl space-y-3">
             <SectionLabel>PERFORMANCE MARKETING</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+            <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight">
               {pageKey === "pricing" ? "Monthly retainers and management fees" : <>Performance Marketing for <span className="text-gradient">Kenyan Businesses</span></>}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground">
               {pageKey === "pricing" ? "Choose the package that matches your channels and advertising budget." : "I help businesses generate more leads and sales through Meta, Google and TikTok Ads."}
             </p>
-            <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-              Management fees are separate from your advertising budget.
+            <p className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-3.5 py-1.5 text-sm text-muted-foreground">
+              <Receipt className="h-4 w-4 shrink-0 text-primary" aria-hidden /> Management fees are separate from your advertising budget.
             </p>
           </div>
 
 {pageKey === "services" && <>
           {/* Single Platform — 60% visual weight */}
           <div className="mb-20">
-            <h2 className="text-xl font-display font-semibold text-center mb-8">Single Platform</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <SubHeading eyebrow="Paid media" title="Single Platform">Strategy, setup, optimisation and reporting for one advertising channel.</SubHeading>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {singlePlatform.map((s, i) => {
                 const Icon = s.icon;
                 return (
@@ -499,16 +562,17 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                     id={`service-${s.slug}`}
-                    className="group corner-brackets surface-card flex flex-col overflow-hidden hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 scroll-mt-24"
+                    onMouseMove={trackSpotlight}
+                    className="spotlight group surface-card flex flex-col overflow-hidden hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 scroll-mt-24"
                   >
                     <CardCover src={s.image.src} alt={s.image.alt} position={s.image.position} />
-                    <div className="px-7 pb-7 flex flex-col flex-1">
-                    <div className="relative z-10 -mt-7 h-14 w-14 bg-gradient-orange flex items-center justify-center mb-5 shadow-[var(--shadow-orange-glow)] ring-4 ring-background">
+                    <div className="px-6 pb-6 sm:px-7 sm:pb-7 flex flex-col flex-1">
+                    <div className="relative z-10 -mt-7 h-14 w-14 rounded-2xl bg-gradient-orange flex items-center justify-center mb-5 shadow-[var(--shadow-orange-glow)] ring-4 ring-background">
                       <Icon className="h-7 w-7 text-white" aria-hidden />
                     </div>
-                    <h3 className="text-2xl font-display font-semibold mb-2">{s.name}</h3>
-                    <p className="text-3xl font-display font-bold text-gradient mb-5">{s.price}</p>
-                    <ul className="space-y-3 mb-7 flex-1">
+                    <h3 className="text-xl sm:text-2xl font-display font-semibold mb-3">{s.name}</h3>
+                    <div className="mb-5"><PriceTag price={s.price} /></div>
+                    <ul className="space-y-2.5 mb-6 flex-1 border-t border-border/60 pt-5">
                       {s.features.map((f) => (
                         <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
                           <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -516,7 +580,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                         </li>
                       ))}
                     </ul>
-                    <div className="mb-5 space-y-2 border-t border-border/60 pt-5">
+                    <div className="mb-5 space-y-2 rounded-xl bg-muted/50 p-4">
                       <Link
                         to={s.proof.to}
                         className="block text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -530,7 +594,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                         {s.hub.label} &rarr;
                       </Link>
                     </div>
-                    <Button variant="outline" className="w-full" asChild><Link to="/agency/contact">
+                    <Button variant="outline" className="w-full rounded-full" asChild><Link to="/agency/contact">
                       Get Custom Quote
                     </Link></Button>
                     </div>
@@ -543,25 +607,9 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 </>}
 {pageKey === "pricing" && <>
-          {pageKey === "pricing" && <div className="max-w-6xl mx-auto mb-16">
-            <h2 className="text-xl font-display font-semibold mb-6">Single services and project fees</h2>
-            <div className="overflow-x-auto rounded-xl border border-border">
-              <table className="w-full text-left text-sm">
-                <caption className="sr-only">Starting fees for existing agency services; ad spend is separate</caption>
-                <thead className="bg-muted"><tr><th scope="col" className="p-4">Service</th><th scope="col" className="p-4">Starting fee</th><th scope="col" className="p-4">Scope</th></tr></thead>
-                <tbody>{[...singlePlatform.map(item => ({...item, desc: item.features.join(", ")})), ...supportingServices].map(item => <tr key={item.slug} className="border-t border-border">
-                  <th scope="row" className="p-4 font-medium"><Link to={`/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
-                  <td className="p-4 font-semibold text-primary">{item.price}</td><td className="p-4 text-muted-foreground">{item.desc}</td>
-                </tr>)}</tbody>
-              </table>
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground">For Meta Ads, the minimum advertising budget is KSh 30,000 per month, paid separately from the management fee. Video production is quoted separately when it goes beyond light social content.</p>
-            <p className="mt-3 text-sm"><Link to="/agency/lead-generation" className="text-primary hover:underline">Lead generation starts at KSh 50,000/month, including landing pages.</Link> Your team follows up with the leads.</p>
-          </div>}
           {/* Retainer Packages — 60% visual weight */}
-          <div className="mb-20">
-            <h2 className="text-xl font-display font-semibold text-center mb-8">Retainer Packages</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="mb-16">
+            <div className="grid md:grid-cols-3 gap-6 md:items-stretch pt-3">
               {retainerPackages.map((p, i) => (
                 <motion.div
                   key={p.name}
@@ -569,22 +617,24 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className={`corner-brackets surface-card p-7 flex flex-col relative hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 ${p.highlight ? "border-primary/60 shadow-elegant" : ""}`}
+                  onMouseMove={trackSpotlight}
+                  className={`spotlight surface-card p-6 sm:p-7 flex flex-col relative hover:-translate-y-1 transition-all duration-300 ${p.highlight ? "border-primary/50 shadow-elegant md:-my-3 md:py-10" : "hover:border-primary/40"}`}
                 >
+                  {p.highlight && <ShineBorder borderWidth={1.5} duration={10} shineColor={["hsl(25 100% 50%)", "hsl(33 100% 62%)"]} />}
                   {p.highlight && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-orange text-white text-xs font-bold uppercase tracking-wide whitespace-nowrap">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3.5 py-1 bg-gradient-orange text-white text-xs font-bold uppercase tracking-wide whitespace-nowrap shadow-[var(--shadow-orange-glow)]">
                       {p.label}
                     </div>
                   )}
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-2xl font-display font-bold">{p.name}</h3>
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <h3 className="text-xl font-display font-bold tracking-wide">{p.name}</h3>
                     {!p.highlight && (
-                      <span className="text-xs font-medium px-2 py-1 bg-muted text-muted-foreground">{p.label}</span>
+                      <span className="rounded-full text-xs font-medium px-2.5 py-1 bg-muted text-muted-foreground">{p.label}</span>
                     )}
                   </div>
-                  <p className="text-3xl font-display font-bold text-gradient mb-1">{p.price}</p>
-                  <p className="text-sm text-muted-foreground mb-6">{p.note}</p>
-                  <ul className="space-y-3 mb-7 flex-1">
+                  <PriceTag price={p.price} />
+                  <p className="mt-3 mb-6 rounded-lg bg-muted/60 px-3 py-2 text-sm text-muted-foreground">{p.note}</p>
+                  <ul className="space-y-2.5 mb-7 flex-1">
                     {p.features.map((f) => (
                       <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
                         <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -592,11 +642,47 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                       </li>
                     ))}
                   </ul>
-                  <Button className={p.highlight ? "w-full" : "w-full variant-outline"} variant={p.highlight ? "default" : "outline"} asChild><Link to="/agency/contact">
+                  <Button className="w-full rounded-full" variant={p.highlight ? "default" : "outline"} asChild><Link to="/agency/contact">
                     Get Custom Quote
                   </Link></Button>
                 </motion.div>
               ))}
+            </div>
+          </div>
+
+          {/* Side-by-side comparison of the packages above */}
+          <div className="mb-20">
+            <h3 className="mb-4 font-display text-lg font-semibold">Compare packages at a glance</h3>
+            <div className="overflow-x-auto rounded-2xl border border-border">
+              <table className="w-full min-w-[34rem] text-left text-sm">
+                <caption className="sr-only">Retainer package comparison, taken from each package's listed features</caption>
+                <thead><tr className="bg-muted/60">
+                  <td className="p-4" />
+                  {retainerPackages.map((p) => <th key={p.name} scope="col" className={`p-4 font-display font-semibold tracking-wide ${p.highlight ? "text-primary" : ""}`}>{p.name}</th>)}
+                </tr></thead>
+                <tbody>{packageComparison.map((row) => <tr key={row.label} className="border-t border-border">
+                  <th scope="row" className="p-4 font-normal text-muted-foreground">{row.label}</th>
+                  {row.values.map((v, i) => <td key={i} className={`p-4 font-medium ${retainerPackages[i].highlight ? "bg-primary/[0.04]" : ""}`}>{v}</td>)}
+                </tr>)}</tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-16">
+            <SubHeading eyebrow="Pay per service" title="Single services and project fees">Starting fees for each service. Select a service to see its scope.</SubHeading>
+            <div className="rounded-2xl border border-border max-sm:border-0 sm:overflow-hidden">
+              <table className="w-full text-left text-sm max-sm:block">
+                <caption className="sr-only">Starting fees for existing agency services; ad spend is separate</caption>
+                <thead className="bg-muted/60 max-sm:sr-only"><tr><th scope="col" className="p-4">Service</th><th scope="col" className="p-4">Starting fee</th><th scope="col" className="p-4">Scope</th></tr></thead>
+                <tbody className="max-sm:grid max-sm:gap-3">{[...singlePlatform.map(item => ({...item, desc: item.features.join(", ")})), ...supportingServices].map(item => <tr key={item.slug} className="border-t border-border transition-colors hover:bg-muted/40 max-sm:grid max-sm:grid-cols-[1fr_auto] max-sm:gap-x-4 max-sm:gap-y-1.5 max-sm:rounded-2xl max-sm:border max-sm:bg-card/60 max-sm:p-4">
+                  <th scope="row" className="p-4 font-medium max-sm:p-0"><Link to={`/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
+                  <td className="p-4 font-semibold text-primary whitespace-nowrap max-sm:p-0 max-sm:text-right first-letter:uppercase">{item.price}</td><td className="p-4 text-muted-foreground max-sm:col-span-2 max-sm:p-0">{item.desc}</td>
+                </tr>)}</tbody>
+              </table>
+            </div>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground">For Meta Ads, the minimum advertising budget is KSh 30,000 per month, paid separately from the management fee. Video production is quoted separately when it goes beyond light social content.</p>
+              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground"><Link to="/agency/lead-generation" className="font-medium text-primary hover:underline">Lead generation starts at KSh 50,000/month, including landing pages.</Link> Your team follows up with the leads.</p>
             </div>
           </div>
 
@@ -605,11 +691,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 {pageKey === "services" && <>
           {/* Supporting Services — 40% visual weight */}
           <div className="mb-20">
-            <div className="text-center mb-10 space-y-3">
-              <SectionLabel>ALSO AVAILABLE</SectionLabel>
-              <h2 className="text-xl font-display font-semibold">Supporting Services</h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+            <SubHeading eyebrow="Also available" title="Supporting Services">Creative, content and advisory work alongside your campaigns.</SubHeading>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {supportingServices.map((s, i) => {
                 const Icon = s.icon;
                 return (
@@ -620,21 +703,22 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.5, delay: i * 0.05 }}
                     id={`service-${s.slug}`}
-                    className="corner-brackets surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300 scroll-mt-24"
+                    onMouseMove={trackSpotlight}
+                    className="spotlight surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300 scroll-mt-24"
                   >
-                    <div className="h-10 w-10 bg-gradient-orange flex items-center justify-center mb-3 shadow-[var(--shadow-orange-glow)]">
+                    <div className="h-10 w-10 rounded-xl bg-gradient-orange flex items-center justify-center mb-4 shadow-[var(--shadow-orange-glow)]">
                       <Icon className="h-5 w-5 text-white" aria-hidden />
                     </div>
-                    <h3 className="font-display font-semibold mb-1">{s.name}</h3>
-                    <p className="text-sm font-bold text-gradient mb-2">{s.price}</p>
-                    <p className="text-xs text-muted-foreground flex-1 mb-3">{s.desc}</p>
+                    <h3 className="font-display font-semibold mb-1.5">{s.name}</h3>
+                    <div className="mb-2"><PriceTag price={s.price} size="sm" /></div>
+                    <p className="text-sm text-muted-foreground flex-1 mb-3">{s.desc}</p>
                     <Link
                       to={s.proof.to}
                       className="mb-4 block text-xs text-muted-foreground hover:text-primary transition-colors"
                     >
                       {s.proof.label} &rarr;
                     </Link>
-                    <Button variant="outline" size="sm" className="w-full" asChild><Link to="/agency/contact">
+                    <Button variant="outline" size="sm" className="w-full rounded-full" asChild><Link to="/agency/contact">
                       Get Custom Quote
                     </Link></Button>
                   </motion.div>
@@ -646,28 +730,28 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
           {/* Dedicated service pages. Renders only once a page is out of draft. */}
           {liveServicePages.length > 0 && (
             <div className="mb-20">
-              <div className="text-center mb-10 space-y-3">
-                <SectionLabel>IN DETAIL</SectionLabel>
-                <h2 className="text-xl font-display font-semibold">Full Service Pages</h2>
-                <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                  Scope, pricing, process, case studies and FAQs for each service.
-                </p>
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
-                {liveServicePages.map((sp) => {
+              <SubHeading eyebrow="In detail" title="Full Service Pages">Scope, pricing, process, case studies and FAQs for each service.</SubHeading>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {liveServicePages.map((sp, i) => {
                   const Icon = sp.icon;
+                  // With an odd count, widen the first (umbrella) service so the grid closes evenly.
+                  const featured = i === 0 && liveServicePages.length % 2 === 1;
                   return (
                     <Link
                       key={sp.slug}
                       to={`/agency/${sp.slug}`}
-                      className="corner-brackets surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300 group"
+                      onMouseMove={trackSpotlight}
+                      className={`spotlight surface-card p-5 sm:p-6 flex flex-col hover:border-primary/40 transition-all duration-300 group ${featured ? "sm:col-span-2 bg-gradient-to-br from-primary/[0.08] to-transparent" : ""}`}
                     >
-                      <Icon className="h-6 w-6 text-primary mb-3" aria-hidden />
-                      <h3 className="font-display font-semibold mb-1 group-hover:text-primary transition-colors">
+                      <div className="mb-4 flex items-center justify-between">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><Icon className="h-5 w-5 text-primary" aria-hidden /></span>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-primary" aria-hidden />
+                      </div>
+                      <h3 className={`font-display font-semibold mb-1 group-hover:text-primary transition-colors ${featured ? "text-xl" : ""}`}>
                         {sp.navLabel}
                       </h3>
-                      <p className="text-sm font-bold text-gradient mb-2">{sp.price.amount}</p>
-                      <p className="text-xs text-muted-foreground flex-1">{sp.standfirst}</p>
+                      <p className="text-sm font-semibold text-primary mb-2">{sp.price.amount}</p>
+                      <p className={`text-muted-foreground flex-1 ${featured ? "text-sm max-w-md" : "text-xs leading-relaxed"}`}>{sp.standfirst}</p>
                     </Link>
                   );
                 })}
@@ -680,7 +764,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
           {/* Free tool: lets visitors test whether a budget pays for itself before booking. */}
           <Link
             to="/agency/ad-budget-calculator"
-            className="corner-brackets surface-card group mx-auto mb-16 flex max-w-4xl flex-col gap-5 p-6 transition-all duration-300 hover:border-primary/40 sm:flex-row sm:items-center sm:p-8"
+            onMouseMove={trackSpotlight}
+            className="spotlight surface-card group mb-10 flex flex-col gap-5 p-6 transition-all duration-300 hover:border-primary/40 sm:flex-row sm:items-center sm:p-8"
           >
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-orange">
               <Calculator className="h-7 w-7 text-white" aria-hidden />
@@ -701,15 +786,16 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
           </Link>
 
           {/* Closing CTA */}
-          <div className="text-center max-w-2xl mx-auto space-y-6">
-            <p className="text-lg text-muted-foreground">
+          <div className="flex flex-col items-start gap-5 rounded-2xl border border-border/70 bg-card/40 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+            <p className="max-w-xl text-base text-muted-foreground sm:text-lg">
               Not sure which package fits? Book a free 30-minute strategy call and I'll recommend the right plan for your business and budget.
             </p>
-            <Button size="lg" asChild>
+            <Button size="lg" className="w-full rounded-full sm:w-auto shrink-0" asChild>
               <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
                 <Calendar className="mr-2 h-5 w-5" /> Book Free Strategy Call
               </a>
             </Button>
+          </div>
           </div>
         </section>
 
@@ -720,27 +806,44 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
         {/* HOW IT WORKS */}
         <section id="how" className="container mx-auto px-4 py-20 scroll-mt-20">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-4">Working Together Is Simple</h2>
-          <p className="text-center text-sm text-muted-foreground mb-10">Click a step to see what happens</p>
-          <div className="max-w-3xl mx-auto mb-10">
-            <Stepper steps={steps.map((s) => s.title)} currentStep={howStep} onStepClick={setHowStep} />
-          </div>
-          <div className="max-w-2xl mx-auto">
-            <AnimatePresence mode="wait">
-              <motion.div key={howStep} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.25 }}>
-                <Card className="p-8 text-center border-border/60">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-4 ring-1 ring-primary/20">
-                    {(() => { const Icon = steps[howStep].icon; return <Icon className="h-6 w-6 text-primary" aria-hidden />; })()}
-                  </div>
-                  <h3 className="font-display text-xl font-semibold mb-2">{steps[howStep].title}</h3>
-                  <p className="text-sm text-muted-foreground">{steps[howStep].desc}</p>
-                </Card>
-              </motion.div>
-            </AnimatePresence>
-            <div className="flex justify-between mt-6">
-              <Button variant="outline" onClick={() => setHowStep((s) => Math.max(0, s - 1))} disabled={howStep === 0}>Back</Button>
-              <Button onClick={() => setHowStep((s) => Math.min(steps.length - 1, s + 1))} disabled={howStep === steps.length - 1}>Next</Button>
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-12 text-center space-y-3">
+              <SectionLabel>HOW IT WORKS</SectionLabel>
+              <h2 className="text-3xl md:text-4xl font-display font-bold">Working Together Is Simple</h2>
+              <p className="text-muted-foreground">From the first call to monthly reporting, in five steps.</p>
             </div>
+            {/* The wrapper watches the viewport: the connector starts at zero size, so it can't. */}
+            <motion.div className="relative" initial="hidden" whileInView="shown" viewport={{ once: true, margin: "-120px" }}>
+              {/* Connector that draws in once; starts hidden only for JS visitors (see index.css). */}
+              <div aria-hidden className="absolute left-6 top-6 bottom-6 w-px bg-border lg:left-[10%] lg:right-[10%] lg:bottom-auto lg:h-px lg:w-auto">
+                <motion.div
+                  variants={{ hidden: { opacity: 0, scaleY: 0, scaleX: 0 }, shown: { opacity: 1, scaleY: 1, scaleX: 1 } }}
+                  transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="h-full w-full origin-top bg-gradient-to-b from-primary to-orange-light lg:origin-left lg:bg-gradient-to-r"
+                />
+              </div>
+            <ol className="relative grid gap-8 lg:grid-cols-5 lg:gap-6">
+              {steps.map((s, i) => (
+                <motion.li
+                  key={s.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ delay: 0.15 + i * 0.12, duration: 0.5 }}
+                  className="relative flex gap-5 lg:flex-col lg:items-center lg:text-center lg:gap-0"
+                >
+                  <span className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-primary/30 shadow-[0_0_0_6px_hsl(var(--background))] lg:mb-5">
+                    <s.icon className="h-5 w-5 text-primary" aria-hidden />
+                  </span>
+                  <div className="pt-1 lg:pt-0">
+                    <p className="mono-accent text-xs text-muted-foreground">Step {i + 1}</p>
+                    <h3 className="mt-1 font-display text-lg font-semibold">{s.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground lg:mx-auto lg:max-w-[14rem]">{s.desc}</p>
+                  </div>
+                </motion.li>
+              ))}
+            </ol>
+            </motion.div>
           </div>
         </section>
 
@@ -749,9 +852,12 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 {pageKey === "results" && <>
         {/* RESULTS */}
         <section id="results" className="container mx-auto px-4 py-20 scroll-mt-20">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">Real Results for Real Brands</h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {caseStudies.map((c, i) => (
+          <div className="max-w-6xl mx-auto">
+          <SubHeading eyebrow="Selected campaigns" title="Real Results for Real Brands">The headline outcome, the challenge behind it and the channels used.</SubHeading>
+          <div className="grid md:grid-cols-3 gap-6">
+            {caseStudies.map((c, i) => {
+              const [metric, ...metricLabel] = c.headline.split(" ");
+              return (
               <motion.div
                 key={c.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -759,47 +865,54 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.55, delay: i * 0.12 }}
               >
-              <Card className="group h-full overflow-hidden flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
-                <CardCover src={c.image} alt={c.imageAlt} className="aspect-video" position="object-top">
-                  <span className="absolute bottom-3 left-4 font-display text-2xl font-bold text-white drop-shadow">{c.headline}</span>
-                </CardCover>
+              <Card onMouseMove={trackSpotlight} className="spotlight group h-full overflow-hidden rounded-2xl flex flex-col hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
+                <CardCover src={c.image} alt={c.imageAlt} className="aspect-video" position="object-top" />
                 <div className="p-6 flex flex-col flex-1">
-                <h3 className="font-display text-xl font-bold mb-3">{c.name}</h3>
-                <div className="mb-4">
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Challenge</div>
-                  <p className="text-sm">{c.challenge}</p>
-                </div>
-                <div className="mb-4">
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Results</div>
-                  <p className="text-sm font-medium text-gradient">{c.results}</p>
-                </div>
+                <p className="flex items-baseline gap-2 font-display">
+                  <span className="text-4xl font-bold tracking-tight text-gradient tabular-nums">{metric}</span>
+                  <span className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{metricLabel.join(" ")}</span>
+                </p>
+                <h3 className="mt-1 mb-5 font-display text-xl font-semibold">{c.name}</h3>
+                <dl className="mb-5 space-y-4 border-t border-border/60 pt-5">
+                  <div>
+                    <dt className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Challenge</dt>
+                    <dd className="text-sm text-muted-foreground">{c.challenge}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs uppercase tracking-wider text-primary mb-1">Results</dt>
+                    <dd className="text-sm font-medium text-foreground">{c.results}</dd>
+                  </div>
+                </dl>
                 <div className="mt-auto">
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Services</div>
+                  <div className="sr-only">Services</div>
                   <div className="flex flex-wrap gap-1.5">
                     {c.services.map((sv) => (
-                      <span key={sv} className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">{sv}</span>
+                      <span key={sv} className="text-xs px-2.5 py-1 rounded-full border border-primary/20 bg-primary/10 text-primary">{sv}</span>
                     ))}
                   </div>
                 </div>
                 </div>
               </Card>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
-          <div className="max-w-6xl mx-auto mt-12">
-            <h2 className="text-2xl font-display font-semibold mb-4">Read the campaign breakdowns</h2>
-            <p className="text-muted-foreground mb-6">The portfolio contains the wider creative work. These articles explain the marketing decisions, campaign context and reported results.</p>
+          </div>
+          <div className="max-w-6xl mx-auto mt-16">
+            <SubHeading eyebrow="Go deeper" title="Read the campaign breakdowns">The portfolio contains the wider creative work. These articles explain the marketing decisions, campaign context and reported results.</SubHeading>
             <div className="grid sm:grid-cols-2 gap-4">{[
               "meta-ads-turnaround-case-study-kenya-2026", "convey-communications-case-study-10x-leads",
               "0-to-4-million-tiktok-views-behind-the-campaign", "nyeri-county-campaign-hyper-local-marketing",
-            ].map(slug => blogSummaries.find(post => post.slug === slug)).filter(Boolean).map(post => <Link key={post!.slug} to={`/agency/blog/${post!.slug}`} className="surface-card p-6 group hover:border-primary/40 transition-colors">
-              <h3 className="font-display font-semibold group-hover:text-primary">{post!.title}</h3><p className="mt-3 text-sm text-muted-foreground">{post!.excerpt}</p>
+            ].map(slug => blogSummaries.find(post => post.slug === slug)).filter(Boolean).map(post => <Link key={post!.slug} to={`/agency/blog/${post!.slug}`} onMouseMove={trackSpotlight} className="spotlight surface-card flex flex-col p-6 group hover:border-primary/40 transition-colors">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Case study</p>
+              <h3 className="font-display text-lg font-semibold leading-snug group-hover:text-primary transition-colors">{post!.title}</h3><p className="mt-2 flex-1 text-sm text-muted-foreground">{post!.excerpt}</p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Read the breakdown <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden /></span>
             </Link>)}</div>
             <p className="mt-6 text-sm text-muted-foreground">My work with Convey began as an employee and later continued as a consultant. Each linked case study provides its own context; these outcomes are not a promise of future results.</p>
           </div>
           <div className="text-center mt-8">
-            <Button variant="outline" asChild>
-              <Link to="/work/case-studies">See All Case Studies</Link>
+            <Button variant="outline" className="rounded-full" asChild>
+              <Link to="/work/case-studies">See All Case Studies <ArrowRight className="h-4 w-4" aria-hidden /></Link>
             </Button>
           </div>
         </section>
@@ -809,17 +922,18 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 {pageKey === "contact" && <>
         {/* BOOKING */}
         <section id="booking" className="container mx-auto px-4 py-20 scroll-mt-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">Ready to Grow Your Brand?</h2>
-            <p className="text-muted-foreground">Book a free 30-minute discovery call — no commitment, just a conversation.</p>
-          </div>
+          <div className="max-w-6xl mx-auto">
+          <SubHeading eyebrow="Get in touch" title="Ready to Grow Your Brand?">Book a free 30-minute discovery call — no commitment, just a conversation.</SubHeading>
 
-          <div className="grid lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-6">
             {/* Calendly */}
-            <Card className="p-6 border-primary/30">
-              <div className="flex items-center gap-2 mb-4">
-                <Calendar className="h-5 w-5 text-primary" />
-                <h3 className="font-display text-xl font-semibold">Book Discovery Call</h3>
+            <Card className="p-5 sm:p-6 rounded-2xl border-primary/30">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><Calendar className="h-5 w-5 text-primary" aria-hidden /></span>
+                <div>
+                  <h3 className="font-display text-xl font-semibold leading-tight">Book Discovery Call</h3>
+                  <p className="text-xs text-muted-foreground">Free · 30 minutes · Pick a time that suits you</p>
+                </div>
               </div>
               <div className="rounded-lg overflow-hidden border border-border/60 bg-muted/30" style={{ minHeight: 480 }}>
                 <iframe
@@ -829,41 +943,39 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                   style={{ minHeight: 480, border: 0 }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-3 text-center">
-                Widget not loading? <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline">Open Calendly in a new tab</a>
+              <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+                Widget not loading?
+                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-medium text-primary hover:underline">Open Calendly in a new tab <ExternalLink className="h-3 w-3" aria-hidden /></a>
               </p>
             </Card>
 
             {/* WhatsApp + Brief */}
             <div className="space-y-6">
-              <Card className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <MessageCircle className="h-5 w-5 text-primary" />
-                  <h3 className="font-display text-xl font-semibold">Chat on WhatsApp</h3>
+              <Card className="p-5 sm:p-6 rounded-2xl">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><MessageCircle className="h-5 w-5 text-primary" aria-hidden /></span>
+                    <div>
+                      <h3 className="font-display text-xl font-semibold leading-tight">Chat on WhatsApp</h3>
+                      <p className="text-sm text-muted-foreground">Prefer WhatsApp? Let's talk there.</p>
+                    </div>
+                  </div>
+                  <Button asChild className="rounded-full shrink-0">
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                      <Phone className="h-4 w-4" /> Message me
+                    </a>
+                  </Button>
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">Prefer WhatsApp? Let's talk there.</p>
-                <Button asChild className="w-full">
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    <Phone className="mr-2 h-4 w-4" /> Message me on WhatsApp
-                  </a>
-                </Button>
               </Card>
 
-              <Card className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <Calendar className="h-5 w-5 text-primary" />
-                  <h3 className="font-display text-xl font-semibold">Schedule a Call</h3>
+              <Card className="p-5 sm:p-6 rounded-2xl">
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><FileText className="h-5 w-5 text-primary" aria-hidden /></span>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold leading-tight">Send Brief Directly</h3>
+                    <p className="text-sm text-muted-foreground">Three short steps. I reply within 24 hours.</p>
+                  </div>
                 </div>
-                <p className="text-sm text-muted-foreground mb-4">Book a free 30-minute discovery call at a time that works for you.</p>
-                <Button asChild className="w-full">
-                  <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
-                    <Calendar className="mr-2 h-4 w-4" /> Book on Calendly
-                  </a>
-                </Button>
-              </Card>
-
-              <Card className="p-6">
-                <h3 className="font-display text-xl font-semibold mb-5">Send Brief Directly</h3>
                 <Stepper steps={["Contact", "Business", "Goals"]} currentStep={briefStep} onStepClick={(i) => i < briefStep && setBriefStep(i)} className="mb-6" />
                 <form
                   onSubmit={(e) => {
@@ -953,32 +1065,40 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               </Card>
             </div>
           </div>
+          </div>
         </section>
 
 
 </>}
 {pageKey === "pricing" && <>
         {/* PAYMENTS */}
-        <section className="container mx-auto px-4 py-20">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">Simple, Transparent Payments</h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <section className="container mx-auto px-4 pb-16 sm:pb-20">
+          <div className="max-w-6xl mx-auto">
+          <SubHeading eyebrow="Payments" title="Simple, Transparent Payments" />
+          <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
             {payments.map((p) => (
-              <Card key={p.title} className="p-6 text-center">
-                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center mb-3 ring-1 ring-primary/20"><p.icon className="h-6 w-6 text-primary" aria-hidden /></div>
-                <h3 className="font-display text-lg font-semibold mb-2">{p.title}</h3>
+              <Card key={p.title} className="p-6 rounded-2xl">
+                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 ring-1 ring-primary/20"><p.icon className="h-5 w-5 text-primary" aria-hidden /></div>
+                <h3 className="font-display text-lg font-semibold mb-1.5">{p.title}</h3>
                 <p className="text-sm text-muted-foreground">{p.desc}</p>
               </Card>
             ))}
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-8 max-w-2xl mx-auto">
+          <p className="mt-6 rounded-xl border border-primary/25 bg-primary/[0.06] px-4 py-3 text-sm text-muted-foreground">
             <strong className="text-foreground">Note:</strong> 50% deposit required to begin work. Balance due on agreed milestone dates.
           </p>
+          </div>
         </section>
 
         {/* FAQ */}
-        <section className="container mx-auto px-4 py-20">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">Common Questions</h2>
-          <div className="max-w-3xl mx-auto">
+        <section className="container mx-auto px-4 pb-20">
+          <div className="max-w-6xl mx-auto grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">FAQ</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">Common Questions</h2>
+            <p className="mt-3 text-muted-foreground">Still unsure? <Link to="/agency/contact" className="text-primary hover:underline">Ask me directly</Link>.</p>
+          </div>
+          <div>
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((f, i) => (
                 <AccordionItem key={i} value={`f${i}`}>
@@ -988,25 +1108,32 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               ))}
             </Accordion>
           </div>
+          </div>
         </section>
 
 
 </>}
-        {/* FOOTER CTA */}
-        <section className="container mx-auto px-4 pb-20">
-          <Card className="max-w-3xl mx-auto p-8 md:p-12 text-center border-primary/40 bg-gradient-to-br from-primary/5 to-transparent">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
-              <Star className="h-3 w-3 fill-primary" /> Work Together
+        {/* FOOTER CTA — the contact page is already the next step */}
+        {pageKey !== "contact" && <section className="container mx-auto px-4 pb-20">
+          <Card className="relative max-w-4xl mx-auto overflow-hidden rounded-3xl p-8 md:p-14 text-center border-primary/40 bg-gradient-to-br from-primary/[0.08] via-transparent to-transparent">
+            <div aria-hidden className="pointer-events-none absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_70%_80%_at_50%_0%,black_20%,transparent_100%)]" />
+            <div className="relative">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
+                <Star className="h-3 w-3 fill-primary" /> Work Together
+              </div>
+              <h2 className="text-balance text-3xl md:text-4xl font-display font-bold mb-3">Find the right next step for your brand</h2>
+              <p className="text-muted-foreground mb-8 max-w-lg mx-auto">I take on a limited number of clients to ensure quality and attention to detail.</p>
+              <div className="flex flex-col justify-center gap-3 sm:flex-row">
+                <Button size="lg" className="rounded-full" asChild><Link to="/agency/contact">Discuss Your Project <ArrowRight className="h-4 w-4" aria-hidden /></Link></Button>
+                {pageKey !== "pricing" && <Button size="lg" variant="outline" className="rounded-full" asChild><Link to="/agency/pricing">View Pricing</Link></Button>}
+              </div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">Find the right next step for your brand</h2>
-            <p className="text-muted-foreground mb-6">I take on a limited number of clients to ensure quality and attention to detail.</p>
-            <Button size="lg" asChild><Link to="/agency/contact">Discuss Your Project</Link></Button>
           </Card>
-        </section>
+        </section>}
       </main>
 
       <div className="container mx-auto px-4 pb-10"><AgencySectionLinks className="justify-center text-muted-foreground" /></div>
-      <footer className="border-t border-border/40 px-4 py-8 text-center text-sm text-muted-foreground space-x-2 leading-8">
+      <footer className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 whitespace-nowrap border-t border-border/40 px-4 py-8 text-sm text-muted-foreground leading-8">
         <span>© {new Date().getFullYear()} Joseph Maina</span>
         <span>·</span>
         <Link to="/" className="hover:text-foreground">Portfolio</Link>
