@@ -175,7 +175,7 @@ export function Hero() {
             className="mt-10 flex flex-col sm:flex-row gap-4"
           >
             <Button size="lg" className="w-full sm:w-auto rounded-full" asChild>
-              <a href="/agency#booking">Book a Free Strategy Call</a>
+              <a href="/agency/contact">Book a Free Strategy Call</a>
             </Button>
             <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild>
               <a href="#case-study">See My Work</a>

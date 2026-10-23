@@ -11,6 +11,7 @@ import {
 import { getHubBySlug } from "@/data/blogHubs";
 import { blogPosts } from "@/data/blogPosts";
 import { Footer } from "@/components/Footer";
+import { AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 
 const AgencyService = () => {
   const { service: slug } = useParams();
@@ -37,12 +38,15 @@ const AgencyService = () => {
 
       <div className="min-h-screen bg-white text-[#111111]">
         <div className="mx-auto max-w-5xl px-5 pb-24 pt-16 sm:px-8">
+          <AgencySectionLinks className="mb-10 text-[#666666]" />
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-[#666666]">
             <Link to="/agency" className="inline-flex items-center gap-2 transition-colors hover:text-[#F97316]">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Agency
             </Link>
+            <ChevronRight className="h-3.5 w-3.5 text-[#CCCCCC]" aria-hidden="true" />
+            <Link to="/agency/services" className="hover:text-[#F97316]">Services</Link>
             <ChevronRight className="h-3.5 w-3.5 text-[#CCCCCC]" aria-hidden="true" />
             <span className="font-medium text-[#111111]">{page.navLabel}</span>
           </nav>

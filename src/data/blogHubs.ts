@@ -65,7 +65,7 @@ export const blogHubs: BlogHub[] = [
       price: "From KES 40,000/month",
       blurb:
         "Campaign strategy and setup, audience research, creative direction, weekly optimization and monthly reporting.",
-      href: "/agency#service-meta-ads",
+      href: "/agency/meta-ads-management",
       pageSlug: "meta-ads-management",
     },
     cta: {
@@ -110,7 +110,7 @@ export const blogHubs: BlogHub[] = [
       price: "From KES 45,000/month",
       blurb:
         "Search, Display and YouTube campaigns, keyword research, bid management, conversion tracking and monthly reporting.",
-      href: "/agency#service-google-ads",
+      href: "/agency/google-ads-management",
       pageSlug: "google-ads-management",
     },
     cta: {
@@ -144,7 +144,7 @@ export const blogHubs: BlogHub[] = [
       price: "From KES 45,000/month",
       blurb:
         "On-page, technical and local SEO built around how Kenyan customers actually search, including Google Business Profile and Maps visibility.",
-      href: "/agency#service-seo-optimization",
+      href: "/agency/seo-services-nairobi",
       pageSlug: "seo-services-nairobi",
     },
     cta: {
@@ -181,7 +181,7 @@ export const blogHubs: BlogHub[] = [
       price: "From KES 50,000/month",
       blurb:
         "Two platforms managed end to end: full campaign management, creative direction, weekly optimization, bi-weekly reporting and WhatsApp support.",
-      href: "/agency#services",
+      href: "/agency/services",
       pageSlug: "lead-generation",
     },
     cta: {
@@ -223,7 +223,7 @@ export const blogHubs: BlogHub[] = [
       price: "Free for now",
       blurb:
         "A review of your ads, site, search presence and tracking. Findings shared in a written report or a call within 1-2 days.",
-      href: "/agency#service-digital-marketing-audit",
+      href: "/agency/digital-marketing-audit",
       pageSlug: "digital-marketing-audit",
     },
     cta: {
@@ -231,7 +231,7 @@ export const blogHubs: BlogHub[] = [
       body:
         "Not sure what needs fixing? The audit is free for now, with clear next steps and no obligation to book ongoing work.",
       label: "Request an Audit",
-      href: "/agency#booking",
+      href: "/agency/contact",
     },
     metaTitle: "What Digital Marketing Costs in Kenya — Pricing and Buying Advice",
     metaDescription:
@@ -266,7 +266,7 @@ export const blogHubs: BlogHub[] = [
       price: "From KES 40,000/month",
       blurb:
         "Campaign strategy, creative direction, audience targeting and community management across TikTok and Instagram.",
-      href: "/agency#service-tiktok-ads",
+      href: "/agency/services#service-tiktok-ads",
       pageSlug: "social-media-management",
     },
     cta: {
@@ -303,7 +303,7 @@ export const blogHubs: BlogHub[] = [
       price: "From KES 40,000/month",
       blurb:
         "The STARTER, GROWTH and SCALE retainers behind these campaigns — scoped to your ad spend and number of platforms.",
-      href: "/agency#services",
+      href: "/agency/services",
       pageSlug: "digital-marketing-kenya",
     },
     cta: {
@@ -311,7 +311,7 @@ export const blogHubs: BlogHub[] = [
       body:
         "Send me a short brief and I'll come back within 24 hours with a tailored proposal, or book a free call first if you'd rather talk it through.",
       label: "Send a Project Brief",
-      href: "/agency#booking",
+      href: "/agency/contact",
     },
     metaTitle: "Digital Marketing Case Studies — Kenyan Campaigns and Results",
     metaDescription:

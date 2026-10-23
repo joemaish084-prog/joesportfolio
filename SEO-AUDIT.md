@@ -1,6 +1,40 @@
 # SEO audit — josephmaina.co.ke
 
-Audited 22 October 2026 against the 20 checks in your screenshot, with deployment follow-up on 23 October. All seven reviewed service pages are now live and indexable, and the live sitemap contains 83 URLs. The previously flagged article is indexed with the correct Google-selected canonical. The performance batch is deployed and retested. Homepage speed improved, but mobile performance remains the main area to work on.
+Audited 22 October 2026 against the 20 checks in your screenshot, with deployment follow-up on 23 October. All seven reviewed service pages are now live and indexable, and the live sitemap contains 83 URLs. The previously flagged article is indexed with the correct Google-selected canonical. Both performance batches are deployed and retested. Latest mobile scores are 65 / 74 / 82 for homepage / blog / case studies; loading delays remain open.
+
+## Agency architecture — implemented locally, awaiting deployment
+
+Built on the existing React Router/Vite site and its prerendering; hosting and the portfolio remain on the same domain. Before this change, `/agency` held services, packages, results and booking on one long page, with JavaScript-only navigation buttons. The seven published service URLs and existing blog URLs are retained.
+
+| Route | Purpose and reused content |
+|---|---|
+| `/agency` | Updated agency homepage: existing hero, brand visuals, working approach and process, with links to the four main sections. |
+| `/agency/services` | New service directory: existing channel cards, supporting services and links to all seven detailed service pages. |
+| `/agency/results` | New results overview: existing campaign outcomes and links to full campaign articles and the wider portfolio. |
+| `/agency/pricing` | New pricing page: existing fees, STARTER/GROWTH/SCALE packages, payment terms, FAQs and budget calculator. Ad spend remains separate. |
+| `/agency/contact` | New contact page: existing Calendly booking, WhatsApp and multi-step brief form, plus public email, phone and Nairobi location. |
+
+The new pages have different purposes and content; they do not reproduce the entire agency homepage. The established colours, typography, cards, hover effects, reveal animations, collage, process stepper and responsive layouts are reused. The fixed "2 client slots" claim was replaced with a general project invitation rather than copied across new pages.
+
+Technical changes:
+
+- Primary agency navigation and quote/pricing CTAs are real links to page URLs. Service, blog and footer links connect the agency section with the portfolio. Published service slugs are unchanged; service breadcrumbs now include the Services directory.
+- Old `/agency#services`, `#results`, `#pricing`, `#booking`, `#contact` and `#service-*` bookmarks resolve to their new destinations in the browser, preserving query parameters. Fragments never reach the server, so these are compatibility navigation handlers rather than HTTP redirects. Supplemental anchors within a useful page remain supported.
+- Each agency page has a unique title, description, H1, self-canonical, social metadata and BreadcrumbList. One consistent Organization entity uses the existing business name, public contact details, Nairobi/Kenya location and social profiles. Service schema references that organization. No reviews, ratings, street address or registration details were added.
+- All five agency core pages prerender their actual shared components into HTML, including headings, content, navigation and contact channels. CSS keeps animated content readable without JavaScript while retaining animations for interactive visitors. Optional lead-submission libraries load when the form is submitted.
+- The build now produces **88 routes and 87 sitemap URLs**, adding exactly four indexable pages. Existing `robots.txt` allows crawling and declares the same sitemap. Existing Vercel clean URLs serve the new HTML files; private-page noindex headers and real unknown-page 404 rules are retained.
+
+Validation: production build, `check:seo`, `check:agency`, `check:performance` and `git diff --check` pass. Final checks cover 88 routes, 87 sitemap entries, 1,674 internal link instances and 339 image tags; homepage initial/preload JavaScript is 185 KiB gzip, within its existing budget. Browser checks confirmed the preserved desktop agency design at 1280px, a working mobile menu and Results navigation, no overflow at 390px on Pricing/Results/Contact, and one H1 on the checked pages. The old booking fragment correctly resolves to `/agency/contact` while preserving a test query parameter. A script-free fixture confirms the agency H1 is visible and the final counter values are readable without JavaScript; the fixture was removed. The final preview has no application console errors. Captures: [desktop agency](site-review.local/agency-home-architecture.jpg), [mobile pricing](site-review.local/agency-pricing-mobile.jpg).
+
+Outstanding: the existing TypeScript errors in `src/lib/chatLead.ts` / generated Supabase types remain unrelated to this work. No test enquiry was sent to the live lead system, so backend delivery is not newly end-to-end verified. New production URL checks and a fresh PageSpeed measurement require deployment. Search Console changes have not been made for pages that are not deployed yet.
+
+After deployment, in the existing Search Console domain property:
+
+1. Check the existing `https://www.josephmaina.co.ke/sitemap.xml` submission; the live file should now contain 87 URLs. A new property or separate agency sitemap is unnecessary.
+2. Inspect `/agency` and the four new URLs above. Run **Test Live URL**, confirm indexing is allowed and the declared canonical matches each URL, then request indexing where appropriate.
+3. Reinspect after Google crawls them to check Google's selected canonical. Monitor indexing and search performance for `/agency/` URLs; changes need time to be processed.
+
+Google chooses sitelinks automatically based on usefulness and site structure. These changes improve discoverability and organization, not a guaranteed sitelink outcome. A subdirectory also cannot have its own separate Google site name. Sources: [Google's sitelinks guidance](https://developers.google.com/search/docs/appearance/sitelinks), [site-name scope](https://developers.google.com/search/docs/appearance/site-names), [crawlable links](https://developers.google.com/search/docs/crawling-indexing/links-crawlable).
 
 ## Latest verification — 23 October 2026
 
@@ -57,7 +91,7 @@ Same emulated device, slow 4G and Lighthouse version as the baseline. These are 
 - Automated accessibility remains 100 / 96 / 100 for homepage / blog / case studies. The blog contrast finding remains open. All three basic SEO scores remain 100.
 - PageSpeed still has no real-user field data. No Core Web Vitals pass or ranking increase is claimed.
 
-### Second performance batch — ready for deployment
+### Second performance batch — deployed and verified
 
 - The blog listing, topic hubs and related cards now use generated summaries rather than downloading every article's body. Summaries regenerate before development/build commands from the existing editorial source. Full article pages retain their content.
 - In the local build, the blog's static JavaScript dependencies fall from 807,070 to 639,393 bytes after this summary split: **167,677 bytes less (20.8%)**. This comparison isolates the summary change within this batch; it is not a new PageSpeed score or a measurement of the entire page payload.
@@ -68,7 +102,24 @@ Same emulated device, slow 4G and Lighthouse version as the baseline. These are 
 - Local browser checks: no overflow at 390px, one H1, working featured-article controls, mobile menu, theme switching and navigation to the homepage. The full Meta Ads article opens with all eight section headings and no application console errors. A temporary script-free fixture showed the blog heading and articles without JavaScript; test fixtures are removed from the final build. [Mobile preview](site-review.local/performance-blog-round2-mobile.jpg).
 - Production build, SEO checks and the expanded performance checks pass. Homepage entry/preload JavaScript is **184 KiB gzip** (including the newly explicit route preloads), within the 220 KiB budget. SEO checks cover **84 pages, 83 sitemap entries, 1,208 internal link instances and 253 image tags**. TypeScript still reports the existing `chatLead.ts` / Supabase errors.
 
-**Next:** deploy this batch, then rerun mobile PageSpeed against the latest live scores: homepage 63, blog 72 and case studies 77. No score increase is claimed before that retest.
+### Second live mobile retest — 23 October 2026, 00:42 EAT
+
+Verified the public deployment: all three tested pages return HTTP 200 and include their route preloads and local critical-font links. Both critical font files return HTTP 200 with `font/woff2`. The blog has its actual visible H1 in the initial HTML, and its preload list excludes the homepage route and full article-body chunk.
+
+| Page / fresh report | Previous → latest performance | FCP | Previous → latest LCP | Previous → latest TBT | CLS | Accessibility | Basic SEO |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| [Homepage](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke/9b8xjh8f01?form_factor=mobile) | 63 → 65 | 4.0 s | 5.0 → 5.8 s | 300 → 20 ms | 0 | 100 | 100 |
+| [Blog](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-agency-blog/nao9dwt66q?form_factor=mobile) | 72 → 74 | 3.0 s | 4.5 → 5.1 s | 160 → 120 ms | 0 | 100 | 100 |
+| [Case studies](https://pagespeed.web.dev/analysis/https-www-josephmaina-co-ke-work-case-studies/eemep3mlyq?form_factor=mobile) | 77 → 82 | 3.0 s | 4.4 → 3.9 s | 50 → 30 ms | 0 | 100 | 100 |
+
+- These are single runs on the same emulated Moto G Power, slow 4G and Lighthouse 13.5.0 settings. Small score changes may reflect run variation. All three scores rose, but homepage and blog LCP worsened; this is not an across-the-board loading improvement.
+- The blog contrast finding is resolved in this automated run: accessibility rose from 96 to 100. All three pages retain 100 for best practices and basic SEO.
+- Homepage H1 remains its LCP element, with 2,550 ms reported render delay. Its blocking stylesheet is 22.3 KiB transferred, with 680 ms estimated savings. This is the next measured area to investigate, alongside client replacement of the initial heading; do not assume fonts alone resolved the delay.
+- Blog LCP is now its introductory paragraph, with 1,330 ms render delay. Its total reported network payload is 2,782 KiB, down from the original 6,375 KiB baseline, but lower payload has not produced a lower LCP in this run.
+- Remaining estimated image savings are homepage 357 KiB, blog 23 KiB and case studies 182 KiB. Prioritize the flagged thumbnails rather than recompressing every image.
+- PageSpeed still reports no field data. Real-user Core Web Vitals and ranking effects remain unverified.
+
+**Next:** investigate blocking CSS and homepage text rendering, then compare repeated mobile runs before claiming a reliable loading improvement. This deployment check changes only the audit report; no new code deployment is required for the report.
 
 ## Deployment follow-up
 
@@ -127,10 +178,10 @@ Submitted `https://www.josephmaina.co.ke/sitemap.xml` through the domain propert
 
 Deployment, sitemap submission, all seven service approvals and the canonical inspection are complete. The original audit table above records the earlier state.
 
-1. **Reduce the homepage heading's remaining render delay.** Inspect font loading, blocking CSS and client startup against the fresh report. The deployed bundle reduction helped the score, but did not materially reduce the reported render-delay subpart.
-2. **Investigate the blog's lower mobile score.** Compare startup and third-party work; image savings alone are not enough. Use repeated controlled measurements when assessing the next change.
+1. **Reduce the homepage heading's remaining render delay.** The second retest reports 2,550 ms render delay and 680 ms estimated blocking-CSS savings. Inspect critical styles and client replacement of the heading. Keep the existing visible initial content and avoid introducing an unstyled first paint.
+2. **Investigate blog LCP.** Its latest performance score rose to 74, but LCP worsened to 5.1 s. Inspect the introductory paragraph's rendering and use repeated controlled measurements when assessing the next change.
 3. **Resize the remaining image outliers.** Start with homepage poster thumbnails and the case-study images flagged in the new reports.
-4. **Recheck the blog contrast finding after deployment.** The second batch changes the orange-button/label text to dark in both themes; confirm the result in the next automated report.
+4. **Keep the blog contrast fix.** The second deployment's automated accessibility score is 100, up from 96; the previously flagged contrast finding is resolved in this run.
 5. **Monitor Search Console.** Allow Google to reread the 83-URL sitemap and collect field data. Review service-page indexing and search performance as data becomes available; avoid unnecessary indexing requests for already indexed pages.
 
 ## Validation and limits

@@ -6,6 +6,9 @@ import { StaticRouter } from "react-router-dom/server.js";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Hero } from "@/components/Hero";
 import AgencyBlog from "@/pages/AgencyBlog";
+import Agency from "@/pages/Agency";
+import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
+import { agencyHead } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
 import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
 import type { BlogSummary } from "@/data/blogSummaries";
@@ -57,6 +60,10 @@ export interface PrerenderRoute {
 const NAV = [
   { href: "/", label: "Home" },
   { href: "/agency", label: "Agency" },
+  { href: "/agency/services", label: "Agency Services" },
+  { href: "/agency/results", label: "Agency Results" },
+  { href: "/agency/pricing", label: "Agency Pricing" },
+  { href: "/agency/contact", label: "Contact the Agency" },
   { href: "/agency/blog", label: "Blog" },
   { href: "/work/case-studies", label: "Case Studies" },
   { href: "/work/videos", label: "Videos" },
@@ -274,9 +281,9 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
         <main className="min-h-screen"><Hero /></main>
         <Shell contentTag="div">
           <p>I'm Joseph Maina, a digital marketing specialist in Nairobi, Kenya. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content.</p>
-          <p><a href="/agency#booking">Book a Free Strategy Call</a></p>
+          <p><a href="/agency/contact">Book a Free Strategy Call</a></p>
           <h2>Services</h2>
-          <ul>{servicePages.map((page) => <li key={page.slug}><a href={page.draft ? "/agency#services" : `/agency/${page.slug}`}>{page.name}</a> — {page.standfirst}</li>)}</ul>
+          <ul>{servicePages.map((page) => <li key={page.slug}><a href={page.draft ? "/agency/services" : `/agency/${page.slug}`}>{page.name}</a> — {page.standfirst}</li>)}</ul>
           <h2>Portfolio</h2>
           <ul>{NAV.filter((item) => item.href.startsWith("/work/")).map((item) => <li key={item.href}><a href={item.href}>{item.label}</a></li>)}</ul>
           <h2>Recent case studies and insights</h2>
@@ -288,28 +295,12 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       ),
       sitemap: { priority: 1.0, changefreq: "monthly" },
     },
-    {
-      path: "/agency",
-      head: STATIC_HEADS.agency,
-      body: html(
-        <SimplePage head={STATIC_HEADS.agency}>
-          <h2>Marketing services</h2>
-          <ul>{servicePages.map((page) => <li key={page.slug}><a href={page.draft ? "/agency#services" : `/agency/${page.slug}`}>{page.name}</a> — {page.price.amount}</li>)}</ul>
-          <h2>Read by topic</h2>
-          <ul>
-            {blogHubs.map((h) => (
-              <li key={h.slug}>
-                <a href={`/agency/blog/topics/${h.slug}`}>{h.name}</a> — {h.tagline}
-              </li>
-            ))}
-          </ul>
-          <p>
-            <a href="https://calendly.com/joemaish084/30min">Book a free discovery call</a>
-          </p>
-        </SimplePage>,
-      ),
-      sitemap: { priority: 0.9, changefreq: "monthly" },
-    },
+    ...(Object.entries(agencyPages) as [AgencyPageKey, (typeof agencyPages)[AgencyPageKey]][]).map(([key, page]) => ({
+      path: page.path,
+      head: agencyHead(key),
+      body: html(<HelmetProvider><StaticRouter location={page.path}><Agency pageKey={key} /></StaticRouter></HelmetProvider>),
+      sitemap: { priority: key === "home" ? 0.9 : 0.8, changefreq: "monthly" as const },
+    })),
     {
       path: "/agency/blog",
       head: blogIndexHead(),

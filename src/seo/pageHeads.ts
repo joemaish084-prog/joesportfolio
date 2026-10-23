@@ -1,5 +1,6 @@
 import { blogSummaries as blogPosts } from "@/data/blogSummaries";
 import type { BlogPost } from "@/data/blogPosts";
+import { agencyOrganization } from "./agencyHeads";
 import { blogHubs, getHubPosts, getPrimaryHubForPost, type BlogHub } from "@/data/blogHubs";
 import type { ServicePage } from "@/data/servicePages";
 import type { Brand } from "@/data/brands";
@@ -161,6 +162,7 @@ export function serviceHead(page: ServicePage): PageHead {
     noindex: page.draft,
     ...ogCardImage(path, page.name),
     jsonLd: [
+      agencyOrganization,
       {
         "@context": "https://schema.org",
         "@type": "Service",
@@ -169,7 +171,7 @@ export function serviceHead(page: ServicePage): PageHead {
         url: canonicalUrl(path),
         serviceType: page.navLabel,
         areaServed: { "@type": "Country", name: "Kenya" },
-        provider: person,
+        provider: { "@id": agencyOrganization["@id"] },
         offers: {
           "@type": "Offer",
           // Preserve "from" and monthly billing without putting display copy in a numeric price field.
@@ -188,6 +190,7 @@ export function serviceHead(page: ServicePage): PageHead {
         "@context": "https://schema.org",
         ...breadcrumbs([
           { name: "Agency", path: "/agency" },
+          { name: "Services", path: "/agency/services" },
           { name: page.navLabel, path },
         ]),
       },

@@ -73,6 +73,10 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/agency" element={<Agency />} />
+            <Route path="/agency/services" element={<Agency pageKey="services" />} />
+            <Route path="/agency/results" element={<Agency pageKey="results" />} />
+            <Route path="/agency/pricing" element={<Agency pageKey="pricing" />} />
+            <Route path="/agency/contact" element={<Agency pageKey="contact" />} />
             <Route path="/agency/blog" element={<AgencyBlog />} />
             <Route path="/agency/blog/topics/:hub" element={<AgencyBlogHub />} />
             <Route path="/agency/blog/:slug" element={<AgencyBlogPost />} />

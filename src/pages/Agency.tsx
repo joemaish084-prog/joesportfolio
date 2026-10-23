@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,16 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
-import emailjs from "@emailjs/browser";
-import { supabase } from "@/integrations/supabase/client";
 import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform, MotionConfig, type MotionValue } from "framer-motion";
 import { Stepper } from "@/components/ui/stepper";
 import { useRef } from "react";
-import { Helmet } from "react-helmet-async";
 import {
-  ArrowLeft, Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
+  Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
   CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
-  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare, Menu, X, Calculator,
+  Video, Search, Lightbulb, Send, ArrowRight, Share2, FileText, Palette, MessageSquare, Calculator,
 } from "lucide-react";
 import { SectionLabel } from "@/components/SectionLabel";
 import { getLiveServicePages } from "@/data/servicePages";
@@ -25,7 +22,10 @@ import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { track } from "@/lib/track";
 import { Seo } from "@/components/Seo";
-import { STATIC_HEADS } from "@/seo/heads";
+import { agencyHead } from "@/seo/agencyHeads";
+import { agencyPages, legacyAgencyTarget, type AgencyPageKey } from "@/data/agencyPages";
+import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/AgencyNavigation";
+import { blogSummaries } from "@/data/blogSummaries";
 import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, CardCover } from "@/components/agency/AgencyVisuals";
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
@@ -190,7 +190,7 @@ function CountUp({ value, prefix = "", suffix = "" }: { value: number; prefix?: 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [inView, value]);
-  return <span ref={ref}>{prefix}{n}{suffix}</span>;
+  return <span ref={ref}>{prefix}<span className="agency-counter-animated" aria-hidden="true">{n}</span><span className="agency-counter-static">{value}</span>{suffix}</span>;
 }
 
 function HeroProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
@@ -233,17 +233,15 @@ function HeroProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouse
   );
 }
 
-const scrollTo = (id: string) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
-const Agency = () => {
+const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
+  const page = agencyPages[pageKey];
+  const location = useLocation();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [form, setForm] = useState<{ name: string; email: string; phone: string; brand: string; service: string; budget: string; goals: string; source: string | null }>({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "", source: null });
   const [sending, setSending] = useState(false);
   const [howStep, setHowStep] = useState(0);
   const [briefStep, setBriefStep] = useState(0);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const heroMouseX = useMotionValue(0);
   const heroMouseY = useMotionValue(0);
@@ -270,34 +268,19 @@ const Agency = () => {
     if (source) setForm((f) => ({ ...f, source }));
   }, []);
 
-  // Deep links from the blog (e.g. /agency#service-meta-ads) need to be scrolled
-  // to manually — React Router does not restore hash targets on navigation.
   useEffect(() => {
-    const id = window.location.hash.slice(1);
-    if (!id) return;
+    const legacy = pageKey === "home" ? legacyAgencyTarget(location.hash) : undefined;
+    if (legacy) {
+      const target = new URL(legacy, window.location.origin);
+      navigate({ pathname: target.pathname, search: location.search, hash: target.hash }, { replace: true });
+      return;
+    }
+    if (!location.hash) { window.scrollTo(0, 0); return; }
     const frame = requestAnimationFrame(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
     return () => cancelAnimationFrame(frame);
-  }, []);
-
-  useEffect(() => {
-    if (!mobileNavOpen) return;
-    document.body.style.overflow = "hidden";
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileNavOpen(false);
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [mobileNavOpen]);
-
-  const scrollToAndClose = (id: string) => {
-    setMobileNavOpen(false);
-    window.setTimeout(() => scrollTo(id), 250);
-  };
+  }, [pageKey, location.pathname, location.hash, location.search, navigate]);
 
   const submitBrief = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -307,6 +290,7 @@ const Agency = () => {
     }
     setSending(true);
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { error } = await supabase.from("agency_leads").insert({
         name: form.name,
         email: form.email,
@@ -319,6 +303,7 @@ const Agency = () => {
       });
       if (error) throw error;
       try {
+        const { default: emailjs } = await import("@emailjs/browser");
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
           from_name: form.name,
           from_email: form.email,
@@ -342,135 +327,26 @@ const Agency = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="min-h-screen bg-background">
-      <Seo {...STATIC_HEADS.agency} />
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          "@id": "https://www.josephmaina.co.ke/agency#localbusiness",
-          name: "Joseph Maina — Digital Marketing Agency",
-          image: "https://www.josephmaina.co.ke/og-image.jpg",
-          url: "https://www.josephmaina.co.ke/agency",
-          telephone: "+254704700160",
-          priceRange: "KES",
-          address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
-          areaServed: "Kenya",
-          sameAs: [
-            "https://www.linkedin.com/in/joseph-isaac-m-33a9a611b/",
-            "https://www.instagram.com/m_k_ush_/",
-          ],
-        })}</script>
-      </Helmet>
-      {/* Navbar */}
-      <header className="border-b border-border/40 sticky top-0 bg-background/80 backdrop-blur-md z-50">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <Link
-            to="/"
-            aria-label="Back to Portfolio"
-            className="inline-flex items-center justify-center sm:justify-start min-h-11 min-w-11 -ml-3 sm:ml-0 sm:min-w-0 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0"
-          >
-            <ArrowLeft className="h-5 w-5 sm:h-4 sm:w-4 sm:mr-2" /> <span className="hidden sm:inline">Back to Portfolio</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            <Link to="/" className="text-muted-foreground hover:text-foreground">Home</Link>
-            <button onClick={() => scrollTo("services")} className="text-muted-foreground hover:text-foreground">Services</button>
-            <button onClick={() => scrollTo("how")} className="text-muted-foreground hover:text-foreground">Process</button>
-            <button onClick={() => scrollTo("results")} className="text-muted-foreground hover:text-foreground">Results</button>
-            <Link to="/agency/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
-            <span className="text-primary font-semibold">Work With Me</span>
-          </nav>
-          <div className="flex items-center gap-1 shrink-0">
-            <Button size="sm" className="h-10 sm:h-9" data-track="calendly_click" onClick={() => scrollTo("booking")}>Book Call</Button>
-            <button
-              type="button"
-              onClick={() => setMobileNavOpen(true)}
-              aria-label="Open menu"
-              aria-expanded={mobileNavOpen}
-              aria-controls="agency-mobile-nav"
-              className="md:hidden h-11 w-11 -mr-2 rounded-full text-foreground inline-flex items-center justify-center shrink-0"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <AnimatePresence>
-        {mobileNavOpen && (
-          <motion.div
-            id="agency-mobile-nav"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Site menu"
-            className="fixed inset-0 z-[100] bg-background md:hidden overflow-y-auto"
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.26, ease: "easeOut" }}
-          >
-            <div className="h-14 px-4 flex items-center justify-between border-b border-border/40">
-              <span className="text-sm font-medium text-foreground">Menu</span>
-              <button
-                type="button"
-                onClick={() => setMobileNavOpen(false)}
-                aria-label="Close menu"
-                className="h-11 w-11 -mr-2 rounded-full text-foreground inline-flex items-center justify-center"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-
-            <div className="px-4 pt-4 pb-10 flex flex-col">
-              <Link
-                to="/"
-                onClick={() => setMobileNavOpen(false)}
-                className="py-3 min-h-[44px] text-2xl font-display font-semibold text-foreground"
-              >
-                Home
-              </Link>
-              <button
-                onClick={() => scrollToAndClose("services")}
-                className="py-3 min-h-[44px] text-left text-2xl font-display font-semibold text-foreground"
-              >
-                Services
-              </button>
-              <button
-                onClick={() => scrollToAndClose("how")}
-                className="py-3 min-h-[44px] text-left text-2xl font-display font-semibold text-foreground"
-              >
-                Process
-              </button>
-              <button
-                onClick={() => scrollToAndClose("results")}
-                className="py-3 min-h-[44px] text-left text-2xl font-display font-semibold text-foreground"
-              >
-                Results
-              </button>
-              <Link
-                to="/agency/blog"
-                onClick={() => setMobileNavOpen(false)}
-                className="py-3 min-h-[44px] text-2xl font-display font-semibold text-foreground"
-              >
-                Blog
-              </Link>
-
-              <div className="border-t border-border my-4" />
-
-              <Button
-                className="w-full rounded-full"
-                data-track="calendly_click"
-                data-track-location="mobile_menu"
-                onClick={() => scrollToAndClose("booking")}
-              >
-                Book Call
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="agency-page min-h-screen bg-background">
+      <Seo {...agencyHead(pageKey)} />
+      <AgencyNavigation />
 
       <main>
+        {pageKey !== "home" && <header className="container mx-auto px-4 pt-12 sm:pt-20 pb-4">
+          <nav aria-label="Breadcrumb" className="flex gap-2 text-sm text-muted-foreground mb-6">
+            <Link to="/agency" className="hover:text-primary">Agency</Link><span aria-hidden="true">/</span><span aria-current="page">{page.label}</span>
+          </nav>
+          <SectionLabel>DIGITAL MARKETING AGENCY</SectionLabel>
+          <h1 className="mt-4 max-w-4xl text-4xl sm:text-5xl font-display font-bold tracking-tight">{page.heading}</h1>
+          <p className="mt-6 max-w-3xl text-lg text-muted-foreground leading-relaxed">{page.intro}</p>
+          {pageKey === "contact" && <p className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+            <a className="text-primary hover:underline" href="mailto:joemaish084@gmail.com">joemaish084@gmail.com</a>
+            <a className="text-primary hover:underline" href="tel:+254704700160">+254 704 700 160</a>
+            <span className="text-muted-foreground">Nairobi, Kenya</span>
+          </p>}
+        </header>}
+
+{pageKey === "home" && <>
         {/* HERO */}
         <section
           ref={heroRef}
@@ -529,9 +405,9 @@ const Agency = () => {
                     <Calendar className="mr-2 h-5 w-5" /> Book Free Discovery Call
                   </a>
                 </Button>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" onClick={() => scrollTo("services")}>
+                <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild><Link to="/agency/pricing">
                   View Pricing
-                </Button>
+                </Link></Button>
               </motion.div>
 
               <HeroCollageMobile />
@@ -545,6 +421,14 @@ const Agency = () => {
           </div>
         </section>
 
+        {pageKey === "home" && <section className="container mx-auto px-4 pt-12">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {Object.entries(agencyPages).filter(([key]) => key !== "home").map(([key, item]) => <Link key={key} to={item.path} className="corner-brackets surface-card p-6 group hover:border-primary/40 transition-colors">
+              <h2 className="font-display text-xl font-semibold group-hover:text-primary">{item.label} <ArrowRight className="inline h-4 w-4" aria-hidden /></h2>
+              <p className="mt-3 text-sm text-muted-foreground">{item.intro}</p>
+            </Link>)}
+          </div>
+        </section>}
         <BrandsLogoMarquee />
 
         {/* WHY */}
@@ -581,25 +465,29 @@ const Agency = () => {
 
         <PaidMediaApproachSection />
 
+
+</>}
+{(pageKey === "services" || pageKey === "pricing") && <>
         {/* SERVICES / PRICING */}
         <section id="services" className="container mx-auto px-4 py-20 scroll-mt-20">
           {/* Positioning */}
           <div className="text-center mb-16 space-y-4">
             <SectionLabel>PERFORMANCE MARKETING</SectionLabel>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
-              Performance Marketing for <span className="text-gradient">Kenyan Businesses</span>
+              {pageKey === "pricing" ? "Monthly retainers and management fees" : <>Performance Marketing for <span className="text-gradient">Kenyan Businesses</span></>}
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              I help businesses generate more leads and sales through Meta, Google and TikTok Ads.
+              {pageKey === "pricing" ? "Choose the package that matches your channels and advertising budget." : "I help businesses generate more leads and sales through Meta, Google and TikTok Ads."}
             </p>
             <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
               Management fees are separate from your advertising budget.
             </p>
           </div>
 
+{pageKey === "services" && <>
           {/* Single Platform — 60% visual weight */}
           <div className="mb-20">
-            <h3 className="text-xl font-display font-semibold text-center mb-8">Single Platform</h3>
+            <h2 className="text-xl font-display font-semibold text-center mb-8">Single Platform</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {singlePlatform.map((s, i) => {
                 const Icon = s.icon;
@@ -642,9 +530,9 @@ const Agency = () => {
                         {s.hub.label} &rarr;
                       </Link>
                     </div>
-                    <Button variant="outline" className="w-full" onClick={() => scrollTo("booking")}>
+                    <Button variant="outline" className="w-full" asChild><Link to="/agency/contact">
                       Get Custom Quote
-                    </Button>
+                    </Link></Button>
                     </div>
                   </motion.div>
                 );
@@ -652,9 +540,27 @@ const Agency = () => {
             </div>
           </div>
 
+
+</>}
+{pageKey === "pricing" && <>
+          {pageKey === "pricing" && <div className="max-w-6xl mx-auto mb-16">
+            <h2 className="text-xl font-display font-semibold mb-6">Single services and project fees</h2>
+            <div className="overflow-x-auto rounded-xl border border-border">
+              <table className="w-full text-left text-sm">
+                <caption className="sr-only">Starting fees for existing agency services; ad spend is separate</caption>
+                <thead className="bg-muted"><tr><th scope="col" className="p-4">Service</th><th scope="col" className="p-4">Starting fee</th><th scope="col" className="p-4">Scope</th></tr></thead>
+                <tbody>{[...singlePlatform.map(item => ({...item, desc: item.features.join(", ")})), ...supportingServices].map(item => <tr key={item.slug} className="border-t border-border">
+                  <th scope="row" className="p-4 font-medium"><Link to={`/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
+                  <td className="p-4 font-semibold text-primary">{item.price}</td><td className="p-4 text-muted-foreground">{item.desc}</td>
+                </tr>)}</tbody>
+              </table>
+            </div>
+            <p className="mt-4 text-sm text-muted-foreground">For Meta Ads, the minimum advertising budget is KSh 30,000 per month, paid separately from the management fee. Video production is quoted separately when it goes beyond light social content.</p>
+            <p className="mt-3 text-sm"><Link to="/agency/lead-generation" className="text-primary hover:underline">Lead generation starts at KSh 50,000/month, including landing pages.</Link> Your team follows up with the leads.</p>
+          </div>}
           {/* Retainer Packages — 60% visual weight */}
           <div className="mb-20">
-            <h3 className="text-xl font-display font-semibold text-center mb-8">Retainer Packages</h3>
+            <h2 className="text-xl font-display font-semibold text-center mb-8">Retainer Packages</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {retainerPackages.map((p, i) => (
                 <motion.div
@@ -686,19 +592,22 @@ const Agency = () => {
                       </li>
                     ))}
                   </ul>
-                  <Button className={p.highlight ? "w-full" : "w-full variant-outline"} variant={p.highlight ? "default" : "outline"} onClick={() => scrollTo("booking")}>
+                  <Button className={p.highlight ? "w-full" : "w-full variant-outline"} variant={p.highlight ? "default" : "outline"} asChild><Link to="/agency/contact">
                     Get Custom Quote
-                  </Button>
+                  </Link></Button>
                 </motion.div>
               ))}
             </div>
           </div>
 
+
+</>}
+{pageKey === "services" && <>
           {/* Supporting Services — 40% visual weight */}
           <div className="mb-20">
             <div className="text-center mb-10 space-y-3">
               <SectionLabel>ALSO AVAILABLE</SectionLabel>
-              <h3 className="text-xl font-display font-semibold">Supporting Services</h3>
+              <h2 className="text-xl font-display font-semibold">Supporting Services</h2>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
               {supportingServices.map((s, i) => {
@@ -716,7 +625,7 @@ const Agency = () => {
                     <div className="h-10 w-10 bg-gradient-orange flex items-center justify-center mb-3 shadow-[var(--shadow-orange-glow)]">
                       <Icon className="h-5 w-5 text-white" aria-hidden />
                     </div>
-                    <h4 className="font-display font-semibold mb-1">{s.name}</h4>
+                    <h3 className="font-display font-semibold mb-1">{s.name}</h3>
                     <p className="text-sm font-bold text-gradient mb-2">{s.price}</p>
                     <p className="text-xs text-muted-foreground flex-1 mb-3">{s.desc}</p>
                     <Link
@@ -725,9 +634,9 @@ const Agency = () => {
                     >
                       {s.proof.label} &rarr;
                     </Link>
-                    <Button variant="outline" size="sm" className="w-full" onClick={() => scrollTo("booking")}>
+                    <Button variant="outline" size="sm" className="w-full" asChild><Link to="/agency/contact">
                       Get Custom Quote
-                    </Button>
+                    </Link></Button>
                   </motion.div>
                 );
               })}
@@ -739,7 +648,7 @@ const Agency = () => {
             <div className="mb-20">
               <div className="text-center mb-10 space-y-3">
                 <SectionLabel>IN DETAIL</SectionLabel>
-                <h3 className="text-xl font-display font-semibold">Full Service Pages</h3>
+                <h2 className="text-xl font-display font-semibold">Full Service Pages</h2>
                 <p className="text-sm text-muted-foreground max-w-xl mx-auto">
                   Scope, pricing, process, case studies and FAQs for each service.
                 </p>
@@ -754,9 +663,9 @@ const Agency = () => {
                       className="corner-brackets surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300 group"
                     >
                       <Icon className="h-6 w-6 text-primary mb-3" aria-hidden />
-                      <h4 className="font-display font-semibold mb-1 group-hover:text-primary transition-colors">
+                      <h3 className="font-display font-semibold mb-1 group-hover:text-primary transition-colors">
                         {sp.navLabel}
-                      </h4>
+                      </h3>
                       <p className="text-sm font-bold text-gradient mb-2">{sp.price.amount}</p>
                       <p className="text-xs text-muted-foreground flex-1">{sp.standfirst}</p>
                     </Link>
@@ -766,6 +675,8 @@ const Agency = () => {
             </div>
           )}
 
+
+</>}
           {/* Free tool: lets visitors test whether a budget pays for itself before booking. */}
           <Link
             to="/agency/ad-budget-calculator"
@@ -802,6 +713,9 @@ const Agency = () => {
           </div>
         </section>
 
+
+</>}
+{pageKey === "home" && <>
         <CreativeShowcase />
 
         {/* HOW IT WORKS */}
@@ -830,6 +744,9 @@ const Agency = () => {
           </div>
         </section>
 
+
+</>}
+{pageKey === "results" && <>
         {/* RESULTS */}
         <section id="results" className="container mx-auto px-4 py-20 scroll-mt-20">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">Real Results for Real Brands</h2>
@@ -869,6 +786,17 @@ const Agency = () => {
               </motion.div>
             ))}
           </div>
+          <div className="max-w-6xl mx-auto mt-12">
+            <h2 className="text-2xl font-display font-semibold mb-4">Read the campaign breakdowns</h2>
+            <p className="text-muted-foreground mb-6">The portfolio contains the wider creative work. These articles explain the marketing decisions, campaign context and reported results.</p>
+            <div className="grid sm:grid-cols-2 gap-4">{[
+              "meta-ads-turnaround-case-study-kenya-2026", "convey-communications-case-study-10x-leads",
+              "0-to-4-million-tiktok-views-behind-the-campaign", "nyeri-county-campaign-hyper-local-marketing",
+            ].map(slug => blogSummaries.find(post => post.slug === slug)).filter(Boolean).map(post => <Link key={post!.slug} to={`/agency/blog/${post!.slug}`} className="surface-card p-6 group hover:border-primary/40 transition-colors">
+              <h3 className="font-display font-semibold group-hover:text-primary">{post!.title}</h3><p className="mt-3 text-sm text-muted-foreground">{post!.excerpt}</p>
+            </Link>)}</div>
+            <p className="mt-6 text-sm text-muted-foreground">My work with Convey began as an employee and later continued as a consultant. Each linked case study provides its own context; these outcomes are not a promise of future results.</p>
+          </div>
           <div className="text-center mt-8">
             <Button variant="outline" asChild>
               <Link to="/work/case-studies">See All Case Studies</Link>
@@ -876,6 +804,9 @@ const Agency = () => {
           </div>
         </section>
 
+
+</>}
+{pageKey === "contact" && <>
         {/* BOOKING */}
         <section id="booking" className="container mx-auto px-4 py-20 scroll-mt-20">
           <div className="text-center mb-12">
@@ -1024,6 +955,9 @@ const Agency = () => {
           </div>
         </section>
 
+
+</>}
+{pageKey === "pricing" && <>
         {/* PAYMENTS */}
         <section className="container mx-auto px-4 py-20">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-center mb-12">Simple, Transparent Payments</h2>
@@ -1056,19 +990,22 @@ const Agency = () => {
           </div>
         </section>
 
+
+</>}
         {/* FOOTER CTA */}
         <section className="container mx-auto px-4 pb-20">
           <Card className="max-w-3xl mx-auto p-8 md:p-12 text-center border-primary/40 bg-gradient-to-br from-primary/5 to-transparent">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
-              <Star className="h-3 w-3 fill-primary" /> Limited Availability
+              <Star className="h-3 w-3 fill-primary" /> Work Together
             </div>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">2 Client Slots Available This Month</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">Find the right next step for your brand</h2>
             <p className="text-muted-foreground mb-6">I take on a limited number of clients to ensure quality and attention to detail.</p>
-            <Button size="lg" onClick={() => scrollTo("booking")}>Secure Your Slot</Button>
+            <Button size="lg" asChild><Link to="/agency/contact">Discuss Your Project</Link></Button>
           </Card>
         </section>
       </main>
 
+      <div className="container mx-auto px-4 pb-10"><AgencySectionLinks className="justify-center text-muted-foreground" /></div>
       <footer className="border-t border-border/40 px-4 py-8 text-center text-sm text-muted-foreground space-x-2 leading-8">
         <span>© {new Date().getFullYear()} Joseph Maina</span>
         <span>·</span>

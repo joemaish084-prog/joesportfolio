@@ -8,6 +8,7 @@ import { blogSummaries as blogPosts, type BlogSummary as BlogPost } from "@/data
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
+import { AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
 
 const Meta = ({
@@ -182,6 +183,7 @@ const AgencyBlog = () => {
       <SiteHeader />
       <div className="min-h-screen bg-background text-foreground">
         <div className="mx-auto max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+          <AgencySectionLinks className="mb-6 text-muted-foreground" />
           <Link
             to="/"
             className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"

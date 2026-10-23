@@ -66,6 +66,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Retain agency reveal/count-up animations for JS visitors, while the same
+   prerendered content remains readable and accurate without JavaScript. */
+html:not(.js) .agency-page [style*="opacity:0"] {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+}
+html:not(.js) .agency-counter-animated { display: none; }
+.js .agency-counter-static {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @layer base {
   :root {
     --chart-good: 142 72% 29%;

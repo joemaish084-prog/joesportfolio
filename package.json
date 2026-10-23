@@ -11,6 +11,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender.mjs",
     "check:seo": "node scripts/check-seo.mjs",
+    "check:agency": "node scripts/check-agency.mjs",
     "check:performance": "node scripts/check-performance.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",

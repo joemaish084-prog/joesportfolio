@@ -18,14 +18,16 @@ const portfolioLinks = [
 ];
 
 const agencyServices = [
-  { name: "Meta Ads Management", href: "/agency#services" },
-  { name: "Google Ads Management", href: "/agency#services" },
-  { name: "TikTok Ads Management", href: "/agency#services" },
-  { name: "SEO Services", href: "/agency#services" },
-  { name: "Social Media Management", href: "/agency#services" },
-  { name: "Media Buying", href: "/agency#services" },
+  { name: "Agency Home", href: "/agency" },
+  { name: "All Services", href: "/agency/services" },
+  { name: "Results & Case Studies", href: "/agency/results" },
+  { name: "Pricing & Packages", href: "/agency/pricing" },
+  { name: "Meta Ads Management", href: "/agency/meta-ads-management" },
+  { name: "Google Ads Management", href: "/agency/google-ads-management" },
+  { name: "SEO Services", href: "/agency/seo-services-nairobi" },
+  { name: "Social Media Management", href: "/agency/social-media-management" },
   { name: "Ad Budget Calculator", href: "/agency/ad-budget-calculator" },
-  { name: "Book Discovery Call", href: "/agency#contact" },
+  { name: "Book Discovery Call", href: "/agency/contact" },
 ];
 
 // Behance uses a custom SVG since lucide-react doesn't ship a Behance icon

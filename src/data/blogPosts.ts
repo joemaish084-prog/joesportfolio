@@ -577,7 +577,7 @@ export const blogPosts: BlogPost[] = [
         heading: "What SEO actually costs in the Kenyan market",
         paragraphs: [
           "One-off technical and on-page audits are a good starting point if you are not ready for a retainer. Mine runs at KES 40,000 and gives you a full picture of what is broken before you commit to ongoing work.",
-          "Ongoing monthly SEO retainers in Kenya commonly range from the low tens of thousands for a single small site up to six figures a month for competitive, content-heavy niches. My own SEO Optimization retainer starts from KES 45,000 a month, covering on-page, technical and local SEO. (See full pricing at /agency#services.)",
+          "Ongoing monthly SEO retainers in Kenya commonly range from the low tens of thousands for a single small site up to six figures a month for competitive, content-heavy niches. My own SEO Optimization retainer starts from KES 45,000 a month, covering on-page, technical and local SEO. (See full pricing at /agency/pricing.)",
         ],
       },
       {
@@ -634,7 +634,7 @@ export const blogPosts: BlogPost[] = [
         heading: "Choose the lead format your audience will actually use",
         paragraphs: [
           "Meta's native lead forms get more submissions because they are frictionless, but the quality is often lower since people fill them from inside the app without much thought.",
-          "In Kenya, a WhatsApp click-to-chat button frequently outperforms both a lead form and a landing page for service businesses, because it matches how people already prefer to inquire and negotiate. (My Meta Ads and Google Ads management pricing is at /agency#services.)",
+          "In Kenya, a WhatsApp click-to-chat button frequently outperforms both a lead form and a landing page for service businesses, because it matches how people already prefer to inquire and negotiate. (My Meta Ads and Google Ads management pricing is at /agency/pricing.)",
         ],
       },
       {

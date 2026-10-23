@@ -65,7 +65,7 @@ export function AgencyPromo() {
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild className="rounded-full">
-                <a href="/agency#booking">
+                <a href="/agency/contact">
                   <Calendar className="mr-2 h-4 w-4" /> Book a Free Call
                 </a>
               </Button>

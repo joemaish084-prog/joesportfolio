@@ -39,6 +39,11 @@ const manifest = JSON.parse(fs.readFileSync(path.join(dist, ".vite/manifest.json
 const initialRouteModules = {
   "/": "src/pages/Index.tsx",
   "/agency/blog": "src/pages/AgencyBlog.tsx",
+  "/agency": "src/pages/Agency.tsx",
+  "/agency/services": "src/pages/Agency.tsx",
+  "/agency/results": "src/pages/Agency.tsx",
+  "/agency/pricing": "src/pages/Agency.tsx",
+  "/agency/contact": "src/pages/Agency.tsx",
   "/work/case-studies": "src/pages/WorkCaseStudies.tsx",
 };
 

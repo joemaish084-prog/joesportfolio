@@ -545,7 +545,7 @@ export const servicePages: ServicePage[] = [
       heading: "Start with the audit",
       body: "Send a short brief and I'll confirm scope and turnaround within 24 hours. If an audit is not what you need, I'll say so.",
       label: "Request an Audit",
-      href: "/agency#booking",
+      href: "/agency/contact",
     },
     draft: false,
     reviewNotes: [],

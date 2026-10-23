@@ -1,3 +1,4 @@
+import { AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 import { contentImageProps } from "@/lib/responsiveImage";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
@@ -57,6 +58,7 @@ const AgencyBlogPost = () => {
       <SiteHeader />
       <div className="min-h-screen bg-background text-foreground">
         <div className="mx-auto max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+          <AgencySectionLinks className="mb-6 text-muted-foreground" />
           <nav
             aria-label="Breadcrumb"
             className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground"
