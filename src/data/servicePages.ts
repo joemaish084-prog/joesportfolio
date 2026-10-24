@@ -38,6 +38,13 @@ export interface ServiceTestimonial {
   role: string;
 }
 
+/** An extra titled block between "What is included" and the process, e.g. how creative testing works. */
+export interface ServiceSection {
+  title: string;
+  intro?: string;
+  items: ServiceInclusion[];
+}
+
 export interface ServicePage {
   slug: string;
   icon: LucideIcon;
@@ -54,6 +61,10 @@ export interface ServicePage {
   notFor?: string[];
   fitNote?: string;
   included: ServiceInclusion[];
+  /** Optional deeper sections (process, reporting). Copy must restate facts already published on the site. */
+  sections?: ServiceSection[];
+  /** One honest line shown under the case study when proof is limited to what is already on the page. */
+  proofNote?: string;
   caseStudy?: ServiceCaseStudy;
   testimonial?: ServiceTestimonial;
   faqs: ServiceFaq[];
@@ -68,7 +79,7 @@ export interface ServicePage {
   reviewNotes: string[];
 }
 
-const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
+export const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
 
 /** The real five-step onboarding process, shared by every service page. */
 export const SERVICE_PROCESS = [
@@ -188,6 +199,29 @@ export const servicePages: ServicePage[] = [
       { title: "Weekly optimization", desc: "Budget moved toward what works and losing ads killed before they drain the month." },
       { title: "Monthly reporting", desc: "Spend, cost per result and what changes next — in language you can act on." },
     ],
+    sections: [
+      {
+        title: "How creative testing works",
+        intro: "On Meta, the ad itself does most of the work. So creative is tested on purpose, not left to chance.",
+        items: [
+          { title: "Several angles at once", desc: "Instead of betting on a single ad, I run a handful of different angles and formats side by side during the first 7–10 days." },
+          { title: "Weak ads are cut early", desc: "Underperformers are paused based on click-through rate and cost per result, not on gut feel." },
+          { title: "Winners shape the next batch", desc: "The hooks and formats that earn results brief the next round of creative, so each month starts smarter than the last." },
+          { title: "Direction, not just a report", desc: "Creative direction is included: what to shoot, what to say and which format to test first. Producing the assets is a separate service." },
+        ],
+      },
+      {
+        title: "How reporting works",
+        intro: "You should always know what the money is doing, in plain language.",
+        items: [
+          { title: "Weekly updates", desc: "Performance updates on WhatsApp every week, so you are never chasing for numbers." },
+          { title: "A monthly report", desc: "A detailed report by email and in your client portal: spend, cost per result and what changes next." },
+          { title: "Tied to leads or sales", desc: "Spend is connected back to leads and revenue impact rather than vanity metrics." },
+          { title: "Your client portal", desc: "Campaign status, reports and files are available to you at any time." },
+        ],
+      },
+    ],
+    proofNote: "Selected Meta Ads results are available on request.",
     caseStudy: {
       name: "iClear Kenya",
       challenge: "Limited brand awareness in a saturated FMCG market.",
@@ -254,6 +288,18 @@ export const servicePages: ServicePage[] = [
       { title: "Bid management", desc: "Ongoing bid and budget control so you are not paying premium prices for low-intent clicks." },
       { title: "Conversion tracking", desc: "Calls, forms and WhatsApp enquiries measured properly — this is the step most accounts are missing." },
       { title: "Monthly reporting", desc: "What you spent, what it returned, and what changes next month." },
+    ],
+    sections: [
+      {
+        title: "How tracking and reporting work",
+        intro: "Google can only optimise for what it can see, so measurement comes before spend.",
+        items: [
+          { title: "Enquiries measured properly", desc: "Calls, forms and WhatsApp enquiries are tracked as conversions, so the account learns from real enquiries rather than clicks." },
+          { title: "Waste is cut continuously", desc: "Negative keywords and bids are adjusted so budget does not drift toward low-intent searches." },
+          { title: "Weekly updates", desc: "Performance updates on WhatsApp every week, so you are never chasing for numbers." },
+          { title: "A monthly report", desc: "A detailed report by email and in your client portal: what you spent, what it returned and what changes next." },
+        ],
+      },
     ],
     caseStudy: {
       name: "Google Ads launch for a Kenyan beauty retailer",

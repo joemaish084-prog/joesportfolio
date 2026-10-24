@@ -154,6 +154,43 @@ const AgencyService = () => {
             <p className="mt-6 text-sm text-[#888888]">{page.price.note}</p>
           </section>
 
+          {/* Deeper sections, e.g. creative testing and reporting */}
+          {page.sections?.map((section) => (
+            <section key={section.title} className="mt-20">
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{section.title}</h2>
+              {section.intro && <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#555555]">{section.intro}</p>}
+              <dl className="mt-7 grid gap-x-10 gap-y-7 sm:grid-cols-2">
+                {section.items.map((item) => (
+                  <div key={item.title} className="border-t border-[#EAEAEA] pt-5">
+                    <dt className="text-base font-bold tracking-tight">{item.title}</dt>
+                    <dd className="mt-2 text-base leading-relaxed text-[#555555]">{item.desc}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ))}
+
+          {/* Pricing starting point */}
+          <section className="mt-20" aria-labelledby="pricing-start">
+            <h2 id="pricing-start" className="text-2xl font-bold tracking-tight sm:text-3xl">Pricing starting point</h2>
+            <div className="mt-7 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-8">
+              <div>
+                <p className="text-2xl font-bold tracking-tight">{page.price.amount}</p>
+                <p className="mt-2 max-w-xl text-base leading-relaxed text-[#555555]">
+                  {page.price.note}
+                  {page.price.amount.includes("/month") && " No lock-in contracts, and the scope is agreed in your proposal."}
+                </p>
+              </div>
+              <Link
+                to="/agency/pricing"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#F97316] transition-all hover:gap-3 sm:mt-0 sm:flex-shrink-0"
+              >
+                See full pricing
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </section>
+
           {/* Process */}
           <section className="mt-20">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">How we start</h2>
@@ -198,6 +235,7 @@ const AgencyService = () => {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             )}
+            {page.proofNote && <p className="mt-6 text-sm text-[#666666]">{page.proofNote}</p>}
           </section>
 
           )}

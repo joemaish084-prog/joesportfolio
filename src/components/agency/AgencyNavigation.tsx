@@ -60,7 +60,7 @@ export function AgencyNavigation() {
         </div>
         <div className="hidden lg:block"><AgencySectionLinks pill className="text-muted-foreground" /></div>
         <div className="flex items-center gap-1 shrink-0">
-          <Button size="sm" className="h-10 sm:h-9 rounded-full px-4" asChild><Link to="/agency/contact">Book Call</Link></Button>
+          <Button size="sm" className="h-10 sm:h-9 rounded-full px-4" asChild><Link to="/agency/contact"><span className="xl:hidden">Book a Call</span><span className="hidden xl:inline">Book a Free Strategy Call</span></Link></Button>
           <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} aria-controls="agency-mobile-nav"
             className="lg:hidden h-11 w-11 -mr-2 rounded-full text-foreground inline-flex items-center justify-center shrink-0"><Menu className="h-6 w-6" /></button>
         </div>
@@ -88,7 +88,7 @@ export function AgencyNavigation() {
       </nav>
       <div className="mt-auto grid gap-3 p-4 pb-8">
         <Button size="lg" className="w-full rounded-full" asChild>
-          <Link to="/agency/contact" onClick={() => setOpen(false)}><Calendar className="h-5 w-5" aria-hidden /> Book a free call</Link>
+          <Link to="/agency/contact" onClick={() => setOpen(false)}><Calendar className="h-5 w-5" aria-hidden /> Book a Free Strategy Call</Link>
         </Button>
         <Button size="lg" variant="outline" className="w-full rounded-full" asChild>
           <a href="https://wa.me/254704700160" target="_blank" rel="noopener noreferrer"><MessageCircle className="h-5 w-5" aria-hidden /> WhatsApp</a>

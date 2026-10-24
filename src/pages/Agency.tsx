@@ -21,9 +21,9 @@ import {
 import { ShineBorder } from "@/components/ui/shine-border";
 import { trackSpotlight } from "@/lib/spotlight";
 import { SectionLabel } from "@/components/SectionLabel";
-import { getLiveServicePages } from "@/data/servicePages";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
+import { ServicesSection } from "@/components/services/ServicesSection";
 import { track } from "@/lib/track";
 import { Seo } from "@/components/Seo";
 import { agencyHead } from "@/seo/agencyHeads";
@@ -288,7 +288,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
     heroMouseY.set(0);
   };
 
-  const liveServicePages = getLiveServicePages();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -522,7 +521,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 
 </>}
-{(pageKey === "services" || pageKey === "pricing") && <>
+{pageKey === "services" && <ServicesSection />}
+{pageKey === "pricing" && <>
         {/* SERVICES / PRICING */}
         <section id="services" className="container mx-auto px-4 py-16 sm:py-20 scroll-mt-20">
           <div className="max-w-6xl mx-auto">
@@ -540,65 +540,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             </p>
           </div>
 
-{pageKey === "services" && <>
-          {/* Single Platform — 60% visual weight */}
-          <div className="mb-20">
-            <SubHeading eyebrow="Paid media" title="Single Platform">Strategy, setup, optimisation and reporting for one advertising channel.</SubHeading>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {singlePlatform.map((s, i) => {
-                const Icon = s.icon;
-                return (
-                  <motion.div
-                    key={s.name}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                    id={`service-${s.slug}`}
-                    onMouseMove={trackSpotlight}
-                    className="spotlight group surface-card flex flex-col overflow-hidden hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 scroll-mt-24"
-                  >
-                    <CardCover src={s.image.src} alt={s.image.alt} position={s.image.position} />
-                    <div className="px-6 pb-6 sm:px-7 sm:pb-7 flex flex-col flex-1">
-                    <div className="relative z-10 -mt-7 h-14 w-14 rounded-2xl bg-gradient-orange flex items-center justify-center mb-5 shadow-[var(--shadow-orange-glow)] ring-4 ring-background">
-                      <Icon className="h-7 w-7 text-white" aria-hidden />
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-display font-semibold mb-3">{s.name}</h3>
-                    <div className="mb-5"><PriceTag price={s.price} /></div>
-                    <ul className="space-y-2.5 mb-6 flex-1 border-t border-border/60 pt-5">
-                      {s.features.map((f) => (
-                        <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                          <span>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mb-5 space-y-2 rounded-xl bg-muted/50 p-4">
-                      <Link
-                        to={s.proof.to}
-                        className="block text-sm text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        {s.proof.label} &rarr;
-                      </Link>
-                      <Link
-                        to={s.hub.to}
-                        className="block text-sm font-medium text-primary hover:underline"
-                      >
-                        {s.hub.label} &rarr;
-                      </Link>
-                    </div>
-                    <Button variant="outline" className="w-full rounded-full" asChild><Link to="/agency/contact">
-                      Get Custom Quote
-                    </Link></Button>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-
-</>}
 {pageKey === "pricing" && <>
           {/* Retainer Packages — 60% visual weight */}
           <div className="mb-16">
@@ -678,79 +619,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground"><Link to="/agency/lead-generation" className="font-medium text-primary hover:underline">Lead generation starts at KSh 50,000/month, including landing pages.</Link> Your team follows up with the leads.</p>
             </div>
           </div>
-
-
-</>}
-{pageKey === "services" && <>
-          {/* Supporting Services — 40% visual weight */}
-          <div className="mb-20">
-            <SubHeading eyebrow="Also available" title="Supporting Services">Creative, content and advisory work alongside your campaigns.</SubHeading>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {supportingServices.map((s, i) => {
-                const Icon = s.icon;
-                return (
-                  <motion.div
-                    key={s.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.5, delay: i * 0.05 }}
-                    id={`service-${s.slug}`}
-                    onMouseMove={trackSpotlight}
-                    className="spotlight surface-card p-5 flex flex-col hover:border-primary/40 transition-all duration-300 scroll-mt-24"
-                  >
-                    <div className="h-10 w-10 rounded-xl bg-gradient-orange flex items-center justify-center mb-4 shadow-[var(--shadow-orange-glow)]">
-                      <Icon className="h-5 w-5 text-white" aria-hidden />
-                    </div>
-                    <h3 className="font-display font-semibold mb-1.5">{s.name}</h3>
-                    <div className="mb-2"><PriceTag price={s.price} size="sm" /></div>
-                    <p className="text-sm text-muted-foreground flex-1 mb-3">{s.desc}</p>
-                    <Link
-                      to={s.proof.to}
-                      className="mb-4 block text-xs text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      {s.proof.label} &rarr;
-                    </Link>
-                    <Button variant="outline" size="sm" className="w-full rounded-full" asChild><Link to="/agency/contact">
-                      Get Custom Quote
-                    </Link></Button>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Dedicated service pages. Renders only once a page is out of draft. */}
-          {liveServicePages.length > 0 && (
-            <div className="mb-20">
-              <SubHeading eyebrow="In detail" title="Full Service Pages">Scope, pricing, process, case studies and FAQs for each service.</SubHeading>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {liveServicePages.map((sp, i) => {
-                  const Icon = sp.icon;
-                  // With an odd count, widen the first (umbrella) service so the grid closes evenly.
-                  const featured = i === 0 && liveServicePages.length % 2 === 1;
-                  return (
-                    <Link
-                      key={sp.slug}
-                      to={`/agency/${sp.slug}`}
-                      onMouseMove={trackSpotlight}
-                      className={`spotlight surface-card p-5 sm:p-6 flex flex-col hover:border-primary/40 transition-all duration-300 group ${featured ? "sm:col-span-2 bg-gradient-to-br from-primary/[0.08] to-transparent" : ""}`}
-                    >
-                      <div className="mb-4 flex items-center justify-between">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><Icon className="h-5 w-5 text-primary" aria-hidden /></span>
-                        <ArrowRight className="h-4 w-4 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-primary" aria-hidden />
-                      </div>
-                      <h3 className={`font-display font-semibold mb-1 group-hover:text-primary transition-colors ${featured ? "text-xl" : ""}`}>
-                        {sp.navLabel}
-                      </h3>
-                      <p className="text-sm font-semibold text-primary mb-2">{sp.price.amount}</p>
-                      <p className={`text-muted-foreground flex-1 ${featured ? "text-sm max-w-md" : "text-xs leading-relaxed"}`}>{sp.standfirst}</p>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          )}
 
 
 </>}

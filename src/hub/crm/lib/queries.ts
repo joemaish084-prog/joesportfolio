@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { FunctionsHttpError } from "@supabase/supabase-js";
+import { FunctionsFetchError, FunctionsHttpError } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useHubAuth } from "../../auth/HubAuthProvider";
 import { unwrap } from "../../lib/queries";
@@ -54,15 +54,25 @@ function useInvalidateCrm() {
 }
 
 /** The message from an edge function's JSON error body, when there is one. */
-export async function functionError(error: unknown) {
+export async function functionError(error: unknown, fn?: string) {
   if (error instanceof FunctionsHttpError) {
+    const status = (error.context as Response).status;
     try {
-      const body = await error.context.json();
+      const body = await (error.context as Response).json();
+      if (body?.code === "NOT_FOUND" || (status === 404 && !body?.error)) {
+        return `The ${fn ?? "server"} function isn't deployed to Supabase yet.`;
+      }
       if (body?.error) return String(body.error);
       if (Array.isArray(body?.blockers)) return body.blockers.join(" · ");
+      if (body?.message) return String(body.message);
     } catch {
       // not JSON
     }
+    if (status === 404) return `The ${fn ?? "server"} function isn't deployed to Supabase yet.`;
+    return `The server answered with an error (${status}).`;
+  }
+  if (error instanceof FunctionsFetchError) {
+    return `Couldn't reach the ${fn ?? "server"} function. Check it's deployed and you're online.`;
   }
   return error instanceof Error ? error.message : "Something went wrong";
 }
@@ -350,7 +360,7 @@ export function useGenerateDraft() {
   return useMutation({
     mutationFn: async (body: { lead_id: string; kind: DraftKind; contact_id?: string | null; campaign_id?: string | null; instructions?: string }) => {
       const { data, error } = await supabase.functions.invoke("crm-draft", { body });
-      if (error) throw new Error(await functionError(error));
+      if (error) throw new Error(await functionError(error, "crm-draft"));
       return (data as { draft: OutreachDraft }).draft;
     },
     onSuccess: invalidate,
@@ -371,7 +381,7 @@ export function useParseSheet() {
       const form = new FormData();
       form.append("file", file);
       const { data, error } = await supabase.functions.invoke("crm-parse-sheet", { body: form });
-      if (error) throw new Error(await functionError(error));
+      if (error) throw new Error(await functionError(error, "crm-parse-sheet"));
       return data as ParsedUpload;
     },
   });

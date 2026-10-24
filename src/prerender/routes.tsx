@@ -203,6 +203,19 @@ function ServicePageBody({ page }: { page: ServicePage }) {
           </li>
         ))}
       </ul>
+      {page.sections?.map((section) => (
+        <div key={section.title}>
+          <h2>{section.title}</h2>
+          {section.intro && <p>{section.intro}</p>}
+          <ul>
+            {section.items.map((item) => (
+              <li key={item.title}>
+                <strong>{item.title}</strong> — {item.desc}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
       <h2>How it works</h2>
       <ol>
         {SERVICE_PROCESS.map((step) => (
@@ -216,6 +229,7 @@ function ServicePageBody({ page }: { page: ServicePage }) {
       <p>{page.caseStudy.challenge}</p>
       <p>{page.caseStudy.results}</p>
       {page.caseStudy.href && <p><a href={page.caseStudy.href}>Read the full breakdown</a></p>}
+      {page.proofNote && <p>{page.proofNote}</p>}
       </>}
       {answered.length > 0 && (
         <>
