@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Prospect lists hold personal data. Keep them out of the repo (and public/).
+*.xlsx
+*.xls
+*.csv

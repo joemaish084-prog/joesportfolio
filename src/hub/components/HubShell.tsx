@@ -11,6 +11,7 @@ import {
   Monitor,
   Moon,
   MoreHorizontal,
+  Radar,
   Search,
   Settings,
   SquareKanban,
@@ -50,7 +51,12 @@ const WORK_NAV: NavItem[] = [
   { to: "/hub/clients", label: "Clients", icon: Users },
   { to: "/hub/onboarding", label: "Onboarding", icon: ListChecks },
   { to: "/hub/pipeline", label: "Pipeline", icon: Filter },
+  { to: "/hub/crm", label: "Outreach CRM", icon: Radar },
 ];
+
+// CRM members who aren't hub admins see only the CRM.
+const CRM_NAV = WORK_NAV.find((n) => n.to === "/hub/crm") as NavItem;
+const CRM_ONLY_NAV = [CRM_NAV];
 
 const RECORDS_NAV: NavItem[] = [
   { to: "/hub/documents", label: "Documents", icon: FileText },
@@ -87,11 +93,11 @@ function Brand() {
   );
 }
 
-function NavList({ onNavigate }: { onNavigate?: () => void }) {
+function NavList({ onNavigate, crmOnly }: { onNavigate?: () => void; crmOnly?: boolean }) {
   return (
     <nav className="space-y-6">
       <ul className="space-y-0.5">
-        {NAV.map(({ to, label, icon: Icon, end }) => (
+        {(crmOnly ? CRM_ONLY_NAV : NAV).map(({ to, label, icon: Icon, end }) => (
           <li key={to}>
             <NavLink
               to={to}
@@ -211,13 +217,13 @@ const DOCK_SLOT = 48;
 const DOCK_FIXED = 18 + 48 + 3 * 17 + 2 * DOCK_SLOT + 20;
 const DOCK_NAV = [...WORK_NAV, ...RECORDS_NAV];
 // What stays in the dock longest when space runs out (first = last to fold into More).
-const DOCK_PRIORITY = ["/hub", "/hub/tasks", "/hub/clients", "/hub/finance", "/hub/pipeline", "/hub/onboarding", "/hub/website", "/hub/documents", "/hub/reports"];
+const DOCK_PRIORITY = ["/hub", "/hub/tasks", "/hub/crm", "/hub/clients", "/hub/finance", "/hub/pipeline", "/hub/onboarding", "/hub/website", "/hub/documents", "/hub/reports"];
 
 /**
  * Which sections fit in the dock at the current window height (browser zoom
  * shrinks it). The rest go under More; the page you're on always stays visible.
  */
-function useDockNav(isActive: (item: NavItem) => boolean) {
+function useDockNav(isActive: (item: NavItem) => boolean, crmOnly: boolean) {
   const [height, setHeight] = useState(() => window.innerHeight);
   useEffect(() => {
     const onResize = () => setHeight(window.innerHeight);
@@ -225,6 +231,7 @@ function useDockNav(isActive: (item: NavItem) => boolean) {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  if (crmOnly) return { shown: CRM_ONLY_NAV, hidden: [] as NavItem[] };
   const slots = Math.max(2, Math.floor((height - 24 - DOCK_FIXED) / DOCK_SLOT));
   if (slots >= DOCK_NAV.length) return { shown: DOCK_NAV, hidden: [] as NavItem[] };
   const keep = slots - 1; // one slot for More
@@ -242,7 +249,7 @@ function AccountMenu({
   onThemeChange,
   settingsActive,
 }: ShellProps & { settingsActive: boolean }) {
-  const { session, signOut } = useHubAuth();
+  const { session, signOut, status } = useHubAuth();
   return (
     <DropdownMenu>
       <Tooltip>
@@ -266,17 +273,19 @@ function AccountMenu({
       </Tooltip>
       <DropdownMenuContent side="right" align="start" sideOffset={14} className="w-64 rounded-2xl p-1.5">
         <DropdownMenuLabel className="px-2.5 py-2 font-normal">
-          <span className="block text-sm font-semibold">Joseph Maina</span>
+          <span className="block text-sm font-semibold">{status === "admin" ? "Joseph Maina" : "Signed in"}</span>
           {session?.user.email && (
             <span className="block truncate text-xs text-muted-foreground">{session.user.email}</span>
           )}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild className="rounded-lg">
-          <NavLink to={SETTINGS_NAV.to} className="flex items-center gap-2.5">
-            <Settings className="h-4 w-4" /> Settings
-          </NavLink>
-        </DropdownMenuItem>
+        {status === "admin" && (
+          <DropdownMenuItem asChild className="rounded-lg">
+            <NavLink to={SETTINGS_NAV.to} className="flex items-center gap-2.5">
+              <Settings className="h-4 w-4" /> Settings
+            </NavLink>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuLabel className="px-2.5 text-xs font-normal text-muted-foreground">Appearance</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={theme} onValueChange={(v) => onThemeChange(v as HubTheme)}>
@@ -341,12 +350,15 @@ function MoreNav({ items, isActive }: { items: NavItem[]; isActive: (item: NavIt
 }
 
 export function HubShell(props: ShellProps) {
+  const crmOnly = useHubAuth().status === "crm";
   const [menuOpen, setMenuOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [paletteLoaded, setPaletteLoaded] = useState(false);
   if (paletteOpen && !paletteLoaded) setPaletteLoaded(true);
 
   useEffect(() => {
+    // The palette searches clients and other admin-only data.
+    if (crmOnly) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
@@ -355,10 +367,11 @@ export function HubShell(props: ShellProps) {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
+  }, [crmOnly]);
   const isActive = useIsActive();
   const privacy = usePrivacy();
-  const dockNav = useDockNav(isActive);
+  const dockNav = useDockNav(isActive, crmOnly);
+  const mobileNav = crmOnly ? CRM_ONLY_NAV : MOBILE_NAV;
 
   return (
     <div className="hub-root bg-background text-foreground">
@@ -383,23 +396,25 @@ export function HubShell(props: ShellProps) {
           ))}
           {dockNav.hidden.length > 0 && <MoreNav items={dockNav.hidden} isActive={isActive} />}
           <DockSeparator />
-          <DockIcon className={cn(dockIconClass, "text-muted-foreground hover:bg-secondary hover:text-foreground")}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={() => setPaletteOpen(true)}
-                  aria-label="Search (Ctrl+K)"
-                  className="flex size-full items-center justify-center"
-                >
-                  <Search className="size-full" strokeWidth={1.75} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="right" className="rounded-lg">
-                Search <kbd className="ml-1 rounded bg-secondary px-1 text-[0.625rem]">Ctrl K</kbd>
-              </TooltipContent>
-            </Tooltip>
-          </DockIcon>
+          {!crmOnly && (
+            <DockIcon className={cn(dockIconClass, "text-muted-foreground hover:bg-secondary hover:text-foreground")}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    onClick={() => setPaletteOpen(true)}
+                    aria-label="Search (Ctrl+K)"
+                    className="flex size-full items-center justify-center"
+                  >
+                    <Search className="size-full" strokeWidth={1.75} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="rounded-lg">
+                  Search <kbd className="ml-1 rounded bg-secondary px-1 text-[0.625rem]">Ctrl K</kbd>
+                </TooltipContent>
+              </Tooltip>
+            </DockIcon>
+          )}
           <DockIcon
             className={cn(
               dockIconClass,
@@ -453,14 +468,16 @@ export function HubShell(props: ShellProps) {
               <Eye className="h-5 w-5" strokeWidth={1.75} />
             )}
           </button>
-          <button
-            type="button"
-            onClick={() => setPaletteOpen(true)}
-            aria-label="Search"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary"
-          >
-            <Search className="h-5 w-5" strokeWidth={1.75} />
-          </button>
+          {!crmOnly && (
+            <button
+              type="button"
+              onClick={() => setPaletteOpen(true)}
+              aria-label="Search"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary"
+            >
+              <Search className="h-5 w-5" strokeWidth={1.75} />
+            </button>
+          )}
         </div>
       </header>
 
@@ -476,7 +493,7 @@ export function HubShell(props: ShellProps) {
         className="hub-safe-bottom fixed inset-x-0 bottom-3 z-30 flex justify-center md:hidden print:hidden"
       >
         <Dock className="hub-glass gap-2 shadow-hub-lg" iconSize={44} iconMagnification={44}>
-          {MOBILE_NAV.map((item) => (
+          {mobileNav.map((item) => (
             <DockNavItem key={item.to} item={item} side="top" active={isActive(item)} />
           ))}
           <DockSeparator />
@@ -505,7 +522,7 @@ export function HubShell(props: ShellProps) {
             <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
           <div className="space-y-6">
-            <NavList onNavigate={() => setMenuOpen(false)} />
+            <NavList onNavigate={() => setMenuOpen(false)} crmOnly={crmOnly} />
             <AccountControls {...props} />
           </div>
         </SheetContent>

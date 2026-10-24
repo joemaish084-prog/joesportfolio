@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { KeyRound, Loader2, MailCheck } from "lucide-react";
+import { KeyRound, Loader2, MailCheck, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,17 +16,82 @@ const REASON_MESSAGE = {
 type Mode = "sign-in" | "forgot" | "sent";
 
 export default function LoginPage() {
-  const { status, reason, signIn } = useHubAuth();
+  const { status, reason, signIn, verifyMfa, signOut } = useHubAuth();
   const location = useLocation();
   const [mode, setMode] = useState<Mode>("sign-in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (status === "admin") {
+  if (status === "admin" || status === "crm") {
     const from = (location.state as { from?: string } | null)?.from;
-    return <Navigate to={from && from.startsWith("/hub") && from !== "/hub/login" ? from : "/hub"} replace />;
+    const home = status === "crm" ? "/hub/crm" : "/hub";
+    const allowed = from && from.startsWith(home) && from !== "/hub/login";
+    return <Navigate to={allowed ? from : home} replace />;
+  }
+
+  if (status === "mfa") {
+    const onVerify = async (e: FormEvent) => {
+      e.preventDefault();
+      setSubmitting(true);
+      setError(null);
+      const result = await verifyMfa(code);
+      setSubmitting(false);
+      if (result.error) setError(result.error);
+    };
+    return (
+      <div className="hub-root flex items-center justify-center bg-background px-4 py-12">
+        <div className="w-full max-w-sm">
+          <div className="mb-8 flex flex-col items-center text-center">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-hub-lg">
+              <ShieldCheck className="h-6 w-6" strokeWidth={2} />
+            </div>
+            <h1 className="text-2xl font-bold tracking-tight">Two-step verification</h1>
+            <p className="mt-1 text-sm text-muted-foreground">Enter the 6-digit code from your authenticator app.</p>
+          </div>
+          <form onSubmit={onVerify} className="hub-card space-y-4 p-6" noValidate>
+            <div className="space-y-1.5">
+              <Label htmlFor="hub-mfa-code" className="hub-label">
+                Code
+              </Label>
+              <Input
+                id="hub-mfa-code"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                autoFocus
+                maxLength={8}
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="hub-tabular h-11 rounded-xl bg-background text-center text-lg tracking-[0.3em]"
+              />
+            </div>
+            {error && (
+              <p role="alert" className="rounded-xl bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                {error}
+              </p>
+            )}
+            <Button
+              type="submit"
+              disabled={submitting || code.replace(/\s/g, "").length < 6}
+              className="h-11 w-full rounded-xl text-[0.9375rem] font-semibold"
+            >
+              {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Verify"}
+            </Button>
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => void signOut("manual")}
+                className="text-sm font-medium text-primary hover:underline"
+              >
+                Use a different account
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
   }
 
   const switchMode = (next: Mode) => {
