@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { CheckCircle2, Pencil, PiggyBank, Plus, Repeat2, Trash2, Wallet } from "lucide-react";
+import { CalendarDays, CheckCircle2, Pencil, PiggyBank, Plus, Repeat2, Search, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FormDialog, inputClass, MoneyInput } from "../components/form";
 import { Money } from "../components/privacy";
-import { EmptyState, PageHeader, Pill, SkeletonBlock, StatTile } from "../components/ui";
+import { EmptyState, PageHeader, Pill, SkeletonBlock } from "../components/ui";
+import { BusinessFundsDashboard } from "../components/funds/BusinessFundsDashboard";
+import { cn } from "@/lib/utils";
 import { formatDate, isOverdue } from "../lib/format";
 import { usePrivacy } from "../lib/privacy";
 import {
@@ -23,9 +25,6 @@ export default function BusinessFundsPage() {
   const [search, setSearch] = useState("");
   const { hidden } = usePrivacy();
   const funds = query.data?.funds ?? [];
-  const active = funds.filter((f) => !f.completed_at);
-  const totalSaved = active.reduce((sum, f) => sum + Number(f.saved_amount), 0);
-  const remaining = active.reduce((sum, f) => sum + Math.max(0, Number(f.target_amount) - Number(f.saved_amount)), 0);
   const shown = funds.filter((f) =>
     (filter === "all" || (filter === "completed" ? !!f.completed_at : !f.completed_at)) &&
     `${f.name} ${f.category} ${f.notes ?? ""}`.toLowerCase().includes(search.toLowerCase().trim()),
@@ -37,27 +36,20 @@ export default function BusinessFundsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Business Funds" subtitle="Set money aside for the things that keep your business moving."
+      <PageHeader title="Business Funds" subtitle="A little today. A stronger business tomorrow."
         actions={<Button className="rounded-full" disabled={!available} onClick={() => setPanel({ kind: "new" })}><Plus className="mr-2 h-4 w-4" />New fund</Button>} />
-      <p className="text-sm text-muted-foreground">Private to hub admins. Track money you set aside manually; recording savings or payments here does not move money.</p>
       {query.isPending ? <SkeletonBlock className="h-64" /> : query.isError ? (
         <div role="alert" className="hub-card space-y-3 p-6"><p>Could not load your funds. Please try again.</p><Button variant="outline" onClick={() => void query.refetch()}>Retry</Button></div>
       ) : query.data?.missing ? (
         <EmptyState icon={PiggyBank} title="Business Funds needs setup" description="The Business Funds database update needs to be applied before you can save your goals." />
       ) : <>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <StatTile label="Set aside" icon={PiggyBank} hint="Across active funds"><Money value={totalSaved} /></StatTile>
-          <StatTile label="Still to save" icon={Wallet} hint="Remaining to reach your targets"><Money value={remaining} /></StatTile>
-          <StatTile label="Ready to use" icon={CheckCircle2} hint={`${active.length} active ${active.length === 1 ? "fund" : "funds"}`}>
-            {active.filter((f) => Number(f.saved_amount) >= Number(f.target_amount)).length}
-          </StatTile>
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Input aria-label="Search funds" placeholder="Search funds…" value={search} onChange={(e) => setSearch(e.target.value)} className="h-11 max-w-sm rounded-xl" />
-          <select aria-label="Fund status" className={`${selectClass} !w-auto`} value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="active">Active funds</option><option value="completed">Completed funds</option><option value="all">All funds</option>
-          </select>
-        </div>
+        <BusinessFundsDashboard funds={funds} onNew={() => setPanel({ kind: "new" })} onAdd={(fund) => setPanel({ kind: "add", fund })} />
+        <div id="funds-collection" className="scroll-mt-20 space-y-4 pt-3">
+          <div className="flex items-center justify-between"><div><h2 className="text-xl font-semibold tracking-tight">Your funds</h2><p className="mt-1 text-xs text-muted-foreground">Every ambition, with a plan behind it.</p></div><span className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground">{funds.length} total</span></div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex rounded-full bg-secondary p-1" aria-label="Fund status">{["active", "completed", "all"].map((status) => <button type="button" key={status} aria-pressed={filter === status} onClick={() => setFilter(status)} className={cn("rounded-full px-4 py-2 text-xs capitalize", filter === status ? "bg-card font-medium shadow-sm" : "text-muted-foreground")}>{status}</button>)}</div>
+            <div className="relative w-full sm:w-64"><Search className="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-muted-foreground" /><Input aria-label="Search funds" placeholder="Find a fund…" value={search} onChange={(e) => setSearch(e.target.value)} className="h-11 rounded-full pl-9" /></div>
+          </div>
         {!shown.length ? <div className="hub-card"><EmptyState icon={PiggyBank}
           title={funds.length ? "No matching funds" : "Give your next goal a place to grow"}
           description={funds.length ? "Try another search or status." : "Save for equipment, subscriptions, software, marketing, or whatever your business needs next."}
@@ -69,9 +61,9 @@ export default function BusinessFundsPage() {
               const pct = Math.min(100, Math.round(saved / target * 100));
               const ready = saved >= target;
               const overdue = isOverdue(fund.due_date, !!fund.completed_at || ready);
-              return <article key={fund.id} className="hub-card flex flex-col gap-4 p-5">
+              return <article key={fund.id} className="hub-card relative flex flex-col gap-4 overflow-hidden !rounded-[24px] p-5 transition-shadow hover:shadow-hub-lg sm:p-6">
                 <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0"><h2 className="break-words text-lg font-semibold">{fund.name}</h2><p className="mt-1 text-sm text-muted-foreground">{fund.category} · {FUND_FREQUENCIES[fund.frequency]}</p></div>
+                  <div className="flex min-w-0 items-start gap-3"><div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-tint text-on-tint">{fund.completed_at ? <CheckCircle2 className="h-5 w-5" /> : fund.frequency === "once" ? <PiggyBank className="h-5 w-5" /> : <Repeat2 className="h-5 w-5" />}</div><div className="min-w-0"><h3 className="break-words text-base font-semibold">{fund.name}</h3><p className="mt-1 text-xs text-muted-foreground">{fund.category} · {FUND_FREQUENCIES[fund.frequency]}</p></div></div>
                   <div className="flex shrink-0 gap-1">
                     {!fund.completed_at && <Button variant="ghost" size="icon" aria-label={`Edit ${fund.name}`} onClick={() => setPanel({ kind: "edit", fund })}><Pencil className="h-4 w-4" /></Button>}
                     <Button variant="ghost" size="icon" aria-label={`Delete ${fund.name}`} onClick={() => setPanel({ kind: "delete", fund })}><Trash2 className="h-4 w-4" /></Button>
@@ -82,13 +74,14 @@ export default function BusinessFundsPage() {
                   {fund.completed_at ? <Pill tone="accent">Completed</Pill> : ready ? <Pill tone="accent">Ready to use</Pill> : overdue ? <Pill tone="warning">Past due</Pill> : null}
                 </div>
                 <div>
-                  <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2"><span className="text-xl font-semibold"><Money value={saved} /></span><span className="text-sm text-muted-foreground">of <Money value={target} /></span></div>
-                  {!hidden && <><div role="progressbar" aria-label={`${fund.name} savings progress`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} className="h-2 overflow-hidden rounded-full bg-secondary"><div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} /></div><p className="mt-2 text-xs text-muted-foreground">{pct}% saved</p></>}
+                  <p className="mb-1 text-[11px] uppercase tracking-wider text-muted-foreground">{fund.completed_at ? "Balance after payment" : "Saved so far"}</p>
+                  <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2"><span className="text-2xl font-semibold tracking-tight"><Money value={saved} /></span><span className="text-xs text-muted-foreground">{fund.completed_at ? "Target" : "of"} <Money value={target} /></span></div>
+                  {!hidden && !fund.completed_at && <><div role="progressbar" aria-label={`${fund.name} savings progress`} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} className="h-2 overflow-hidden rounded-full bg-secondary"><div className="h-full rounded-full bg-gradient-to-r from-orange-600 to-orange-400" style={{ width: `${pct}%` }} /></div><p className="mt-2 text-right text-xs font-medium text-on-tint">{pct}% funded</p></>}
                   <p className="mt-2 text-sm text-muted-foreground">{fund.completed_at ? "Balance left after payment: " : "Remaining: "}<Money value={fund.completed_at ? saved : Math.max(0, target - saved)} /></p>
                 </div>
-                {fund.due_date && <p className="text-sm text-muted-foreground">{fund.frequency === "once" ? "Target date" : "Next payment"}: {formatDate(fund.due_date)}</p>}
+                {fund.due_date && <p className="flex items-center gap-2 text-xs text-muted-foreground"><CalendarDays className="h-3.5 w-3.5" />{fund.frequency === "once" ? "Target date" : "Next payment"}: {formatDate(fund.due_date)}</p>}
                 {fund.notes && <p className="whitespace-pre-wrap break-words text-sm text-muted-foreground">{fund.notes}</p>}
-                {!fund.completed_at && <div className="mt-auto flex flex-wrap gap-2 pt-1">
+                {!fund.completed_at && <div className="mt-auto flex flex-wrap gap-2 border-t border-border/60 pt-4">
                   <Button variant="outline" className="rounded-full" onClick={() => setPanel({ kind: "add", fund })}><Plus className="mr-2 h-4 w-4" />Add savings</Button>
                   <Button variant="ghost" className="rounded-full" disabled={!ready} onClick={() => setPanel({ kind: "pay", fund })}>
                     {fund.frequency !== "once" && <Repeat2 className="mr-2 h-4 w-4" />}Record payment
@@ -98,6 +91,8 @@ export default function BusinessFundsPage() {
             })}
           </div>
         )}
+        </div>
+        <p className="text-center text-xs text-muted-foreground">Private to hub admins · Manual savings records · No money is moved</p>
       </>}
       {panel && <FundPanel panel={panel} onClose={() => setPanel(null)} />}
     </div>
