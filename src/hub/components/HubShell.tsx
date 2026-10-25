@@ -20,6 +20,7 @@ import {
   Sun,
   Users,
   Wallet,
+  PiggyBank,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -62,6 +63,7 @@ const RECORDS_NAV: NavItem[] = [
   { to: "/hub/documents", label: "Documents", icon: FileText },
   { to: "/hub/reports", label: "Reports", icon: BarChart3 },
   { to: "/hub/finance", label: "Finance", icon: Wallet },
+  { to: "/hub/funds", label: "Business Funds", icon: PiggyBank },
   { to: "/hub/website", label: "Website", icon: Globe },
 ];
 
@@ -217,7 +219,7 @@ const DOCK_SLOT = 48;
 const DOCK_FIXED = 18 + 48 + 3 * 17 + 2 * DOCK_SLOT + 20;
 const DOCK_NAV = [...WORK_NAV, ...RECORDS_NAV];
 // What stays in the dock longest when space runs out (first = last to fold into More).
-const DOCK_PRIORITY = ["/hub", "/hub/tasks", "/hub/crm", "/hub/clients", "/hub/finance", "/hub/pipeline", "/hub/onboarding", "/hub/website", "/hub/documents", "/hub/reports"];
+const DOCK_PRIORITY = ["/hub", "/hub/tasks", "/hub/crm", "/hub/clients", "/hub/finance", "/hub/funds", "/hub/pipeline", "/hub/onboarding", "/hub/website", "/hub/documents", "/hub/reports"];
 
 /**
  * Which sections fit in the dock at the current window height (browser zoom

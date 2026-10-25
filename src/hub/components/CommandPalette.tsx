@@ -20,6 +20,7 @@ import {
   User,
   Users,
   Wallet,
+  PiggyBank,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -45,6 +46,7 @@ const PAGES = [
   { label: "Documents", to: "/hub/documents", icon: FileText },
   { label: "Reports", to: "/hub/reports", icon: BarChart3 },
   { label: "Finance", to: "/hub/finance", icon: Wallet },
+  { label: "Business Funds", to: "/hub/funds", icon: PiggyBank },
   { label: "Pipeline", to: "/hub/pipeline", icon: Filter },
   { label: "Website", to: "/hub/website", icon: Globe },
   { label: "Settings", to: "/hub/settings", icon: Settings },

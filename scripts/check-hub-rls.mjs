@@ -33,6 +33,7 @@ const tables = [
   "expenses",
   "leads",
   "hub_settings",
+  "business_funds",
 ];
 let leaks = 0;
 

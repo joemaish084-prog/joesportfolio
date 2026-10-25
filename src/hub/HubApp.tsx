@@ -21,6 +21,7 @@ import { SkeletonBlock } from "./components/ui";
 const DocumentsPage = lazy(() => import("./pages/DocumentsPage"));
 const ReportsPage = lazy(() => import("./pages/ReportsPage"));
 const FinancePage = lazy(() => import("./pages/FinancePage"));
+const BusinessFundsPage = lazy(() => import("./pages/BusinessFundsPage"));
 const InvoicePage = lazy(() => import("./pages/InvoicePage"));
 const PipelinePage = lazy(() => import("./pages/PipelinePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
@@ -99,6 +100,7 @@ export default function HubApp() {
               <Route path="documents" element={admin(section(<DocumentsPage />))} />
               <Route path="reports" element={admin(section(<ReportsPage />))} />
               <Route path="finance" element={admin(section(<FinancePage />))} />
+              <Route path="funds" element={admin(section(<BusinessFundsPage />))} />
               <Route path="finance/invoices/:id" element={admin(section(<InvoicePage />))} />
               <Route path="pipeline" element={admin(section(<PipelinePage />))} />
               <Route path="settings" element={admin(section(<SettingsPage />))} />
