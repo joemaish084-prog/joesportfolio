@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-// SheetJS from its own CDN: the npm copy (0.18.5) has known parsing advisories.
-import * as XLSX from "https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs";
+// SheetJS 0.20.3, vendored: the npm registry copy (0.18.5) has known parsing
+// advisories, and Supabase's bundler won't fetch from cdn.sheetjs.com.
+// Same file as node_modules/xlsx/xlsx.mjs (Apache-2.0, see vendor/xlsx-LICENSE.txt).
+import * as XLSX from "../_shared/vendor/xlsx-0.20.3.mjs";
 import { corsHeaders, json, rateLimited, requireAccess, userClient } from "../_shared/crm/http.ts";
 import { MAX_UPLOAD_BYTES, detectSheetKind, readWorkbook, sha256Hex } from "../_shared/crm/sheet.ts";
 

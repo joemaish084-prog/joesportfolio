@@ -9,6 +9,7 @@ import {
   Loader2,
   Mail,
   MessageCircle,
+  PenLine,
   RefreshCw,
   Send,
   Sparkles,
@@ -39,6 +40,7 @@ import {
 } from "../../lib/queries";
 import {
   DRAFT_KINDS,
+  DRAFT_KIND_CHANNEL,
   DRAFT_KIND_LABEL,
   MESSAGE_STATUS_LABEL,
   type CrmLead,
@@ -383,6 +385,7 @@ export function OutreachPanel({ lead, initialKind }: { lead: CrmLead; initialKin
   const messages = useLeadMessages(lead.id);
   const contacts = useLeadContacts(lead.id);
   const generate = useGenerateDraft();
+  const saveDraft = useSaveDraft();
   const suppress = useAddSuppression();
   const [kind, setKind] = useState<DraftKind>(initialKind ?? "initial_email");
   const [contactId, setContactId] = useState("");
@@ -398,6 +401,33 @@ export function OutreachPanel({ lead, initialKind }: { lead: CrmLead; initialKin
   const open = visible.filter((d) => d.status === "draft" || d.status === "approved");
   const used = visible.filter((d) => d.status === "used");
   const blocked = lead.do_not_contact && kind !== "discovery_prep";
+
+  // A hand-written draft: same approval and hand-off as an AI one, starting
+  // from a greeting, the sender's name and (for email) the opt-out line.
+  const writeMyself = () => {
+    const sender = org.data?.sender_name ?? "";
+    const contact = (contacts.data ?? []).find((c) => c.id === contactId);
+    const greeting = contact?.name ? `Hi ${contact.name.split(/\s+/)[0]},` : `Hi ${lead.name} team,`;
+    const channel = DRAFT_KIND_CHANNEL[kind];
+    const optOut = channel === "email" ? `\n\nIf you'd rather not hear from me, just reply "no thanks" and I won't contact you again.` : "";
+    const body =
+      channel === "notes"
+        ? `What we know (verified):\n- \n\nWhat we're assuming:\n- \n\nQuestions to ask:\n- `
+        : `${greeting}\n\n${channel === "email" ? "" : `This is ${sender}${org.data?.sender_business ? ` from ${org.data.sender_business}` : ""}. `}\n${optOut}\n\n${sender}`;
+    saveDraft.mutate(
+      {
+        values: {
+          lead_id: lead.id,
+          contact_id: contactId || null,
+          kind,
+          channel,
+          subject: channel === "email" ? "" : null,
+          body,
+        },
+      },
+      { onSuccess: () => toast.success("Blank draft added. Write it, save, then approve."), onError: (e) => toast.error(e.message) },
+    );
+  };
 
   const run = (k: DraftKind, draftId?: string) => {
     if (draftId) setRegenerating(draftId);
@@ -476,8 +506,11 @@ export function OutreachPanel({ lead, initialKind }: { lead: CrmLead; initialKin
                 {generate.isPending && !regenerating ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : <Sparkles className="mr-1.5 h-4 w-4" />}
                 Write draft
               </Button>
+              <Button variant="outline" className="rounded-full" onClick={writeMyself} disabled={saveDraft.isPending || blocked || !org.data?.sender_name}>
+                <PenLine className="mr-1.5 h-4 w-4" /> Write it myself
+              </Button>
               <p className="text-xs text-muted-foreground">
-                Uses only what's on this lead. Nothing is sent: you review, approve and send it yourself.
+                Nothing is sent: you review, approve and send it yourself.
               </p>
             </div>
           </div>
