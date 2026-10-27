@@ -42,7 +42,10 @@ const Index = () => {
       <main className="min-h-screen">
         <Hero />
         <ExpandCollapseAll />
-        <Suspense fallback={null}>
+        {/* Reserve the page's height while the section chunks load. With a null
+            fallback the page collapses to the hero, and a visitor who has already
+            scrolled the prerendered page lands on empty dark background. */}
+        <Suspense fallback={<div aria-hidden style={{ minHeight: "8000px" }} />}>
           <CollapsibleWrapper id="case-study" title="Case Studies" Icon={BarChart3} count="Featured" defaultOpenOnMobile>
             <CaseStudy />
           </CollapsibleWrapper>
