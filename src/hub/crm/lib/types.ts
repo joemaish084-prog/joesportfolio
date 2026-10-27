@@ -107,7 +107,9 @@ export type CrmOrganisation = {
   timezone: string;
   require_mfa: boolean;
   sending_enabled: boolean;
-  email_provider: "none" | "gmail";
+  email_provider: "none" | "gmail" | "brevo";
+  /** Verified sender the email comes from; replies go to sender_email. */
+  from_email: string | null;
   sending_mode: "manual_approval" | "batch_approval";
   automation_mode: "draft_only";
   daily_send_limit: number;

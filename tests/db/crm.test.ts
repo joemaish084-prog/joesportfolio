@@ -216,14 +216,58 @@ describe("drafts and sending", () => {
     await expect(db.as(db.owner, sendSql, [lead, draft])).rejects.toThrow(/Sending is disabled/);
     await expect(db.as("service_role", sendSql, [lead, draft])).rejects.toThrow(/Sending is disabled/);
 
-    await db.admin("update public.crm_organisations set sending_enabled = true where id = $1", [db.org]);
+    // Sending can't even be switched on without a provider.
+    await expect(db.admin("update public.crm_organisations set sending_enabled = true where id = $1", [db.org])).rejects.toThrow(
+      /sending_ready/,
+    );
+    await db.admin("update public.crm_organisations set sending_enabled = true, email_provider = 'gmail' where id = $1", [db.org]);
     try {
-      // Still blocked: no provider connected.
-      await expect(db.as("service_role", sendSql, [lead, draft])).rejects.toThrow(/Sending is disabled/);
-      await db.admin("update public.crm_organisations set email_provider = 'gmail' where id = $1", [db.org]);
       // Even with sending on, people can't write provider statuses themselves.
       await expect(db.as(db.owner, sendSql, [lead, draft])).rejects.toThrow(/row-level security/);
       expect(await db.as("service_role", sendSql, [lead, draft])).toHaveLength(1);
+    } finally {
+      await db.admin("update public.crm_organisations set sending_enabled = false, email_provider = 'none' where id = $1", [db.org]);
+    }
+  });
+
+  it("accepts Brevo only with a From address, and records a Brevo send", async () => {
+    // Seeded From address
+    const [org] = await db.admin<{ from_email: string }>("select from_email from public.crm_organisations where id = $1", [db.org]);
+    expect(org.from_email).toBe("hello@josephmaina.co.ke");
+    // Sending can't be on without a From address
+    await expect(
+      db.admin("update public.crm_organisations set email_provider = 'brevo', from_email = null, sending_enabled = true where id = $1", [db.org]),
+    ).rejects.toThrow(/sending_ready/);
+
+    const lead = await db.addLead({ email: "sales@brevotest.co.ke", stage: "ready_for_outreach" });
+    const draft = await approvedDraft(lead);
+    await db.admin(
+      "update public.crm_organisations set email_provider = 'brevo', from_email = 'hello@josephmaina.co.ke', sending_enabled = true where id = $1",
+      [db.org],
+    );
+    try {
+      await db.as(
+        "service_role",
+        `insert into public.crm_outreach_messages
+           (lead_id, draft_id, channel, direction, status, provider, provider_message_id, idempotency_key, to_address)
+         values ($1, $2, 'email', 'outbound', 'sent', 'brevo', '<abc@smtp-relay.mailin.fr>', $3, 'sales@brevotest.co.ke')`,
+        [lead, draft, `draft:${draft}`],
+      );
+      // Same draft can't be recorded twice
+      await expect(
+        db.as(
+          "service_role",
+          `insert into public.crm_outreach_messages (lead_id, channel, direction, status, provider, idempotency_key)
+           values ($1, 'email', 'outbound', 'sent', 'brevo', $2)`,
+          [lead, `draft:${draft}`],
+        ),
+      ).rejects.toThrow();
+      const [l] = await db.admin<{ stage: string; tasks: number }>(
+        "select stage, (select count(*)::int from public.crm_follow_up_tasks where lead_id = $1) as tasks from public.crm_leads where id = $1",
+        [lead],
+      );
+      expect(l).toEqual({ stage: "contacted", tasks: 2 });
+      expect(await db.as("service_role", "select public.crm_is_suppressed($1, 'email', 'x@y.co') as s", [db.org])).toEqual([{ s: false }]);
     } finally {
       await db.admin("update public.crm_organisations set sending_enabled = false, email_provider = 'none' where id = $1", [db.org]);
     }

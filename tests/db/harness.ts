@@ -47,6 +47,7 @@ export async function createDb() {
   await pg.query("insert into public.user_roles (user_id, role) values ($1, 'admin')", [owner]);
 
   await pg.exec(migration("20261024000000_crm_core.sql"));
+  await pg.exec(migration("20261027000000_crm_brevo.sql"));
   for (const t of ["crm_organisations", "crm_memberships", "crm_leads"]) {
     await pg.exec(`grant all on public.${t} to service_role`);
   }

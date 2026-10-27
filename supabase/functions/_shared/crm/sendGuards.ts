@@ -59,6 +59,7 @@ export function sendBlockers(c: SendCheck): string[] {
   }
   if (c.lead.do_not_contact || c.lead.stage === "do_not_contact") blockers.push("The lead is marked do not contact");
   if (!c.to) blockers.push("There's no email address");
+  else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c.to)) blockers.push("That email address doesn't look right");
   if (c.suppressed) blockers.push("The address is on the suppression list");
   if (c.campaignPaused) blockers.push("The campaign is paused");
   if (c.sentToday >= c.org.daily_send_limit) blockers.push(`Today's limit of ${c.org.daily_send_limit} emails is reached`);

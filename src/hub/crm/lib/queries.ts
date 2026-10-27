@@ -367,6 +367,19 @@ export function useGenerateDraft() {
   });
 }
 
+/** Sends one approved email draft through the connected provider (Brevo). */
+export function useSendEmail() {
+  const invalidate = useInvalidateCrm();
+  return useMutation({
+    mutationFn: async ({ draftId, to }: { draftId: string; to: string }) => {
+      const { data, error } = await supabase.functions.invoke("crm-send-email", { body: { draft_id: draftId, to } });
+      if (error) throw new Error(await functionError(error, "crm-send-email"));
+      return data as { sent: boolean; warning?: string };
+    },
+    onSettled: invalidate,
+  });
+}
+
 export type ParsedUpload = {
   filename: string;
   size: number;

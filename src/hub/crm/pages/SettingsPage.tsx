@@ -114,7 +114,10 @@ function SenderSettings({ readOnly }: { readOnly: boolean }) {
 }
 
 function SendingSettings({ readOnly }: { readOnly: boolean }) {
+  const saveOrg = useSaveOrg();
   const f = useOrgForm((o) => ({
+    email_provider: o.email_provider,
+    from_email: o.from_email ?? "",
     sending_mode: o.sending_mode,
     daily_send_limit: o.daily_send_limit,
     send_window_start: o.send_window_start.slice(0, 5),
@@ -123,22 +126,72 @@ function SendingSettings({ readOnly }: { readOnly: boolean }) {
   }));
   if (!f.v || !f.org) return null;
   const v = f.v;
+  const org = f.org;
+  // The switch acts on saved settings, so it waits for unsaved provider changes.
+  const ready = org.email_provider === "brevo" && !!org.from_email && !f.dirty;
+
+  const toggleSending = (on: boolean) => {
+    if (
+      on &&
+      !window.confirm(
+        `Turn on sending from ${org.from_email} through Brevo?\n\nEach email still needs your approval and goes out only when you click Send now. ` +
+          "Brevo's anti-spam policy prohibits scraped contact lists; sending to scraped leads can get the account suspended.",
+      )
+    )
+      return;
+    saveOrg.mutate(
+      { id: org.id, values: { sending_enabled: on } },
+      { onSuccess: () => toast.success(on ? "Sending is on" : "Sending is off"), onError: (e) => toast.error(e.message) },
+    );
+  };
+
   return (
     <Section title="Sending">
       <div className="space-y-4 p-5">
         <div className="flex items-start justify-between gap-4 rounded-2xl bg-secondary/60 p-4">
           <div className="text-sm">
             <p className="flex items-center gap-2 font-medium">
-              <Lock className="h-4 w-4" /> Sending from the CRM: off
+              {!org.sending_enabled && <Lock className="h-4 w-4" />} Sending from the CRM: {org.sending_enabled ? "on" : "off"}
             </p>
             <p className="text-muted-foreground">
-              No email provider is connected, so nothing can be sent from here; the database refuses it too. You send from Gmail or WhatsApp and
-              log it. Automation: drafts and reminders only.
+              {org.sending_enabled
+                ? `Approved emails can be sent from ${org.from_email} with Send now. Every send is logged and audited.`
+                : ready
+                  ? "Brevo is set up. Switch this on to show Send now on approved emails."
+                  : "Choose Brevo and a From address below and save, then switch this on. Until then you send from Gmail or WhatsApp and log it."}
             </p>
           </div>
-          <Switch aria-label="Send from the CRM" checked={f.org.sending_enabled} disabled />
+          <Switch
+            aria-label="Send from the CRM"
+            checked={org.sending_enabled}
+            disabled={readOnly || saveOrg.isPending || (!org.sending_enabled && !ready)}
+            onCheckedChange={toggleSending}
+          />
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Email provider" hint="The Brevo API key is stored in Supabase secrets, not here.">
+            <SelectField
+              label="Email provider"
+              disabled={readOnly || org.sending_enabled}
+              value={v.email_provider}
+              onChange={(x) => f.setV({ ...v, email_provider: x as CrmOrganisation["email_provider"] })}
+              options={[
+                { value: "none", label: "None (Gmail / WhatsApp hand-off)" },
+                { value: "brevo", label: "Brevo" },
+              ]}
+            />
+          </Field>
+          <Field label="From address" htmlFor="s-from" hint="Must be a verified sender in Brevo. Replies go to the reply-to email above.">
+            <Input
+              id="s-from"
+              type="email"
+              readOnly={readOnly || org.sending_enabled}
+              value={v.from_email}
+              onChange={(e) => f.setV({ ...v, from_email: e.target.value.trim() })}
+              placeholder="hello@josephmaina.co.ke"
+              className={inputClass}
+            />
+          </Field>
           <Field label="Approval">
             <SelectField
               label="Approval"
@@ -198,7 +251,9 @@ function SendingSettings({ readOnly }: { readOnly: boolean }) {
           onReset={f.reset}
           onSave={() => {
             if (v.send_window_start >= v.send_window_end) return toast.error("The start time must be before the end time.");
-            f.submit(v);
+            if (v.from_email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.from_email)) return toast.error("The From address doesn't look right.");
+            if (v.email_provider === "brevo" && !v.from_email) return toast.error("Add the From address for Brevo.");
+            f.submit({ ...v, from_email: v.from_email || null });
           }}
         />
       )}

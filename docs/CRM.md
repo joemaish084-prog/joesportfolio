@@ -26,9 +26,11 @@ Private CRM inside the Client Hub at **`/hub/crm`**. Same login, idle sign-out, 
   - Server-side through the Lovable AI gateway, using only verified facts. Anything unverified is listed as an assumption.
   - Each draft is checked for guarantees, invented statistics, claimed audits, "you have no website" claims, a missing opt-out line and a missing sender name.
   - Drafts are stored separately from messages, and editing an approved draft needs a fresh approval.
-- **Sending.** Off. You open approved emails in Gmail and WhatsApp messages in WhatsApp (wa.me links), press Send yourself, then click **I've sent it**. That records a manual send, not a delivery.
-  - The provider seam (`_shared/crm/emailProvider.ts`) and send guards exist, but no provider is built.
-  - The database refuses provider sends while `sending_enabled = false` or the provider is `none`.
+- **Sending.** Two ways, both only for approved drafts:
+  - **By hand (default):** open the approved email in Gmail or the WhatsApp message in WhatsApp, press Send there, then click **I've sent it**. That records a manual send, not a delivery.
+  - **Brevo (off until an owner turns it on):** type or pick the client's email on an approved email draft and click **Send now**. It's sent from the From address (`hello@josephmaina.co.ke`) through Brevo's HTTP API, with replies going to your reply-to email and an opt-out line plus a `List-Unsubscribe` header added. Only the approved text is sent, each draft at most once. It's checked against suppression, do-not-contact, a paused campaign, the daily limit (and Brevo's 300/day free cap) and the sending hours, then recorded with Brevo's message id. Recording a send schedules follow-ups.
+  - The database refuses provider sends unless sending is on, a provider and From address are set, and the draft is approved (`crm_message_guard`, `crm_organisations_sending_ready_check`).
+  - **Brevo policy:** Brevo's anti-spam policy prohibits sending to contacts scraped from the internet, transactional or marketing. The dealer list was scraped from Google Maps, so sending it through Brevo risks the account being suspended.
 - **Follow-ups.**
   - When the first message is logged, follow-ups are scheduled in business days from the sequence in Settings (default +4, then +6).
   - Sending a follow-up draft marks it done.
@@ -47,9 +49,11 @@ Private CRM inside the Client Hub at **`/hub/crm`**. Same login, idle sign-out, 
 |---|---|
 | `supabase/migrations/20261024000000_crm_core.sql` | Schema, RLS, triggers, RPCs, seed |
 | `supabase/migrations/20261024000000_crm_core.rollback.sql` | Undo (deletes all CRM data) |
+| `supabase/migrations/20261027000000_crm_brevo.sql` (+ `.rollback.sql`) | Brevo provider, From address, sending-ready rule |
+| `supabase/functions/_shared/vendor/xlsx-0.20.3.mjs` | SheetJS, vendored (Supabase can't fetch it from its CDN) |
 | `supabase/functions/crm-parse-sheet` | Upload parsing (owner) |
 | `supabase/functions/crm-draft` | AI drafts (owner/manager) |
-| `supabase/functions/crm-send-email` | Send guards; always refuses today |
+| `supabase/functions/crm-send-email` | Sends one approved email through Brevo (off by default) |
 | `supabase/functions/_shared/crm/*` | Pure shared logic (draft rules, send guards, sheet reader) |
 | `src/hub/crm/` | The UI and its logic |
 | `src/hub/auth/HubAuthProvider.tsx`, `src/hub/HubApp.tsx`, `src/hub/pages/LoginPage.tsx`, `src/hub/components/HubShell.tsx` | Hub changes: CRM-only members, two-step login, CRM in the dock |
@@ -64,8 +68,10 @@ No new frontend variables. Edge function secrets (Supabase → Edge Functions �
 | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | yes | Provided by Supabase automatically |
 | `LOVABLE_API_KEY` | yes, for drafts | Already set for `hub-read-invoice` |
 | `CRM_AI_MODEL` | no | Defaults to `google/gemini-3-flash-preview` |
+| `BREVO_API_KEY` | for Send now | A Brevo **v3 API key** (`xkeysib-…`), not the SMTP key. Supabase blocks SMTP ports, so the HTTP API is used |
+| `SUPABASE_SERVICE_ROLE_KEY` | yes, provided | Used only by `crm-send-email` to record sends |
 
-None of the CRM functions use the service-role key.
+Only `crm-send-email` uses the service-role key, to record a send after its checks pass. Never put any of these in `.env`: it's committed, and `VITE_` values ship to the browser.
 
 ## Setup
 

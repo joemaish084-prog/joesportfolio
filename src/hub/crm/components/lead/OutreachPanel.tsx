@@ -37,6 +37,7 @@ import {
   useLogMessage,
   useOrg,
   useSaveDraft,
+  useSendEmail,
 } from "../../lib/queries";
 import {
   DRAFT_KINDS,
@@ -80,6 +81,7 @@ function DraftCard({
   const save = useSaveDraft();
   const logMessage = useLogMessage();
   const logOpened = useLogComposeOpened();
+  const sendEmail = useSendEmail();
   const contacts = useLeadContacts(lead.id);
   const [subject, setSubject] = useState(draft.subject ?? "");
   const [body, setBody] = useState(draft.body);
@@ -157,6 +159,21 @@ function DraftCard({
   const outsideHours = org && !withinSendWindow(org, new Date());
   const wa = draft.channel === "whatsapp" ? whatsappUrl(to, body) : null;
   const ig = draft.channel === "instagram" ? instagramUrl(lead.instagram) : null;
+  const toValid = !!emailKey(to);
+  // Direct sending only once an owner has connected Brevo and switched it on.
+  const canSendDirect = !!org?.sending_enabled && org.email_provider === "brevo" && !!org.from_email;
+
+  const sendNow = () => {
+    if (!toValid) return;
+    if (!window.confirm(`Send "${subject}" to ${to} from ${org?.from_email}?\n\nIt goes out straight away and can't be recalled.`)) return;
+    sendEmail.mutate(
+      { draftId: draft.id, to },
+      {
+        onSuccess: (r) => (r.warning ? toast.warning(r.warning) : toast.success(`Sent to ${to}`)),
+        onError: (e) => toast.error(e.message),
+      },
+    );
+  };
 
   return (
     <article className="border-b border-border/60 p-5 last:border-b-0">
@@ -248,7 +265,9 @@ function DraftCard({
 
       {draft.status === "approved" && canEdit && !dirty && !lead.do_not_contact && (
         <div className="mt-4 rounded-2xl bg-secondary/60 p-4">
-          <p className="mb-3 text-sm font-medium">Send it yourself</p>
+          <p className="mb-3 text-sm font-medium">
+            {draft.channel === "email" && canSendDirect ? `Send from ${org?.from_email}, or send it yourself` : "Send it yourself"}
+          </p>
           {outsideHours && (
             <p className="mb-3 text-xs text-warning">
               It's outside your sending hours ({org?.send_window_start.slice(0, 5)} to {org?.send_window_end.slice(0, 5)}, weekdays). Consider
@@ -256,22 +275,45 @@ function DraftCard({
             </p>
           )}
           <div className="flex flex-wrap items-end gap-2">
-            {draft.channel !== "instagram" && (
+            {draft.channel === "email" && (
+              <Field label="Client's email" htmlFor={`to-${draft.id}`} className="w-72">
+                <Input
+                  id={`to-${draft.id}`}
+                  type="email"
+                  inputMode="email"
+                  autoComplete="off"
+                  list={`emails-${draft.id}`}
+                  placeholder="name@business.co.ke"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value.trim())}
+                  aria-invalid={!!to && !toValid}
+                  className="h-10 rounded-xl bg-background"
+                />
+                <datalist id={`emails-${draft.id}`}>
+                  {emails.map((e) => (
+                    <option key={e} value={e} />
+                  ))}
+                </datalist>
+              </Field>
+            )}
+            {draft.channel === "whatsapp" && (
               <SelectField
-                label={draft.channel === "email" ? "Send to" : "WhatsApp number"}
+                label="WhatsApp number"
                 className="w-64"
                 value={to}
                 onChange={setTo}
-                options={
-                  (draft.channel === "email" ? emails : phones).length
-                    ? (draft.channel === "email" ? emails : phones).map((v) => ({ value: v, label: v }))
-                    : [{ value: "", label: draft.channel === "email" ? "No valid email on file" : "No phone on file" }]
-                }
+                options={phones.length ? phones.map((v) => ({ value: v, label: v })) : [{ value: "", label: "No phone on file" }]}
               />
             )}
-            {draft.channel === "email" && to && (
+            {draft.channel === "email" && canSendDirect && (
+              <Button size="sm" className="rounded-full" onClick={sendNow} disabled={!toValid || sendEmail.isPending}>
+                {sendEmail.isPending ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <Send className="mr-1.5 h-3.5 w-3.5" />}
+                Send now
+              </Button>
+            )}
+            {draft.channel === "email" && toValid && (
               <>
-                <Button asChild size="sm" className="rounded-full">
+                <Button asChild size="sm" variant={canSendDirect ? "outline" : "default"} className="rounded-full">
                   <a href={gmailComposeUrl(to, subject, body)} target="_blank" rel="noopener noreferrer" onClick={() => opened("email_compose_opened")}>
                     <Mail className="mr-1.5 h-3.5 w-3.5" /> Open in Gmail
                   </a>

@@ -1,6 +1,59 @@
 import { describe, expect, it } from "vitest";
 import { buildDraftPrompt, checkDraft, splitFacts } from "./draftRules";
+import { brevoProvider, getEmailProvider, withOptOut } from "./emailProvider";
 import { sendBlockers, withinSendWindow, type SendCheck } from "./sendGuards";
+
+describe("Brevo provider", () => {
+  const email = {
+    to: "sales@kei.co.ke",
+    from: { email: "hello@josephmaina.co.ke", name: "Joseph Maina" },
+    replyTo: "joe@example.com",
+    subject: "Buyer enquiries",
+    text: "Hi Kei Cars team",
+    idempotencyKey: "draft:1",
+    headers: { "List-Unsubscribe": "<mailto:joe@example.com?subject=unsubscribe>" },
+    tags: ["crm-outreach"],
+  };
+
+  it("posts to the transactional API with the key in a header, never the body", async () => {
+    const calls: { url: string; init: RequestInit }[] = [];
+    const fake = async (url: string, init: RequestInit) => {
+      calls.push({ url, init });
+      return new Response(JSON.stringify({ messageId: "<m1@brevo>" }), { status: 201 });
+    };
+    const result = await brevoProvider("xkeysib-test", fake).send(email);
+    expect(result).toEqual({ providerMessageId: "<m1@brevo>" });
+    expect(calls[0].url).toBe("https://api.brevo.com/v3/smtp/email");
+    expect((calls[0].init.headers as Record<string, string>)["api-key"]).toBe("xkeysib-test");
+    const sent = JSON.parse(String(calls[0].init.body));
+    expect(sent).toMatchObject({
+      sender: { email: "hello@josephmaina.co.ke", name: "Joseph Maina" },
+      to: [{ email: "sales@kei.co.ke" }],
+      replyTo: { email: "joe@example.com" },
+      subject: "Buyer enquiries",
+      textContent: "Hi Kei Cars team",
+    });
+    expect(String(calls[0].init.body)).not.toContain("xkeysib-test");
+  });
+
+  it("turns Brevo errors into plain messages", async () => {
+    const respond = (status: number, body: unknown) => async () => new Response(JSON.stringify(body), { status });
+    await expect(brevoProvider("k", respond(401, { message: "Key not found" })).send(email)).rejects.toThrow("Brevo rejected the API key");
+    await expect(brevoProvider("k", respond(400, { message: "sender not valid" })).send(email)).rejects.toThrow(/sender not valid/);
+  });
+
+  it("is unavailable without its key, and other providers aren't built", () => {
+    expect(getEmailProvider("brevo", {})).toBeNull();
+    expect(getEmailProvider("brevo", { BREVO_API_KEY: "k" })?.name).toBe("brevo");
+    expect(getEmailProvider("gmail", { BREVO_API_KEY: "k" })).toBeNull();
+  });
+
+  it("adds an opt-out line once", () => {
+    expect(withOptOut("Hello", "joe@example.com")).toMatch(/no thanks" \(joe@example.com\)/);
+    const already = "Hello\n\nJust reply no thanks and I won't contact you again.";
+    expect(withOptOut(already, null)).toBe(already);
+  });
+});
 
 describe("draft facts", () => {
   it("never treats scraped presence or ratings as verified facts", () => {
@@ -100,6 +153,7 @@ describe("send guards", () => {
     expect(sendBlockers({ ...ready, lead: { do_not_contact: true, stage: "do_not_contact" } })).toHaveLength(1);
     expect(sendBlockers({ ...ready, sentToday: 20 })).toEqual(["Today's limit of 20 emails is reached"]);
     expect(sendBlockers({ ...ready, campaignPaused: true })).toEqual(["The campaign is paused"]);
+    expect(sendBlockers({ ...ready, to: "not-an-email" })).toEqual(["That email address doesn't look right"]);
   });
 
   it("respects sending hours and days in Nairobi time", () => {
