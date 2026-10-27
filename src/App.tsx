@@ -11,6 +11,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
 import { ConversionTracker } from "@/components/ConversionTracker";
 import { PulseTracker } from "@/components/PulseTracker";
+import { preloadHomeSections } from "./pages/homeSections";
 const Index = lazy(() => import("./pages/Index"));
 const Agency = lazy(() => import("./pages/Agency"));
 const AgencyBlog = lazy(() => import("./pages/AgencyBlog"));
@@ -35,6 +36,8 @@ const HubApp = lazy(() => import("./hub/HubApp"));
 // Retain the trusted build-generated page while its route chunk loads. The
 // initial createRoot render would otherwise replace visible HTML with a blank.
 const initialPath = window.location.pathname;
+// The homepage sections are the bulk of the page; fetch them alongside Index.
+if (initialPath === "/") preloadHomeSections();
 let initialMarkup = document.getElementById("root")?.innerHTML ?? "";
 function RouteFallback() {
   const { pathname } = useLocation();
