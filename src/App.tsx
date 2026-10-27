@@ -33,6 +33,8 @@ const WorkBranding = lazy(() => import("./pages/WorkBranding"));
 const WorkBrand = lazy(() => import("./pages/WorkBrand"));
 // Private back office. Lazy, unlinked and noindexed; see src/hub.
 const HubApp = lazy(() => import("./hub/HubApp"));
+// Client portal for signed-in clients. Lazy, unlinked and noindexed; see src/portal.
+const PortalApp = lazy(() => import("./portal/PortalApp"));
 // Retain the trusted build-generated page while its route chunk loads. The
 // initial createRoot render would otherwise replace visible HTML with a blank.
 const initialPath = window.location.pathname;
@@ -48,9 +50,10 @@ function RouteFallback() {
 }
 const pageFallback = <RouteFallback />;
 
-const isHubPath = (path: string) => path === "/hub" || path.startsWith("/hub/");
+const isHubPath = (path: string) =>
+  path === "/hub" || path.startsWith("/hub/") || path === "/portal" || path.startsWith("/portal/");
 
-// Keeps analytics, the pixel and the cookie banner off the private hub.
+// Keeps analytics, the pixel and the cookie banner off the private hub and client portal.
 const PublicOnly = ({ children }: { children: ReactNode }) =>
   isHubPath(useLocation().pathname) ? null : <>{children}</>;
 
@@ -105,6 +108,7 @@ const App = () => (
               }
             />
             <Route path="/hub/*" element={<HubApp />} />
+            <Route path="/portal/*" element={<PortalApp />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           </Suspense>

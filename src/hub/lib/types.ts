@@ -188,6 +188,8 @@ export type HubDocument = {
   mime_type: string | null;
   size_bytes: number | null;
   notes: string | null;
+  /** Shown to the client in their portal. */
+  client_visible: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -224,6 +226,7 @@ export type WorkLogEntry = {
   details: string | null;
   category: WorkCategory;
   minutes: number | null;
+  client_visible: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -236,6 +239,7 @@ export type Report = {
   period_end: string;
   summary: string | null;
   document_id: string | null;
+  client_visible: boolean;
   created_at: string;
   updated_at: string;
 };
@@ -466,6 +470,81 @@ export type Task = {
   updated_at: string;
 };
 
+// ---------------------------------------------------------------- client portal
+
+export const PORTAL_MODULES = [
+  { id: "overview", label: "Overview", locked: true },
+  { id: "results", label: "Performance" },
+  { id: "reports", label: "Reports" },
+  { id: "work", label: "Work done" },
+  { id: "roadmap", label: "Roadmap" },
+  { id: "billing", label: "Billing" },
+  { id: "documents", label: "Documents" },
+  { id: "book", label: "Book a call" },
+  { id: "help", label: "Help", locked: true },
+] as const;
+export type PortalModuleId = (typeof PORTAL_MODULES)[number]["id"];
+
+export type ClientPortalSettings = {
+  client_id: string;
+  enabled: boolean;
+  modules: PortalModuleId[];
+  welcome_message: string | null;
+  call_link: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ClientUser = {
+  id: string;
+  client_id: string;
+  user_id: string | null;
+  email: string;
+  full_name: string | null;
+  invited_at: string | null;
+  last_seen_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type MilestoneStatus = "planned" | "in_progress" | "done";
+export type ClientMilestone = {
+  id: string;
+  client_id: string;
+  title: string;
+  description: string | null;
+  due_date: string | null;
+  status: MilestoneStatus;
+  sort_order: number;
+  completed_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ClientUpdate = {
+  id: string;
+  client_id: string;
+  kind: "update" | "action";
+  title: string;
+  body: string | null;
+  link_url: string | null;
+  resolved_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ClientMessage = {
+  id: string;
+  client_id: string;
+  sender_user_id: string | null;
+  kind: "question" | "request" | "feedback";
+  subject: string;
+  body: string;
+  status: "new" | "read" | "done";
+  created_at: string;
+  updated_at: string;
+};
+
 type Generated = "id" | "created_at" | "updated_at";
 
 type TableDef<Row, Required extends keyof Row> = {
@@ -492,6 +571,10 @@ export type HubDatabase = {
       expenses: TableDef<Expense, "description" | "amount">;
       leads: TableDef<Lead, "name">;
       tasks: TableDef<Task, "title">;
+      client_users: TableDef<ClientUser, "client_id" | "email">;
+      client_milestones: TableDef<ClientMilestone, "client_id" | "title">;
+      client_updates: TableDef<ClientUpdate, "client_id" | "title">;
+      client_messages: TableDef<ClientMessage, "client_id" | "subject" | "body">;
       hub_settings: {
         Row: HubSettings;
         Insert: Partial<HubSettings>;

@@ -26,7 +26,7 @@ $$;
 
 create schema storage;
 grant usage on schema storage to authenticated;
-create table storage.buckets (id text primary key, name text, public boolean);
+create table storage.buckets (id text primary key, name text, public boolean, file_size_limit bigint);
 create table storage.objects (id uuid primary key default gen_random_uuid(), bucket_id text, name text);
 alter table storage.objects enable row level security;
 `;
@@ -48,6 +48,10 @@ export async function createDb() {
 
   await pg.exec(migration("20261024000000_crm_core.sql"));
   await pg.exec(migration("20261027000000_crm_brevo.sql"));
+  // Client portal: needs the hub's reports, work log, invoices and documents.
+  await pg.exec(migration("20261016010000_client_hub_phase2.sql"));
+  await pg.exec(migration("20261021000000_hub_engagements.sql"));
+  await pg.exec(migration("20261028000000_client_portal.sql"));
   for (const t of ["crm_organisations", "crm_memberships", "crm_leads"]) {
     await pg.exec(`grant all on public.${t} to service_role`);
   }

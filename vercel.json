@@ -14,6 +14,10 @@
       "destination": "/spa-shell"
     },
     {
+      "source": "/portal/:path*",
+      "destination": "/spa-shell"
+    },
+    {
       "source": "/admin",
       "destination": "/spa-shell"
     }
@@ -27,6 +31,10 @@
           "value": "noindex, nofollow, noarchive"
         }
       ]
+    },
+    {
+      "source": "/portal/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
     },
     {
       "source": "/admin",

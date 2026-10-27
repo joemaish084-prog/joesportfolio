@@ -64,6 +64,9 @@ const FinancePanel = lazy(() =>
 const ClientPortal = lazy(() =>
   import("../components/clients/ClientPortal").then((m) => ({ default: m.ClientPortal })),
 );
+const PortalPanel = lazy(() =>
+  import("../components/clients/PortalPanel").then((m) => ({ default: m.PortalPanel })),
+);
 const tabFallback = <SkeletonBlock className="h-64 rounded-[20px]" />;
 
 const TABS = [
@@ -74,6 +77,7 @@ const TABS = [
   { value: "progress", label: "Progress" },
   { value: "worklog", label: "Work log" },
   { value: "finance", label: "Finance" },
+  { value: "portal", label: "Client portal" },
 ] as const;
 
 /** Kenyan local numbers (07…, 01…) become 2547…/2541… for wa.me links. */
@@ -501,6 +505,11 @@ export default function ClientDetailPage() {
         <TabsContent value="finance" className="mt-0">
           <Suspense fallback={tabFallback}>
             <FinancePanel clientId={client.id} />
+          </Suspense>
+        </TabsContent>
+        <TabsContent value="portal" className="mt-0">
+          <Suspense fallback={tabFallback}>
+            <PortalPanel client={client} />
           </Suspense>
         </TabsContent>
       </Tabs>

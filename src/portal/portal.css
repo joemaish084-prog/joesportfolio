@@ -1,0 +1,210 @@
+@config "./tailwind.portal.config.ts";
+@tailwind utilities;
+
+/*
+ * Client portal design tokens, keyed to html.portal-active so the public
+ * site's tokens are untouched. Same family as the site: warm charcoal, one
+ * orange accent, Space Grotesk for headings and big numbers. Dark is the
+ * default; html.portal-light switches to a warm paper look.
+ */
+html.portal-active {
+  --portal-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --portal-display: "Space Grotesk", Inter, -apple-system, "Segoe UI", sans-serif;
+
+  --background: 30 22% 97%;
+  --foreground: 20 14% 9%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14% 9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14% 9%;
+  --primary: 25 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 28 16% 93%;
+  --secondary-foreground: 20 14% 9%;
+  --muted: 28 16% 94%;
+  --muted-foreground: 22 8% 40%;
+  --accent: 27 100% 95%;
+  --accent-foreground: 22 90% 34%;
+  --destructive: 3 86% 56%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 28 12% 88%;
+  --input: 28 12% 84%;
+  --ring: 25 100% 50%;
+  --radius: 1rem;
+  --shadow-orange-glow: 0 1px 2px hsl(25 100% 30% / 0.18);
+
+  --portal-tint: 27 100% 95%;
+  --portal-on-tint: 22 90% 34%;
+  --portal-success: 152 60% 30%;
+  --portal-warning: 3 80% 48%;
+  --portal-warning-soft: 3 100% 96%;
+  --portal-glass: 0 0% 100%;
+  --portal-shadow: 0 1px 2px hsl(20 20% 10% / 0.04), 0 6px 20px hsl(20 20% 10% / 0.05);
+  --portal-shadow-lg: 0 2px 6px hsl(20 20% 10% / 0.06), 0 22px 48px hsl(20 20% 10% / 0.1);
+  --portal-grid: hsl(20 14% 9% / 0.05);
+
+  color-scheme: light;
+}
+
+html.portal-active.portal-dark {
+  --background: 20 14% 5.5%;
+  --foreground: 30 20% 96%;
+  --card: 20 11% 8.5%;
+  --card-foreground: 30 20% 96%;
+  --popover: 20 11% 10%;
+  --popover-foreground: 30 20% 96%;
+  --primary: 25 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 20 8% 14%;
+  --secondary-foreground: 30 20% 96%;
+  --muted: 20 8% 13%;
+  --muted-foreground: 25 8% 63%;
+  --accent: 24 50% 13%;
+  --accent-foreground: 28 100% 64%;
+  --destructive: 3 90% 62%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 20 8% 17%;
+  --input: 20 8% 22%;
+  --ring: 25 100% 50%;
+
+  --portal-tint: 24 50% 13%;
+  --portal-on-tint: 28 100% 64%;
+  --portal-success: 152 55% 55%;
+  --portal-warning: 3 90% 66%;
+  --portal-warning-soft: 3 50% 14%;
+  --portal-glass: 20 11% 8.5%;
+  --portal-shadow: 0 1px 2px hsl(0 0% 0% / 0.35), 0 6px 20px hsl(0 0% 0% / 0.3);
+  --portal-shadow-lg: 0 2px 6px hsl(0 0% 0% / 0.4), 0 22px 48px hsl(0 0% 0% / 0.5);
+  --portal-grid: hsl(30 20% 96% / 0.045);
+
+  color-scheme: dark;
+}
+
+html.portal-active body {
+  font-family: var(--portal-font);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.portal-root {
+  min-height: 100dvh;
+  font-family: var(--portal-font);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Dialogs and the mobile menu render in a portal outside .portal-root. */
+.portal-scope {
+  font-family: var(--portal-font);
+  color: hsl(var(--foreground));
+}
+
+.portal-root ::selection {
+  background: hsl(var(--primary) / 0.28);
+}
+
+.portal-display {
+  font-family: var(--portal-display);
+  letter-spacing: -0.02em;
+}
+
+.portal-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Soft warm glow behind the page, like the site's hero. */
+.portal-backdrop {
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, hsl(25 100% 50% / 0.1), transparent 60%),
+    radial-gradient(40rem 24rem at -5% 20%, hsl(25 100% 50% / 0.05), transparent 60%);
+}
+
+.portal-glass {
+  background: hsl(var(--portal-glass) / 0.72);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  backdrop-filter: saturate(160%) blur(18px);
+}
+
+.portal-card {
+  position: relative;
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border: 1px solid hsl(var(--border) / 0.8);
+  border-radius: 22px;
+  box-shadow: var(--portal-shadow);
+}
+
+.portal-card-interactive {
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease;
+}
+
+.portal-card-interactive:hover {
+  box-shadow: var(--portal-shadow-lg);
+  border-color: hsl(var(--primary) / 0.35);
+  transform: translateY(-2px);
+}
+
+.portal-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--primary));
+}
+
+/* The hero card is always the dark, warm look of the site, in either theme.
+   Re-declaring the tokens here makes charts and text inside follow suit. */
+.portal-hero {
+  --foreground: 30 20% 96%;
+  --card: 20 11% 8.5%;
+  --muted: 20 8% 13%;
+  --muted-foreground: 25 8% 68%;
+  --border: 20 8% 20%;
+  --portal-grid: hsl(30 20% 96% / 0.07);
+  color: hsl(var(--foreground));
+  border-color: hsl(30 20% 96% / 0.1);
+  background:
+    radial-gradient(34rem 18rem at 100% 0%, hsl(25 100% 50% / 0.22), transparent 62%),
+    linear-gradient(145deg, #221b16 0%, #110e0c 58%, #1a120c 100%);
+}
+
+.portal-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Tremor charts: keep the axis text in the portal's own muted tone and the
+   grid faint, whatever theme is on. */
+.portal-root .recharts-cartesian-grid line {
+  stroke: var(--portal-grid);
+}
+
+.portal-root .recharts-text {
+  fill: hsl(var(--muted-foreground));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-card-interactive,
+  .portal-card-interactive:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Print/PDF: always a light page. */
+@media print {
+  html.portal-active,
+  html.portal-active.portal-dark {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+    --muted-foreground: 0 0% 38%;
+    --border: 0 0% 85%;
+    color-scheme: light;
+  }
+}
