@@ -2,15 +2,21 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 
 interface State {
   failed: boolean;
+  detail: string;
 }
 
 // Without a boundary, one uncaught render/effect error unmounts the whole app and
 // leaves the dark page background: a "black screen". Show a recovery prompt instead.
 export class RootErrorBoundary extends Component<{ children: ReactNode }, State> {
-  state: State = { failed: false };
+  state: State = { failed: false, detail: "" };
 
-  static getDerivedStateFromError(): State {
-    return { failed: true };
+  static getDerivedStateFromError(error: unknown): State {
+    const e = error as { name?: string; message?: string; stack?: string } | null;
+    const detail = [`${e?.name ?? "Error"}: ${e?.message ?? String(error)}`, e?.stack?.split("\n").slice(1, 4).join("\n")]
+      .filter(Boolean)
+      .join("\n")
+      .slice(0, 600);
+    return { failed: true, detail };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
@@ -43,6 +49,9 @@ export class RootErrorBoundary extends Component<{ children: ReactNode }, State>
         >
           Reload
         </button>
+        <pre style={{ maxWidth: "100%", whiteSpace: "pre-wrap", wordBreak: "break-word", fontSize: "11px", opacity: 0.6, textAlign: "left" }}>
+          {this.state.detail}
+        </pre>
       </div>
     );
   }
