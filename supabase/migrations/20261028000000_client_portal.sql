@@ -214,6 +214,48 @@ grant execute on function public.portal_client_ids() to authenticated;
 grant execute on function public.portal_modules(uuid) to authenticated;
 grant execute on function public.portal_can_read_file(text) to authenticated;
 
+-- ---------------------------------------------------------------- business details
+
+-- Your contact details for the portal's Help and Book pages, and (only when the
+-- client's Billing section is on) the payment lines already printed on invoices:
+-- M-Pesa Till/Paybill, bank account and KRA PIN. Internal: only portal_snapshot()
+-- calls it, nobody else may.
+create or replace function public.portal_business(p_payment boolean)
+returns jsonb
+language plpgsql
+stable
+security definer
+set search_path = public
+as $$
+declare
+  b jsonb;
+  result jsonb;
+begin
+  -- hub_settings arrives with hub phase 3; without it the portal falls back to defaults.
+  if to_regclass('public.hub_settings') is null then
+    return '{}'::jsonb;
+  end if;
+  execute 'select business from public.hub_settings where id' into b;
+  b := coalesce(b, '{}'::jsonb);
+
+  result := jsonb_build_object(
+    'name', b ->> 'name', 'tagline', b ->> 'tagline', 'location', b ->> 'location',
+    'phone', b ->> 'phone', 'email', b ->> 'email', 'website', b ->> 'website'
+  );
+  if p_payment then
+    result := result || jsonb_build_object(
+      'kra_pin', b ->> 'kra_pin',
+      'mpesa_till', b ->> 'mpesa_till', 'mpesa_paybill', b ->> 'mpesa_paybill', 'mpesa_account', b ->> 'mpesa_account',
+      'bank_name', b ->> 'bank_name', 'bank_account_name', b ->> 'bank_account_name',
+      'bank_account_number', b ->> 'bank_account_number', 'bank_branch', b ->> 'bank_branch'
+    );
+  end if;
+  return jsonb_strip_nulls(result);
+end
+$$;
+
+revoke all on function public.portal_business(boolean) from public, anon, authenticated;
+
 -- ---------------------------------------------------------------- the snapshot
 
 -- Everything the portal shows, for one client, in one round trip. A signed-in
@@ -278,6 +320,7 @@ begin
       'welcome_message', cfg.welcome_message,
       'call_link', cfg.call_link
     ),
+    'business', public.portal_business('billing' = any (mods)),
     'me', jsonb_build_object(
       'email', coalesce(member.email, auth.jwt() ->> 'email'),
       'full_name', member.full_name,

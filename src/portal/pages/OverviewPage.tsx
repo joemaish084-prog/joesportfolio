@@ -21,13 +21,36 @@ import { usePortal } from "../auth/PortalData";
 import { useResolveAction } from "../lib/api";
 import { headlineSentence, headlineStory, money, notes, openActions, roadmapProgress, storiesFor, withData } from "../lib/derive";
 import { downloadPerformancePdf } from "../lib/export";
-import { formatBig, formatMoney, friendlyDate, greetingFor } from "../lib/format";
+import { formatBig, formatMoney, friendlyDate, greetingFor, nairobiDate, swahiliGreeting } from "../lib/format";
 import { formatKpi } from "@/hub/lib/format";
+import { NairobiSkyline } from "../components/art";
 import { BorderBeam, BlurFade, DotPattern, NumberTicker, SpotlightCard } from "../components/magic/magic";
 import { Spark, TrendChart, unitFormatter } from "../components/charts";
 import { Delta, EmptyState, Pill, SectionTitle } from "../components/ui";
 import { WORK_CATEGORY_LABEL } from "@/hub/lib/types";
 import { BarChart3 } from "lucide-react";
+
+/** The greeting, with Nairobi behind it. The Swahili line follows the time of day in Kenya. */
+function WelcomeBanner({ first, business }: { first: string; business: string }) {
+  return (
+    <section className="portal-card portal-hero relative min-h-[12.5rem] overflow-hidden md:min-h-[15.5rem]">
+      <div className="absolute inset-y-0 right-0 w-full opacity-70 sm:w-[74%] sm:opacity-100">
+        <NairobiSkyline bare contain />
+      </div>
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-[#110e0c] via-[#110e0c]/75 to-transparent" />
+      <div className="relative flex h-full flex-col justify-center p-6 md:p-9">
+        <p className="portal-eyebrow">
+          {swahiliGreeting()} · {nairobiDate()}
+        </p>
+        <h1 className="portal-display mt-2 text-[2rem] font-bold leading-tight md:text-[2.75rem]">
+          {greetingFor()}
+          {first ? `, ${first}` : ""}
+        </h1>
+        <p className="mt-2 max-w-sm text-[0.9375rem] text-white/70">Here's how {business} is doing today.</p>
+      </div>
+    </section>
+  );
+}
 
 function Hero({ story, onPdf }: { story: KpiStory; onPdf: () => void }) {
   const { kpi, latest, points } = story;
@@ -336,13 +359,7 @@ export default function OverviewPage() {
   return (
     <div className="space-y-6">
       <BlurFade>
-        <header>
-          <p className="portal-eyebrow">{snap.client.business_name || snap.client.name}</p>
-          <h1 className="portal-display mt-1.5 text-[1.875rem] font-bold leading-tight md:text-[2.5rem]">
-            {greetingFor()}
-            {first ? `, ${first}` : ""}
-          </h1>
-        </header>
+        <WelcomeBanner first={first} business={snap.client.business_name || snap.client.name} />
       </BlurFade>
 
       <Attention />

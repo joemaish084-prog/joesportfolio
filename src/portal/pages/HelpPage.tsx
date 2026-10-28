@@ -12,6 +12,8 @@ import { usePortal } from "../auth/PortalData";
 import { useSendMessage, type MessageInput } from "../lib/api";
 import { friendlyDate } from "../lib/format";
 import { BlurFade } from "../components/magic/magic";
+import { ManagerCard } from "../components/people";
+import { contactFor } from "../lib/contact";
 import { TOUR_EVENT } from "../components/WelcomeTour";
 import { PageHeader, Pill } from "../components/ui";
 
@@ -35,7 +37,8 @@ const GUIDE = [
 ];
 
 export default function HelpPage() {
-  const { messages } = usePortal();
+  const { messages, business } = usePortal();
+  const email = contactFor(business).email;
   const send = useSendMessage();
   const form = useForm<Values>({ resolver: zodResolver(schema), defaultValues: { kind: "question", subject: "", body: "" } });
   const kind = form.watch("kind");
@@ -101,6 +104,10 @@ export default function HelpPage() {
         </BlurFade>
 
         <div className="space-y-4">
+          <BlurFade delay={0.04}>
+            <ManagerCard />
+          </BlurFade>
+
           <BlurFade delay={0.06}>
             <section className="portal-card p-5">
               <h2 className="portal-display font-semibold">Using the portal</h2>
@@ -126,8 +133,8 @@ export default function HelpPage() {
           <BlurFade delay={0.1}>
             <section className="portal-card p-5">
               <h2 className="portal-display font-semibold">Prefer email?</h2>
-              <a href="mailto:joemaish084@gmail.com" className="mt-2 flex items-center gap-2 text-sm font-medium text-primary hover:underline">
-                <Mail className="h-4 w-4" /> joemaish084@gmail.com
+              <a href={`mailto:${email}`} className="mt-2 flex items-center gap-2 text-sm font-medium text-primary hover:underline">
+                <Mail className="h-4 w-4" /> {email}
               </a>
             </section>
           </BlurFade>

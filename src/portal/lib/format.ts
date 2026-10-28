@@ -26,7 +26,7 @@ export function friendlyDate(iso: string) {
 }
 
 export function greetingFor(date = new Date()) {
-  const h = date.getHours();
+  const h = nairobiHour(date);
   return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
 }
 
@@ -34,4 +34,24 @@ export function fileSize(bytes: number | null) {
   if (!bytes) return "";
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+}
+
+// Kenya time. Clients and the agency are in Nairobi, so greetings and dates
+// follow East Africa Time whatever the device clock says.
+const NAIROBI = "Africa/Nairobi";
+
+export function nairobiHour(date = new Date()) {
+  const h = new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: NAIROBI }).format(date);
+  return Number(h) % 24;
+}
+
+/** "Tuesday, 28 October" in Nairobi. */
+export function nairobiDate(date = new Date()) {
+  return new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: NAIROBI }).format(date);
+}
+
+/** The Swahili greeting for the time of day: asubuhi (morning), mchana (afternoon), jioni (evening). */
+export function swahiliGreeting(date = new Date()) {
+  const h = nairobiHour(date);
+  return h < 12 ? "Habari za asubuhi" : h < 17 ? "Habari za mchana" : "Habari za jioni";
 }

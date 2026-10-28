@@ -3,6 +3,7 @@ import { CalendarCheck, Clock, ExternalLink, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePortal } from "../auth/PortalData";
 import { BlurFade } from "../components/magic/magic";
+import { ManagerCard } from "../components/people";
 import { PageHeader, Skeleton } from "../components/ui";
 
 const CalEmbed = lazy(() => import("../components/CalEmbed"));
@@ -61,7 +62,8 @@ export default function BookPage() {
           </div>
         </BlurFade>
 
-        <BlurFade delay={0.08}>
+        <BlurFade delay={0.08} className="space-y-4">
+          <ManagerCard />
           <aside className="portal-card space-y-4 p-5">
             <h2 className="portal-display font-semibold">What to expect</h2>
             <ul className="space-y-4 text-sm">

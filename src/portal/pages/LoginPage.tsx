@@ -3,13 +3,15 @@ import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowRight, BarChart3, FileDown, KeyRound, Loader2, MailCheck, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart3, FileDown, KeyRound, Loader2, MailCheck, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { usePortalAuth } from "../auth/PortalAuthProvider";
+import { NairobiSkyline } from "../components/art";
 import { BorderBeam, DotPattern } from "../components/magic/magic";
+import { ManagerAvatar } from "../components/people";
 
 const emailSchema = z.object({ email: z.string().trim().min(1, "Enter your email").email("That doesn't look like an email") });
 const passwordSchema = emailSchema.extend({ password: z.string().min(1, "Enter your password") });
@@ -62,48 +64,66 @@ export default function LoginPage() {
   const error = (msg?: string) => (msg ? <p className="mt-1.5 text-xs text-destructive">{msg}</p> : null);
 
   return (
-    <div className="portal-root portal-backdrop grid lg:grid-cols-[1.05fr_1fr]">
-      {/* ---- brand panel */}
-      <aside className="relative hidden overflow-hidden border-r border-border/60 lg:flex lg:flex-col lg:justify-between lg:p-12">
-        <DotPattern className="text-foreground/[0.06] [mask-image:radial-gradient(70%_60%_at_30%_30%,#000,transparent)]" />
-        <div aria-hidden className="pointer-events-none absolute -left-24 top-1/3 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
+    <div className="portal-root portal-backdrop grid content-start lg:grid-cols-[1.05fr_1fr] lg:content-stretch">
+      {/* ---- brand panel: always the warm dark look, with Nairobi underneath the words */}
+      <aside className="portal-hero relative hidden overflow-hidden border-r border-white/10 lg:flex lg:flex-col lg:justify-between lg:p-12">
+        <div className="absolute inset-0">
+          <NairobiSkyline tall />
+        </div>
+        <div aria-hidden className="absolute inset-x-0 top-0 h-3/5 bg-gradient-to-b from-[#110e0c]/80 via-[#110e0c]/40 to-transparent" />
+        <DotPattern className="text-white/[0.06] [mask-image:radial-gradient(70%_50%_at_30%_20%,#000,transparent)]" />
+
         <div className="relative flex items-center gap-3">
           <img src="/logo/jm-mark.png" alt="" width={260} height={260} className="h-11 w-11" />
           <span className="portal-display text-lg font-semibold">JM Creative</span>
         </div>
-        <div className="relative max-w-md">
-          <p className="portal-eyebrow">Client portal</p>
+
+        <div className="relative -mt-44 max-w-md self-start">
+          <p className="portal-eyebrow flex items-center gap-2">
+            <MapPin className="h-3.5 w-3.5" /> Client portal · Nairobi
+          </p>
           <h1 className="portal-display mt-3 text-[2.75rem] font-bold leading-[1.05] tracking-tight">
             Your growth, <span className="text-primary">in one place.</span>
           </h1>
-          <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">
+          <p className="mt-4 text-[1.0625rem] leading-relaxed text-white/70">
             Results, reports, invoices and everything we're building together. Always up to date, never a chase.
           </p>
-          <ul className="mt-10 space-y-5">
+          <ul className="mt-9 space-y-4 [@media(max-height:820px)]:hidden">
             {POINTS.map(({ icon: Icon, title, text }) => (
               <li key={title} className="flex gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-tint text-on-tint ring-1 ring-primary/20">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.07] text-[#ffb27a] ring-1 ring-white/10 backdrop-blur">
                   <Icon className="h-[1.125rem] w-[1.125rem]" />
                 </span>
                 <span>
                   <span className="block font-semibold">{title}</span>
-                  <span className="block text-sm text-muted-foreground">{text}</span>
+                  <span className="block text-sm text-white/60">{text}</span>
                 </span>
               </li>
             ))}
           </ul>
         </div>
-        <p className="relative text-xs text-muted-foreground">© {new Date().getFullYear()} JM Creative · Nairobi, Kenya</p>
+
+        <div className="relative flex items-center gap-3.5">
+          <ManagerAvatar className="h-12 w-12 ring-offset-[#110e0c]" />
+          <div>
+            <p className="text-sm font-semibold">Joseph Maina</p>
+            <p className="text-xs text-white/60">Your growth partner · JM Creative, Nairobi, Kenya</p>
+          </div>
+        </div>
       </aside>
 
-      {/* ---- form */}
-      <main className="flex min-h-dvh items-center justify-center px-5 py-12">
-        <div className="w-full max-w-[26rem]">
-          <div className="mb-8 flex items-center gap-3 lg:hidden">
-            <img src="/logo/jm-mark.png" alt="" width={260} height={260} className="h-10 w-10" />
-            <span className="portal-display text-lg font-semibold">JM Creative</span>
-          </div>
+      {/* ---- phones and tablets: Nairobi across the top, full width */}
+      <div className="portal-hero relative h-48 overflow-hidden border-b border-white/10 lg:hidden">
+        <NairobiSkyline />
+        <div className="absolute inset-x-0 top-0 flex items-center gap-3 p-5">
+          <img src="/logo/jm-mark.png" alt="" width={260} height={260} className="h-9 w-9" />
+          <span className="portal-display text-base font-semibold">JM Creative</span>
+        </div>
+      </div>
 
+      {/* ---- form */}
+      <main className="flex items-start justify-center px-5 py-8 lg:min-h-dvh lg:items-center lg:py-12">
+        <div className="w-full max-w-[26rem]">
           <div className="portal-card p-7 sm:p-8">
             <BorderBeam size={180} duration={10} />
 
@@ -155,8 +175,8 @@ export default function LoginPage() {
             ) : (
               <>
                 <div className="mb-6">
-                  <h2 className="portal-display text-2xl font-bold">Welcome back</h2>
-                  <p className="mt-1.5 text-sm text-muted-foreground">Sign in to see how your business is growing.</p>
+                  <h2 className="portal-display text-2xl font-bold">Karibu tena</h2>
+                  <p className="mt-1.5 text-sm text-muted-foreground">Welcome back. Sign in to see how your business is growing.</p>
                 </div>
 
                 <div role="tablist" aria-label="Sign-in method" className="mb-6 grid grid-cols-2 rounded-xl bg-secondary p-1 text-sm">

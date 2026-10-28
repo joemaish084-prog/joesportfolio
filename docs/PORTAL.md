@@ -22,6 +22,28 @@ In the hub, open a client and go to the **Client portal** tab:
 Results come from the client's KPIs and the monthly reports you already add
 under Progress. Publish a report by ticking it under "What you share".
 
+## Look and Kenya touches
+
+- **Artwork:** an original Nairobi skyline (KICC, Times Tower and neighbours, an
+  acacia in front) on the login screen, the Overview banner and the welcome tour
+  (`src/portal/components/art.tsx`). It is inline SVG, so it costs no extra
+  download on a mobile connection. The sky follows the real time in Nairobi:
+  dawn, day, dusk, or a starry night with lit windows.
+- **Your card:** your portrait, WhatsApp and Call buttons appear in the sidebar,
+  Help and Book pages. WhatsApp opens with a message that already says who is
+  writing. Details come from Settings → Business (falling back to the public
+  site's number).
+- **How to pay:** the Billing page shows your M-Pesa Till/Paybill (with one-tap
+  copy), bank account and KRA PIN, plus the phone steps, from the same business
+  settings used on invoices. They are sent to a client only while their Billing
+  section is on.
+- **Language and time:** greetings follow East Africa Time and add a Swahili line
+  (*Habari za asubuhi/mchana/jioni*); the login says *Karibu tena*. Amounts are
+  KES, and M-Pesa is a payment method throughout.
+- Photos from client projects (which include children) are deliberately not used
+  as decoration. To add real photography later, put it in `src/assets` and use it
+  in the login panel.
+
 ## Setup (once)
 
 1. Apply `supabase/migrations/20261028000000_client_portal.sql`

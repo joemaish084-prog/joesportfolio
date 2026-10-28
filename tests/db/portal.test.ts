@@ -26,6 +26,7 @@ type Snapshot = {
   payments: Record<string, unknown>[];
   documents: ({ title: string } & Record<string, unknown>)[];
   messages: unknown[];
+  business: Record<string, string>;
 } | null;
 
 const snapshot = async (who: string, clientId: string | null = null) =>
@@ -216,6 +217,44 @@ describe("modules", () => {
     await expect(
       db.admin("insert into public.client_portal_settings (client_id, modules) values ($1, array['nope'])", [birch]),
     ).rejects.toThrow(/check constraint/);
+  });
+});
+
+describe("business details", () => {
+  beforeAll(async () => {
+    await db.admin(
+      `update public.hub_settings set business = business || $1::jsonb`,
+      [
+        JSON.stringify({
+          phone: "+254 700 000 000",
+          kra_pin: "A000000000Z",
+          mpesa_till: "123456",
+          mpesa_paybill: "400200",
+          bank_account_number: "0100-9999",
+        }),
+      ],
+    );
+  });
+
+  it("shows your contact details and, with billing on, how to pay", async () => {
+    const b = (await snapshot(alice))?.business;
+    expect(b).toMatchObject({ phone: "+254 700 000 000", mpesa_till: "123456", mpesa_paybill: "400200", kra_pin: "A000000000Z" });
+    expect(b).not.toHaveProperty("mpesa_account"); // unset fields are left out, not null
+  });
+
+  it("keeps payment details back when the billing section is off", async () => {
+    await db.admin(
+      "insert into public.client_portal_settings (client_id, modules) values ($1, array['overview', 'results', 'help'])",
+      [acme],
+    );
+    const b = (await snapshot(alice))?.business;
+    expect(b).toMatchObject({ phone: "+254 700 000 000" });
+    expect(JSON.stringify(b)).not.toMatch(/123456|400200|A000000000Z|0100-9999/);
+    await db.admin("delete from public.client_portal_settings where client_id = $1", [acme]);
+  });
+
+  it("cannot be read directly by a client", async () => {
+    await expect(db.as(alice, "select public.portal_business(true)")).rejects.toThrow(/permission denied/);
   });
 });
 

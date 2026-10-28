@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { WeavePattern } from "./art";
 
 export function PageHeader({
   eyebrow,
@@ -84,7 +85,8 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="portal-card flex flex-col items-center gap-3 px-6 py-14 text-center">
+    <div className="portal-card relative flex flex-col items-center gap-3 overflow-hidden px-6 py-14 text-center">
+      <WeavePattern className="text-primary opacity-[0.05] [mask-image:radial-gradient(60%_70%_at_50%_40%,#000,transparent)]" />
       <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-tint text-on-tint ring-1 ring-primary/20">
         <Icon className="h-6 w-6" />
       </span>

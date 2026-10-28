@@ -88,8 +88,27 @@ export type PortalMessage = {
   created_at: string;
 };
 
+/** Your contact details, plus (when billing is on) how the client pays you. All optional. */
+export type PortalBusiness = {
+  name?: string;
+  tagline?: string;
+  location?: string;
+  phone?: string;
+  email?: string;
+  website?: string;
+  kra_pin?: string;
+  mpesa_till?: string;
+  mpesa_paybill?: string;
+  mpesa_account?: string;
+  bank_name?: string;
+  bank_account_name?: string;
+  bank_account_number?: string;
+  bank_branch?: string;
+};
+
 export type PortalSnapshot = {
   client: PortalClient;
+  business: PortalBusiness;
   settings: { modules: ModuleId[]; welcome_message: string | null; call_link: string | null };
   me: { email: string | null; full_name: string | null; preview: boolean };
   kpis: PortalKpi[];

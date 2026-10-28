@@ -16,6 +16,7 @@ import { usePortal } from "../auth/PortalData";
 import { isDemo, stopPreview } from "../lib/api";
 import { MODULES } from "../lib/modules";
 import type { PortalTheme } from "../theme/usePortalTheme";
+import { ManagerCard } from "./people";
 import { Avatar } from "./ui";
 import { WelcomeTour } from "./WelcomeTour";
 
@@ -70,6 +71,7 @@ function SidebarFooter({ theme, onTheme }: { theme: PortalTheme; onTheme: (t: Po
   const name = me.full_name || client.contact_person || me.email || "You";
   return (
     <div className="space-y-3 border-t border-border/70 pt-4">
+      <ManagerCard variant="compact" />
       <div className="flex items-center gap-3 px-1">
         <Avatar name={name} />
         <div className="min-w-0 flex-1">

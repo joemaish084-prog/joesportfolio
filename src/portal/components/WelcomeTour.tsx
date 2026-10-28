@@ -3,6 +3,7 @@ import { BarChart3, ChevronLeft, ChevronRight, Download, LifeBuoy, Sparkles } fr
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { NairobiSkyline } from "./art";
 import { usePortal } from "../auth/PortalData";
 
 // A short first-visit tour so nobody has to work the portal out alone. It
@@ -39,7 +40,7 @@ export function WelcomeTour() {
   const steps = [
     {
       icon: Sparkles,
-      title: first ? `Welcome, ${first}` : "Welcome",
+      title: first ? `Karibu, ${first}` : "Karibu",
       text: settings.welcome_message || "This is your private space. Everything we do together lives here, updated as it happens.",
     },
     {
@@ -74,6 +75,9 @@ export function WelcomeTour() {
     <Dialog open={open} onOpenChange={(o) => (o ? setOpen(true) : close())}>
       <DialogContent className="portal-scope max-w-md overflow-hidden rounded-3xl border-border bg-card p-0">
         <div className="relative px-7 pb-6 pt-9 text-center">
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-28 opacity-40">
+            <NairobiSkyline bare />
+          </div>
           <div aria-hidden className="pointer-events-none absolute -top-16 left-1/2 h-40 w-72 -translate-x-1/2 rounded-full bg-primary/25 blur-3xl" />
           <span className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-[#ff9a4d] text-white shadow-portal-lg">
             <s.icon className="h-7 w-7" />

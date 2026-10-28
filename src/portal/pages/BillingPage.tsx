@@ -15,6 +15,7 @@ import { formatMoney } from "../lib/format";
 import { BlurFade } from "../components/magic/magic";
 import { DataTable } from "../components/DataTable";
 import { ExportMenu } from "../components/ExportMenu";
+import { PayCard, hasPaymentDetails } from "../components/people";
 import { EmptyState, PageHeader, Pill, type PillTone } from "../components/ui";
 
 type Row = ReturnType<typeof money>["rows"][number];
@@ -83,6 +84,15 @@ function InvoiceDialog({ row, onClose }: { row: Row | null; onClose: () => void 
                   <dd className="portal-tabular font-bold">{formatMoney(row.balance, cur)}</dd>
                 </div>
               </dl>
+              {row.balance > 0 && (snap.business.mpesa_till || snap.business.mpesa_paybill) && (
+                <p className="rounded-2xl bg-tint p-3.5 text-sm text-on-tint">
+                  Pay with M-Pesa{" "}
+                  {snap.business.mpesa_till
+                    ? `Till ${snap.business.mpesa_till}`
+                    : `Paybill ${snap.business.mpesa_paybill}, account ${snap.business.mpesa_account || row.invoice.number}`}
+                  . Mention <span className="font-semibold">{row.invoice.number}</span> so we match it right away.
+                </p>
+              )}
               {payments.length > 0 && (
                 <div>
                   <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Payments</p>
@@ -281,7 +291,10 @@ export default function BillingPage() {
         </div>
       </BlurFade>
 
-      <BlurFade delay={0.06}>
+      <BlurFade
+        delay={0.06}
+        className={`grid items-start gap-5 ${hasPaymentDetails(snap.business) ? "lg:grid-cols-[minmax(0,1fr)_21rem]" : ""}`}
+      >
         <DataTable
           data={m.rows}
           columns={columns}
@@ -290,6 +303,7 @@ export default function BillingPage() {
           onRowClick={(r) => setOpen(r)}
           empty="No invoices yet."
         />
+        <PayCard reference={m.rows.find((r) => r.balance > 0)?.invoice.number} />
       </BlurFade>
       <InvoiceDialog row={open} onClose={() => setOpen(null)} />
     </div>

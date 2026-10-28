@@ -7,6 +7,7 @@ drop function if exists public.portal_send_message(text, text, text, uuid);
 drop function if exists public.portal_resolve_update(uuid);
 drop function if exists public.portal_touch();
 drop function if exists public.portal_snapshot(uuid);
+drop function if exists public.portal_business(boolean);
 drop function if exists public.portal_can_read_file(text);
 drop function if exists public.portal_modules(uuid);
 drop function if exists public.portal_client_ids();
