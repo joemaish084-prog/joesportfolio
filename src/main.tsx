@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
+import { RootErrorBoundary } from "@/components/RootErrorBoundary";
 import "./index.css";
 
 // A lazy chunk that fails to load (flaky mobile network, or a stale tab after a
@@ -17,7 +18,9 @@ window.addEventListener("vite:preloadError", (event) => {
 });
 
 createRoot(document.getElementById("root")!).render(
-  <HelmetProvider>
-    <App />
-  </HelmetProvider>
+  <RootErrorBoundary>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </RootErrorBoundary>
 );

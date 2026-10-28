@@ -3,11 +3,24 @@ const PULSE_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/pulse`;
 const DEVICE_ID_KEY = "pulse_device_id";
 const SESSION_ID_KEY = "pulse_session_id";
 
+// crypto.randomUUID is missing on iOS Safari < 15.4, older Android WebViews and
+// insecure contexts; calling it unguarded throws and unmounts the whole app.
+function newId(): string {
+  try {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      return crypto.randomUUID();
+    }
+  } catch {
+    // fall through
+  }
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
+}
+
 export function getDeviceId(): string {
   try {
     let id = localStorage.getItem(DEVICE_ID_KEY);
     if (!id) {
-      id = crypto.randomUUID();
+      id = newId();
       localStorage.setItem(DEVICE_ID_KEY, id);
     }
     return id;
@@ -20,12 +33,12 @@ export function getSessionId(): string {
   try {
     let id = sessionStorage.getItem(SESSION_ID_KEY);
     if (!id) {
-      id = crypto.randomUUID();
+      id = newId();
       sessionStorage.setItem(SESSION_ID_KEY, id);
     }
     return id;
   } catch {
-    return crypto.randomUUID();
+    return newId();
   }
 }
 
@@ -42,13 +55,13 @@ export interface PulsePayload {
 }
 
 export function sendPulse(payload: PulsePayload, useBeacon = false) {
-  const body = JSON.stringify({
-    device_id: getDeviceId(),
-    session_id: getSessionId(),
-    ...payload,
-  });
-
   try {
+    const body = JSON.stringify({
+      device_id: getDeviceId(),
+      session_id: getSessionId(),
+      ...payload,
+    });
+
     if (useBeacon && navigator.sendBeacon) {
       const blob = new Blob([body], { type: "application/json" });
       navigator.sendBeacon(PULSE_URL, blob);
