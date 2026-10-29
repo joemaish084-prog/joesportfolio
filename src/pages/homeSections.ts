@@ -47,7 +47,21 @@ export const Contact = lazy(loaders.Contact);
 export const Footer = lazy(loaders.Footer);
 export const ChatAssistant = lazy(loaders.ChatAssistant);
 
-/** Begin downloading every section chunk without waiting for a render. */
-export const preloadHomeSections = () => {
-  Object.values(loaders).forEach((load) => void load().catch(() => {}));
+/** Begin downloading section chunks without waiting for a render (all of them by default). */
+export const preloadHomeSections = (names: (keyof typeof loaders)[] = Object.keys(loaders) as (keyof typeof loaders)[]) => {
+  names.forEach((name) => void loaders[name]().catch(() => {}));
+};
+
+/** Index listens for this to render every section at once, e.g. before jumping to an anchor. */
+export const MOUNT_ALL_SECTIONS_EVENT = "home:mount-all-sections";
+
+/** Run when the main thread is free, so section work doesn't block taps and scrolling. */
+export const whenIdle = (callback: () => void, timeout = 2000) => {
+  if ("requestIdleCallback" in window) {
+    const id = window.requestIdleCallback(callback, { timeout });
+    return () => window.cancelIdleCallback(id);
+  }
+  // Safari before 16.4 has no requestIdleCallback.
+  const id = setTimeout(callback, 200);
+  return () => clearTimeout(id);
 };

@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { caseStudies } from "@/data/caseStudies";
+import { MOUNT_ALL_SECTIONS_EVENT } from "@/pages/homeSections";
 
 const CVViewer = lazy(() => import("./CVViewer").then((m) => ({ default: m.CVViewer })));
 
@@ -241,7 +242,20 @@ export function SiteHeader() {
     e.preventDefault();
     setOpen(false);
     const el = document.querySelector(hash);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    // The homepage adds lower sections gradually; render them all, then scroll
+    // once the target exists (its chunk may still be downloading).
+    window.dispatchEvent(new Event(MOUNT_ALL_SECTIONS_EVENT));
+    const giveUpAt = Date.now() + 8000;
+    const tryScroll = () => {
+      const target = document.querySelector(hash);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      else if (Date.now() < giveUpAt) window.setTimeout(tryScroll, 100);
+    };
+    window.setTimeout(tryScroll, 50);
   }, []);
 
   const navLinkClass = "text-sm font-medium transition-colors";

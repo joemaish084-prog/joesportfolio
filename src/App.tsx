@@ -38,8 +38,9 @@ const PortalApp = lazy(() => import("./portal/PortalApp"));
 // Retain the trusted build-generated page while its route chunk loads. The
 // initial createRoot render would otherwise replace visible HTML with a blank.
 const initialPath = window.location.pathname;
-// The homepage sections are the bulk of the page; fetch them alongside Index.
-if (initialPath === "/") preloadHomeSections();
+// Fetch the first homepage sections alongside Index. Index fetches the rest once
+// the page is up, so on a phone connection they don't compete with the first screen.
+if (initialPath === "/") preloadHomeSections(window.location.hash ? undefined : ["CaseStudy", "Videos"]);
 let initialMarkup = document.getElementById("root")?.innerHTML ?? "";
 function RouteFallback() {
   const { pathname } = useLocation();
