@@ -2,6 +2,7 @@ import { Fragment, Suspense, lazy, useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   BarChart3,
+  CalendarDays,
   FileText,
   Filter,
   Globe,
@@ -49,6 +50,7 @@ type NavItem = { to: string; label: string; icon: LucideIcon; end?: boolean };
 const WORK_NAV: NavItem[] = [
   { to: "/hub", label: "Overview", icon: LayoutGrid, end: true },
   { to: "/hub/tasks", label: "Tasks", icon: SquareKanban },
+  { to: "/hub/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/hub/clients", label: "Clients", icon: Users },
   { to: "/hub/onboarding", label: "Onboarding", icon: ListChecks },
   { to: "/hub/pipeline", label: "Pipeline", icon: Filter },

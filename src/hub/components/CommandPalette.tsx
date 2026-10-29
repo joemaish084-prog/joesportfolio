@@ -5,6 +5,7 @@ import {
   Eye,
   EyeOff,
   BarChart3,
+  CalendarDays,
   FileText,
   FileUp,
   Filter,
@@ -41,6 +42,7 @@ import { LEAD_STAGE_LABEL } from "../lib/types";
 const PAGES = [
   { label: "Overview", to: "/hub", icon: LayoutGrid },
   { label: "Tasks", to: "/hub/tasks", icon: SquareKanban },
+  { label: "Calendar", to: "/hub/calendar", icon: CalendarDays },
   { label: "Clients", to: "/hub/clients", icon: Users },
   { label: "Onboarding", to: "/hub/onboarding", icon: ListChecks },
   { label: "Documents", to: "/hub/documents", icon: FileText },

@@ -27,6 +27,7 @@ const PipelinePage = lazy(() => import("./pages/PipelinePage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
 const WebsitePage = lazy(() => import("./pages/WebsitePage"));
 const TasksPage = lazy(() => import("./pages/TasksPage"));
+const CalendarPage = lazy(() => import("./pages/CalendarPage"));
 const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
 // Agency Command Centre (outreach CRM), its own chunk.
 const CrmApp = lazy(() => import("./crm/CrmApp"));
@@ -106,6 +107,7 @@ export default function HubApp() {
               <Route path="settings" element={admin(section(<SettingsPage />))} />
               <Route path="website" element={admin(section(<WebsitePage />))} />
               <Route path="tasks" element={admin(section(<TasksPage />))} />
+              <Route path="calendar" element={admin(section(<CalendarPage />))} />
               <Route path="crm/*" element={section(<CrmApp />)} />
               <Route path="*" element={<Navigate to="/hub" replace />} />
             </Route>
