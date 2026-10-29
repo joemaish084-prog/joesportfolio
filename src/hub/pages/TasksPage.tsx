@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { WeekStrip } from "../components/calendar/WeekStrip";
 import { BlurFade } from "../components/motion/blur-fade";
 import { NumberTicker } from "../components/motion/number-ticker";
 import { Ring } from "../components/overview/visuals";
@@ -243,6 +244,10 @@ export default function TasksPage() {
             <p className="hidden text-xs text-muted-foreground lg:ml-auto lg:block">
               Drag cards between columns · click to open
             </p>
+          </BlurFade>
+
+          <BlurFade delay={0.1}>
+            <WeekStrip tasks={shown} onOpenTask={(task) => setSheet({ open: true, task, status: task.status })} />
           </BlurFade>
 
           <BlurFade delay={0.12}>

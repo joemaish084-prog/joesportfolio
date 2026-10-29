@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { format, parseISO, startOfDay } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { functionError } from "../crm/lib/queries";
 
@@ -107,3 +108,20 @@ export function useDeleteEvent() {
 }
 
 export const browserTimeZone = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+export const ymd = (d: Date) => format(d, "yyyy-MM-dd");
+
+/** Does this event cover any part of the given day? */
+export function eventOnDay(e: CalendarEvent, day: Date) {
+  if (e.allDay) return e.start <= ymd(day) && ymd(day) < e.end;
+  const s = parseISO(e.start).getTime();
+  const f = parseISO(e.end).getTime();
+  const d0 = startOfDay(day).getTime();
+  return s < d0 + 864e5 && f > d0;
+}
+
+export const eventTimeLabel = (e: CalendarEvent) => (e.allDay ? "All day" : format(parseISO(e.start), "HH:mm"));
+
+/** All-day events first, then by start time. */
+export const sortEvents = (a: CalendarEvent, b: CalendarEvent) =>
+  Number(b.allDay) - Number(a.allDay) || a.start.localeCompare(b.start);

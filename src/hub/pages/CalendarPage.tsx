@@ -32,10 +32,14 @@ import { STATUS_COLOR } from "../components/tasks/TaskCard";
 import { TaskSheet } from "../components/tasks/TaskSheet";
 import { EmptyState, PageHeader, SkeletonBlock } from "../components/ui";
 import {
+  eventOnDay,
+  eventTimeLabel,
+  sortEvents,
   useConnectGoogle,
   useDisconnectGoogle,
   useGoogleEvents,
   useGoogleStatus,
+  ymd,
   type CalendarEvent,
 } from "../lib/calendar";
 import { useTasks } from "../lib/tasks";
@@ -44,7 +48,6 @@ import type { Task } from "../lib/types";
 // Month view of Google Calendar, with hub tasks shown on their due dates.
 // Events are read and written through the google-calendar Edge Function.
 
-const ymd = (d: Date) => format(d, "yyyy-MM-dd");
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const GOOGLE_RESULT: Record<string, { ok: boolean; message: string }> = {
@@ -53,20 +56,6 @@ const GOOGLE_RESULT: Record<string, { ok: boolean; message: string }> = {
   scope: { ok: false, message: "Tick the calendar permission on Google's screen to connect" },
   error: { ok: false, message: "Couldn't connect Google Calendar. Try again." },
 };
-
-/** Does this event cover any part of the given day? */
-function onDay(e: CalendarEvent, day: Date) {
-  if (e.allDay) return e.start <= ymd(day) && ymd(day) < e.end;
-  const s = parseISO(e.start).getTime();
-  const f = parseISO(e.end).getTime();
-  const d0 = startOfDay(day).getTime();
-  return s < d0 + 864e5 && f > d0;
-}
-
-const timeLabel = (e: CalendarEvent) => (e.allDay ? "All day" : format(parseISO(e.start), "HH:mm"));
-
-const sortEvents = (a: CalendarEvent, b: CalendarEvent) =>
-  Number(b.allDay) - Number(a.allDay) || a.start.localeCompare(b.start);
 
 export default function CalendarPage() {
   const [params, setParams] = useSearchParams();
@@ -119,7 +108,7 @@ export default function CalendarPage() {
   const allLabels = useMemo(() => [...new Set(allTasks.flatMap((t) => t.labels))].sort(), [allTasks]);
 
   const eventList = useMemo(() => [...(events.data ?? [])].sort(sortEvents), [events.data]);
-  const eventsOn = (day: Date) => eventList.filter((e) => onDay(e, day));
+  const eventsOn = (day: Date) => eventList.filter((e) => eventOnDay(e, day));
   const tasksOn = (day: Date) => tasksByDay.get(ymd(day)) ?? [];
 
   const openNew = (day: Date) => {
@@ -310,7 +299,7 @@ export default function CalendarPage() {
                             e.allDay ? "bg-primary text-primary-foreground" : "bg-tint text-on-tint hover:bg-tint/70",
                           )}
                         >
-                          {!e.allDay && <span className="hub-tabular mr-1 opacity-70">{timeLabel(e)}</span>}
+                          {!e.allDay && <span className="hub-tabular mr-1 opacity-70">{eventTimeLabel(e)}</span>}
                           {e.title}
                         </button>
                       </li>
