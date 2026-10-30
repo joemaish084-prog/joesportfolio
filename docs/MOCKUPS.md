@@ -8,6 +8,8 @@ Homepage order: Graphic Design → Brand Identity → Mockups. Gallery: `/work/m
 
 ## Generation prompts
 
+The homepage showcase lets visitors switch between four brand spotlights, each with its own colour setting, lead scene, supporting previews and collection link. The full gallery uses visual brand selectors, application filters, a clear-filters action and an uncropped 3:2 image grid. The homepage also links directly to the interactive 3D collection.
+
 See [the expanded collection and 3D viewer notes](MOCKUPS-EXPANSION.md) for the additional scenes and their generation prompts.
 
 ### jm-stationery
