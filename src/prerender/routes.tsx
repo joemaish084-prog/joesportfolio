@@ -23,6 +23,7 @@ import {
   blogIndexHead,
   blogPostHead,
   brandHead,
+  brandingIndexHead,
   calculatorHead,
   serviceHead,
 } from "@/seo/pageHeads";
@@ -265,15 +266,57 @@ function BrandPageBody({ brand }: { brand: Brand }) {
       <p>
         <a href="/work/branding">Branding</a> › {brand.name}
       </p>
-      <h1>{brand.name} Brand Identity</h1>
+      <h1>
+        {brand.name} {brand.seo.workType.toLowerCase()}
+      </h1>
       <p>{brand.tagline}</p>
       <p>
         {brand.sector} · {brand.year} · {brand.scope.join(", ")}
       </p>
+      <h2>The brief</h2>
       <p>{brand.brief}</p>
-      {brand.approach.map((p, i) => (
-        <p key={i}>{p}</p>
+      <h2>What I did</h2>
+      <ol>
+        {brand.approach.map((p, i) => (
+          <li key={i}>{p}</li>
+        ))}
+      </ol>
+      <h2>Colour palette</h2>
+      <ul>
+        {brand.palette.map((c) => (
+          <li key={c.hex}>
+            {c.name} ({c.hex}): {c.role}
+          </li>
+        ))}
+      </ul>
+      <h2>Typography</h2>
+      <ul>
+        {brand.fonts.map((f) => (
+          <li key={f.name}>
+            {f.name}: {f.role}
+          </li>
+        ))}
+      </ul>
+      <h2>Templates</h2>
+      <ul>
+        {brand.templates.map((t) => (
+          <li key={t.name}>
+            {t.name}: {t.description}
+          </li>
+        ))}
+      </ul>
+      <h2>The work</h2>
+      {brand.posts.map((p) => (
+        <figure key={p.title}>
+          <img src={p.thumb} alt={`${brand.name} ${brand.seo.workType.toLowerCase()}: ${p.title}`} width={540} height={675} loading="lazy" />
+          <figcaption>
+            {p.title} · {p.template}
+          </figcaption>
+        </figure>
       ))}
+      <p>
+        <a href="/work/branding">More brand identity and media kit work</a> · <a href="/agency/contact">Start a project</a>
+      </p>
     </Shell>
   );
 }
@@ -429,13 +472,16 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     },
     {
       path: STATIC_HEADS.workBranding.path,
-      head: STATIC_HEADS.workBranding,
+      head: brandingIndexHead(brands),
       body: html(
         <SimplePage head={STATIC_HEADS.workBranding}>
           <ul>
             {brands.map((b) => (
               <li key={b.slug}>
-                <a href={`/work/branding/${b.slug}`}>{b.name}</a> — {b.tagline}
+                <a href={`/work/branding/${b.slug}`}>
+                  {b.name} {b.seo.workType.toLowerCase()}
+                </a>{" "}
+                — {b.tagline}
               </li>
             ))}
           </ul>
@@ -451,7 +497,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       path: head.path,
       head,
       body: html(<BrandPageBody brand={brand} />),
-      card: { eyebrow: "Brand identity", title: brand.name, meta: brand.tagline },
+      card: { eyebrow: brand.seo.workType, title: brand.name, meta: brand.tagline },
       sitemap: { priority: 0.7, changefreq: "yearly" },
     });
   }

@@ -6,7 +6,7 @@ import type { ServicePage } from "@/data/servicePages";
 import type { Brand } from "@/data/brands";
 import { CALCULATOR_FAQS, CALCULATOR_INTRO, CALCULATOR_PATH, CALCULATOR_TITLE } from "@/data/adCalculatorContent";
 
-import { SITE_URL, canonicalUrl, absoluteUrl, ogCardImage, type PageHead } from "./heads";
+import { SITE_URL, STATIC_HEADS, canonicalUrl, absoluteUrl, ogCardImage, type PageHead } from "./heads";
 
 const person = { "@type": "Person", name: "Joseph Maina", url: SITE_URL, image: `${SITE_URL}/joseph-maina.jpg` };
 
@@ -23,11 +23,78 @@ const breadcrumbs = (items: { name: string; path: string }[]) => ({
 // --------------------------------------------------------------- dynamic pages
 
 export function brandHead(brand: Brand): PageHead {
+  const path = `/work/branding/${brand.slug}`;
+  const { seo } = brand;
   return {
-    title: `${brand.name} Brand Identity | Joseph Maina`,
-    description: `${brand.name}: ${brand.tagline} Logo system, colour palette, typography, social templates and mockups by Joseph Maina.`,
-    path: `/work/branding/${brand.slug}`,
-    ...ogCardImage(`/work/branding/${brand.slug}`, `${brand.name} brand identity by Joseph Maina`),
+    title: seo.title,
+    description: seo.description,
+    ogTitle: `${brand.name} ${seo.workType.toLowerCase()} by Joseph Maina`,
+    path,
+    ...ogCardImage(path, `${brand.name} ${seo.workType.toLowerCase()} by Joseph Maina`),
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        name: `${brand.name} ${seo.workType}`,
+        headline: brand.tagline,
+        description: brand.brief,
+        url: canonicalUrl(path),
+        genre: seo.workType,
+        keywords: seo.keywords.join(", "),
+        dateCreated: brand.year,
+        inLanguage: "en-KE",
+        creator: person,
+        about: { "@type": "Thing", name: brand.name, description: brand.sector },
+        image: brand.posts.map((p) => ({
+          "@type": "ImageObject",
+          contentUrl: absoluteUrl(p.image),
+          name: `${brand.name} ${seo.workType.toLowerCase()}: ${p.title}`,
+          creator: person,
+        })),
+        isPartOf: { "@type": "CollectionPage", name: "Brand identity portfolio", url: canonicalUrl("/work/branding") },
+      },
+      {
+        "@context": "https://schema.org",
+        ...breadcrumbs([
+          { name: "Home", path: "/" },
+          { name: "Branding", path: "/work/branding" },
+          { name: brand.name, path },
+        ]),
+      },
+    ],
+  };
+}
+
+export function brandingIndexHead(brands: Brand[]): PageHead {
+  const head = STATIC_HEADS.workBranding;
+  return {
+    ...head,
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: "Brand identity and media kit portfolio",
+        description: head.description,
+        url: canonicalUrl(head.path),
+        author: person,
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: brands.map((b, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: `${b.name} ${b.seo.workType.toLowerCase()}`,
+            url: canonicalUrl(`/work/branding/${b.slug}`),
+          })),
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        ...breadcrumbs([
+          { name: "Home", path: "/" },
+          { name: "Branding", path: head.path },
+        ]),
+      },
+    ],
   };
 }
 

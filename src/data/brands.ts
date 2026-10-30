@@ -99,6 +99,14 @@ export interface HeadlineStyle {
 export interface Brand {
   slug: string;
   name: string;
+  /** Search copy, written for what people actually type, not the page's display headline. */
+  seo: {
+    title: string;
+    description: string;
+    /** What the work is, e.g. "Brand identity" or "Media kit". Used in the H1, schema and social card. */
+    workType: string;
+    keywords: string[];
+  };
   tagline: string;
   sector: string;
   year: string;
@@ -200,6 +208,13 @@ export const brands: Brand[] = [
   {
     slug: "duara-schools",
     name: "Duara Schools",
+    seo: {
+      title: "Duara Schools Brand Identity & School Branding | Joseph Maina",
+      description:
+        "School branding for Duara Schools, Kenyan community microschools: logo system, colour palette, typography and social media templates by Joseph Maina, Nairobi.",
+      workType: "Brand identity",
+      keywords: ["school branding Kenya", "brand identity design Nairobi", "social media templates", "school social media design"],
+    },
     tagline: "A warm, confident identity for a network of community microschools.",
     sector: "Early-years education",
     year: "2025",
@@ -326,6 +341,13 @@ export const brands: Brand[] = [
   {
     slug: "iclear",
     name: "iClear",
+    seo: {
+      title: "iClear Branding & Social Media Design | Joseph Maina",
+      description:
+        "Branding and social media design for iClear water purifiers in Nairobi: campaign posts, product promos, roll-up banners and a colour and type system.",
+      workType: "Brand identity",
+      keywords: ["social media design Kenya", "product campaign design", "roll-up banner design Nairobi", "brand identity design Nairobi"],
+    },
     tagline: "A clean, premium look for home water purification.",
     sector: "Home water purification",
     year: "2025",
@@ -459,6 +481,13 @@ export const brands: Brand[] = [
   {
     slug: "sidi-safari",
     name: "Sidi Safari",
+    seo: {
+      title: "Sidi Safari Media Kit Design, Kenya | Joseph Maina",
+      description:
+        "Influencer media kit for Kenyan beauty creator Sidi Safari: brand story, Instagram and TikTok insights, rate cards and the 50 Questions With Sidi series.",
+      workType: "Media kit",
+      keywords: ["influencer media kit design", "media kit design Kenya", "creator media kit", "influencer rate card", "personal brand design Nairobi"],
+    },
     tagline: "A warm, editorial media kit for a Kenyan beauty and lifestyle creator.",
     sector: "Creator & media host",
     year: "2026",

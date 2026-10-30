@@ -141,9 +141,9 @@ export const STATIC_HEADS = {
     path: "/work/case-studies",
   },
   workBranding: {
-    title: "Brand Identity Portfolio | Joseph Maina, Nairobi",
+    title: "Brand Identity & Media Kit Design Portfolio | Joseph Maina, Nairobi",
     description:
-      "Brand identity work by Joseph Maina: logo systems, colour palettes, typography, social templates and mockups for Kenyan brands.",
+      "Brand identity and media kit design by Joseph Maina in Nairobi: logo systems, colour palettes, typography, social templates and influencer media kits for Kenyan brands.",
     path: "/work/branding",
   },
   privacy: {

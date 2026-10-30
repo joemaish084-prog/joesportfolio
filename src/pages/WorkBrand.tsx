@@ -285,7 +285,7 @@ function TemplatesSection({ brand }: { brand: Brand }) {
               aria-label={`View ${p.title}`}
               className="group block w-full overflow-hidden rounded-xl ring-1 ring-brand-ink/10 transition-all hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
             >
-              <img src={p.thumb} alt={`${p.title}, ${p.template}`} width={540} height={675} loading="lazy" decoding="async" className="aspect-[4/5] w-full object-cover" />
+              <img src={p.thumb} alt={`${brand.name} ${brand.seo.workType.toLowerCase()}: ${p.title} (${p.template})`} width={540} height={675} loading="lazy" decoding="async" className="aspect-[4/5] w-full object-cover" />
             </button>
           </li>
         ))}
