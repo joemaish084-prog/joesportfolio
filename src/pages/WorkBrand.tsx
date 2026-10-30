@@ -355,6 +355,12 @@ const WorkBrand = () => {
   if (!brand || !kit) return <NotFound />;
   const { colors, cover, type, book } = brand;
   const { Divider, Elements, Mockups } = kit;
+  // The accent phrase can use a second typeface (Sidi Safari's italic serif).
+  const accentType: CSSProperties = {
+    fontFamily: brand.headline.accentFont,
+    fontWeight: brand.headline.accentWeight,
+    fontStyle: brand.headline.accentItalic ? "italic" : "normal",
+  };
   const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(" ");
   const vars = {
     "--brand-bg": channels(colors.background),
@@ -394,7 +400,7 @@ const WorkBrand = () => {
                 <h1 className="mt-4 text-5xl leading-[0.95] sm:text-7xl" style={displayFont}>
                   {cover.line}
                   <span className="block">
-                    <span style={{ fontStyle: brand.headline.accentItalic ? "italic" : "normal", ...paintText(cover.accentPaint) }}>{cover.accent}</span>
+                    <span style={{ ...accentType, ...paintText(cover.accentPaint) }}>{cover.accent}</span>
                     {brand.headline.underline && <Swoosh color={colors.highlight} className="mt-1 h-4 w-2/3" />}
                   </span>
                 </h1>
@@ -464,7 +470,7 @@ const WorkBrand = () => {
           <div className="container mx-auto px-4 pb-20 pt-6 text-center sm:px-6 lg:px-8">
             <h2 className="text-3xl text-brand-on-primary sm:text-5xl" style={displayFont}>
               Need a brand that{" "}
-              <span className="text-brand-highlight" style={{ fontStyle: brand.headline.accentItalic ? "italic" : "normal" }}>holds together?</span>
+              <span className="text-brand-highlight" style={accentType}>holds together?</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-brand-on-primary/80">Logo, colour, type and templates your team can keep using long after launch.</p>
             <a href="/#contact" className="mt-8 inline-flex min-h-11 items-center gap-4 rounded-full bg-brand-highlight py-2 pl-6 pr-2 text-lg font-bold text-brand-on-highlight transition-transform hover:-translate-y-0.5">

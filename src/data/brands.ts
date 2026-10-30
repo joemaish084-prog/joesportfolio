@@ -133,7 +133,8 @@ export interface Brand {
   /** Poster used for the annotated "anatomy" breakdown, with callouts in % of the image. */
   anatomy: { image: string; callouts: { x: number; y: number; label: string; note: string }[] };
   instagram: { bio: string[]; avatarBg: string; avatarLogo: "color" | "white" };
-  contact: { phone: string; web: string; handle: string };
+  /** Phone is optional: a creator's personal number isn't republished here. */
+  contact: { phone?: string; web: string; handle: string };
 }
 
 const duaraPosts = [
@@ -166,10 +167,34 @@ const iclearPosts = [
   post("iclear", 9, "iClear, water is sweet", "Product"),
 ];
 
+const sidiPosts = [
+  post("sidi", 1, "Cover: sidi Safari", "Story"),
+  post("sidi", 2, "Beauty. With a story.", "Story"),
+  post("sidi", 3, "Real routines. Personal stories.", "Story"),
+  post("sidi", 4, "My world. Five ways in.", "Story"),
+  post("sidi", 5, "Beauty with personality.", "Story"),
+  post("sidi", 6, "Instagram, in focus.", "Performance"),
+  post("sidi", 7, "Content, that connects.", "Performance"),
+  post("sidi", 8, "50 Questions With Sidi", "50 Questions"),
+  post("sidi", 9, "One format. Endless stories.", "50 Questions"),
+  post("sidi", 10, "The people. The perspective.", "50 Questions"),
+  post("sidi", 11, "More voices. More stories.", "50 Questions"),
+  post("sidi", 12, "The series, on screen.", "50 Questions"),
+  post("sidi", 13, "Conversations. With momentum.", "Performance"),
+  post("sidi", 14, "Sidi's platforms, at a glance.", "Performance"),
+  post("sidi", 15, "Join the conversation.", "50 Questions"),
+  post("sidi", 16, "Partner with 50 Questions.", "Rates"),
+  post("sidi", 17, "Considered content. Natural brand fit.", "Rates"),
+  post("sidi", 18, "Shared stories. Thoughtful partnerships.", "Story"),
+  post("sidi", 19, "Ways to work together.", "Rates"),
+];
+
 const jakarta = "'Plus Jakarta Sans', sans-serif";
 const lato = "'Lato', sans-serif";
 const abril = "'Abril Fatface', serif";
 const poppins = "'Poppins', sans-serif";
+const dmSans = "'DM Sans', sans-serif";
+const cormorant = "'Cormorant Garamond', serif";
 
 export const brands: Brand[] = [
   {
@@ -430,6 +455,135 @@ export const brands: Brand[] = [
       avatarLogo: "white",
     },
     contact: { phone: "+254 768 488 274", web: "iclear.co.ke", handle: "@iclear_water" },
+  },
+  {
+    slug: "sidi-safari",
+    name: "Sidi Safari",
+    tagline: "A warm, editorial media kit for a Kenyan beauty and lifestyle creator.",
+    sector: "Creator & media host",
+    year: "2026",
+    scope: ["Media kit", "Personal brand", "Series identity", "Rate cards", "20 pages"],
+    brief:
+      "Sidi Safari is a Kenya-based beauty and lifestyle creator and the host of 50 Questions With Sidi, an interview series with Kenyan personalities. She needed a media kit to pitch to brands: who she is, how her content performs and what a partnership costs, presented as personally as her content.",
+    approach: [
+      "Built a two-voice wordmark and headline system: a bold DM Sans statement, then a light Cormorant italic line.",
+      "Took the palette from her own world: ink navy, blush and cream, with gold kept for arrows, rules and tape.",
+      "Turned Instagram and TikTok insights into clear data pages, with every figure labelled by source and reporting window.",
+      "Gave 50 Questions With Sidi its own chapter and sponsorship packages, next to her creator rate cards.",
+    ],
+    fontsHref:
+      "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap",
+    type: { display: dmSans, displayWeight: 700, displayTracking: "-0.045em", body: dmSans },
+    colors: {
+      background: "#F7F3EE",
+      surface: "#FFFFFF",
+      ink: "#1F2940",
+      primary: "#1F2940",
+      onPrimary: "#F7F3EE",
+      accent: "#8D6B24",
+      onAccent: "#FFFFFF",
+      highlight: "#C9A24A",
+      onHighlight: "#1F2940",
+      label: "#8D6B24",
+    },
+    palette: [
+      { name: "Cream", hex: "#F7F3EE", role: "Canvas for story and data pages", share: 38, on: "#1F2940" },
+      { name: "Ink Navy", hex: "#1F2940", role: "Headlines, text and dark chapters", share: 26, on: "#F7F3EE" },
+      { name: "Blush", hex: "#E9D7D7", role: "Cards, arches and the italic on navy", share: 18, on: "#1F2940" },
+      { name: "Sand", hex: "#ECE4D6", role: "Second card colour beside Blush", share: 8, on: "#1F2940" },
+      { name: "Gold", hex: "#C9A24A", role: "Arrows, rules and tape only", share: 6, on: "#1F2940" },
+      { name: "Deep Gold", hex: "#8D6B24", role: "Small labels and numerals on light", share: 4, on: "#F7F3EE" },
+    ],
+    fonts: [
+      { name: "DM Sans Bold", role: "Headlines", family: dmSans, weight: 700, sample: "Real routines." },
+      { name: "Cormorant Garamond Light Italic", role: "The second line", family: cormorant, weight: 300, italic: true, sample: "Personal stories." },
+      { name: "DM Sans Regular", role: "Body copy and figures", family: dmSans, weight: 400, sample: "1,223,934 views in 90 days" },
+      { name: "Cormorant Garamond Light", role: "Numerals and names", family: cormorant, weight: 300, color: "#8D6B24", sample: "01  02  03  04  05" },
+    ],
+    headline: {
+      lineFont: dmSans,
+      lineWeight: 700,
+      lineColor: "#1F2940",
+      accentFont: cormorant,
+      accentWeight: 300,
+      accentItalic: true,
+      accentPaint: "#1F2940",
+      underline: "#C9A24A",
+      tracking: "-0.04em",
+      panel: "#E9D7D7",
+      sample: { line: "Beauty.", accent: "With a story." },
+    },
+    cover: { line: "Sidi", accent: "Safari.", accentPaint: "#8D6B24", disc: "#E9D7D7", logo: "color" },
+    logos: {
+      stacked: asset("sidi", "logo-stacked"),
+      white: asset("sidi", "logo-white"),
+      horizontal: asset("sidi", "logo-horizontal"),
+      horizontalWhite: asset("sidi", "logo-horizontal-white"),
+      mark: asset("sidi", "logo-mark"),
+    },
+    logoStages: [
+      { label: "Full colour", bg: "#F7F3EE", logo: "color" },
+      { label: "On blush", bg: "#E9D7D7", logo: "color" },
+      { label: "Reversed", bg: "#1F2940", logo: "white" },
+      { label: "On white", bg: "#FFFFFF", logo: "color" },
+    ],
+    book: {
+      logo: {
+        title: "A name in two voices",
+        intro: "There's no symbol: the name is the logo. \"sidi\" is set in heavy, tight DM Sans and \"Safari\" in a light Cormorant italic. It's confident and soft at once, like her content.",
+        clearSpace: "Clear space: keep the height of the i's dot (x) free on every side",
+      },
+      colour: {
+        title: "Navy, blush and a little gold",
+        intro: "Ink navy brings the authority. Blush and cream keep it warm and personal. Gold is used sparingly, for arrows, rules and tape. Tap a swatch to copy its code.",
+      },
+      type: {
+        title: "A strong line, then a soft one",
+        intro: "Every chapter opens with a bold DM Sans statement followed by a light Cormorant italic line. The first says what the page is; the second says how it feels.",
+      },
+      elements: {
+        title: "Pieces that repeat on every page",
+        intro: "Arrows, tape, running headers and data cards: small parts that make twenty pages read as one kit.",
+      },
+      anatomy: { intro: "The About page uses almost every part of the system. Tap a number to see what each part does." },
+      templates: {
+        title: "One kit, four kinds of page",
+        intro: "Story pages, performance pages, the 50 Questions series and the rate cards, all built from the same parts.",
+      },
+      mockups: {
+        title: "Beyond the PDF",
+        intro: "The same system carried onto her profile, a business card and the pages brands spend the most time on.",
+      },
+      rules: { intro: "A few rules that keep the kit consistent as the numbers and packages are updated." },
+    },
+    templates: [
+      { name: "Story", description: "Cover, about, brand essence, content pillars and past partners." },
+      { name: "Performance", description: "Instagram and TikTok insights, each figure with its source and window." },
+      { name: "50 Questions", description: "The interview series: format, guests, artwork and integrations." },
+      { name: "Rates", description: "Creator packages, series sponsorships and services, all in KES." },
+    ],
+    posts: sidiPosts,
+    anatomy: {
+      // The A4 page sits at x 91–989, y 40–1310 inside the 1080×1350 poster.
+      image: sidiPosts[1].image,
+      callouts: [
+        { x: 17, y: 7.5, label: "Running header", note: "Small spaced caps: name on the left, chapter on the right." },
+        { x: 50, y: 15.5, label: "Statement", note: "DM Sans Bold in Ink Navy, tracked tight." },
+        { x: 69, y: 23, label: "Italic line", note: "Cormorant Light Italic carries the feeling." },
+        { x: 28.5, y: 31.5, label: "Gold swoosh", note: "A hand-drawn gold underline and arrow lead into the copy." },
+        { x: 13.5, y: 35.5, label: "Paper tag", note: "A cream label, slightly rotated, names the section." },
+        { x: 38, y: 66, label: "Sign-off", note: "One italic line closes the page: Warm. Honest. Always personal." },
+        { x: 67, y: 38.5, label: "Taped photo", note: "A real photo in a cream border, held on with gold tape." },
+        { x: 89, y: 61, label: "Navy arch", note: "A large shape behind the photo adds depth without clutter." },
+        { x: 58, y: 92.8, label: "Footer", note: "A navy rule, the chapter's topics and the page number." },
+      ],
+    },
+    instagram: {
+      bio: ["Beauty. With a story. Kenya-based creator & host.", "Skincare • Body care • 50 Questions With Sidi"],
+      avatarBg: "#E9D7D7",
+      avatarLogo: "color",
+    },
+    contact: { web: "tiktok.com/@sidisafari", handle: "@sidi_safari" },
   },
 ];
 
