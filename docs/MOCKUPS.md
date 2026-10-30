@@ -1,12 +1,14 @@
 # Mockup collection
 
-Six AI-generated concept application scenes, created with the built-in imagegen tool using the supplied JM monogram, the user's template previews as art-direction references, and existing brand assets. These are original concept scenes; the supplied PSD/EPS files were not edited. Original templates and archive files remain outside the repository.
+Sixteen AI-generated concept application scenes, created with the built-in imagegen tool using the supplied JM monogram, the user's template previews as art-direction references, and existing brand assets. These are original concept scenes; the supplied PSD/EPS files were not edited. Original templates and archive files remain outside the repository.
 
 Assets: `src/assets/mockups/`. Each scene has a 1536px full JPEG and a 768px `-thumb.jpg` for responsive display. Full-resolution source PNGs remain in the generator output directory. All scenes are labelled as concept applications in the interface.
 
 Homepage order: Graphic Design → Brand Identity → Mockups. Gallery: `/work/mockups`, with combinable `brand` and `category` query parameters. Brand books link to their filtered collection, and gallery entries link back to the brand book where one exists.
 
 ## Generation prompts
+
+See [the expanded collection and 3D viewer notes](MOCKUPS-EXPANSION.md) for the additional scenes and their generation prompts.
 
 ### jm-stationery
 

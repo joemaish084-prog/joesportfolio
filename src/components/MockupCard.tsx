@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Box } from "lucide-react";
 import type { Mockup } from "@/data/mockups";
 
 export function MockupCard({ item, onOpen, featured = false, eager = false }: {
@@ -27,6 +27,7 @@ export function MockupCard({ item, onOpen, featured = false, eager = false }: {
           className="h-full w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.035]"
         />
         <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-sm">Concept application</span>
+        {item.model && <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/75 px-3 py-2 text-xs font-semibold text-white"><Box className="h-3.5 w-3.5" />3D available</span>}
         <span className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/95 text-black shadow-sm transition-transform motion-safe:group-hover:-translate-y-1" aria-hidden="true">
           <ArrowUpRight className="h-5 w-5" />
         </span>
