@@ -16,6 +16,7 @@ import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost } from "@/
 import { servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
 import { brands, type Brand } from "@/data/brands";
 import { designs } from "@/data/designs";
+import { mockups } from "@/data/mockups";
 import { shortVideos, longVideos } from "@/data/videos";
 import { faqs } from "@/data/faqs";
 import {
@@ -70,6 +71,7 @@ const NAV = [
   { href: "/work/videos", label: "Videos" },
   { href: "/work/design", label: "Design" },
   { href: "/work/branding", label: "Branding" },
+  { href: "/work/mockups", label: "Mockups" },
 ];
 
 function Shell({ children, contentTag: Content = "main" }: { children: ReactNode; contentTag?: "main" | "div" }) {
@@ -315,7 +317,7 @@ function BrandPageBody({ brand }: { brand: Brand }) {
         </figure>
       ))}
       <p>
-        <a href="/work/branding">More brand identity and media kit work</a> · <a href="/agency/contact">Start a project</a>
+        <a href={`/work/mockups?brand=${brand.slug}`}>See more mockups for {brand.name}</a> · <a href="/work/branding">More brand identity and media kit work</a> · <a href="/agency/contact">Start a project</a>
       </p>
     </Shell>
   );
@@ -467,6 +469,21 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       body: html(<SimplePage head={STATIC_HEADS.workDesign}>
         <h2>Campaign and brand artwork</h2>
         {designs.map((design) => <section key={design.title}><h3>{design.title}</h3><p>{design.description}</p><img src={design.image} alt={design.title} width={400} loading="lazy" /></section>)}
+      </SimplePage>),
+      sitemap: { priority: 0.8, changefreq: "monthly" },
+    },
+    {
+      path: STATIC_HEADS.workMockups.path,
+      head: STATIC_HEADS.workMockups,
+      body: html(<SimplePage head={STATIC_HEADS.workMockups}>
+        <h2>Design, out in the world.</h2>
+        <p>Concept applications of portfolio brand identities on paper, fabric and everyday objects.</p>
+        {mockups.map((item) => <section key={item.id}>
+          <h3>{item.brand}: {item.title}</h3>
+          <p>{item.description} Concept visualisation.</p>
+          <img src={item.thumb} alt={item.alt} width={768} height={512} loading="lazy" />
+          {item.kitHref && <p><a href={item.kitHref}>View {item.brand} brand kit</a></p>}
+        </section>)}
       </SimplePage>),
       sitemap: { priority: 0.8, changefreq: "monthly" },
     },

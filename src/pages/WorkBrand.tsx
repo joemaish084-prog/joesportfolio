@@ -10,6 +10,7 @@ import { brandHead } from "@/seo/pageHeads";
 import { Swoosh } from "@/components/branding/BrandArt";
 import { displayFont, kits, paintText } from "@/components/branding/kits";
 import { getBrand, type Brand } from "@/data/brands";
+import { mockups as applicationMockups } from "@/data/mockups";
 import NotFound from "./NotFound";
 
 /** Brand fonts are only needed here, so they load with the page instead of site-wide. */
@@ -355,6 +356,7 @@ const WorkBrand = () => {
   if (!brand || !kit) return <NotFound />;
   const { colors, cover, type, book } = brand;
   const { Divider, Elements, Mockups } = kit;
+  const featuredApplication = applicationMockups.find((item) => item.brandSlug === brand.slug);
   // The accent phrase can use a second typeface (Sidi Safari's italic serif).
   const accentType: CSSProperties = {
     fontFamily: brand.headline.accentFont,
@@ -460,7 +462,16 @@ const WorkBrand = () => {
           <AnatomySection brand={brand} />
           <TemplatesSection brand={brand} />
           <Chapter n="07" label="Applications" title={book.mockups.title} intro={book.mockups.intro}>
+            {featuredApplication && (
+              <Link to={`/work/mockups?brand=${brand.slug}`} className="group mb-8 block overflow-hidden rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">
+                <img src={featuredApplication.thumb} srcSet={`${featuredApplication.thumb} 768w, ${featuredApplication.image} 1536w`} sizes="(min-width: 1280px) 1100px, 100vw" width={1536} height={1024} alt={featuredApplication.alt} loading="lazy" decoding="async" className="aspect-[3/2] w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.02]" />
+                <span className="flex flex-wrap items-center justify-between gap-2 px-1 py-4 text-xs font-bold uppercase tracking-wider"><span>Concept application · {featuredApplication.category}</span><span className="inline-flex items-center gap-2">Explore the mockup <ArrowRight className="h-4 w-4" /></span></span>
+              </Link>
+            )}
             <Mockups brand={brand} />
+            <Link to={`/work/mockups?brand=${brand.slug}`} className="mt-8 inline-flex min-h-11 items-center gap-3 rounded-full border border-current px-6 py-3 text-sm font-bold transition-opacity hover:opacity-70">
+              See more mockups for {brand.name} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
           </Chapter>
           <RulesSection brand={brand} />
         </div>

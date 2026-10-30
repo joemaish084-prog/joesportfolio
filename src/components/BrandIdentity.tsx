@@ -40,6 +40,11 @@ export function BrandIdentity() {
             </Button>
           </div>
         )}
+        <div className="mt-6 text-center">
+          <Link to="/work/mockups" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary">
+            See these identities in the mockup collection <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </section>
   );

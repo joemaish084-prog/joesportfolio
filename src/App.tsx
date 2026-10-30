@@ -24,6 +24,7 @@ const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Connect = lazy(() => import("./pages/Connect"));
 const WorkDesign = lazy(() => import("./pages/WorkDesign"));
+const WorkMockups = lazy(() => import("./pages/WorkMockups"));
 const WorkVideos = lazy(() => import("./pages/WorkVideos"));
 const WorkCaseStudies = lazy(() => import("./pages/WorkCaseStudies"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -96,6 +97,7 @@ const App = () => (
             <Route path="/terms" element={<Terms />} />
             <Route path="/connect" element={<Connect />} />
             <Route path="/work/design" element={<WorkDesign />} />
+            <Route path="/work/mockups" element={<WorkMockups />} />
             <Route path="/work/videos" element={<WorkVideos />} />
             <Route path="/work/case-studies" element={<WorkCaseStudies />} />
             <Route path="/work/branding" element={<Suspense fallback={pageFallback}><WorkBranding /></Suspense>} />

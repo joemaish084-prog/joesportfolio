@@ -10,6 +10,7 @@ const loaders = {
   Videos: () => import("@/components/Videos").then((m) => ({ default: m.Videos })),
   GraphicDesign: () => import("@/components/GraphicDesign").then((m) => ({ default: m.GraphicDesign })),
   BrandIdentity: () => import("@/components/BrandIdentity").then((m) => ({ default: m.BrandIdentity })),
+  Mockups: () => import("@/components/Mockups").then((m) => ({ default: m.Mockups })),
   About: () => import("@/components/About").then((m) => ({ default: m.About })),
   ServicesPricing: () => import("@/components/ServicesPricing").then((m) => ({ default: m.ServicesPricing })),
   AgencyPromo: () => import("@/components/AgencyPromo").then((m) => ({ default: m.AgencyPromo })),
@@ -32,6 +33,7 @@ export const WhatsAppButton = lazy(loaders.WhatsAppButton);
 export const Videos = lazy(loaders.Videos);
 export const GraphicDesign = lazy(loaders.GraphicDesign);
 export const BrandIdentity = lazy(loaders.BrandIdentity);
+export const Mockups = lazy(loaders.Mockups);
 export const About = lazy(loaders.About);
 export const ServicesPricing = lazy(loaders.ServicesPricing);
 export const AgencyPromo = lazy(loaders.AgencyPromo);

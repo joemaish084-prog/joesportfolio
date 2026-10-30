@@ -45,6 +45,7 @@ const navLinks: NavLink[] = [
     children: [
       { label: "Graphics", description: "Campaign creatives and social designs", href: "/work/design" },
       { label: "Branding", description: "Logo, colour, type and brand systems", badge: "New", href: "/work/branding" },
+      { label: "Mockups", description: "Brand identities on paper, fabric and everyday objects", href: "/work/mockups" },
     ],
   },
   {

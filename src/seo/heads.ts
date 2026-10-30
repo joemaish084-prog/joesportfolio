@@ -146,6 +146,11 @@ export const STATIC_HEADS = {
       "Brand identity and media kit design by Joseph Maina in Nairobi: logo systems, colour palettes, typography, social templates and influencer media kits for Kenyan brands.",
     path: "/work/branding",
   },
+  workMockups: {
+    title: "Brand Mockups & Applications | Joseph Maina, Nairobi",
+    description: "Explore brand mockup concepts for JM Marketing, Duara Schools, iClear and Sidi Safari, from printed stationery to apparel and drinkware.",
+    path: "/work/mockups",
+  },
   privacy: {
     title: "Privacy Policy | Joseph Maina",
     description: "How Joseph Maina Digital Marketing collects, uses and protects your personal information.",
