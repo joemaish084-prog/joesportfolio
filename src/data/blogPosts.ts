@@ -17,8 +17,20 @@ export interface BlogSection {
   heading: string;
   paragraphs: string[];
   image?: BlogSectionImage;
-  /** Data visuals rendered after the paragraphs (Meta turnaround case study). */
+  /** Checklist rendered after the paragraphs. */
+  list?: string[];
+  /** Comparison or numbers table rendered after the paragraphs. */
+  table?: BlogSectionTable;
+  /** One highlighted takeaway, rendered last in the section. */
+  callout?: string;
+  /** Data visuals rendered after the paragraphs (paid-media case studies). */
   visuals?: MetaTurnaroundVisualKind[];
+}
+
+export interface BlogSectionTable {
+  headers: string[];
+  rows: string[][];
+  note?: string;
 }
 
 export interface BlogPost {
@@ -3184,6 +3196,2825 @@ export const blogPosts: BlogPost[] = [
         paragraphs: [
           "Not everyone wants the loudest matatu on the road. Plenty of commuters choose the quiet shuttle with the calm driver, and they are just as loyal to it.",
           "Loud, bold branding suits a youth fashion label or a nightlife brand. A clinic, a law firm or a school wins with calm, clear and reliable. The lesson is not to be louder, it is to be unmistakably yourself, for the people you actually want on board.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "meta-pixel-conversions-api-setup-kenya-2026",
+    category: "Meta Ads",
+    title: "Meta Pixel and Conversions API: Tracking You Can Trust in Kenya",
+    excerpt: "If your tracking is wrong, every decision after it is a guess. Here is how to set it up and how to check it is telling the truth.",
+    date: "2026-10-21",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Meta Pixel and Conversions API: Tracking You Can Trust in Kenya",
+    metaDescription: "How Kenyan businesses should set up the Meta Pixel and Conversions API, which events to track, how to test them, and how to track WhatsApp and M-Pesa sales.",
+    intro: "Most Meta accounts I audit have the same problem hiding under the campaigns: nobody is sure the numbers are real. The Pixel was installed by someone who left, purchases fire twice, and WhatsApp sales are not counted at all. Meta's delivery system learns from the signals you send it, so bad tracking does not just spoil your report. It teaches the algorithm the wrong lesson.",
+    thumbnail: "https://images.unsplash.com/photo-1780253256194-34e5867ccb8c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Developer at a laptop with lines of code on the screen in a dark room",
+
+    sections: [
+      {
+        id: "pixel-vs-capi",
+        heading: "What the Pixel and the Conversions API each do",
+        paragraphs: [
+          "The Pixel is code in the visitor's browser. It reports what they do on your site. It is quick to install, but browsers, ad blockers and privacy settings can stop it from firing.",
+          "The Conversions API, usually called CAPI, sends the same events from your server or your shop platform directly to Meta. It does not depend on the browser, so it catches events the Pixel misses. You want both running together, with the same event ID on each, so Meta can spot duplicates and count the sale once.",
+        ],
+        table: {
+          headers: ["","Pixel","Conversions API"],
+          rows: [
+            ["Runs from","The visitor's browser","Your server or shop platform"],
+            ["Affected by ad blockers","Yes","No"],
+            ["Setup effort","Low","Low on Shopify or WooCommerce plugins, higher on a custom site"],
+            ["Should you use it","Yes","Yes, once the Pixel works"],
+          ],
+        },
+      },
+      {
+        id: "which-events",
+        heading: "Track fewer events, and track the right ones",
+        paragraphs: [
+          "You do not need twenty custom events. You need the steps that lead to money, firing once each, at the correct moment. Purchase must fire on the thank-you page after payment is confirmed, not when someone clicks the checkout button.",
+        ],
+        list: [
+          "E-commerce: ViewContent, AddToCart, InitiateCheckout, Purchase with the real value and KES as the currency.",
+          "Service business: Lead on the form thank-you page, and Contact when someone taps call or WhatsApp.",
+          "Booking business: Schedule when the booking is confirmed, not when the calendar opens.",
+        ],
+      },
+      {
+        id: "setup-order",
+        heading: "The setup order I follow",
+        paragraphs: [
+          "Do this in order. Most tracking mess comes from people adding a plugin on top of an old Pixel that is still hard-coded into the theme.",
+        ],
+        list: [
+          "Open Events Manager and confirm which dataset belongs to your business. Make sure it sits in your own Business Manager, not a former freelancer's.",
+          "Search your site's theme and plugins for old Pixel code and remove anything you will not use.",
+          "Install through your platform's official integration if there is one. On Shopify and WooCommerce this can set up the Pixel and CAPI together.",
+          "Verify your domain in Business Settings.",
+          "Use the Test Events tool, then buy something real or submit a real form and watch each event arrive.",
+          "Check that Purchase shows the correct value and currency. A KES 3,500 order reported as USD 3,500 will ruin your return figures.",
+        ],
+      },
+      {
+        id: "whatsapp-mpesa",
+        heading: "The Kenyan problem: sales that close on WhatsApp and M-Pesa",
+        paragraphs: [
+          "Plenty of Kenyan businesses close the sale in a chat and take payment by till number, so no thank-you page ever loads. To Meta, those sales do not exist, and your campaign looks like it is failing while your shop is busy.",
+          "There are two honest fixes. For click-to-WhatsApp campaigns, use Meta's messaging events if your setup supports them, so that purchases logged in the chat are tied back to the ad. Otherwise, keep a simple sheet that records which ad each customer came from and the order value, and compare it with Ads Manager every week. It is less elegant, but it is real money, which is better than a clean dashboard measuring nothing.",
+        ],
+      },
+      {
+        id: "read-it-honestly",
+        heading: "Read the numbers honestly",
+        paragraphs: [
+          "Meta's default attribution is 7-day click and 1-day view, which means it can claim a sale from someone who merely saw your ad yesterday. So its revenue figure usually runs higher than what lands in the bank. Treat it as a consistent yardstick for comparing campaigns, not as your accounts.",
+          "Every month, put Meta's reported revenue next to your actual sales. The gap matters less than whether it stays steady. If it suddenly widens, something has broken.",
+        ],
+        callout: "Rule of thumb: if you cannot say where your purchase number comes from, fix that before you spend another shilling on creative.",
+      },
+    ],
+  },
+  {
+    slug: "google-shopping-ads-merchant-center-kenya-2026",
+    category: "Google Ads",
+    title: "Google Shopping Ads in Kenya: A Practical Merchant Center Guide",
+    excerpt: "Your product photo and price, right at the top of Google. Here is what a Kenyan online shop needs to get there.",
+    date: "2026-10-21",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Google Shopping Ads in Kenya: A Practical Merchant Center Guide",
+    metaDescription: "How Kenyan online shops can run Google Shopping ads: Merchant Center setup, product feed fixes, common disapprovals, campaign structure and how to judge results.",
+    intro: "When someone searches for a specific product, Shopping ads put your photo, price and shop name in front of them before they click anything. For a retailer, that is the closest Google gets to a shop window on a busy street. In one Kenyan retail account I ran, Shopping brought in 139 tracked orders in its first weeks. It does take more groundwork than a search ad, and nearly all of it sits in your product data.",
+    thumbnail: "https://images.unsplash.com/photo-1753161024820-a10728a1eb80?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Woman on a phone call browsing a clothes rail in a shop",
+
+    sections: [
+      {
+        id: "how-different",
+        heading: "How Shopping differs from search ads",
+        paragraphs: [
+          "There are no keywords and you do not write ad headlines. Google reads your product data from Merchant Center, then decides which searches to match and builds the ad from your title, image and price. So your feed is effectively your ad copy and your targeting at once.",
+          "This suits businesses with real products, clear prices and a site that can take an order. If your prices are \"DM us\", or you have no working product pages, deal with that first.",
+        ],
+      },
+      {
+        id: "what-you-need",
+        heading: "What you need before you start",
+        paragraphs: [
+        ],
+        list: [
+          "A site with one page per product, showing the same price as your feed, in KES.",
+          "Clear delivery costs, return terms and contact details published on the site. Merchant Center checks these.",
+          "A Merchant Center account linked to your Google Ads account, with your website verified.",
+          "Clean product photos without watermarks, promotional text or borders.",
+          "Conversion tracking on your purchase thank-you page, tested with a real order.",
+        ],
+      },
+      {
+        id: "feed",
+        heading: "Fix the feed, because that is where the money is",
+        paragraphs: [
+          "Shopify and WooCommerce both have Google integrations that can sync your products. Do not stop at a successful sync. The default titles are often just what your team happened to type, and titles are a major way Google works out which searches your product is for.",
+        ],
+        table: {
+          headers: ["Field","Weak","Better"],
+          rows: [
+            ["Title","Glow Serum","Vitamin C Face Serum 30ml for Dark Spots, Brand Name"],
+            ["Image","Busy lifestyle shot with sale text","Product on a clean background, no text"],
+            ["Price","Differs from the website","Exact match, including any sale price"],
+            ["Availability","Always \"in stock\"","Synced with real stock"],
+            ["Brand and category","Left blank","Filled in accurately"],
+          ],
+          note: "Put the words buyers use near the start of the title, and never add claims or terms that the product page does not support.",
+        },
+      },
+      {
+        id: "disapprovals",
+        heading: "The disapprovals you are likely to meet",
+        paragraphs: [
+          "Mismatched prices are the classic, usually caused by a sale running on your site but not in your feed. Missing delivery information and missing return terms are also common. Some categories, including health and beauty products that make strong claims, get extra scrutiny, so avoid medical promises in titles and descriptions.",
+          "Check the diagnostics page in Merchant Center every week. A product that gets quietly disapproved cannot sell, and nothing in your Ads dashboard will shout about it.",
+        ],
+      },
+      {
+        id: "campaigns",
+        heading: "Standard Shopping or Performance Max?",
+        paragraphs: [
+          "Performance Max can show your products on Shopping, YouTube, Display, Gmail and more, and Google pushes it hard. Standard Shopping gives you more control and clearer reporting, and you can still add negative keywords to remove junk searches.",
+          "With a small catalogue and budget, I prefer to begin with Standard Shopping, because it is easier to see what is working. Split out your best sellers and products with healthy margins so they get their own budget. Then test Performance Max once you have conversion data. Avoid running both on the same products without a plan, because they end up competing for the same sales.",
+          "Google is also adding AI features to Shopping, including AI Max. Treat those as tests. Your feed quality matters even more when Google is the one deciding where to show you.",
+        ],
+      },
+      {
+        id: "judging",
+        heading: "Judge it by profit per product",
+        paragraphs: [
+          "Overall ROAS can hide a lot. Shopping may sell plenty of low-margin items while your profitable ones get no impressions. Download the product report each month and look at spend, revenue and margin per product. Also expect that a new campaign may start slowly. In that same retail account, the first search campaign returned 1.4x in week one and 27.3x by week three, so one bad week is not a verdict.",
+        ],
+        callout: "Spend your first hours on titles, images and prices, not on bidding. A clean feed makes every other decision easier.",
+      },
+    ],
+  },
+  {
+    slug: "get-more-google-reviews-nairobi-2026",
+    category: "SEO",
+    title: "How to Get More Google Reviews in Nairobi Without Breaking the Rules",
+    excerpt: "Reviews shape who gets the call. Here is how to ask for them properly, and the common tricks that can get them removed.",
+    date: "2026-10-21",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "How to Get More Google Reviews in Nairobi Without Breaking the Rules",
+    metaDescription: "How Nairobi businesses can get more Google reviews within Google's 2026 rules: when and how to ask, WhatsApp scripts, replying to bad reviews and what to avoid.",
+    intro: "Two clinics appear side by side on Google Maps. One has 12 reviews, the latest from 2023. The other has 180, with some from last week. You know which one gets the call. Reviews affect both whether you show up and whether people choose you, yet most Nairobi businesses collect them by accident. A simple routine fixes that, as long as you stay inside Google's rules, which are stricter than many owners realise.",
+    thumbnail: "https://images.unsplash.com/photo-1758520388212-04b4d36e1364?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two women laughing while looking at a smartphone, with shopping bags beside them",
+
+    sections: [
+      {
+        id: "the-rules",
+        heading: "What Google does not allow",
+        paragraphs: [
+          "Google's contribution policy is direct on this. You may ask customers for reviews. You may not buy them, reward them or filter them. Breaking these rules can get reviews removed and can put your whole profile at risk.",
+        ],
+        table: {
+          headers: ["Not allowed","Do this instead"],
+          rows: [
+            ["Offering a discount, gift or payment for a review","Ask plainly, with nothing attached"],
+            ["Only asking customers you expect to be happy","Ask every customer the same way"],
+            ["Pressuring people to review while on your premises","Send the link afterwards, so they can choose"],
+            ["Telling people what to write, or asking them to name a staff member","Let them use their own words"],
+            ["Reviews from staff, relatives or paid accounts","Build up slowly from real customers"],
+          ],
+          note: "Based on Google's Maps user-generated content policy, checked in October 2026. Policies change, so re-read it from time to time.",
+        },
+      },
+      {
+        id: "when-to-ask",
+        heading: "Ask at the right moment",
+        paragraphs: [
+          "The best moment is soon after the customer got what they came for: the order has arrived, the treatment is finished, the car is back on the road. Make it a step in your process, assigned to a named person, so it does not depend on someone remembering.",
+        ],
+      },
+      {
+        id: "script",
+        heading: "A WhatsApp message you can copy",
+        paragraphs: [
+          "In your Business Profile, use the \"Ask for reviews\" option to get your short link, and then send it over WhatsApp, where Kenyan customers will actually see it. Keep it personal and short.",
+        ],
+        callout: "\"Hi Achieng, thank you for choosing us today. If you have a minute, would you share your honest experience on Google? It really helps other people find us: [link]. Asante sana!\"",
+      },
+      {
+        id: "replying",
+        heading: "Reply to all of them, especially the bad ones",
+        paragraphs: [
+          "Replying shows future customers how you behave when things go wrong. A calm response to a two-star review can do more for you than another five-star review. Never reveal private details, particularly in health or financial services, where even confirming someone was a client can be a problem.",
+        ],
+        list: [
+          "Thank the person and use their name.",
+          "Acknowledge the problem without arguing over the details in public.",
+          "Say what you are doing about it, and offer a direct contact.",
+          "Report a review only if it breaks policy, such as a fake one from someone you never served. Disliking it is not enough.",
+        ],
+      },
+      {
+        id: "steady",
+        heading: "Aim for steady, not sudden",
+        paragraphs: [
+          "A sudden burst of 50 reviews in one week looks odd to customers and to Google. Five real reviews every week, month after month, look far better, and give searchers fresh evidence that you are still open and still good.",
+          "Track your total, average rating and latest review date monthly, and compare them with your top three local competitors. That tells you how far you are behind and how long it will take to catch up. For the setup work behind this, see my guide to Google Business Profile for Nairobi businesses.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "landing-page-that-converts-kenya-2026",
+    category: "Lead Generation",
+    title: "The Landing Page That Converts Kenyan Mobile Traffic: A Section-by-Section Plan",
+    excerpt: "You paid for the click. Here is how to stop losing it to a slow page, a vague headline and a form nobody wants to fill in.",
+    date: "2026-10-21",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "The Landing Page That Converts Kenyan Mobile Traffic",
+    metaDescription: "How to build a landing page for Kenyan mobile traffic: page speed, headline, proof, price, WhatsApp buttons and forms, with a section-by-section plan and checklist.",
+    intro: "Many Kenyan advertisers pay for good clicks and then send them to a page built on a big desktop monitor in an office with fibre. The person who clicked is on a mid-range Android, on mobile data, while waiting in a queue. If your page takes too long or makes them work to understand it, they are gone, and you still pay for the click. Nearly all landing page problems come back to this mismatch.",
+    thumbnail: "https://images.unsplash.com/photo-1487523117656-d5d117ad47c5?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two computer monitors showing website designs on a desk",
+
+    sections: [
+      {
+        id: "one-job",
+        heading: "Give the page one job",
+        paragraphs: [
+          "A landing page exists to get one action: a call, a chat, a booking or a purchase. Remove the full navigation menu, the blog links and the rest of your company story. Each extra option is another way of leaving. Send each campaign to a page that matches the ad, so that someone clicking \"Braces from KES X\" finds braces, not your general dental home page.",
+        ],
+      },
+      {
+        id: "structure",
+        heading: "The structure, from top to bottom",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Section","What it does","Example"],
+          rows: [
+            ["Headline","Says what you get and for whom","Solar water heating for Nairobi homes, installed in 3 days"],
+            ["Button","Gives an immediate way to act","Chat on WhatsApp"],
+            ["Price or range","Filters people and builds trust","Packages from KES X"],
+            ["Proof","Answers \"can I trust you?\"","Reviews, client photos, real numbers"],
+            ["How it works","Removes uncertainty","Three short steps"],
+            ["Objections","Deals with the reasons not to buy","Delivery, payment, guarantee, FAQs"],
+            ["Final call to action","Catches those who read to the end","Repeat the button"],
+          ],
+          note: "Examples show the pattern. Only state times, prices and guarantees that are true of your business.",
+        },
+      },
+      {
+        id: "speed",
+        heading: "Speed comes first",
+        paragraphs: [
+          "A beautiful page that does not load has a conversion rate of zero. Compare link clicks with landing page views in your ad reports. A big gap often means people give up before the page appears. Test your page with Google's PageSpeed Insights on the mobile setting, then deal with the usual causes.",
+        ],
+        list: [
+          "Compress images and use modern formats such as WebP. A 4MB banner is expensive on mobile data.",
+          "Avoid autoplay background videos, sliders and pop-ups.",
+          "Remove unused plugins and tracking scripts, keeping only those you use.",
+          "Test on a real, ordinary Android phone, not only on your own.",
+        ],
+      },
+      {
+        id: "form-vs-whatsapp",
+        heading: "Forms, WhatsApp or both?",
+        paragraphs: [
+          "Offer the way your customers prefer, and put the buttons where thumbs reach. A sticky bottom bar with call and WhatsApp buttons works well on mobile. If you use a form, ask only for what you need to follow up. Every extra field loses some people. A name and phone number are often enough for a first contact, and you can ask the rest in conversation.",
+          "If you collect personal details, say why and how you will use them, and link to your privacy notice. This is partly a legal duty under Kenya's data protection rules, and it also reassures people.",
+        ],
+      },
+      {
+        id: "trust",
+        heading: "Kenyan buyers need specific trust signals",
+        paragraphs: [
+          "Online scams are common, and customers know it. Vague claims do not help. Show your real business name, physical location, a landline or a named contact, real photos and recent reviews. Say how payment works: a registered till or paybill in the business name is more reassuring than a personal number. Say what happens if something goes wrong.",
+        ],
+        callout: "Test: show the page to someone for five seconds on a phone. If they cannot tell you what you sell, who it is for and what to do next, rewrite the top of the page.",
+      },
+      {
+        id: "improve",
+        heading: "Improve one thing at a time",
+        paragraphs: [
+          "Conversion rates vary too widely by industry and offer for a universal target to be useful. Your own starting point is the benchmark. Change the highest-impact element first, usually the headline or the offer, then button placement. Give each change enough traffic to judge, and record the results, so that you build up knowledge about your market rather than a pile of opinions.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "digital-marketing-budget-kenyan-sme-2026",
+    category: "Pricing",
+    title: "How Much Should a Kenyan SME Budget for Digital Marketing?",
+    excerpt: "Forget the percentage you read online. Here is a way to build a budget from your own numbers, plus where to spend first.",
+    date: "2026-10-22",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "How Much Should a Kenyan SME Budget for Digital Marketing?",
+    metaDescription: "How to set a digital marketing budget as a Kenyan SME: why percentage rules mislead, a goal-based calculation, what fees and VAT to include, and sample allocations.",
+    intro: "The usual answer is \"spend 5 to 10% of revenue\". It is not useless, but it does not tell you whether that money can do anything. A shop with KES 300,000 a month in sales would have KES 30,000 by that rule. After a retainer and VAT, there might be nothing left for ads. A better way to budget is to start with what you need the marketing to achieve, then see if the sums work.",
+    thumbnail: "https://images.unsplash.com/photo-1642043175009-5997b3a078d8?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Calculator, pencil and ruler on a sheet of grid paper",
+
+    sections: [
+      {
+        id: "from-goal",
+        heading: "Build it backwards from your goal",
+        paragraphs: [
+          "Work from the sales you want to what they will cost. Here is a made-up example for a business with a KES 8,000 average order and KES 3,200 gross profit per order, aiming for 40 extra orders a month.",
+        ],
+        table: {
+          headers: ["Step","Calculation","Result"],
+          rows: [
+            ["Extra sales wanted","Your goal","40 orders"],
+            ["Maximum ad cost per order","Say 40% of KES 3,200 gross profit","KES 1,280"],
+            ["Monthly ad budget","40 x KES 1,280","KES 51,200"],
+            ["VAT on Meta ads","16% of ad spend","KES 8,192"],
+            ["Profit after ad costs","(40 x 3,200) minus 59,392","KES 68,608"],
+          ],
+          note: "Illustrative. This is before any management fee, creative costs or time. Use your own figures, and test assumptions on a small budget first.",
+        },
+      },
+      {
+        id: "true-cost",
+        heading: "Budget for all of it, not only ads",
+        paragraphs: [
+          "The ad spend is rarely the whole bill. A realistic budget has room for:",
+        ],
+        list: [
+          "Ad spend, including 16% VAT on Meta. Check your invoices for how Google bills you as well.",
+          "Management, whether that is a retainer, a freelancer or your own staff's hours.",
+          "Creative: photos, videos and designs. Ads wear out, so this is not a one-off.",
+          "The landing page or website and its upkeep.",
+          "Tools such as scheduling, CRM or email, if you truly need them.",
+          "Someone's time to answer enquiries. Unanswered leads are the most expensive kind.",
+        ],
+      },
+      {
+        id: "minimum",
+        heading: "When the budget is too small to manage",
+        paragraphs: [
+          "If your ad budget is KES 15,000 a month, paying KES 40,000 for management does not make sense. Spending more on the manager than on the ads only works if the value of each sale is high. At that level, learn to run one simple campaign yourself, or pay for a one-off setup and a monthly check-in. Spend the rest on your Google Business Profile, reviews and organic video, all of which cost mainly time.",
+          "My own retainers start from KES 40,000 a month, excluding ad spend, and I would rather tell you early if that does not yet add up for your business.",
+        ],
+      },
+      {
+        id: "allocation",
+        heading: "Where to put the first shilling",
+        paragraphs: [
+          "The right order depends on how people buy from you. Use this as a starting point rather than a formula.",
+        ],
+        table: {
+          headers: ["Your stage","Priority","Why"],
+          rows: [
+            ["Just starting, no reviews","Google Business Profile, reviews, basic page","Nearly free, and it makes all ads work better"],
+            ["People search for what you sell","Google Search first","Catches people who already want it"],
+            ["People do not yet search for it","Meta or TikTok video","Creates the demand"],
+            ["Steady sales already","Retargeting, then add a second channel","Builds on what already works"],
+            ["Long-term","SEO and content","Slow, but gets cheaper over time"],
+          ],
+        },
+      },
+      {
+        id: "test-budget",
+        heading: "Treat the first three months as a test",
+        paragraphs: [
+          "Your first budget is a guess, so use it to buy information. Choose an amount you can afford to spend for three months without getting results. If losing it would hurt the business, it is too much for now. Review monthly: cost per sale, actual bank revenue and profit. Increase what is working gradually, as big, sudden budget jumps can make results less stable.",
+          "Plan for the seasons as well. Many Kenyan businesses have strong months and weak ones, such as December or the January school-fee squeeze. A flat budget across the year often overspends in slow months and underspends when people are ready to buy.",
+        ],
+        callout: "The right question is not \"how much should I spend?\" It is \"how much can I pay for a customer and still make money?\" The budget follows from that.",
+      },
+    ],
+  },
+  {
+    slug: "tiktok-spark-ads-kenya-2026",
+    category: "TikTok",
+    title: "TikTok Spark Ads: Turn Your Best Organic Videos Into Ads",
+    excerpt: "Spark Ads keep the likes, comments and the real account name. That is why they rarely feel like ads at all.",
+    date: "2026-10-22",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "TikTok Spark Ads: Turn Your Best Organic Videos Into Ads",
+    metaDescription: "How TikTok Spark Ads work for Kenyan brands: boosting your own or a creator's videos, authorisation codes, which videos to pick, budgets and how to measure results.",
+    intro: "A polished ad on TikTok looks like an interruption, and people swipe. A Spark Ad runs as a normal TikTok post, from a real account, with the original likes and comments still attached. Instead of guessing what will work and paying to find out, you can look at which videos have already earned attention organically, and put your budget behind those.",
+    thumbnail: "https://images.unsplash.com/photo-1746014601523-db2b450dee40?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand scrolling through a TikTok feed on a phone",
+
+    sections: [
+      {
+        id: "what-they-are",
+        heading: "What Spark Ads are",
+        paragraphs: [
+          "Spark Ads let you promote organic TikTok posts through Ads Manager, either from your own account or from a creator's, with their authorisation. Engagement from the promotion is credited to the original post, and viewers can still comment, follow and visit the profile.",
+          "They work with most objectives, including traffic, leads and sales, so you are not limited to views. That is the main difference from the simple Promote button inside the app, which offers much less control.",
+        ],
+        table: {
+          headers: ["","Promote in the app","Regular in-feed ad","Spark Ad"],
+          rows: [
+            ["Uses an organic post","Yes","No","Yes"],
+            ["Keeps likes and comments","Yes","No, starts from zero","Yes"],
+            ["Full targeting and objectives","Limited","Yes","Yes"],
+            ["Can use a creator's video","No","Only if uploaded","Yes, with their code"],
+            ["Shows from","Your account","Your ad identity","The real account"],
+          ],
+        },
+      },
+      {
+        id: "which-videos",
+        heading: "Choosing which videos to spark",
+        paragraphs: [
+          "Do not pick the video you like best. Let the audience's behaviour decide. Reach matters less than whether people stayed and acted.",
+        ],
+        list: [
+          "High average watch time and completion rate compared with your other videos.",
+          "Comments that show buying interest, such as \"how much?\" and \"where can I get this?\"",
+          "A clear link with what you sell. A funny video that never mentions your product will get cheap views and few sales.",
+          "A strong hook in the first seconds, and something that works without much context.",
+          "Rights to everything in it. Commercial use of trending music can be restricted, so use the commercial music library.",
+        ],
+      },
+      {
+        id: "codes",
+        heading: "Working with creators' videos",
+        paragraphs: [
+          "A creator can turn on ad authorisation for a video in the TikTok app, generate a code and choose how long it lasts. You paste this code into Ads Manager when building the ad. Agree in writing on the fee, how long you can use the video, and whether you may edit the caption.",
+          "Keep a simple tracker of each code and its expiry date. Also remember that the video stays on the creator's account, so a banned or deleted post can take your ad with it. A creator's name on the ad also carries their reputation, so check their previous content first.",
+        ],
+      },
+      {
+        id: "campaign",
+        heading: "A simple first campaign",
+        paragraphs: [
+          "Select three to five videos with good organic signals. Run them in one campaign whose objective matches your real goal. Use a broad audience within Kenya or your service area, and let the videos do much of the targeting. TikTok's help centre has listed daily minimums of above USD 50 at campaign level and above USD 20 at ad group level, so check the current figures in Ads Manager before you plan a very small test.",
+          "Set the call to action to go somewhere fast and mobile-friendly. Reply to the comments too, since they are public and carry on working for you. A helpful answer to \"how much?\" beneath a Spark Ad will be seen by everyone who comes after.",
+        ],
+      },
+      {
+        id: "measure",
+        heading: "How to measure it",
+        paragraphs: [
+          "Be careful with \"cheap views\". They feel like success, and pay no bills. Watch the 2-second and 6-second view rates and completion rate to check the creative, then click-through, cost per lead or sale, and the actual orders that came through.",
+          "Videos tire on TikTok, sometimes within weeks. When frequency rises and results fall, rotate in new ones. So the system depends on a steady flow of organic videos, which is why paid and organic should be run together rather than by separate people who never talk.",
+        ],
+        callout: "Post organically to find out what works. Spend money only on what has already earned attention.",
+      },
+    ],
+  },
+  {
+    slug: "google-ads-launch-case-study-kenya-2026",
+    category: "Case Study",
+    title: "From No Google Ads to KES 1.94 Million in Ten Weeks: A Launch Case Study",
+    excerpt: "A Kenyan retailer that had never run Google Ads, one small search campaign, and what the numbers did week by week.",
+    date: "2026-10-22",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "From No Google Ads to KES 1.94M in Ten Weeks: Case Study",
+    metaDescription: "A real Google Ads case study from Kenya: how a retailer with no Google Ads reached KES 1.94M in tracked revenue at 15.5x ROAS in ten weeks, including what underperformed.",
+    intro: "This business had never run a Google ad. Everything it knew about paid media came from Meta. Ten weeks after launch, Google Ads had recorded KES 1,942,243 in revenue from KES 125,422 in spend, a return of 15.5x across 339 tracked orders. Here is how it unfolded, including the first week, when it looked like a bad idea, and the campaign that did not earn its keep. The client stays unnamed. The numbers are real.",
+    thumbnail: "https://images.unsplash.com/photo-1586125674857-4eb86880905d?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Google search home page on a computer screen",
+    heroVisual: "hero",
+
+    sections: [
+      {
+        id: "starting-point",
+        heading: "The starting point",
+        paragraphs: [
+          "The client is a Kenyan beauty retailer, already selling well through Meta. But Meta mostly reaches people who were not looking for anything at that moment. Nobody was catching the people already typing product names into Google, and those searches were going to whoever else showed up.",
+          "So the brief was straightforward: get in front of people who are already searching, track every order, and see if this can pay for itself.",
+        ],
+        visuals: ["process"],
+      },
+      {
+        id: "week-one",
+        heading: "Week one returned 1.4x. We kept going",
+        paragraphs: [
+          "One search campaign went live in the first week of August, on a small weekly budget. It returned 1.4x in week one. For a retailer, that is a loss once you count the cost of the goods, and many owners would have switched it off by then.",
+          "By week three, the same campaign was returning 27.3x. New campaigns need data before automated bidding and the account's targeting settle down, and judging one on its first few days is a common way to kill something before it works. It only made sense to wait because the orders were being tracked. We could see what was going on, and we were not just hoping.",
+        ],
+        callout: "Week one: 1.4x. Week three: 27.3x. Same campaign, same account.",
+      },
+      {
+        id: "adding-shopping",
+        heading: "Adding Shopping",
+        paragraphs: [
+          "Shopping ads began delivering in the last week of August. They show the product's photo and price in the results, so they suit a retailer whose products people recognise on sight. They went on to bring in 139 orders, at 14.9x.",
+          "In September, as returns improved, the monthly picture moved from 10.5x in August to 16.4x across September and into early October, and spend rose along with it.",
+        ],
+        visuals: ["monthly"],
+      },
+      {
+        id: "results",
+        heading: "What each campaign did",
+        paragraphs: [
+          "General product search was the star: KES 57,437 in spend, 176 orders and KES 1,032,685 in revenue, at 18.0x and KES 326 per order. These are people searching with clear intent, often for a specific product, and they are close to buying.",
+        ],
+        visuals: ["campaigns"],
+      },
+      {
+        id: "what-didnt-work",
+        heading: "What did not work as well",
+        paragraphs: [
+          "A local search campaign for skin consultations began in mid-September. It spent KES 10,257 for 13 orders and returned 7.9x, the weakest in the account, at KES 789 per order. That is more than twice the cost per order of general product search. It was worth trying, and the numbers told us plainly that it was not the priority.",
+          "A smaller search campaign for a related brand returned 11.1x on KES 8,200. It was respectable, but it had far less volume than the main campaign.",
+        ],
+        visuals: ["comparison"],
+      },
+      {
+        id: "caveats",
+        heading: "How far to trust these numbers",
+        paragraphs: [
+          "These are orders and revenue as recorded in the Google Ads reports, converted from US dollars at KES 129.89. Platform-reported revenue is not the same as money in the bank. Some of these customers may also have seen Meta ads, or might have bought anyway. A few weeks are missing from the weekly log, which is why the monthly chart adds up to slightly less than the account total. The ads were paused in early October.",
+          "Also, this is one retailer with established products and demand. A 15.5x return is not a forecast for your business.",
+        ],
+      },
+      {
+        id: "takeaways",
+        heading: "What you can take from it",
+        paragraphs: [
+          "The lessons here apply well beyond beauty retail.",
+        ],
+        list: [
+          "Set up conversion tracking before launch. Everything here depended on it.",
+          "Start with search intent, on a budget small enough to survive a slow first week.",
+          "Do not judge a new campaign on its first few days.",
+          "Scale what is improving, and compare campaigns on cost per order.",
+          "Test new lines honestly, and accept what the results say.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "boost-post-vs-ads-manager-kenya-2026",
+    category: "Meta Ads",
+    title: "Boost Post vs Ads Manager: When the Blue Button Wastes Your Money",
+    excerpt: "Boosting is not always wrong. But if you want sales, the button that is easiest to press is usually the wrong one.",
+    date: "2026-10-23",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Boost Post vs Ads Manager: When the Blue Button Wastes Your Money",
+    metaDescription: "Boost post or Ads Manager? What each one really does, when boosting makes sense for Kenyan businesses, and how to move your budget into campaigns that sell.",
+    intro: "The Boost button sits right under your post, it takes a minute, and it accepts M-Pesa. No wonder most Kenyan small businesses start there. The trouble is that a boost tends to buy what it was built to buy: likes, comments and reach. If what you need is enquiries or orders, you are paying for applause.",
+    thumbnail: "https://images.unsplash.com/photo-1555020368-9e1b4cf78a52?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Phone showing the Facebook app with the What's on your mind prompt",
+
+    sections: [
+      {
+        id: "real-difference",
+        heading: "The real difference",
+        paragraphs: [
+          "A boost promotes one existing post with a short list of settings. Ads Manager lets you choose the outcome you want Meta to chase, such as sales or leads, and gives you control over the budget, audience, placement, creative testing and tracking.",
+          "That outcome setting is the part that matters. Meta looks for people likely to do whatever you asked for. Ask for engagement and it finds people who like and comment on things. Those are often not the people who pull out their phone and pay.",
+        ],
+        table: {
+          headers: ["","Boost post","Ads Manager"],
+          rows: [
+            ["Time to launch","A minute or two","Longer the first time"],
+            ["Goal options","Limited","Full list, including sales and leads"],
+            ["Testing several ads","No, one post at a time","Yes"],
+            ["Conversion tracking","Limited","Full Pixel and event optimisation"],
+            ["Best for","Reach on one good post","Anything judged by revenue or leads"],
+          ],
+        },
+      },
+      {
+        id: "when-boost-works",
+        heading: "When boosting is actually fine",
+        paragraphs: [
+          "I do not tell every client to stop boosting. It has honest uses, as long as you know what you are buying.",
+        ],
+        list: [
+          "An event or announcement that simply needs local eyes on it.",
+          "A post already doing well organically, where you want more people to see it.",
+          "Building a warm audience of video viewers and engagers that you can retarget later.",
+          "A very small test before you put real money behind an idea.",
+        ],
+      },
+      {
+        id: "signs",
+        heading: "Signs the boost button is costing you",
+        paragraphs: [
+          "Look at your last three months of boosts and be honest about these.",
+        ],
+        list: [
+          "You can quote the likes but not how many enquiries or sales came from them.",
+          "Your comments are full of emojis from accounts that will never buy.",
+          "You boost whichever post you happen to like, rather than the one with the clearest offer.",
+          "Each boost starts from scratch, so nothing you learn carries over to the next one.",
+        ],
+      },
+      {
+        id: "moving-over",
+        heading: "A simple way to move over",
+        paragraphs: [
+          "You do not need a complicated account. Create a Business Manager that you own, connect your Page and Instagram, and set up one sales or leads campaign. Choose the destination that matches how you sell: your website if you have a working checkout, WhatsApp if that is where you close.",
+          "Use your best boosted post as the first ad, since you can run an existing post inside Ads Manager and keep its likes and comments. Add two or three other angles next to it. Keep your budget about the same as you were boosting with, and judge it after a fortnight on cost per enquiry or sale, not on likes.",
+          "Remember that Meta adds 16% VAT in Kenya, so KES 10,000 of ads costs KES 11,600. Build it into your budget whichever button you press.",
+        ],
+        callout: "The test: if a campaign's success would not show up in your till, it should not get your sales budget.",
+      },
+    ],
+  },
+  {
+    slug: "negative-keywords-google-ads-kenya-2026",
+    category: "Google Ads",
+    title: "Negative Keywords: How to Stop Paying for the Wrong Google Searches",
+    excerpt: "Part of your Google budget is paying for people who will never buy from you. Here is how to find them and shut them out.",
+    date: "2026-10-23",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Negative Keywords: How to Stop Paying for the Wrong Google Searches",
+    metaDescription: "A practical guide to negative keywords and match types for Kenyan Google Ads accounts: starter lists, how to read the search terms report, and common mistakes.",
+    intro: "Open the search terms report in almost any neglected Google Ads account and you will find someone paying for clicks from people looking for jobs, free downloads, how-to videos or a business in another country. Search ads charge you for those clicks in exactly the same way as for buyers. Negative keywords are how you tell Google where you do not want to appear, and they are some of the fastest savings in any account.",
+    thumbnail: "https://images.unsplash.com/photo-1772115428479-9045bc0c2a3d?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Close-up of a hand typing on a computer keyboard",
+
+    sections: [
+      {
+        id: "match-types",
+        heading: "Match types, quickly",
+        paragraphs: [
+          "Your keywords and your negatives both have match types, but they behave differently. Normal keywords can match close variations and related meanings. Negatives do not stretch in the same way, which means that blocking \"job\" does not automatically block \"jobs\" or \"careers\". You have to add each of them.",
+        ],
+        table: {
+          headers: ["Negative type","Written as","Blocks searches that"],
+          rows: [
+            ["Broad","free training","Contain both words, in any order"],
+            ["Phrase","\"free training\"","Contain those words in that order"],
+            ["Exact","[free training]","Are exactly those words, nothing more"],
+          ],
+        },
+      },
+      {
+        id: "starter-list",
+        heading: "A starter list for Kenyan accounts",
+        paragraphs: [
+          "Add these before you launch, then adapt them. Think before you add each one, because some will be wrong for your business. A training college wants \"course\". A loan company may want \"cheap\". A used-car dealer wants \"second hand\".",
+        ],
+        table: {
+          headers: ["Theme","Examples to consider"],
+          rows: [
+            ["Job seekers","jobs, vacancies, careers, salary, internship, attachment, cv"],
+            ["Free seekers","free, download, pdf, template, sample"],
+            ["Learners","how to, tutorial, course, what is, meaning, notes, kcse"],
+            ["Wrong location","Uganda, Tanzania, Lagos, or Kenyan towns you do not serve"],
+            ["Wrong intent","second hand, repair, spare parts, wholesale, if you do not offer them"],
+            ["Competitor brands","only if you have decided not to bid on them"],
+          ],
+        },
+      },
+      {
+        id: "search-terms",
+        heading: "Your weekly 15-minute search terms routine",
+        paragraphs: [
+          "A starter list only gets you so far. The real source of negatives is the search terms report, which shows the actual words people typed before clicking your ad. It does not show every search, but it shows enough.",
+        ],
+        list: [
+          "Set the date range to the last 7 days and sort by cost.",
+          "For each irrelevant term that spent money, pick the word that makes it irrelevant, and add that word as a negative.",
+          "Look for terms that converted but are not yet keywords, and add them as keywords.",
+          "Add negatives at the right level: account-wide for jobs and free, campaign or ad group level for anything more specific.",
+          "Keep a shared negative list, so that each new campaign starts protected.",
+        ],
+      },
+      {
+        id: "automation",
+        heading: "Why this matters more with AI matching",
+        paragraphs: [
+          "Google keeps widening how it matches searches. Broad match leans on meaning rather than your exact words, and since September 2026 Google has been moving some Search campaigns to AI Max automatically, which can expand matching even further. Check whether your account has been affected, and review its search terms after any such change.",
+          "These tools can find useful searches you would not have thought of. They also need boundaries, and negatives are one of the main ones you still control. The looser the matching, the more often you should be in the report.",
+        ],
+      },
+      {
+        id: "mistakes",
+        heading: "Mistakes that cost you real customers",
+        paragraphs: [
+          "Negatives can do damage too. A careless one will block buyers, and nothing will warn you.",
+        ],
+        list: [
+          "Adding a single broad word such as \"cheap\" when many of your buyers search for exactly that.",
+          "Blocking a word in one campaign that another campaign targets on purpose, then wondering why it stopped.",
+          "Reacting to one click. Wait for a pattern unless the term is obviously useless.",
+          "Forgetting Kiswahili and misspellings, which show up in Kenyan search terms too.",
+        ],
+        callout: "Do it weekly at first, then monthly once new junk slows down. The account gets cheaper to run the longer you keep at it.",
+      },
+    ],
+  },
+  {
+    slug: "local-keyword-research-nairobi-2026",
+    category: "SEO",
+    title: "Local Keyword Research for Nairobi Businesses, Using Free Tools",
+    excerpt: "You do not need an expensive subscription to learn what your customers are typing. Here is the free method.",
+    date: "2026-10-23",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Local Keyword Research for Nairobi Businesses, Using Free Tools",
+    metaDescription: "A free local keyword research method for Nairobi and Kenyan businesses: where to find real search terms, how to judge intent, and how to map keywords to pages.",
+    intro: "Most small business websites in Nairobi are written in the language of the owner, not the customer. The site says \"bespoke interior solutions\" and the customer types \"carpenter for kitchen cabinets Ruiru\". Keyword research closes that gap. Paid tools help, but often show thin data for Kenyan searches anyway. For a local business, free sources and a few hours can take you most of the way.",
+    thumbnail: "https://images.unsplash.com/photo-1779968130487-f619b788ad84?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "To-do notepad, cup of coffee and pencil on a wooden table",
+
+    sections: [
+      {
+        id: "start-with-people",
+        heading: "Start with people, not tools",
+        paragraphs: [
+          "Before you open anything, write down how customers actually describe what they want. Look through WhatsApp enquiries, listen to phone calls and ask whoever answers them. Note the exact words, including Sheng, Kiswahili and misspellings. These phrases often never appear in any keyword tool, and they make the best page headings.",
+        ],
+      },
+      {
+        id: "free-sources",
+        heading: "Free sources worth your time",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Tool","What it gives you","How to use it"],
+          rows: [
+            ["Google autocomplete","What people commonly type","Type your service plus an area, then work through the alphabet"],
+            ["People Also Ask and related searches","Questions and related phrasing","Each good question can become a page section"],
+            ["Google Search Console","Searches you already appear for","Sort by impressions and find terms ranking on page two"],
+            ["Google Keyword Planner","Rough volume ranges and ideas","Set the location to Kenya, and expect wide ranges"],
+            ["Google Maps","Who appears, and their categories","Note the competitor categories and services listed"],
+            ["AnswerThePublic","Question ideas","Use it for content ideas, not for precise volume"],
+          ],
+        },
+      },
+      {
+        id: "local-modifiers",
+        heading: "Build the local variations",
+        paragraphs: [
+          "Nairobi searches are often specific about place. People search by estate, road and landmark, not only by city. Combine your services with the places you genuinely serve.",
+        ],
+        list: [
+          "Service + area: dentist Kilimani, plumber Ruaka, salon Rongai.",
+          "Service + nearby: \"near me\", \"near Yaya\", \"along Thika Road\".",
+          "Service + price: cost, price, how much, cheap, affordable.",
+          "Service + urgency: same day, 24 hours, open now.",
+          "Service + proof: best, reviews, recommended, licensed.",
+        ],
+      },
+      {
+        id: "intent",
+        heading: "Sort by intent before volume",
+        paragraphs: [
+          "A term with 50 monthly searches from people ready to pay beats one with 5,000 searches from students. Search each phrase yourself and look at what Google shows. A map pack and business listings mean local buying intent. Long articles mean people are still researching. Government or university pages may mean you are not the answer at all.",
+        ],
+        table: {
+          headers: ["Search","Intent","Best page type"],
+          rows: [
+            ["emergency plumber Westlands","Ready to buy","Service page with a phone button"],
+            ["how much does a borehole cost in Kenya","Researching a purchase","Detailed pricing guide"],
+            ["why is my water pressure low","Learning","Helpful blog post, linked to your service"],
+            ["plumber jobs Nairobi","Job seeking","Ignore"],
+          ],
+        },
+      },
+      {
+        id: "map-to-pages",
+        heading: "Give each topic one page",
+        paragraphs: [
+          "Put your findings into a simple sheet with four columns: keyword, intent, target page and status. Group close variations together, and give each group one page. Two pages chasing the same search usually compete with each other and weaken both.",
+          "Use the main phrase naturally in the page title, the main heading and the first paragraph. Then write for a person. After a few weeks, Search Console will show you which searches the page is picking up, and that real data is better than any estimate. Use it to refine the page.",
+        ],
+        callout: "Keyword tools tell you what is popular. Your enquiries tell you what makes money. When they disagree, believe your enquiries.",
+      },
+    ],
+  },
+  {
+    slug: "whatsapp-lead-follow-up-system-kenya-2026",
+    category: "Lead Generation",
+    title: "The WhatsApp Follow-Up System That Stops Paid Leads Going Cold",
+    excerpt: "Most leads are not lost in the ads. They are lost on day two, when nobody sends the second message.",
+    date: "2026-10-23",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "The WhatsApp Follow-Up System That Stops Paid Leads Going Cold",
+    metaDescription: "A simple lead follow-up system for Kenyan businesses: reply times, a five-message WhatsApp sequence with scripts, a tracking sheet, and when to stop.",
+    intro: "Business owners often tell me their leads are poor quality. Then we go through the chats. The lead asked a question on Tuesday night, got a reply on Wednesday afternoon, went quiet, and nobody ever wrote again. That is not always a bad lead. Sometimes it is a busy person with a full day. Before you pay for more leads, make sure you are not wasting the ones you have already bought.",
+    thumbnail: "https://images.unsplash.com/photo-1519069060891-f8c50519bf39?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a smartphone with a chat open on the screen",
+
+    sections: [
+      {
+        id: "speed",
+        heading: "Speed is your first advantage",
+        paragraphs: [
+          "When someone clicks your ad, they are thinking about the problem right now, and they may have messaged your competitors too. The first useful reply often wins. Set a realistic standard: within 15 minutes during business hours, and first thing next morning for messages that come in overnight. Use a WhatsApp Business away message so that late enquiries know when to expect you.",
+          "Name who is responsible. \"The team\" handling leads often means no one is. If leads come from several sources, one person should check them all at set times.",
+        ],
+      },
+      {
+        id: "sequence",
+        heading: "A five-message sequence you can adapt",
+        paragraphs: [
+          "Most sales need more than one conversation. This sequence is for people who enquired but have gone quiet. Each message should add something, so it does not feel like nagging. Use the customer's name, and write as you normally would.",
+        ],
+        table: {
+          headers: ["When","Purpose","Example"],
+          rows: [
+            ["Right away","Answer and ask one question","\"Hi Brian, the 2-bedroom is KES X a month. Are you looking to move this month or next?\""],
+            ["Next day","Add something helpful","\"Here's a short video of the unit, so you can see the kitchen.\""],
+            ["Day 3","Provide proof","\"A tenant who moved in last month shared this review.\""],
+            ["Day 7","Deal with the likely objection","\"Many people ask about the deposit. We can split it like this...\""],
+            ["Day 14","Close the loop politely","\"Should I keep this open for you or close it for now? Either is fine.\""],
+          ],
+          note: "Adjust the timing to the purchase. Property, school places and big-ticket items may take months.",
+        },
+      },
+      {
+        id: "last-message",
+        heading: "The last message works surprisingly well",
+        paragraphs: [
+          "That final \"should I close this?\" message gives people an easy way to respond. Often they will reply with a real answer: the price was high, they are waiting for a salary, they bought elsewhere. Each of those is useful information, and some of them turn back into sales later. After that, stop. Nothing in your system should chase someone forever.",
+        ],
+        callout: "Never argue with \"not now\". Ask when it would be good to check back, write the date down, and message them that day.",
+      },
+      {
+        id: "tracking",
+        heading: "Track it in something simple",
+        paragraphs: [
+          "A Google Sheet is plenty until you have many leads. A CRM is worth it later, once the habit exists. A tool will not fix a team that does not follow up. Record these columns for each lead:",
+        ],
+        list: [
+          "Name, number and date they enquired.",
+          "Source: which ad, Google search, referral or Instagram.",
+          "What they want, and any budget mentioned.",
+          "Status: new, in conversation, quote sent, won, lost, later.",
+          "Next action and date. Without this, the lead will be forgotten.",
+          "Reason lost, and sale value if won.",
+        ],
+      },
+      {
+        id: "labels",
+        heading: "Use the tools you already have",
+        paragraphs: [
+          "WhatsApp Business has labels, quick replies and a catalogue, and all are free. Create labels matching your statuses, and save your common answers as quick replies. Those save time, but do personalise them. People can tell when they are getting a bulk message, particularly from a business that is meant to be local.",
+          "Before adding anyone to broadcasts or promotions, make sure they agreed to receive them and can opt out. An enquiry about one product is not permission to market to them forever, and Kenya's data protection rules take this seriously.",
+        ],
+      },
+      {
+        id: "numbers",
+        heading: "Know your numbers each week",
+        paragraphs: [
+          "Three numbers will expose the problem: average time to first reply, the percentage of leads that get a second message, and the percentage that become customers. Look at them by source. Then you can have a fair discussion about lead quality, because you will know whether a campaign is sending poor leads or your follow-up is losing good ones.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-much-does-a-website-cost-kenya-2026",
+    category: "Pricing",
+    title: "How Much Does a Website Cost in Kenya in 2026?",
+    excerpt: "Quotes run from KES 15,000 to well over a million. Here is what actually changes the price, and what to get in writing.",
+    date: "2026-10-24",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "How Much Does a Website Cost in Kenya in 2026?",
+    metaDescription: "What a website really costs in Kenya in 2026: typical price ranges by type, yearly costs, what drives the price, red flags and the questions to ask before you pay.",
+    intro: "Ask five Kenyan web designers for a quote on the same site and you could get five completely different prices. Some of that is experience. A lot of it is that \"website\" can mean a one-page brochure or a shop with M-Pesa checkout connected to your stock system. Here is how to compare prices, and how to avoid the most expensive mistake, which is not paying too much but not owning what you paid for.",
+    thumbnail: "https://images.unsplash.com/photo-1706597461613-9e1d816a3d78?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop, tablet, monitors and a phone with blank screens on a white desk",
+
+    sections: [
+      {
+        id: "ranges",
+        heading: "Rough price ranges",
+        paragraphs: [
+          "Prices published by Kenyan web designers in 2026 start at about KES 25,000 for a small business site, with many falling between KES 60,000 and KES 150,000 for a proper business website. Treat the table below as a rough guide. These bands are my general reading of the market, not a survey, and your scope will move them.",
+        ],
+        table: {
+          headers: ["Type","Rough one-off cost","Good for"],
+          rows: [
+            ["Simple brochure site or template","KES 25,000 to 60,000","A new business that needs basic credibility"],
+            ["Business site with custom design and SEO setup","KES 60,000 to 150,000","Most established SMEs"],
+            ["E-commerce with M-Pesa and card checkout","KES 100,000 to 300,000 or more","Selling products online"],
+            ["Custom system, portal or booking platform","KES 300,000 and up","Unique processes and integrations"],
+          ],
+          note: "Indicative ranges only, checked against published Kenyan price guides in October 2026. Always get a written quote for your own scope.",
+        },
+      },
+      {
+        id: "yearly",
+        heading: "The costs that come back every year",
+        paragraphs: [
+          "A site is not a one-off purchase. Ask for these figures up front, so that a cheap first year does not turn into a surprise.",
+        ],
+        list: [
+          "Domain name, such as your .co.ke address, renewed yearly.",
+          "Hosting, which should be fast and have backups.",
+          "Security certificate. This is often included in hosting, and you should not be paying much extra for it.",
+          "Paid plugins or themes, if your site relies on them.",
+          "Maintenance: updates, backups and small edits, charged monthly or by the job.",
+          "Transaction fees on your payment gateway if you sell online.",
+        ],
+      },
+      {
+        id: "what-changes-price",
+        heading: "What actually moves the price",
+        paragraphs: [
+          "It is rarely the number of pages. Custom design costs more than a template, and custom functionality costs more than either. Writing the content, taking the photographs, connecting payments, translating and moving an old site all add to the bill. Many low quotes simply leave these out, and you discover this after you have paid the deposit.",
+          "Be clear on what the site is for. If it has to bring in enquiries from ads and search, then speed, page structure and tracking matter far more than animations. A gorgeous website that is slow on an ordinary Android phone will cost you much more in lost customers than you saved.",
+        ],
+      },
+      {
+        id: "ownership",
+        heading: "Make sure you own it",
+        paragraphs: [
+          "This is where business owners get badly burned. Designers leave, phones change, and suddenly no one has access to the site. Before you pay, get these in writing:",
+        ],
+        list: [
+          "The domain registered in your business's name, with your own login.",
+          "Admin access to the website and hosting from day one.",
+          "All the content, images and code handed over when you leave, within what licences allow.",
+          "Google Analytics and Search Console set up under your own account.",
+          "What happens to the site and data if you stop paying for maintenance.",
+        ],
+      },
+      {
+        id: "red-flags",
+        heading: "Red flags in a quote",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["If you hear","Ask"],
+          rows: [
+            ["\"Page one on Google guaranteed\"","How? Nobody can honestly guarantee that"],
+            ["\"We'll register the domain for you\"","In whose name, and can I have the login?"],
+            ["\"Free hosting for life\"","Whose server is it? What happens if I leave?"],
+            ["A price with no list of what is included","Can I have the scope in writing, page by page?"],
+            ["No examples of similar work","Can I see live sites and speak to a past client?"],
+            ["Full payment up front","Can we pay in stages tied to delivery?"],
+          ],
+        },
+      },
+      {
+        id: "start-small",
+        heading: "My advice for most small businesses",
+        paragraphs: [
+          "Start with less than you think you need. A fast, clear site with a few strong pages, your real prices and a WhatsApp button will usually outperform a large one that took six months to launch. Get it live, track what people do, then spend on what they actually use. You can also ask for a site audit first if you are not sure that yours needs replacing, since sometimes a few fixes are enough.",
+        ],
+        callout: "The cheapest website is the one you only need to pay for once. The most expensive is the one you have to rebuild because you never owned the first one.",
+      },
+    ],
+  },
+  {
+    slug: "working-with-creators-influencers-kenya-2026",
+    category: "Social Media",
+    title: "Working With Kenyan Creators: Briefs, Fees and How to Avoid Wasting It",
+    excerpt: "A big following is not the same as buying power. Here is how to choose creators and get something you can measure.",
+    date: "2026-10-24",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Working With Kenyan Creators: Briefs, Fees and How to Avoid Wasting It",
+    metaDescription: "How Kenyan brands should work with influencers and UGC creators: nano vs macro, vetting, what to pay for, writing a brief, usage rights, disclosure and measuring sales.",
+    intro: "A brand pays a well-known personality to post a photo with its product. The post gets thousands of likes and the phone does not ring. Many Kenyan businesses have tried this once and decided influencers do not work. Usually, the choice of person and the brief were the problem. The most useful creator for you may have 8,000 followers who trust them and live in your delivery area.",
+    thumbnail: "https://images.unsplash.com/photo-1758521540269-58fe43602d39?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Woman sitting on the floor filming herself with a camera on a tripod",
+
+    sections: [
+      {
+        id: "two-things",
+        heading: "Influence and UGC are different purchases",
+        paragraphs: [
+          "With influencer work you pay for access to their audience and their credibility. With UGC, user-generated-style content, you pay a creator to make a video that you then post or run as an ad on your own accounts. Their following hardly matters. Small businesses often get more value from the second, because the same video can be used over and over.",
+        ],
+        table: {
+          headers: ["Creator type","Rough following","Best for","Watch out for"],
+          rows: [
+            ["UGC creator","Any","Ad creative you own or license","Needs a clear brief"],
+            ["Nano","Under 10,000","Trust, niches and local reach","Takes many creators to scale"],
+            ["Micro","10,000 to 100,000","Good mix of reach and engagement","Check for bought followers"],
+            ["Macro or celebrity","Over 100,000","Mass awareness and launches","Expensive, and rarely direct sales"],
+          ],
+          note: "Follower bands are a common industry shorthand, not fixed definitions.",
+        },
+      },
+      {
+        id: "vetting",
+        heading: "How to vet a creator",
+        paragraphs: [
+          "Look past the follower count. Ask for screenshots of their insights, then use your own eyes too.",
+        ],
+        list: [
+          "Audience location: what share is in Kenya, and is it in the areas you serve?",
+          "Typical views over the last ten posts, rather than the one video that blew up.",
+          "Comments: real conversations, or just fire emojis from the same accounts?",
+          "How previous sponsored posts performed compared with their normal ones.",
+          "Fit: would their audience really buy this, and would they really use it?",
+          "Reliability: ask brands they have worked with whether they delivered on time.",
+        ],
+      },
+      {
+        id: "fees",
+        heading: "Fees and how to structure them",
+        paragraphs: [
+          "There is no standard Kenyan rate card, and prices vary enormously with reach and reputation. Rather than asking only \"what is your rate?\", ask for a price for the exact deliverables. It is also fair to pay small creators properly: free products are not a fee.",
+          "Test with several smaller creators before you spend the whole budget on one. For sales-focused work, consider a base fee plus commission, tracked with a personal discount code. A code tracks sales far better than asking about likes, and it gives the creator a reason to care about the result.",
+        ],
+      },
+      {
+        id: "brief",
+        heading: "A one-page brief that gets better work",
+        paragraphs: [
+          "Do not script every word. People can smell a brand's script, and the creator knows their audience better than you do. But do be clear on what has to be there.",
+        ],
+        list: [
+          "The goal, and the one thing the viewer should remember.",
+          "The audience, and the problem you solve for them.",
+          "Must-haves: the price, the offer, how to buy, and any claims you can legally make.",
+          "Must-nots: claims to avoid, competitors, and sensitive topics.",
+          "Deliverables, dates and whether you review before posting.",
+          "Usage rights: can you run the video as an ad, for how long, and on which platforms?",
+        ],
+      },
+      {
+        id: "disclosure",
+        heading: "Keep it honest and on record",
+        paragraphs: [
+          "Paid content should be clear about being paid. Use the platform's paid partnership or branded content labels, and ask the creator to disclose it plainly. Your audience's trust is the asset here, and hidden ads can also bring trouble from platforms and regulators. Check rules for your sector with extra care, particularly for health, alcohol, betting, or financial products, and avoid before-and-after or medical claims you cannot support.",
+          "Put it all in a short written agreement: deliverables, dates, the fee, usage rights and what happens if a post is deleted. This protects both of you.",
+        ],
+      },
+      {
+        id: "measure",
+        heading: "Measure it like a campaign",
+        paragraphs: [
+          "Give each creator their own code or link, and ask customers how they heard about you. Note the views, the clicks, the sales and any lift in searches and followers during the campaign. Then compare the cost per sale with your other channels. Some creators pay back at once, and others only build awareness, which is fine if that is what you bought and you knew it.",
+        ],
+        callout: "Best low-risk start: pay three small creators to make videos, post them, and put ad money behind the one that performs best using Spark Ads or Partnership Ads.",
+      },
+    ],
+  },
+  {
+    slug: "meta-and-google-ads-together-case-study-kenya-2026",
+    category: "Case Study",
+    title: "Meta and Google Ads Together: KES 5.43 Million Across Two Platforms",
+    excerpt: "One retailer, two platforms, one report. How Meta created demand, Google caught it, and why the total needs a caveat.",
+    date: "2026-10-24",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Meta and Google Ads Together: KES 5.43 Million Across Two Platforms",
+    metaDescription: "A real Kenyan case study on running Meta Ads and Google Ads together: KES 5.43M in tracked revenue at 26.4x blended ROAS, the spend split and the double-counting caveat.",
+    intro: "People love asking whether they should use Meta or Google. For this retailer, from 1 August to 8 October, the answer was both, doing different jobs. Together they tracked KES 5,427,357 in revenue on KES 205,601 of ad spend, a blended 26.4x across 938 orders. But the most useful part of this case study may be the warning that comes with that total. The client stays unnamed. The numbers are real.",
+    thumbnail: "https://images.unsplash.com/photo-1758873271772-6bbc792c1514?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two colleagues talking across a table with a laptop in an office",
+    heroVisual: "hero",
+
+    sections: [
+      {
+        id: "two-jobs",
+        heading: "Two platforms, two jobs",
+        paragraphs: [
+          "Before August, this Kenyan beauty retailer used Meta only. Meta is good at putting a product in front of someone who was not looking for it. Google does the opposite: it reaches people who are already searching. We added Google to catch the demand that existed, rather than to replace anything.",
+        ],
+        visuals: ["process"],
+      },
+      {
+        id: "split",
+        heading: "The split, and why the cheaper one got less money",
+        paragraphs: [
+          "Meta took 42% of the spend and was credited with 68% of the revenue. On raw return, Meta won easily: 42.6x against 14.6x. So why not put everything into Meta?",
+          "Because the two are not interchangeable. Google was in its first two months, was improving quickly, and was reaching people Meta might not catch at the moment they were ready. Google added 303 orders from people searching for the products. We raised Google spend by 125% in September, as its return rose from 10.5x to 16.4x.",
+        ],
+        table: {
+          headers: ["","Meta Ads","Google Ads"],
+          rows: [
+            ["Spend","KES 86,607","KES 118,995"],
+            ["Tracked revenue","KES 3,687,530","KES 1,739,827"],
+            ["Return on ad spend","42.6x","14.6x"],
+            ["Cost per order","KES 136","KES 393"],
+          ],
+          note: "1 August to 8 October 2026. Google's figures come from the weekly log, which is missing a few weeks.",
+        },
+        visuals: ["comparison"],
+      },
+      {
+        id: "by-month",
+        heading: "Month by month",
+        paragraphs: [
+          "August brought in KES 1,761,649 at 24.5x. September grew to KES 2,872,308 at 24.3x, holding its return while spend went up by about 65%. That is the part I would point to first. Plenty of accounts fall apart when the budget increases.",
+          "October looks spectacular at 51.5x, but it covers just eight days and Meta alone, since Google Ads had been paused. It is not a fair comparison, and I would not treat it as a trend.",
+        ],
+        visuals: ["monthly","campaigns"],
+      },
+      {
+        id: "caveat",
+        heading: "The honest caveat: this total probably overstates sales",
+        paragraphs: [
+          "Each platform claims the orders it touched. If someone saw a Meta ad, then searched on Google and bought, both may have counted that order. So KES 5.43 million is the sum of two platforms' claims, and it may be higher than the sales they actually drove.",
+          "Meta's revenue is also on a 7-day click and 1-day view window, and Google's is converted from US dollars at KES 129.89. Neither is an audited sales figure. The right way to use these numbers is for comparing campaigns and tracking direction, and then to check them against your actual sales.",
+        ],
+        callout: "If you add up what each ad platform says it sold, you will usually get more than you really sold. Plan for that.",
+      },
+      {
+        id: "reporting",
+        heading: "One report, one currency",
+        paragraphs: [
+          "A simple thing made a real difference. Meta bills and reports one way, and Google another. Combining them into one monthly report in Kenyan shillings meant that the two could finally be compared, and budget decisions could be made in a single conversation.",
+        ],
+      },
+      {
+        id: "takeaways",
+        heading: "When should you run both?",
+        paragraphs: [
+          "I have written elsewhere that almost nobody should run both on day one, and I stand by that. This retailer added Google after Meta was already working. A sensible order looks like this:",
+        ],
+        list: [
+          "Make one platform work properly first, with tracking you trust.",
+          "Add the second to do a different job, not more of the same.",
+          "Expect the newer platform to look worse at first, and judge its direction.",
+          "Report both in one place and in one currency.",
+          "Check the combined figure against your real sales every month.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "click-to-whatsapp-ads-kenya-2026",
+    category: "Meta Ads",
+    title: "Click-to-WhatsApp Ads in Kenya: The Setup That Turns Chats Into Sales",
+    excerpt: "Kenyans would rather chat than fill in a form. These ads meet them there, but the ad is only half of the job.",
+    date: "2026-10-25",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Click-to-WhatsApp Ads in Kenya: The Setup That Turns Chats Into Sales",
+    metaDescription: "How to run click-to-WhatsApp ads in Kenya: when they beat a website, the first-message script, WhatsApp's 2026 pricing and the free 72-hour window, and what to measure.",
+    intro: "For many Kenyan businesses, a click-to-WhatsApp ad is the shortest road from an advert to a sale. One tap and the customer is talking to you in the app they already live in. No slow landing page, no form, no password. It also creates a new way to lose money: a flood of \"Hi, how much?\" messages arriving at 9pm with nobody there to answer.",
+    thumbnail: "https://images.unsplash.com/photo-1754331732644-f7b381eccd9f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a phone showing a WhatsApp screen",
+
+    sections: [
+      {
+        id: "when-to-use",
+        heading: "When WhatsApp beats a website, and when it does not",
+        paragraphs: [
+          "Choose the destination by looking at how customers actually decide, not at what looks modern.",
+        ],
+        table: {
+          headers: ["Send them to WhatsApp if","Send them to a website if"],
+          rows: [
+            ["The customer has questions before buying","The product is simple and the price is fixed"],
+            ["Price depends on size, location or quantity","You have many products to browse"],
+            ["You sell services, property, courses or custom work","You have working online checkout and payment"],
+            ["Someone can reply within minutes","Nobody can answer chats quickly"],
+          ],
+        },
+      },
+      {
+        id: "ad-setup",
+        heading: "Set the ad up so the right people tap",
+        paragraphs: [
+          "Connect your WhatsApp Business number to your Page in Business Settings, then create a campaign with WhatsApp as the conversion location. Sales or Leads is normally the better objective if your account has the data for it. Engagement often brings people who like chatting, not people who buy.",
+          "Say the price, or at least a starting price, in the ad itself. It feels like you are giving away your hook, but it filters out the people who would only ask and vanish. I have written separately about why hiding prices behind \"DM for price\" costs sales.",
+          "Customise the pre-filled message too. \"Hi, I saw your ad for the 3-bedroom in Syokimau, is it available?\" tells your team exactly which ad worked and what the person wants.",
+        ],
+      },
+      {
+        id: "first-reply",
+        heading: "The first reply decides the sale",
+        paragraphs: [
+          "A lead that waits three hours has usually messaged two of your competitors. Set up a greeting and quick replies, but make sure a real person follows quickly during business hours. Use this structure for the first response:",
+        ],
+        list: [
+          "Acknowledge what they asked about, by name of product if you can.",
+          "Answer the question they actually asked, including the price.",
+          "Ask one simple qualifying question, such as the area for delivery or the date they need it.",
+          "Give one next step, such as the till number or a time to view.",
+        ],
+        callout: "Example: \"Hi Wanjiru, yes, that one is in stock at KES 4,500. Delivery to Kilimani is KES 300 and arrives tomorrow. Shall I reserve one for you?\"",
+      },
+      {
+        id: "cost",
+        heading: "What WhatsApp itself costs now",
+        paragraphs: [
+          "The ordinary WhatsApp Business app stays free. The changes below affect businesses using the WhatsApp Business Platform, the API version that chatbots and shared inboxes run on.",
+          "From 1 October 2026, service replies on the platform are charged after the first 1,000 messages per phone number each month. Published Kenyan rates sit well under one US cent per message, so for most small businesses this is modest. There is also a useful exception: when someone starts a chat through a click-to-WhatsApp ad and you reply within 24 hours, a free window of 72 hours opens, and your messages in it are not charged.",
+          "That is another reason to answer fast. Rates change, so check Meta's current rate card before you budget for a large volume of messages.",
+        ],
+      },
+      {
+        id: "measure",
+        heading: "Measure conversations that became money",
+        paragraphs: [
+          "Ads Manager will happily report \"messaging conversations started\". That is the top of the funnel, not the result. Track these four numbers each week in a simple sheet: chats started, chats that got a reply within 15 minutes, orders, and revenue.",
+          "If you get plenty of chats but few sales, the problem is usually the offer, the audience or the reply. If you get few chats, the ad is the problem. Keeping those two apart saves you from rebuilding the campaign when what needs fixing is your response time.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "google-ads-conversion-tracking-kenya-2026",
+    category: "Google Ads",
+    title: "Google Ads Conversion Tracking for Calls, WhatsApp and Orders",
+    excerpt: "Google's bidding is only as smart as what you tell it counts. Here is how to track what Kenyan customers actually do.",
+    date: "2026-10-25",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Google Ads Conversion Tracking for Calls, WhatsApp and Orders",
+    metaDescription: "How to set up Google Ads conversion tracking in Kenya for purchases, forms, calls and WhatsApp clicks, what to count as primary, and how to check it is working.",
+    intro: "If you tell Google that a page view is a conversion, it will get extremely good at finding people who view pages. Automated bidding optimises for what you feed it, so your choice of conversion may be the most important setting in the account. In Kenya, this is harder than the textbook version, because so many sales begin with a phone call or a WhatsApp tap rather than a checkout.",
+    thumbnail: "https://images.unsplash.com/photo-1758876204260-bdb299fa4374?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Man talking on the phone at a desk",
+
+    sections: [
+      {
+        id: "what-to-count",
+        heading: "Decide what really counts",
+        paragraphs: [
+          "Google lets you mark each conversion action as primary, which bidding uses, or secondary, which is reported but not optimised for. Keep your primary list short and close to money.",
+        ],
+        table: {
+          headers: ["Action","Primary or secondary","Note"],
+          rows: [
+            ["Completed purchase","Primary","Pass the real order value in KES"],
+            ["Form submitted","Primary","Fire on the thank-you page, not on the button"],
+            ["Call from ad, over 60 seconds","Primary","Filters out wrong numbers and hang-ups"],
+            ["WhatsApp button click","Usually primary for WhatsApp sellers","It is an intent signal, not a sale"],
+            ["Add to cart, page views, scroll","Secondary","Useful to see, harmful to optimise for"],
+          ],
+        },
+      },
+      {
+        id: "setup",
+        heading: "How to set it up",
+        paragraphs: [
+          "The simplest setup for most small businesses is Google Tag Manager on the site, the Google tag, and a linked GA4 property. Importing GA4 key events works, although the native Google Ads tag is often more direct for purchases.",
+        ],
+        list: [
+          "Create each conversion action in Google Ads under Goals.",
+          "Add the tags through Tag Manager, firing only on the correct page or click.",
+          "Turn on enhanced conversions for forms and purchases, which improves matching with hashed customer details. Mention this in your privacy notice.",
+          "Add a call asset to your search campaigns with call reporting on. Call-only ads are being phased out in favour of call assets, so do not build new campaigns around them.",
+          "Check your site's consent setup if you serve visitors outside Kenya, especially in Europe.",
+        ],
+      },
+      {
+        id: "whatsapp",
+        heading: "Tracking WhatsApp without fooling yourself",
+        paragraphs: [
+          "A click on your WhatsApp button is trackable with a Tag Manager click trigger on links containing wa.me or api.whatsapp.com. Test it on a phone, since the behaviour there is what counts.",
+          "Just remember what you are measuring. A click means someone opened the chat, and some never send anything. To bring in real results, ask each customer how they found you, or use a different pre-filled message per campaign. Then you can compare clicks with actual orders each week. If you can capture the click ID and later report the sale, Google's offline conversion import can feed real sales back into bidding, which is worth setting up once volumes justify it.",
+        ],
+      },
+      {
+        id: "testing",
+        heading: "Test it properly",
+        paragraphs: [
+          "Do not trust the green tick alone. Tracking breaks quietly when someone updates the site.",
+        ],
+        list: [
+          "Use Tag Assistant to confirm that the tags fire on the correct page and only once.",
+          "Place a real order or submit a real form, then see it appear in Google Ads. Allow several hours.",
+          "Reload the thank-you page. If it counts a second purchase, set the conversion to count once, or send a transaction ID.",
+          "Compare a week's reported conversions with your own orders. Large gaps in either direction need an explanation.",
+        ],
+      },
+      {
+        id: "bidding",
+        heading: "When to let Google bid for you",
+        paragraphs: [
+          "Automated bidding needs reliable conversions to learn from. Starting on Maximise Clicks with a cap, or Manual CPC, can make sense for a new account. Move to Maximise Conversions as your numbers come in, then to a target CPA or ROAS once they are steady.",
+          "In the retail account behind my case study, tracked orders made it possible to see that general product search returned 18.0x while a local consultation campaign returned 7.9x. Without tracking, those two campaigns would have looked the same: just a bill from Google.",
+        ],
+        callout: "Before you touch bids or budgets, ask one question: does each conversion in this account represent something I would happily pay for?",
+      },
+    ],
+  },
+  {
+    slug: "location-pages-seo-nairobi-2026",
+    category: "SEO",
+    title: "Location Pages That Rank in Nairobi, and the Copy-Paste Kind That Won't",
+    excerpt: "One page per estate can work well, or it can get you ignored. It depends on whether each one says something true and useful.",
+    date: "2026-10-25",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Location Pages That Rank in Nairobi (and Ones That Won't)",
+    metaDescription: "How to build location pages for Nairobi and Kenyan towns that rank and convert: when you need them, what each page must include, and the doorway page trap to avoid.",
+    intro: "If you serve Karen, Kilimani and Kitengela, it is tempting to make three pages and swap only the place name. Plenty of businesses do this. Google has a name for it, doorway pages, and treats them as spam. Done properly, though, location pages can bring in some of the most valuable searches you can get, because a person typing a specific estate usually wants to buy soon.",
+    thumbnail: "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "High-rise buildings above a busy Nairobi city street",
+
+    sections: [
+      {
+        id: "do-you-need-them",
+        heading: "Do you need them at all?",
+        paragraphs: [
+          "They make most sense if you travel to customers, such as cleaners, movers, technicians and contractors, or if you have several branches. If you have one shop and customers come to you, your energy is usually better spent on your Google Business Profile and on a strong contact page.",
+          "Only create a page for a place you can actually serve. You also need something real to say about it, and that is where most location pages fail.",
+        ],
+      },
+      {
+        id: "what-to-include",
+        heading: "What makes a page genuinely local",
+        paragraphs: [
+          "Ask yourself whether a customer in that area would learn something they could not read on your other pages. Things that make the difference:",
+        ],
+        list: [
+          "Delivery or arrival times and call-out costs specific to that area.",
+          "Real work done nearby, with a photo and, if the client agrees, their testimonial.",
+          "Local conditions that affect the job, such as water problems, access rules or apartment management requirements.",
+          "The nearest branch or team and how to find it, with a landmark Kenyans will recognise.",
+          "Answers to the questions customers in that area really ask you.",
+          "Reviews from customers in that area, with their permission.",
+        ],
+      },
+      {
+        id: "copy-paste",
+        heading: "Compare the two approaches",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["","Copy-paste page","Useful page"],
+          rows: [
+            ["Opening","\"We offer the best cleaning in [area]\"","\"We clean about two Kileleshwa apartments a week, mostly after tenants move out\""],
+            ["Proof","None, or the same testimonial everywhere","A nearby job and a local review"],
+            ["Details","Same text on 30 pages","Local times, prices and access details"],
+            ["Likely outcome","Ignored, and it may drag down the site","Ranks for local searches, and persuades"],
+          ],
+          note: "The example wording is illustrative. Only write claims that are true of your business.",
+        },
+      },
+      {
+        id: "page-structure",
+        heading: "A structure to work from",
+        paragraphs: [
+          "Use a title along the lines of \"House Cleaning in Kileleshwa | Your Business\", and a heading that says the same in natural language. Put your phone and WhatsApp buttons near the top. Then cover the services available there, what they cost, proof, frequently asked questions and which nearby areas you also serve.",
+          "Link to it from your main service page and from a page that lists all your areas, so that people and Google can find it. A page nobody links to rarely gets far. Keep your business name, address and phone number consistent with your Google Business Profile.",
+        ],
+      },
+      {
+        id: "rollout",
+        heading: "Roll them out slowly",
+        paragraphs: [
+          "Start with the three to five areas that already bring you the best customers. Write those properly, wait a couple of months and check their impressions, rankings and enquiries in Search Console and your own records. Use what you learn before you write more.",
+          "AI tools can help with a first draft, but they cannot visit Kileleshwa or know your call-out times. If every page reads like the same page, you are back to the doorway problem, just faster.",
+        ],
+        callout: "The test: take the place name off the page. If it could describe anywhere, it is not a location page yet.",
+      },
+    ],
+  },
+  {
+    slug: "good-cost-per-lead-kenya-2026",
+    category: "Lead Generation",
+    title: "What Is a Good Cost per Lead in Kenya? Work Out Your Own Number",
+    excerpt: "Other people's benchmarks will mislead you. A simple sum tells you what a lead is actually worth to your business.",
+    date: "2026-10-25",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "What Is a Good Cost per Lead in Kenya? Work Out Your Own Number",
+    metaDescription: "How to work out a good cost per lead for your Kenyan business: the allowable CPL formula, worked examples, why benchmarks mislead, and when a cheap lead costs more.",
+    intro: "\"Is KES 500 per lead good?\" It depends. For a school with fees in the hundreds of thousands, it could be a bargain. For someone selling a KES 1,500 product, it is a disaster. Benchmarks from other countries, or from other industries, cannot answer this. A bit of arithmetic with your own numbers can, and it takes about ten minutes.",
+    thumbnail: "https://images.unsplash.com/photo-1625225233840-695456021cde?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Calculator, pen and paper clips on a white desk",
+
+    sections: [
+      {
+        id: "formula",
+        heading: "The sum",
+        paragraphs: [
+          "You need three figures: what you earn from a sale after costs, how many leads it takes to get a sale, and how much of that profit you are willing to spend on getting the customer.",
+        ],
+        callout: "Allowable cost per lead = gross profit per sale x share you will spend on marketing x lead-to-sale rate",
+      },
+      {
+        id: "examples",
+        heading: "Three worked examples",
+        paragraphs: [
+          "The figures below are made up to show the method. Replace them with your own.",
+        ],
+        table: {
+          headers: ["","Salon package","Car hire","Private school"],
+          rows: [
+            ["Average sale","KES 6,000","KES 25,000","KES 150,000"],
+            ["Gross profit","KES 3,000","KES 10,000","KES 60,000"],
+            ["Share for marketing","40%","30%","30%"],
+            ["Maximum cost per sale","KES 1,200","KES 3,000","KES 18,000"],
+            ["Leads that become sales","1 in 4 (25%)","1 in 5 (20%)","1 in 10 (10%)"],
+            ["Allowable cost per lead","KES 300","KES 600","KES 1,800"],
+          ],
+        },
+      },
+      {
+        id: "repeat",
+        heading: "Add repeat customers, carefully",
+        paragraphs: [
+          "If customers come back, one sale undersells what a lead is worth. A salon client who visits six times a year is worth far more than one package. Using lifetime value lets you spend more than competitors who only count the first sale, and that can be a real advantage.",
+          "Be careful, though. Base it on what customers have actually done, not on what you hope they will do, and remember that money earned over two years does not pay this month's ad bill. If cash is tight, stick to what you can recover from the first sale or the first few months.",
+        ],
+      },
+      {
+        id: "benchmarks",
+        heading: "Why cheap leads can cost more",
+        paragraphs: [
+          "A campaign with KES 80 leads can be worse than one with KES 800 leads. Instant forms in particular make it effortless to submit, and some people barely recall doing so. What you are buying is customers, so judge everything by cost per customer.",
+        ],
+        table: {
+          headers: ["","Campaign A","Campaign B"],
+          rows: [
+            ["Spend","KES 40,000","KES 40,000"],
+            ["Cost per lead","KES 80","KES 800"],
+            ["Leads","500","50"],
+            ["Leads that reach a real conversation","60","35"],
+            ["Sales","4","10"],
+            ["Cost per sale","KES 10,000","KES 4,000"],
+          ],
+          note: "Illustrative figures. Your team's hours spent on chasing 500 leads are an extra cost on top.",
+        },
+      },
+      {
+        id: "data-you-need",
+        heading: "If you do not have the numbers yet",
+        paragraphs: [
+          "A new business may not know its lead-to-sale rate. Do not let that stop you. Make an honest estimate, and then replace it with real figures after your first 30 to 50 leads. Track each lead's source and outcome, because that is the only way to see which campaign is producing customers.",
+          "You can also try my free ad budget calculator with your own numbers. It helps show whether a budget can pay for itself before you commit to it.",
+        ],
+      },
+      {
+        id: "if-too-high",
+        heading: "If your cost is above the limit",
+        paragraphs: [
+          "Do not immediately blame the ads. Each part of the formula is a lever, and some are cheaper to fix than others.",
+        ],
+        list: [
+          "Better follow-up increases your lead-to-sale rate without any more ad spend.",
+          "A stronger offer or landing page reduces the cost of each lead.",
+          "Bundles and higher prices increase profit per sale, which raises the amount you can pay.",
+          "Better qualifying questions bring fewer leads, but better ones.",
+          "If none of it can work, this channel may not suit the product. It is better to learn that early.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "who-owns-your-ad-account-kenya-2026",
+    category: "Pricing",
+    title: "Who Owns Your Ad Accounts? Check This Before Paying Any Marketer",
+    excerpt: "Years of data and a Pixel you paid to train can walk out of the door with your agency. Here is how to protect yourself.",
+    date: "2026-10-26",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Who Owns Your Ad Accounts? Check This Before Paying Any Marketer",
+    metaDescription: "Do you really own your Meta, Google and TikTok ad accounts? What Kenyan businesses should check, how to set up ownership properly, and what to put in the contract.",
+    intro: "A common story: a business falls out with its marketer, then discovers that its ad account, its Pixel, its Facebook Page and even its domain all sit under that person's login. Years of data are gone, and the business starts again from nothing. It usually does not take a dishonest marketer. It just takes nobody asking the question at the start. It takes about fifteen minutes to check where you stand.",
+    thumbnail: "https://images.unsplash.com/photo-1722487631997-cf1e0f92c2c4?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding up a bunch of keys",
+
+    sections: [
+      {
+        id: "why-it-matters",
+        heading: "Why this matters more than you think",
+        paragraphs: [
+          "Your ad account is more than a place to pay for ads. It holds your campaign history, what you have learned about which audiences and creative worked, and the conversion data the platform uses when deciding who to show your ads to. You paid for that learning. If you lose it, your next marketer starts blind.",
+          "In the better cases, a departing marketer hands everything over without any trouble. You should not have to rely on that.",
+        ],
+      },
+      {
+        id: "right-setup",
+        heading: "What the right setup looks like",
+        paragraphs: [
+          "The principle is the same everywhere: the business owns the asset, and the marketer is given access to it. Access can be removed. Ownership is hard to get back.",
+        ],
+        table: {
+          headers: ["Asset","You should have","Your marketer should have"],
+          rows: [
+            ["Meta Business Portfolio","Admin, under your business","Partner access to the assets they need"],
+            ["Meta ad account, Page, Pixel","Owned by your business","Access as a partner"],
+            ["Google Ads","Your own account with admin access","Linked to their manager (MCC) account"],
+            ["Google Analytics, Tag Manager, Search Console","Owner or admin","Edit access"],
+            ["TikTok Business Center and ad account","Owner","Partner access"],
+            ["Domain, hosting and website","Registered to you, with your login","Only the access they need"],
+            ["Payment method","Your card, or your M-Pesa top-ups","None, wherever possible"],
+          ],
+        },
+      },
+      {
+        id: "check-it",
+        heading: "How to check right now",
+        paragraphs: [
+          "Do this today, even if you are happy with your marketer. It is not an accusation, it is basic housekeeping.",
+        ],
+        list: [
+          "Log in to business.facebook.com, open Settings, and look at People, Ad accounts, Pages and Datasets. Is your business listed as the owner?",
+          "In Google Ads, open Admin, then Access and security. Is there an admin on your own email address?",
+          "Look up your domain with a WHOIS service, or your registrar. Is the registered owner you?",
+          "Log in to Google Analytics and Search Console with your own email.",
+          "Look at who is listed as admin on your Instagram, TikTok and WhatsApp Business accounts.",
+          "Remove people who have left. Former staff with admin access are a security risk.",
+        ],
+      },
+      {
+        id: "contract",
+        heading: "What to put in the contract",
+        paragraphs: [
+          "Whatever else your agreement says, these points should be in writing. A good marketer will not object to any of them. Most prefer the clarity.",
+        ],
+        list: [
+          "All ad accounts, data and audiences belong to the client, including those created during the engagement.",
+          "Who owns creative, and whether you can keep using it after the contract ends. Stock images, music and creator content may have their own licences.",
+          "Ad spend is paid directly by the client, or any markup is declared.",
+          "How much notice either side must give, and a handover process with a date.",
+          "Regular reporting, with direct access to the accounts rather than only to PDFs.",
+          "How customer data is handled, in line with Kenya's data protection rules.",
+        ],
+      },
+      {
+        id: "already-stuck",
+        heading: "If you are already locked out",
+        paragraphs: [
+          "Start with a polite written request for access or transfer, setting out exactly what you need. Most disputes end there. Some assets cannot be moved between owners easily, so you may have to create new accounts. Export what you can, including customer lists, reports and creative, while you can still reach them.",
+          "If your Page or domain has been kept from you, gather your proof of ownership, such as business registration and invoices, and use the platform's or registrar's own recovery process. If the amounts involved are significant, get advice from a lawyer.",
+        ],
+        callout: "Any marketer who refuses to work in accounts you own is telling you something. Find out why before you pay the first invoice.",
+      },
+    ],
+  },
+  {
+    slug: "social-media-content-calendar-small-business-kenya-2026",
+    category: "Social Media",
+    title: "A Social Media Content Calendar a Busy Kenyan Business Can Keep Up",
+    excerpt: "Most content plans die in week three. This one is built around one filming session and four kinds of post.",
+    date: "2026-10-26",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "A Social Media Content Calendar a Busy Kenyan Business Can Keep Up",
+    metaDescription: "A realistic monthly social media content calendar for Kenyan small businesses: content pillars, batching in one filming day, a sample week and key Kenyan dates.",
+    intro: "Most social media plans fail for the same reason. They demand daily posts from a business owner who also has to serve customers, chase payments and sort out the supplier. By week three, the page goes quiet. The aim is not to post as much as possible. It is to have a plan modest enough that you will still be doing it in six months, because consistency is what builds recognition.",
+    thumbnail: "https://images.unsplash.com/photo-1759868937753-34859b641bc1?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Colourful sticky notes scattered on a white board",
+
+    sections: [
+      {
+        id: "how-much",
+        heading: "Decide how much you can really do",
+        paragraphs: [
+          "Choose what you can sustain when you are busy, not when you feel motivated. Three good posts a week, every week, beat fourteen in one week followed by silence. Pick one or two platforms where your customers actually are. A half-hearted presence on five will drain you and impress no one.",
+        ],
+      },
+      {
+        id: "pillars",
+        heading: "Four content pillars",
+        paragraphs: [
+          "Rather than asking what to post each morning, rotate between four types of content. Here is how they could look for a business like a bakery.",
+        ],
+        table: {
+          headers: ["Pillar","Purpose","Bakery example"],
+          rows: [
+            ["Teach","Be useful, and earn saves and shares","How to store a cake so it stays moist for a week"],
+            ["Show","Build trust behind the scenes","Decorating a wedding cake at 5am"],
+            ["Prove","Show that others trust you","A customer reacting to their surprise cake"],
+            ["Sell","Make a clear offer","Order by Thursday for weekend delivery, from KES X"],
+          ],
+        },
+      },
+      {
+        id: "batching",
+        heading: "Batch it: one half-day a month",
+        paragraphs: [
+          "Filming one thing every day is what burns people out. Instead, block out one morning, and capture a month's worth at once. Change your shirt between clips if it helps. One filming session can give you many short videos, and each of those can become a story, a caption or a static post.",
+        ],
+        list: [
+          "Plan: list 12 ideas across the four pillars, using questions your customers have asked.",
+          "Film: one phone, natural light, and a clip-on microphone if you can.",
+          "Edit: use CapCut or similar, with captions, since many people watch on mute.",
+          "Schedule: use Meta Business Suite and TikTok's scheduler, both of which are free.",
+          "Leave gaps: keep space for real events, new stock or anything trending that is relevant.",
+        ],
+      },
+      {
+        id: "sample-week",
+        heading: "A sample week",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Day","Post","Format"],
+          rows: [
+            ["Monday","Answer one common customer question","Short video"],
+            ["Wednesday","Behind the scenes or a staff moment","Video or Stories"],
+            ["Friday","Customer proof, then the offer","Video or carousel"],
+            ["Daily, 15 minutes","Reply to comments and messages","Community"],
+          ],
+          note: "Best posting times differ by audience. Check your own insights instead of relying on a general chart.",
+        },
+      },
+      {
+        id: "kenyan-dates",
+        heading: "Plan around the Kenyan calendar",
+        paragraphs: [
+          "A little planning makes your content feel current without chasing every trend. Mark the moments that matter to your customers, and start preparing a few weeks before each.",
+        ],
+        list: [
+          "Paydays at month-end, and the leaner middle of the month.",
+          "January, April and August to September school terms and fees.",
+          "National holidays: Madaraka Day, Mashujaa Day and Jamhuri Day.",
+          "Easter, Eid, Valentine's Day, Mother's Day and the December travel season.",
+          "Sector moments, such as the wedding season, KCSE results or the safari high season.",
+        ],
+      },
+      {
+        id: "review",
+        heading: "Review once a month",
+        paragraphs: [
+          "Spend half an hour looking at what happened. Which three posts got the most saves, shares, messages or enquiries? Make more of those. Which got nothing? Change the hook, or drop the topic. Ask your team what customers mentioned as well.",
+          "Likes are a poor measure. If a dull-looking video about delivery brings in six enquiries while a funny trend brings in none, then you have your answer about what to make next month.",
+        ],
+        callout: "A plan you can follow beats a perfect one you cannot. If three posts a week is too much, do two, and do them every week.",
+      },
+    ],
+  },
+  {
+    slug: "instagram-577000-views-one-week-case-study-2026",
+    category: "Case Study",
+    title: "577,300 Instagram Views in One Week: What a Spike Actually Leaves Behind",
+    excerpt: "A Nairobi skincare clinic's Instagram jumped elevenfold in a week. Then we watched what stayed and what vanished.",
+    date: "2026-10-26",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "577,300 Instagram Views in a Week: What a Spike Leaves Behind",
+    metaDescription: "A real Instagram case study from a Nairobi skincare clinic: 577,300 views in a week, what it brought in, how fast it faded, and what the data cannot tell us.",
+    intro: "In a typical week, this Nairobi skincare clinic's Instagram account got about 52,700 views. In the week of 14 September 2026, it got 577,300. It is the kind of number that gets screenshotted and sent around the office. The more useful question is what happened next. So here is the whole picture, including the weeks after, and an admission about what we cannot explain. The client stays unnamed.",
+    thumbnail: "https://images.unsplash.com/photo-1722503585219-7cef8492616d?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a phone showing a social media screen",
+
+    sections: [
+      {
+        id: "the-spike",
+        heading: "The spike",
+        paragraphs: [
+          "That week brought 577,300 views and 239,000 people reached, compared with a typical week's 52,700 views. A typical week here is the average of the seven weeks before.",
+        ],
+        table: {
+          headers: ["Measure","That week","Compared with a typical week"],
+          rows: [
+            ["Views","577,300","About 11x"],
+            ["People reached","239,000","16x"],
+            ["Link clicks","1,100","6x"],
+            ["New followers","345","About 3x"],
+          ],
+        },
+      },
+      {
+        id: "gap",
+        heading: "Look at the gap between those multipliers",
+        paragraphs: [
+          "Reach went up 16 times, link clicks 6 times and followers about 3 times. The further you get from passive watching and the closer to real action, the smaller the jump becomes. Huge reach mostly brings in people who are not your customers, and who will see one thing and move on.",
+          "That is not a failure. 1,100 link clicks in a week is real attention for a clinic. It simply shows why a headline views figure says so little about what the business got.",
+        ],
+      },
+      {
+        id: "after",
+        heading: "What stayed, and what faded",
+        paragraphs: [
+          "The week after, views settled at 102,037, still about double the usual, with 2,300 interactions and 257 new followers. So there was a real carry-over for one week. Then, two weeks after the spike, views were back at 47,886, within the normal range.",
+        ],
+        table: {
+          headers: ["Week of","Views","Reached","New followers"],
+          rows: [
+            ["31 Aug","58,000","17,100","85"],
+            ["7 Sep","35,400","11,700","78"],
+            ["14 Sep (spike)","577,300","239,000","345"],
+            ["21 Sep","102,037","8,400","257"],
+            ["28 Sep","47,886","11,400","94"],
+            ["5 Oct","70,684","20,700","80"],
+          ],
+          note: "Weekly figures from the Instagram insights tracker.",
+        },
+        callout: "A spike in reach does not hold on its own. Two weeks later, the account was back in its normal range.",
+      },
+      {
+        id: "what-we-dont-know",
+        heading: "What the data does not show",
+        paragraphs: [
+          "The tracker does not record what caused the spike. I could give you a neat story about the perfect hook, but I would be making it up. A paid reach campaign was live on the same account that month, so some of those views are likely paid and were not earned organically.",
+          "We also cannot tell you how many of those clicks turned into appointments from this data alone. Any case study that claims to explain exactly why something went viral deserves some suspicion, including ones I write.",
+        ],
+      },
+      {
+        id: "what-to-do",
+        heading: "What to do when it happens to you",
+        paragraphs: [
+          "A spike is short, so the preparation has to be in place before it arrives. If a post of yours takes off, these are the things worth doing:",
+        ],
+        list: [
+          "Make sure your bio link works, and leads to a clear next step, such as booking.",
+          "Reply quickly to comments and messages while people are paying attention.",
+          "Pin the post, and add a comment with the details people are asking for.",
+          "Follow up in the next few days, while there is still some carry-over.",
+          "Build a retargeting audience of the people who engaged, then show them an offer.",
+          "Write down what you think happened, and try to repeat it, knowing you might not.",
+        ],
+      },
+      {
+        id: "takeaway",
+        heading: "The takeaway",
+        paragraphs: [
+          "Enjoy the spike, but do not plan your business around one. Build for the ordinary weeks, with a steady flow of content, tracking that links attention to bookings, and a follow-up process. Then a good week becomes a bonus you can use, rather than a number in a screenshot.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "meta-retargeting-small-budget-kenya-2026",
+    category: "Meta Ads",
+    title: "Meta Retargeting on a Small Budget: Win Back People Who Almost Bought",
+    excerpt: "Most people do not buy the first time they see you. Retargeting is how a small budget reaches the ones who were close.",
+    date: "2026-10-27",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Meta Retargeting on a Small Budget: Win Back People Who Almost Bought",
+    metaDescription: "A practical Meta retargeting guide for Kenyan businesses: which audiences to build, what to show them, how much to spend, and why too small an audience can fail.",
+    intro: "Someone watched your video, visited your site, added something to cart, and then their matatu reached the stage and they put their phone away. They were interested. They just got interrupted. Retargeting is how you show up again, and for a business with a small budget, these warm people are often the cheapest sales available.",
+    thumbnail: "https://images.unsplash.com/photo-1753161021289-1373415244b1?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two women with shopping bags looking at their phones in a clothing shop",
+
+    sections: [
+      {
+        id: "audiences",
+        heading: "The audiences worth building",
+        paragraphs: [
+          "Not all warm people are equally warm. Build them in layers so that your message can match how close they are.",
+        ],
+        table: {
+          headers: ["Audience","How warm","What to show"],
+          rows: [
+            ["Added to cart or started checkout, last 14 days","Very warm","Reminder, delivery details, a reason to finish now"],
+            ["Visited a product or service page, last 30 days","Warm","Reviews, results, answers to common objections"],
+            ["Sent you a message but did not buy, last 30 days","Warm","The offer again, plus proof"],
+            ["Watched most of a video or engaged with your Page, last 90 days","Lukewarm","Your best offer with a clear call to action"],
+            ["Past customers","Different job","Restocks, new products and complementary items"],
+          ],
+          note: "These windows are starting points. Short buying cycles suit shorter windows, while property or school fees need longer ones.",
+        },
+      },
+      {
+        id: "small-budget-problem",
+        heading: "The small-audience problem nobody warns you about",
+        paragraphs: [
+          "Retargeting needs enough people to retarget. If your site gets a few hundred visitors a month, a \"cart abandoners, last 7 days\" audience might be twenty people. Meta will struggle to deliver to it, and the same few people will see your ad again and again.",
+          "If that is you, widen it. Combine all your warm groups into one audience: site visitors, video viewers, Page and Instagram engagers, people who messaged you. Run one ad set against that group, then split it as it grows. Also, feed the top of the funnel. You cannot retarget people you never reached, so a reasonable share of your spend has to keep bringing in new people.",
+        ],
+      },
+      {
+        id: "what-to-show",
+        heading: "Do not show them the same ad again",
+        paragraphs: [
+          "They have already seen your introduction. They did not buy for a reason, so use retargeting to deal with that reason. These are the objections I would answer first in Kenya:",
+        ],
+        list: [
+          "\"Will it arrive?\" Show delivery areas, times and costs.",
+          "\"Is this real?\" Show customer videos, reviews and your physical location.",
+          "\"Can I trust paying first?\" Explain pay on delivery or how your till number works.",
+          "\"Is it worth the price?\" Compare it with the alternative and show what is included.",
+          "\"Can I wait?\" Offer a real deadline if there is one. Never invent fake urgency.",
+        ],
+      },
+      {
+        id: "budget",
+        heading: "How much to spend",
+        paragraphs: [
+          "Let audience size decide, not a fixed percentage. Watch your frequency, which is the average number of times each person has seen the ad. If it climbs past about 4 or 5 in a week and results are falling, you are saturating a small group. Lower the budget or change the creative rather than pushing harder.",
+          "Be aware too that Meta's automated campaigns, such as Advantage+, already show ads to warm people within their broader delivery. If you run one, exclude recent buyers, and compare results before you add a separate retargeting campaign. You may be paying twice to reach the same person.",
+        ],
+      },
+      {
+        id: "be-careful",
+        heading: "Stop before it gets creepy",
+        paragraphs: [
+          "Remove people who have already bought, or they will keep seeing ads for the thing they own, which is both irritating and wasteful. Avoid ad copy that points out personal facts about them, such as \"We saw you looking at weight-loss products\". Meta's rules restrict this and customers rightly dislike it.",
+          "Retargeting does not fix a weak offer. If nobody buys from your warm audience either, look at the product, the price or the checkout before you spend more on ads.",
+        ],
+        callout: "Start simple: one audience of everyone warm from the last 30 to 90 days, one ad built on proof, and no recent buyers.",
+      },
+    ],
+  },
+  {
+    slug: "google-ads-quality-score-kenya-2026",
+    category: "Google Ads",
+    title: "Google Ads Quality Score: Pay Less per Click Without Bidding Less",
+    excerpt: "Two businesses can bid on the same keyword and pay very different prices. This is why, and how to end up on the right side.",
+    date: "2026-10-27",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Google Ads Quality Score: Pay Less per Click Without Bidding Less",
+    metaDescription: "What Google Ads Quality Score really is, the three parts that drive it, how Kenyan advertisers can raise it to lower click costs, and when to stop worrying about it.",
+    intro: "Google Ads does not simply give the top spot to whoever pays the most. A business with a relevant ad and a good landing page can appear above a competitor bidding more, and pay less per click for it. Quality Score is the 1 to 10 rating that gives you a look at how Google sees your ads, and it is one of the most misunderstood numbers in the account.",
+    thumbnail: "https://images.unsplash.com/photo-1765211003372-cdba7e14a77c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Close-up of a vintage car speedometer dial",
+
+    sections: [
+      {
+        id: "what-it-is",
+        heading: "What it is, and what it is not",
+        paragraphs: [
+          "Quality Score is a diagnostic shown per keyword. It is not fed into the auction directly. In each auction, Google calculates Ad Rank using your bid, the quality of your ad in that specific moment, and other factors. Quality Score is a summary of how that tends to go, built from past performance, and it is useful because it shows which parts need work.",
+        ],
+        table: {
+          headers: ["Component","The question it answers","How to improve it"],
+          rows: [
+            ["Expected click-through rate","Will people click this ad for this keyword?","Stronger headlines, a clear price or offer, ad assets"],
+            ["Ad relevance","Does the ad match the search?","Tight ad groups, with the keyword's meaning in the headline"],
+            ["Landing page experience","Does the page deliver what the ad promised?","Matching content, fast mobile loading, a clear next step"],
+          ],
+        },
+      },
+      {
+        id: "structure",
+        heading: "Start with structure",
+        paragraphs: [
+          "One ad written to cover forty different keywords can never be very relevant to any of them. Group keywords by intent, so that each ad group has one job. Separate \"house cleaning Nairobi\" from \"office cleaning Nairobi\", give each its own ad, and send each to its own page.",
+          "You do not need hundreds of ad groups. That approach fell out of fashion for good reasons, since thin data helps nobody. A handful of well-defined themes is usually enough for a small Kenyan business.",
+        ],
+      },
+      {
+        id: "landing-page",
+        heading: "Landing pages are often the cheapest win",
+        paragraphs: [
+          "Plenty of Kenyan accounts send every click to the home page. Someone searching \"AC repair Westlands\" lands on a page that talks about your company history, and leaves. Google notices the mismatch, and so does your conversion rate.",
+        ],
+        list: [
+          "Repeat the search's meaning in the main heading on the page.",
+          "Show the price or a starting price if you can, and the areas you serve.",
+          "Make it load quickly on a mid-range Android phone on mobile data. Compress the images first.",
+          "Put a call and WhatsApp button where a thumb can reach them.",
+          "Keep the promise the ad made. If the ad says same-day service, the page must say so too.",
+        ],
+      },
+      {
+        id: "ads",
+        heading: "Write ads that earn the click",
+        paragraphs: [
+          "Fill your responsive search ads with distinct headlines covering the keyword, the benefit, the price, proof and the location. Do not write fifteen versions of one idea. Add sitelinks, callouts, a call asset and a location asset, since these make your ad bigger and more useful without costing anything extra to set up.",
+          "Be specific where competitors are vague. \"Same-day delivery in Nairobi from KES 300\" beats \"Quality service at affordable prices\" on both clicks and trust.",
+        ],
+      },
+      {
+        id: "keep-perspective",
+        heading: "Keep it in perspective",
+        paragraphs: [
+          "A 7 that brings profitable sales is better than a 10 that brings none. Some keywords carry low scores for reasons you cannot do much about, such as very broad terms or your own competitors' brand names. Do not pause a profitable keyword just because the score looks low, and do not chase a perfect account for its own sake.",
+          "Use the score to find problems. Sort by spend, look at your ten most expensive keywords, and check which of the three components says \"below average\". Fixing those will do far more than tidying up a hundred keywords that barely spend.",
+        ],
+        callout: "Quality Score is the warning light on the dashboard. Fix what the light points to, not the light.",
+      },
+    ],
+  },
+  {
+    slug: "ai-search-chatgpt-local-business-kenya-2026",
+    category: "SEO",
+    title: "How to Get Your Kenyan Business Found in ChatGPT and Google AI Answers",
+    excerpt: "Customers are starting to ask AI who to call. There is no secret hack, but there is plenty you can do to be a good answer.",
+    date: "2026-10-27",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "How to Get Your Kenyan Business Found in ChatGPT and Google AI Answers",
+    metaDescription: "What Kenyan businesses can do to appear in AI search answers from ChatGPT, Google and others: clear facts, reviews, mentions and pages that are easy to quote.",
+    intro: "\"Who is a good family lawyer in Nairobi?\" More people are now asking questions like that to a chatbot, or reading the AI answer at the top of Google rather than clicking ten links. Anyone selling you a guaranteed way to rank in ChatGPT is overselling. Nobody controls these answers. But the systems behind them need sources, and there are practical ways to become one of them.",
+    thumbnail: "https://images.unsplash.com/photo-1762330465857-07e4c81c0dfa?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person typing on a smartphone with an AI chatbot on the screen",
+
+    sections: [
+      {
+        id: "what-is-different",
+        heading: "What is different, and what is not",
+        paragraphs: [
+          "AI answers usually draw on the web, on business listings and on what others say about you. That means good ordinary SEO is still the foundation. The difference is that a person may get a single recommendation, or a shortlist of three, instead of a page of results. Being on the list matters more, and there are fewer places on it.",
+          "You also cannot track it as neatly as a keyword ranking. Answers vary by person and by day, so treat any report that gives you a single \"AI ranking\" with suspicion.",
+        ],
+      },
+      {
+        id: "be-easy-to-understand",
+        heading: "Make your facts impossible to misread",
+        paragraphs: [
+          "An AI cannot recommend what it cannot work out. Check that the basics are stated plainly, in text, on your site.",
+        ],
+        list: [
+          "What you do, who for, and where. Use plain words rather than slogans.",
+          "Your location, areas served, hours, phone number and starting prices.",
+          "Who runs the business and their relevant qualifications or licences.",
+          "The same name, address and phone number on your site, profiles and directories.",
+          "Schema markup for your business type, which helps machines read these details.",
+          "Important information in real text, not only inside images or PDFs.",
+        ],
+      },
+      {
+        id: "answer-questions",
+        heading: "Write pages that can be quoted",
+        paragraphs: [
+          "AI answers are built from clear statements. A paragraph that says \"A basic will in Kenya typically needs...\" is more usable than three paragraphs about your firm's passion for excellence. Use each question customers ask as a heading, then answer it directly in the first two sentences, with detail below.",
+          "Publish things only you can say: your real prices, your own case data, and what you have seen working in your market. Generic summaries are exactly what AI can already produce on its own, so they give it no reason to cite you.",
+        ],
+      },
+      {
+        id: "be-mentioned",
+        heading: "Get talked about elsewhere",
+        paragraphs: [
+          "If your own website is the only place saying you are good, that is weak evidence, for people and for machines. Recommendations tend to reflect what appears across several sources.",
+        ],
+        table: {
+          headers: ["Source","What to do"],
+          rows: [
+            ["Google Business Profile","Complete every field, and keep it active"],
+            ["Google reviews","Build a steady flow of detailed, honest reviews"],
+            ["Bing Places","Claim your listing. It takes minutes and some assistants use Bing data"],
+            ["Kenyan media and associations","Earn coverage, list your membership, contribute expert quotes"],
+            ["Directories and comparison lists","Get accurate listings on the credible ones in your sector"],
+          ],
+        },
+      },
+      {
+        id: "check-it",
+        heading: "How to check where you stand",
+        paragraphs: [
+          "Once a month, ask several assistants the questions your customers would ask, such as \"best physiotherapist in Westlands\". Record whether you appear, who does, and which sources are cited. Those sources are your to-do list. If one Kenyan site keeps being cited, find out how to get on it.",
+          "Also check that what the assistants say about you is correct. Wrong hours or an old address usually come from an outdated listing somewhere, and that can be fixed.",
+          "Then ask new customers how they found you, and add \"ChatGPT or an AI tool\" as an option. That number will tell you more than any tracking dashboard, and it will tell you when this deserves more of your time.",
+        ],
+        callout: "Do not abandon Google for this. Most of the work above helps you in normal search too, which is exactly why it is safe to do now.",
+      },
+    ],
+  },
+  {
+    slug: "lead-magnets-for-kenyan-businesses-2026",
+    category: "Lead Generation",
+    title: "Lead Magnets That Work in Kenya, and Why Your Ebook Doesn't",
+    excerpt: "Nobody wants your 40-page guide. They do want the price list, the checklist and the answer to the question keeping them up.",
+    date: "2026-10-27",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Lead Magnets That Work in Kenya, and Why Your Ebook Doesn't",
+    metaDescription: "Lead magnet ideas for Kenyan businesses that attract buyers rather than freebie seekers: price guides, checklists and calculators, plus how to deliver and follow up.",
+    intro: "A lead magnet is something useful that you give away in exchange for a contact. The usual advice is to write an ebook, so people do, and they get a hundred downloads and no sales. Long reads rarely match what a Kenyan buyer wants at that moment on their phone. What works better is usually smaller, more practical and closer to the decision they are trying to make.",
+    thumbnail: "https://images.unsplash.com/photo-1693045181229-3eddc1a2e242?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Printed checklist on a clipboard with pencils beside it",
+
+    sections: [
+      {
+        id: "what-makes-good",
+        heading: "What a good one has in common",
+        paragraphs: [
+          "The right test is not \"will many people want this?\" but \"will the people who want it also want to buy from me?\" A strong lead magnet is:",
+        ],
+        list: [
+          "Specific to one problem that your product or service solves.",
+          "Quick to use, ideally in less than ten minutes on a phone.",
+          "Useful immediately, even if they never buy.",
+          "A natural step towards the sale, not a distraction from it.",
+        ],
+      },
+      {
+        id: "ideas",
+        heading: "Ideas that fit Kenyan buyers",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Business","Lead magnet","Why it attracts buyers"],
+          rows: [
+            ["Builder or contractor","Cost guide for a 3-bedroom in Kenya","Only people planning to build want it"],
+            ["Real estate","Checklist for buying land safely in Kenya","Speaks to their biggest fear"],
+            ["School","Fees and admissions guide for next year","Parents are actively deciding"],
+            ["Accountant","KRA deadlines calendar for small businesses","Useful, and shows that you know your subject"],
+            ["Salon or clinic","Short quiz: which treatment suits your skin?","Leads straight to a booking"],
+            ["Marketer","Budget calculator or audit","Shows the gap you could fill"],
+            ["E-commerce","Early access to restocks on WhatsApp","Buyers ask to be told"],
+          ],
+        },
+      },
+      {
+        id: "price-list",
+        heading: "The one that nearly always works: a real price guide",
+        paragraphs: [
+          "In many Kenyan industries, the hardest thing to find is an honest price. So an honest price guide is valuable. It attracts people who are close to a purchase, and it shows you are straightforward. People worry that competitors will see it. They usually already know your prices, and customers are the ones who do not.",
+          "If your prices really do vary, publish ranges and explain what moves them. That is more convincing than \"contact us for a quote\", and it filters out people who could never afford you before they take up your time.",
+        ],
+      },
+      {
+        id: "delivery",
+        heading: "Deliver it where people actually are",
+        paragraphs: [
+          "In Kenya, delivery by WhatsApp often beats email. Someone taps a button on your ad or page, sends a keyword, and gets the document in the chat. You now have a conversation open, which is a better place to start than an unopened inbox. Keep files small, since a heavy PDF costs the customer data. Meta lead forms can also capture the contact, if you follow up quickly.",
+          "Say clearly what they are signing up for. If you will send promotions afterwards, tell them, ask for their consent and offer an easy way to opt out. Under Kenya's data protection rules, a download does not automatically give you permission for ongoing marketing.",
+        ],
+      },
+      {
+        id: "follow-up",
+        heading: "It only pays if you follow up",
+        paragraphs: [
+          "The lead magnet is the start of a conversation, not the result. A day or so after delivery, send one short question: \"Did the guide help? What are you trying to figure out?\" The answers are good for sales and even better for your marketing, because they tell you the language and concerns of your market.",
+          "Then measure it by sales. Track how many people took it, how many replied and how many bought. If it produces plenty of leads but no customers, change the topic so that it sits closer to the purchase.",
+        ],
+        callout: "Before you build anything, look through your last 50 enquiries. The question you are asked most is probably your lead magnet.",
+      },
+    ],
+  },
+  {
+    slug: "is-your-marketing-actually-paying-kenya-2026",
+    category: "Pricing",
+    title: "Is Your Marketing Actually Paying? A Simple Profit Check for Kenyan SMEs",
+    excerpt: "A 10x return in a dashboard can still lose you money. Here is how to work out what you really kept.",
+    date: "2026-10-28",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Is Your Marketing Actually Paying? A Profit Check for SMEs",
+    metaDescription: "How Kenyan SMEs can check if marketing is really profitable: ROAS versus profit, break-even ROAS, blended numbers, and a simple monthly review you can run in a sheet.",
+    intro: "Your agency reports a return of 8x. Your bank balance does not seem to know that. Both things may be true. Platform dashboards measure revenue they believe they influenced, not what you got to keep. With one small monthly sheet, you can see through all of it, and you will not need a data team or expensive software to do it.",
+    thumbnail: "https://images.unsplash.com/photo-1633158829875-e5316a358c6f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Small green plant growing out of a glass jar filled with coins",
+
+    sections: [
+      {
+        id: "roas-vs-profit",
+        heading: "ROAS is not profit",
+        paragraphs: [
+          "ROAS is revenue divided by ad spend. It ignores what the goods cost, delivery, staff, returns, the agency's fee and the VAT on your ads. A business with thin margins can have a high ROAS and still lose money, while a high-margin service can do very well with a modest one.",
+        ],
+        table: {
+          headers: ["","Product A","Service B"],
+          rows: [
+            ["Reported ROAS","6x","3x"],
+            ["Revenue from KES 100,000 ads","KES 600,000","KES 300,000"],
+            ["Gross margin","20%","70%"],
+            ["Gross profit","KES 120,000","KES 210,000"],
+            ["After ad spend","KES 20,000","KES 110,000"],
+          ],
+          note: "Illustrative figures, before VAT, fees and overheads.",
+        },
+      },
+      {
+        id: "break-even",
+        heading: "Find your break-even ROAS",
+        paragraphs: [
+          "This one number changes how you read every report. Divide 1 by your gross margin. If your margin is 25%, you need a ROAS of 4x just to cover the ads. At 50% you need 2x. Anything below that loses money on each sale, unless repeat purchases make up for it. Remember to allow for extra costs such as VAT and fees.",
+        ],
+        callout: "Break-even ROAS = 1 / gross margin. Write it on the wall beside your dashboard.",
+      },
+      {
+        id: "blended",
+        heading: "Look at the blended number too",
+        paragraphs: [
+          "Each platform claims credit for any sale it touched, so if a customer saw your Meta ad and then searched on Google, both may count the same order. I point this out in my own combined case study, where the total may overstate actual sales for this reason. Add up platform figures and you can end up with more revenue than you truly made.",
+          "So add a blunt measure: total revenue for the month divided by total marketing spend. It cannot tell you which campaign worked, but it cannot be fooled by attribution either. If platforms report growth while this number gets worse, believe this number.",
+        ],
+      },
+      {
+        id: "monthly-sheet",
+        heading: "A monthly review you can do in 30 minutes",
+        paragraphs: [
+          "Make a sheet with one row per month, and these columns.",
+        ],
+        list: [
+          "Total revenue, taken from your bank, M-Pesa statements and till rather than from an ad platform.",
+          "Gross profit, after the direct cost of what you sold.",
+          "Total marketing cost: ads, VAT, fees, creative and tools.",
+          "New customers, and how they said they found you.",
+          "Cost per new customer: marketing cost divided by new customers.",
+          "Profit after marketing: gross profit minus marketing cost.",
+        ],
+      },
+      {
+        id: "what-ads-miss",
+        heading: "What the sums miss",
+        paragraphs: [
+          "Be fair to your marketing as well. Some of it does not pay back in the same month. Awareness work, SEO and video can take months and show up as more people searching for you by name. Repeat customers can also turn an unprofitable first sale into a very profitable customer. Sales through referral and phone calls may never get connected to the ad that began them.",
+          "That is why you should also ask new customers how they heard about you, each time, and write it down. It is imperfect, and it picks up what software misses, including \"a friend sent me your TikTok\".",
+          "To test whether a campaign is really adding sales, you can sometimes pause it for a fortnight in one area or period and see what happens to total sales. If nothing changes, it was probably taking credit for sales you were going to get anyway.",
+        ],
+      },
+      {
+        id: "act",
+        heading: "What to do with the answer",
+        paragraphs: [
+          "If you are profitable and can handle more orders, gradually increase spend and watch whether profit rises along with it. If you are below break-even, check your margin and offer before you blame the ads. And if you cannot fill in that sheet, your first job is to sort out your records, as no marketer can fix numbers that nobody has.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "video-hooks-first-three-seconds-kenya-2026",
+    category: "Content",
+    title: "The First Three Seconds: Video Hooks That Stop Kenyan Thumbs",
+    excerpt: "Most videos are lost before the point arrives. Here are the hook types that work, with examples you can adapt today.",
+    date: "2026-10-28",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "The First Three Seconds: Video Hooks That Stop Kenyan Thumbs",
+    metaDescription: "How to write short video hooks for TikTok, Reels and ads in Kenya: seven hook formulas with local examples, visual and text hooks, and how to test which one wins.",
+    intro: "Nobody wakes up wanting to watch your advert. They are scrolling through friends, football and Sheng comedy, and you have about as long as it takes to move a thumb. You can make a very good video that nobody sees, simply because the opening looked like everything else. Fixing the first few seconds is usually the cheapest improvement you can make to your content.",
+    thumbnail: "https://images.unsplash.com/photo-1764162051296-63c5cddf6ba6?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone on a tripod showing a man filming himself live",
+
+    sections: [
+      {
+        id: "three-layers",
+        heading: "A hook has three layers",
+        paragraphs: [
+          "What people see, what they read and what they hear all need to work together, right from the first frame. Many people watch with the sound off, and many others are listening rather than reading, so do not rely on just one.",
+        ],
+        list: [
+          "Visual: movement, a surprising object, a result or a face reacting. Avoid logos and slow pans.",
+          "Text on screen: a few large words in the safe area, readable in a second.",
+          "Spoken: begin mid-thought, with no \"Hi guys, welcome to my page\".",
+        ],
+      },
+      {
+        id: "formulas",
+        heading: "Seven hooks you can adapt",
+        paragraphs: [
+          "These work because each opens a question that the viewer wants closed. Replace the examples with something true about your own business.",
+        ],
+        table: {
+          headers: ["Hook type","Example","Works for"],
+          rows: [
+            ["Costly mistake","\"Don't buy land in Kenya before checking these 3 things\"","Property, advice"],
+            ["Real price","\"Here's what a 2-bedroom actually costs to finish in Ruiru\"","Contractors, services"],
+            ["Result first","Finished room, then \"this took one weekend and KES 20,000\"","Home, beauty, food"],
+            ["Call-out","\"If you run a salon in Nairobi, stop doing this\"","B2B, niches"],
+            ["Unpopular opinion","\"Your business doesn't need a website yet\"","Experts, founders"],
+            ["Behind the scenes","\"What happens to your order after you pay\"","E-commerce, food"],
+            ["Comparison","\"KES 500 vs KES 5,000 facial: what's the difference?\"","Retail, services"],
+          ],
+          note: "Illustrative examples. Only use numbers and claims you can stand behind.",
+        },
+      },
+      {
+        id: "kenyan-angle",
+        heading: "Sound like here",
+        paragraphs: [
+          "Viewers quickly spot an imported script. Local places, prices in shillings and the way people actually talk all signal that this is for them. A mix of English and Sheng or Kiswahili can do this well, if it suits your brand and someone who really speaks it wrote the line. Mentioning a matatu route, a familiar estate or the January fees squeeze gets more attention than anything generic.",
+          "Keep the details plain, though. The hook can be playful, while the price and how to order should be perfectly clear.",
+        ],
+      },
+      {
+        id: "deliver",
+        heading: "Then deliver on the promise",
+        paragraphs: [
+          "A clickbait hook can boost your first few seconds and then destroy your watch time, because people feel tricked and leave. It also brings the wrong viewers. The platforms measure how long people stay, so the hook has to lead straight to the thing it promised.",
+          "Cut the build-up. After you have written a script, try deleting the first sentence, and sometimes the second. You will often find that the video really begins there.",
+        ],
+      },
+      {
+        id: "test",
+        heading: "Test hooks, not whole videos",
+        paragraphs: [
+          "You can test cheaply. Film three different openings for the same video, and use the same body. Post them apart, or run them as separate ads with equal budgets. Compare their hook rate, which is the share of viewers who get past the first three seconds, then compare the clicks or sales.",
+          "A high hook rate with low completion means that the opening works but the middle does not. A low hook rate means that the good stuff is never seen. Keep a swipe file of the hooks that win. In a few months you will have a list of what stops your particular audience, and that is worth more than any list of tips, including this one.",
+        ],
+        callout: "Before filming, write five hooks and choose the one you would stop for yourself. It takes ten minutes, and it is the highest-value ten minutes in the process.",
+      },
+    ],
+  },
+  {
+    slug: "514000-people-kes-8255-awareness-case-study-2026",
+    category: "Case Study",
+    title: "514,000 Reached for KES 8,255: What a Tiny Awareness Budget Buys",
+    excerpt: "Four small reach campaigns, cheap impressions and only 4 tracked purchases. Why that was not the failure it sounds like.",
+    date: "2026-10-28",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "514,000 Reached for KES 8,255: What a Tiny Awareness Budget Buys",
+    metaDescription: "A real Meta awareness case study from Kenya: 513,902 people reached on KES 8,255 at KES 13.67 CPM, how each campaign did, and what awareness spending did not achieve.",
+    intro: "Four campaigns, KES 8,255 in total, and 513,902 people reached. On reach alone, that is remarkably cheap. Now the other half: those same campaigns brought in just 4 tracked purchases. Judged like a sales campaign, this looks terrible. Whether it was worth doing depends on knowing what you were buying, and that is why I think this small case study deserves a closer look. The client stays unnamed. The numbers are real.",
+    thumbnail: "https://images.unsplash.com/photo-1770409122871-c2c674688912?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Times Square with bright billboards and crowds of people",
+
+    sections: [
+      {
+        id: "context",
+        heading: "What these campaigns were for",
+        paragraphs: [
+          "These ran between 31 August and 7 October 2026 on the Meta account of a Nairobi beauty retailer, alongside its sales campaigns. Each had a specific moment to support: a creator collaboration, a partner brand launch, a product-line launch and an in-store push. They were meant to make people aware of something, and were judged on reach and cost.",
+        ],
+      },
+      {
+        id: "numbers",
+        heading: "The numbers",
+        paragraphs: [
+          "Together they delivered 603,705 impressions at KES 13.67 per thousand. Reach is added up across all four, so anyone who saw more than one campaign is counted more than once. The true number of unique people is lower than 513,902.",
+        ],
+        table: {
+          headers: ["Campaign","Days","Reached","Spend","Per 1,000 impressions"],
+          rows: [
+            ["Creator collaboration","7","166,116","KES 2,575","KES 12.52"],
+            ["Partner brand launch","17","138,479","KES 2,767","KES 15.56"],
+            ["Product-line launch","14","124,255","KES 1,416","KES 11.06"],
+            ["In-store awareness","17","85,052","KES 1,497","KES 16.24"],
+          ],
+          note: "Campaign names are replaced with generic descriptions.",
+        },
+      },
+      {
+        id: "observations",
+        heading: "What stood out",
+        paragraphs: [
+          "The creator collaboration reached the most people, in the shortest run: 166,116 in seven days. The product-line launch had the lowest cost per thousand impressions at KES 11.06. No campaign spent more than KES 2,767, which shows that a meaningful awareness push does not need a large budget in this market when the audience is broad and local.",
+        ],
+      },
+      {
+        id: "what-it-did-not-do",
+        heading: "What it did not do",
+        paragraphs: [
+          "Only 4 purchases, worth KES 46,100, were tracked directly to these campaigns, and click-through stayed near 0.2%. That is what you should expect. Meta was asked to find the most people at the lowest cost, not the people most likely to buy, and it did that.",
+          "This matters if someone is showing you a report full of reach and calling it success. If your goal was sales, reach is not a result. And if you judge awareness campaigns by ROAS, you will conclude they are useless and probably switch them off.",
+        ],
+        callout: "Same account, different jobs: sales campaigns are judged on revenue, reach campaigns on cost and reach. Mixing the yardsticks gives you the wrong answer both ways.",
+      },
+      {
+        id: "unknown",
+        heading: "What we cannot prove",
+        paragraphs: [
+          "The theory is that awareness warms people up, so that the sales campaigns work better when they see a familiar name. The sales campaigns in this account did perform well during this period. But I cannot prove that these reach campaigns caused any of that, because we did not run a holdout test. It is a reasonable belief, not a measured fact.",
+          "Measuring it properly would mean a lift test, or at least comparing a region or period with and without it. At this level of spend, that was not worth doing. At a larger budget, it would be.",
+        ],
+      },
+      {
+        id: "when",
+        heading: "When a small awareness budget makes sense",
+        paragraphs: [
+          "Based on this, I would consider it in these situations:",
+        ],
+        list: [
+          "You have a specific moment to support, such as a launch, an event or a store opening.",
+          "You already have sales campaigns running that can benefit from warmer audiences.",
+          "You serve a broad local market, so that cheap reach actually reaches potential buyers.",
+          "You are building a video-viewer audience to retarget later.",
+          "You can afford it, and it is a small share of the total. Here it was about 6% of the Meta account's spend.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-read-meta-ads-report-kenya-2026",
+    category: "Meta Ads",
+    title: "How to Read a Meta Ads Report Without Being Fooled by It",
+    excerpt: "Your agency's report looks impressive. Here is what each number means, which ones matter, and how to find what is really wrong.",
+    date: "2026-10-29",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "How to Read a Meta Ads Report Without Being Fooled by It",
+    metaDescription: "How to read a Meta Ads report: what CPM, CTR, frequency and ROAS really mean, a simple diagnostic order for Kenyan businesses, and the vanity metrics to ignore.",
+    intro: "A Meta Ads report can tell you exactly what is wrong with your campaign, or it can make a campaign that loses money look like a triumph. The difference depends on knowing which numbers to read and in what order. You do not need to be a media buyer. You need to know enough to ask your marketer the awkward question.",
+    thumbnail: "https://images.unsplash.com/photo-1746014601017-4e515ef51722?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop on a wooden table showing bar charts, with a cup of coffee beside it",
+
+    sections: [
+      {
+        id: "the-numbers",
+        heading: "The numbers, in plain language",
+        paragraphs: [
+          "These are the columns you will meet most often. Set them up as a saved view so that you see them each time.",
+        ],
+        table: {
+          headers: ["Metric","What it tells you","If it looks bad, suspect"],
+          rows: [
+            ["Reach and frequency","How many people saw the ad, and how often","An audience too small or tired"],
+            ["CPM","Cost per 1,000 impressions","Competition, narrow targeting or a weak ad"],
+            ["Hook rate (video)","Share of viewers who get past the first seconds","The opening of the video"],
+            ["CTR (link)","Share of viewers who click the link","The creative or the offer"],
+            ["Landing page views vs link clicks","How many clicks actually loaded your page","A slow site or mobile problems"],
+            ["Conversion rate","Share of visitors who buy or enquire","The page, the price or the trust"],
+            ["Cost per result","What each sale or lead costs","Any of the above"],
+            ["ROAS","Revenue per shilling of ad spend, as reported","Margin, tracking or attribution"],
+          ],
+        },
+      },
+      {
+        id: "order",
+        heading: "Read it from the money backwards",
+        paragraphs: [
+          "Start at the bottom line and walk back up. Is cost per sale or lead acceptable for your margin? If yes, leave it alone, whatever the other numbers say. If no, go up the funnel until you find the step that breaks.",
+        ],
+        list: [
+          "Lots of clicks but few landing page views: your site is too slow, or it is breaking on phones.",
+          "Lots of page views but few sales: the page, the price or the trust is failing, not the ad.",
+          "Few clicks: the ad is not persuading, so test a new angle before you touch the audience.",
+          "High CPM with a tiny audience: broaden the audience, or improve the creative.",
+          "Frequency climbing as results fall: the audience has tired of the ad.",
+        ],
+      },
+      {
+        id: "vanity",
+        heading: "The metrics that flatter and do not pay",
+        paragraphs: [
+          "Reach, impressions, likes and followers have their uses, especially in awareness campaigns. But watch out for a report where those are the headline and revenue is missing. A CTR on \"all clicks\" is also inflated, because it counts taps on your profile and likes as well as link clicks. Ask for link CTR.",
+          "ROAS deserves care as well. A 10x return sounds wonderful until you check your margin, and until you remember that Meta can credit itself for someone who saw an ad and bought a day later, even if they were going to buy anyway. Compare it with your real sales each month.",
+        ],
+      },
+      {
+        id: "time",
+        heading: "Do not read it too soon",
+        paragraphs: [
+          "Campaigns need time. Meta generally wants around 50 conversions per ad set per week before delivery settles, and small Kenyan accounts often will not reach that. Judging a campaign on day two, then changing it, restarts the learning and keeps performance unstable.",
+          "Unless something is clearly broken, give a new campaign about a week. Compare equal periods, and allow for month-end and payday, when many Kenyan buyers behave very differently from the middle of the month.",
+        ],
+      },
+      {
+        id: "questions",
+        heading: "Five questions to ask your marketer",
+        paragraphs: [
+          "A good marketer enjoys these. Vague or defensive answers tell you something too.",
+        ],
+        list: [
+          "How many sales or qualified leads did we get, and what did each one cost?",
+          "How does the platform's revenue compare with what we actually banked?",
+          "What did you test this month, and what did you stop?",
+          "Which campaign would you switch off first, and why?",
+          "Do I own the ad account and can I see this data myself?",
+        ],
+        callout: "If a report never mentions money, it is not a performance report. It is a highlights reel.",
+      },
+    ],
+  },
+  {
+    slug: "youtube-ads-for-kenyan-businesses-2026",
+    category: "Google Ads",
+    title: "YouTube Ads for Kenyan Businesses: Worth It on a Small Budget?",
+    excerpt: "YouTube can be cheap reach or wasted money. It depends on the ad's first five seconds and what you expect it to do.",
+    date: "2026-10-29",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "YouTube Ads for Kenyan Businesses: Worth It on a Small Budget?",
+    metaDescription: "A practical guide to YouTube ads in Kenya: ad formats, when YouTube suits a small business, how to make a video people do not skip, targeting and how to judge results.",
+    intro: "Kenyan viewers spend a lot of time on YouTube, from sermons to football highlights to how-to videos, and relatively few small businesses advertise there. That can make it good value. It can also be a quick way to spend money on people impatiently waiting for the Skip button. The results depend almost entirely on what you ask the ad to do.",
+    thumbnail: "https://images.unsplash.com/photo-1762330470472-d88a6565e7c1?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone displaying the YouTube app",
+
+    sections: [
+      {
+        id: "formats",
+        heading: "The formats that matter",
+        paragraphs: [
+          "You do not need to learn them all. These are the ones small businesses are most likely to use.",
+        ],
+        table: {
+          headers: ["Format","How it works","Use it for"],
+          rows: [
+            ["Skippable in-stream","Plays before or during a video, skippable after 5 seconds","Explaining an offer and getting clicks"],
+            ["Bumper","Up to 6 seconds, cannot be skipped","Reminders and reinforcing one message"],
+            ["In-feed","Shows in search and suggestions, viewer chooses to watch","Longer content and how-to videos"],
+            ["Shorts","Vertical ads between Shorts","Reusing your TikTok and Reels creative"],
+            ["Demand Gen","Google's campaign for YouTube and other visual placements","Driving action, once you have conversion tracking"],
+          ],
+        },
+      },
+      {
+        id: "who-suits",
+        heading: "Who it suits",
+        paragraphs: [
+          "YouTube works best when seeing the thing helps to sell it, or when the buyer needs trust before they contact you. Think real estate tours, schools, hospitals, training courses, tourism and considered purchases.",
+          "If you sell one low-priced product and cannot produce any video, or you only have a very small budget, Search or Meta is likely to pay back sooner. YouTube is usually better as a second or third channel, feeding the people who will later search for you by name.",
+        ],
+      },
+      {
+        id: "first-five",
+        heading: "Write for the first five seconds",
+        paragraphs: [
+          "Viewers have a Skip button and did not come to see you. If your video opens with a logo and music, you have paid to be skipped. Put the problem, the benefit and your name inside those first five seconds.",
+        ],
+        list: [
+          "Open with the problem or the result, not with an introduction.",
+          "Show the brand early, so that even a skipper gets something for your money.",
+          "Assume the sound may be low: use captions and clear visuals.",
+          "Use a person speaking directly to the camera, even if it was shot on a phone.",
+          "End with one call to action, and put it on screen.",
+        ],
+        callout: "A simple script: 5 seconds for the problem, 15 for how you solve it, 5 for proof, 5 for what to do next. Thirty seconds is plenty.",
+      },
+      {
+        id: "targeting",
+        heading: "Targeting that does not waste it",
+        paragraphs: [
+          "Do not leave your ads running on children's channels and cartoons. It is a classic waste, particularly on mobile, where phones get handed to kids. Check where your ads appeared, in the placements report, and exclude what is not relevant, including content labelled for kids.",
+          "Good starting points are custom segments based on what people searched for on Google, in-market audiences, and your own website visitors. Set locations carefully too. If you serve Nairobi only, there is no reason to pay for viewers in Mombasa, and you should choose \"presence\" in your location settings so that you reach people physically in your area.",
+        ],
+      },
+      {
+        id: "measure",
+        heading: "Judge it by the right result",
+        paragraphs: [
+          "YouTube rarely gets the last click, so judging it only on direct sales will often make it look worse than it is. Before you launch, take note of branded searches, direct site visits and enquiries. Then watch whether those rise while the campaign is running.",
+          "Also watch the view rate, how long people watch and the click-through rate. If almost everyone skips at five seconds, the opening needs work. Test two or three openings for the same video instead of remaking the whole thing, since the first seconds are usually where the difference lies.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "local-backlinks-citations-kenya-2026",
+    category: "SEO",
+    title: "Local Backlinks and Citations in Kenya: Where to Actually Get Them",
+    excerpt: "A link from your Chamber of Commerce is worth more than a thousand from a package someone sold you on Facebook.",
+    date: "2026-10-29",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Local Backlinks and Citations in Kenya: Where to Actually Get Them",
+    metaDescription: "Where Kenyan businesses can earn real local backlinks and citations: directories, associations, suppliers, media and sponsorships, and which link offers to refuse.",
+    intro: "Links from other websites still help Google decide who to trust. But the offer in your inbox, \"500 high-quality backlinks for KES 5,000\", will not help you and may hurt you. Local link building is slower and much less glamorous. It mostly means getting properly listed, and getting mentioned by the real organisations you already deal with.",
+    thumbnail: "https://images.unsplash.com/photo-1752159646124-27b7f6973be8?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two businessmen in suits shaking hands",
+
+    sections: [
+      {
+        id: "citation-vs-link",
+        heading: "Citations and backlinks are different jobs",
+        paragraphs: [
+          "A citation is a mention of your business name, address and phone number, with or without a link. It helps confirm that your business is real and where it is. A backlink is a link to your site from another site. It passes on trust and can send you visitors. You want both, and many good listings provide both.",
+        ],
+      },
+      {
+        id: "citations-first",
+        heading: "Start with consistent citations",
+        paragraphs: [
+          "First decide on one exact version of your name, address and phone number. Use it everywhere. Then fix the old ones, because past phone numbers and moved addresses cause more trouble than a missing listing.",
+        ],
+        list: [
+          "Google Business Profile, Bing Places and Apple Business Connect.",
+          "Facebook, Instagram and LinkedIn company profiles.",
+          "Credible Kenyan business directories that have real traffic and editorial checks.",
+          "Sector directories, such as those for hospitality, health, property or legal services.",
+          "Your registration or licensing body's public list, where there is one.",
+        ],
+      },
+      {
+        id: "real-links",
+        heading: "Where real local links come from",
+        paragraphs: [
+          "The best links often come from relationships you already have. Ask, and make it easy by sending the exact link and wording.",
+        ],
+        table: {
+          headers: ["Source","How to get it"],
+          rows: [
+            ["Trade bodies and KNCCI or KEPSA","Join if relevant, then ask for your member listing"],
+            ["Suppliers and brands you stock","Ask to be listed as a stockist or partner"],
+            ["Partners and clients","Offer a testimonial with your link, or a case study"],
+            ["Schools, churches, estates and local events","Sponsor something you would support anyway"],
+            ["Kenyan media and blogs","Give them a real story, data or an expert comment"],
+            ["Universities and training bodies","Offer talks, attachments or scholarships"],
+          ],
+        },
+      },
+      {
+        id: "pr",
+        heading: "Give journalists a reason",
+        paragraphs: [
+          "Kenyan business journalists need stories, and \"company has anniversary\" is not one. Numbers, local angles and something useful to the community are. A clean-water initiative at a school, for example, is more likely to be picked up than a press release about a new logo, as I wrote about in my piece on the national press coverage we won for iClear.",
+          "Original data works too. A simple survey of your customers, or what you have learned from a year of orders, gives writers something to quote and link to.",
+        ],
+      },
+      {
+        id: "refuse",
+        heading: "What to refuse",
+        paragraphs: [
+          "Google's spam policies treat these as link schemes. At best they do nothing, and at worst they can get your site's rankings pulled down.",
+        ],
+        list: [
+          "Bulk packages that promise a number of links at a low price.",
+          "\"Guest posts\" on sites that exist only to sell posts and that cover every topic.",
+          "Private blog networks, or link exchanges with anyone who will agree.",
+          "Hidden links, or footer credits on sites that have nothing to do with you.",
+          "Anyone guaranteeing a specific ranking from links.",
+        ],
+        callout: "Ask of any link: would this be worth having if Google did not exist? If people could really find you through it, it is probably a good one.",
+      },
+      {
+        id: "pace",
+        heading: "A pace you can keep up",
+        paragraphs: [
+          "Spend your first month cleaning up citations. After that, aim for one or two real link requests a month. Keep a simple sheet with the source, the contact, the date and the outcome. It is unexciting work, and that is why your competitors have not done it. Results usually take months to show, so judge this by the steady rise in your Search Console and Maps visibility, not by next week's ranking.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "data-protection-act-marketing-kenya-2026",
+    category: "Lead Generation",
+    title: "Can You WhatsApp That Lead? Kenya's Data Protection Rules for Marketers",
+    excerpt: "That list of numbers has real rules attached. Here is what Kenyan businesses need to know, in plain language.",
+    date: "2026-10-29",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Can You WhatsApp That Lead? Kenya's Data Protection Rules",
+    metaDescription: "What Kenya's Data Protection Act and 2021 General Regulations mean for marketing: consent, opt-outs, buying lists, WhatsApp broadcasts and a practical checklist.",
+    intro: "Most Kenyan businesses treat phone numbers as theirs to use. Someone enquired once, so they get promotions forever. A list gets passed along from a friend's business, and off goes the bulk SMS. But Kenya has had a Data Protection Act since 2019, and its 2021 General Regulations deal specifically with direct marketing. You do not need to be frightened of this. You do need to know the basics.",
+    thumbnail: "https://images.unsplash.com/photo-1744329630282-ace56b873b79?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Padlock securing a metal bolt on a wooden door",
+
+    sections: [
+      {
+        id: "disclaimer",
+        heading: "What this article is, and is not",
+        paragraphs: [
+          "I am a marketer, not a lawyer. This is a plain-language summary of how the rules affect everyday marketing, based on the Regulations as published, to help you ask better questions. For decisions about your own business, especially in health, finance, or anything involving children's data, speak to a data protection lawyer or check with the Office of the Data Protection Commissioner, the ODPC.",
+        ],
+      },
+      {
+        id: "what-counts",
+        heading: "What counts as direct marketing",
+        paragraphs: [
+          "The Regulations treat personal data as used for commercial purposes when it is used to persuade someone to buy, subscribe to or otherwise take up a product or service. Direct marketing includes sending someone an electronic message about a sale or promotion using personal data they provided, as well as catalogues addressed to them. A WhatsApp broadcast or an SMS promotion sent to your customer list will generally fit that description.",
+          "General advertising that does not use personal data to identify or target specific people is not treated as direct marketing. A billboard, or an Instagram post to your followers, is not the same as a message to someone's phone.",
+        ],
+      },
+      {
+        id: "rules",
+        heading: "The practical rules",
+        paragraphs: [
+          "Regulations 15 to 17 set out the conditions. In practice, they come down to the following:",
+        ],
+        list: [
+          "Collect the data from the person directly, rather than from a bought or borrowed list.",
+          "Tell them at the time that direct marketing is one of the reasons you are collecting it.",
+          "Get their consent to that use.",
+          "Give a simple way to opt out, that costs them nothing or very little and takes little effort.",
+          "Remind them of the opt-out in your marketing messages, for example \"Reply STOP to opt out\".",
+          "When someone opts out, stop using their data for marketing, and actually record it.",
+          "Do not disguise who is sending the message.",
+          "Do not market with automated calling systems that have no human on the line.",
+        ],
+      },
+      {
+        id: "common-situations",
+        heading: "Common situations",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Situation","Practical view"],
+          rows: [
+            ["Customer asks about a product on WhatsApp, and you reply","Fine. They contacted you and you are answering them"],
+            ["Adding that customer to your weekly promotions","Ask first, and offer an opt-out"],
+            ["Buying or being given a list of numbers","High risk. You did not collect it, and they never agreed"],
+            ["Getting numbers from a competitor's Facebook comments","Same problem. Being public does not mean consent"],
+            ["Uploading customers to Meta or Google as an audience","Tell them in your privacy notice, and check your consent first"],
+            ["Lead form on your website","Add a clear, unticked marketing consent box and link to your privacy notice"],
+          ],
+          note: "General guidance only, not legal advice.",
+        },
+      },
+      {
+        id: "wording",
+        heading: "Consent wording you can adapt",
+        paragraphs: [
+          "It does not need to be long. Keep it separate from your order terms, leave the box unticked, and keep a record of when and how the person agreed.",
+        ],
+        callout: "\"I'd like to get offers and updates from [Business Name] by WhatsApp and SMS. I can opt out anytime by replying STOP.\"",
+      },
+      {
+        id: "beyond-marketing",
+        heading: "Other duties to check",
+        paragraphs: [
+          "Find out whether your business has to register with the ODPC as a data controller or processor. It depends on things such as turnover, staff numbers and your sector. Have a privacy notice on your site in plain language. Limit who can see customer data, and do not leave a full customer list on someone's personal phone with no controls.",
+          "If you have a marketing agency or freelancer handling your data, including me, agree in writing how they may use it. The ODPC does take complaints and has issued penalties, and the Act allows administrative fines of up to KES 5 million or 1% of annual turnover, whichever is lower.",
+          "There is a commercial upside too. A list of people who agreed to hear from you performs much better than a list of strangers, and is less likely to get your WhatsApp number reported and restricted.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "hire-in-house-marketer-or-outsource-kenya-2026",
+    category: "Pricing",
+    title: "Hire an In-House Marketer or Outsource? The Real Cost in Kenya",
+    excerpt: "The salary is only the first number. Here is how to compare a hire with a freelancer or an agency honestly.",
+    date: "2026-10-30",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Hire an In-House Marketer or Outsource? The Real Cost in Kenya",
+    metaDescription: "Should a Kenyan SME hire an in-house marketer or outsource? Real costs beyond salary, what one person can realistically do, a comparison table and a hybrid option.",
+    intro: "At some point, every growing Kenyan business does the sums. \"The agency costs KES 60,000 a month. For that, I could have my own full-time person.\" Sometimes that is exactly the right decision. Often, it ends up with a junior hire who is expected to be a strategist, designer, videographer, media buyer and social media manager at once. Here is how to compare the options, including the costs people forget.",
+    thumbnail: "https://images.unsplash.com/photo-1758520144427-ddb02ac74e9d?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two women shaking hands across a desk in an office",
+
+    sections: [
+      {
+        id: "real-cost",
+        heading: "The real cost of a hire",
+        paragraphs: [
+          "A Kenyan career guide puts digital marketing pay anywhere from about KES 35,000 to KES 400,000 a month, depending on seniority. That is a wide range, and it reflects a real difference: entry-level people who can post and design, and senior people who can run strategy and budgets.",
+          "The salary is not the whole cost. Add statutory employer contributions, a laptop and phone, data, software subscriptions, training, leave, management time and recruitment. Add also the risk that it does not work out, and the months lost before you find out.",
+        ],
+      },
+      {
+        id: "compare",
+        heading: "How the options compare",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["","In-house hire","Freelancer","Agency"],
+          rows: [
+            ["Knows your business deeply","Best, over time","Moderate","Varies"],
+            ["Range of skills","Usually one or two strengths","Usually one or two strengths","Often broader"],
+            ["Available daily and on site","Yes","By arrangement","Rarely"],
+            ["Experience across many accounts","Limited","Moderate to high","High, if senior people do the work"],
+            ["Cost structure","Fixed, ongoing","Flexible","Monthly retainer"],
+            ["If it goes wrong","HR process, notice","Easier to end","Contract notice"],
+            ["Risk to watch","Isolated, with no one to learn from","Single point of failure","Your account given to a junior"],
+          ],
+        },
+      },
+      {
+        id: "who-should-hire",
+        heading: "When to hire in-house",
+        paragraphs: [
+          "A hire makes sense when you have a steady, daily flow of work that needs someone close to the business.",
+        ],
+        list: [
+          "You produce content all the time, such as a salon, a restaurant or a school with events to film.",
+          "You respond to customers on social media all day.",
+          "You have enough work for a full-time role for at least a year.",
+          "You or someone senior can direct them. A junior with no manager tends to drift.",
+        ],
+      },
+      {
+        id: "who-should-outsource",
+        heading: "When to outsource",
+        paragraphs: [
+          "Outsourcing tends to be better for specialised or irregular work, particularly when mistakes are costly.",
+        ],
+        list: [
+          "Running paid ads, where errors quickly cost real money.",
+          "Technical SEO, tracking and analytics setup.",
+          "You need senior strategy but cannot justify a senior salary.",
+          "You are testing whether a channel can work before you build a team around it.",
+        ],
+      },
+      {
+        id: "hybrid",
+        heading: "The option that often works best: both",
+        paragraphs: [
+          "For many SMEs, the strongest setup is a junior or mid-level in-house person who captures content, handles the community and knows the business, paired with an outside specialist for strategy and paid media. The insider provides the raw material and daily presence. The specialist provides experience they could not otherwise afford.",
+          "It also gives your employee someone to learn from. Make sure your business owns all the accounts, whichever way you go, so that no single departure can take your marketing with it.",
+        ],
+      },
+      {
+        id: "hiring-tips",
+        heading: "If you do hire",
+        paragraphs: [
+          "Ask for a real task, not just a CV. Give candidates a brief for one of your products, and ask how they would market it with a set budget. Ask what they have run, how much they spent, and what failed. Anyone who has really done the work can tell you about their failures.",
+          "Be clear on what success means after 90 days, in numbers you can check. \"Handle our marketing\" is not a job description. \"Publish four videos a week, and answer all enquiries within 15 minutes\" is.",
+        ],
+        callout: "Do not compare a salary with a retainer. Compare the total cost with the results each can realistically produce, and be honest about who would manage them.",
+      },
+    ],
+  },
+  {
+    slug: "linkedin-for-b2b-marketing-kenya-2026",
+    category: "Social Media",
+    title: "LinkedIn for Kenyan B2B: Win Clients Without Becoming a Guru",
+    excerpt: "If your buyers sit in offices and sign contracts, this is where they read. A practical approach for founders with no time.",
+    date: "2026-10-30",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "LinkedIn for Kenyan B2B: Win Clients Without Becoming a Guru",
+    metaDescription: "A practical LinkedIn plan for Kenyan B2B businesses: why the founder's profile beats the company page, what to post, how to engage, outreach and when to try paid ads.",
+    intro: "TikTok is not going to sell your HR software, your audit services or your logistics contract, at least not directly. When a Kenyan procurement manager, CEO or finance head wants to know who you are, there is a good chance they will look you up on LinkedIn. You do not need to become one of those people posting inspirational stories about airport conversations. You just need to be visible and useful to a few hundred of the right people.",
+    thumbnail: "https://images.unsplash.com/photo-1675352162037-792ae4045e3c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone displaying the LinkedIn logo",
+
+    sections: [
+      {
+        id: "who-its-for",
+        heading: "Who it suits",
+        paragraphs: [
+          "LinkedIn makes sense if a single client is worth a lot, and if a decision involves professionals who care about credibility: consulting, accounting, law, recruitment, technology, training, B2B supplies and the corporate side of other industries. If you sell a KES 1,500 product to the general public, your time is better spent elsewhere.",
+        ],
+      },
+      {
+        id: "profile-first",
+        heading: "Your profile matters more than the company page",
+        paragraphs: [
+          "People trust people. Company pages tend to get much less organic reach than a person posting, so in most small firms the founder's own profile should do the heavy lifting, with the company page kept tidy as a reference.",
+        ],
+        table: {
+          headers: ["Section","Weak","Stronger"],
+          rows: [
+            ["Headline","CEO at ABC Ltd","Helping Kenyan manufacturers cut logistics costs | CEO, ABC Ltd"],
+            ["About","A list of your values","Who you help, the results, and how to contact you"],
+            ["Banner","Default or a stock image","What you do, and one piece of proof"],
+            ["Featured","Empty","A case study, a guide and your booking link"],
+            ["Recommendations","None","Three to five from real clients"],
+          ],
+        },
+      },
+      {
+        id: "what-to-post",
+        heading: "What to post",
+        paragraphs: [
+          "Write about what you see in your work. It needs no special talent, just specifics. Two posts a week are plenty to begin with.",
+        ],
+        list: [
+          "The question clients keep asking you, with your real answer.",
+          "A mistake you see often in your industry, and how to avoid it.",
+          "A lesson from a project, with client details removed unless you have permission.",
+          "A plain explanation of a new KRA, regulatory or market change, and what to do about it.",
+          "Your honest opinion on something people in your industry get wrong.",
+          "Numbers: what something costs, how long it takes, or what you found.",
+        ],
+        callout: "Avoid the engagement bait. A post that gets 40 likes from peers matters less than a post read by three people who could hire you.",
+      },
+      {
+        id: "engage",
+        heading: "Spend more time in comments than on posts",
+        paragraphs: [
+          "Build a list of 30 to 50 people you would like to work with or be known by, and turn on their notifications if you can. Spend 15 minutes a day leaving useful comments on what they post. Add something to the conversation: an example, a number, or a polite disagreement. \"Great insight!\" does nothing for you.",
+          "This gets you seen by the exact people you want, before you have built any audience of your own. Over time they will start to recognise your name, and that makes everything else easier.",
+        ],
+      },
+      {
+        id: "outreach",
+        heading: "Outreach without being that person",
+        paragraphs: [
+          "Everyone has had this message: you accept a connection, and within seconds there is a long pitch. Please do not do this. Connect with a brief, specific note, and do not sell in it. Engage with their content for a while. When you do get in touch, refer to something specific, and offer something useful, such as a relevant article or a short observation, before asking for any time.",
+          "Remember that a person's details being on LinkedIn does not make them yours to add to a mailing list. Keep to one-to-one conversations, respect it when someone isn't interested, and keep Kenya's direct marketing rules in mind.",
+        ],
+      },
+      {
+        id: "paid",
+        heading: "Should you pay for LinkedIn ads?",
+        paragraphs: [
+          "LinkedIn lets you target by job title, company and industry, which no other platform does as precisely. It is also among the more expensive platforms per click, and the Kenyan audience for many job titles is small. Consider it if one client is worth hundreds of thousands of shillings and you have a clear offer. Otherwise, do the organic work first.",
+          "Measure your results by conversations and not by likes: profile views from relevant people, inbound messages, meetings booked and deals where the client says \"I've been following your posts\". Expect it to take months. That slow build is also why competitors give up, which leaves more room for you.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "meta-sales-campaign-types-ranked-case-study-2026",
+    category: "Case Study",
+    title: "Eight Types of Meta Sales Campaign, Ranked by What They Really Returned",
+    excerpt: "Restocks, clearance sales, product days and video, all in one account. Here is which offers earned their budget and which did not.",
+    date: "2026-10-30",
+    dateLabel: "October 2026",
+    readTime: "4 min read",
+    metaTitle: "Eight Types of Meta Sales Campaign, Ranked by Return",
+    metaDescription: "A real Kenyan Meta Ads breakdown: eight sales campaign types ranked by ROAS across KES 120,810 of spend, from always-on to restocks and video, with lessons on offers.",
+    intro: "Most case studies give you one big number. This one takes a single Nairobi beauty retailer's Meta account and sets its eight types of sales campaign side by side: KES 120,810 in spend, 949 purchases, all between July and October 2026. The range is wide, from 70.2x down to 15.4x, in the same account with the same products. It is about as close as you can get to a test of which kinds of offer work. The client stays unnamed. The numbers are real.",
+    thumbnail: "https://images.unsplash.com/photo-1752694950205-8cd0bbb984db?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shop window with sale signs announcing 70% and 30% off",
+
+    sections: [
+      {
+        id: "ranking",
+        heading: "The ranking",
+        paragraphs: [
+          "Here is every type of sales campaign in the account. Read the chart with one caveat in mind: longer campaigns and larger budgets face a tougher test than short, small ones.",
+        ],
+        visuals: ["campaigns"],
+      },
+      {
+        id: "always-on",
+        heading: "Always-on: the most revenue from the top of the table",
+        paragraphs: [
+          "The always-on sales campaign returned 70.2x, with KES 21,280 of spend bringing in KES 1,493,843 and 243 purchases at KES 88 each. It was the most productive campaign in the account by a distance. This suggests that consistently having something running can matter as much as any clever promotion, although it benefited from the warmth built up by everything else in the account.",
+        ],
+      },
+      {
+        id: "reasons",
+        heading: "Offers with a reason to act now",
+        paragraphs: [
+          "Next came three formats with a built-in reason to buy now. Restock announcements returned 63.4x on three one-week runs, individually between 50x and 98x. These go to an audience that already knows the product and may have been waiting for it. Product-day promotions returned 59.8x across three runs, at KES 82 per purchase, the lowest cost per purchase of any type. The strongest single run of all was one of these, at 76.8x. End-month sales returned 50.8x, which fits with when many Kenyan customers have just been paid.",
+          "These campaigns share some things: a short duration, one clear message and something real to say. \"It's back in stock\" is a much stronger reason to tap than \"check out our products\".",
+        ],
+        callout: "The strongest formats gave people a true, specific reason to buy today. None of them relied on a clever targeting setup.",
+      },
+      {
+        id: "big-discounts",
+        heading: "Bigger events brought volume, at a lower return",
+        paragraphs: [
+          "The mid-year clearance sale returned 34.1x, in the lower half of the table. But it took KES 39,079, the largest budget in the group, and it brought in KES 1,331,405 and 256 purchases, the most of any type. Lower return does not make it a bad campaign. At that scale, it was one of the biggest earners. The seasonal promotion came in at a similar 33.8x, on much less.",
+          "This is why ROAS alone can mislead. A small campaign with a high multiple may have nowhere left to grow, while a big one with a lower multiple can still bring in more money. You also need to consider margins, since a clearance sale has given away some margin before the ad even runs.",
+        ],
+      },
+      {
+        id: "video",
+        heading: "The one at the bottom",
+        paragraphs: [
+          "The video sales campaign returned 15.4x, over 69 days, on KES 18,077, with a cost per purchase of KES 292. That is more than three times the always-on campaign's. It was the weakest, and we reduced its budget.",
+          "This does not prove that video does not work, as a return of 15.4x would be a great result in many accounts. It may have a different job, reaching colder audiences who take longer to decide. Campaign types here are not controlled experiments. But when you have to choose where the next shilling goes, this table helps you decide.",
+        ],
+      },
+      {
+        id: "caveats",
+        heading: "What to be careful about",
+        paragraphs: [
+          "These figures are as reported by Meta, on a 7-day click and 1-day view window, and usually run higher than banked sales. Campaign types differed in length, budget and season, so this is not a clean test. These numbers come from a retailer with an established brand and loyal customers. Your returns will be different, and this is not a promise of what they will be. Returns like these are unusual, so please do not treat them as a benchmark.",
+        ],
+      },
+      {
+        id: "use-it",
+        heading: "How to use this in your own account",
+        paragraphs: [
+          "You can run the same exercise in an afternoon.",
+        ],
+        list: [
+          "Rename your campaigns by offer type, so they can be compared.",
+          "Export spend, purchases and revenue for at least three months.",
+          "Group by type, and rank them by return and cost per purchase.",
+          "Look at volume too, not only at the multiple.",
+          "Give the winners more budget gradually, then give the weakest a new job or stop it.",
+          "Plan next quarter's calendar around the formats that have a real reason to act.",
         ],
       },
     ],

@@ -3,6 +3,7 @@ import type { PaidCaseStudy } from "@/data/metaTurnaroundCaseStudy";
 // Anonymised figures for the combined Meta + Google Ads case study, taken from
 // the client's monthly report. The client is deliberately not named.
 export const combinedAds: PaidCaseStudy = {
+  slug: "meta-and-google-ads-together-case-study-kenya-2026",
   platform: "Meta Ads + Google Ads",
   period: "1 Aug to 8 Oct 2026",
   attributionNote:

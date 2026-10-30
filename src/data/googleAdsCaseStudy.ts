@@ -4,6 +4,7 @@ import type { PaidCaseStudy } from "@/data/metaTurnaroundCaseStudy";
 // deliberately not named: campaign and ad group labels are generic descriptions.
 // Google bills in US$; KES figures use the rate in the client report (129.89).
 export const googleAdsLaunch: PaidCaseStudy = {
+  slug: "google-ads-launch-case-study-kenya-2026",
   platform: "Google Ads",
   period: "1 Aug to 8 Oct 2026",
   attributionNote:

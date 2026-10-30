@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
 import { blogPostHead } from "@/seo/pageHeads";
-import { ArrowLeft, ArrowRight, Calculator, CalendarDays, ChevronRight, Clock, Eye, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calculator, CalendarDays, Check, ChevronRight, Clock, Eye, User } from "lucide-react";
 import { CALCULATOR_HUBS, CALCULATOR_PATH } from "@/data/adCalculatorContent";
 import { getPostBySlug } from "@/data/blogPosts";
+import { combinedAds } from "@/data/combinedAdsCaseStudy";
+import { googleAdsLaunch } from "@/data/googleAdsCaseStudy";
 import {
   getHubsForPost,
   getPrimaryHubForPost,
@@ -45,6 +47,8 @@ const AgencyBlogPost = () => {
   const related = getRelatedByHub(post.slug);
   const hubs = getHubsForPost(post.slug);
   const primaryHub = getPrimaryHubForPost(post.slug);
+  // Charts default to the Meta turnaround figures unless the post has its own case study.
+  const visualData = [googleAdsLaunch, combinedAds].find((study) => study.slug === post.slug);
 
   return (
     <>
@@ -121,7 +125,7 @@ const AgencyBlogPost = () => {
               </figure>
 
               {post.heroVisual && (
-                <MetaTurnaroundVisual kind={post.heroVisual} tone="theme" className="mt-8" />
+                <MetaTurnaroundVisual kind={post.heroVisual} tone="theme" data={visualData} className="mt-8" />
               )}
 
               <p className="mt-10 text-xl leading-relaxed text-foreground/90">{post.intro}</p>
@@ -134,9 +138,58 @@ const AgencyBlogPost = () => {
                       {p}
                     </p>
                   ))}
+                  {section.list && (
+                    <ul className="mt-6 space-y-3">
+                      {section.list.map((item) => (
+                        <li key={item} className="flex gap-3 text-lg leading-[1.7] text-foreground/80">
+                          <Check className="mt-1.5 h-5 w-5 flex-shrink-0 text-primary" aria-hidden="true" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {section.table && (
+                    <figure className="mt-8">
+                      <div className="overflow-x-auto rounded-2xl border border-border">
+                        <table className="w-full min-w-[520px] text-left text-sm sm:text-base">
+                          <thead className="bg-card">
+                            <tr>
+                              {section.table.headers.map((header) => (
+                                <th key={header} scope="col" className="px-4 py-3 font-semibold text-foreground">
+                                  {header}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-border">
+                            {section.table.rows.map((row) => (
+                              <tr key={row.join("|")}>
+                                {row.map((cell, i) => (
+                                  <td
+                                    key={i}
+                                    className={`px-4 py-3 align-top ${i === 0 ? "font-medium text-foreground" : "text-foreground/80"}`}
+                                  >
+                                    {cell}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      {section.table.note && (
+                        <figcaption className="mt-3 text-sm text-muted-foreground">{section.table.note}</figcaption>
+                      )}
+                    </figure>
+                  )}
                   {section.visuals?.map((kind) => (
-                    <MetaTurnaroundVisual key={kind} kind={kind} tone="theme" className="mt-8" />
+                    <MetaTurnaroundVisual key={kind} kind={kind} tone="theme" data={visualData} className="mt-8" />
                   ))}
+                  {section.callout && (
+                    <p className="mt-8 rounded-2xl border border-primary/30 bg-primary/5 p-5 text-lg font-medium leading-relaxed text-foreground sm:p-6">
+                      {section.callout}
+                    </p>
+                  )}
                   {section.image && (
                     <figure className="mt-8">
                       <img
