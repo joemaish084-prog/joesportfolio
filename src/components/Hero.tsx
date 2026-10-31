@@ -73,11 +73,8 @@ function ProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
         className="relative z-10 rounded-3xl border border-border/60 bg-card/70 backdrop-blur-2xl p-8 shadow-2xl"
       >
         <div className="relative flex items-center gap-2 mb-8">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-          </span>
-          <span className="text-[11px] uppercase tracking-widest text-muted-foreground font-medium">Live results</span>
+          <span className="inline-flex rounded-full h-2 w-2 bg-primary" />
+          <span className="text-[11px] uppercase tracking-widest text-muted-foreground font-medium">Campaign results</span>
         </div>
 
         <div className="relative h-28 flex flex-col justify-center">
@@ -165,7 +162,7 @@ export function Hero() {
             transition={{ delay: 0.22, duration: 0.5, ease: appleEase }}
             className="mt-6 text-lg text-muted-foreground max-w-md"
           >
-            I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content — not just reach.
+            I'm Joseph Maina, founder of Joseph Maina Marketing. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content — not just reach.
           </motion.p>
 
           <motion.div

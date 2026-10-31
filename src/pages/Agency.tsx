@@ -25,6 +25,7 @@ import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { track } from "@/lib/track";
+import { getAttribution, leadSource } from "@/lib/attribution";
 import { Seo } from "@/components/Seo";
 import { agencyHead } from "@/seo/agencyHeads";
 import { agencyPages, legacyAgencyTarget, type AgencyPageKey } from "@/data/agencyPages";
@@ -46,6 +47,9 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
   "Hi Joseph! I visited josephmaina.co.ke/agency and I'd like to discuss working together."
 );
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+// These parameters are what make Calendly report a booking back to this page.
+const CALENDLY_EMBED_URL = `${CALENDLY_URL}?embed_domain=www.josephmaina.co.ke&embed_type=Inline`;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const stats = [
   { value: 500, prefix: "KES ", suffix: "K+", label: "Ad budgets managed" },
@@ -165,6 +169,7 @@ const serviceOptions = [
   "Meta Ads Management",
   "Google Ads Management",
   "TikTok Ads Management",
+  "Lead Generation",
   "Starter Retainer",
   "Growth Retainer",
   "Scale Retainer",
@@ -176,10 +181,25 @@ const serviceOptions = [
   "Graphic Design",
   "Digital Marketing Audit",
   "Strategy Consultation",
+  "Not sure yet",
 ];
 
+// ?service= values on links into the brief form.
+const serviceFromLink: Record<string, string> = {
+  "meta-ads-management": "Meta Ads Management",
+  "google-ads-management": "Google Ads Management",
+  "seo-services-nairobi": "SEO Optimization",
+  "social-media-management": "Social Media Management",
+  "lead-generation": "Lead Generation",
+  "digital-marketing-audit": "Digital Marketing Audit",
+  "digital-marketing-kenya": "Not sure yet",
+  starter: "Starter Retainer",
+  growth: "Growth Retainer",
+  scale: "Scale Retainer",
+};
+
 const steps = [
-  { icon: CalendarDays, title: "Discovery Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
+  { icon: CalendarDays, title: "Free Strategy Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
   { icon: ClipboardList, title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
   { icon: PenLine, title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
   { icon: Rocket, title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
@@ -195,11 +215,11 @@ const payments = [
 
 const faqs = [
   { q: "Do you require long-term contracts?", a: "No lock-in contracts. I work on monthly retainers with 30-day notice to end services. I believe in earning your business every month." },
-  { q: "How quickly can we get started?", a: "After the discovery call and proposal acceptance — we can launch within 3-5 business days." },
+  { q: "How quickly can we get started?", a: "After the strategy call and proposal acceptance — we can launch within 3-5 business days." },
   { q: "Do I provide the ad budget separately?", a: "Yes. My fee covers management only. Ad spend goes directly to Meta/Google/TikTok. This keeps everything transparent." },
   { q: "What reports will I receive?", a: "Weekly performance updates via WhatsApp and detailed monthly reports delivered to your email and client portal." },
   { q: "Can I see my campaign performance anytime?", a: "Yes — your client portal gives you 24/7 access to your campaign status, reports and files." },
-  { q: "What makes you different from an agency?", a: "Direct access to the person doing the work — not an account manager passing messages. Faster decisions, personal attention, better results." },
+  { q: "What does founder-led mean for my business?", a: "Direct access to the person doing the work — not an account manager passing messages. Faster decisions, personal attention, better results." },
 ];
 
 function CountUp({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
@@ -267,7 +287,9 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [form, setForm] = useState<{ name: string; email: string; phone: string; brand: string; service: string; budget: string; goals: string; source: string | null }>({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "", source: null });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
+  const [spamTrap, setSpamTrap] = useState("");
+  const [briefSent, setBriefSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [briefStep, setBriefStep] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
@@ -290,10 +312,9 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const source = params.get("source") || params.get("utm_source");
-    if (source) setForm((f) => ({ ...f, source }));
-  }, []);
+    const service = serviceFromLink[new URLSearchParams(location.search).get("service") ?? ""];
+    if (service) setForm((f) => ({ ...f, service }));
+  }, [location.search]);
 
   useEffect(() => {
     const legacy = pageKey === "home" ? legacyAgencyTarget(location.hash) : undefined;
@@ -315,6 +336,10 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
       toast({ title: "Please complete all fields", variant: "destructive" });
       return;
     }
+    // Only bots fill the hidden field. They see success, and nothing is saved.
+    if (spamTrap) { setBriefSent(true); return; }
+    const attribution = getAttribution();
+    const source = leadSource(attribution);
     setSending(true);
     try {
       const { supabase } = await import("@/integrations/supabase/client");
@@ -326,7 +351,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         service_interest: form.service,
         budget_range: form.budget,
         goals: form.goals,
-        source: form.source,
+        source,
       });
       if (error) throw error;
       try {
@@ -334,16 +359,16 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
           from_name: form.name,
           from_email: form.email,
-          message: `New Agency Brief\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "—"}\nBrand: ${form.brand}\nService: ${form.service}\nBudget: ${form.budget}\n\nGoals:\n${form.goals}`,
+          message: `New Agency Brief\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "—"}\nBrand: ${form.brand}\nService: ${form.service}\nBudget: ${form.budget}\nSource: ${source}\nFirst page: ${attribution.landing}\n\nGoals:\n${form.goals}`,
           to_name: "Joseph Maina",
         }, EMAILJS_PUBLIC_KEY);
       } catch (emailErr) {
         console.error("EmailJS send failed (lead already saved):", emailErr);
       }
-      toast({ title: "Brief sent", description: "I'll reply within 24 hours." });
-      track("generate_lead", { form_location: "agency_brief" });
-      setForm({ ...form, name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
+      track("generate_lead", { form_location: "agency_brief", service: form.service });
+      setForm({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
       setBriefStep(0);
+      setBriefSent(true);
     } catch (err) {
       console.error(err);
       toast({ title: "Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
@@ -373,7 +398,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                   <li><span aria-current="page" className="text-foreground">{page.label}</span></li>
                 </ol>
               </nav>
-              <SectionLabel>DIGITAL MARKETING AGENCY</SectionLabel>
+              <SectionLabel>JOSEPH MAINA MARKETING</SectionLabel>
               <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{page.intro}</p>
               {pageKey === "contact" && <p className="mt-8 flex flex-wrap gap-2.5 text-sm">
@@ -411,7 +436,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 className="flex items-center gap-3 mb-7"
               >
                 <span className="h-px w-8 bg-primary" />
-                <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-medium">Digital Marketing Agency</span>
+                <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-medium">Joseph Maina Marketing · Nairobi, Kenya</span>
               </motion.div>
 
               <motion.h1
@@ -420,8 +445,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 transition={{ delay: 0.1, duration: 0.5 }}
                 className="text-4xl sm:text-5xl lg:text-[3.75rem] font-display font-semibold tracking-tight text-foreground max-w-xl leading-[1.08]"
               >
-                Grow your brand with{" "}
-                <span className="font-serif italic font-normal text-primary">data-driven</span> marketing
+                More leads and sales for{" "}
+                <span className="font-serif italic font-normal text-primary">Kenyan businesses</span>
               </motion.h1>
 
               <motion.p
@@ -430,7 +455,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 transition={{ delay: 0.22, duration: 0.5 }}
                 className="mt-6 text-lg text-muted-foreground max-w-md"
               >
-                From Meta Ads to full digital strategy — I help Kenyan brands get real results online. No fluff, just growth.
+                Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi. You work directly with me, Joseph Maina, on paid ads, SEO and content.
               </motion.p>
 
               <motion.div
@@ -441,13 +466,17 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               >
                 <Button size="lg" className="w-full sm:w-auto rounded-full" asChild>
                   <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
-                    <Calendar className="mr-2 h-5 w-5" /> Book Free Discovery Call
+                    <Calendar className="mr-2 h-5 w-5" /> Book a Free Strategy Call
                   </a>
                 </Button>
                 <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild><Link to="/agency/pricing">
                   View Pricing
                 </Link></Button>
               </motion.div>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Prefer to chat?{" "}
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">Message me on WhatsApp</a>
+              </p>
 
               <HeroCollageMobile />
             </div>
@@ -483,10 +512,28 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             })}
           </div>
         </section>}
+        {/* PROOF: real figures from the published case studies */}
+        <section data-track-location="home_proof" className="container mx-auto px-4 pt-16 sm:pt-20">
+          <div className="mx-auto max-w-6xl">
+            <SubHeading eyebrow="Recent results" title="Tracked campaigns, real numbers"
+              aside={<Link to="/agency/results" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">See all results <ArrowRight className="h-4 w-4" aria-hidden /></Link>} />
+            <div className="grid gap-4 md:grid-cols-3">
+              {caseStudies.slice(0, 3).map((cs) => (
+                <Link key={cs.id} to={`/work/case-studies#${cs.id}`} onMouseMove={trackSpotlight} className="spotlight surface-card group flex flex-col p-6 hover:border-primary/40 transition-colors">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{cs.tag} · {cs.period}</p>
+                  <p className="mt-4 font-display text-3xl font-bold text-gradient tabular-nums">{cs.stats[0].value}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{cs.stats[0].label}</p>
+                  <p className="mt-4 border-t border-border/60 pt-4 text-sm text-muted-foreground"><strong className="font-semibold text-foreground">{cs.stats[1].value}</strong> {cs.stats[1].label.toLowerCase()}</p>
+                </Link>
+              ))}
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground">Past results are specific to each campaign and are not a promise of future results.</p>
+          </div>
+        </section>
         <BrandsLogoMarquee />
 
-        {/* WHY */}
-        <section className="container mx-auto px-4 py-20">
+        {/* WHY. Clipped sideways: the visual's angled photo slides in past the screen edge on phones. */}
+        <section className="container mx-auto overflow-x-clip px-4 py-20">
           <div className="grid lg:grid-cols-[1fr_1.05fr] gap-12 lg:gap-16 items-center max-w-6xl mx-auto">
             <FieldworkVisual />
             <div>
@@ -499,7 +546,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               >
                 <SectionLabel>WHY WORK WITH ME</SectionLabel>
                 <h2 className="text-3xl md:text-4xl font-display font-bold">
-                  Why Brands Choose <span className="text-gradient">Joseph Maina</span>
+                  Why Brands Choose <span className="text-gradient">Joseph Maina Marketing</span>
                 </h2>
               </motion.div>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -576,7 +623,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                       </li>
                     ))}
                   </ul>
-                  <Button className="w-full rounded-full" variant={p.highlight ? "default" : "outline"} asChild><Link to="/agency/contact">
+                  <Button className="w-full rounded-full" variant={p.highlight ? "default" : "outline"} asChild><Link to={`/agency/contact?service=${p.name.toLowerCase()}#brief`}>
                     Get Custom Quote
                   </Link></Button>
                 </motion.div>
@@ -653,7 +700,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             </p>
             <Button size="lg" className="w-full rounded-full sm:w-auto shrink-0" asChild>
               <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
-                <Calendar className="mr-2 h-5 w-5" /> Book Free Strategy Call
+                <Calendar className="mr-2 h-5 w-5" /> Book a Free Strategy Call
               </a>
             </Button>
           </div>
@@ -716,7 +763,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
           <div className="max-w-6xl mx-auto">
           <SubHeading eyebrow="Case studies" title="Real Results for Real Brands"
             aside={<Link to="/work/case-studies" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">All case studies in full <ArrowRight className="h-4 w-4" aria-hidden /></Link>}>
-            Tracked campaigns with the numbers, strategy and attribution behind them. Clients are not named; the figures are real.
+            Tracked campaigns with the numbers, strategy and attribution behind them. Clients in these case studies are not named; the figures are real.
           </SubHeading>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {caseStudies.map((cs, i) => (
@@ -780,7 +827,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         {/* BOOKING */}
         <section id="booking" className="container mx-auto px-4 py-20 scroll-mt-20">
           <div className="max-w-6xl mx-auto">
-          <SubHeading eyebrow="Get in touch" title="Ready to Grow Your Brand?">Book a free 30-minute discovery call — no commitment, just a conversation.</SubHeading>
+          <SubHeading eyebrow="Get in touch" title="Ready to Grow Your Brand?">Book a free 30-minute strategy call — no commitment, just a conversation.</SubHeading>
 
           <div className="grid lg:grid-cols-[1.1fr_1fr] gap-6">
             {/* Calendly */}
@@ -788,21 +835,21 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               <div className="flex items-center gap-3 mb-4">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><Calendar className="h-5 w-5 text-primary" aria-hidden /></span>
                 <div>
-                  <h3 className="font-display text-xl font-semibold leading-tight">Book Discovery Call</h3>
+                  <h3 className="font-display text-xl font-semibold leading-tight">Book a Free Strategy Call</h3>
                   <p className="text-xs text-muted-foreground">Free · 30 minutes · Pick a time that suits you</p>
                 </div>
               </div>
               <div className="rounded-lg overflow-hidden border border-border/60 bg-muted/30" style={{ minHeight: 480 }}>
                 <iframe
-                  src={CALENDLY_URL}
-                  title="Book a discovery call with Joseph Maina"
+                  src={CALENDLY_EMBED_URL}
+                  title="Book a free strategy call with Joseph Maina"
                   className="w-full"
                   style={{ minHeight: 480, border: 0 }}
                 />
               </div>
               <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
                 Widget not loading?
-                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-medium text-primary hover:underline">Open Calendly in a new tab <ExternalLink className="h-3 w-3" aria-hidden /></a>
+                <a href={CALENDLY_URL} data-calendly-direct target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-medium text-primary hover:underline">Open Calendly in a new tab <ExternalLink className="h-3 w-3" aria-hidden /></a>
               </p>
             </Card>
 
@@ -825,7 +872,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 </div>
               </Card>
 
-              <Card className="p-5 sm:p-6 rounded-2xl">
+              <Card id="brief" className="p-5 sm:p-6 rounded-2xl scroll-mt-24">
                 <div className="flex items-center gap-3 mb-5">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><FileText className="h-5 w-5 text-primary" aria-hidden /></span>
                   <div>
@@ -833,6 +880,16 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     <p className="text-sm text-muted-foreground">Three short steps. I reply within 24 hours.</p>
                   </div>
                 </div>
+                {briefSent ? (
+                  <div role="status" className="rounded-xl border border-primary/30 bg-primary/[0.06] p-5">
+                    <p className="flex items-center gap-2 font-display text-lg font-semibold"><Check className="h-5 w-5 text-primary" aria-hidden /> Brief received. Thank you.</p>
+                    <p className="mt-2 text-sm text-muted-foreground">I'll reply within 24 hours. Want to move faster? Book a call or message me now.</p>
+                    <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                      <Button className="rounded-full" asChild><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a Free Strategy Call</a></Button>
+                      <Button variant="outline" className="rounded-full" asChild><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a></Button>
+                    </div>
+                  </div>
+                ) : <>
                 <Stepper steps={["Contact", "Business", "Goals"]} currentStep={briefStep} onStepClick={(i) => i < briefStep && setBriefStep(i)} className="mb-6" />
                 <form
                   onSubmit={(e) => {
@@ -840,6 +897,10 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     if (briefStep === 0) {
                       if (!form.name.trim() || !form.email.trim()) {
                         toast({ title: "Please fill in your name and email", variant: "destructive" });
+                        return;
+                      }
+                      if (!EMAIL_PATTERN.test(form.email.trim())) {
+                        toast({ title: "Please enter a valid email address", variant: "destructive" });
                         return;
                       }
                       setBriefStep(1);
@@ -855,20 +916,21 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                   }}
                   className="space-y-3"
                 >
+                  <input type="text" name="company_website" value={spamTrap} onChange={(e) => setSpamTrap(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-px w-px opacity-0" />
                   <AnimatePresence mode="wait">
                     {briefStep === 0 && (
                       <motion.div key="step-0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
                         <div>
                           <Label htmlFor="b-name">Name</Label>
-                          <Input id="b-name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                          <Input id="b-name" autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                         </div>
                         <div>
                           <Label htmlFor="b-email">Email</Label>
-                          <Input id="b-email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                          <Input id="b-email" type="email" autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                         </div>
                         <div>
-                          <Label htmlFor="b-phone">Phone (optional)</Label>
-                          <Input id="b-phone" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                          <Label htmlFor="b-phone">WhatsApp or phone (optional)</Label>
+                          <Input id="b-phone" type="tel" autoComplete="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
                         </div>
                       </motion.div>
                     )}
@@ -876,26 +938,28 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                       <motion.div key="step-1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
                         <div>
                           <Label htmlFor="b-brand">Brand name</Label>
-                          <Input id="b-brand" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
+                          <Input id="b-brand" autoComplete="organization" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
                         </div>
                         <div>
-                          <Label>Service interested in</Label>
+                          <Label htmlFor="b-service">Service interested in</Label>
                           <Select value={form.service} onValueChange={(v) => setForm({ ...form, service: v })}>
-                            <SelectTrigger><SelectValue placeholder="Select a service" /></SelectTrigger>
+                            <SelectTrigger id="b-service"><SelectValue placeholder="Select a service" /></SelectTrigger>
                             <SelectContent>
                               {serviceOptions.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
                             </SelectContent>
                           </Select>
                         </div>
                         <div>
-                          <Label>Monthly budget</Label>
+                          <Label htmlFor="b-budget">Monthly ad budget</Label>
+                          <p className="mb-1.5 text-xs text-muted-foreground">Ad spend only, paid separately from my fees. A rough figure is fine.</p>
                           <Select value={form.budget} onValueChange={(v) => setForm({ ...form, budget: v })}>
-                            <SelectTrigger><SelectValue placeholder="Select budget" /></SelectTrigger>
+                            <SelectTrigger id="b-budget"><SelectValue placeholder="Select budget" /></SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="<KES 20,000">Below KES 20,000</SelectItem>
-                              <SelectItem value="KES 20,000 - 50,000">KES 20,000 – 50,000</SelectItem>
-                              <SelectItem value="KES 50,000 - 100,000">KES 50,000 – 100,000</SelectItem>
-                              <SelectItem value="KES 100,000+">KES 100,000+</SelectItem>
+                              <SelectItem value="<KES 30,000">Below KES 30,000</SelectItem>
+                              <SelectItem value="KES 30,000 - 50,000">KES 30,000 – 50,000</SelectItem>
+                              <SelectItem value="KES 50,000 - 200,000">KES 50,000 – 200,000</SelectItem>
+                              <SelectItem value="KES 200,000+">KES 200,000+</SelectItem>
+                              <SelectItem value="Not sure yet">Not sure yet</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -904,7 +968,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     {briefStep === 2 && (
                       <motion.div key="step-2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
                         <div>
-                          <Label htmlFor="b-goals">Brief description of goals</Label>
+                          <Label htmlFor="b-goals">What should your marketing achieve?</Label>
                           <Textarea id="b-goals" rows={3} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
                         </div>
                       </motion.div>
@@ -919,6 +983,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     </Button>
                   </div>
                 </form>
+                </>}
               </Card>
             </div>
           </div>
@@ -981,7 +1046,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               <h2 className="text-balance text-3xl md:text-4xl font-display font-bold mb-3">Find the right next step for your brand</h2>
               <p className="text-muted-foreground mb-8 max-w-lg mx-auto">I take on a limited number of clients to ensure quality and attention to detail.</p>
               <div className="flex flex-col justify-center gap-3 sm:flex-row">
-                <Button size="lg" className="rounded-full" asChild><Link to="/agency/contact">Discuss Your Project <ArrowRight className="h-4 w-4" aria-hidden /></Link></Button>
+                <Button size="lg" className="rounded-full" asChild><Link to="/agency/contact">Book a Free Strategy Call <ArrowRight className="h-4 w-4" aria-hidden /></Link></Button>
                 {pageKey !== "pricing" && <Button size="lg" variant="outline" className="rounded-full" asChild><Link to="/agency/pricing">View Pricing</Link></Button>}
               </div>
             </div>

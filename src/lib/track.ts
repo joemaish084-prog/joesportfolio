@@ -2,6 +2,8 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     fbq?: (...args: unknown[]) => void;
+    /** Defined in index.html. Only runs once the visitor accepts cookies. */
+    loadMetaPixel?: () => void;
   }
 }
 

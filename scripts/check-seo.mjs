@@ -82,6 +82,6 @@ for (const file of ["spa-shell.html", "404.html"]) {
   assert(tags(fs.readFileSync(`dist/${file}`, "utf8"), "meta").some((tag) => tag.name === "robots" && tag.content.includes("noindex")), `${file}: must remain noindex`);
 }
 const config = JSON.parse(fs.readFileSync("vercel.json", "utf8"));
-assert(config.rewrites.every((rule) => ["/hub/:path*", "/admin"].includes(rule.source)), "Unknown URLs must reach the real 404, not an SPA catch-all");
+assert(config.rewrites.every((rule) => ["/hub/:path*", "/portal/:path*", "/admin"].includes(rule.source)), "Unknown URLs must reach the real 404, not an SPA catch-all");
 assert(config.redirects.some((rule) => rule.has?.some((condition) => condition.type === "host" && condition.value === "josephmaina.co.ke") && rule.permanent && rule.destination === `${SITE_URL}/:path*`), "Apex domain must redirect to canonical www host");
 console.log(`SEO checks passed: ${routes.length} pages, ${locations.length} sitemap entries, ${links} internal links, ${images} image tags.`);

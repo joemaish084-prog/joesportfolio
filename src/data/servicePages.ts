@@ -83,7 +83,7 @@ export const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
 
 /** The real five-step onboarding process, shared by every service page. */
 export const SERVICE_PROCESS = [
-  { title: "Discovery Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
+  { title: "Free Strategy Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
   { title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
   { title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
   { title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
@@ -148,7 +148,7 @@ export const servicePages: ServicePage[] = [
       ...SHARED_FAQS,
       {
         q: "How quickly can we get started?",
-        a: "After the discovery call and proposal acceptance — we can launch within 3-5 business days.",
+        a: "After the strategy call and proposal acceptance — we can launch within 3-5 business days.",
       },
       {
         q: "Which channel should a Kenyan SME start with?",
@@ -391,7 +391,7 @@ export const servicePages: ServicePage[] = [
     cta: {
       heading: "Find out why you are not ranking",
       body: "Start with a free audit. I’ll explain what needs attention in a written report or a call before you decide on ongoing work.",
-      label: "Book an SEO Review Call",
+      label: "Book an SEO Strategy Call",
       href: CALENDLY_URL,
       external: true,
     },
@@ -532,7 +532,7 @@ export const servicePages: ServicePage[] = [
     cta: {
       heading: "Getting clicks but no enquiries?",
       body: "That is usually fixable in weeks, not months, and it is the first thing I look at. Bring your numbers to a free call and we'll find the break.",
-      label: "Book a Lead Generation Call",
+      label: "Book a Lead Generation Strategy Call",
       href: CALENDLY_URL,
       external: true,
     },
@@ -591,7 +591,7 @@ export const servicePages: ServicePage[] = [
       heading: "Start with the audit",
       body: "Send a short brief and I'll confirm scope and turnaround within 24 hours. If an audit is not what you need, I'll say so.",
       label: "Request an Audit",
-      href: "/agency/contact",
+      href: "/agency/contact?service=digital-marketing-audit#brief",
     },
     draft: false,
     reviewNotes: [],

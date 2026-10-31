@@ -166,7 +166,7 @@ export const blogHubs: BlogHub[] = [
       heading: "Find out why you are not ranking",
       body:
         "Start with a free audit. I'll share what needs attention in a written report or a call within 1-2 days.",
-      label: "Book an SEO Review Call",
+      label: "Book an SEO Strategy Call",
       href: CALENDLY_URL,
       external: true,
     },
@@ -208,7 +208,7 @@ export const blogHubs: BlogHub[] = [
       heading: "Getting clicks but no enquiries?",
       body:
         "That is usually fixable in weeks, not months, and it is the first thing I look at on a call. Bring your numbers and we'll find the break.",
-      label: "Book a Lead Generation Call",
+      label: "Book a Lead Generation Strategy Call",
       href: CALENDLY_URL,
       external: true,
     },

@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { captureAttribution } from "@/lib/attribution";
+import { openCalendlyPopup } from "@/lib/calendly";
 import { track } from "@/lib/track";
 
 function linkLocation(el: Element): string {
@@ -13,11 +15,14 @@ function linkLocation(el: Element): string {
  * Site-wide conversion listeners:
  * - Calendly's postMessage booking event, so "calendly_booked" fires once per
  *   booking no matter which page or widget (inline embed or popup) was used.
- * - Delegated clicks on WhatsApp, phone and booking links/buttons. The
- *   listener only observes, so it never blocks the normal click behaviour.
+ * - Delegated clicks on WhatsApp, phone and booking links/buttons. Only Calendly
+ *   links change behaviour: they open as a popup on this page, because a booking
+ *   made in a separate tab can never report back. A plain click only, and the
+ *   normal link is the fallback if the popup can't load.
  */
 export function ConversionTracker() {
   useEffect(() => {
+    captureAttribution();
     const seenBookings = new Set<string>();
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== "https://calendly.com") return;
@@ -40,8 +45,14 @@ export function ConversionTracker() {
 
       if (href.includes("wa.me")) track("whatsapp_click", { link_location });
       else if (href.startsWith("tel:")) track("phone_click", { link_location });
-      else if (el.getAttribute("data-track") === "calendly_click" || href.includes("calendly.com"))
+      else if (el.getAttribute("data-track") === "calendly_click" || href.includes("calendly.com")) {
         track("calendly_click", { link_location });
+        const plainClick = e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey;
+        if (href.includes("calendly.com") && plainClick && !el.hasAttribute("data-calendly-direct")) {
+          e.preventDefault();
+          openCalendlyPopup(href).catch(() => window.location.assign(href));
+        }
+      }
     };
 
     window.addEventListener("message", onMessage);

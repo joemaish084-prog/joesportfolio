@@ -66,8 +66,8 @@ export function ServicesPricing() {
 
         <div className="mt-12 text-center">
           <Button asChild size="lg">
-            <a href="/agency" data-track="calendly_click">
-              Book Free Discovery Call
+            <a href="/agency/contact" data-track="calendly_click">
+              Book a Free Strategy Call
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </Button>

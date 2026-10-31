@@ -244,6 +244,7 @@ export function ChatAssistant() {
     }
     await notifyLeadByEmail(finalFields, status);
     track("lead_submitted", { status });
+    track("generate_lead", { form_location: "chat", lead_status: status });
 
     const industryNote = finalFields.industry ? ` in ${finalFields.industry.toLowerCase()}` : "";
 

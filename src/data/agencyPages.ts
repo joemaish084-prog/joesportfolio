@@ -1,9 +1,9 @@
 export const agencyPages = {
   home: {
     path: "/agency", label: "Agency Home",
-    title: "Digital Marketing Agency Nairobi | Joseph Maina",
+    title: "Digital Marketing Agency Nairobi | Joseph Maina Marketing",
     heading: "Digital marketing for Kenyan businesses",
-    description: "Paid ads, SEO and content for Kenyan businesses. Explore Joseph Maina's agency services, campaign results and pricing, or book a free discovery call.",
+    description: "Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi. Paid ads, SEO and content for Kenyan businesses. Book a free strategy call.",
     intro: "A direct partnership for paid media, SEO and content, built around your business goals.",
     teaser: "",
   },
@@ -33,10 +33,10 @@ export const agencyPages = {
   },
   contact: {
     path: "/agency/contact", label: "Contact",
-    title: "Contact Joseph Maina's Marketing Agency | Nairobi",
+    title: "Contact Joseph Maina Marketing | Nairobi",
     heading: "Let's talk about your business",
-    description: "Contact Joseph Maina in Nairobi for digital marketing support. Book a free 30-minute discovery call, send a project brief or start a conversation on WhatsApp.",
-    intro: "Tell me what you sell, who you want to reach and what is getting in the way. Book a free discovery call, send a brief or get in touch directly.",
+    description: "Contact Joseph Maina Marketing in Nairobi for digital marketing support. Book a free 30-minute strategy call, send a project brief or start a conversation on WhatsApp.",
+    intro: "Tell me what you sell, who you want to reach and what is getting in the way. Book a free strategy call, send a brief or get in touch directly.",
     teaser: "Book a free 30-minute call, send a project brief or message on WhatsApp.",
   },
 } as const;

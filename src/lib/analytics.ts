@@ -18,4 +18,5 @@ export function grantAnalyticsConsent() {
     ad_user_data: "granted",
     ad_personalization: "granted",
   });
+  window.loadMetaPixel?.();
 }

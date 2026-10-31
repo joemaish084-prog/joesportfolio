@@ -27,7 +27,7 @@ const agencyServices = [
   { name: "SEO Services", href: "/agency/seo-services-nairobi" },
   { name: "Social Media Management", href: "/agency/social-media-management" },
   { name: "Ad Budget Calculator", href: "/agency/ad-budget-calculator" },
-  { name: "Book Discovery Call", href: "/agency/contact" },
+  { name: "Book a Free Strategy Call", href: "/agency/contact" },
 ];
 
 // Behance uses a custom SVG since lucide-react doesn't ship a Behance icon
@@ -176,13 +176,13 @@ export function Footer() {
             <a href="https://www.josephmaina.co.ke" className="hover:text-primary transition-colors">
               josephmaina.co.ke
             </a>{" "}
-            | Digital Marketing Agency Nairobi, Kenya
+            | Joseph Maina Marketing, Nairobi, Kenya
           </p>
           <p>Built &amp; maintained by Joseph Isaac Maina</p>
         </div>
 
         <div className="mt-6 text-xs text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
-          Joseph Maina — Digital Marketing Specialist in Nairobi, Kenya. Offering Meta Ads, Google Ads, TikTok Ads, SEO, Social Media Management and Media Buying services across Kenya and Africa.
+          Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi, led by Joseph Maina, a digital marketing specialist. Offering Meta Ads, Google Ads, TikTok Ads, SEO, Social Media Management and Media Buying services across Kenya and Africa.
         </div>
       </div>
     </footer>

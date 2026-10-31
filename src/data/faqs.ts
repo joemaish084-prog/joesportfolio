@@ -60,14 +60,14 @@ export const faqs = [
       "Yes. I work with early-stage startups and SMEs across Kenya to build their digital presence from scratch — brand strategy, social media, SEO and paid ads all in one package.",
   },
   {
-    question: "What makes you different from a digital marketing agency in Nairobi?",
+    question: "What makes Joseph Maina Marketing different from other digital marketing agencies in Nairobi?",
     answer:
-      "Unlike large agencies where your account is managed by juniors, you work directly with me — a senior specialist with 3+ years of proven results. Faster decisions, personal attention and better ROI.",
+      "It is founder-led. Unlike large agencies where your account is managed by juniors, you work directly with me — a senior specialist with 3+ years of proven results. Faster decisions, personal attention and better ROI.",
   },
   {
     question: "Do you offer affordable digital marketing packages for small businesses in Kenya?",
     answer:
-      "Yes. Monthly retainers start at KES 40,000, with the scope agreed around your business needs. Advertising spend is separate from management fees. Book a free discovery call to find the right fit for your budget.",
+      "Yes. Monthly retainers start at KES 40,000, with the scope agreed around your business needs. Advertising spend is separate from management fees. Book a free strategy call to find the right fit for your budget.",
   },
   {
     question: "Can you manage YouTube marketing and video campaigns in Kenya?",

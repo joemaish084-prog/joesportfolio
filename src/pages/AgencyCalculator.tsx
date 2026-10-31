@@ -461,7 +461,7 @@ const AgencyCalculator = () => {
                   data-track-location="ad_budget_calculator"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 >
-                  <Calendar className="h-4 w-4" aria-hidden="true" /> Book a free call
+                  <Calendar className="h-4 w-4" aria-hidden="true" /> Book a free strategy call
                 </a>
               </div>
               <button

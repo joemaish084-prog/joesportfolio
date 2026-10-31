@@ -46,6 +46,18 @@ assert(contact.includes("<form") && links(contact).includes("mailto:joemaish084@
 for (const match of pricing.matchAll(/href="\/agency\/services#([^"]+)"/g)) {
   assert(services.includes(`id="${match[1]}"`), `Pricing scope link must resolve: ${match[1]}`);
 }
-assert(links(fs.readFileSync("dist/index.html", "utf8")).includes("/agency"), "Portfolio must link to agency home");
+const portfolio = fs.readFileSync("dist/index.html", "utf8");
+assert(links(portfolio).includes("/agency"), "Portfolio must link to agency home");
+assert(home.includes("founder-led digital marketing agency in Nairobi"), "Agency home states the positioning");
+assert(new Set(links(home).filter(path => path.startsWith("/work/case-studies#"))).size === 3, "Agency home links to three case study results");
+for (const pack of ["starter", "growth", "scale"]) assert(links(pricing).includes(`/agency/contact?service=${pack}#brief`), `Pricing preselects the ${pack} package`);
+assert(contact.includes('id="brief"'), "Contact has the brief form anchor");
+assert(contact.includes("embed_domain="), "Booking embed can report bookings back to the page");
+assert(!portfolio.includes("Live results"), "Fixed figures must not be labelled as live");
+for (const [label, html] of [["portfolio", portfolio], ["contact", contact]]) {
+  const gate = html.indexOf("window.loadMetaPixel=function");
+  assert(gate >= 0 && html.indexOf("fbq('init'") > gate, `${label}: Meta Pixel must wait for cookie consent`);
+  assert(!html.includes("facebook.com/tr?"), `${label}: no-script pixel cannot ask for consent`);
+}
 assert(!/^Disallow:\s*\/(?:agency(?:\/|\s|$)|\s*$)/mi.test(fs.readFileSync("dist/robots.txt", "utf8")), "Robots must allow agency crawling");
 console.log("Agency checks passed: five distinct prerendered pages, seven existing services, navigation, schemas, sitemap and contact channels.");

@@ -111,9 +111,9 @@ export const STATIC_HEADS = {
     }],
   },
   agency: {
-    title: "Digital Marketing Agency Nairobi | Joseph Maina",
+    title: "Digital Marketing Agency Nairobi | Joseph Maina Marketing",
     description:
-      "Meta Ads, Google Ads and SEO for Kenyan businesses. See services and pricing, then book a free discovery call with Joseph Maina.",
+      "Meta Ads, Google Ads and SEO for Kenyan businesses. See services and pricing, then book a free strategy call with Joseph Maina Marketing.",
     path: "/agency",
   },
   connect: {

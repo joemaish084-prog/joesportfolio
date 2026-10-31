@@ -1,10 +1,12 @@
-import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 const WHATSAPP_NUMBER = "254704700160";
-const WHATSAPP_MESSAGE = encodeURIComponent(
-  "Hi Joseph! I visited josephmaina.co.ke and I'd like to chat."
-);
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+
+// Names the page, so the first message already says what the visitor was reading.
+const whatsappUrl = (pathname: string) => {
+  const page = pathname === "/" ? "josephmaina.co.ke" : `josephmaina.co.ke${pathname}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi Joseph! I was on ${page} and I'd like to chat.`)}`;
+};
 
 function WhatsAppIcon() {
   return (
@@ -15,21 +17,18 @@ function WhatsAppIcon() {
 }
 
 export function WhatsAppButton() {
+  const { pathname } = useLocation();
+  if (pathname === "/admin") return null;
   return (
-    <motion.a
-      href={WHATSAPP_URL}
+    <a
+      href={whatsappUrl(pathname)}
       target="_blank"
       rel="noopener noreferrer"
       data-track-location="floating_button"
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ delay: 1, duration: 0.4 }}
-      className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elegant flex items-center justify-center hover:shadow-lg transition-shadow"
+      className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elegant flex items-center justify-center animate-fade-in hover:scale-110 hover:shadow-lg active:scale-95 transition-[transform,box-shadow]"
       aria-label="Message me on WhatsApp"
     >
       <WhatsAppIcon />
-    </motion.a>
+    </a>
   );
 }

@@ -27,7 +27,8 @@ export function AgencySectionLinks({ className = "", pill = false }: { className
   </nav>;
 }
 
-export function AgencyNavigation() {
+/** `solid` is for pages with a light body, where the translucent bar turns grey. */
+export function AgencyNavigation({ solid = false }: { solid?: boolean }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
@@ -47,7 +48,7 @@ export function AgencyNavigation() {
     return () => { document.body.style.overflow = previous; document.removeEventListener("keydown", close); };
   }, [open]);
   return <>
-    <header className={`sticky top-0 z-50 border-b backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 ${scrolled ? "border-border/60 bg-background/85 shadow-[0_8px_30px_-12px_hsl(0_0%_0%/0.25)]" : "border-transparent bg-background/60"}`}>
+    <header className={`sticky top-0 z-50 border-b backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 ${solid ? "border-border/60 bg-background" : scrolled ? "border-border/60 bg-background/85 shadow-[0_8px_30px_-12px_hsl(0_0%_0%/0.25)]" : "border-transparent bg-background/60"}`}>
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 shrink-0">
           <Link to="/" aria-label="Back to Portfolio" className="group flex items-center gap-2 min-h-11">

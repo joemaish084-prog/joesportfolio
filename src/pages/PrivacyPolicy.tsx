@@ -20,6 +20,8 @@ const PrivacyPolicy = () => (
         <li>Name and email when you contact us</li>
         <li>Phone / WhatsApp number when provided</li>
         <li>Google Analytics usage data (anonymized)</li>
+        <li>Meta Pixel data about ad visits and enquiries, if you accept cookies</li>
+        <li>The page and campaign that brought you here, when you send an enquiry</li>
         <li>Cookies for site functionality</li>
       </ul>
     </LegalSection>
@@ -39,8 +41,8 @@ const PrivacyPolicy = () => (
 
     <LegalSection title="Cookies">
       <p>
-        We use Google Analytics cookies to understand how visitors use our site. You can opt out via
-        your browser settings.
+        If you accept cookies, we use Google Analytics to understand how visitors use our site and
+        Meta Pixel to measure our ads. You can change your choice on our cookie policy page.
       </p>
     </LegalSection>
 

@@ -61,7 +61,7 @@ export function CookieConsent() {
           </div>
           <div className="flex-1">
             <p className="text-sm text-foreground leading-relaxed">
-              We use cookies to improve your experience and analyze site traffic.{" "}
+              We use cookies to improve your experience, analyze site traffic and measure our ads.{" "}
               <Link to="/cookie-policy" className="text-primary underline underline-offset-4">
                 Read our cookie policy
               </Link>
@@ -72,6 +72,7 @@ export function CookieConsent() {
               <div className="mt-3 space-y-2 text-xs text-muted-foreground border-t border-border pt-3">
                 <p><strong className="text-foreground">Essential:</strong> Required for the site to work.</p>
                 <p><strong className="text-foreground">Analytics:</strong> Google Analytics — anonymized traffic data.</p>
+                <p><strong className="text-foreground">Marketing:</strong> Meta Pixel — measures our Facebook and Instagram ads. Only loads if you accept.</p>
                 <p><strong className="text-foreground">Functional:</strong> Remembers your theme preference.</p>
               </div>
             )}
@@ -84,23 +85,22 @@ export function CookieConsent() {
               >
                 Accept All
               </Button>
-              {showPrefs ? (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => save("essential")}
+                className="text-xs h-9"
+              >
+                Essential Only
+              </Button>
+              {!showPrefs && (
                 <Button
                   size="sm"
-                  variant="outline"
-                  onClick={() => save("essential")}
-                  className="text-xs h-9"
-                >
-                  Essential Only
-                </Button>
-              ) : (
-                <Button
-                  size="sm"
-                  variant="outline"
+                  variant="ghost"
                   onClick={() => setShowPrefs(true)}
                   className="text-xs h-9"
                 >
-                  Manage Preferences
+                  What's included
                 </Button>
               )}
             </div>

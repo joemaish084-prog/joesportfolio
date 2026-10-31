@@ -10,7 +10,6 @@ import { STATIC_HEADS } from "@/seo/heads";
 import {
   ScrollProgress,
   BackToTop,
-  WhatsAppButton,
   Videos,
   GraphicDesign,
   BrandIdentity,
@@ -184,7 +183,6 @@ const Index = () => {
       )}
       <Suspense fallback={null}><ChatAssistant /></Suspense>
       <Suspense fallback={null}><BackToTop /></Suspense>
-      <Suspense fallback={null}><WhatsAppButton /></Suspense>
     </>
   );
 };

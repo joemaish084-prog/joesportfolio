@@ -36,6 +36,7 @@ const WorkBrand = lazy(() => import("./pages/WorkBrand"));
 const HubApp = lazy(() => import("./hub/HubApp"));
 // Client portal for signed-in clients. Lazy, unlinked and noindexed; see src/portal.
 const PortalApp = lazy(() => import("./portal/PortalApp"));
+const WhatsAppButton = lazy(() => import("@/components/WhatsAppButton").then((m) => ({ default: m.WhatsAppButton })));
 // Retain the trusted build-generated page while its route chunk loads. The
 // initial createRoot render would otherwise replace visible HTML with a blank.
 const initialPath = window.location.pathname;
@@ -116,6 +117,7 @@ const App = () => (
           </Routes>
           </Suspense>
           <PublicOnly>
+            <Suspense fallback={null}><WhatsAppButton /></Suspense>
             <CookieConsent />
           </PublicOnly>
         </BrowserRouter>

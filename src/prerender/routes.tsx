@@ -339,7 +339,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
         <SiteHeader />
         <main className="min-h-screen"><Hero /></main>
         <Shell contentTag="div">
-          <p>I'm Joseph Maina, a digital marketing specialist in Nairobi, Kenya. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content.</p>
+          <p>I'm Joseph Maina, a digital marketing specialist in Nairobi, Kenya, and the founder of Joseph Maina Marketing. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content.</p>
           <p><a href="/agency/contact">Book a Free Strategy Call</a></p>
           <h2>Services</h2>
           <ul>{servicePages.map((page) => <li key={page.slug}><a href={page.draft ? "/agency/services" : `/agency/${page.slug}`}>{page.name}</a> — {page.standfirst}</li>)}</ul>

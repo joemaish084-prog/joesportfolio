@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 import { supabase } from "@/integrations/supabase/client";
 import { track } from "@/lib/track";
+import { getAttribution, leadSource } from "@/lib/attribution";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 
@@ -36,6 +37,8 @@ export function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSending, setIsSending] = useState(false);
+  const [spamTrap, setSpamTrap] = useState("");
+  const [sent, setSent] = useState(false);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -50,6 +53,10 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    // Only bots fill the hidden field. They see success, and nothing is saved.
+    if (spamTrap) { setSent(true); return; }
+    const attribution = getAttribution();
+    const source = leadSource(attribution);
     setIsSending(true);
     const name = formData.name.trim();
     const email = formData.email.trim();
@@ -59,10 +66,10 @@ export function Contact() {
         name,
         email,
         message,
-        source: null,
+        source,
       });
       if (error) throw error;
-      toast({ title: "Message sent", description: "I'll reply within 24 hours." });
+      setSent(true);
       track("generate_lead", { form_location: "home_contact" });
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
@@ -71,7 +78,7 @@ export function Contact() {
         await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
           from_name: name,
           from_email: email,
-          message: message,
+          message: `${message}\n\nSource: ${source}\nFirst page: ${attribution.landing}`,
           to_name: "Joseph Maina",
         }, EMAILJS_PUBLIC_KEY);
       } catch (emailError) {
@@ -150,10 +157,24 @@ export function Contact() {
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={0.2}>
+              {sent ? (
+                <div role="status" className="rounded-xl border border-primary/30 bg-primary/[0.06] p-6">
+                  <p className="font-display text-xl font-semibold">Message received. Thank you.</p>
+                  <p className="mt-2 text-muted-foreground">I'll reply within 24 hours. Want to move faster? Book a call or message me now.</p>
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                    <Button asChild className="rounded-full"><a href="/agency/contact">Book a Free Strategy Call</a></Button>
+                    <Button asChild variant="outline" className="rounded-full"><a href="https://wa.me/254704700160" target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a></Button>
+                  </div>
+                </div>
+              ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <input type="text" name="company_website" value={spamTrap} onChange={(e) => setSpamTrap(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-px w-px opacity-0" />
                 <div>
                   <Input
                     placeholder="Your Name"
+                    aria-label="Your name"
+                    autoComplete="name"
+                    aria-invalid={Boolean(errors.name)}
                     value={formData.name}
                     onChange={(e) => { setFormData({ ...formData, name: e.target.value }); if (errors.name) setErrors({ ...errors, name: undefined }); }}
                     className={`h-12 ${errors.name ? "border-destructive" : ""}`}
@@ -164,6 +185,9 @@ export function Contact() {
                   <Input
                     type="email"
                     placeholder="Your Email"
+                    aria-label="Your email"
+                    autoComplete="email"
+                    aria-invalid={Boolean(errors.email)}
                     value={formData.email}
                     onChange={(e) => { setFormData({ ...formData, email: e.target.value }); if (errors.email) setErrors({ ...errors, email: undefined }); }}
                     className={`h-12 ${errors.email ? "border-destructive" : ""}`}
@@ -173,6 +197,8 @@ export function Contact() {
                 <div>
                   <Textarea
                     placeholder="Your Message"
+                    aria-label="Your message"
+                    aria-invalid={Boolean(errors.message)}
                     value={formData.message}
                     onChange={(e) => { setFormData({ ...formData, message: e.target.value }); if (errors.message) setErrors({ ...errors, message: undefined }); }}
                     rows={6}
@@ -184,6 +210,7 @@ export function Contact() {
                   {isSending ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" />Sending...</>) : "Send Message"}
                 </Button>
               </form>
+              )}
             </ScrollReveal>
           </div>
         </div>

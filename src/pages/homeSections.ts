@@ -6,7 +6,6 @@ import { lazy } from "react";
 const loaders = {
   ScrollProgress: () => import("@/components/ScrollProgress").then((m) => ({ default: m.ScrollProgress })),
   BackToTop: () => import("@/components/BackToTop").then((m) => ({ default: m.BackToTop })),
-  WhatsAppButton: () => import("@/components/WhatsAppButton").then((m) => ({ default: m.WhatsAppButton })),
   Videos: () => import("@/components/Videos").then((m) => ({ default: m.Videos })),
   GraphicDesign: () => import("@/components/GraphicDesign").then((m) => ({ default: m.GraphicDesign })),
   BrandIdentity: () => import("@/components/BrandIdentity").then((m) => ({ default: m.BrandIdentity })),
@@ -29,7 +28,6 @@ const loaders = {
 
 export const ScrollProgress = lazy(loaders.ScrollProgress);
 export const BackToTop = lazy(loaders.BackToTop);
-export const WhatsAppButton = lazy(loaders.WhatsAppButton);
 export const Videos = lazy(loaders.Videos);
 export const GraphicDesign = lazy(loaders.GraphicDesign);
 export const BrandIdentity = lazy(loaders.BrandIdentity);

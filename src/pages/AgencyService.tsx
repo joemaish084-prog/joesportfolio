@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
 import { serviceHead } from "@/seo/pageHeads";
-import { AlertTriangle, ArrowLeft, ArrowRight, Check, ChevronRight, Quote, X } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight, Check, ChevronRight, MessageCircle, Quote, X } from "lucide-react";
 import {
   SERVICE_PROCESS,
   getServicePageBySlug,
@@ -11,7 +11,30 @@ import {
 import { getHubBySlug } from "@/data/blogHubs";
 import { blogPosts } from "@/data/blogPosts";
 import { Footer } from "@/components/Footer";
-import { AgencySectionLinks } from "@/components/agency/AgencyNavigation";
+import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
+
+/** The lower-commitment ways to get in touch, beside each page's main booking button. */
+function OtherContactOptions({ slug, name, briefIsPrimary, className = "" }: { slug: string; name: string; briefIsPrimary: boolean; className?: string }) {
+  const whatsappText = encodeURIComponent(`Hi Joseph! I'd like to talk about ${name}.`);
+  return (
+    <p className={`flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold ${className}`}>
+      <a
+        href={`https://wa.me/254704700160?text=${whatsappText}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex min-h-11 items-center gap-2 text-[#111111] transition-colors hover:text-[#F97316]"
+      >
+        <MessageCircle className="h-4 w-4" aria-hidden="true" />
+        Message me on WhatsApp
+      </a>
+      {!briefIsPrimary && (
+        <Link to={`/agency/contact?service=${slug}#brief`} className="inline-flex min-h-11 items-center text-[#555555] transition-colors hover:text-[#F97316]">
+          Or send a project brief
+        </Link>
+      )}
+    </p>
+  );
+}
 
 const AgencyService = () => {
   const { service: slug } = useParams();
@@ -37,8 +60,8 @@ const AgencyService = () => {
       <Seo {...serviceHead(page)} />
 
       <div className="min-h-screen bg-white text-[#111111]">
-        <div className="mx-auto max-w-5xl px-5 pb-24 pt-16 sm:px-8">
-          <AgencySectionLinks className="mb-10 text-[#666666]" />
+        <AgencyNavigation solid />
+        <div className="mx-auto max-w-5xl px-5 pb-24 pt-10 sm:px-8">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-[#666666]">
             <Link to="/agency" className="inline-flex items-center gap-2 transition-colors hover:text-[#F97316]">
@@ -75,7 +98,7 @@ const AgencyService = () => {
           )}
 
           {/* Hero */}
-          <header className="mt-10 max-w-3xl">
+          <header data-track-location="service_hero" className="mt-10 max-w-3xl">
             <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#F97316]">
               <page.icon className="h-4 w-4" aria-hidden="true" />
               Service
@@ -107,6 +130,7 @@ const AgencyService = () => {
                 <p className="text-sm text-[#888888]">{page.price.note}</p>
               </div>
             </div>
+            <OtherContactOptions slug={page.slug} name={page.name} briefIsPrimary={!page.cta.external} className="mt-3" />
           </header>
 
           {/* Who it's for */}
@@ -325,7 +349,7 @@ const AgencyService = () => {
           )}
 
           {/* CTA */}
-          <section className="mt-20 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-8 text-center sm:p-12">
+          <section data-track-location="service_cta" className="mt-20 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-8 text-center sm:p-12">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{page.cta.heading}</h2>
             <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-[#555555]">{page.cta.body}</p>
             {page.cta.external ? (
@@ -347,6 +371,7 @@ const AgencyService = () => {
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             )}
+            <OtherContactOptions slug={page.slug} name={page.name} briefIsPrimary={!page.cta.external} className="mt-4 justify-center" />
           </section>
 
           {/* Other services */}

@@ -45,8 +45,9 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-K789XFXX');});</script>
     <!-- End Google Tag Manager -->
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Code: nothing loads or fires until cookies are accepted (see src/lib/analytics.ts) -->
     <script>
+    window.loadMetaPixel=function(){if(window.fbq)return;
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -56,7 +57,8 @@
     s.parentNode.insertBefore(t,s);});}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1700479915418949');
-    fbq('track', 'PageView');
+    fbq('track', 'PageView');};
+    try{if(localStorage.getItem('cookie-consent-v1')==='accepted')window.loadMetaPixel();}catch(e){}
     </script>
     <!-- End Meta Pixel Code -->
     <meta charset="UTF-8" />
@@ -79,7 +81,7 @@
     <meta data-rh="true" name="twitter:description" content="Grow your Kenyan business with Joseph Maina, a digital marketing specialist in Nairobi. Explore Meta Ads, Google Ads, SEO and real campaign case studies." />
     <meta data-rh="true" name="twitter:image" content="https://www.josephmaina.co.ke/og-image.jpg" />
     <!-- /prerender:head -->
-    <meta property="og:site_name" content="Joseph Maina | Digital Marketing Agency Nairobi" />
+    <meta property="og:site_name" content="Joseph Maina Marketing" />
     <!-- Prerendered page text in #root is for crawlers and no-JS visitors; the app replaces it on mount. -->
     <script>document.documentElement.classList.add('js')</script>
     <style>.js [data-prerender]{display:none}</style>
@@ -240,9 +242,6 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K789XFXX"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <noscript><img alt="" height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1700479915418949&ev=PageView&noscript=1"
-    /></noscript>
     <div id="root"></div>
 
     <!-- prerender:home-body -->
