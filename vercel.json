@@ -8,7 +8,7 @@
       "permanent": true
     },
     { "source": "/blog", "destination": "/agency/blog", "permanent": false },
-    { "source": "/contact", "destination": "/#contact", "permanent": false },
+    { "source": "/contact", "destination": "/agency/contact", "permanent": false },
     {
       "source": "/agency/blog/topics/seo",
       "destination": "/agency/blog/topics/local-seo",
