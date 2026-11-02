@@ -6,6 +6,18 @@
       "has": [{ "type": "host", "value": "josephmaina.co.ke" }],
       "destination": "https://www.josephmaina.co.ke/:path*",
       "permanent": true
+    },
+    { "source": "/blog", "destination": "/agency/blog", "permanent": false },
+    { "source": "/contact", "destination": "/#contact", "permanent": false },
+    {
+      "source": "/agency/blog/topics/seo",
+      "destination": "/agency/blog/topics/local-seo",
+      "permanent": true
+    },
+    {
+      "source": "/agency/blog/topics/hiring-an-agency",
+      "destination": "/agency/blog/topics/pricing-and-buying",
+      "permanent": true
     }
   ],
   "rewrites": [
