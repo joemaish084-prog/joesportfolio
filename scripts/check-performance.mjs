@@ -37,11 +37,28 @@ for (const page of [html, blog]) {
   assert(!page.includes("family=Inter") && !page.includes("family=Space+Grotesk"), "Primary fonts must not depend on a Google stylesheet");
 }
 const manifest = JSON.parse(fs.readFileSync("dist/.vite/manifest.json", "utf8"));
+// A redirected entry can have two browser module identities. Keep React out of
+// it, so the renderer and lazy routes always use the same hook dispatcher.
+const entry = manifest["index.html"];
+const entryCode = fs.readFileSync(`dist/${entry.file}`, "utf8");
+assert(!entryCode.includes("ReactCurrentDispatcher"), "React must not be bundled into the redirectable entry module");
+assert(!entry.imports?.length, "The entry must load the app dynamically, without static React dependencies");
+assert(entry.css?.length, "Prerendered pages need their stylesheet before the app starts");
+const reactChunks = Object.entries(manifest).filter(([, chunk]) =>
+  chunk.file.endsWith(".js") && fs.readFileSync(`dist/${chunk.file}`, "utf8").includes("ReactCurrentDispatcher"),
+);
+assert.equal(reactChunks.length, 1, "The production build must contain one shared React runtime");
+const [reactKey] = reactChunks[0];
 function staticDependencies(key, seen = new Set()) {
   if (seen.has(key)) return seen;
   seen.add(key);
   for (const dependency of manifest[key]?.imports ?? []) staticDependencies(dependency, seen);
   return seen;
+}
+for (const name of ["Index", "Agency", "HubApp", "PortalApp"]) {
+  const route = Object.entries(manifest).find(([, chunk]) => chunk.name === name && chunk.isDynamicEntry);
+  assert(route, `${name} must be present in the production manifest`);
+  assert(staticDependencies(route[0]).has(reactKey), `${name} must share the app's React runtime`);
 }
 assert(!staticDependencies("src/pages/AgencyBlog.tsx").has("src/pages/Index.tsx"), "The blog must not load the homepage route");
 for (const key of staticDependencies("src/pages/AgencyBlog.tsx")) {
