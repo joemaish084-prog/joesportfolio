@@ -7,7 +7,7 @@ import { PGlite } from "@electric-sql/pglite";
 // roles, auth.users, auth.uid()/auth.jwt() read from request.jwt.claims the
 // way PostgREST sets them, and the storage tables the hub migration touches.
 
-const SUPABASE_STUB = `
+export const SUPABASE_STUB = `
 create role anon nologin noinherit;
 create role authenticated nologin noinherit;
 create role service_role nologin noinherit bypassrls;
@@ -31,7 +31,7 @@ create table storage.objects (id uuid primary key default gen_random_uuid(), buc
 alter table storage.objects enable row level security;
 `;
 
-const migration = (name: string) => readFileSync(new URL(`../../supabase/migrations/${name}`, import.meta.url), "utf8");
+export const migration = (name: string) => readFileSync(new URL(`../../supabase/migrations/${name}`, import.meta.url), "utf8");
 
 export type Db = Awaited<ReturnType<typeof createDb>>;
 export type Role = "owner" | "manager" | "viewer";

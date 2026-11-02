@@ -85,6 +85,43 @@ export function useAddToPipeline() {
   });
 }
 
+export const WHATSAPP_SOURCES = ["website", "instagram", "tiktok", "facebook", "referral", "other"] as const;
+export const WHATSAPP_SOURCE_LABEL: Record<(typeof WHATSAPP_SOURCES)[number], string> = {
+  website: "Website",
+  instagram: "Instagram",
+  tiktok: "TikTok",
+  facebook: "Facebook",
+  referral: "Referral",
+  other: "Other",
+};
+export const WHATSAPP_STATUSES = ["new", "talking", "won", "lost"] as const;
+export const WHATSAPP_STATUS_LABEL: Record<(typeof WHATSAPP_STATUSES)[number], string> = {
+  new: "New",
+  talking: "Talking",
+  won: "Won",
+  lost: "Lost",
+};
+
+export type WhatsAppLeadInput = {
+  created_at: string;
+  name: string | null;
+  phone: string | null;
+  business_name: string | null;
+  detail: string | null;
+  source: (typeof WHATSAPP_SOURCES)[number];
+  status: (typeof WHATSAPP_STATUSES)[number];
+  booked: boolean;
+};
+
+/** Logs a WhatsApp chat so it counts on the Leads dashboard. */
+export function useLogWhatsAppLead() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (values: WhatsAppLeadInput) => unwrap(await raw.from("whatsapp_leads").insert(values)),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["hub", "site"] }),
+  });
+}
+
 export function formatMs(ms: number) {
   if (!ms) return "0s";
   const s = Math.round(ms / 1000);

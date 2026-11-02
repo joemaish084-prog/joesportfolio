@@ -494,7 +494,13 @@ function InsightCard({
 
 // ---------------------------------------------------------------- website leads
 
-const KIND_ICON: Record<string, LucideIcon> = { chat: MessageCircle, contact: Mail, agency: Phone };
+// Keyed by the kind names get_admin_analytics() returns.
+const KIND: Record<string, { icon: LucideIcon; label: string }> = {
+  "Chat agent": { icon: Sparkles, label: "Chat" },
+  "Agency enquiry": { icon: Phone, label: "Agency form" },
+  "Contact form": { icon: Mail, label: "Contact form" },
+  WhatsApp: { icon: MessageCircle, label: "WhatsApp" },
+};
 
 export function WebsiteLeads({ rows, leads }: { rows: LeadRow[]; leads: Lead[] | undefined }) {
   const add = useAddToPipeline();
@@ -507,7 +513,7 @@ export function WebsiteLeads({ rows, leads }: { rows: LeadRow[]; leads: Lead[] |
       {rows.slice(0, 12).map((row) => {
         const key = `${row.created_at}-${row.email ?? row.phone ?? row.name}`;
         const existing = leads ? matchingLead(row, leads) : undefined;
-        const Icon = KIND_ICON[row.kind] ?? Mail;
+        const Icon = KIND[row.kind]?.icon ?? Mail;
         const done = !!existing || added.has(key);
         const canAdd = !!(row.email || row.phone);
         return (
@@ -523,7 +529,7 @@ export function WebsiteLeads({ rows, leads }: { rows: LeadRow[]; leads: Lead[] |
                 )}
               </p>
               <p className="truncate text-xs text-muted-foreground">
-                {[row.kind === "chat" ? "Chat" : row.kind === "agency" ? "Agency form" : "Contact form", row.budget_range, row.email ?? row.phone]
+                {[KIND[row.kind]?.label ?? row.kind, row.budget_range, row.email ?? row.phone]
                   .filter(Boolean)
                   .join(" · ")}
               </p>

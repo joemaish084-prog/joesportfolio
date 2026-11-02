@@ -1,15 +1,7 @@
 import { useEffect } from "react";
 import { captureAttribution } from "@/lib/attribution";
 import { openCalendlyPopup } from "@/lib/calendly";
-import { track } from "@/lib/track";
-
-function linkLocation(el: Element): string {
-  const explicit = el.closest("[data-track-location]");
-  if (explicit) return explicit.getAttribute("data-track-location") || "other";
-  if (el.closest("footer")) return "footer";
-  if (el.closest("header")) return "header";
-  return el.closest("section[id]")?.id || "other";
-}
+import { linkLocation, track } from "@/lib/track";
 
 /**
  * Site-wide conversion listeners:

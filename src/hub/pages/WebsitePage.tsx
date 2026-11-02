@@ -1,5 +1,15 @@
 import { useMemo, useState, type ReactNode } from "react";
-import { Eye, Globe, Inbox, MousePointerClick, RefreshCw, Timer, Users, type LucideIcon } from "lucide-react";
+import {
+  Eye,
+  Globe,
+  Inbox,
+  MessageCircle,
+  MousePointerClick,
+  RefreshCw,
+  Timer,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -16,6 +26,7 @@ import {
   VisitHeatmap,
   WebsiteLeads,
 } from "../components/website/WebsiteParts";
+import { WhatsAppLeadDialog } from "../components/website/WhatsAppLeadDialog";
 import { useRows } from "../lib/data";
 import { RANGE_DAYS, formatMs, pageName, pctChange, useSiteAnalytics, type RangeDays } from "../lib/website";
 
@@ -61,6 +72,7 @@ export default function WebsitePage() {
   const [days, setDays] = useState<RangeDays>(readRange);
   const site = useSiteAnalytics(days);
   const leads = useRows("leads", "position", true);
+  const [logging, setLogging] = useState(false);
 
   const changeRange = (v: string) => {
     const n = Number(v) as RangeDays;
@@ -105,6 +117,9 @@ export default function WebsitePage() {
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
+              <Button className="h-10 rounded-xl" onClick={() => setLogging(true)}>
+                <MessageCircle className="mr-1.5 h-4 w-4" /> Log WhatsApp chat
+              </Button>
               <Button
                 variant="secondary"
                 size="icon"
@@ -256,6 +271,8 @@ export default function WebsitePage() {
           </BlurFade>
         </>
       )}
+
+      <WhatsAppLeadDialog open={logging} onOpenChange={setLogging} />
     </>
   );
 }

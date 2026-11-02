@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { buildElementSelector, sendPulse } from "@/lib/pulse";
+import { linkLocation } from "@/lib/track";
 
 const HEARTBEAT_INTERVAL_MS = 15_000;
 
@@ -66,10 +67,12 @@ export function PulseTracker() {
       const target = e.target as Element | null;
       if (!target || !(target instanceof Element)) return;
       const el = target.closest("button, a, [role='button'], input, select, textarea") || target;
+      // WhatsApp taps are tagged so the Leads dashboard can count them.
+      const whatsapp = el.closest("a[href*='wa.me']");
       sendPulse({
         event_type: "click",
         page_path: location.pathname + location.search,
-        element_selector: buildElementSelector(el),
+        element_selector: whatsapp ? `whatsapp:${linkLocation(whatsapp)}` : buildElementSelector(el),
         element_text: (el.textContent || "").trim().slice(0, 80) || undefined,
       });
     };

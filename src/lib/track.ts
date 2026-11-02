@@ -14,6 +14,15 @@ const META_EVENTS: Record<string, string> = {
   whatsapp_click: "Contact",
 };
 
+/** Where on the page a tracked link sits, e.g. "floating_button", "footer" or a section id. */
+export function linkLocation(el: Element): string {
+  const explicit = el.closest("[data-track-location]");
+  if (explicit) return explicit.getAttribute("data-track-location") || "other";
+  if (el.closest("footer")) return "footer";
+  if (el.closest("header")) return "header";
+  return el.closest("section[id]")?.id || "other";
+}
+
 /**
  * Pushes an event to the GTM dataLayer (GA4 is sent from GTM) and fires the
  * matching Meta Pixel event when there is one. Never put personal data

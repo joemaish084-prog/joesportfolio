@@ -15,6 +15,7 @@ import {
   Layers,
   List,
   Megaphone,
+  MessageCircle,
   Monitor,
   MousePointerClick,
   Radio,
@@ -1258,10 +1259,12 @@ export function CrawlersPanel({ data, density }: PanelProps) {
 
 export function LeadsPanel({ data, density, rangeLabel }: PanelProps) {
   const noLeads = data.leads.by_day.every((d) => d.count === 0);
+  // Undefined until the whatsapp_leads migration is applied.
+  const waTaps = data.leads.whatsapp_clicks;
 
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className={`grid grid-cols-2 gap-3 ${waTaps === undefined ? "lg:grid-cols-4" : "md:grid-cols-3 xl:grid-cols-5"}`}>
         <StatCard
           icon={Inbox}
           label="Leads"
@@ -1286,9 +1289,19 @@ export function LeadsPanel({ data, density, rangeLabel }: PanelProps) {
           value={data.period.sessions}
           hint="the conversion denominator"
         />
+        {waTaps !== undefined && (
+          <StatCard
+            icon={MessageCircle}
+            label="WhatsApp Taps"
+            value={waTaps}
+            current={waTaps}
+            prev={data.leads.prev_whatsapp_clicks}
+            hint={`${data.leads.whatsapp_click_sessions ?? 0} sessions · ${data.leads.whatsapp_from_site ?? 0} became chats`}
+          />
+        )}
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className={`grid gap-5 sm:grid-cols-2 ${waTaps === undefined ? "xl:grid-cols-4" : "xl:grid-cols-5"}`}>
         <SectionCard title="By capture surface" icon={Inbox}>
           <RankedList
             items={data.leads.by_kind.map((k) => ({ label: k.kind, value: k.count }))}
@@ -1317,11 +1330,25 @@ export function LeadsPanel({ data, density, rangeLabel }: PanelProps) {
             emptyLabel="No chat conversations captured yet."
           />
         </SectionCard>
+        {waTaps !== undefined && (
+          <SectionCard title="WhatsApp taps" subtitle="Which button they tapped." icon={MessageCircle}>
+            <RankedList
+              items={(data.leads.whatsapp_by_location ?? []).map((l) => ({
+                label: l.location.replace(/_/g, " "),
+                value: l.count,
+              }))}
+              emptyLabel="No WhatsApp taps in this range."
+            />
+            <p className="mt-4 border-t border-border/50 pt-3 text-[11.5px] leading-relaxed text-muted-foreground">
+              A tap isn't a lead until they message. Log real chats in the hub under Website → Log WhatsApp chat.
+            </p>
+          </SectionCard>
+        )}
       </div>
 
       <SectionCard title={`Leads — ${rangeLabel}`} icon={Activity}>
         {noLeads ? (
-          <EmptyState label="No leads captured in this range yet. The chat agent, agency enquiry form and contact form all write here." />
+          <EmptyState label="No leads captured in this range yet. The chat agent, agency enquiry form, contact form and logged WhatsApp chats all write here." />
         ) : (
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
@@ -1346,7 +1373,7 @@ export function LeadsPanel({ data, density, rangeLabel }: PanelProps) {
 
       <SectionCard
         title="Recent leads"
-        subtitle="Chat agent, agency enquiries and contact form in one stream."
+        subtitle="Chat agent, agency enquiries, contact form and WhatsApp in one stream."
         icon={Inbox}
         action={
           <ExportButton

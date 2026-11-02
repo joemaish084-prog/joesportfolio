@@ -200,6 +200,12 @@ export interface AnalyticsData {
     chat_funnel: { step: string; count: number; booked: number }[];
     by_day: { day: string; count: number }[];
     recent: LeadRow[];
+    // Optional until the whatsapp_leads migration is applied.
+    whatsapp_clicks?: number;
+    prev_whatsapp_clicks?: number;
+    whatsapp_click_sessions?: number;
+    whatsapp_by_location?: { location: string; count: number }[];
+    whatsapp_from_site?: number;
   };
   recent_activity: ActivityRow[];
 }
