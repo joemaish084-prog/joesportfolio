@@ -24,11 +24,14 @@ export function LeadDialog({
   onOpenChange,
   lead,
   stage: initialStage = "new",
+  onWon,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   lead?: Lead | null;
   stage?: LeadStage;
+  /** Called after saving a lead as won that isn't a client yet. */
+  onWon?: (lead: Lead) => void;
 }) {
   const save = useSaveRow("leads");
   const leads = useRows("leads", "position", true);
@@ -100,9 +103,10 @@ export function LeadDialog({
         },
       },
       {
-        onSuccess: () => {
+        onSuccess: (saved) => {
           toast.success(lead ? "Lead updated" : "Lead added");
           onOpenChange(false);
+          if (saved.stage === "won" && !saved.converted_client_id) onWon?.(saved);
         },
         onError: (e) => setError(e.message),
       },

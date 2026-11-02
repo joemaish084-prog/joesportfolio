@@ -11,9 +11,8 @@ import { Field, FormDialog, MoneyInput, inputClass } from "../../../components/f
 import { EmptyState, Pill, Section } from "../../../components/ui";
 import { toNumberOrNull } from "../../../lib/format";
 import { useKes } from "../../../lib/privacy";
-import { useSaveClient } from "../../../lib/queries";
 import { SERVICES } from "../../../lib/types";
-import { useCrm, useLeadDeals, useSaveDeal } from "../../lib/queries";
+import { useCrm, useLeadDeals, useSaveDeal, useWinToClient } from "../../lib/queries";
 import type { CrmLead, Deal } from "../../lib/types";
 import { SelectField } from "../bits";
 
@@ -133,8 +132,22 @@ export function DealsPanel({ lead }: { lead: CrmLead }) {
   const hubAdmin = useHubAuth().status === "admin";
   const deals = useLeadDeals(lead.id);
   const save = useSaveDeal();
-  const saveClient = useSaveClient();
+  const winToClient = useWinToClient();
   const [dialog, setDialog] = useState<{ open: boolean; deal: Deal | null }>({ open: false, deal: null });
+
+  // Hands a won deal to the Client Hub as a new client in onboarding.
+  const convert = (deal: Deal) =>
+    winToClient.mutate(
+      { lead, deal },
+      {
+        onSuccess: (client) =>
+          client &&
+          toast.success(`${client.name} added to clients as onboarding`, {
+            action: { label: "Open", onClick: () => navigate(`/hub/clients/${client.id}`) },
+          }),
+        onError: (e) => toast.error(`Won, but the client wasn't created: ${e.message}`),
+      },
+    );
 
   const setStatus = (deal: Deal, status: Deal["status"]) => {
     let lost_reason = deal.lost_reason;
@@ -145,42 +158,15 @@ export function DealsPanel({ lead }: { lead: CrmLead }) {
     }
     save.mutate(
       { id: deal.id, values: { status, lost_reason } },
-      { onSuccess: () => toast.success(status === "won" ? "Won. Nicely done." : status === "lost" ? "Marked lost" : "Reopened"), onError: (e) => toast.error(e.message) },
-    );
-  };
-
-  // Hands a won deal to the Client Hub as a new client in onboarding.
-  const convert = (deal: Deal) =>
-    saveClient.mutate(
       {
-        client: {
-          client_type_id: null,
-          name: lead.name,
-          business_name: lead.name,
-          contact_person: null,
-          email: lead.email,
-          phone: lead.phone,
-          website: lead.website,
-          industry: null,
-          status: "onboarding",
-          start_date: format(new Date(), "yyyy-MM-dd"),
-          monthly_fee: deal.expected_monthly_retainer,
-          services: SERVICES.filter((s) => deal.proposed_service.toLowerCase().includes(s.toLowerCase())),
-          main_goal: null,
-          notes: deal.notes,
-          custom_fields: {},
-        },
-        kpis: [],
-      },
-      {
-        onSuccess: async (client) => {
-          await save.mutateAsync({ id: deal.id, values: { converted_client_id: client.id } });
-          toast.success(`${client.name} is now a client`);
-          navigate(`/hub/clients/${client.id}`);
+        onSuccess: (saved) => {
+          toast.success(status === "won" ? "Won. Nicely done." : status === "lost" ? "Marked lost" : "Reopened");
+          if (status === "won" && hubAdmin && !saved.converted_client_id) convert(saved);
         },
         onError: (e) => toast.error(e.message),
       },
     );
+  };
 
   return (
     <Section
@@ -263,7 +249,7 @@ export function DealsPanel({ lead }: { lead: CrmLead }) {
                     </Button>
                   )}
                   {d.status === "won" && hubAdmin && !d.converted_client_id && (
-                    <Button size="sm" variant="outline" className="rounded-full" onClick={() => convert(d)} disabled={saveClient.isPending}>
+                    <Button size="sm" variant="outline" className="rounded-full" onClick={() => convert(d)} disabled={winToClient.isPending}>
                       <UserPlus className="mr-1.5 h-3.5 w-3.5" /> Add to Client Hub
                     </Button>
                   )}

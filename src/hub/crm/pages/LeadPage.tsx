@@ -14,7 +14,8 @@ import { LeadOverview } from "../components/lead/LeadOverview";
 import { OutreachPanel } from "../components/lead/OutreachPanel";
 import { Timeline } from "../components/lead/Timeline";
 import { LeadFormDialog } from "../components/LeadFormDialog";
-import { useCrm, useDeleteLead, useLead, useMembers, useSaveLead } from "../lib/queries";
+import { useHubAuth } from "../../auth/HubAuthProvider";
+import { useCrm, useDeleteLead, useLead, useMembers, useSaveLead, useWinToClient } from "../lib/queries";
 import { DRAFT_KINDS, QUALIFICATION, QUALIFICATION_LABEL, STAGES, STAGE_LABEL, type CrmLead, type DraftKind } from "../lib/types";
 
 const TABS = ["overview", "outreach", "timeline", "deals", "access"] as const;
@@ -25,6 +26,8 @@ export default function LeadPage() {
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const { canEdit, isOwner } = useCrm();
+  const hubAdmin = useHubAuth().status === "admin";
+  const winToClient = useWinToClient();
   const lead = useLead(id);
   const members = useMembers();
   const save = useSaveLead();
@@ -56,6 +59,30 @@ export default function LeadPage() {
 
   const update = (values: Partial<CrmLead>, message: string) =>
     save.mutate({ id: l.id, values }, { onSuccess: () => toast.success(message), onError: (e) => toast.error(e.message) });
+
+  // A win goes straight to the Client Hub as an onboarding client.
+  const setStage = (stage: CrmLead["stage"]) =>
+    save.mutate(
+      { id: l.id, values: { stage } },
+      {
+        onSuccess: (saved) => {
+          toast.success(`Moved to ${STAGE_LABEL[stage]}`);
+          if (stage !== "won" || !hubAdmin) return;
+          winToClient.mutate(
+            { lead: saved },
+            {
+              onSuccess: (client) =>
+                client &&
+                toast.success(`${client.name} added to clients as onboarding`, {
+                  action: { label: "Open", onClick: () => navigate(`/hub/clients/${client.id}`) },
+                }),
+              onError: (e) => toast.error(`Won, but the client wasn't created: ${e.message}`),
+            },
+          );
+        },
+        onError: (e) => toast.error(e.message),
+      },
+    );
 
   const markDnc = () => {
     if (!window.confirm(`Mark ${l.name} as do not contact? Follow-ups stop and their email and phone go on the suppression list.`)) return;
@@ -140,7 +167,7 @@ export default function LeadPage() {
               className="w-48"
               value={l.stage}
               disabled={l.do_not_contact || save.isPending}
-              onChange={(v) => update({ stage: v as CrmLead["stage"] }, `Moved to ${STAGE_LABEL[v as CrmLead["stage"]]}`)}
+              onChange={(v) => setStage(v as CrmLead["stage"])}
               options={STAGES.filter((s) => s !== "do_not_contact" || l.do_not_contact).map((s) => ({ value: s, label: `Stage: ${STAGE_LABEL[s]}` }))}
             />
             <SelectField

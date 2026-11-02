@@ -3,7 +3,8 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { FunctionsFetchError, FunctionsHttpError } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { useHubAuth } from "../../auth/HubAuthProvider";
-import { unwrap } from "../../lib/queries";
+import { unwrap, useSaveClient } from "../../lib/queries";
+import { SERVICES } from "../../lib/types";
 import type {
   Activity,
   AuditLog,
@@ -260,6 +261,66 @@ export const useDeleteContact = () => useDelete("crm_lead_contacts");
 export const useSaveDraft = () => useSave<OutreachDraft>("crm_outreach_drafts");
 export const useSaveDeal = () => useSave<Deal>("crm_deals");
 export const useDeleteDeal = () => useDelete("crm_deals");
+
+/**
+ * Hands a won lead to the Client Hub as a client in onboarding, filled from the
+ * lead, its decision maker and the deal so nothing is typed twice. The deal
+ * holds the link to the client; a lead won without a deal gets a won deal to
+ * carry it. Resolves to null when the lead is already a client. Creating
+ * clients is for hub admins (RLS on clients).
+ */
+export function useWinToClient() {
+  const invalidate = useInvalidateCrm();
+  const saveClient = useSaveClient();
+  return useMutation({
+    mutationFn: async ({ lead, deal }: { lead: CrmLead; deal?: Deal }) => {
+      const deals = unwrap(await raw.from("crm_deals").select("*").eq("lead_id", lead.id)) as Deal[];
+      if (deals.some((d) => d.converted_client_id)) return null;
+      const biggest = (status: Deal["status"]) =>
+        deals
+          .filter((d) => d.status === status)
+          .sort((a, b) => Number(b.expected_monthly_retainer ?? 0) - Number(a.expected_monthly_retainer ?? 0))[0];
+      let won = deal ?? biggest("won") ?? biggest("open");
+      if (!won) {
+        won = unwrap(
+          await raw.from("crm_deals").insert({ lead_id: lead.id, proposed_service: "Marketing services", status: "won" }).select().single(),
+        ) as Deal;
+      } else if (won.status !== "won") {
+        won = unwrap(await raw.from("crm_deals").update({ status: "won" }).eq("id", won.id).select().single()) as Deal;
+      }
+
+      const contacts = unwrap(await raw.from("crm_lead_contacts").select("*").eq("lead_id", lead.id)) as LeadContact[];
+      const contact = contacts.find((c) => c.is_decision_maker && c.name) ?? contacts.find((c) => c.name);
+      const industry = lead.industry_id
+        ? (unwrap(await raw.from("crm_industries").select("name").eq("id", lead.industry_id).maybeSingle()) as { name: string } | null)
+        : null;
+
+      const client = await saveClient.mutateAsync({
+        client: {
+          client_type_id: null,
+          name: lead.name,
+          business_name: lead.name,
+          contact_person: contact?.name ?? null,
+          email: lead.email ?? contact?.email ?? null,
+          phone: lead.phone ?? contact?.phone ?? null,
+          website: lead.website,
+          industry: industry?.name ?? lead.business_type,
+          status: "onboarding",
+          start_date: new Date().toISOString().slice(0, 10),
+          monthly_fee: won.expected_monthly_retainer,
+          services: SERVICES.filter((s) => won.proposed_service.toLowerCase().includes(s.toLowerCase())),
+          main_goal: null,
+          notes: [lead.notes, won.notes].filter(Boolean).join("\n\n") || null,
+          custom_fields: {},
+        },
+        kpis: [],
+      });
+      unwrap(await raw.from("crm_deals").update({ converted_client_id: client.id }).eq("id", won.id));
+      return client;
+    },
+    onSuccess: invalidate,
+  });
+}
 export const useSaveFollowUp = () => useSave<FollowUpTask>("crm_follow_up_tasks");
 export const useSaveCampaign = () => useSave<Campaign>("crm_campaigns");
 export const useSaveOrg = () => useSave<CrmOrganisation>("crm_organisations");

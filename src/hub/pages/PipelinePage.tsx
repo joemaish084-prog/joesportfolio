@@ -195,6 +195,7 @@ export default function PipelinePage() {
 
   const moveTo = (lead: Lead, stage: LeadStage) => {
     if (lead.stage === stage) return;
+    if (stage === "won" && !lead.converted_client_id) return convert(lead, false);
     const position = Math.max(0, ...(columns.get(stage) ?? []).map((l) => l.position)) + 1;
     move.mutate([{ id: lead.id, stage, position }], {
       onSuccess: () => toast.success(`${lead.name} → ${LEAD_STAGE_LABEL[stage]}`),
@@ -216,10 +217,13 @@ export default function PipelinePage() {
       { onSuccess: () => toast.success(`${lead.name} archived`), onError: (e) => toast.error(e.message) },
     );
 
-  // Creates the client from the lead (with the type's suggested KPIs), marks the
-  // lead won and opens the new client so the profile can be finished.
-  const convert = (lead: Lead) => {
+  // Creates the client from the lead (with the type's suggested KPIs) in
+  // onboarding and marks the lead won. Runs on its own when a lead is moved to
+  // Won; "Convert to client" also opens the new client to finish the profile.
+  const convert = (lead: Lead, open = true) => {
+    if (saveClient.isPending) return;
     const type = types.data?.find((t) => t.id === lead.client_type_id);
+    const position = Math.max(0, ...(columns.get("won") ?? []).map((l) => l.position)) + 1;
     saveClient.mutate(
       {
         client: {
@@ -243,10 +247,19 @@ export default function PipelinePage() {
       },
       {
         onSuccess: async (client) => {
-          await saveLead.mutateAsync({ id: lead.id, values: { stage: "won", converted_client_id: client.id } });
+          await saveLead.mutateAsync({
+            id: lead.id,
+            values: { stage: "won", converted_client_id: client.id, ...(lead.stage === "won" ? {} : { position }) },
+          });
           qc.invalidateQueries({ queryKey: tableKey("leads") });
-          toast.success(`${client.name} is now a client`);
-          navigate(`/hub/clients/${client.id}`);
+          if (open) {
+            toast.success(`${client.name} is now a client`);
+            navigate(`/hub/clients/${client.id}`);
+          } else {
+            toast.success(`${client.name} won and added to clients as onboarding`, {
+              action: { label: "Open", onClick: () => navigate(`/hub/clients/${client.id}`) },
+            });
+          }
         },
         onError: (e) => toast.error(e.message),
       },
@@ -390,6 +403,7 @@ export default function PipelinePage() {
         onOpenChange={(o) => setDialog((d) => ({ ...d, open: o }))}
         lead={dialog.lead}
         stage={dialog.stage}
+        onWon={(lead) => convert(lead, false)}
       />
     </>
   );
