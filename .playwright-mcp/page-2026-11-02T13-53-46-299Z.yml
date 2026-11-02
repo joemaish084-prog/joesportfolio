@@ -1,0 +1,72 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Joseph Maina — home" [ref=e6] [cursor=pointer]:
+          - /url: /#home
+          - img "JM Creative" [ref=e7]
+        - navigation "Primary" [ref=e8]:
+          - link "Home" [ref=e9] [cursor=pointer]:
+            - /url: /#home
+          - link "Videos" [ref=e11] [cursor=pointer]:
+            - /url: /#videos
+          - link "Design" [ref=e15] [cursor=pointer]:
+            - /url: /#graphic-design
+          - link "Cases" [ref=e19] [cursor=pointer]:
+            - /url: /#case-study
+          - link "Blog" [ref=e23] [cursor=pointer]:
+            - /url: /agency/blog
+          - link "Experience" [ref=e26] [cursor=pointer]:
+            - /url: /#experience
+          - link "About" [ref=e28] [cursor=pointer]:
+            - /url: /#about
+          - link "Contact" [ref=e31] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=e32]:
+          - button [ref=e33] [cursor=pointer]
+          - button "View CV" [ref=e34] [cursor=pointer]
+          - link "Agency" [ref=e35] [cursor=pointer]:
+            - /url: /agency
+    - main [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - generic [ref=e40]: Digital Marketing Specialist — Nairobi, Kenya
+            - heading "Digital Marketing That Turns Attention Into Real Growth" [level=1] [ref=e42]
+            - paragraph [ref=e43]: I'm Joseph Maina, founder of Joseph Maina Marketing. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content — not just reach.
+            - generic [ref=e44]:
+              - link "Book a Free Strategy Call" [ref=e45] [cursor=pointer]:
+                - /url: /agency/contact
+              - link "See My Work" [ref=e46] [cursor=pointer]:
+                - /url: "#case-study"
+            - generic [ref=e47]:
+              - generic [ref=e48]:
+                - paragraph [ref=e49]: KES 500K+
+                - paragraph [ref=e50]: Ad budgets managed
+              - generic [ref=e51]:
+                - paragraph [ref=e52]: 4M+
+                - paragraph [ref=e53]: TikTok views
+              - generic [ref=e54]:
+                - paragraph [ref=e55]: 3+
+                - paragraph [ref=e56]: Years experience
+          - generic [ref=e58]:
+            - generic [ref=e61]:
+              - img "ASDSP Programme documentary title card for Nyeri farmers" [ref=e62]
+              - generic [ref=e63]: Video
+            - generic [ref=e66]:
+              - img "Joseph Maina, digital marketing specialist in Nairobi, Kenya" [ref=e67]
+              - generic [ref=e68]: Joseph Maina
+            - generic [ref=e71]:
+              - img "Still from an iClear 'Maji ni Uhai' short-form video" [ref=e72]
+              - generic [ref=e73]: Reels
+            - generic [ref=e80]:
+              - generic [ref=e81]: Campaign results
+              - generic [ref=e85]:
+                - paragraph [ref=e86]: 4M+
+                - paragraph [ref=e87]: TikTok views on a single campaign
+        - link "Scroll to see more" [ref=e93] [cursor=pointer]:
+          - /url: "#case-study"
+          - generic [ref=e94]: Scroll

@@ -1,0 +1,18 @@
+- generic [ref=f3e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - main [ref=f3e4]:
+    - heading "Page not found" [level=1] [ref=f3e5]
+    - paragraph [ref=f3e6]: This page may have moved or the address may be incorrect.
+    - paragraph [ref=f3e7]:
+      - link "Visit the portfolio" [ref=f3e8] [cursor=pointer]:
+        - /url: /
+      - text: ·
+      - link "Explore services" [ref=f3e9] [cursor=pointer]:
+        - /url: /agency
+      - text: ·
+      - link "Read the blog" [ref=f3e10] [cursor=pointer]:
+        - /url: /agency/blog
+  - link "Message me on WhatsApp" [ref=f3e11] [cursor=pointer]:
+    - /url: https://wa.me/254704700160?text=Hi%20Joseph!%20I%20was%20on%20josephmaina.co.ke%2Fsome-missing-page%20and%20I'd%20like%20to%20chat.
