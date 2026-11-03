@@ -10,6 +10,9 @@ import logoPowwater from "@/assets/marquee/powwater.webp";
 import logoGlowskin from "@/assets/marquee/glowskin.webp";
 import logoBeautysquare from "@/assets/marquee/beautysquare.webp";
 import logoDuara from "@/assets/marquee/duara.webp";
+import logoDansar from "@/assets/marquee/dansar.webp";
+import logoBeulah from "@/assets/marquee/beulah.webp";
+import logoSurbubia from "@/assets/marquee/surbubia.webp";
 
 const brands = [
   { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },
@@ -21,6 +24,9 @@ const brands = [
   { name: "PowWater", industry: "Water Services", logo: logoPowwater },
   { name: "Glow Skin Cosmetics", industry: "Skincare Retailer", logo: logoGlowskin },
   { name: "Beauty Square Kenya", industry: "Skincare Retail", logo: logoBeautysquare },
+  { name: "Dansar Babyshop", industry: "Baby Products Retailer", logo: logoDansar },
+  { name: "Beulah Wellness Solutions", industry: "Health & Wellness", logo: logoBeulah },
+  { name: "Surbubia Homes", industry: "Real Estate", logo: logoSurbubia },
 ];
 
 export function BrandsLogoMarquee() {
