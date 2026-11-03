@@ -14,8 +14,8 @@ import { getHubBySlug } from "@/data/blogHubs";
 import { blogPosts } from "@/data/blogPosts";
 import { Footer } from "@/components/Footer";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
-import { ServiceGallery, ServiceHeroVisual } from "@/components/services/ServiceVisuals";
-import { getServiceVisuals } from "@/data/serviceVisuals";
+import { ServiceGallery, ServiceHeroVisual, ServiceSideImage } from "@/components/services/ServiceVisuals";
+import { PROCESS_VISUAL, getServiceVisuals } from "@/data/serviceVisuals";
 
 /** The lower-commitment ways to get in touch, beside each page's main booking button. */
 function OtherContactOptions({ slug, name, briefIsPrimary, className = "" }: { slug: string; name: string; briefIsPrimary: boolean; className?: string }) {
@@ -174,7 +174,8 @@ const AgencyService = () => {
           {/* What's included */}
           <section className="mt-20">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.included}</h2>
-            <dl className="mt-7 divide-y divide-[#EAEAEA] border-y border-[#EAEAEA]">
+            <div className={visuals?.included ? "mt-7 grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-12" : "mt-7"}>
+            <dl className="divide-y divide-[#EAEAEA] border-y border-[#EAEAEA]">
               {page.included.map((item) => (
                 <div key={item.title} className="py-6 sm:flex sm:gap-8">
                   <dt className="text-base font-bold tracking-tight sm:w-1/3 sm:flex-shrink-0">
@@ -186,6 +187,8 @@ const AgencyService = () => {
                 </div>
               ))}
             </dl>
+            {visuals?.included && <ServiceSideImage visual={visuals.included} className="max-lg:order-first" />}
+            </div>
             <p className="mt-6 text-sm text-[#888888]">{page.price.note}</p>
           </section>
 
@@ -229,7 +232,9 @@ const AgencyService = () => {
           {/* Process */}
           <section className="mt-20">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.process}</h2>
-            <ol className="mt-7 space-y-5">
+            <div className="mt-7 grid gap-8 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-start lg:gap-12">
+            <ServiceSideImage visual={PROCESS_VISUAL} />
+            <ol className="space-y-5 lg:pt-2">
               {SERVICE_PROCESS.map((step, i) => (
                 <li key={step.title} className="flex items-start gap-5">
                   <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#F97316] text-sm font-bold text-white">
@@ -242,6 +247,7 @@ const AgencyService = () => {
                 </li>
               ))}
             </ol>
+            </div>
           </section>
 
           {/* Case study */}

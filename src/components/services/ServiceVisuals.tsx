@@ -3,6 +3,13 @@ import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } fro
 import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { ServiceVisual, ServiceVisuals } from "@/data/serviceVisuals";
+import { unsplashImageProps } from "@/lib/responsiveImage";
+
+/** src, srcSet and size for an image: resized variants for Unsplash, the file itself otherwise. */
+function imageProps(visual: ServiceVisual, sizes: string) {
+  const resized = unsplashImageProps(visual.src, sizes);
+  return { src: visual.src, ...resized, width: visual.width, height: visual.height, alt: visual.alt };
+}
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -43,10 +50,7 @@ export function ServiceHeroVisual({ visuals }: { visuals: ServiceVisuals }) {
         className="relative overflow-hidden rounded-3xl bg-[#F3F3F3] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.25)]"
       >
         <img
-          src={hero.src}
-          alt={hero.alt}
-          width={hero.width}
-          height={hero.height}
+          {...imageProps(hero, "(min-width: 1024px) 380px, 384px")}
           fetchPriority="high"
           className="aspect-[4/5] w-full object-cover"
         />
@@ -63,10 +67,7 @@ export function ServiceHeroVisual({ visuals }: { visuals: ServiceVisuals }) {
           className={`absolute bottom-0 left-0 ${wideAccent ? "w-[68%]" : "w-[46%]"} overflow-hidden rounded-2xl border-4 border-white bg-[#F3F3F3] shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]`}
         >
           <img
-            src={accent.src}
-            alt={accent.alt}
-            width={accent.width}
-            height={accent.height}
+            {...imageProps(accent, "260px")}
             loading="lazy"
             className={`${wideAccent ? "aspect-[2/1]" : "aspect-square"} w-full object-cover`}
           />
@@ -103,13 +104,10 @@ export function ServiceGallery({ title, intro, items }: { title: string; intro: 
               aria-label={`View full size: ${item.caption}`}
             >
               <img
-                src={item.src}
-                alt={item.alt}
-                width={item.width}
-                height={item.height}
+                {...imageProps(item, "(min-width: 1024px) 240px, 50vw")}
                 loading="lazy"
                 className={`aspect-[4/5] w-full transition-transform duration-500 ease-out motion-safe:group-hover:scale-105 ${
-                  item.width / item.height > 1.3 ? "bg-[#111111] object-contain" : "object-cover"
+                  item.width / item.height > 1.8 ? "bg-[#111111] object-contain" : "object-cover"
                 }`}
               />
               <span className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-3 pt-10 text-xs font-medium leading-snug text-white opacity-100 transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-visible:opacity-100">
@@ -132,10 +130,7 @@ export function ServiceGallery({ title, intro, items }: { title: string; intro: 
           {current && (
             <figure>
               <img
-                src={current.src}
-                alt={current.alt}
-                width={current.width}
-                height={current.height}
+                {...imageProps(current, "(min-width: 896px) 860px, 100vw")}
                 className="mx-auto max-h-[75vh] w-auto rounded-lg object-contain"
               />
               <figcaption className="mt-3 flex items-center justify-between gap-4 px-1">
@@ -161,5 +156,31 @@ export function ServiceGallery({ title, intro, items }: { title: string; intro: 
         </DialogContent>
       </Dialog>
     </section>
+  );
+}
+
+/**
+ * A photo set beside a section's content. Short and wide on phones, tall and
+ * sticky beside the content on large screens.
+ */
+export function ServiceSideImage({ visual, className = "" }: { visual: ServiceVisual; className?: string }) {
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.figure
+      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10% 0px" }}
+      transition={{ duration: 0.7, ease: EASE }}
+      className={`group relative overflow-hidden rounded-3xl bg-[#F3F3F3] lg:sticky lg:top-28 ${className}`}
+    >
+      <img
+        {...imageProps(visual, "(min-width: 1024px) 340px, 100vw")}
+        loading="lazy"
+        className="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-105 lg:aspect-[4/5]"
+      />
+      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-5 pt-14 text-sm font-medium leading-snug text-white">
+        {visual.caption}
+      </figcaption>
+    </motion.figure>
   );
 }
