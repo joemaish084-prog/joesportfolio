@@ -14,6 +14,8 @@ import { getHubBySlug } from "@/data/blogHubs";
 import { blogPosts } from "@/data/blogPosts";
 import { Footer } from "@/components/Footer";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
+import { ServiceGallery, ServiceHeroVisual } from "@/components/services/ServiceVisuals";
+import { getServiceVisuals } from "@/data/serviceVisuals";
 
 /** The lower-commitment ways to get in touch, beside each page's main booking button. */
 function OtherContactOptions({ slug, name, briefIsPrimary, className = "" }: { slug: string; name: string; briefIsPrimary: boolean; className?: string }) {
@@ -77,6 +79,7 @@ const AgencyService = () => {
     : undefined;
   const otherServices = servicePages.filter((s) => s.slug !== page.slug);
   const headings = serviceHeadings(page);
+  const visuals = getServiceVisuals(page.slug);
 
   return (
     <>
@@ -121,7 +124,8 @@ const AgencyService = () => {
           )}
 
           {/* Hero */}
-          <header data-track-location="service_hero" className="mt-10 max-w-3xl">
+          <div className={visuals ? "mt-10 grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,380px)] lg:gap-16" : ""}>
+          <header data-track-location="service_hero" className={visuals ? "max-w-3xl" : "mt-10 max-w-3xl"}>
             <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#F97316]">
               <page.icon className="h-4 w-4" aria-hidden="true" />
               Service
@@ -137,6 +141,8 @@ const AgencyService = () => {
             </div>
             <OtherContactOptions slug={page.slug} name={page.name} briefIsPrimary={!page.cta.external} className="mt-3" />
           </header>
+          {visuals && <ServiceHeroVisual visuals={visuals} />}
+          </div>
 
           {/* Who it's for */}
           <section className="mt-20">
@@ -281,6 +287,8 @@ const AgencyService = () => {
               </figcaption>
             </figure>
           )}
+
+          {visuals?.gallery && <ServiceGallery {...visuals.gallery} />}
 
           {/* Mid-page CTA, so readers who are convinced by the proof don't have to scroll to the end */}
           <section

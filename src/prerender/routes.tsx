@@ -15,6 +15,7 @@ import type { BlogSummary } from "@/data/blogSummaries";
 import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost, hubServiceLinkLabel, resolveHubServiceHref } from "@/data/blogHubs";
 import { getLiveServicePages, serviceHeadings, servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
 import { getServiceForPost, serviceLinkLabel } from "@/data/postServices";
+import { getServiceVisuals } from "@/data/serviceVisuals";
 import { brands, type Brand } from "@/data/brands";
 import { designs } from "@/data/designs";
 import { mockups } from "@/data/mockups";
@@ -199,6 +200,7 @@ function PostPage({ post }: { post: BlogPost }) {
 function ServicePageBody({ page }: { page: ServicePage }) {
   const answered = page.faqs.filter((f) => !f.a.includes("[CONFIRM]"));
   const headings = serviceHeadings(page);
+  const visuals = getServiceVisuals(page.slug);
   const related = page.relatedPosts
     .map((slug) => blogPosts.find((p) => p.slug === slug))
     .filter((p): p is BlogPost => Boolean(p));
@@ -209,6 +211,12 @@ function ServicePageBody({ page }: { page: ServicePage }) {
       </p>
       <h1>{page.name}</h1>
       <p>{page.standfirst}</p>
+      {visuals && (
+        <figure>
+          <img src={visuals.hero.src} alt={visuals.hero.alt} width={visuals.hero.width} height={visuals.hero.height} />
+          <figcaption>{visuals.hero.caption}</figcaption>
+        </figure>
+      )}
       <p>
         <strong>{page.price.amount}</strong> — {page.price.note}
       </p>
@@ -255,6 +263,17 @@ function ServicePageBody({ page }: { page: ServicePage }) {
       {page.caseStudy.href && <p><a href={page.caseStudy.href}>Read the full breakdown</a></p>}
       {page.proofNote && <p>{page.proofNote}</p>}
       </>}
+      {visuals?.gallery && (
+        <>
+          <h2>{visuals.gallery.title}</h2>
+          {visuals.gallery.items.map((item) => (
+            <figure key={item.src}>
+              <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" />
+              <figcaption>{item.caption}</figcaption>
+            </figure>
+          ))}
+        </>
+      )}
       {answered.length > 0 && (
         <>
           <h2>{headings.faqs}</h2>
