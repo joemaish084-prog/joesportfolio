@@ -125,3 +125,47 @@ export const awarenessCampaigns: InsightCaseStudy = {
   ],
   note: "Reach is added up across the four campaigns, so a person who saw more than one is counted more than once.",
 };
+
+// Anonymised: the client is a Kenyan residential developer and is deliberately
+// not named. Buyer names, the exact unit type and the exact price are left out
+// because together they would identify the development.
+// Figures are from Meta Ads Manager and a read of every Instagram chat, 1 to 31 Oct 2026.
+export const propertyLeadFunnel: InsightCaseStudy = {
+  chip: "Meta Ads · property enquiries · 1 to 31 Oct 2026",
+  before: { value: "126 enquiries", label: "Instagram chats and lead forms from the ads" },
+  headlineTag: "Hot buyers",
+  headline: { value: "14", label: "serious buyers after reading every chat, 6 of them with a phone number" },
+  stats: [
+    { value: "KES 40,101", label: "Spent in October", note: "about KES 1,200 a day" },
+    { value: "KES 318", label: "Per enquiry" },
+    { value: "KES 2,864", label: "Per hot buyer", note: "the number that matters for a home sale" },
+  ],
+  barsTitle: "Where the 126 enquiries went",
+  bars: [
+    { label: "Messaged the page", value: 126, display: "126", sub: "KES 318 each" },
+    { label: "Real buyer or renter", value: 106, display: "106", sub: "KES 378 each" },
+    { label: "Showed real interest", value: 37, display: "37", sub: "KES 1,084 each" },
+    { label: "Hot buyers", value: 14, display: "14", sub: "KES 2,864 each", highlight: true },
+    { label: "Gave a phone number", value: 6, display: "6", sub: "KES 6,684 each" },
+  ],
+  barsNote: "Cost each is the month's ad spend divided by the people at that step.",
+  points: [
+    {
+      title: "The ads found the right people",
+      body: "106 of the 126 enquiries were real home buyers or renters, asking about payment plans, mortgages and site visits.",
+    },
+    {
+      title: "Chats got cheaper through the month",
+      body: "Cost per Instagram chat fell from KES 478 in the first week to KES 140 in the last three days, against a month average of KES 309.",
+    },
+    {
+      title: "The leak was in the inbox, not the ads",
+      body: "60 people tapped a quick question on an ad and never replied, because the answers did not end with a next step. Many first replies came the next day and two chats were never answered.",
+    },
+    {
+      title: "What changes in November",
+      body: "Same budget. Replies within an hour that end in one question, \"Which day can you come for a site visit?\", quick questions that lead to a visit, and one sheet tracking every lead to visit and deposit.",
+    },
+  ],
+  note: "October only. Site visits and sales were not tracked yet, so this shows cost per buyer, not cost per sale. November results will be added here.",
+};

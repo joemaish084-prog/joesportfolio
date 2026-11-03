@@ -28,6 +28,40 @@ export interface CaseStudySummary {
  */
 export const caseStudies: CaseStudySummary[] = [
   {
+    id: "property-lead-funnel",
+    tag: "Real estate leads",
+    period: "Oct 2026",
+    title: "126 Property Enquiries, 14 Hot Buyers: Where Real Estate Leads Get Lost",
+    summary:
+      "A Kenyan residential developer spent KES 40,101 on Facebook and Instagram ads in October. The ads brought the right people; most of them were lost in the chat. The client is not named, the numbers are real.",
+    stats: [
+      { value: "126", label: "Enquiries" },
+      { value: "14", label: "Hot buyers" },
+      { value: "KES 2,864", label: "Per hot buyer" },
+    ],
+    cover: {
+      src: unsplash("1600596542815-ffad4c1539a9", 1600),
+      alt: "Modern white two-storey house with large windows beside a swimming pool",
+    },
+    gallery: [
+      {
+        src: unsplash("1611746872915-64382b5c76da", 1200),
+        alt: "Phone screen showing a folder of messaging apps including WhatsApp",
+        caption: "Every enquiry started as a chat",
+      },
+      {
+        src: unsplash("1560518883-ce09059eeffa", 800),
+        alt: "House keys lying next to a small model house on a wooden table",
+        caption: "14 serious buyers in one month",
+      },
+      {
+        src: unsplash("1563986768609-322da13575f3", 800),
+        alt: "Person replying to messages on a phone while working on a laptop",
+        caption: "Fast replies that end in a site-visit question",
+      },
+    ],
+  },
+  {
     id: "meta-google-combined",
     tag: "Paid media",
     period: "Aug to Oct 2026",

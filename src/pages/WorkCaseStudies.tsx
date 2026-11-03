@@ -11,11 +11,12 @@ import { getHubBySlug, getHubPosts } from "@/data/blogHubs";
 import { metaTurnaround } from "@/data/metaTurnaroundCaseStudy";
 import { googleAdsLaunch } from "@/data/googleAdsCaseStudy";
 import { combinedAds } from "@/data/combinedAdsCaseStudy";
-import { awarenessCampaigns, instagramSpike } from "@/data/insightCaseStudies";
+import { awarenessCampaigns, instagramSpike, propertyLeadFunnel } from "@/data/insightCaseStudies";
 import { InsightCaseStudyDetail } from "@/components/case-studies/InsightCaseStudyDetail";
 import { STATIC_HEADS } from "@/seo/heads";
 
 const DETAILS: Record<string, () => ReactNode> = {
+  "property-lead-funnel": () => <InsightCaseStudyDetail data={propertyLeadFunnel} />,
   "meta-google-combined": () => <PaidCaseStudyDetail data={combinedAds} />,
   "instagram-spike": () => <InsightCaseStudyDetail data={instagramSpike} />,
   "awareness-campaigns": () => <InsightCaseStudyDetail data={awarenessCampaigns} />,
