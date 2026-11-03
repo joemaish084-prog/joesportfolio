@@ -50,6 +50,10 @@ export function brandHead(brand: Brand): PageHead {
           contentUrl: absoluteUrl(p.image),
           name: `${brand.name} ${seo.workType.toLowerCase()}: ${p.title}`,
           creator: person,
+          creditText: "Design by Joseph Maina",
+          // Per /terms, deliverables belong to the client once paid. license/acquireLicensePage
+          // are deliberately omitted: client artwork is not offered for licensing.
+          copyrightNotice: `© ${brand.year} ${brand.name}`,
         })),
         isPartOf: { "@type": "CollectionPage", name: "Brand identity portfolio", url: canonicalUrl("/work/branding") },
       },
