@@ -52,6 +52,10 @@ export interface ServicePage {
   name: string;
   /** Short label for breadcrumbs and cross-links. */
   navLabel: string;
+  /** The service as a phrase, used in section headings, e.g. "Meta Ads management". */
+  topic: string;
+  /** Date the page content last changed (YYYY-MM-DD), used as the sitemap lastmod. */
+  updated: string;
   metaTitle: string;
   metaDescription: string;
   /** One-sentence positioning under the H1. */
@@ -112,6 +116,8 @@ export const servicePages: ServicePage[] = [
     icon: TrendingUp,
     name: "Digital Marketing for Kenyan SMEs",
     navLabel: "Digital Marketing",
+    topic: "digital marketing for SMEs",
+    updated: "2026-11-03",
     metaTitle: "Digital Marketing for Kenyan SMEs | Joseph Maina, Nairobi",
     metaDescription:
       "Performance marketing for Kenyan small and medium businesses — Meta, Google and TikTok Ads, SEO and lead generation. Retainers from KES 40,000/month.",
@@ -180,6 +186,8 @@ export const servicePages: ServicePage[] = [
     icon: Target,
     name: "Meta Ads Management in Nairobi",
     navLabel: "Meta Ads",
+    topic: "Meta Ads management",
+    updated: "2026-11-03",
     metaTitle: "Meta Ads Management Nairobi | Facebook & Instagram Ads Kenya",
     metaDescription:
       "Facebook and Instagram ads management for Kenyan businesses from KES 40,000/month. Campaign strategy, creative direction, weekly optimization and monthly reporting.",
@@ -270,6 +278,8 @@ export const servicePages: ServicePage[] = [
     icon: BarChart3,
     name: "Google Ads Management in Kenya",
     navLabel: "Google Ads",
+    topic: "Google Ads management",
+    updated: "2026-11-03",
     metaTitle: "Google Ads Management Kenya | Shopping & Performance Max",
     metaDescription:
       "Google Ads management in Kenya from KES 45,000/month. Search, Shopping, Performance Max, Display and YouTube campaigns with conversion tracking and reporting.",
@@ -343,6 +353,8 @@ export const servicePages: ServicePage[] = [
     icon: MapPin,
     name: "SEO Services in Nairobi",
     navLabel: "SEO",
+    topic: "SEO services",
+    updated: "2026-11-03",
     metaTitle: "SEO Services Nairobi | Local SEO & Google Business Profile Kenya",
     metaDescription:
       "SEO services for Nairobi and Kenyan businesses from KES 45,000/month. On-page, technical and local SEO including Google Business Profile and Maps visibility.",
@@ -403,6 +415,8 @@ export const servicePages: ServicePage[] = [
     icon: Share2,
     name: "Social Media Management for Small Businesses",
     navLabel: "Social Media",
+    topic: "social media management",
+    updated: "2026-11-03",
     metaTitle: "Social Media Management Kenya | Content & Community for SMEs",
     metaDescription:
       "Social media management in Kenya from KES 40,000/month. Four posts a week on two platforms you choose, with community management and light video shoots.",
@@ -471,6 +485,8 @@ export const servicePages: ServicePage[] = [
     icon: Magnet,
     name: "Lead Generation Campaigns in Kenya",
     navLabel: "Lead Generation",
+    topic: "lead generation campaigns",
+    updated: "2026-11-03",
     metaTitle: "Lead Generation Campaigns Kenya | Leads for Kenyan SMEs",
     metaDescription:
       "Lead generation campaigns in Kenya from KES 50,000/month. Landing pages included, with campaign management and tracking. Your team follows up with leads.",
@@ -544,6 +560,8 @@ export const servicePages: ServicePage[] = [
     icon: ClipboardList,
     name: "Digital Marketing Audit in Nairobi",
     navLabel: "Marketing Audit",
+    topic: "the digital marketing audit",
+    updated: "2026-11-03",
     metaTitle: "Free Digital Marketing Audit Nairobi | Joseph Maina",
     metaDescription:
       "Free digital marketing audit for Kenyan businesses. Review your ads, website, SEO and tracking, with findings in a written report or call within 1–2 days.",
@@ -602,3 +620,18 @@ export const getServicePageBySlug = (slug?: string) => servicePages.find((s) => 
 
 /** Service pages cleared for indexing and sitemap inclusion. */
 export const getLiveServicePages = () => servicePages.filter((s) => !s.draft);
+
+const capitalise = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+/**
+ * Section headings that name the service, so each page's H2s describe that
+ * service instead of repeating the same generic headings on every page.
+ */
+export const serviceHeadings = (page: ServicePage) => ({
+  whoFor: `${capitalise(page.topic)}: who it is for`,
+  included: `What's included in ${page.topic}`,
+  pricing: `Pricing for ${page.topic}`,
+  process: "How we start",
+  faqs: `Questions about ${page.topic}`,
+  midCta: `Ready to talk about ${page.topic}?`,
+});

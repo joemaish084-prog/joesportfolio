@@ -32,6 +32,7 @@ import { agencyPages, legacyAgencyTarget, type AgencyPageKey } from "@/data/agen
 import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 import { blogSummaries } from "@/data/blogSummaries";
 import { caseStudies } from "@/data/caseStudies";
+import { getLiveServicePages } from "@/data/servicePages";
 import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, CardCover } from "@/components/agency/AgencyVisuals";
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
@@ -153,6 +154,15 @@ function SubHeading({ eyebrow, title, children, aside }: { eyebrow?: string; tit
     {aside}
   </div>;
 }
+
+/** Pricing-table rows that have their own service page. */
+const SERVICE_PAGE_FOR_ROW: Record<string, string> = {
+  "meta-ads": "/agency/meta-ads-management",
+  "google-ads": "/agency/google-ads-management",
+  "social-media-management": "/agency/social-media-management",
+  "seo-optimization": "/agency/seo-services-nairobi",
+  "digital-marketing-audit": "/agency/digital-marketing-audit",
+};
 
 const supportingServices = [
   { icon: Share2, slug: "social-media-management", name: "Social Media Management", price: "from KES 40,000/mo", desc: "Content, scheduling and community management.", proof: { label: "Read: TikTok vs Instagram for Kenyan brands", to: "/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026" } },
@@ -511,6 +521,20 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               </Link>;
             })}
           </div>
+          {/* Direct links to every service page, so each one is a click from the agency home */}
+          <nav aria-label="Services" className="mx-auto mt-6 max-w-7xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Our services</p>
+            <ul className="mt-2 grid gap-x-8 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
+              {getLiveServicePages().map((page) => (
+                <li key={page.slug}>
+                  <Link to={`/agency/${page.slug}`} className="group inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-foreground/90 hover:text-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    {page.name}
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform motion-safe:group-hover:translate-x-0.5" aria-hidden />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </section>}
         {/* PROOF: real figures from the published case studies */}
         <section data-track-location="home_proof" className="container mx-auto px-4 pt-16 sm:pt-20">
@@ -656,7 +680,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 <caption className="sr-only">Starting fees for existing agency services; ad spend is separate</caption>
                 <thead className="bg-muted/60 max-sm:sr-only"><tr><th scope="col" className="p-4">Service</th><th scope="col" className="p-4">Starting fee</th><th scope="col" className="p-4">Scope</th></tr></thead>
                 <tbody className="max-sm:grid max-sm:gap-3">{[...singlePlatform.map(item => ({...item, desc: item.features.join(", ")})), ...supportingServices].map(item => <tr key={item.slug} className="border-t border-border transition-colors hover:bg-muted/40 max-sm:grid max-sm:grid-cols-[1fr_auto] max-sm:gap-x-4 max-sm:gap-y-1.5 max-sm:rounded-2xl max-sm:border max-sm:bg-card/60 max-sm:p-4">
-                  <th scope="row" className="p-4 font-medium max-sm:p-0"><Link to={`/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
+                  <th scope="row" className="p-4 font-medium max-sm:p-0"><Link to={SERVICE_PAGE_FOR_ROW[item.slug] ?? `/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
                   <td className="p-4 font-semibold text-primary whitespace-nowrap max-sm:p-0 max-sm:text-right first-letter:uppercase">{item.price}</td><td className="p-4 text-muted-foreground max-sm:col-span-2 max-sm:p-0">{item.desc}</td>
                 </tr>)}</tbody>
               </table>

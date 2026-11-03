@@ -26,6 +26,8 @@ interface NavLink {
   children?: NavChild[];
   /** "View all" link at the bottom of the dropdown. */
   footer?: { label: string; href: string };
+  /** Shown in the desktop bar only from the xl breakpoint, where there is room. Always in the mobile menu. */
+  wideOnly?: boolean;
 }
 
 const navLinks: NavLink[] = [
@@ -61,6 +63,20 @@ const navLinks: NavLink[] = [
   // Topic hubs are listed by hand rather than imported from the blog data, which
   // is too large to load with the header on every page.
   {
+    label: "Services",
+    href: "/agency/services",
+    children: [
+      { label: "Meta Ads Management", description: "Facebook and Instagram ads, optimised weekly", href: "/agency/meta-ads-management" },
+      { label: "Google Ads Management", description: "Search, Shopping and Performance Max", href: "/agency/google-ads-management" },
+      { label: "SEO Services", description: "Local SEO and Google Business Profile", href: "/agency/seo-services-nairobi" },
+      { label: "Social Media Management", description: "Content and community for small businesses", href: "/agency/social-media-management" },
+      { label: "Lead Generation", description: "Campaigns and landing pages that bring enquiries", href: "/agency/lead-generation" },
+      { label: "Digital Marketing for SMEs", description: "All-round marketing for Kenyan businesses", href: "/agency/digital-marketing-kenya" },
+      { label: "Free Marketing Audit", description: "A review of your current ads, site and tracking", href: "/agency/digital-marketing-audit" },
+    ],
+    footer: { label: "All services and pricing", href: "/agency/services" },
+  },
+  {
     label: "Blog",
     href: "/agency/blog",
     children: [
@@ -72,7 +88,7 @@ const navLinks: NavLink[] = [
     ],
     footer: { label: "All articles", href: "/agency/blog" },
   },
-  { label: "Experience", href: "/#experience" },
+  { label: "Experience", href: "/#experience", wideOnly: true },
   {
     label: "About",
     href: "/#about",
@@ -289,7 +305,7 @@ export function SiteHeader() {
                   aria-current={isActive ? "true" : undefined}
                   aria-haspopup={link.children ? "true" : undefined}
                   aria-expanded={link.children ? isOpen : undefined}
-                  className={`relative inline-flex items-center gap-1 ${navLinkClass} ${
+                  className={`relative ${link.wideOnly ? "hidden xl:inline-flex" : "inline-flex"} items-center gap-1 ${navLinkClass} ${
                     isActive ? "text-primary" : "text-foreground/70 hover:text-foreground"
                   }`}
                 >
@@ -388,9 +404,9 @@ export function SiteHeader() {
           {/* Desktop right */}
           <div className="hidden lg:flex items-center gap-3">
             <ThemeToggle />
-            <Button size="sm" variant="outline" onClick={() => setCvOpen(true)} className="rounded-full">
-              <FileText className="mr-1.5 h-4 w-4" />
-              View CV
+            <Button size="sm" variant="outline" onClick={() => setCvOpen(true)} className="rounded-full" aria-label="View CV">
+              <FileText className="h-4 w-4 xl:mr-1.5" aria-hidden="true" />
+              <span className="hidden xl:inline">View CV</span>
             </Button>
             <Button size="sm" asChild className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
               <a href="/agency">Agency</a>

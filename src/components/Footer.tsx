@@ -26,6 +26,9 @@ const agencyServices = [
   { name: "Google Ads Management", href: "/agency/google-ads-management" },
   { name: "SEO Services", href: "/agency/seo-services-nairobi" },
   { name: "Social Media Management", href: "/agency/social-media-management" },
+  { name: "Lead Generation", href: "/agency/lead-generation" },
+  { name: "Digital Marketing for SMEs", href: "/agency/digital-marketing-kenya" },
+  { name: "Free Marketing Audit", href: "/agency/digital-marketing-audit" },
   { name: "Ad Budget Calculator", href: "/agency/ad-budget-calculator" },
   { name: "Book a Free Strategy Call", href: "/agency/contact" },
 ];

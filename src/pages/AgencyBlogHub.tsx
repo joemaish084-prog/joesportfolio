@@ -5,7 +5,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
 import { blogHubHead } from "@/seo/pageHeads";
 import { ArrowLeft, ArrowRight, CalendarDays, ChevronRight, Clock, Eye } from "lucide-react";
-import { blogHubs, getHubBySlug, getHubPosts, resolveHubServiceHref } from "@/data/blogHubs";
+import { blogHubs, getHubBySlug, getHubPosts, hubServiceLinkLabel, resolveHubServiceHref } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
@@ -171,7 +171,7 @@ const AgencyBlogHub = () => {
                 to={resolveHubServiceHref(hub)}
                 className="mt-6 inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background sm:mt-0"
               >
-                View Service &amp; Pricing
+                {hubServiceLinkLabel(hub)}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>

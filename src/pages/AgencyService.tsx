@@ -6,7 +6,9 @@ import { AlertTriangle, ArrowLeft, ArrowRight, Check, ChevronRight, MessageCircl
 import {
   SERVICE_PROCESS,
   getServicePageBySlug,
+  serviceHeadings,
   servicePages,
+  type ServicePage,
 } from "@/data/servicePages";
 import { getHubBySlug } from "@/data/blogHubs";
 import { blogPosts } from "@/data/blogPosts";
@@ -36,6 +38,26 @@ function OtherContactOptions({ slug, name, briefIsPrimary, className = "" }: { s
   );
 }
 
+/** The page's main booking button: an external link (Calendly) or an in-site route. */
+function PrimaryCta({ cta, className = "" }: { cta: ServicePage["cta"]; className?: string }) {
+  const classes = `inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 ${className}`;
+  const content = (
+    <>
+      {cta.label}
+      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+    </>
+  );
+  return cta.external ? (
+    <a href={cta.href} target="_blank" rel="noopener noreferrer" className={classes}>
+      {content}
+    </a>
+  ) : (
+    <Link to={cta.href} className={classes}>
+      {content}
+    </Link>
+  );
+}
+
 const AgencyService = () => {
   const { service: slug } = useParams();
   const page = getServicePageBySlug(slug);
@@ -54,6 +76,7 @@ const AgencyService = () => {
     ? blogPosts.find((p) => p.slug === page.caseStudy?.readMore)
     : undefined;
   const otherServices = servicePages.filter((s) => s.slug !== page.slug);
+  const headings = serviceHeadings(page);
 
   return (
     <>
@@ -106,25 +129,7 @@ const AgencyService = () => {
             <h1 className="mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">{page.name}</h1>
             <p className="mt-5 text-lg leading-relaxed text-[#555555]">{page.standfirst}</p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              {page.cta.external ? (
-                <a
-                  href={page.cta.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                >
-                  {page.cta.label}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
-              ) : (
-                <Link
-                  to={page.cta.href}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                >
-                  {page.cta.label}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-              )}
+              <PrimaryCta cta={page.cta} />
               <div>
                 <p className="text-lg font-bold tracking-tight">{page.price.amount}</p>
                 <p className="text-sm text-[#888888]">{page.price.note}</p>
@@ -135,7 +140,7 @@ const AgencyService = () => {
 
           {/* Who it's for */}
           <section className="mt-20">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Who this is for</h2>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.whoFor}</h2>
             <ul className="mt-7 grid gap-4 sm:grid-cols-2">
               {page.whoFor.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-base leading-relaxed text-[#444444]">
@@ -162,7 +167,7 @@ const AgencyService = () => {
 
           {/* What's included */}
           <section className="mt-20">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">What is included</h2>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.included}</h2>
             <dl className="mt-7 divide-y divide-[#EAEAEA] border-y border-[#EAEAEA]">
               {page.included.map((item) => (
                 <div key={item.title} className="py-6 sm:flex sm:gap-8">
@@ -196,7 +201,7 @@ const AgencyService = () => {
 
           {/* Pricing starting point */}
           <section className="mt-20" aria-labelledby="pricing-start">
-            <h2 id="pricing-start" className="text-2xl font-bold tracking-tight sm:text-3xl">Pricing starting point</h2>
+            <h2 id="pricing-start" className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.pricing}</h2>
             <div className="mt-7 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-8">
               <div>
                 <p className="text-2xl font-bold tracking-tight">{page.price.amount}</p>
@@ -217,7 +222,7 @@ const AgencyService = () => {
 
           {/* Process */}
           <section className="mt-20">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">How we start</h2>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.process}</h2>
             <ol className="mt-7 space-y-5">
               {SERVICE_PROCESS.map((step, i) => (
                 <li key={step.title} className="flex items-start gap-5">
@@ -277,9 +282,23 @@ const AgencyService = () => {
             </figure>
           )}
 
+          {/* Mid-page CTA, so readers who are convinced by the proof don't have to scroll to the end */}
+          <section
+            data-track-location="service_mid_cta"
+            className="mt-16 flex flex-col gap-5 rounded-2xl bg-[#111111] p-8 text-white sm:flex-row sm:items-center sm:justify-between sm:p-10"
+          >
+            <div>
+              <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{headings.midCta}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-[#BBBBBB]">
+                {page.price.amount}. {page.cta.external ? "Start with a free 30-minute strategy call, with no obligation." : page.price.note}
+              </p>
+            </div>
+            <PrimaryCta cta={page.cta} className="flex-shrink-0 self-start sm:self-auto" />
+          </section>
+
           {/* FAQ */}
           <section className="mt-20">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Questions</h2>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.faqs}</h2>
             <dl className="mt-7 divide-y divide-[#EAEAEA] border-y border-[#EAEAEA]">
               {page.faqs.map((faq) => {
                 const unanswered = faq.a.includes("[CONFIRM]");
@@ -352,25 +371,7 @@ const AgencyService = () => {
           <section data-track-location="service_cta" className="mt-20 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-8 text-center sm:p-12">
             <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{page.cta.heading}</h2>
             <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-[#555555]">{page.cta.body}</p>
-            {page.cta.external ? (
-              <a
-                href={page.cta.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              >
-                {page.cta.label}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
-            ) : (
-              <Link
-                to={page.cta.href}
-                className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#F97316] px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              >
-                {page.cta.label}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            )}
+            <PrimaryCta cta={page.cta} className="mt-7" />
             <OtherContactOptions slug={page.slug} name={page.name} briefIsPrimary={!page.cta.external} className="mt-4 justify-center" />
           </section>
 

@@ -13,8 +13,8 @@ import {
   getHubsForPost,
   getPrimaryHubForPost,
   getRelatedByHub,
-  resolveHubServiceHref,
 } from "@/data/blogHubs";
+import { getServiceForPost, serviceLinkLabel } from "@/data/postServices";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MetaTurnaroundVisual } from "@/components/MetaTurnaroundVisual";
@@ -47,6 +47,7 @@ const AgencyBlogPost = () => {
   const related = getRelatedByHub(post.slug);
   const hubs = getHubsForPost(post.slug);
   const primaryHub = getPrimaryHubForPost(post.slug);
+  const service = getServiceForPost(post.slug, primaryHub?.service.pageSlug);
   // Charts default to the Meta turnaround figures unless the post has its own case study.
   const visualData = [googleAdsLaunch, combinedAds].find((study) => study.slug === post.slug);
 
@@ -231,26 +232,26 @@ const AgencyBlogPost = () => {
                 </Link>
               )}
 
-              {/* Related service for this topic */}
-              {primaryHub && (
+              {/* Related service for this article */}
+              {service && (
                 <section
-                  className={`${CALCULATOR_HUBS.includes(primaryHub.slug) ? "mt-6" : "mt-20"} rounded-2xl border border-border p-7 sm:p-9`}
+                  className={`${primaryHub && CALCULATOR_HUBS.includes(primaryHub.slug) ? "mt-6" : "mt-20"} rounded-2xl border border-border p-7 sm:p-9`}
                 >
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                     Related service
                   </p>
                   <h2 className="mt-4 text-xl font-bold tracking-tight sm:text-2xl">
-                    {primaryHub.service.name}
+                    {service.name}
                   </h2>
-                  <p className="mt-1 text-sm font-semibold text-primary">{primaryHub.service.price}</p>
+                  <p className="mt-1 text-sm font-semibold text-primary">{service.price.amount}</p>
                   <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-                    {primaryHub.service.blurb}
+                    {service.standfirst}
                   </p>
                   <Link
-                    to={resolveHubServiceHref(primaryHub)}
+                    to={`/agency/${service.slug}`}
                     className="mt-6 inline-flex items-center gap-2 rounded-full border border-foreground px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-foreground hover:text-background"
                   >
-                    View Service &amp; Pricing
+                    {serviceLinkLabel(service)}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </section>

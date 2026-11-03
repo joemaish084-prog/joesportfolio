@@ -367,6 +367,12 @@ export const resolveHubServiceHref = (hub: BlogHub) => {
   return page && !page.draft ? `/agency/${page.slug}` : hub.service.href;
 };
 
+/** Descriptive anchor text for a hub's service link, naming the service. */
+export const hubServiceLinkLabel = (hub: BlogHub) => {
+  const page = hub.service.pageSlug ? getServicePageBySlug(hub.service.pageSlug) : undefined;
+  return page && !page.draft ? `See ${page.navLabel} service and pricing` : "See all services and pricing";
+};
+
 /** Posts belonging to a hub, resolved and filtered to slugs that actually exist. */
 export const getHubPosts = (hub: BlogHub): BlogPost[] =>
   hub.postSlugs

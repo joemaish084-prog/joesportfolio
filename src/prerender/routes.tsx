@@ -12,8 +12,9 @@ import { agencyHead } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
 import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
 import type { BlogSummary } from "@/data/blogSummaries";
-import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost } from "@/data/blogHubs";
-import { servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
+import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost, hubServiceLinkLabel, resolveHubServiceHref } from "@/data/blogHubs";
+import { getLiveServicePages, serviceHeadings, servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
+import { getServiceForPost, serviceLinkLabel } from "@/data/postServices";
 import { brands, type Brand } from "@/data/brands";
 import { designs } from "@/data/designs";
 import { mockups } from "@/data/mockups";
@@ -94,6 +95,15 @@ function Shell({ children, contentTag: Content = "main" }: { children: ReactNode
           </span>
         ))}
       </nav>
+      <nav aria-label="Services">
+        Services:{" "}
+        {getLiveServicePages().map((page, i) => (
+          <span key={page.slug}>
+            {i > 0 && " · "}
+            <a href={`/agency/${page.slug}`}>{page.name}</a>
+          </span>
+        ))}
+      </nav>
       <Content>{children}</Content>
       <footer>
         <p>
@@ -124,6 +134,7 @@ function SimplePage({ head, children }: { head: PageHead; children?: ReactNode }
 
 function PostPage({ post }: { post: BlogPost }) {
   const hub = getPrimaryHubForPost(post.slug);
+  const service = getServiceForPost(post.slug, hub?.service.pageSlug);
   return (
     <Shell>
       <article>
@@ -157,6 +168,15 @@ function PostPage({ post }: { post: BlogPost }) {
           </section>
         ))}
       </article>
+      {service && (
+        <aside>
+          <h2>Related service: {service.name}</h2>
+          <p>{service.standfirst}</p>
+          <p>
+            <a href={`/agency/${service.slug}`}>{serviceLinkLabel(service)}</a>
+          </p>
+        </aside>
+      )}
       {hub && (
         <aside>
           <h2>{hub.cta.heading}</h2>
@@ -178,6 +198,7 @@ function PostPage({ post }: { post: BlogPost }) {
 
 function ServicePageBody({ page }: { page: ServicePage }) {
   const answered = page.faqs.filter((f) => !f.a.includes("[CONFIRM]"));
+  const headings = serviceHeadings(page);
   const related = page.relatedPosts
     .map((slug) => blogPosts.find((p) => p.slug === slug))
     .filter((p): p is BlogPost => Boolean(p));
@@ -191,14 +212,14 @@ function ServicePageBody({ page }: { page: ServicePage }) {
       <p>
         <strong>{page.price.amount}</strong> — {page.price.note}
       </p>
-      <h2>Who this is for</h2>
+      <h2>{headings.whoFor}</h2>
       <ul>
         {page.whoFor.map((w) => (
           <li key={w}>{w}</li>
         ))}
       </ul>
       {page.fitNote && <p>{page.fitNote}</p>}
-      <h2>What's included</h2>
+      <h2>{headings.included}</h2>
       <ul>
         {page.included.map((item) => (
           <li key={item.title}>
@@ -219,7 +240,7 @@ function ServicePageBody({ page }: { page: ServicePage }) {
           </ul>
         </div>
       ))}
-      <h2>How it works</h2>
+      <h2>{headings.process}</h2>
       <ol>
         {SERVICE_PROCESS.map((step) => (
           <li key={step.title}>
@@ -236,7 +257,7 @@ function ServicePageBody({ page }: { page: ServicePage }) {
       </>}
       {answered.length > 0 && (
         <>
-          <h2>Frequently asked questions</h2>
+          <h2>{headings.faqs}</h2>
           {answered.map((f) => (
             <div key={f.q}>
               <h3>{f.q}</h3>
@@ -397,6 +418,11 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
               <PostLink key={p.slug} post={p} />
             ))}
           </ul>
+          <h2>Related service: {hub.service.name}</h2>
+          <p>{hub.service.blurb}</p>
+          <p>
+            <a href={resolveHubServiceHref(hub)}>{hubServiceLinkLabel(hub)}</a>
+          </p>
           <p>
             <a href={hub.cta.href}>{hub.cta.label}</a>
           </p>
@@ -430,7 +456,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       body: html(<ServicePageBody page={page} />),
       card: { eyebrow: page.navLabel, title: page.name, meta: page.price.amount },
       // Drafts stay noindex and out of the sitemap until their [CONFIRM] markers are cleared.
-      sitemap: page.draft ? undefined : { priority: 0.9, changefreq: "monthly" },
+      sitemap: page.draft ? undefined : { priority: 0.9, changefreq: "monthly", lastmod: page.updated },
     });
   }
 
