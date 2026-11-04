@@ -1,3 +1,4 @@
+import { AdminAction } from "./AdminAction";
 import { useState, type FormEvent } from "react";
 import { CalendarDays, ChevronDown, PartyPopper, Plus, RotateCcw, StickyNote, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -194,13 +195,13 @@ function ItemRow({
             <span className="text-xs text-muted-foreground">
               {item.is_done && item.done_at ? `Done ${formatDate(item.done_at, "d MMM yyyy")}` : " "}
             </span>
-            <button
+            <AdminAction><button
               type="button"
               onClick={() => remove.mutate(item.id, { onError: (e) => toast.error(`Couldn't remove: ${e.message}`) })}
               className="flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs text-destructive transition-colors duration-150 hover:bg-destructive/10"
             >
               <Trash2 className="h-3.5 w-3.5" /> Remove step
-            </button>
+            </button></AdminAction>
           </div>
         </div>
       )}

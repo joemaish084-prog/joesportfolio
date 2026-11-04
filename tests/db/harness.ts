@@ -53,6 +53,8 @@ export async function createDb() {
   await pg.exec(migration("20261017000000_client_hub_phase3.sql"));
   await pg.exec(migration("20261021000000_hub_engagements.sql"));
   await pg.exec(migration("20261028000000_client_portal.sql"));
+  await pg.exec(migration("20261020000000_hub_tasks.sql"));
+  await pg.exec(migration("20261104000000_hub_team.sql"));
   for (const t of ["crm_organisations", "crm_memberships", "crm_leads"]) {
     await pg.exec(`grant all on public.${t} to service_role`);
   }

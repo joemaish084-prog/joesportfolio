@@ -64,6 +64,7 @@ import { billsMonthly } from "../lib/engagement";
 import { useSettings } from "../lib/settings";
 import { pctChange, useSiteAnalytics } from "../lib/website";
 import { LEAD_STAGE_LABEL, STATUS_LABEL, type ClientStatus, type LeadStage } from "../lib/types";
+import { useHubAuth } from "../auth/HubAuthProvider";
 
 function MetricCard({ title, value, hint, to, icon: Icon, aside, loading }: {
   title: string;
@@ -158,6 +159,7 @@ function dayLabel(date: string | null) {
 // ---------------------------------------------------------------- page
 
 export default function OverviewPage() {
+  const { displayName, status } = useHubAuth();
   const clients = useClients();
   const types = useClientTypes();
   const onboarding = useOnboardingByClient();
@@ -346,7 +348,7 @@ export default function OverviewPage() {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="min-w-0">
               <h1 className="text-[1.75rem] font-bold leading-tight tracking-tight md:text-[2.125rem]">
-                {greeting()}, Joseph
+                {greeting()}, {displayName.split(/\s+/)[0]}
               </h1>
               <p className="mt-1 text-[0.9375rem] text-muted-foreground">
                 {format(new Date(), "EEEE, d MMMM")}
@@ -520,7 +522,7 @@ export default function OverviewPage() {
             <Funnel stages={pipeline.stages} wonThisMonth={pipeline.wonThisMonth} kes={kes} />
           )}
         </Card>
-        <WebsiteCard />
+        {status === "admin" && <WebsiteCard />}
       </BlurFade>
 
       {/* ---- activity + clients */}

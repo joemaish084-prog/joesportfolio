@@ -73,6 +73,12 @@ const RECORDS_NAV: NavItem[] = [
 const SETTINGS_NAV: NavItem = { to: "/hub/settings", label: "Settings", icon: Settings };
 
 const NAV = [...WORK_NAV, ...RECORDS_NAV, SETTINGS_NAV];
+function useVisibleNav(items: NavItem[]) {
+  const { status, crm } = useHubAuth();
+  return items.filter(item => status !== "member" || (
+    !["/hub/funds", "/hub/website"].includes(item.to) && (item.to !== "/hub/crm" || !!crm)
+  ));
+}
 // Phones get the four most-used sections in the dock; the rest live under More.
 const MOBILE_NAV = ["/hub", "/hub/tasks", "/hub/clients", "/hub/finance"].map(
   (to) => NAV.find((n) => n.to === to) as NavItem,
@@ -99,10 +105,11 @@ function Brand() {
 }
 
 function NavList({ onNavigate, crmOnly }: { onNavigate?: () => void; crmOnly?: boolean }) {
+  const visible = useVisibleNav(NAV);
   return (
     <nav className="space-y-6">
       <ul className="space-y-0.5">
-        {(crmOnly ? CRM_ONLY_NAV : NAV).map(({ to, label, icon: Icon, end }) => (
+        {(crmOnly ? CRM_ONLY_NAV : visible).map(({ to, label, icon: Icon, end }) => (
           <li key={to}>
             <NavLink
               to={to}
@@ -229,6 +236,7 @@ const DOCK_PRIORITY = ["/hub", "/hub/tasks", "/hub/crm", "/hub/clients", "/hub/f
  * shrinks it). The rest go under More; the page you're on always stays visible.
  */
 function useDockNav(isActive: (item: NavItem) => boolean, crmOnly: boolean) {
+  const available = useVisibleNav(DOCK_NAV);
   const [height, setHeight] = useState(() => window.innerHeight);
   useEffect(() => {
     const onResize = () => setHeight(window.innerHeight);
@@ -238,14 +246,14 @@ function useDockNav(isActive: (item: NavItem) => boolean, crmOnly: boolean) {
 
   if (crmOnly) return { shown: CRM_ONLY_NAV, hidden: [] as NavItem[] };
   const slots = Math.max(2, Math.floor((height - 24 - DOCK_FIXED) / DOCK_SLOT));
-  if (slots >= DOCK_NAV.length) return { shown: DOCK_NAV, hidden: [] as NavItem[] };
+  if (slots >= available.length) return { shown: available, hidden: [] as NavItem[] };
   const keep = slots - 1; // one slot for More
-  const byPriority = DOCK_PRIORITY.map((to) => DOCK_NAV.find((n) => n.to === to) as NavItem);
+  const byPriority = DOCK_PRIORITY.map((to) => available.find((n) => n.to === to)).filter((item): item is NavItem => !!item);
   let picked = byPriority.slice(0, keep);
-  const current = DOCK_NAV.find(isActive);
+  const current = available.find(isActive);
   if (current && !picked.includes(current)) picked = [...picked.slice(0, keep - 1), current];
   // Shown in the usual dock order, not priority order.
-  return { shown: DOCK_NAV.filter((n) => picked.includes(n)), hidden: DOCK_NAV.filter((n) => !picked.includes(n)) };
+  return { shown: available.filter((n) => picked.includes(n)), hidden: available.filter((n) => !picked.includes(n)) };
 }
 
 /** The brand mark opens settings, appearance and sign out. */
@@ -254,7 +262,7 @@ function AccountMenu({
   onThemeChange,
   settingsActive,
 }: ShellProps & { settingsActive: boolean }) {
-  const { session, signOut, status } = useHubAuth();
+  const { session, signOut, status, displayName } = useHubAuth();
   return (
     <DropdownMenu>
       <Tooltip>
@@ -278,13 +286,13 @@ function AccountMenu({
       </Tooltip>
       <DropdownMenuContent side="right" align="start" sideOffset={14} className="w-64 rounded-2xl p-1.5">
         <DropdownMenuLabel className="px-2.5 py-2 font-normal">
-          <span className="block text-sm font-semibold">{status === "admin" ? "Joseph Maina" : "Signed in"}</span>
+          <span className="block truncate text-sm font-semibold">{displayName}</span>
           {session?.user.email && (
             <span className="block truncate text-xs text-muted-foreground">{session.user.email}</span>
           )}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {status === "admin" && (
+        {(status === "admin" || status === "member") && (
           <DropdownMenuItem asChild className="rounded-lg">
             <NavLink to={SETTINGS_NAV.to} className="flex items-center gap-2.5">
               <Settings className="h-4 w-4" /> Settings

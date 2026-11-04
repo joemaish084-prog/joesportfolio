@@ -9,6 +9,8 @@ import { PageHeader } from "../components/ui";
 import { ChangePasswordForm } from "../components/settings/ChangePassword";
 import { useHubAuth } from "../auth/HubAuthProvider";
 import { toast } from "sonner";
+import { ProfileSettings } from "../components/settings/ProfileSettings";
+import { TeamSettings } from "../components/settings/TeamSettings";
 
 const TABS = [
   { value: "business", label: "Business & invoices" },
@@ -16,12 +18,14 @@ const TABS = [
   { value: "onboarding", label: "Onboarding steps" },
   { value: "cleanup", label: "Clean-up" },
   { value: "account", label: "Account" },
+  { value: "team", label: "Team" },
 ] as const;
 
 export default function SettingsPage() {
   const [params, setParams] = useSearchParams();
-  const { session } = useHubAuth();
-  const tab = TABS.some((t) => t.value === params.get("tab")) ? params.get("tab")! : "business";
+  const { session, status } = useHubAuth();
+  const tabs = status === "admin" ? TABS : TABS.filter(t => t.value === "account");
+  const tab = tabs.some((t) => t.value === params.get("tab")) ? params.get("tab")! : tabs[0].value;
 
   return (
     <>
@@ -31,7 +35,7 @@ export default function SettingsPage() {
       <Tabs value={tab} onValueChange={(v) => setParams(v === "business" ? {} : { tab: v }, { replace: true })}>
         <div className="-mx-4 mb-6 overflow-x-auto px-4 sm:mx-0 sm:px-0">
           <TabsList className="h-auto rounded-xl bg-secondary p-1">
-            {TABS.map((t) => (
+            {tabs.map((t) => (
               <TabsTrigger
                 key={t.value}
                 value={t.value}
@@ -42,7 +46,7 @@ export default function SettingsPage() {
             ))}
           </TabsList>
         </div>
-        <TabsContent value="business" className="mt-0 max-w-3xl">
+        {status === "admin" && <><TabsContent value="business" className="mt-0 max-w-3xl">
           <BusinessSettings />
         </TabsContent>
         <TabsContent value="types" className="mt-0">
@@ -54,7 +58,9 @@ export default function SettingsPage() {
         <TabsContent value="cleanup" className="mt-0 max-w-3xl">
           <CleanupSettings />
         </TabsContent>
+        <TabsContent value="team" className="mt-0"><TeamSettings /></TabsContent></>}
         <TabsContent value="account" className="mt-0 max-w-md">
+          <ProfileSettings />
           <h2 className="hub-section-title">Your login</h2>
           <div className="hub-card space-y-4 p-5 sm:p-6">
             <p className="text-sm">

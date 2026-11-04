@@ -56,7 +56,10 @@ export function useSaveRow<T extends TableName>(table: T, alsoInvalidate: TableN
 export function useDeleteRow<T extends TableName>(table: T, alsoInvalidate: TableName[] = []) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (id: string) => unwrap(await raw.from(table).delete().eq("id", id)),
+    mutationFn: async (id: string) => {
+      const removed = unwrap(await raw.from(table).delete().eq("id", id).select("id"));
+      if (!removed.length) throw new Error("This record could not be deleted. An administrator may be required.");
+    },
     onSuccess: () => [table, ...alsoInvalidate].forEach((t) => qc.invalidateQueries({ queryKey: tableKey(t) })),
   });
 }
@@ -97,8 +100,10 @@ export function useDeleteDocument() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (doc: HubDocument) => {
-      unwrap(await raw.from("documents").delete().eq("id", doc.id));
-      await storage().remove([doc.storage_path]);
+      const removed = unwrap(await raw.from("documents").delete().eq("id", doc.id).select("id"));
+      if (!removed.length) throw new Error("Only an administrator can permanently delete this document.");
+      const { error } = await storage().remove([doc.storage_path]);
+      if (error) throw error;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: tableKey("documents") }),
   });

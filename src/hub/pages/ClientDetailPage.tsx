@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { OnboardingChecklist } from "../components/OnboardingChecklist";
+import { useHubAuth } from "../auth/HubAuthProvider";
 import { BlurFade } from "../components/motion/blur-fade";
 import { KesTicker } from "../components/motion/number-ticker";
 import { ClientAvatar, EmptyState, ProgressBar, Row, Section, SkeletonBlock, StatusBadge } from "../components/ui";
@@ -280,6 +281,8 @@ function OverviewTab({ client }: { client: Client }) {
 }
 
 export default function ClientDetailPage() {
+  const { status } = useHubAuth();
+  const tabs = status === "admin" ? TABS : TABS.filter(t => t.value !== "portal");
   const { id } = useParams();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
@@ -290,7 +293,7 @@ export default function ClientDetailPage() {
 
   // Old links used ?tab=overview for what is now Profile.
   const requested = params.get("tab") === "overview" ? "profile" : params.get("tab");
-  const tab = TABS.some((t) => t.value === requested) ? requested! : "dashboard";
+  const tab = tabs.some((t) => t.value === requested) ? requested! : "dashboard";
   const items = id ? onboarding.itemsFor(id) : [];
   const progress = id ? onboarding.progressFor(id) : null;
 
@@ -451,7 +454,7 @@ export default function ClientDetailPage() {
       >
         <div className="-mx-4 mb-6 overflow-x-auto px-4 sm:mx-0 sm:px-0">
           <TabsList className="h-auto rounded-xl bg-secondary p-1">
-            {TABS.map((t) => (
+            {tabs.map((t) => (
               <TabsTrigger
                 key={t.value}
                 value={t.value}
@@ -507,11 +510,11 @@ export default function ClientDetailPage() {
             <FinancePanel clientId={client.id} />
           </Suspense>
         </TabsContent>
-        <TabsContent value="portal" className="mt-0">
+        {status === "admin" && <TabsContent value="portal" className="mt-0">
           <Suspense fallback={tabFallback}>
             <PortalPanel client={client} />
           </Suspense>
-        </TabsContent>
+        </TabsContent>}
       </Tabs>
 
       {progress && progress.total > 0 && tab === "profile" && (

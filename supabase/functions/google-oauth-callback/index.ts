@@ -29,9 +29,10 @@ serve(async (req) => {
     if (!code || !userId) return back("error");
 
     const admin = serviceClient();
-    // The state was signed for a hub admin; check they still are.
+    // The signed state identifies one user; recheck their current hub access.
     const { data: role } = await admin.from("user_roles").select("user_id").eq("user_id", userId).eq("role", "admin").maybeSingle();
-    if (!role) return back("error");
+    const { data: member } = await admin.from("hub_team_members").select("user_id").eq("user_id", userId).eq("active", true).maybeSingle();
+    if (!role && !member) return back("error");
 
     const t = await exchangeCode(cfg, code);
     // Unticking the calendar box on Google's consent screen leaves us with nothing to sync.

@@ -38,6 +38,7 @@ import { useRows } from "../lib/data";
 import { usePrivacy } from "../lib/privacy";
 import { useClients } from "../lib/queries";
 import { LEAD_STAGE_LABEL } from "../lib/types";
+import { useHubAuth } from "../auth/HubAuthProvider";
 
 const PAGES = [
   { label: "Overview", to: "/hub", icon: LayoutGrid },
@@ -76,6 +77,8 @@ export default function CommandPalette({
   onOpenChange: (open: boolean) => void;
 }) {
   const navigate = useNavigate();
+  const { status } = useHubAuth();
+  const pages = status === "admin" ? PAGES : PAGES.filter(p => !["/hub/funds", "/hub/website", "/hub/settings?tab=cleanup"].includes(p.to));
   const clients = useClients();
   const leads = useRows("leads", "position", true);
   const privacy = usePrivacy();
@@ -118,7 +121,7 @@ export default function CommandPalette({
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Go to">
-          {PAGES.map(({ label, to, icon: Icon }) => (
+          {pages.map(({ label, to, icon: Icon }) => (
             <CommandItem key={to} value={`page ${label}`} onSelect={() => go(to)}>
               <Icon className="mr-2" />
               {label}

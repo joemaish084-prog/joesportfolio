@@ -1,3 +1,4 @@
+import { AdminAction } from "@/hub/components/AdminAction";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
@@ -209,7 +210,7 @@ export default function ReportsPage() {
                           >
                             <Pencil className="mr-2 h-4 w-4" /> Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem
+                          <AdminAction><DropdownMenuItem
                             className="text-destructive focus:text-destructive"
                             onSelect={() =>
                               remove.mutate(r.id, {
@@ -219,7 +220,7 @@ export default function ReportsPage() {
                             }
                           >
                             <Trash2 className="mr-2 h-4 w-4" /> Delete
-                          </DropdownMenuItem>
+                          </DropdownMenuItem></AdminAction>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

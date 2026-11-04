@@ -72,11 +72,11 @@ serve(async (req) => {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   try {
-    // Only the hub admin may use this.
+    // Active hub staff can enter invoice data.
     const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
       global: { headers: { Authorization: req.headers.get("Authorization") ?? "" } },
     });
-    const { data: isAdmin, error: roleError } = await supabase.rpc("is_hub_admin");
+    const { data: isAdmin, error: roleError } = await supabase.rpc("hub_can_work");
     if (roleError || isAdmin !== true) return json({ error: "Not allowed" }, 403);
 
     const body = await req.json().catch(() => null);

@@ -1,3 +1,4 @@
+import { AdminAction } from "@/hub/components/AdminAction";
 import { Suspense, lazy, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
@@ -244,7 +245,7 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
                             >
                               <Pencil className="mr-2 h-4 w-4" /> Edit
                             </DropdownMenuItem>
-                            <DropdownMenuItem
+                            <AdminAction><DropdownMenuItem
                               className="text-destructive focus:text-destructive"
                               onSelect={() =>
                                 remove.mutate(r.id, {
@@ -254,7 +255,7 @@ export function ProgressPanel({ clientId }: { clientId: string }) {
                               }
                             >
                               <Trash2 className="mr-2 h-4 w-4" /> Delete
-                            </DropdownMenuItem>
+                            </DropdownMenuItem></AdminAction>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>

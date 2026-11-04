@@ -1,3 +1,4 @@
+import { AdminAction } from "@/hub/components/AdminAction";
 import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { endOfMonth, format, startOfMonth, startOfYear, subMonths } from "date-fns";
@@ -621,7 +622,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                                 </DropdownMenuItem>
                               )}
                               {!hasPayments && (
-                                <DropdownMenuItem
+                                <AdminAction><DropdownMenuItem
                                   className="text-destructive focus:text-destructive"
                                   onSelect={() =>
                                     deleteInvoice.mutate(i.id, {
@@ -631,7 +632,7 @@ export function FinancePanel({ clientId }: { clientId?: string }) {
                                   }
                                 >
                                   <Trash2 className="mr-2 h-4 w-4" /> Delete
-                                </DropdownMenuItem>
+                                </DropdownMenuItem></AdminAction>
                               )}
                             </DropdownMenuContent>
                           </DropdownMenu>
@@ -869,9 +870,9 @@ function RowActions({ label, onEdit, onDelete }: { label: string; onEdit: () => 
         <DropdownMenuItem onSelect={onEdit}>
           <Pencil className="mr-2 h-4 w-4" /> Edit
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={onDelete}>
+        <AdminAction><DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={onDelete}>
           <Trash2 className="mr-2 h-4 w-4" /> Delete
-        </DropdownMenuItem>
+        </DropdownMenuItem></AdminAction>
       </DropdownMenuContent>
     </DropdownMenu>
   );

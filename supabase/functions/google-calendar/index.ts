@@ -3,8 +3,8 @@ import { corsHeaders, json, userClient } from "../_shared/crm/http.ts";
 import { authUrl, isEventId, signState, toGoogleBody, toHubEvent, type GoogleEvent } from "../_shared/google/calendar.ts";
 import { GoogleDisconnected, accessToken, googleConfig, revoke, serviceClient, type Connection } from "../_shared/google/oauth.ts";
 
-// Client Hub calendar: the hub's only way to reach Google Calendar. Hub admin
-// only. One POST endpoint with an `action`:
+// Client Hub calendar: active staff reach only their own Google connection.
+// One POST endpoint with an `action`:
 //   status | connect | disconnect | list {timeMin, timeMax} |
 //   create {event} | update {id, event} | delete {id}
 // Tokens never leave this function; the browser only sees events.
@@ -18,7 +18,7 @@ serve(async (req) => {
 
   try {
     const caller = userClient(req);
-    const { data: isAdmin, error: roleError } = await caller.rpc("is_hub_admin");
+    const { data: isAdmin, error: roleError } = await caller.rpc("hub_can_work");
     if (roleError || isAdmin !== true) return json({ error: "Not allowed" }, 403);
     const { data: who } = await caller.auth.getUser();
     const userId = who.user?.id;

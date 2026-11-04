@@ -1,3 +1,4 @@
+import { AdminAction } from "@/hub/components/AdminAction";
 import { useEffect, useMemo, useState } from "react";
 import { format, isSameMonth, parseISO } from "date-fns";
 import { Clock, MoreHorizontal, NotebookPen, Pencil, Plus, Trash2 } from "lucide-react";
@@ -274,7 +275,7 @@ export function WorkLogPanel({ clientId }: { clientId: string }) {
                         >
                           <Pencil className="mr-2 h-4 w-4" /> Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem
+                        <AdminAction><DropdownMenuItem
                           className="text-destructive focus:text-destructive"
                           onSelect={() =>
                             remove.mutate(e.id, {
@@ -284,7 +285,7 @@ export function WorkLogPanel({ clientId }: { clientId: string }) {
                           }
                         >
                           <Trash2 className="mr-2 h-4 w-4" /> Delete
-                        </DropdownMenuItem>
+                        </DropdownMenuItem></AdminAction>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </li>

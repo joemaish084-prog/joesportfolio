@@ -50,26 +50,32 @@ function FullScreenSpinner() {
   );
 }
 
-/** Signed in and past any second factor: hub admins and CRM members. */
+/** Signed in and past any second factor: admins, editors and CRM members. */
 function RequireSignedIn({ children }: { children: ReactNode }) {
   const { status, signOut } = useHubAuth();
   const location = useLocation();
   const onIdle = useCallback(() => void signOut("idle"), [signOut]);
-  useIdleSignOut(onIdle, IDLE_TIMEOUT_MS, status === "admin" || status === "crm");
+  useIdleSignOut(onIdle, IDLE_TIMEOUT_MS, status === "admin" || status === "member" || status === "crm");
 
   if (status === "loading") return <FullScreenSpinner />;
-  if (status !== "admin" && status !== "crm") return <Navigate to="/hub/login" replace state={{ from: location.pathname }} />;
+  if (status !== "admin" && status !== "member" && status !== "crm") return <Navigate to="/hub/login" replace state={{ from: location.pathname }} />;
   return <>{children}</>;
 }
 
-/** The rest of the hub (clients, finance…) stays admin-only; CRM members go to the CRM. */
+/** Privileged pages remain admin-only; editors return to their overview. */
 function AdminOnly({ children }: { children: ReactNode }) {
   const { status } = useHubAuth();
-  if (status !== "admin") return <Navigate to="/hub/crm" replace />;
+  if (status !== "admin") return <Navigate to={status === "crm" ? "/hub/crm" : "/hub"} replace />;
   return <>{children}</>;
 }
 
 const admin = (node: ReactNode) => <AdminOnly>{node}</AdminOnly>;
+function HubOnly({ children }: { children: ReactNode }) {
+  const { status } = useHubAuth();
+  if (status !== "admin" && status !== "member") return <Navigate to="/hub/crm" replace />;
+  return <>{children}</>;
+}
+const hub = (node: ReactNode) => <HubOnly>{node}</HubOnly>;
 
 /** Entry point for /hub/*. Loaded with React.lazy, so none of this ships with the public site. */
 export default function HubApp() {
@@ -92,22 +98,22 @@ export default function HubApp() {
                 </RequireSignedIn>
               }
             >
-              <Route index element={admin(<OverviewPage />)} />
-              <Route path="clients" element={admin(<ClientsPage />)} />
-              <Route path="clients/new" element={admin(<ClientFormPage />)} />
-              <Route path="clients/:id" element={admin(<ClientDetailPage />)} />
-              <Route path="clients/:id/edit" element={admin(<ClientFormPage />)} />
-              <Route path="onboarding" element={admin(<OnboardingPage />)} />
-              <Route path="documents" element={admin(section(<DocumentsPage />))} />
-              <Route path="reports" element={admin(section(<ReportsPage />))} />
-              <Route path="finance" element={admin(section(<FinancePage />))} />
+              <Route index element={hub(<OverviewPage />)} />
+              <Route path="clients" element={hub(<ClientsPage />)} />
+              <Route path="clients/new" element={hub(<ClientFormPage />)} />
+              <Route path="clients/:id" element={hub(<ClientDetailPage />)} />
+              <Route path="clients/:id/edit" element={hub(<ClientFormPage />)} />
+              <Route path="onboarding" element={hub(<OnboardingPage />)} />
+              <Route path="documents" element={hub(section(<DocumentsPage />))} />
+              <Route path="reports" element={hub(section(<ReportsPage />))} />
+              <Route path="finance" element={hub(section(<FinancePage />))} />
               <Route path="funds" element={admin(section(<BusinessFundsPage />))} />
-              <Route path="finance/invoices/:id" element={admin(section(<InvoicePage />))} />
-              <Route path="pipeline" element={admin(section(<PipelinePage />))} />
-              <Route path="settings" element={admin(section(<SettingsPage />))} />
+              <Route path="finance/invoices/:id" element={hub(section(<InvoicePage />))} />
+              <Route path="pipeline" element={hub(section(<PipelinePage />))} />
+              <Route path="settings" element={hub(section(<SettingsPage />))} />
               <Route path="website" element={admin(section(<WebsitePage />))} />
-              <Route path="tasks" element={admin(section(<TasksPage />))} />
-              <Route path="calendar" element={admin(section(<CalendarPage />))} />
+              <Route path="tasks" element={hub(section(<TasksPage />))} />
+              <Route path="calendar" element={hub(section(<CalendarPage />))} />
               <Route path="crm/*" element={section(<CrmApp />)} />
               <Route path="*" element={<Navigate to="/hub" replace />} />
             </Route>

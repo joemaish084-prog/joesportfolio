@@ -26,7 +26,7 @@ export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (status === "admin" || status === "crm") {
+  if (status === "admin" || status === "member" || status === "crm") {
     const from = (location.state as { from?: string } | null)?.from;
     const home = status === "crm" ? "/hub/crm" : "/hub";
     const allowed = from && from.startsWith(home) && from !== "/hub/login";

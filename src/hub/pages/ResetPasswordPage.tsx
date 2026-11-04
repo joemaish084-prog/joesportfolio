@@ -28,14 +28,14 @@ export default function ResetPasswordPage() {
             <div className="flex justify-center py-6">
               <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" aria-label="Loading" />
             </div>
-          ) : status === "admin" ? (
+          ) : status === "admin" || status === "member" || status === "crm" ? (
             <ChangePasswordForm
               submitLabel="Save and open the hub"
               onDone={() => {
                 // A fresh start for the 30-minute idle timer.
                 markActive();
                 toast.success("Password updated");
-                navigate("/hub", { replace: true });
+                navigate(status === "crm" ? "/hub/crm" : "/hub", { replace: true });
               }}
             />
           ) : (

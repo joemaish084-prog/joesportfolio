@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { AuthError, Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,18 +6,22 @@ import { db } from "../lib/db";
 import { hubKeys } from "../lib/queries";
 import type { CrmAccess } from "../crm/lib/types";
 import { markActive } from "./useIdleSignOut";
+import { readHubProfile, type HubProfile } from "../lib/team";
 
 export type SignOutReason = "idle" | "denied" | "manual";
 
 /**
- * admin: the full hub. crm: a CRM member without hub admin, who sees only
- * /hub/crm. mfa: signed in but the account's second factor isn't verified yet.
+ * admin: the full hub. member: operational editor. crm: CRM-only access.
+ * mfa: signed in but the account's second factor isn't verified yet.
  */
-type Status = "loading" | "signed-out" | "mfa" | "admin" | "crm";
+type Status = "loading" | "signed-out" | "mfa" | "admin" | "member" | "crm";
 
 type HubAuth = {
   status: Status;
   session: Session | null;
+  profile: HubProfile | null;
+  displayName: string;
+  refreshProfile: () => Promise<void>;
   /** The caller's CRM membership, or null (not a member, or the CRM isn't set up yet). */
   crm: CrmAccess | null;
   /** Why the last session ended, for the login screen. */
@@ -61,19 +65,32 @@ export function HubAuthProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [crm, setCrm] = useState<CrmAccess | null>(null);
   const [needsMfa, setNeedsMfa] = useState(false);
+  const [profile, setProfile] = useState<HubProfile | null>(null);
+  const accessScope = useRef<string | null>(null);
+  const sessionUser = useRef<string | null>(null);
   const [reason, setReason] = useState<SignOutReason | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setSessionLoaded(true);
-    });
-    const { data } = supabase.auth.onAuthStateChange((_event, next) => {
+    const applySession = (next: Session | null) => {
+      const nextUser = next?.user.id ?? null;
+      if (sessionUser.current !== nextUser) {
+        qc.removeQueries({ queryKey: hubKeys.all });
+        setIsAdmin(null);
+        setProfile(null);
+        setCrm(null);
+        sessionUser.current = nextUser;
+      }
       setSession(next);
       setSessionLoaded(true);
+    };
+    supabase.auth.getSession().then(({ data }) => {
+      applySession(data.session);
+    });
+    const { data } = supabase.auth.onAuthStateChange((_event, next) => {
+      applySession(next);
     });
     return () => data.subscription.unsubscribe();
-  }, []);
+  }, [qc]);
 
   const signOut = useCallback(
     async (why: SignOutReason = "manual") => {
@@ -81,6 +98,7 @@ export function HubAuthProvider({ children }: { children: ReactNode }) {
       await supabase.auth.signOut();
       // Drop every cached hub row so nothing lingers in memory after sign-out.
       qc.removeQueries({ queryKey: hubKeys.all });
+      setProfile(null);
     },
     [qc],
   );
@@ -95,20 +113,25 @@ export function HubAuthProvider({ children }: { children: ReactNode }) {
       setIsAdmin(null);
       setCrm(null);
       setNeedsMfa(false);
+      setProfile(null);
       return;
     }
     let cancelled = false;
     setIsAdmin(null);
-    Promise.all([
+    const checkAccess = () => Promise.all([
       db.rpc("is_hub_admin"),
       // Missing until the CRM migration is applied; the hub carries on without it.
       supabase.rpc("crm_my_access" as never),
       supabase.auth.mfa.getAuthenticatorAssuranceLevel(),
-    ]).then(([admin, access, level]) => {
+      readHubProfile(),
+    ]).then(([admin, access, level, hubProfile]) => {
       if (cancelled) return;
       const hubAdmin = !admin.error && admin.data === true;
       const membership = access.error ? null : ((access.data as CrmAccess | null) ?? null);
-      if (!hubAdmin && !membership) {
+      const scope = JSON.stringify([userId, hubAdmin, hubProfile?.role, membership]);
+      if (accessScope.current !== null && accessScope.current !== scope) qc.removeQueries({ queryKey: hubKeys.all });
+      accessScope.current = scope;
+      if (!hubAdmin && !hubProfile && !membership) {
         setIsAdmin(false);
         void signOut("denied");
         return;
@@ -116,12 +139,22 @@ export function HubAuthProvider({ children }: { children: ReactNode }) {
       // Anyone who has enrolled a factor must use it, whatever the org setting.
       setNeedsMfa(level.data?.nextLevel === "aal2" && level.data.currentLevel !== "aal2");
       setCrm(membership);
+      setProfile(hubProfile);
       setIsAdmin(hubAdmin);
+    }).catch(() => {
+      if (!cancelled) void signOut("denied");
     });
+    void checkAccess();
+    const timer = window.setInterval(() => void checkAccess(), 60_000);
     return () => {
       cancelled = true;
+      window.clearInterval(timer);
     };
-  }, [userId, aal, signOut]);
+  }, [userId, aal, signOut, qc]);
+
+  const refreshProfile = useCallback(async () => setProfile(await readHubProfile()), []);
+  const metadataName = session?.user.user_metadata?.full_name;
+  const displayName = profile?.full_name.trim() || (typeof metadataName === "string" ? metadataName.trim() : "") || session?.user.email?.split("@")[0] || "there";
 
   const verifyMfa = useCallback(async (code: string) => {
     const { data: factors, error: listError } = await supabase.auth.mfa.listFactors();
@@ -151,13 +184,15 @@ export function HubAuthProvider({ children }: { children: ReactNode }) {
           ? "mfa"
           : isAdmin
             ? "admin"
-            : crm
-              ? "crm"
-              : "signed-out";
+            : profile
+              ? "member"
+              : crm
+                ? "crm"
+                : "signed-out";
 
   const value = useMemo(
-    () => ({ status, session, crm, reason, signIn, verifyMfa, signOut }),
-    [status, session, crm, reason, signIn, verifyMfa, signOut],
+    () => ({ status, session, profile, displayName, refreshProfile, crm, reason, signIn, verifyMfa, signOut }),
+    [status, session, profile, displayName, refreshProfile, crm, reason, signIn, verifyMfa, signOut],
   );
 
   return <HubAuthContext.Provider value={value}>{children}</HubAuthContext.Provider>;
