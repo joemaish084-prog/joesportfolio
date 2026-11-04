@@ -41,6 +41,7 @@ import { useHubAuth } from "../auth/HubAuthProvider";
 import { usePrivacy } from "../lib/privacy";
 import type { HubTheme } from "../theme/useHubTheme";
 import { Dock, DockIcon, DockSeparator } from "./motion/dock";
+import { HubLogo } from "./HubLogo";
 
 // The palette (and cmdk) loads the first time it's opened.
 const CommandPalette = lazy(() => import("./CommandPalette"));
@@ -88,7 +89,7 @@ type ShellProps = { theme: HubTheme; onThemeChange: (theme: HubTheme) => void };
 function Brand() {
   return (
     <div className="flex items-center gap-2.5 px-3">
-      <img src="/logo/jm-mark.png" alt="" width={260} height={260} className="h-9 w-9" />
+      <HubLogo className="h-9 w-9" />
       <div className="leading-tight">
         <p className="text-[0.9375rem] font-semibold">Client Hub</p>
         <p className="text-[0.6875rem] text-muted-foreground">Joseph Maina</p>
@@ -247,7 +248,7 @@ function useDockNav(isActive: (item: NavItem) => boolean, crmOnly: boolean) {
   return { shown: DOCK_NAV.filter((n) => picked.includes(n)), hidden: DOCK_NAV.filter((n) => !picked.includes(n)) };
 }
 
-/** The JM badge: settings, light/dark and sign out, out of the way until needed. */
+/** The brand mark opens settings, appearance and sign out. */
 function AccountMenu({
   theme,
   onThemeChange,
@@ -262,9 +263,9 @@ function AccountMenu({
             <button
               type="button"
               aria-label="Account, settings and appearance"
-              className="relative mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-primary text-[0.8125rem] font-bold text-primary-foreground transition-transform duration-150 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[state=open]:scale-105"
+              className="relative mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform duration-150 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background data-[state=open]:scale-105"
             >
-              JM
+              <HubLogo />
               {settingsActive && (
                 <span aria-hidden className="absolute -left-2.5 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-primary" />
               )}

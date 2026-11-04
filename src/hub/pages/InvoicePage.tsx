@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { InvoiceDialog, PaymentDialog } from "../components/finance/FinanceDialogs";
+import { HubLogo } from "../components/HubLogo";
 import { EmptyState, Pill, SkeletonBlock } from "../components/ui";
 import { useRows } from "../lib/data";
 import { INVOICE_STATE, invoiceState, paidByInvoice } from "../lib/finance";
@@ -148,9 +149,7 @@ function InvoicePage() {
       <article className="hub-card p-6 sm:p-10 print:rounded-none print:border-0 print:p-0 print:shadow-none">
         <header className="flex flex-col justify-between gap-6 sm:flex-row">
           <div>
-            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground print:[-webkit-print-color-adjust:exact] print:[print-color-adjust:exact]">
-              JM
-            </div>
+            <HubLogo alt="JM Creative" className="mb-3 h-12 w-12" />
             <p className="text-lg font-bold">{business.name}</p>
             {[business.tagline, business.address, business.location, business.phone, business.email, business.website]
               .filter(Boolean)

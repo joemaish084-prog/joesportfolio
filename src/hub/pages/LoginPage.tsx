@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useHubAuth } from "../auth/HubAuthProvider";
+import { HubLogo } from "../components/HubLogo";
 
 const REASON_MESSAGE = {
   idle: "You were signed out after 30 minutes of inactivity.",
@@ -164,7 +165,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
           {mode === "sign-in" ? (
-            <img src="/logo/jm-mark.png" alt="JM Creative" width={260} height={260} className="mb-5 h-20 w-20" />
+            <HubLogo alt="JM Creative" className="mb-5 h-20 w-20" />
           ) : (
             <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-hub-lg">
               {mode === "forgot" ? (
