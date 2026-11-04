@@ -1,6 +1,14 @@
 @config "./tailwind.hub.config.ts";
 @tailwind utilities;
 
+/* Personal time dashboard keeps colour for its status pills. */
+.hub-time {
+  --primary: var(--foreground);
+  --ring: var(--foreground);
+  --accent: var(--secondary);
+  --accent-foreground: var(--foreground);
+}
+
 /*
  * Client Hub design tokens. Everything is keyed to html.hub-active, which only
  * exists while the hub is mounted, so the public site's tokens are untouched.

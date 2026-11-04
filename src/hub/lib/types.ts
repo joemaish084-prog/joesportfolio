@@ -1,5 +1,6 @@
 // Types for the Client Hub tables. Kept here rather than in the generated
 // integrations/supabase/types.ts so regenerating that file never breaks the hub.
+import type { TimeClient, TimeEntry, TimeSettings } from "./time";
 
 export const ENGAGEMENT_TYPES = ["retainer", "contract", "project"] as const;
 export type EngagementType = (typeof ENGAGEMENT_TYPES)[number];
@@ -571,6 +572,14 @@ export type HubDatabase = {
       expenses: TableDef<Expense, "description" | "amount">;
       leads: TableDef<Lead, "name">;
       tasks: TableDef<Task, "title">;
+      hub_time_entries: TableDef<TimeEntry, "client_id" | "minutes" | "entry_date">;
+      hub_time_clients: { Row: TimeClient; Insert: TimeClient; Update: Partial<TimeClient>; Relationships: [] };
+      hub_time_settings: {
+        Row: TimeSettings;
+        Insert: TimeSettings;
+        Update: Pick<TimeSettings, "weekly_agency_hours">;
+        Relationships: [];
+      };
       client_users: TableDef<ClientUser, "client_id" | "email">;
       client_milestones: TableDef<ClientMilestone, "client_id" | "title">;
       client_updates: TableDef<ClientUpdate, "client_id" | "title">;
@@ -585,6 +594,11 @@ export type HubDatabase = {
     Views: Record<string, never>;
     Functions: {
       is_hub_admin: { Args: never; Returns: boolean };
+      is_hub_time_owner: { Args: never; Returns: boolean };
+      hub_time_save_entry: {
+        Args: { p_id: string; p_client_id: string; p_minutes: number; p_note: string; p_entry_date: string };
+        Returns: string;
+      };
       hub_apply_onboarding_template: { Args: { p_client_id: string }; Returns: number };
       hub_merge_clients: { Args: { p_keep: string; p_drop: string }; Returns: undefined };
     };

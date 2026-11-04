@@ -2,6 +2,8 @@
 
 The main hub supports Admin and Editor accounts in one shared business workspace.
 CRM organisations and client portal memberships keep their separate access rules.
+The unlisted [personal time dashboard](HUB-TIME.md) at `/hub/time` is restricted
+to its specifically bound account, including against other hub administrators.
 
 | Capability | Admin | Editor |
 | --- | --- | --- |
