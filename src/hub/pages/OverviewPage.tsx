@@ -1,5 +1,5 @@
-import { useMemo, type MouseEvent, type ReactNode } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useMemo, type ReactNode } from "react";
+import { Link } from "react-router-dom";
 import {
   differenceInCalendarDays,
   endOfMonth,
@@ -18,6 +18,7 @@ import {
   CheckCircle2,
   ChevronRight,
   FileText,
+  MoreHorizontal,
   Filter,
   FolderUp,
   ListChecks,
@@ -28,22 +29,22 @@ import {
   FileSignature,
   SquareKanban,
   Target,
-  UserCheck,
   UserPlus,
   Users,
-  Wallet,
   type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
-import { ShineBorder } from "@/components/ui/shine-border";
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { AnimatedList } from "../components/motion/animated-list";
 import { BlurFade } from "../components/motion/blur-fade";
-import { AvatarStack, GoalCard, Ring, Sparkline, StageColumns } from "../components/overview/visuals";
+import { Ring, Sparkline, StageColumns } from "../components/overview/visuals";
+import { BusinessSnapshot } from "../components/overview/BusinessSnapshot";
 import { KesTicker, NumberTicker } from "../components/motion/number-ticker";
 import { SpotlightCard } from "../components/motion/spotlight-card";
-import { PrivateBlur } from "../components/privacy";
+import { PrivacyToggle, PrivateBlur } from "../components/privacy";
 import { ClientAvatar, EmptyState, ProgressBar, SkeletonBlock, StatusBadge } from "../components/ui";
 import { useRows } from "../lib/data";
 import { invoiceState, paidByInvoice, sumAmounts } from "../lib/finance";
@@ -64,32 +65,27 @@ import { useSettings } from "../lib/settings";
 import { pctChange, useSiteAnalytics } from "../lib/website";
 import { LEAD_STAGE_LABEL, STATUS_LABEL, type ClientStatus, type LeadStage } from "../lib/types";
 
-// The shared BentoCard renders plain <a href> links; route them through the
-// router so moving around the hub never reloads the page.
-function useRouterLinks() {
-  const navigate = useNavigate();
-  return (e: MouseEvent<HTMLElement>) => {
-    const anchor = (e.target as HTMLElement).closest("a");
-    const href = anchor?.getAttribute("href");
-    if (!href?.startsWith("/") || e.metaKey || e.ctrlKey || e.shiftKey) return;
-    e.preventDefault();
-    navigate(href);
-  };
-}
-
-const bentoCardClass =
-  "col-span-1 rounded-[20px] border border-border/70 bg-card shadow-hub [&_h3]:text-base [&_h3]:leading-snug [&_p]:text-xs md:[&_h3]:text-lg md:[&_p]:text-sm [&_svg.h-12]:h-9 [&_svg.h-12]:w-9";
-
-function Stat({ children, loading, aside }: { children: ReactNode; loading?: boolean; aside?: ReactNode }) {
+function MetricCard({ title, value, hint, to, icon: Icon, aside, loading }: {
+  title: string;
+  value: ReactNode;
+  hint: string;
+  to: string;
+  icon: LucideIcon;
+  aside?: ReactNode;
+  loading?: boolean;
+}) {
   return (
-    <div className="flex items-start justify-between gap-3 p-4 pb-0">
-      {loading ? (
-        <SkeletonBlock className="h-10 w-20" />
-      ) : (
-        <div className="min-w-0 text-[2.25rem] font-bold leading-none tracking-tight">{children}</div>
-      )}
-      {!loading && aside && <div className="hidden shrink-0 sm:block">{aside}</div>}
-    </div>
+    <Link to={to} className="hub-card hub-card-interactive group flex min-w-0 flex-col p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary md:p-5">
+      <div className="flex items-center justify-between gap-3">
+        <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground"><Icon className="h-4 w-4 text-primary" />{title}</span>
+        <ChevronRight className="h-4 w-4 text-muted-foreground/50 transition-colors group-hover:text-primary" />
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-3">
+        {loading ? <SkeletonBlock className="h-9 w-24" /> : <div className="hub-tabular min-w-0 text-2xl font-bold tracking-tight md:text-3xl">{value}</div>}
+        {!loading && aside}
+      </div>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{hint}</p>
+    </Link>
   );
 }
 
@@ -171,7 +167,6 @@ export default function OverviewPage() {
   const reports = useRows("reports", "period_end");
   const work = useRows("work_log", "worked_on");
   const documents = useRows("documents");
-  const routeLinks = useRouterLinks();
   const kes = useKes();
   const { settings } = useSettings();
 
@@ -324,11 +319,11 @@ export default function OverviewPage() {
     return { counts, max: Math.max(1, ...counts.map((c) => c.count)) };
   }, [live]);
 
-  const loadError = clients.error ?? onboarding.error;
+  const loadError = clients.error ?? onboarding.error ?? invoices.error ?? payments.error ?? leads.error ?? reports.error;
   const dueToday = agenda?.today.length ?? 0;
 
   // One line under the greeting that says what the day looks like.
-  const summary = !agenda
+  const summary = !agenda || !attentionItems
     ? null
     : attention === 0 && dueToday === 0
       ? "Nothing late and nothing due today."
@@ -363,30 +358,26 @@ export default function OverviewPage() {
                 )}
               </p>
             </div>
-            <div className="lg:w-80">
-              <GoalCard
-                received={money?.thisMonth ?? null}
-                goal={settings.revenueGoal}
-                daysLeft={differenceInCalendarDays(endOfMonth(new Date()), new Date())}
-                kes={kes}
-              />
-            </div>
           </div>
-          <div className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-            {QUICK_ACTIONS.map(({ label, to, icon: Icon }, i) => (
-              <Button
-                key={to}
-                asChild
-                variant={i === 0 ? "default" : "secondary"}
-                size="sm"
-                className={cn("h-9 shrink-0 rounded-full px-3.5", i !== 0 && "bg-card shadow-hub hover:bg-secondary")}
-              >
-                <Link to={to}>
-                  <Icon className="mr-1.5 h-4 w-4" />
-                  {label}
-                </Link>
-              </Button>
-            ))}
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <span className="flex h-9 items-center gap-2 rounded-xl bg-secondary px-3 text-xs font-medium"><CalendarClock className="h-3.5 w-3.5 text-muted-foreground" />{format(new Date(), "MMMM yyyy")}</span>
+              <PrivacyToggle className="h-9 px-3 text-xs" />
+            </div>
+            <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="secondary" size="sm" className="h-9 rounded-full px-3"><MoreHorizontal className="mr-1.5 h-4 w-4" />More</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-52 rounded-xl">
+                  {QUICK_ACTIONS.slice(2).map(({ label, to, icon: Icon }) => (
+                    <DropdownMenuItem key={to} asChild><Link to={to}><Icon className="mr-2 h-4 w-4" />{label}</Link></DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Button asChild variant="secondary" size="sm" className="h-9 rounded-full px-3"><Link to="/hub/clients/new"><UserPlus className="mr-1.5 h-4 w-4" />New client</Link></Button>
+              <Button asChild size="sm" className="h-9 rounded-full px-4"><Link to="/hub/tasks?new=task"><Plus className="mr-1.5 h-4 w-4" />New task</Link></Button>
+            </div>
           </div>
         </header>
       </BlurFade>
@@ -397,156 +388,32 @@ export default function OverviewPage() {
         </p>
       )}
 
-      {/* ---- summary bento */}
       <BlurFade delay={0.05}>
-        <BentoGrid className="auto-rows-[15rem] grid-cols-2 gap-3 md:auto-rows-[15.5rem] md:gap-4 lg:grid-cols-3">
-          <BentoCard
-            name="Active clients"
-            description={
-              stats
-                ? `${kes(stats.retainer)}/mo recurring${
-                    stats.projects ? ` · ${stats.projects} ${stats.projects === 1 ? "project" : "projects"} running` : ""
-                  }`
-                : "Currently retained"
-            }
-            Icon={UserCheck}
-            href="/hub/clients?status=active"
-            cta="View clients"
-            className={bentoCardClass}
-            background={
-              <Stat loading={!stats} aside={stats && <AvatarStack names={stats.activeNames} />}>
-                <NumberTicker value={stats?.active ?? 0} />
-              </Stat>
-            }
-            onClickCapture={routeLinks}
-          />
-          <BentoCard
-            name="Money in"
-            description={
-              money?.delta == null
-                ? "Received this month"
-                : `${Math.abs(money.delta)}% ${money.delta >= 0 ? "more" : "less"} than this point last month`
-            }
-            Icon={Wallet}
-            href="/hub/finance"
-            cta="Open finance"
-            className={bentoCardClass}
-            background={
-              <Stat
-                loading={!money}
-                aside={money?.series.some((m) => m.amount > 0) && <Sparkline values={money.series.map((m) => m.amount)} />}
-              >
-                <KesTicker value={money?.thisMonth ?? 0} className="text-[1.375rem] sm:text-[1.75rem] md:text-[2rem]" />
-              </Stat>
-            }
-            onClickCapture={routeLinks}
-          />
-          <BentoCard
-            name="Pipeline"
-            description={
-              pipeline ? `${pipeline.count} open ${pipeline.count === 1 ? "lead" : "leads"} · per month` : "Open leads"
-            }
-            Icon={Filter}
-            href="/hub/pipeline"
-            cta="Open pipeline"
-            className={bentoCardClass}
-            background={
-              <Stat
-                loading={!pipeline}
-                aside={
-                  !!pipeline?.count && (
-                    <StageColumns
-                      stages={pipeline.stages.map((s) => ({ label: LEAD_STAGE_LABEL[s.stage], count: s.count }))}
-                    />
-                  )
-                }
-              >
-                <KesTicker value={pipeline?.value ?? 0} className="text-[1.375rem] sm:text-[1.75rem] md:text-[2rem]" />
-              </Stat>
-            }
-            onClickCapture={routeLinks}
-          />
-          <BentoCard
-            name="Open tasks"
-            description={
-              stats
-                ? `Onboarding steps · ${stats.onboarding} ${stats.onboarding === 1 ? "client" : "clients"} onboarding`
-                : "Onboarding steps left"
-            }
-            Icon={ListChecks}
-            href="/hub/onboarding"
-            cta="Work through them"
-            className={bentoCardClass}
-            background={
-              <Stat
-                loading={!stats}
-                aside={
-                  !!stats?.stepsTotal && (
-                    <div className="flex flex-col items-center gap-1">
-                      <Ring value={stats.stepsDone} total={stats.stepsTotal} size={48} />
-                      <span className="text-[0.6875rem] text-muted-foreground">done</span>
-                    </div>
-                  )
-                }
-              >
-                <NumberTicker value={stats?.openTasks ?? 0} />
-              </Stat>
-            }
-            onClickCapture={routeLinks}
-          />
-          <BentoCard
-            name="Needs attention"
-            description={
-              attention ? "Late steps, overdue invoices and missed follow-ups" : "Nothing late. All caught up."
-            }
-            Icon={AlertTriangle}
-            href={attentionItems?.[0]?.to ?? "/hub/onboarding"}
-            cta="Deal with the first one"
-            className={cn(bentoCardClass, "col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1")}
-            background={
-              <>
-                <ShineBorder
-                  borderWidth={1}
-                  duration={16}
-                  shineColor={["hsl(var(--primary) / 0.45)", "hsl(var(--primary) / 0.15)"]}
-                />
-                <Stat loading={!attentionItems}>
-                  <NumberTicker value={attention} className={cn(attention > 0 && "text-warning")} />
-                </Stat>
-                {!!attentionItems?.length && (
-                  <ul className="relative z-10 mt-4 hidden space-y-1 px-2 lg:block">
-                    {attentionItems.slice(0, 4).map((item) => (
-                      <li key={item.id}>
-                        <Link
-                          to={item.to}
-                          className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 transition-colors duration-150 hover:bg-secondary"
-                        >
-                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-warning" />
-                          <span className="min-w-0">
-                            <span className="block truncate text-sm font-medium">{item.title}</span>
-                            <span className="block truncate text-xs text-muted-foreground">{item.detail}</span>
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                    {attentionItems.length > 4 && (
-                      <li className="px-2 pt-1 text-xs text-muted-foreground">+{attentionItems.length - 4} more</li>
-                    )}
-                  </ul>
-                )}
-              </>
-            }
-            onClickCapture={routeLinks}
-          />
-        </BentoGrid>
+        <BusinessSnapshot stats={stats} received={money?.thisMonth ?? null} delta={money?.delta ?? null}
+          goal={settings.revenueGoal} daysLeft={differenceInCalendarDays(endOfMonth(new Date()), new Date())}
+          month={format(new Date(), "MMMM")} kes={kes} />
+      </BlurFade>
+
+      <BlurFade delay={0.08} className="mt-4 grid gap-3 md:grid-cols-3 md:gap-4">
+        <MetricCard title="Open tasks" value={<NumberTicker value={stats?.openTasks ?? 0} />} loading={!stats}
+          hint={stats ? `${stats.stepsDone} of ${stats.stepsTotal} onboarding steps complete` : "Loading onboarding steps…"}
+          to="/hub/onboarding" icon={ListChecks}
+          aside={!!stats?.stepsTotal && <Ring value={stats.stepsDone} total={stats.stepsTotal} size={40} />} />
+        <MetricCard title="Pipeline" value={<KesTicker value={pipeline?.value} className="text-xl md:text-lg xl:text-2xl" />} loading={!pipeline}
+          hint={pipeline ? `${pipeline.count} open ${pipeline.count === 1 ? "lead" : "leads"} · estimated monthly value` : "Loading open leads…"}
+          to="/hub/pipeline" icon={Filter}
+          aside={!!pipeline?.count && <div className="hidden xl:block"><StageColumns stages={pipeline.stages.map(s => ({ label: LEAD_STAGE_LABEL[s.stage], count: s.count }))} /></div>} />
+        <MetricCard title="Due today" value={<NumberTicker value={dueToday} />} loading={!agenda}
+          hint={agenda ? dueToday ? "Your next steps are in the agenda below" : "Nothing scheduled for today" : "Checking your agenda…"}
+          to="/hub/calendar" icon={CalendarCheck2} />
       </BlurFade>
 
       {/* ---- agenda + money + pipeline */}
-      <BlurFade delay={0.1} className="mt-6 grid gap-4 lg:grid-cols-3">
+      <BlurFade delay={0.1} className="mt-6 grid items-start gap-4 lg:grid-cols-3">
         <Card
           title="Coming up"
           hint="What's due in the next 30 days. Late items are in Needs attention."
-          className="lg:col-span-2 lg:row-span-2"
+          className="lg:col-span-2"
         >
           {!agenda ? (
             <div className="space-y-3">
@@ -589,6 +456,29 @@ export default function OverviewPage() {
           )}
         </Card>
 
+        <Card title="Needs attention" hint="Late work, overdue invoices and missed follow-ups."
+          action={attentionItems && <span className={cn("hub-tabular rounded-full px-2 py-0.5 text-xs font-semibold", attention ? "bg-warning-soft text-warning" : "bg-tint text-on-tint")}>{attention}</span>}>
+          {!attentionItems ? <SkeletonBlock className="h-24" /> : attention === 0 ? (
+            <div className="flex items-start gap-3 rounded-2xl border border-border/60 bg-secondary/30 p-4">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+              <div><p className="text-sm font-medium">You're all caught up</p><p className="mt-1 text-xs leading-relaxed text-muted-foreground">No overdue items. Keep things moving with your upcoming work.</p></div>
+            </div>
+          ) : (
+            <ul className="max-h-80 overflow-y-auto divide-y divide-border/60">
+              {attentionItems.map(item => (
+                <li key={item.id}><Link to={item.to} className="group flex items-start gap-2.5 rounded-xl px-2 py-3 hover:bg-secondary/60">
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
+                  <span className="min-w-0 flex-1"><span className="block text-sm font-medium">{item.title}</span><span className="mt-0.5 block text-xs text-muted-foreground">{item.detail}</span></span>
+                  <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/50 group-hover:text-primary" />
+                </Link></li>
+              ))}
+            </ul>
+          )}
+        </Card>
+
+      </BlurFade>
+
+      <BlurFade delay={0.12} className="mt-4 grid gap-4 lg:grid-cols-3">
         <Card
           title="Money in"
           hint="Payments received, last 6 months."
@@ -630,11 +520,12 @@ export default function OverviewPage() {
             <Funnel stages={pipeline.stages} wonThisMonth={pipeline.wonThisMonth} kes={kes} />
           )}
         </Card>
+        <WebsiteCard />
       </BlurFade>
 
       {/* ---- activity + clients */}
       <BlurFade delay={0.15} className="mt-4 grid gap-4 lg:grid-cols-3">
-        <Card title="Recent activity" hint="The latest things that happened." className="lg:col-span-2 lg:row-span-2">
+        <Card title="Recent activity" hint="The latest things that happened." className="lg:col-span-2">
           {activity.length === 0 ? (
             <p className="py-8 text-center text-sm text-muted-foreground">Activity shows up here as you work.</p>
           ) : (
@@ -668,8 +559,6 @@ export default function OverviewPage() {
             </AnimatedList>
           )}
         </Card>
-
-        <WebsiteCard />
 
         <Card
           title="Clients at a glance"
