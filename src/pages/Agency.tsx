@@ -25,6 +25,8 @@ import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { track } from "@/lib/track";
+import { MarketToggle } from "@/components/MarketToggle";
+import { localizePrice, pick, useMarket } from "@/lib/market";
 import { getAttribution, leadSource } from "@/lib/attribution";
 import { Seo } from "@/components/Seo";
 import { agencyHead } from "@/seo/agencyHeads";
@@ -104,6 +106,7 @@ const retainerPackages = [
     label: "For small businesses",
     price: "From KES 40,000/month",
     note: "Ad spend under KES 50,000/month",
+    intlNote: "Ad spend from $1,500/month",
     features: ["1 platform managed", "Campaign setup and strategy", "Audience research", "Monthly reporting", "Email support"],
   },
   {
@@ -112,6 +115,7 @@ const retainerPackages = [
     highlight: true,
     price: "From KES 70,000/month",
     note: "Ad spend KES 50,000 - 200,000/month",
+    intlNote: "Ad spend $3,000 - $8,000/month",
     features: ["2 platforms managed", "Full campaign management", "Creative direction", "Weekly optimization", "Bi-weekly reporting", "WhatsApp support"],
   },
   {
@@ -119,13 +123,14 @@ const retainerPackages = [
     label: "For established brands",
     price: "From KES 120,000/month",
     note: "Ad spend KES 200,000+/month",
+    intlNote: "Ad spend $8,000+/month",
     features: ["All platforms managed", "Full performance marketing", "Dedicated strategy sessions", "Daily monitoring", "Weekly reporting", "Priority WhatsApp support", "Quarterly strategy review"],
   },
 ];
 
 // Every value restates a line from the package's own feature list or note.
 const packageComparison = [
-  { label: "Monthly ad spend", values: ["Under KES 50,000", "KES 50,000 – 200,000", "KES 200,000+"] },
+  { label: "Monthly ad spend", values: ["Under KES 50,000", "KES 50,000 – 200,000", "KES 200,000+"], intlValues: ["From $1,500", "$3,000 – $8,000", "$8,000+"] },
   { label: "Platforms managed", values: ["1", "2", "All"] },
   { label: "Reporting", values: ["Monthly", "Bi-weekly", "Weekly"] },
   { label: "Support", values: ["Email", "WhatsApp", "Priority WhatsApp"] },
@@ -134,7 +139,8 @@ const packageComparison = [
 const hubIcons = { services: LayoutGrid, results: TrendingUp, pricing: Tag, contact: MessageCircle } as const;
 
 // "From KES 40,000/month" -> qualifier, amount and period, so the amount can lead.
-function PriceTag({ price, size = "lg" }: { price: string; size?: "lg" | "sm" }) {
+function PriceTag({ price: kePrice, size = "lg" }: { price: string; size?: "lg" | "sm" }) {
+  const price = localizePrice(kePrice, useMarket());
   const [, from, amount, per] = price.match(/^(from\s+)?(.*?)(\/\w+)?$/i) ?? ["", "", price, ""];
   return <p className="font-display leading-tight">
     {from && <span className="block text-xs font-medium uppercase tracking-wider text-muted-foreground">From</span>}
@@ -293,6 +299,7 @@ function HeroProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouse
 }
 
 const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
+  const market = useMarket();
   const page = agencyPages[pageKey];
   const location = useLocation();
   const navigate = useNavigate();
@@ -609,6 +616,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             <p className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-3.5 py-1.5 text-sm text-muted-foreground">
               <Receipt className="h-4 w-4 shrink-0 text-primary" aria-hidden /> Management fees are separate from your advertising budget.
             </p>
+            {pageKey === "pricing" && <MarketToggle className="items-start pt-2" />}
           </div>
 
 {pageKey === "pricing" && <>
@@ -638,7 +646,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     )}
                   </div>
                   <PriceTag price={p.price} />
-                  <p className="mt-3 mb-6 rounded-lg bg-muted/60 px-3 py-2 text-sm text-muted-foreground">{p.note}</p>
+                  <p className="mt-3 mb-6 rounded-lg bg-muted/60 px-3 py-2 text-sm text-muted-foreground">{pick(market, p.note, p.intlNote)}</p>
                   <ul className="space-y-2.5 mb-7 flex-1">
                     {p.features.map((f) => (
                       <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -667,7 +675,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 </tr></thead>
                 <tbody>{packageComparison.map((row) => <tr key={row.label} className="border-t border-border">
                   <th scope="row" className="p-4 font-normal text-muted-foreground">{row.label}</th>
-                  {row.values.map((v, i) => <td key={i} className={`p-4 font-medium ${retainerPackages[i].highlight ? "bg-primary/[0.04]" : ""}`}>{v}</td>)}
+                  {row.values.map((v, i) => <td key={i} className={`p-4 font-medium ${retainerPackages[i].highlight ? "bg-primary/[0.04]" : ""}`}>{pick(market, v, row.intlValues?.[i] ?? v)}</td>)}
                 </tr>)}</tbody>
               </table>
             </div>
@@ -681,13 +689,13 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 <thead className="bg-muted/60 max-sm:sr-only"><tr><th scope="col" className="p-4">Service</th><th scope="col" className="p-4">Starting fee</th><th scope="col" className="p-4">Scope</th></tr></thead>
                 <tbody className="max-sm:grid max-sm:gap-3">{[...singlePlatform.map(item => ({...item, desc: item.features.join(", ")})), ...supportingServices].map(item => <tr key={item.slug} className="border-t border-border transition-colors hover:bg-muted/40 max-sm:grid max-sm:grid-cols-[1fr_auto] max-sm:gap-x-4 max-sm:gap-y-1.5 max-sm:rounded-2xl max-sm:border max-sm:bg-card/60 max-sm:p-4">
                   <th scope="row" className="p-4 font-medium max-sm:p-0"><Link to={SERVICE_PAGE_FOR_ROW[item.slug] ?? `/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
-                  <td className="p-4 font-semibold text-primary whitespace-nowrap max-sm:p-0 max-sm:text-right first-letter:uppercase">{item.price}</td><td className="p-4 text-muted-foreground max-sm:col-span-2 max-sm:p-0">{item.desc}</td>
+                  <td className="p-4 font-semibold text-primary whitespace-nowrap max-sm:p-0 max-sm:text-right first-letter:uppercase">{localizePrice(item.price, market)}</td><td className="p-4 text-muted-foreground max-sm:col-span-2 max-sm:p-0">{item.desc}</td>
                 </tr>)}</tbody>
               </table>
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground">For Meta Ads, the minimum advertising budget is KSh 30,000 per month, paid separately from the management fee. Video production is quoted separately when it goes beyond light social content.</p>
-              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground"><Link to="/agency/lead-generation" className="font-medium text-primary hover:underline">Lead generation starts at KSh 50,000/month, including landing pages.</Link> Your team follows up with the leads.</p>
+              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground">For Meta Ads, the minimum advertising budget is {pick(market, "KSh 30,000", "$1,500")} per month, paid separately from the management fee. Video production is quoted separately when it goes beyond light social content.</p>
+              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground"><Link to="/agency/lead-generation" className="font-medium text-primary hover:underline">Lead generation starts at {pick(market, "KSh 50,000", "$1,200")}/month, including landing pages.</Link> Your team follows up with the leads.</p>
             </div>
           </div>
 

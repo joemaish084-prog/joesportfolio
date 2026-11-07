@@ -16,6 +16,7 @@ import { Footer } from "@/components/Footer";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { ServiceGallery, ServiceHeroVisual, ServiceSideImage } from "@/components/services/ServiceVisuals";
 import { PROCESS_VISUAL, getServiceVisuals } from "@/data/serviceVisuals";
+import { localizePrice, useMarket } from "@/lib/market";
 
 /** The lower-commitment ways to get in touch, beside each page's main booking button. */
 function OtherContactOptions({ slug, name, briefIsPrimary, className = "" }: { slug: string; name: string; briefIsPrimary: boolean; className?: string }) {
@@ -63,6 +64,7 @@ function PrimaryCta({ cta, className = "" }: { cta: ServicePage["cta"]; classNam
 const AgencyService = () => {
   const { service: slug } = useParams();
   const page = getServicePageBySlug(slug);
+  const market = useMarket();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -135,7 +137,7 @@ const AgencyService = () => {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <PrimaryCta cta={page.cta} />
               <div>
-                <p className="text-lg font-bold tracking-tight">{page.price.amount}</p>
+                <p className="text-lg font-bold tracking-tight">{localizePrice(page.price.amount, market)}</p>
                 <p className="text-sm text-[#888888]">{page.price.note}</p>
               </div>
             </div>
@@ -213,7 +215,7 @@ const AgencyService = () => {
             <h2 id="pricing-start" className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.pricing}</h2>
             <div className="mt-7 rounded-2xl border border-[#EAEAEA] bg-[#FAFAFA] p-6 sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-8">
               <div>
-                <p className="text-2xl font-bold tracking-tight">{page.price.amount}</p>
+                <p className="text-2xl font-bold tracking-tight">{localizePrice(page.price.amount, market)}</p>
                 <p className="mt-2 max-w-xl text-base leading-relaxed text-[#555555]">
                   {page.price.note}
                   {page.price.amount.includes("/month") && " No lock-in contracts, and the scope is agreed in your proposal."}
@@ -304,7 +306,7 @@ const AgencyService = () => {
             <div>
               <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{headings.midCta}</h2>
               <p className="mt-2 text-sm leading-relaxed text-[#BBBBBB]">
-                {page.price.amount}. {page.cta.external ? "Start with a free 30-minute strategy call, with no obligation." : page.price.note}
+                {localizePrice(page.price.amount, market)}. {page.cta.external ? "Start with a free 30-minute strategy call, with no obligation." : page.price.note}
               </p>
             </div>
             <PrimaryCta cta={page.cta} className="flex-shrink-0 self-start sm:self-auto" />
@@ -403,7 +405,7 @@ const AgencyService = () => {
                   <h3 className="mt-4 text-base font-bold tracking-tight group-hover:text-[#F97316]">
                     {s.navLabel}
                   </h3>
-                  <p className="mt-1.5 text-sm font-semibold text-[#F97316]">{s.price.amount}</p>
+                  <p className="mt-1.5 text-sm font-semibold text-[#F97316]">{localizePrice(s.price.amount, market)}</p>
                 </Link>
               ))}
             </div>

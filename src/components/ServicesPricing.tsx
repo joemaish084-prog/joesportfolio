@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
+import { MarketToggle } from "@/components/MarketToggle";
+import { localizePrice, pick, useMarket } from "@/lib/market";
 
 const services = [
   {
@@ -32,6 +34,7 @@ const services = [
 ];
 
 export function ServicesPricing() {
+  const market = useMarket();
   return (
     <section id="services" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32" aria-label="Digital Marketing Services & Pricing">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -41,8 +44,13 @@ export function ServicesPricing() {
             Services & Pricing
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Monthly retainers for brands in Nairobi and across Kenya. Management fees are separate from your advertising budget. Custom packages available on request.
+            {pick(
+              market,
+              "Monthly retainers for brands in Nairobi and across Kenya. Management fees are separate from your advertising budget. Custom packages available on request.",
+              "Monthly retainers for brands in Dubai, the UK, the US and beyond. Management fees are separate from your advertising budget. Custom packages available on request.",
+            )}
           </p>
+          <MarketToggle className="pt-2" />
         </div>
 
         {/* Fixed 22rem rows only suit the desktop bento; stacked cards size to their content */}
@@ -51,7 +59,7 @@ export function ServicesPricing() {
             <ScrollReveal key={s.title} direction="up" delay={i * 0.1}>
               <BentoCard
                 name={s.title}
-                description={s.description}
+                description={localizePrice(s.description, market)}
                 Icon={s.icon}
                 href="/agency"
                 cta={`Explore ${s.title} services`}
