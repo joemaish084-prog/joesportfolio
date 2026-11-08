@@ -68,7 +68,8 @@
 
 /* Retain agency reveal/count-up animations for JS visitors, while the same
    prerendered content remains readable and accurate without JavaScript. */
-html:not(.js) .agency-page [style*="opacity:0"] {
+html:not(.js) .agency-page [style*="opacity:0"],
+html:not(.js) .service-page [style*="opacity:0"] {
   opacity: 1 !important;
   transform: none !important;
   clip-path: none !important;

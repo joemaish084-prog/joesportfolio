@@ -57,7 +57,7 @@ function routePreloads(routePath) {
     files.add(chunk.file);
     for (const dependency of chunk.imports ?? []) visit(dependency);
   }
-  visit(initialRouteModules[routePath]);
+  visit(initialRouteModules[routePath] ?? (serviceRoutePaths.has(routePath) ? "src/pages/AgencyService.tsx" : undefined));
   return [...files].map(file => `<link rel="modulepreload" href="/${file}" crossorigin>`).join("\n");
 }
 
@@ -113,6 +113,7 @@ function outputFile(routePath) {
 }
 
 const routes = getPrerenderRoutes();
+const serviceRoutePaths = new Set(routes.filter(route => route.head.jsonLd?.some(node => node["@type"] === "Service")).map(route => route.path));
 const seen = new Set();
 for (const route of routes) {
   if (seen.has(route.path)) throw new Error(`prerender: duplicate route ${route.path}`);

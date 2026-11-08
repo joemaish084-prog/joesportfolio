@@ -1,6 +1,36 @@
 # SEO audit — josephmaina.co.ke
 
-Audited 22 October 2026 against the 20 checks in your screenshot, with deployment follow-up on 23 October. All seven reviewed service pages are now live and indexable, and the live sitemap contains 83 URLs. The previously flagged article is indexed with the correct Google-selected canonical. Both performance batches are deployed and retested. Latest mobile scores are 65 / 74 / 82 for homepage / blog / case studies; loading delays remain open.
+Latest review: **7 November 2026**, prioritizing the Services directory and its seven service pages. The live sitemap contains **124 URLs**; all passed the basic HTTP, metadata, H1, canonical and indexability checks in this review. The changes below are local and require deployment. October findings, counts and PageSpeed scores are retained as historical snapshots rather than current measurements.
+
+
+## Services technical SEO - 7 November 2026
+
+The live `/agency/services` page already returns HTTP 200, has one H1, allows indexing and declares its correct canonical. All 124 sitemap URLs passed the same basic checks, with unique titles. An invented URL returned HTTP 404. Public crawling is allowed by robots.txt; its existing private-portal rule was preserved.
+
+Changes prepared locally:
+
+- Updated the Services directory's title, description and H1 to clearly identify digital marketing services in Nairobi and Kenya, without changing its URL or approved offers.
+- Expanded the existing directory links with the seven services' existing scope descriptions. Added an ItemList describing exactly those linked services, with stable service identities connected to their individual Service and WebPage schema and the existing agency Organization.
+- Replaced hidden, separately maintained summaries on all seven service pages with prerendering of their actual shared page component. The initial HTML now includes the real service scope, FAQs, proof, images, navigation, contact options and related-service links. Added a main landmark and no-JavaScript image-animation fallback while preserving the interactive design and animations.
+- Added route preloads to the seven service pages. They now use blog summaries for related cards rather than downloading full blog article bodies; hero, supporting and related images use the existing responsive-image helpers.
+- Unknown service slugs now retain the not-found experience in the client rather than redirecting to the agency homepage. Production status remains controlled by the existing Vercel real-404 configuration.
+- Extended the agency checks to verify directory/schema agreement, shared service identities, visible prerendered content, FAQs and route preloads. Added a guard against full blog bodies returning to service-page dependencies.
+
+No new landing pages, prices, reviews, ratings or business claims were created. Existing service URLs, published facts, market-price configuration and private hub/portal boundaries are preserved. Service/ItemList markup describes the content; it does not guarantee a Google rich result, higher ranking or sitelinks.
+
+Validation completed:
+
+- `npm run build`: passed, including 125 prerendered routes, 110 social cards and 124 sitemap URLs. No generated blog-summary changes were introduced by the build hooks.
+- `npm run check:seo`: passed for all 125 routes, 3,667 internal link instances and 480 image tags.
+- `npm run check:agency`: passed, including the seven actual service-page renders, directory/schema agreement, FAQ counts and route preloads.
+- `npm run check:performance`: passed; homepage initial/preload JavaScript remains within the existing budget at 191 KiB gzip. The service dependency graph excludes the full blog-body chunk. This is not a new Lighthouse score.
+- Targeted ESLint on changed application files: passed. `git diff --check`: passed.
+- Repository-wide ESLint: 8 errors and 47 warnings in unchanged code, including existing UI, tracking, Supabase and Tailwind files. TypeScript reports the existing `chatLead.ts` / generated Supabase type errors. These are not fixed or hidden by this SEO work.
+- The browser-access host was unavailable, so a fresh desktop/mobile visual check could not be completed. No PageSpeed or Core Web Vitals improvement is claimed from source changes alone. Production routing and rendered content must be rechecked after deployment.
+
+After deployment: inspect `/agency/services` and the seven service URLs in the existing Search Console property, run Test Live URL, check the rendered content/canonical/indexability, and request indexing where appropriate. The existing sitemap URL remains unchanged; verify that its live count stays at 124. Google chooses whether and when to index or show enhanced results.
+
+Reference: [Google's JavaScript SEO guidance](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics) recommends prerendering and consistent HTML canonicals; [crawlable link guidance](https://developers.google.com/search/docs/crawling-indexing/links-crawlable) supports the directory's real URL links.
 
 ## Agency architecture — implemented locally, awaiting deployment
 

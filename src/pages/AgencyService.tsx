@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Seo } from "@/components/Seo";
 import { serviceHead } from "@/seo/pageHeads";
 import { AlertTriangle, ArrowLeft, ArrowRight, Check, ChevronRight, MessageCircle, Quote, X } from "lucide-react";
@@ -11,7 +11,9 @@ import {
   type ServicePage,
 } from "@/data/servicePages";
 import { getHubBySlug } from "@/data/blogHubs";
-import { blogPosts } from "@/data/blogPosts";
+import { blogSummaries as blogPosts } from "@/data/blogSummaries";
+import { contentImageProps } from "@/lib/responsiveImage";
+import NotFound from "@/pages/NotFound";
 import { Footer } from "@/components/Footer";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { ServiceGallery, ServiceHeroVisual, ServiceSideImage } from "@/components/services/ServiceVisuals";
@@ -64,13 +66,17 @@ function PrimaryCta({ cta, className = "" }: { cta: ServicePage["cta"]; classNam
 const AgencyService = () => {
   const { service: slug } = useParams();
   const page = getServicePageBySlug(slug);
+  return page ? <AgencyServiceContent page={page} /> : <NotFound />;
+};
+
+/** Shared by the client route and build-time rendering, so search engines get
+ * the same service scope, proof, FAQs and links that visitors see. */
+export function AgencyServiceContent({ page }: { page: ServicePage }) {
   const market = useMarket();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [slug]);
-
-  if (!page) return <Navigate to="/agency" replace />;
+  }, [page.slug]);
 
   const hub = getHubBySlug(page.hubSlug);
   const related = page.relatedPosts
@@ -79,7 +85,7 @@ const AgencyService = () => {
   const caseStudyPost = page.caseStudy?.readMore
     ? blogPosts.find((p) => p.slug === page.caseStudy?.readMore)
     : undefined;
-  const otherServices = servicePages.filter((s) => s.slug !== page.slug);
+  const otherServices = servicePages.filter((s) => s.slug !== page.slug && !s.draft);
   const headings = serviceHeadings(page);
   const visuals = getServiceVisuals(page.slug);
 
@@ -87,9 +93,9 @@ const AgencyService = () => {
     <>
       <Seo {...serviceHead(page)} />
 
-      <div className="min-h-screen bg-white text-[#111111]">
+      <div className="service-page min-h-screen bg-white text-[#111111]">
         <AgencyNavigation solid />
-        <div className="mx-auto max-w-5xl px-5 pb-24 pt-10 sm:px-8">
+        <main className="mx-auto max-w-5xl px-5 pb-24 pt-10 sm:px-8">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-[#666666]">
             <Link to="/agency" className="inline-flex items-center gap-2 transition-colors hover:text-[#F97316]">
@@ -313,8 +319,8 @@ const AgencyService = () => {
           </section>
 
           {/* FAQ */}
-          <section className="mt-20">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.faqs}</h2>
+          <section aria-labelledby="service-faqs" className="mt-20">
+            <h2 id="service-faqs" className="text-2xl font-bold tracking-tight sm:text-3xl">{headings.faqs}</h2>
             <dl className="mt-7 divide-y divide-[#EAEAEA] border-y border-[#EAEAEA]">
               {page.faqs.map((faq) => {
                 const unanswered = faq.a.includes("[CONFIRM]");
@@ -360,6 +366,7 @@ const AgencyService = () => {
                     <div className="relative h-36">
                       <img
                         src={post.thumbnail}
+                        {...contentImageProps(post.thumbnail, "(min-width: 768px) 300px, 100vw")}
                         alt={post.thumbnailAlt}
                         loading="lazy"
                         width={400}
@@ -410,11 +417,11 @@ const AgencyService = () => {
               ))}
             </div>
           </section>
-        </div>
+        </main>
         <Footer />
       </div>
     </>
   );
-};
+}
 
 export default AgencyService;

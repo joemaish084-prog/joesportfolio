@@ -9,9 +9,9 @@ export const agencyPages = {
   },
   services: {
     path: "/agency/services", label: "Services",
-    title: "Digital Marketing Services in Kenya | Joseph Maina",
-    heading: "Digital marketing services for your next stage of growth",
-    description: "Explore Meta Ads, Google Ads, SEO, social media and lead generation services in Kenya. Compare the scope and find the right support for your business.",
+    title: "Digital Marketing Services Nairobi & Kenya | Joseph Maina",
+    heading: "Digital marketing services in Nairobi, Kenya",
+    description: "Compare Google Ads, Meta Ads, SEO, social media and lead generation services in Nairobi and across Kenya. Explore scope, pricing and campaign results.",
     intro: "Choose a single channel or combine strategy, campaigns and creative. Start with the service that fits your goals, then read its scope, process and pricing.",
     teaser: "Meta, Google and TikTok Ads, SEO, social and content, with a detailed page for each core service.",
   },

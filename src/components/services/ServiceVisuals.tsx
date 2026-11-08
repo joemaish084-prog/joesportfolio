@@ -3,11 +3,11 @@ import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } fro
 import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { ServiceVisual, ServiceVisuals } from "@/data/serviceVisuals";
-import { unsplashImageProps } from "@/lib/responsiveImage";
+import { contentImageProps } from "@/lib/responsiveImage";
 
 /** src, srcSet and size for an image: resized variants for Unsplash, the file itself otherwise. */
 function imageProps(visual: ServiceVisual, sizes: string) {
-  const resized = unsplashImageProps(visual.src, sizes);
+  const resized = contentImageProps(visual.src, sizes);
   return { src: visual.src, ...resized, width: visual.width, height: visual.height, alt: visual.alt };
 }
 
@@ -51,7 +51,7 @@ export function ServiceHeroVisual({ visuals }: { visuals: ServiceVisuals }) {
       >
         <img
           {...imageProps(hero, "(min-width: 1024px) 380px, 384px")}
-          fetchPriority="high"
+          {...{ fetchpriority: "high" }}
           className="aspect-[4/5] w-full object-cover"
         />
         <figcaption className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-[#111111] shadow-sm backdrop-blur">

@@ -237,12 +237,14 @@ export function serviceHead(page: ServicePage): PageHead {
       {
         "@context": "https://schema.org",
         "@type": "Service",
+        "@id": `${canonicalUrl(path)}#service`,
         name: page.name,
         description: page.metaDescription,
         url: canonicalUrl(path),
         serviceType: page.navLabel,
         areaServed: { "@type": "Country", name: "Kenya" },
         provider: { "@id": agencyOrganization["@id"] },
+        mainEntityOfPage: { "@id": `${canonicalUrl(path)}#webpage` },
         offers: {
           "@type": "Offer",
           // Preserve "from" and monthly billing without putting display copy in a numeric price field.
@@ -255,6 +257,13 @@ export function serviceHead(page: ServicePage): PageHead {
           },
           description: `${page.price.amount}. ${page.price.note}`,
         },
+      },
+      {
+        "@context": "https://schema.org", "@type": "WebPage",
+        "@id": `${canonicalUrl(path)}#webpage`,
+        name: page.metaTitle, description: page.metaDescription, url: canonicalUrl(path),
+        mainEntity: { "@id": `${canonicalUrl(path)}#service` },
+        isPartOf: { "@id": `${SITE_URL}/agency/services#webpage` },
       },
       ...(faqs.length > 0 ? [{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs }] : []),
       {

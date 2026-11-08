@@ -7,15 +7,15 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Hero } from "@/components/Hero";
 import AgencyBlog from "@/pages/AgencyBlog";
 import Agency from "@/pages/Agency";
+import { AgencyServiceContent } from "@/pages/AgencyService";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
 import { agencyHead } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
 import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
 import type { BlogSummary } from "@/data/blogSummaries";
 import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost, hubServiceLinkLabel, resolveHubServiceHref } from "@/data/blogHubs";
-import { getLiveServicePages, serviceHeadings, servicePages, SERVICE_PROCESS, type ServicePage } from "@/data/servicePages";
+import { getLiveServicePages, servicePages } from "@/data/servicePages";
 import { getServiceForPost, serviceLinkLabel } from "@/data/postServices";
-import { getServiceVisuals } from "@/data/serviceVisuals";
 import { brands, type Brand } from "@/data/brands";
 import { designs } from "@/data/designs";
 import { mockups } from "@/data/mockups";
@@ -197,110 +197,6 @@ function PostPage({ post }: { post: BlogPost }) {
   );
 }
 
-function ServicePageBody({ page }: { page: ServicePage }) {
-  const answered = page.faqs.filter((f) => !f.a.includes("[CONFIRM]"));
-  const headings = serviceHeadings(page);
-  const visuals = getServiceVisuals(page.slug);
-  const related = page.relatedPosts
-    .map((slug) => blogPosts.find((p) => p.slug === slug))
-    .filter((p): p is BlogPost => Boolean(p));
-  return (
-    <Shell>
-      <p>
-        <a href="/agency">Agency</a> › {page.navLabel}
-      </p>
-      <h1>{page.name}</h1>
-      <p>{page.standfirst}</p>
-      {visuals && (
-        <figure>
-          <img src={visuals.hero.src} alt={visuals.hero.alt} width={visuals.hero.width} height={visuals.hero.height} />
-          <figcaption>{visuals.hero.caption}</figcaption>
-        </figure>
-      )}
-      <p>
-        <strong>{page.price.amount}</strong> — {page.price.note}
-      </p>
-      <h2>{headings.whoFor}</h2>
-      <ul>
-        {page.whoFor.map((w) => (
-          <li key={w}>{w}</li>
-        ))}
-      </ul>
-      {page.fitNote && <p>{page.fitNote}</p>}
-      <h2>{headings.included}</h2>
-      <ul>
-        {page.included.map((item) => (
-          <li key={item.title}>
-            <strong>{item.title}</strong> — {item.desc}
-          </li>
-        ))}
-      </ul>
-      {page.sections?.map((section) => (
-        <div key={section.title}>
-          <h2>{section.title}</h2>
-          {section.intro && <p>{section.intro}</p>}
-          <ul>
-            {section.items.map((item) => (
-              <li key={item.title}>
-                <strong>{item.title}</strong> — {item.desc}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-      <h2>{headings.process}</h2>
-      <ol>
-        {SERVICE_PROCESS.map((step) => (
-          <li key={step.title}>
-            <strong>{step.title}</strong> — {step.desc}
-          </li>
-        ))}
-      </ol>
-      {page.caseStudy && <>
-      <h2>Case study: {page.caseStudy.name}</h2>
-      <p>{page.caseStudy.challenge}</p>
-      <p>{page.caseStudy.results}</p>
-      {page.caseStudy.href && <p><a href={page.caseStudy.href}>Read the full breakdown</a></p>}
-      {page.proofNote && <p>{page.proofNote}</p>}
-      </>}
-      {visuals?.gallery && (
-        <>
-          <h2>{visuals.gallery.title}</h2>
-          {visuals.gallery.items.map((item) => (
-            <figure key={item.src}>
-              <img src={item.src} alt={item.alt} width={item.width} height={item.height} loading="lazy" />
-              <figcaption>{item.caption}</figcaption>
-            </figure>
-          ))}
-        </>
-      )}
-      {answered.length > 0 && (
-        <>
-          <h2>{headings.faqs}</h2>
-          {answered.map((f) => (
-            <div key={f.q}>
-              <h3>{f.q}</h3>
-              <p>{f.a}</p>
-            </div>
-          ))}
-        </>
-      )}
-      {related.length > 0 && (
-        <>
-          <h2>Further reading</h2>
-          <ul>
-            {related.map((p) => (
-              <PostLink key={p.slug} post={p} />
-            ))}
-          </ul>
-        </>
-      )}
-      <p>
-        <a href={page.cta.href}>{page.cta.label}</a>
-      </p>
-    </Shell>
-  );
-}
 
 function BrandPageBody({ brand }: { brand: Brand }) {
   return (
@@ -472,7 +368,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     routes.push({
       path: head.path,
       head,
-      body: html(<ServicePageBody page={page} />),
+      body: html(<HelmetProvider><StaticRouter location={head.path}><AgencyServiceContent page={page} /></StaticRouter></HelmetProvider>),
       card: { eyebrow: page.navLabel, title: page.name, meta: page.price.amount },
       // Drafts stay noindex and out of the sitemap until their [CONFIRM] markers are cleared.
       sitemap: page.draft ? undefined : { priority: 0.9, changefreq: "monthly", lastmod: page.updated },

@@ -33,6 +33,32 @@ const pricing = read("/agency/pricing");
 const results = read("/agency/results");
 const contact = read("/agency/contact");
 const home = read("/agency");
+const catalogSchemas = [...services.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
+const catalog = catalogSchemas.find(schema => schema["@type"] === "CollectionPage")?.mainEntity;
+assert.equal(catalog?.["@type"], "ItemList", "Services directory needs a factual service list");
+const directory = services.match(/<nav aria-label="Full service pages"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+assert(directory, "Service directory must be rendered before JavaScript");
+assert.equal(catalog.numberOfItems, catalog.itemListElement.length, "Catalog count must match its entries");
+assert.deepEqual(catalog.itemListElement.map(entry => new URL(entry.item.url).pathname).sort(), links(directory).sort(), "Catalog must describe exactly the services linked in the directory");
+for (const [index, entry] of catalog.itemListElement.entries()) {
+  assert.equal(entry.position, index + 1, "Catalog positions are consecutive");
+  const path = new URL(entry.item.url).pathname;
+  const html = read(path);
+  const root = html.slice(html.indexOf('<div id="root">'));
+  assert(!root.includes('data-prerender="'), `${path}: actual service content must not be replaced by a hidden summary`);
+  assert(root.includes('<main '), `${path}: needs a main landmark`);
+  assert(links(root).includes("/agency/services"), `${path}: links back to the directory`);
+  const schemas = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
+  const service = schemas.find(schema => schema["@type"] === "Service");
+  const page = schemas.find(schema => schema["@type"] === "WebPage");
+  assert.equal(service?.["@id"], entry.item["@id"], `${path}: directory and detail share the service identity`);
+  assert.equal(page?.mainEntity?.["@id"], service["@id"], `${path}: page describes its service`);
+  assert.equal(service.mainEntityOfPage?.["@id"], page["@id"], `${path}: service links to its page`);
+  const faq = schemas.find(schema => schema["@type"] === "FAQPage");
+  const faqContent = root.match(/<section aria-labelledby="service-faqs"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  if (faq) assert.equal(faq.mainEntity.length, (faqContent?.match(/<dt\b/g) ?? []).length, `${path}: schema FAQs match visible FAQ entries`);
+  assert(/rel="modulepreload"[^>]*href="\/assets\/AgencyService-/.test(html), `${path}: preload its route without a JavaScript discovery waterfall`);
+}
 for (const slug of ["digital-marketing-kenya", "meta-ads-management", "google-ads-management", "seo-services-nairobi", "social-media-management", "lead-generation", "digital-marketing-audit"]) {
   assert(links(services).includes(`/agency/${slug}`), `Existing service retained: ${slug}`);
   assert(sitemap.includes(`<loc>${origin}/agency/${slug}</loc>`), `Existing service in sitemap: ${slug}`);

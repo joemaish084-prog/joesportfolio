@@ -62,7 +62,7 @@ export function ServicesSection() {
 
           {/* Every dedicated service page stays one click away. */}
           <nav aria-label="Full service pages" className="mt-8 border-t border-border/60 pt-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Full service pages</p>
+            <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Explore each service</h2>
             <ul className="mt-3 grid gap-x-8 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
               {servicePages.map((page) => (
                 <li key={page.slug}>
@@ -70,6 +70,7 @@ export function ServicesSection() {
                     {page.navLabel}
                     <ArrowRight className="h-3.5 w-3.5 transition-transform motion-safe:group-hover:translate-x-0.5" aria-hidden />
                   </Link>
+                  <p className="mb-4 text-xs leading-relaxed text-muted-foreground">{page.standfirst}</p>
                 </li>
               ))}
             </ul>

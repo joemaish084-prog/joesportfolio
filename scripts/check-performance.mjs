@@ -64,4 +64,7 @@ assert(!staticDependencies("src/pages/AgencyBlog.tsx").has("src/pages/Index.tsx"
 for (const key of staticDependencies("src/pages/AgencyBlog.tsx")) {
   assert(!/\/blogPosts-/.test(manifest[key].file), "The blog listing must not download full article bodies");
 }
+for (const key of staticDependencies("src/pages/AgencyService.tsx")) {
+  assert(!/\/blogPosts-/.test(manifest[key].file), "Service pages must not download full blog article bodies");
+}
 console.log(`Performance checks passed: visible initial hero, ${Math.round(bytes / 1024)} KiB initial JS gzip, ${variants} responsive image references.`);

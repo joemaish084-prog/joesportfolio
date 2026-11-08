@@ -1,5 +1,6 @@
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
 import { SITE_URL, canonicalUrl, type PageHead } from "./heads";
+import { getLiveServicePages } from "@/data/servicePages";
 
 export const agencyOrganization = {
   "@context": "https://schema.org",
@@ -32,6 +33,24 @@ export function agencyHead(key: AgencyPageKey): PageHead {
       "@id": `${canonicalUrl(page.path)}#webpage`,
       name: page.title, description: page.description, url: canonicalUrl(page.path),
       about: { "@id": agencyOrganization["@id"] },
+      ...(key === "services" ? {
+        mainEntity: {
+          "@type": "ItemList",
+          "@id": `${SITE_URL}/agency/services#service-list`,
+          name: "Digital marketing services",
+          numberOfItems: getLiveServicePages().length,
+          itemListElement: getLiveServicePages().map((service, index) => ({
+            "@type": "ListItem", position: index + 1,
+            item: {
+              "@type": "Service",
+              "@id": `${SITE_URL}/agency/${service.slug}#service`,
+              name: service.name, description: service.standfirst,
+              url: canonicalUrl(`/agency/${service.slug}`),
+              provider: { "@id": agencyOrganization["@id"] },
+            },
+          })),
+        },
+      } : {}),
       ...(key !== "home" ? { isPartOf: { "@id": `${SITE_URL}/agency#webpage` } } : {}),
     }, {
       "@context": "https://schema.org", "@type": "BreadcrumbList",
