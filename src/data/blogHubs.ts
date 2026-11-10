@@ -203,6 +203,7 @@ export const blogHubs: BlogHub[] = [
       "data-protection-act-marketing-kenya-2026",
       "lead-qualification-questions-whatsapp-kenya-2026",
       "whatsapp-broadcast-vs-email-marketing-kenya-2026",
+      "why-tech-builders-struggle-to-market-and-sell-kenya-2026",
     ],
     service: {
       name: "GROWTH Retainer — Lead Generation",

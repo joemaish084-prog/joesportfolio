@@ -6959,6 +6959,104 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "why-tech-builders-struggle-to-market-and-sell-kenya-2026",
+    category: "Marketing",
+    title: "Why Tech Builders Struggle to Market and Sell Their Own Product",
+    excerpt: "Building a good product and selling it are two different skills. Here is where Kenyan developers and technical founders usually get stuck.",
+    date: "2026-11-10",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Why Tech Builders Struggle to Market and Sell Their Own Product",
+    metaDescription: "Why developers and technical founders in Kenya often build good products and still struggle to sell them, plus a practical plan for finding the first ten customers.",
+    intro: "A developer spends six months building something genuinely useful. It works, it is fast, the code is clean. Then it launches, and almost nobody notices. This is one of the most common stories I see among technical founders, and it is rarely about the quality of the product. Building and selling are different skills, and the habits that make someone good at the first can get in the way of the second. It is a pattern, not a rule: plenty of builders sell brilliantly. But if you recognise yourself below, you are in large company.",
+    thumbnail: "https://images.unsplash.com/photo-1649698145660-d30f91023b52?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop screen filled with lines of code above the keyboard",
+
+    sections: [
+      {
+        id: "build-it",
+        heading: "\"Build it and they will come\" is the first mistake",
+        paragraphs: [
+          "Builders are trained to solve problems, and a finished product feels like the end of the problem. For a buyer, it is the beginning of a new one: they have never heard of you, they do not know whether you can be trusted, and they already have a way of doing things, even if that way is a notebook and a WhatsApp group.",
+          "Finding customers is a separate piece of work, with its own skills, its own time and its own failures. Treating it as something that will happen on its own after launch is why so many good products stall.",
+        ],
+      },
+      {
+        id: "language",
+        heading: "Builders describe the machine, buyers describe the problem",
+        paragraphs: [
+          "Look at the website of a typical technical product and you will often find the stack, the architecture and a list of features. A shop owner in Nairobi is not asking whether the system is cloud-based. They are asking whether it will stop stock going missing and whether it helps with their tax records.",
+        ],
+        infographic: {"kind":"compare","title":"The same product, described two ways","columns":[{"heading":"Builder language","tone":"bad","points":["\"Cloud-based, API-first inventory platform\"","\"Real-time sync across devices\"","\"Built on a modern stack\""]},{"heading":"Buyer language","tone":"good","points":["\"Know what is in the shop, without counting\"","\"See today's sales from your phone\"","\"Your stock and M-Pesa payments in one place\""]}],"note":"Illustrative wording. Use the words your own customers use."},
+      },
+      {
+        id: "six-gaps",
+        heading: "Six gaps I see most often",
+        paragraphs: [
+          "None of these is a character flaw. They are habits that make sense when you build things, and cost you when you sell them.",
+        ],
+        table: {
+          headers: ["The gap","What it looks like","A better move"],
+          rows: [
+            ["Features before problems","A page listing tools and features","Lead with the problem and the result"],
+            ["Waiting until it is ready","Months of building before a single customer conversation","Talk to buyers in the first week"],
+            ["Hiding the price","\"Contact us\" for everything","Show a starting price"],
+            ["Underpricing","Charging little because \"it is just code\"","Price on the value of the problem solved"],
+            ["No distribution plan","A launch post, then silence","Pick one channel and use it every week"],
+            ["Hoping people sign up alone","Waiting for strangers to find the site","Demos, calls and WhatsApp conversations"],
+          ],
+        },
+      },
+      {
+        id: "kenya",
+        heading: "Why this bites harder with Kenyan small businesses",
+        paragraphs: [
+          "In my experience, many Kenyan SME owners buy on trust. They want to see the thing working in their own shop, hear from someone they know, and be able to message a real person when something breaks. A polished sign-up page and a documentation site do not provide any of that.",
+          "The problems that sell tend to be practical ones: knowing the stock count, matching M-Pesa payments to sales, keeping tax records in order. If your product solves one of these, say so in those words, and show it.",
+        ],
+      },
+      {
+        id: "selling",
+        heading: "Selling is a skill, and it can be learned",
+        paragraphs: [
+          "Many builders avoid selling because it feels pushy. It does not have to be. At its best, selling is a structured conversation that finds out whether you can really help, and says so honestly if you cannot. The part builders skip most is the ask: a clear next step at the end of every conversation.",
+        ],
+        infographic: {"kind":"steps","title":"A simple sales conversation","items":[{"label":"Ask how they do it today","detail":"Listen more than you talk."},{"label":"Find what the problem costs them","detail":"Lost stock, lost time, lost sales."},{"label":"Show only the part that solves it","detail":"Skip the rest of the features."},{"label":"Handle the real objection","detail":"Usually price, trust or switching effort."},{"label":"Ask for a small next step","detail":"A trial, a deposit or a second meeting."}]},
+      },
+      {
+        id: "first-ten",
+        heading: "Get the first ten customers by hand",
+        paragraphs: [
+          "Before any advertising, sell to the first ten customers manually. Talk to people, demo in person, set up their account yourself and watch what confuses them. You will learn more about your product and your market than any analytics tool can tell you, and those early conversations become your marketing copy.",
+          "Expect a long funnel. The numbers below are illustrative, not a benchmark, and yours will differ. The point is that most conversations do not become customers, so plan for enough of them.",
+        ],
+        infographic: {"kind":"funnel","title":"A manual funnel for a business software product","illustrative":true,"stages":[{"label":"Conversations","value":100,"display":"100"},{"label":"Demos","value":30,"display":"30"},{"label":"Trials","value":10,"display":"10"},{"label":"Paying customers","value":4,"display":"4"}]},
+      },
+      {
+        id: "marketing",
+        heading: "The marketing basics a builder actually needs",
+        paragraphs: [
+          "You do not need a campaign to start. You need a handful of things done properly, in this order.",
+        ],
+        list: [
+          "One clear page that says who it is for, what problem it solves and what it costs, as I set out in my landing page guide.",
+          "Proof: a customer's words, a number or a short video of it working.",
+          "Content that answers the questions buyers type into Google, starting with local searches, as in my local keyword research guide.",
+          "A quick, human follow-up on every enquiry, using a system like the one in my WhatsApp lead follow-up guide.",
+          "A weekly look at where customers came from, so you know what to repeat.",
+        ],
+      },
+      {
+        id: "who",
+        heading: "Who should do the selling?",
+        paragraphs: [
+          "There are three honest options. Learn the basics yourself, because the first customers should hear from the person who built it. Bring in a co-founder or partner who enjoys selling. Or hire help for the parts you do not want to do, and keep control of the accounts and the data.",
+        ],
+        callout: "Building is a skill and selling is a different skill. Neither is harder, but only one of them is waiting for you after launch.",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

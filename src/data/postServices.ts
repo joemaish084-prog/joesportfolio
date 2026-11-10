@@ -81,6 +81,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "video-hooks-first-three-seconds-kenya-2026",
   ],
   "lead-generation": [
+    "why-tech-builders-struggle-to-market-and-sell-kenya-2026",
     "property-leads-lost-in-the-inbox-case-study-2026",
     "whatsapp-broadcast-vs-email-marketing-kenya-2026",
     "lead-qualification-questions-whatsapp-kenya-2026",

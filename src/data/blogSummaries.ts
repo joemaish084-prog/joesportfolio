@@ -1390,5 +1390,18 @@ export const blogSummaries: BlogSummary[] = [
     metaDescription: "What a Nairobi firm's internship post, 127 applications, replies to every applicant and a public pay correction teach Kenyan small businesses about hiring.",
     thumbnail: "https://images.unsplash.com/photo-1528901166007-3784c7dd3653?q=80&w=1600&auto=format&fit=crop",
     thumbnailAlt: "Two colleagues looking at code on a laptop in a busy open-plan office",
+  },
+  {
+    slug: "why-tech-builders-struggle-to-market-and-sell-kenya-2026",
+    category: "Marketing",
+    title: "Why Tech Builders Struggle to Market and Sell Their Own Product",
+    excerpt: "Building a good product and selling it are two different skills. Here is where Kenyan developers and technical founders usually get stuck.",
+    date: "2026-11-10",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Why Tech Builders Struggle to Market and Sell Their Own Product",
+    metaDescription: "Why developers and technical founders in Kenya often build good products and still struggle to sell them, plus a practical plan for finding the first ten customers.",
+    thumbnail: "https://images.unsplash.com/photo-1649698145660-d30f91023b52?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop screen filled with lines of code above the keyboard",
   }
 ];
