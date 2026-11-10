@@ -64,6 +64,8 @@ export const blogHubs: BlogHub[] = [
       "click-to-whatsapp-ads-kenya-2026",
       "meta-retargeting-small-budget-kenya-2026",
       "how-to-read-meta-ads-report-kenya-2026",
+      "meta-ads-account-structure-small-budget-kenya-2026",
+      "ad-creative-fatigue-signs-kenya-2026",
     ],
     service: {
       name: "Meta Ads Management",
@@ -114,6 +116,8 @@ export const blogHubs: BlogHub[] = [
       "google-ads-conversion-tracking-kenya-2026",
       "google-ads-quality-score-kenya-2026",
       "youtube-ads-for-kenyan-businesses-2026",
+      "google-ads-bidding-strategies-explained-kenya-2026",
+      "responsive-search-ads-headlines-kenya-2026",
     ],
     service: {
       name: "Google Ads Management",
@@ -153,6 +157,8 @@ export const blogHubs: BlogHub[] = [
       "location-pages-seo-nairobi-2026",
       "ai-search-chatgpt-local-business-kenya-2026",
       "local-backlinks-citations-kenya-2026",
+      "how-google-maps-ranks-businesses-nairobi-2026",
+      "core-web-vitals-website-speed-kenya-2026",
     ],
     service: {
       name: "SEO Optimization",
@@ -195,6 +201,8 @@ export const blogHubs: BlogHub[] = [
       "good-cost-per-lead-kenya-2026",
       "lead-magnets-for-kenyan-businesses-2026",
       "data-protection-act-marketing-kenya-2026",
+      "lead-qualification-questions-whatsapp-kenya-2026",
+      "whatsapp-broadcast-vs-email-marketing-kenya-2026",
     ],
     service: {
       name: "GROWTH Retainer — Lead Generation",
@@ -242,6 +250,8 @@ export const blogHubs: BlogHub[] = [
       "who-owns-your-ad-account-kenya-2026",
       "is-your-marketing-actually-paying-kenya-2026",
       "hire-in-house-marketer-or-outsource-kenya-2026",
+      "marketing-retainer-vs-project-vs-commission-kenya-2026",
+      "marketing-contract-checklist-kenya-2026",
     ],
     service: {
       name: "Digital Marketing Audit",
@@ -290,6 +300,8 @@ export const blogHubs: BlogHub[] = [
       "social-media-content-calendar-small-business-kenya-2026",
       "video-hooks-first-three-seconds-kenya-2026",
       "linkedin-for-b2b-marketing-kenya-2026",
+      "community-management-replying-to-comments-kenya-2026",
+      "short-video-editing-workflow-small-business-kenya-2026",
     ],
     service: {
       name: "TikTok Ads & Social Media Management",
@@ -322,6 +334,8 @@ export const blogHubs: BlogHub[] = [
     ],
     postSlugs: [
       "meta-ads-turnaround-case-study-kenya-2026",
+      "property-leads-lost-in-the-inbox-case-study-2026",
+      "seven-lessons-two-platforms-one-retailer-case-study-2026",
       "google-ads-launch-case-study-kenya-2026",
       "meta-and-google-ads-together-case-study-kenya-2026",
       "instagram-577000-views-one-week-case-study-2026",

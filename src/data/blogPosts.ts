@@ -17,6 +17,8 @@ export interface BlogSection {
   heading: string;
   paragraphs: string[];
   image?: BlogSectionImage;
+  /** Infographic rendered after the paragraphs. All its text is real page text, never an image. */
+  infographic?: BlogInfographic;
   /** Checklist rendered after the paragraphs. */
   list?: string[];
   /** Comparison or numbers table rendered after the paragraphs. */
@@ -26,6 +28,35 @@ export interface BlogSection {
   /** Data visuals rendered after the paragraphs (paid-media case studies). */
   visuals?: MetaTurnaroundVisualKind[];
 }
+
+/**
+ * Infographics are drawn in HTML and CSS from this data, so every label and
+ * number is crawlable text and is read out by screen readers. Set `illustrative`
+ * when the figures are examples rather than measured results.
+ */
+export type BlogInfographic =
+  | { kind: "steps"; title: string; items: { label: string; detail?: string }[]; note?: string }
+  | {
+      kind: "bars";
+      title: string;
+      items: { label: string; value: number; display: string; note?: string; highlight?: boolean }[];
+      note?: string;
+      illustrative?: boolean;
+    }
+  | {
+      kind: "funnel";
+      title: string;
+      stages: { label: string; value: number; display: string }[];
+      note?: string;
+      illustrative?: boolean;
+    }
+  | {
+      kind: "compare";
+      title: string;
+      columns: { heading: string; tone?: "good" | "bad" | "neutral"; points: string[] }[];
+      note?: string;
+    }
+  | { kind: "stats"; title: string; items: { value: string; label: string }[]; note?: string; illustrative?: boolean };
 
 export interface BlogSectionTable {
   headers: string[];
@@ -3218,6 +3249,7 @@ export const blogPosts: BlogPost[] = [
       {
         id: "pixel-vs-capi",
         heading: "What the Pixel and the Conversions API each do",
+        infographic: {"kind":"compare","title":"Pixel versus Conversions API","columns":[{"heading":"Pixel","tone":"neutral","points":["Runs in the visitor's browser","Can be blocked by ad blockers","Quick to install"]},{"heading":"Conversions API","tone":"good","points":["Sends events from your server or shop platform","Not affected by browser blockers","Use both, with matching event IDs"]}]},
         paragraphs: [
           "The Pixel is code in the visitor's browser. It reports what they do on your site. It is quick to install, but browsers, ad blockers and privacy settings can stop it from firing.",
           "The Conversions API, usually called CAPI, sends the same events from your server or your shop platform directly to Meta. It does not depend on the browser, so it catches events the Pixel misses. You want both running together, with the same event ID on each, so Meta can spot duplicates and count the sale once.",
@@ -3713,6 +3745,7 @@ export const blogPosts: BlogPost[] = [
       {
         id: "results",
         heading: "What each campaign did",
+        infographic: {"kind":"bars","title":"Return on ad spend by campaign","items":[{"label":"General product search","value":18,"display":"18.0x","note":"176 orders, KES 326 per order","highlight":true},{"label":"Shopping, all products","value":14.9,"display":"14.9x","note":"139 orders, KES 356 per order"},{"label":"Sister-brand search","value":11.1,"display":"11.1x","note":"11 orders, KES 745 per order"},{"label":"Local skin consultation search","value":7.9,"display":"7.9x","note":"13 orders, KES 789 per order"}]},
         paragraphs: [
           "General product search was the star: KES 57,437 in spend, 176 orders and KES 1,032,685 in revenue, at 18.0x and KES 326 per order. These are people searching with clear intent, often for a specific product, and they are close to buying.",
         ],
@@ -4014,6 +4047,7 @@ export const blogPosts: BlogPost[] = [
       {
         id: "sequence",
         heading: "A five-message sequence you can adapt",
+        infographic: {"kind":"steps","title":"The five-message follow-up timeline","items":[{"label":"Right away","detail":"Answer and ask one question"},{"label":"Next day","detail":"Add something helpful"},{"label":"Day 3","detail":"Share proof"},{"label":"Day 7","detail":"Deal with the likely objection"},{"label":"Day 14","detail":"Close the loop politely"}]},
         paragraphs: [
           "Most sales need more than one conversation. This sequence is for people who enquired but have gone quiet. Each message should add something, so it does not feel like nagging. Use the customer's name, and write as you normally would.",
         ],
@@ -4380,6 +4414,7 @@ export const blogPosts: BlogPost[] = [
       {
         id: "first-reply",
         heading: "The first reply decides the sale",
+        infographic: {"kind":"steps","title":"Structure of a first reply","items":[{"label":"Acknowledge","detail":"Name what they asked about"},{"label":"Answer","detail":"Including the price"},{"label":"Qualify","detail":"One simple question"},{"label":"Next step","detail":"Till number, or a time to view"}]},
         paragraphs: [
           "A lead that waits three hours has usually messaged two of your competitors. Set up a greeting and quick replies, but make sure a real person follows quickly during business hours. Use this structure for the first response:",
         ],
@@ -4587,6 +4622,7 @@ export const blogPosts: BlogPost[] = [
       {
         id: "examples",
         heading: "Three worked examples",
+        infographic: {"kind":"bars","title":"Allowable cost per lead by business","illustrative":true,"items":[{"label":"Salon package","value":300,"display":"KES 300"},{"label":"Car hire","value":600,"display":"KES 600"},{"label":"Private school","value":1800,"display":"KES 1,800","highlight":true}]},
         paragraphs: [
           "The figures below are made up to show the method. Replace them with your own.",
         ],
@@ -4871,6 +4907,7 @@ export const blogPosts: BlogPost[] = [
       {
         id: "after",
         heading: "What stayed, and what faded",
+        infographic: {"kind":"bars","title":"Instagram views by week","items":[{"label":"31 Aug","value":58000,"display":"58,000"},{"label":"7 Sep","value":35400,"display":"35,400"},{"label":"14 Sep","value":577300,"display":"577,300","highlight":true},{"label":"21 Sep","value":102037,"display":"102,037"},{"label":"28 Sep","value":47886,"display":"47,886"},{"label":"5 Oct","value":70684,"display":"70,684"}],"note":"Weekly figures from the Instagram insights tracker."},
         paragraphs: [
           "The week after, views settled at 102,037, still about double the usual, with 2,300 interactions and 257 new followers. So there was a real carry-over for one week. Then, two weeks after the spike, views were back at 47,886, within the normal range.",
         ],
@@ -5722,6 +5759,7 @@ export const blogPosts: BlogPost[] = [
       {
         id: "rules",
         heading: "The practical rules",
+        infographic: {"kind":"steps","title":"The direct marketing consent flow","items":[{"label":"Collect from the person","detail":"Not from a bought or borrowed list"},{"label":"Say marketing is a purpose","detail":"At the time you collect it"},{"label":"Get consent","detail":"For that use"},{"label":"Offer a simple opt-out","detail":"Free or very low effort"},{"label":"Honour it","detail":"Stop and record the opt-out"}],"note":"A plain summary of Regulations 15 to 17, not legal advice."},
         paragraphs: [
           "Regulations 15 to 17 set out the conditions. In practice, they come down to the following:",
         ],
@@ -6016,6 +6054,816 @@ export const blogPosts: BlogPost[] = [
           "Give the winners more budget gradually, then give the weakest a new job or stop it.",
           "Plan next quarter's calendar around the formats that have a real reason to act.",
         ],
+      },
+    ],
+  },
+  {
+    slug: "meta-ads-account-structure-small-budget-kenya-2026",
+    category: "Meta Ads",
+    title: "How to Structure a Meta Ads Account on a Small Budget",
+    excerpt: "Twelve ad sets on KES 20,000 means twelve starved ad sets. Here is a structure small Kenyan budgets can actually feed.",
+    date: "2026-11-03",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "How to Structure a Meta Ads Account on a Small Budget",
+    metaDescription: "A simple Meta Ads account structure for small Kenyan budgets: how many campaigns to run, how to split budget between prospecting and retargeting, and what to avoid.",
+    intro: "The most common structural mistake in small Meta accounts is doing too much with too little money. Ten campaigns, three ad sets each, KES 300 a day spread across all of them, and nothing gets enough spend to learn. Structure is how you decide where the shillings go, so on a small budget the best structure is the simplest one that still lets you test.",
+    thumbnail: "https://images.unsplash.com/photo-1688733720228-4f7a18681c4f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Desk with a laptop and large monitor showing marketing dashboards",
+
+    sections: [
+      {
+        id: "why-fewer",
+        heading: "Why fewer campaigns usually win",
+        paragraphs: [
+          "Meta's delivery system learns from conversions. It has long pointed to roughly 50 optimisation events a week per ad set before delivery settles, and a small Kenyan account rarely produces that many in several places at once. Every extra ad set splits the same few conversions into thinner slices.",
+          "So the rule I work from is: give each ad set enough budget to have a real chance of a result, and accept that this means fewer of them.",
+        ],
+        infographic: {"kind":"steps","title":"A three-layer structure for budgets under about KES 60,000 a month","items":[{"label":"One prospecting campaign","detail":"Broad audience in your service area, two or three different ads inside one ad set."},{"label":"One retargeting campaign","detail":"Everyone warm from the last 30 to 90 days, excluding recent buyers."},{"label":"One reserve for tests","detail":"A small slice you can move into a new idea without touching the winners."}],"note":"A starting shape, not a rule. Bigger budgets can split by product or offer."},
+      },
+      {
+        id: "budget-split",
+        heading: "How to split the money",
+        paragraphs: [
+          "Most of the budget should go to finding new people, because retargeting can only reach people you have already reached. Treat the split below as a starting point and adjust it once you have a few weeks of data.",
+        ],
+        infographic: {"kind":"bars","title":"An example monthly split","illustrative":true,"items":[{"label":"Prospecting","value":60,"display":"60%","note":"Finds new buyers","highlight":true},{"label":"Retargeting","value":25,"display":"25%","note":"Wins back warm visitors and chatters"},{"label":"Testing","value":15,"display":"15%","note":"New offers, angles and audiences"}]},
+      },
+      {
+        id: "one-offer",
+        heading: "One clear offer per campaign",
+        paragraphs: [
+          "In my own Meta turnaround case study, the account improved once campaigns were built around specific offers such as restocks and product days instead of one general stream of ads. A campaign with a single offer is easier to judge, because you know what the result is a result of.",
+        ],
+        list: [
+          "Name campaigns by offer and month, so reports are readable later.",
+          "Keep two or three ads per ad set, each with a different angle rather than a different colour.",
+          "Add new ads to the existing ad set instead of starting new campaigns for every idea.",
+          "Leave a campaign alone for about a week before judging it, unless something is clearly broken.",
+        ],
+      },
+      {
+        id: "mistakes",
+        heading: "Structure mistakes I keep seeing",
+        paragraphs: [
+        ],
+        infographic: {"kind":"compare","title":"Over-built versus right-sized","columns":[{"heading":"Over-built","tone":"bad","points":["Many campaigns, each starved of budget","Separate ad sets for tiny audience tweaks","Editing budgets and ads daily","Reports full of tests nobody finished"]},{"heading":"Right-sized","tone":"good","points":["Two or three campaigns with clear jobs","Broad audiences and distinct creative","Changes made on a weekly rhythm","Every test has a question and an end date"]}]},
+        callout: "If you cannot explain in one sentence what each campaign is for, you have one too many.",
+      },
+    ],
+  },
+  {
+    slug: "ad-creative-fatigue-signs-kenya-2026",
+    category: "Meta Ads",
+    title: "Ad Fatigue: How to Spot a Tired Meta Ad Before It Eats Your Budget",
+    excerpt: "Ads wear out. The signs show up in your numbers a week or two before results fall off a cliff.",
+    date: "2026-11-04",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Ad Fatigue: How to Spot a Tired Meta Ad Before It Eats Your Budget",
+    metaDescription: "How to recognise ad fatigue on Meta Ads in Kenya: frequency, falling click-through, rising cost per result, and a simple creative refresh routine for small budgets.",
+    intro: "An ad that worked brilliantly in October can be quietly losing money by November. Nothing is wrong with the product. The same people have simply seen it too many times. Ad fatigue is predictable, so you can plan for it instead of being surprised by it in the middle of a month.",
+    thumbnail: "https://images.unsplash.com/photo-1759215524472-1b0686fdbd87?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand scrolling an Instagram feed on a smartphone",
+
+    sections: [
+      {
+        id: "what-it-is",
+        heading: "What fatigue actually is",
+        paragraphs: [
+          "When the same audience keeps seeing the same ad, they stop noticing it, then start finding it irritating. Clicks fall, the cost of each click rises, and Meta has to pay more to find people who have not yet seen it. Small local audiences tire fastest, because there are fewer fresh people to reach.",
+        ],
+      },
+      {
+        id: "signs",
+        heading: "The signs, in the order they usually appear",
+        paragraphs: [
+          "Check these weekly. No single sign proves fatigue, but two or three together almost always do.",
+        ],
+        infographic: {"kind":"steps","title":"How fatigue usually unfolds","items":[{"label":"Frequency climbs","detail":"The average person has now seen the ad several times in a week."},{"label":"Link click-through falls","detail":"Fewer people tap, although reach looks healthy."},{"label":"Cost per click and CPM rise","detail":"Meta is paying more to find new eyes."},{"label":"Cost per result jumps","detail":"The lead or sale now costs noticeably more than last month."},{"label":"Negative feedback appears","detail":"Hide-ad clicks and annoyed comments creep in."}]},
+      },
+      {
+        id: "what-to-check",
+        heading: "Check it against the right baseline",
+        paragraphs: [
+          "Compare an ad with its own first fortnight, not with another campaign. A retargeting audience will always see higher frequency than a broad prospecting one, so a number that is normal there could be a warning elsewhere.",
+        ],
+        table: {
+          headers: ["Metric","Healthy direction","Fatigue direction"],
+          rows: [
+            ["Frequency","Stable or rising slowly","Climbing fast"],
+            ["Link CTR","Steady","Falling week on week"],
+            ["CPM","Steady","Rising without a season reason"],
+            ["Cost per result","Steady or falling","Rising"],
+          ],
+          note: "Remember payday and month-end effects before blaming the ad.",
+        },
+      },
+      {
+        id: "refresh",
+        heading: "A refresh routine that does not need a studio",
+        paragraphs: [
+          "You rarely need a whole new campaign. Keep the winning offer and change how it looks and sounds. The first few seconds and the first line do most of the work, so start there.",
+        ],
+        list: [
+          "New opening: same video, a different first three seconds.",
+          "New angle: lead with a different objection, such as price, delivery or trust.",
+          "New format: turn a video into a carousel, or a photo into a short clip.",
+          "New face: a customer, a staff member or a creator instead of the owner.",
+          "Rotate in two fresh ads every two to three weeks, and retire the weakest one.",
+        ],
+        callout: "Plan the refresh before the fall. Having two ads ready in the folder is far cheaper than rebuilding during a slump.",
+      },
+    ],
+  },
+  {
+    slug: "google-ads-bidding-strategies-explained-kenya-2026",
+    category: "Google Ads",
+    title: "Google Ads Bidding Strategies Explained for Kenyan Advertisers",
+    excerpt: "Manual, Maximise Clicks, Maximise Conversions, tCPA, tROAS. Which one to use, and when to move up.",
+    date: "2026-11-04",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Google Ads Bidding Strategies Explained for Kenyan Advertisers",
+    metaDescription: "Google Ads bidding strategies explained for Kenya: Manual CPC, Maximise Clicks, Maximise Conversions, Target CPA and Target ROAS, with a simple path for small accounts.",
+    intro: "The bidding dropdown in Google Ads has half a dozen options and nothing on the screen tells a small business which one to pick. The right choice depends on one thing above all: how much reliable conversion data your account already has. A strategy that works for a big retailer can spend a small account's budget in a week.",
+    thumbnail: "https://images.unsplash.com/photo-1614091473310-072faa6a091c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Google search box with suggestions on a laptop screen",
+
+    sections: [
+      {
+        id: "ladder",
+        heading: "Think of it as a ladder",
+        paragraphs: [
+          "Start on the lower rungs while the account has little data, and climb as conversions accumulate. Climbing too early gives Google too little to learn from. Staying low forever leaves performance on the table once you do have data.",
+        ],
+        infographic: {"kind":"steps","title":"A bidding ladder for small accounts","items":[{"label":"Manual CPC or Maximise Clicks with a cap","detail":"Brand new account with no conversion data. You control cost, Google sends traffic."},{"label":"Maximise Conversions","detail":"Conversion tracking is proven and you are getting steady results."},{"label":"Target CPA","detail":"You know what a lead or sale is worth and want a cost ceiling."},{"label":"Maximise Conversion Value and Target ROAS","detail":"Orders have different values and the value is tracked accurately."}],"note":"Google decides how much data each strategy needs, so check its current guidance in the account."},
+      },
+      {
+        id: "compare",
+        heading: "What each strategy does",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Strategy","Optimises for","Risk to watch"],
+          rows: [
+            ["Manual CPC","Whatever you set per keyword","Time-consuming and easy to neglect"],
+            ["Maximise Clicks","The most clicks for your budget","Cheap clicks that never buy; always set a cap"],
+            ["Maximise Conversions","The most conversions for your budget","Counts whatever you track, so bad tracking spends well on bad results"],
+            ["Target CPA","Conversions near a cost you name","A target set too low can choke delivery"],
+            ["Maximise Conversion Value","Revenue, not order count","Needs real values passed in KES"],
+            ["Target ROAS","A return you name","Too ambitious a target limits volume"],
+          ],
+        },
+      },
+      {
+        id: "tracking-first",
+        heading: "Tracking comes before strategy",
+        paragraphs: [
+          "Every automated option above chases your conversions. If your primary conversion is a page view, you will get very efficient page views. In the Google Ads launch case study, the first week returned 1.4x and by week three the same campaign returned 27.3x. That only made sense to watch because every order was tracked.",
+          "Fix the tracking first, using the approach in my conversion tracking guide, and only then choose a strategy.",
+        ],
+      },
+      {
+        id: "changing",
+        heading: "Changing strategy without wrecking the account",
+        paragraphs: [
+          "Switching bidding resets some of what Google has learned, so do it deliberately.",
+        ],
+        list: [
+          "Change one campaign at a time and note the date.",
+          "Do it after a stable stretch, not in the middle of a promotion.",
+          "Give the new strategy a couple of weeks before judging it.",
+          "Set targets close to your current results, then tighten gradually.",
+          "Keep a note of budget, targets and results so you can undo a bad move.",
+        ],
+        callout: "Never set a target CPA or ROAS you have not been hitting. Ask for slightly better than today, not a miracle.",
+      },
+    ],
+  },
+  {
+    slug: "responsive-search-ads-headlines-kenya-2026",
+    category: "Google Ads",
+    title: "Writing Responsive Search Ads That Get Clicked in Kenya",
+    excerpt: "Fifteen headlines and four descriptions sound like a lot until you try to fill them with something useful.",
+    date: "2026-11-05",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Writing Responsive Search Ads That Get Clicked in Kenya",
+    metaDescription: "How to write Google responsive search ads for Kenyan businesses: the headline mix, character limits, pinning, using prices and locations, and testing what works.",
+    intro: "Google's responsive search ads let you supply up to 15 headlines and 4 descriptions, then Google mixes them to match each search. Most small accounts fill the slots with ten versions of the same sentence. The ads that earn clicks give Google genuinely different things to combine: what you sell, why it is better, what it costs and where you are.",
+    thumbnail: "https://images.unsplash.com/photo-1772588627357-e735115b9620?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hands holding a blank notebook beside a laptop and a cup of coffee",
+
+    sections: [
+      {
+        id: "limits",
+        heading: "The limits you are writing inside",
+        paragraphs: [
+          "Headlines are limited to 30 characters and descriptions to 90, so every word has to earn its place. Write in short, concrete phrases.",
+        ],
+        infographic: {"kind":"stats","title":"Responsive search ad limits","items":[{"value":"15","label":"headlines, up to 30 characters each"},{"value":"4","label":"descriptions, up to 90 characters each"},{"value":"3","label":"headlines can show together"}],"note":"Check the Google Ads help centre for current limits before you build."},
+      },
+      {
+        id: "mix",
+        heading: "Give Google a mix, not a pile",
+        paragraphs: [
+          "Think in categories. A strong set covers each of these, so that whichever combination shows, it still says something useful.",
+        ],
+        infographic: {"kind":"compare","title":"Headline categories to cover","columns":[{"heading":"What and who","tone":"neutral","points":["The keyword in plain words","The service plus the area, such as Kilimani"]},{"heading":"Why you","tone":"good","points":["A real credential or result","Reviews or years in business, if true","Same-day or free delivery, if true"]},{"heading":"Price and action","tone":"good","points":["From KES X, if you can state it","Book today, Call now, Chat on WhatsApp"]}]},
+      },
+      {
+        id: "rules",
+        heading: "Practical rules",
+        paragraphs: [
+        ],
+        list: [
+          "Use the words people search for in at least two or three headlines.",
+          "Put a real price or range in one headline. It filters out people who cannot afford you.",
+          "Avoid repeating the same phrase across headlines, since Google cannot combine duplicates usefully.",
+          "Pin a headline only when a legal line must show; pinning limits Google's testing.",
+          "Add assets: sitelinks, callouts, a call asset and a location asset.",
+          "Never claim what the landing page cannot back up.",
+        ],
+      },
+      {
+        id: "testing",
+        heading: "Read the asset report, then rewrite",
+        paragraphs: [
+          "After a few weeks, open the asset details and look at which headlines are rated Low. Replace those with new ideas instead of rewording them. Compare performance by the product or area the ad group covers, and keep the landing page matched to the promise. Better relevance can also lower what you pay per click, which is the point of my Quality Score guide.",
+        ],
+        callout: "A good headline set reads like the answers to the first three questions a customer would ask you in person.",
+      },
+    ],
+  },
+  {
+    slug: "how-google-maps-ranks-businesses-nairobi-2026",
+    category: "SEO",
+    title: "How Google Maps Ranks Businesses in Nairobi: Relevance, Distance, Prominence",
+    excerpt: "Google says local results come down to three things. Two of them you can influence, and one you cannot.",
+    date: "2026-11-05",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "How Google Maps Ranks Nairobi Businesses",
+    metaDescription: "How Google Maps ranks businesses in Nairobi: relevance, distance and prominence explained, with practical steps for your Business Profile, reviews and website.",
+    intro: "Google's own description of local ranking is short. Results are based mainly on relevance, distance and prominence. Understanding which of those you control tells you where to spend your time, and where complaining about a competitor two streets nearer to the searcher is a waste of it.",
+    thumbnail: "https://images.unsplash.com/photo-1790456175905-f5baeea3b15a?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Nairobi skyline with tall buildings and a highway curving through the city",
+
+    sections: [
+      {
+        id: "three-factors",
+        heading: "The three factors",
+        paragraphs: [
+          "Google weighs these together, so a weakness in one can be offset by strength in another.",
+        ],
+        infographic: {"kind":"compare","title":"Google's three local ranking factors","columns":[{"heading":"Relevance","tone":"good","points":["How well your profile matches the search","You control this: categories, services, description"]},{"heading":"Distance","tone":"neutral","points":["How far you are from the searcher or the place they named","You mostly cannot change this, but a correct pin and service area matter"]},{"heading":"Prominence","tone":"good","points":["How well known you are, online and off","You influence this: reviews, links, mentions, a solid website"]}]},
+      },
+      {
+        id: "relevance",
+        heading: "Relevance: tell Google exactly what you are",
+        paragraphs: [
+          "Choose the most precise primary category, add secondary categories that are true, list every service, and write a description that says what you do and where. Then keep your website consistent with it. A \"Dentist\" who also lists orthodontics and teeth whitening is easier to match to those searches than one with an empty profile.",
+        ],
+      },
+      {
+        id: "distance",
+        heading: "Distance: what you can and cannot change",
+        paragraphs: [
+          "If someone searches \"pharmacy near me\" from Kilimani, the closest relevant pharmacies get an advantage. You cannot move your shop. You can make sure the pin is exact, your hours are right, and, if you travel to customers, that your service area lists the places you really serve. Do not create fake addresses; Google treats them as spam and they can get a profile suspended.",
+        ],
+      },
+      {
+        id: "prominence",
+        heading: "Prominence: the part you can build",
+        paragraphs: [
+          "This is where steady work pays off, and it is why a competitor with a worse location can still outrank you.",
+        ],
+        infographic: {"kind":"steps","title":"Building prominence, in a sensible order","items":[{"label":"Fill in the profile fully","detail":"Photos, services, hours and posts."},{"label":"Earn honest reviews","detail":"A steady flow, within Google's rules."},{"label":"Make the website match","detail":"A page for each core service, with consistent name, address and phone."},{"label":"Get mentioned locally","detail":"Associations, suppliers, partners and local media."}]},
+      },
+      {
+        id: "check",
+        heading: "How to check where you stand",
+        paragraphs: [
+          "Search your main service from a phone in the area you serve, in a private window, and note who appears. Do it from a few different spots, since results shift with location. Then compare your profile with the top three: categories, number and recency of reviews, photos and website. The gaps are your to-do list.",
+        ],
+        callout: "You cannot out-distance a competitor, but you can out-work them on relevance and prominence.",
+      },
+    ],
+  },
+  {
+    slug: "core-web-vitals-website-speed-kenya-2026",
+    category: "SEO",
+    title: "Core Web Vitals for Kenyan Websites: Speed Targets in Plain Language",
+    excerpt: "Three numbers describe whether your site feels fast on a phone. Here is what they mean and how to improve each.",
+    date: "2026-11-06",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Core Web Vitals for Kenyan Websites: Speed Targets in Plain Language",
+    metaDescription: "Core Web Vitals explained for Kenyan website owners: LCP, INP and CLS targets, why mobile data makes them matter, and simple fixes for slow sites.",
+    intro: "A site that looks perfect on the designer's laptop can feel painfully slow on a mid-range Android phone on mobile data, which is how many of your Kenyan customers will see it. Core Web Vitals are Google's three measures of that real-world experience. They are not the biggest ranking factor, but they are tied to something that matters more: whether people stay long enough to buy.",
+    thumbnail: "https://images.unsplash.com/photo-1696995027812-35c9086bf9d8?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Close-up of a motorcycle speedometer dial",
+
+    sections: [
+      {
+        id: "three-numbers",
+        heading: "The three numbers",
+        paragraphs: [
+          "Google publishes thresholds for what counts as good, measured on real visits and judged at the 75th percentile.",
+        ],
+        infographic: {"kind":"stats","title":"Google's \"good\" thresholds","items":[{"value":"2.5 s","label":"LCP: how fast the main content appears"},{"value":"200 ms","label":"INP: how quickly the page reacts to a tap"},{"value":"0.1","label":"CLS: how much the layout jumps while loading"}],"note":"Thresholds as published by Google at web.dev; check there for any updates."},
+      },
+      {
+        id: "how-to-test",
+        heading: "How to test your own site",
+        paragraphs: [
+          "Run your key pages through Google's PageSpeed Insights on the mobile tab. Look first at the field data at the top, which comes from real visitors when enough of them exist, and treat the lab score below as a guide to fixes. Search Console also has a Core Web Vitals report for your whole site.",
+        ],
+      },
+      {
+        id: "fixes",
+        heading: "The fixes that matter most",
+        paragraphs: [
+          "Most slow Kenyan business sites suffer from the same few problems.",
+        ],
+        infographic: {"kind":"compare","title":"Problems and their usual fixes","columns":[{"heading":"Slow to appear (LCP)","tone":"neutral","points":["Huge hero images: compress and resize them","Cheap hosting: move to a faster host","Render-blocking scripts: remove what you do not use"]},{"heading":"Slow to respond (INP)","tone":"neutral","points":["Heavy page builders and plugins","Chat widgets and trackers loading at once","Large pop-ups running on tap"]},{"heading":"Jumping layout (CLS)","tone":"neutral","points":["Images without set width and height","Banners injected above the content","Web fonts swapping late"]}]},
+      },
+      {
+        id: "priority",
+        heading: "Where to start",
+        paragraphs: [
+        ],
+        list: [
+          "Compress and properly size every image, and use modern formats such as WebP.",
+          "Delete plugins and scripts you do not need, especially old tracking tags.",
+          "Test on a real, ordinary phone on mobile data, not only on office Wi-Fi.",
+          "Fix your landing pages first, since they receive your paid traffic.",
+          "Re-test after each change so you know what worked.",
+        ],
+        callout: "Faster pages also lower the waste in your ad budget, because you stop paying for clicks that leave before the page loads.",
+      },
+    ],
+  },
+  {
+    slug: "lead-qualification-questions-whatsapp-kenya-2026",
+    category: "Lead Generation",
+    title: "Qualifying Leads on WhatsApp: Five Questions That Separate Buyers From Browsers",
+    excerpt: "Not every enquiry deserves the same effort. A few well-chosen questions tell you who to call first.",
+    date: "2026-11-06",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Qualifying Leads on WhatsApp: Five Questions to Ask",
+    metaDescription: "How to qualify leads on WhatsApp in Kenya: five qualifying questions, a simple hot, warm and cold scoring system, and how to ask without scaring people off.",
+    intro: "A lead is not a customer until you have found out whether they can buy, want to buy and will buy soon. Many Kenyan teams treat every message equally, so the person ready to pay tomorrow waits behind ten people who were only curious. A few qualifying questions, asked naturally, fix this without making anyone feel interrogated.",
+    thumbnail: "https://images.unsplash.com/photo-1770368787756-c02439ce475f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a smartphone showing a messaging app",
+
+    sections: [
+      {
+        id: "five-questions",
+        heading: "The five questions",
+        paragraphs: [
+          "Ask them across a conversation, not as a form. Each one should feel like part of helping.",
+        ],
+        infographic: {"kind":"steps","title":"Five qualifying questions","items":[{"label":"What do you need?","detail":"Confirms it is something you actually sell."},{"label":"When do you need it?","detail":"Reveals urgency."},{"label":"Where are you?","detail":"Checks delivery or service area."},{"label":"What budget are you working with?","detail":"Reveals whether the price fits."},{"label":"Who else decides?","detail":"Finds out whether this person can say yes."}]},
+      },
+      {
+        id: "score",
+        heading: "Turn the answers into a simple score",
+        paragraphs: [
+          "Keep it to three levels so your team will really use it.",
+        ],
+        table: {
+          headers: ["Level","What you have learned","What to do"],
+          rows: [
+            ["Hot","Clear need, a date, a fitting budget and they decide","Reply within minutes and offer a next step"],
+            ["Warm","Real interest, but timing or budget unclear","Follow up with proof, then check in on the agreed date"],
+            ["Cold","Just browsing, or out of area","Send helpful information and move on"],
+          ],
+        },
+      },
+      {
+        id: "property-example",
+        heading: "What this looked like in one real account",
+        paragraphs: [
+          "In a residential developer's October Meta account, 126 people enquired, 106 were real buyers or renters, 37 showed real interest and 14 were hot buyers. That is the shape qualification reveals. The case study that follows shows what happened when the inbox was the weak point.",
+        ],
+        infographic: {"kind":"funnel","title":"126 enquiries, filtered by reading every chat","stages":[{"label":"Messaged the page","value":126,"display":"126"},{"label":"Real buyer or renter","value":106,"display":"106"},{"label":"Showed real interest","value":37,"display":"37"},{"label":"Hot buyers","value":14,"display":"14"}],"note":"From the anonymised October 2026 property case study."},
+      },
+      {
+        id: "how-to-ask",
+        heading: "How to ask without sounding like a bank",
+        paragraphs: [
+        ],
+        list: [
+          "Answer their question first, then ask yours. Give before you take.",
+          "Ask one question per message.",
+          "Explain why you ask: \"So I can quote delivery properly, which area are you in?\"",
+          "Write it down straight away in your tracking sheet, with the score.",
+          "Review scores weekly, and change the questions if they do not predict who buys.",
+        ],
+        callout: "Qualification is not about rejecting people. It is about spending your best hours on the people who are ready.",
+      },
+    ],
+  },
+  {
+    slug: "whatsapp-broadcast-vs-email-marketing-kenya-2026",
+    category: "Lead Generation",
+    title: "WhatsApp Broadcasts or Email? Choosing the Right Channel for Kenyan Customers",
+    excerpt: "Your customers answer WhatsApp in minutes and may ignore email for weeks. Both have a job, and both have consent rules.",
+    date: "2026-11-07",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "WhatsApp Broadcasts or Email for Kenyan Customers?",
+    metaDescription: "WhatsApp broadcasts versus email marketing for Kenyan businesses: reach, cost, consent rules, best uses of each and how to combine them.",
+    intro: "Ask a Kenyan customer to check their email and you may wait a week. Message them on WhatsApp and the reply comes in minutes. That makes WhatsApp attractive for promotions, but it is also easy to misuse, and email still does jobs WhatsApp cannot. The right answer for most businesses is a deliberate mix.",
+    thumbnail: "https://images.unsplash.com/photo-1787834564746-d463e1fba81f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smartphone home screen showing Facebook, Messenger, Instagram and messaging app icons",
+
+    sections: [
+      {
+        id: "compare",
+        heading: "How they compare",
+        paragraphs: [
+        ],
+        infographic: {"kind":"compare","title":"WhatsApp broadcasts versus email","columns":[{"heading":"WhatsApp","tone":"good","points":["Fast replies and personal feel","Great for offers, restocks and reminders","List size and rules limit mass sending","Needs a clear opt-in from each contact"]},{"heading":"Email","tone":"neutral","points":["Good for longer content and receipts","Cheap to send to a large, consented list","Slower to be read in many Kenyan audiences","Needs a visible way to unsubscribe"]}],"note":"Open rates vary widely by audience, so measure your own."},
+      },
+      {
+        id: "consent",
+        heading: "Consent applies to both",
+        paragraphs: [
+          "Under Kenya's Data Protection (General) Regulations, using personal data for direct marketing generally needs the person's consent, a simple opt-out, and a reminder of how to opt out in each message. This is the same whether the channel is WhatsApp, SMS or email. I explain the rules in more detail in my data protection piece, which is a plain summary rather than legal advice.",
+        ],
+      },
+      {
+        id: "best-uses",
+        heading: "Give each channel the job it does best",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Use WhatsApp for","Use email for"],
+          rows: [
+            ["Restock and sale alerts to opted-in customers","Receipts, invoices and confirmations"],
+            ["Appointment reminders","Newsletters and longer guides"],
+            ["Quick answers and quotes","Welcome sequences for new subscribers"],
+            ["Follow-up after an enquiry","Reactivating customers who stopped replying"],
+          ],
+        },
+      },
+      {
+        id: "getting-opt-ins",
+        heading: "Build the list properly",
+        paragraphs: [
+          "A smaller list of people who asked to hear from you outperforms a large list of strangers, and it is far less likely to get your number reported.",
+        ],
+        list: [
+          "Add a clear opt-in tick box to your forms, unticked by default.",
+          "Invite chatters to join your updates, and say what they will receive and how often.",
+          "Include \"Reply STOP to opt out\" in promotional messages and honour it.",
+          "Send on a schedule people can expect, and keep promotions to a sensible frequency.",
+          "Never use bought or borrowed number lists.",
+        ],
+        callout: "Whichever channel you pick, ask first, say what you will send, and make leaving easy.",
+      },
+    ],
+  },
+  {
+    slug: "marketing-retainer-vs-project-vs-commission-kenya-2026",
+    category: "Pricing",
+    title: "Retainer, Project Fee or Commission: How Marketers Charge in Kenya, and Which Suits You",
+    excerpt: "Each pricing model rewards a different behaviour. Pick the one that rewards the behaviour you actually want.",
+    date: "2026-11-07",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Retainer, Project Fee or Commission: How Marketers Charge",
+    metaDescription: "Marketing pricing models in Kenya compared: monthly retainer, project fee, hourly and commission. What each includes, who it suits and the risks to watch.",
+    intro: "When a marketer quotes you, the number matters less than the model behind it. A retainer, a one-off fee and a commission each push the marketer to behave differently, and they suit different businesses. Knowing the difference stops you comparing two quotes that are not really comparable.",
+    thumbnail: "https://images.unsplash.com/photo-1758518730384-be3d205838e8?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two professionals shaking hands across a desk in an office",
+
+    sections: [
+      {
+        id: "the-models",
+        heading: "The four common models",
+        paragraphs: [
+        ],
+        table: {
+          headers: ["Model","How it works","Suits","Watch out for"],
+          rows: [
+            ["Monthly retainer","Fixed fee for ongoing work","Ads, social and SEO that need steady attention","Unclear scope, so you pay for activity rather than results"],
+            ["Project fee","One price for a defined deliverable","A website, a brand kit, an audit or a campaign setup","Scope creep and extra charges for changes"],
+            ["Hourly or day rate","You pay for time","Training, consulting and small fixes","Open-ended bills without a cap"],
+            ["Commission or performance fee","A share of sales or a bonus on results","Sales-led businesses with clean tracking","Disputes over attribution, and short-term thinking"],
+          ],
+        },
+      },
+      {
+        id: "what-each-rewards",
+        heading: "What each one rewards",
+        paragraphs: [
+          "Ask yourself what behaviour you want, then look at which model pays for it.",
+        ],
+        infographic: {"kind":"compare","title":"Incentives behind each model","columns":[{"heading":"Retainer","tone":"neutral","points":["Rewards staying and being available","Works when scope and reporting are clear"]},{"heading":"Project","tone":"neutral","points":["Rewards finishing fast","Works when you know exactly what you need"]},{"heading":"Commission","tone":"neutral","points":["Rewards visible sales","Can ignore brand building and anything hard to track"]}]},
+      },
+      {
+        id: "ad-spend",
+        heading: "Keep ad spend separate",
+        paragraphs: [
+          "Whatever the model, the fee for the marketer and the money spent on ads are different things. Ad spend goes to the platform, ideally paid directly from your own account, with 16% VAT added on Meta. A retainer quoted as a percentage of ad spend can reward a marketer for spending more, so check how any percentage works.",
+        ],
+      },
+      {
+        id: "choose",
+        heading: "How to choose",
+        paragraphs: [
+        ],
+        list: [
+          "Need ongoing management of ads or SEO: a retainer with a written scope and monthly reporting.",
+          "Need one defined thing built: a project fee with stages and a clear list of what is included.",
+          "Not sure what you need: pay for a short audit first, then choose a model.",
+          "Selling something with clean, trackable orders: consider a lower base plus a performance bonus.",
+          "Whatever you choose, own your accounts and get the terms in writing.",
+        ],
+        callout: "Compare quotes by what is included and how success is measured, not by the headline price.",
+      },
+    ],
+  },
+  {
+    slug: "marketing-contract-checklist-kenya-2026",
+    category: "Pricing",
+    title: "The Marketing Agreement Checklist: What to Get in Writing Before You Pay",
+    excerpt: "Most marketing disputes come from things nobody wrote down. Here is the short list worth agreeing up front.",
+    date: "2026-11-08",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "The Marketing Agreement Checklist: Get It in Writing",
+    metaDescription: "A checklist of what Kenyan businesses should put in writing before hiring a marketer or agency: scope, reporting, ownership, payment, notice and data protection.",
+    intro: "Marketing relationships rarely fall apart over the work itself. They fall apart over assumptions: who owns the accounts, what counts as a deliverable, how long the notice period is, and what happens to the data. A one-page agreement that covers these points is cheap insurance for both sides. This is a practical checklist, not legal advice, so have a lawyer review anything with serious money behind it.",
+    thumbnail: "https://images.unsplash.com/photo-1778113048525-387745cbbc6c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Paper form on a clipboard with a pencil beside it",
+
+    sections: [
+      {
+        id: "ten-points",
+        heading: "The ten points",
+        paragraphs: [
+          "Walk through these before you pay a deposit. If something is missing, ask for it to be added.",
+        ],
+        infographic: {"kind":"steps","title":"Agree these in writing","items":[{"label":"Scope","detail":"Exactly what is included, and what costs extra."},{"label":"Fees and payment dates","detail":"Amounts, VAT, and what triggers each payment."},{"label":"Ad spend","detail":"Who pays the platform, and whether any markup exists."},{"label":"Ownership of accounts","detail":"Your business owns ad accounts, Pixels, domains and data."},{"label":"Reporting","detail":"What you will see, how often, and with direct account access."},{"label":"Creative rights","detail":"Who owns the content and how long you may use it."},{"label":"Timelines","detail":"Start date and key delivery dates."},{"label":"Notice and exit","detail":"How either side ends it, plus a handover process."},{"label":"Data protection","detail":"How customer data is stored and used."},{"label":"Confidentiality","detail":"What may and may not be shared, including case studies."}]},
+      },
+      {
+        id: "ownership",
+        heading: "Ownership deserves its own line",
+        paragraphs: [
+          "If you read only one point, read this one. Years of data and a trained Pixel should not leave with a former marketer. I cover this in detail in my piece on who owns your ad accounts.",
+        ],
+      },
+      {
+        id: "results",
+        heading: "Be careful with promised results",
+        paragraphs: [
+          "Nobody can honestly guarantee a ranking, a sales figure or a return on ad spend, because platforms and markets move. A professional can commit to process: setup done by a date, tests run, reports delivered, and decisions explained. Be wary of anyone who guarantees outcomes.",
+        ],
+        list: [
+          "Prefer agreed activities and measurable targets over guarantees.",
+          "Agree how results will be measured, and from which source.",
+          "Agree what happens if targets are missed, such as a review meeting.",
+          "Keep a log of changes made to your accounts.",
+        ],
+      },
+      {
+        id: "review",
+        heading: "Review it together at 90 days",
+        paragraphs: [
+          "Put a review date in the agreement. Ninety days is long enough to see a pattern and short enough to fix a bad fit. Bring your own sales figures to that meeting, not only the platform reports.",
+        ],
+        callout: "A good marketer welcomes a clear agreement. Reluctance to write things down is information too.",
+      },
+    ],
+  },
+  {
+    slug: "community-management-replying-to-comments-kenya-2026",
+    category: "Social Media",
+    title: "Community Management for Small Kenyan Brands: Replying to Comments and DMs",
+    excerpt: "A reply is a public sales conversation. Here is a simple system for handling comments, questions and complaints.",
+    date: "2026-11-08",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Replying to Comments and DMs: Community Management",
+    metaDescription: "How Kenyan small businesses should handle social media comments and DMs: reply times, a triage system, handling complaints and when to move to WhatsApp.",
+    intro: "Every comment under your post is visible to everyone who scrolls past. A helpful reply to \"how much?\" does not only help the asker; it helps the dozens of silent readers with the same question. An ignored question, or an argument with an angry customer, is just as public. Community management is sales and reputation work, and a simple system makes it manageable.",
+    thumbnail: "https://images.unsplash.com/photo-1647964186247-7d0a3d24c7a1?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a phone showing a brand's Instagram profile",
+
+    sections: [
+      {
+        id: "triage",
+        heading: "Sort everything into four buckets",
+        paragraphs: [
+          "Spend ten minutes at set times each day and sort what you find, instead of reacting all day.",
+        ],
+        infographic: {"kind":"compare","title":"Four kinds of message","columns":[{"heading":"Buying questions","tone":"good","points":["\"How much?\" and \"Where are you?\"","Reply first, with the price and a next step"]},{"heading":"Praise","tone":"good","points":["Thank them by name","Ask permission before sharing it"]},{"heading":"Complaints","tone":"neutral","points":["Acknowledge, apologise if it is fair","Move the detail to a private chat"]},{"heading":"Spam and abuse","tone":"bad","points":["Hide or delete, and block repeat offenders","Do not argue"]}]},
+      },
+      {
+        id: "speed",
+        heading: "Set a reply standard",
+        paragraphs: [
+          "Decide what you can keep up. A reasonable aim is to answer buying questions within a few hours during business hours and everything else within a day. In active campaigns, check more often, because ad comments are warm leads.",
+        ],
+      },
+      {
+        id: "price-in-comments",
+        heading: "Answer the price question in public",
+        paragraphs: [
+          "Replying \"DM for price\" under an ad usually costs sales, because many people will not bother. Give the price or a range in the comment, then invite them to chat for details. It saves your team repeating the same answer, and every future reader sees it.",
+        ],
+        list: [
+          "Reply with the price, what is included, and one next step.",
+          "Pin your best answer to the top of the comments.",
+          "Keep saved replies for common questions, but add a personal word.",
+          "Move to WhatsApp when the details need names or numbers.",
+        ],
+      },
+      {
+        id: "complaints",
+        heading: "Handle complaints calmly",
+        paragraphs: [
+          "A calm reply to a complaint can win more trust than the original sale. Say you are sorry for the experience, ask for the details in a private message, and follow up publicly once solved. Never reveal customer information in the comments, and do not delete honest criticism, since people notice.",
+        ],
+        callout: "Treat the comment section as part of your shop. Someone should always be standing at the counter.",
+      },
+    ],
+  },
+  {
+    slug: "short-video-editing-workflow-small-business-kenya-2026",
+    category: "Content",
+    title: "A Short-Video Editing Workflow a Small Kenyan Team Can Actually Finish",
+    excerpt: "Editing is where most content plans stall. A fixed workflow turns a pile of clips into posts without burning a weekend.",
+    date: "2026-11-09",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "A Short-Video Editing Workflow a Small Kenyan Team Can Actually Finish",
+    metaDescription: "A short-video editing workflow for Kenyan small businesses using a phone and a free editor: shooting, cutting, captions, sound and exporting for TikTok and Reels.",
+    intro: "Plenty of small businesses film good footage and never post it, because editing feels like a mountain. The way through is not a better app. It is a repeatable order of steps, so each video takes the same short path from raw clip to published post. Here is the workflow I recommend, using a phone and a free editor such as CapCut.",
+    thumbnail: "https://images.unsplash.com/photo-1553446472-8f625ae729ad?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hands holding a camera with a red microphone on top",
+
+    sections: [
+      {
+        id: "steps",
+        heading: "Six steps from clip to post",
+        paragraphs: [
+          "Do the steps in this order, and do the same ones every time.",
+        ],
+        infographic: {"kind":"steps","title":"The editing workflow","items":[{"label":"Plan the hook","detail":"Write the first line before you film."},{"label":"Shoot in batches","detail":"Film several videos in one session, vertical, in natural light."},{"label":"Cut hard","detail":"Remove pauses and anything that does not move the story."},{"label":"Add captions","detail":"Many people watch with the sound off."},{"label":"Add sound","detail":"Clear voice first, then licensed music if you use any."},{"label":"Export and label","detail":"Export vertical, name the file, and keep a log."}]},
+      },
+      {
+        id: "shooting",
+        heading: "Shoot so editing is easy",
+        paragraphs: [
+          "Edits go quicker when the footage is usable. Clean the lens, shoot vertically, steady the phone, and keep the sound clear, since poor audio loses viewers faster than imperfect video.",
+        ],
+        list: [
+          "Film the first line three different ways and choose later.",
+          "Hold each shot for a few seconds before and after the action.",
+          "Get close for the audio, or use a clip-on microphone.",
+          "Capture extra close-ups of the product to cut away to.",
+        ],
+      },
+      {
+        id: "pace",
+        heading: "Pace and length",
+        paragraphs: [
+          "Short videos reward tight cutting. A new visual or line every couple of seconds keeps attention, and the video should end as soon as the point is made.",
+        ],
+        table: {
+          headers: ["Goal","Rough length","Notes"],
+          rows: [
+            ["Hook test","7 to 15 seconds","One idea, fast"],
+            ["Product demo","15 to 30 seconds","Show the result early"],
+            ["Explainer or advice","30 to 60 seconds","Number the points"],
+          ],
+          note: "Rough guides. Your own retention numbers are better evidence than any rule.",
+        },
+      },
+      {
+        id: "music",
+        heading: "Mind the music rules",
+        paragraphs: [
+          "Trending sounds are often licensed for personal accounts only. For a business account or any paid ad, use the platform's commercial music library or properly licensed tracks. It avoids muted videos and removed ads.",
+        ],
+        callout: "Keep a simple log of each video, its hook and its results. After a month you will know which edits earn their time.",
+      },
+    ],
+  },
+  {
+    slug: "property-leads-lost-in-the-inbox-case-study-2026",
+    category: "Case Study",
+    title: "126 Property Enquiries for KES 40,101: Why the Leak Was the Inbox, Not the Ads",
+    excerpt: "A residential developer's October Meta numbers looked fine until we read every chat. Here is where the buyers went.",
+    date: "2026-11-09",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "126 Property Enquiries for KES 40,101: The Leak Was the Inbox",
+    metaDescription: "A real Meta Ads case study from Kenya: a developer's 126 property enquiries in October 2026, 14 hot buyers, KES 2,864 per hot buyer, and what changed in the inbox.",
+    intro: "In October 2026, a residential developer spent KES 40,101 on Meta ads and received 126 enquiries on Instagram and lead forms. On the dashboard that is KES 318 each, a respectable figure. The more useful number appeared after we read every chat: 14 serious buyers, 6 of them with a phone number. The client, the buyers and the exact unit are left out on purpose.",
+    thumbnail: "https://images.unsplash.com/photo-1735547876935-7be80eae1c88?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a bunch of house keys",
+
+    sections: [
+      {
+        id: "numbers",
+        heading: "The month in numbers",
+        paragraphs: [
+          "These are the figures for 1 to 31 October. Cost per step is the month's ad spend divided by the people at that step.",
+        ],
+        infographic: {"kind":"stats","title":"October 2026 at a glance","items":[{"value":"KES 40,101","label":"spent, about KES 1,200 a day"},{"value":"126","label":"enquiries at KES 318 each"},{"value":"14","label":"hot buyers at KES 2,864 each"},{"value":"6","label":"gave a phone number"}]},
+      },
+      {
+        id: "funnel",
+        heading: "Where the 126 enquiries went",
+        paragraphs: [
+          "The ads found the right people. 106 of the 126 were real buyers or renters asking about payment plans, mortgages and site visits. The loss happened after that.",
+        ],
+        infographic: {"kind":"funnel","title":"From enquiry to phone number","stages":[{"label":"Messaged the page","value":126,"display":"126"},{"label":"Real buyer or renter","value":106,"display":"106"},{"label":"Showed real interest","value":37,"display":"37"},{"label":"Hot buyers","value":14,"display":"14"},{"label":"Gave a phone number","value":6,"display":"6"}]},
+      },
+      {
+        id: "the-leak",
+        heading: "The leak was in the inbox",
+        paragraphs: [
+          "60 people tapped a quick question on an ad and never replied, because the answers did not end with a next step. Many first replies arrived the next day, and two chats were never answered. By then, a buyer comparing several developments had often moved on.",
+          "The ads were also getting better. Cost per Instagram chat fell from KES 478 in the first week to KES 140 in the last three days, against a month average of KES 309.",
+        ],
+      },
+      {
+        id: "what-changed",
+        heading: "What changes in November",
+        paragraphs: [
+          "Same budget, different handling of what the ads bring in.",
+        ],
+        list: [
+          "Replies within an hour, ending in one question: \"Which day can you come for a site visit?\"",
+          "Quick questions on the ad that lead straight to a visit booking.",
+          "One sheet tracking every lead from chat to visit to deposit.",
+          "A hot, warm or cold score on every conversation, as set out in my qualification guide.",
+        ],
+      },
+      {
+        id: "caveats",
+        heading: "What this does and does not show",
+        paragraphs: [
+          "This is October only. Site visits and sales were not tracked yet, so it shows cost per hot buyer, not cost per sale. The month's detail also comes from reading chats by hand, which involves judgement about who counts as hot. November results will be added to the full case study when they exist.",
+        ],
+        callout: "Before you change an ad that brings enquiries, read the chats. The problem may be the reply, not the ad.",
+      },
+    ],
+  },
+  {
+    slug: "seven-lessons-two-platforms-one-retailer-case-study-2026",
+    category: "Case Study",
+    title: "Seven Lessons From Running Meta and Google for One Kenyan Retailer",
+    excerpt: "KES 205,601 of ad spend, 938 tracked orders, and the seven things I would tell any business starting out.",
+    date: "2026-11-10",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Seven Lessons From Running Meta and Google for One Kenyan Retailer",
+    metaDescription: "Seven lessons from a real Kenyan case study of Meta Ads and Google Ads: KES 5.43M tracked revenue, the platform split, tracking, testing and the double-counting caveat.",
+    intro: "From 1 August to 8 October 2026, one Kenyan beauty retailer spent KES 205,601 across Meta and Google and the reports tracked KES 5,427,357 in revenue from 938 orders. The client stays unnamed and the numbers are real. Rather than repeat the full case studies, here are the seven lessons I would hand to any business about to do the same.",
+    thumbnail: "https://images.unsplash.com/photo-1787647562168-f268c163018e?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Colleagues discussing data charts on a screen in a workspace",
+
+    sections: [
+      {
+        id: "the-split",
+        heading: "The split behind the numbers",
+        paragraphs: [
+          "Meta took 42% of the spend and was credited with 68% of the revenue. Google reached people already searching, at a higher cost per order.",
+        ],
+        infographic: {"kind":"bars","title":"Return on ad spend by platform","items":[{"label":"Meta Ads","value":42.6,"display":"42.6x","note":"KES 86,607 spend, KES 136 per order","highlight":true},{"label":"Google Ads","value":14.6,"display":"14.6x","note":"KES 118,995 spend, KES 393 per order"},{"label":"Blended","value":26.4,"display":"26.4x","note":"KES 205,601 spend, 938 orders"}],"note":"1 August to 8 October 2026. Each platform claims the orders it touched, so the blended total may overstate real sales."},
+      },
+      {
+        id: "lessons",
+        heading: "The seven lessons",
+        paragraphs: [
+        ],
+        infographic: {"kind":"steps","title":"What I would tell any business","items":[{"label":"Fix measurement first","detail":"Nothing else here works without tracked orders."},{"label":"Build around specific offers","detail":"Restocks and product days beat general ads."},{"label":"Give new campaigns time","detail":"Google returned 1.4x in week one and 27.3x by week three."},{"label":"Add a second platform for a different job","detail":"Meta created demand and Google caught intent."},{"label":"Scale what is improving","detail":"Google spend rose 125% in September as its return improved."},{"label":"Report in one place","detail":"One monthly report in KES makes comparison fair."},{"label":"Distrust the total","detail":"Check platform revenue against real sales every month."}]},
+      },
+      {
+        id: "detail",
+        heading: "A little more on three of them",
+        paragraphs: [
+          "On offers: in the Meta account, always-on sales returned 70.2x and restock announcements 63.4x, while a longer video campaign returned 15.4x and had its budget cut. The offer with a real reason to act was the difference. On patience: the first Google week would have looked like a failure to anyone who switched it off, yet the campaign went on to return far more.",
+          "On scaling: September revenue was KES 2,872,308 at 24.3x, holding its return while spend grew by about 65% from August. Plenty of accounts fall apart when the budget increases, so holding the return was the part worth noticing.",
+        ],
+      },
+      {
+        id: "caveat",
+        heading: "The caveat I will keep repeating",
+        paragraphs: [
+          "Meta's revenue is on a 7-day click and 1-day view window, and Google's is converted from US dollars at KES 129.89. These are platform claims, not audited sales. They are good for comparing campaigns and tracking direction, and they are not a forecast for your own business.",
+        ],
+        callout: "Read the individual case studies for the full detail: the Meta turnaround, the Google launch and the two-platform write-up.",
       },
     ],
   },

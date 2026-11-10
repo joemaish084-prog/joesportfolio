@@ -10,6 +10,7 @@ import { track } from "@/lib/track";
 import { getAttribution, leadSource } from "@/lib/attribution";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
+import { CopyContactButton } from "@/components/CopyContactButton";
 
 const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
@@ -114,18 +115,24 @@ export function Contact() {
                 <div>
                   <h3 className="text-xl font-display font-semibold mb-6">Get in Touch</h3>
                   <div className="space-y-4">
-                    <a href="mailto:joemaish084@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <Mail className="h-5 w-5 text-primary" />
-                      </div>
-                      <span>joemaish084@gmail.com</span>
-                    </a>
-                    <a href="tel:+254704700160" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <Phone className="h-5 w-5 text-primary" />
-                      </div>
-                      <span>0704 700 160</span>
-                    </a>
+                    <div className="flex items-center gap-1">
+                      <a href="mailto:joemaish084@gmail.com" className="flex min-w-0 flex-1 items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+                        <div className="w-10 h-10 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                          <Mail className="h-5 w-5 text-primary" />
+                        </div>
+                        <span className="break-all">joemaish084@gmail.com</span>
+                      </a>
+                      <CopyContactButton value="joemaish084@gmail.com" label="email address" />
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <a href="tel:+254704700160" className="flex min-w-0 flex-1 items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
+                        <div className="w-10 h-10 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                          <Phone className="h-5 w-5 text-primary" />
+                        </div>
+                        <span>0704 700 160</span>
+                      </a>
+                      <CopyContactButton value="+254704700160" label="phone number" />
+                    </div>
                     <a href="https://wa.me/254704700160" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors group">
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                         <MessageCircle className="h-5 w-5 text-primary" />

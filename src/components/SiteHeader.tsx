@@ -94,6 +94,7 @@ const navLinks: NavLink[] = [
     href: "/#about",
     children: [
       { label: "My story", description: "Who I am and how I work", href: "/#about" },
+      { label: "How I work", description: "From the first brief to campaign reporting", href: "/#process" },
       { label: "Skills & tools", description: "What I do and what I use", href: "/#skills" },
       { label: "Certifications", description: "Courses and achievements", href: "/#certifications" },
       { label: "Press coverage", description: "Featured in the Daily Nation", href: "/#press" },

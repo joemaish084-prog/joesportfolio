@@ -9,10 +9,13 @@ export interface CaseStudyImage {
 const unsplash = (id: string, width: number) =>
   `https://images.unsplash.com/photo-${id}?q=80&w=${width}&auto=format&fit=crop`;
 
+export type CaseStudyChannel = "meta" | "google" | "social";
+
 export interface CaseStudySummary {
   /** Anchor on /work/case-studies. */
   id: string;
   tag: string;
+  channels: CaseStudyChannel[];
   period: string;
   title: string;
   summary: string;
@@ -29,6 +32,7 @@ export interface CaseStudySummary {
 export const caseStudies: CaseStudySummary[] = [
   {
     id: "property-lead-funnel",
+    channels: ["meta"],
     tag: "Real estate leads",
     period: "Oct 2026",
     title: "126 Property Enquiries, 14 Hot Buyers: Where Real Estate Leads Get Lost",
@@ -63,6 +67,7 @@ export const caseStudies: CaseStudySummary[] = [
   },
   {
     id: "meta-google-combined",
+    channels: ["meta", "google"],
     tag: "Paid media",
     period: "Aug to Oct 2026",
     title: "Meta Ads and Google Ads Case Study: KES 5.43M in Attributed Revenue",
@@ -97,6 +102,7 @@ export const caseStudies: CaseStudySummary[] = [
   },
   {
     id: "google-ads-launch",
+    channels: ["google"],
     tag: "Paid search",
     period: "Aug to Oct 2026",
     title: "Google Ads Case Study in Kenya: From Zero to KES 1.94M",
@@ -131,6 +137,7 @@ export const caseStudies: CaseStudySummary[] = [
   },
   {
     id: "meta-ads-turnaround",
+    channels: ["meta"],
     tag: "Paid media",
     period: "Jul to Oct 2026",
     title: "Meta Ads Case Study: KES 5.33M in Attributed Revenue for a Nairobi Beauty Retailer",
@@ -165,6 +172,7 @@ export const caseStudies: CaseStudySummary[] = [
   },
   {
     id: "instagram-spike",
+    channels: ["social"],
     tag: "Instagram",
     period: "Sep 2026",
     title: "577,300 views in one week: an Instagram spike for a skincare clinic",
@@ -199,6 +207,7 @@ export const caseStudies: CaseStudySummary[] = [
   },
   {
     id: "awareness-campaigns",
+    channels: ["meta"],
     tag: "Brand awareness",
     period: "Aug to Oct 2026",
     title: "514,000 people reached for KES 8,255: awareness on a small budget",
@@ -233,6 +242,7 @@ export const caseStudies: CaseStudySummary[] = [
   },
   {
     id: "social-media-2025",
+    channels: ["social"],
     tag: "Social media",
     period: "2025",
     title: "A full year of video-first social media",

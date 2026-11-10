@@ -1,16 +1,27 @@
+import { useState } from "react";
 import { unsplashImageProps } from "@/lib/responsiveImage";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
-import { caseStudies } from "@/data/caseStudies";
+import { caseStudies, type CaseStudyChannel } from "@/data/caseStudies";
 
-// Only the newest few appear on the homepage; the rest are on the full page.
-const preview = caseStudies.slice(0, 3);
+const filters: { value: "latest" | CaseStudyChannel; label: string }[] = [
+  { value: "latest", label: "Latest" },
+  { value: "meta", label: "Meta Ads" },
+  { value: "google", label: "Google Ads" },
+  { value: "social", label: "Social media" },
+];
+
+const getStudies = (filter: (typeof filters)[number]["value"]) =>
+  filter === "latest" ? caseStudies.slice(0, 3) : caseStudies.filter((study) => study.channels.includes(filter));
 
 // The homepage shows a short preview; the full breakdowns live at /work/case-studies.
 export function CaseStudy() {
+  const [activeFilter, setActiveFilter] = useState<(typeof filters)[number]["value"]>("latest");
+  const preview = getStudies(activeFilter);
+
   return (
     <section
       id="case-study"
@@ -29,13 +40,32 @@ export function CaseStudy() {
               Digital Marketing <span className="text-gradient">Case Studies</span> in Kenya
             </h2>
             <p className="text-lg max-w-3xl mx-auto" style={{ color: "hsl(var(--case-study-muted))" }}>
-              Recent Meta Ads and Google Ads campaigns for Kenyan brands, with the strategy, tracked results and
-              attribution details behind each one.
+              Find the work closest to your goals. Explore paid ads and social media campaigns,
+              with the strategy, tracked results and attribution details behind each one.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div role="group" aria-label="Filter case studies by channel" className="mb-5 flex flex-wrap justify-center gap-2">
+          {filters.map((filter) => (
+            <button
+              key={filter.value}
+              type="button"
+              aria-pressed={activeFilter === filter.value}
+              aria-controls="case-study-results"
+              onClick={() => setActiveFilter(filter.value)}
+              className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${activeFilter === filter.value ? "border-primary bg-primary text-primary-foreground" : "border-[hsl(var(--case-study-card-border))] text-[hsl(var(--case-study-muted))] hover:border-primary hover:text-primary"}`}
+            >
+              {filter.label}
+              <span className="text-xs opacity-75">{getStudies(filter.value).length}</span>
+            </button>
+          ))}
+        </div>
+        <p role="status" aria-atomic="true" className="mb-6 text-center text-sm" style={{ color: "hsl(var(--case-study-muted))" }}>
+          {preview.length} {activeFilter === "latest" ? "recent case studies" : `${filters.find((filter) => filter.value === activeFilter)?.label} case studies`}
+        </p>
+
+        <div id="case-study-results" className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {preview.map((cs, i) => (
             <ScrollReveal key={cs.id} direction="up" delay={i * 0.12} className="h-full">
               <Link
@@ -66,7 +96,7 @@ export function CaseStudy() {
                   <span>
                     {cs.tag} · {cs.period}
                   </span>
-                  {i === 0 && (
+                  {cs.id === caseStudies[0]?.id && (
                     <span className="rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold tracking-wider text-primary-foreground">
                       Latest
                     </span>

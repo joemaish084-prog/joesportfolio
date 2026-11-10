@@ -44,6 +44,7 @@ import {
  * loads it: the React app replaces #root as soon as it mounts.
  */
 
+import { InfographicStatic } from "@/components/blog/InfographicStatic";
 import type { OgCard } from "@/prerender/ogCard";
 
 export { SITE_URL, headTags } from "@/seo/heads";
@@ -160,6 +161,35 @@ function PostPage({ post }: { post: BlogPost }) {
             {section.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
+            {section.infographic && <InfographicStatic graphic={section.infographic} />}
+            {section.list && (
+              <ul>
+                {section.list.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )}
+            {section.table && (
+              <table>
+                <thead>
+                  <tr>
+                    {section.table.headers.map((header) => (
+                      <th key={header}>{header}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {section.table.rows.map((row) => (
+                    <tr key={row.join("|")}>
+                      {row.map((cell, i) => (
+                        <td key={i}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            {section.callout && <p>{section.callout}</p>}
             {section.image && (
               <figure>
                 <img src={section.image.src} alt={section.image.alt} width={section.image.width ?? 800} height={section.image.height} loading="lazy" />

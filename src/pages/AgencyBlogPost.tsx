@@ -18,6 +18,7 @@ import { getServiceForPost, serviceLinkLabel } from "@/data/postServices";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MetaTurnaroundVisual } from "@/components/MetaTurnaroundVisual";
+import { BlogInfographic } from "@/components/blog/BlogInfographic";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
 
 const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
@@ -139,6 +140,7 @@ const AgencyBlogPost = () => {
                       {p}
                     </p>
                   ))}
+                  {section.infographic && <BlogInfographic graphic={section.infographic} className="mt-8" />}
                   {section.list && (
                     <ul className="mt-6 space-y-3">
                       {section.list.map((item) => (
