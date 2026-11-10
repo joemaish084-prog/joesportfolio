@@ -121,10 +121,10 @@ export interface Brand {
   fonts: BrandFont[];
   headline: HeadlineStyle;
   /** Page cover: the name set in the brand's headline style, and the logo on a disc. */
-  cover: { line: string; accent: string; accentPaint: string; disc: string; logo: "color" | "white" };
+  cover: { line: string; accent: string; accentPaint: string; disc: string; logo: "color" | "white"; image?: string };
   logos: { stacked: string; white: string; horizontal: string; horizontalWhite: string; mark: string };
   /** Background options for the interactive logo viewer. */
-  logoStages: { label: string; bg: string; logo: "color" | "white"; filter?: string }[];
+  logoStages: { label: string; bg: string; logo: "color" | "white"; filter?: string; image?: string }[];
   /** Copy for each chapter of the brand book. */
   book: {
     logo: { title: string; intro: string; clearSpace: string };
@@ -142,7 +142,7 @@ export interface Brand {
   anatomy: { image: string; callouts: { x: number; y: number; label: string; note: string }[] };
   instagram: { bio: string[]; avatarBg: string; avatarLogo: "color" | "white" };
   /** Phone is optional: a creator's personal number isn't republished here. */
-  contact: { phone?: string; web: string; handle: string };
+  contact: { phone?: string; web: string; handle: string; instagramUrl?: string };
 }
 
 const duaraPosts = [
@@ -203,8 +203,91 @@ const abril = "'Abril Fatface', serif";
 const poppins = "'Poppins', sans-serif";
 const dmSans = "'DM Sans', sans-serif";
 const cormorant = "'Cormorant Garamond', serif";
+const noirPosts = [post("noir-novel", 1, "Some stories are read. Others are worn.", "Brand introduction")];
 
 export const brands: Brand[] = [
+  {
+    slug: "noir-novel",
+    name: "Noir & Novel",
+    seo: {
+      title: "Noir & Novel Logo Design & Brand Launch | Joseph Maina",
+      description: "Noir & Novel fragrance branding by Joseph Maina: an editorial wordmark in five colour variations and the brand's first Instagram post. Scents. Stories. Sensations.",
+      workType: "Logo & launch creative",
+      keywords: ["perfume logo design", "fragrance brand identity", "logo design Nairobi", "Instagram launch design", "Noir and Novel"],
+    },
+    tagline: "An identity for fragrance, told through the language of stories.",
+    sector: "Fragrance & perfumery",
+    year: "2026",
+    scope: ["Logo design", "5 logo variations", "First Instagram post"],
+    brief: "Introduce Noir & Novel with a distinctive logo and a first social post that connects fragrance with storytelling: Scents. Stories. Sensations.",
+    approach: [
+      "Designed an elegant serif wordmark, with a sweeping ampersand connecting Noir and Novel.",
+      "Created five treatments: black with a gold ampersand, black, reversed white, charcoal, and gold on black.",
+      "Designed the first Instagram post around an open book, an amber perfume bottle and warm directional light.",
+      "Connected the launch headline to the brand name: Some stories are read. Others are worn.",
+    ],
+    fontsHref: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;600&display=swap",
+    type: { display: cormorant, displayWeight: 500, displayTracking: "-0.045em", body: dmSans },
+    colors: {
+      background: "#FFFFFF", surface: "#F6EFE3", ink: "#17140F", primary: "#0C0B09",
+      onPrimary: "#F6EFE3", accent: "#87612F", onAccent: "#FFFFFF",
+      highlight: "#D8AF65", onHighlight: "#17140F", label: "#87612F",
+    },
+    palette: [
+      { name: "Paper White", hex: "#FFFFFF", role: "The light logo canvas", share: 40, on: "#17140F" },
+      { name: "Noir", hex: "#0C0B09", role: "Dark logo treatments and contrast", share: 20, on: "#F6EFE3" },
+      { name: "Parchment", hex: "#F6EFE3", role: "Warmth drawn from the launch artwork", share: 25, on: "#17140F" },
+      { name: "Gold", hex: "#D8AF65", role: "The accent, used with restraint", share: 10, on: "#17140F" },
+      { name: "Amber", hex: "#87612F", role: "Italic accents and small labels", share: 5, on: "#FFFFFF" },
+    ],
+    fonts: [
+      { name: "Cormorant Garamond", role: "Portfolio headline pairing", family: cormorant, weight: 400, sample: "Some stories are read." },
+      { name: "Cormorant Garamond Italic", role: "Portfolio accent pairing", family: cormorant, weight: 400, italic: true, color: "#87612F", sample: "Others are worn." },
+      { name: "DM Sans", role: "Portfolio labels and reading text", family: dmSans, weight: 400, sample: "SCENTS. STORIES. SENSATIONS." },
+    ],
+    headline: {
+      lineFont: cormorant, lineWeight: 400, lineColor: "#17140F", accentFont: cormorant,
+      accentWeight: 400, accentItalic: true, accentPaint: "#87612F", tracking: "-0.045em",
+      panel: "#F6EFE3", sample: { line: "Some stories are read.", accent: "Others are worn." },
+    },
+    cover: { line: "Noir", accent: "& Novel.", accentPaint: "#87612F", disc: "#FFFFFF", logo: "color", image: noirPosts[0].image },
+    logos: {
+      stacked: asset("noir-novel", "logo-primary"), white: asset("noir-novel", "logo-white"),
+      horizontal: asset("noir-novel", "logo-primary"), horizontalWhite: asset("noir-novel", "logo-white"),
+      mark: asset("noir-novel", "logo-primary"),
+    },
+    logoStages: [
+      { label: "Gold ampersand", bg: "#FFFFFF", logo: "color", image: asset("noir-novel", "logo-primary") },
+      { label: "Black", bg: "#FFFFFF", logo: "color", image: asset("noir-novel", "logo-black") },
+      { label: "Reversed white", bg: "#000000", logo: "white", image: asset("noir-novel", "logo-white") },
+      { label: "Charcoal", bg: "#FFFFFF", logo: "color", image: asset("noir-novel", "logo-charcoal") },
+      { label: "Gold on black", bg: "#000000", logo: "white", image: asset("noir-novel", "logo-gold") },
+    ],
+    book: {
+      logo: { title: "Two words. One signature.", intro: "A high-contrast serif wordmark, joined by a sweeping ampersand. Explore the five supplied colour treatments, each keeping the name and tagline together.", clearSpace: "Give the complete wordmark room to breathe on every side." },
+      colour: { title: "Noir, gold and warm paper", intro: "Black, white and gold come from the logo treatments; parchment and amber echo the launch artwork. These swatches describe the portfolio presentation. Tap a colour to copy its code." },
+      type: { title: "An editorial voice", intro: "The logo artwork is shown as supplied. Cormorant Garamond and DM Sans are complementary web typefaces chosen for this portfolio presentation, rather than a claim about the original logo fonts." },
+      elements: { title: "A story in the details", intro: "The ampersand, generous spacing, a fine gold rule and warm still-life imagery connect the identity to its first post." },
+      anatomy: { intro: "The first post introduces the idea behind the name before signing off with the full logo. Tap a number to explore the composition." },
+      templates: { title: "The first chapter", intro: "The original launch artwork, designed by Joseph Maina. One introduction, connecting the world of books with the experience of wearing a fragrance. Open it to view the full design." },
+      mockups: { title: "From identity to Instagram", intro: "A profile preview showing how the supplied logo and first post work together. The artwork is the delivered design; the phone is a portfolio presentation." },
+      rules: { intro: "A few presentation principles drawn from the supplied logo treatments and launch post." },
+    },
+    templates: [{ name: "Brand introduction", description: "An editorial headline, a book-and-fragrance still life, and the full brand signature." }],
+    posts: noirPosts,
+    anatomy: {
+      image: noirPosts[0].image,
+      callouts: [
+        { x: 31, y: 9, label: "Opening label", note: "AN INTRODUCTION in spaced capitals sets the tone before the headline." },
+        { x: 16, y: 19, label: "The story", note: "Some stories are read: a short serif statement that starts with something familiar." },
+        { x: 79, y: 26, label: "The turn", note: "Others are worn: the italic amber line connects storytelling to fragrance." },
+        { x: 69, y: 58, label: "The still life", note: "An open book and an amber bottle make the connection visible, with warm light giving the composition depth." },
+        { x: 25, y: 84, label: "The signature", note: "The wordmark, gold ampersand and tagline close the introduction as one complete identity." },
+      ],
+    },
+    instagram: { bio: ["Scents. Stories. Sensations."], avatarBg: "#FFFFFF", avatarLogo: "color" },
+    contact: { web: "instagram.com/__noir__novel", handle: "@__noir__novel", instagramUrl: "https://www.instagram.com/__noir__novel/" },
+  },
   {
     slug: "duara-schools",
     name: "Duara Schools",

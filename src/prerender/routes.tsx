@@ -263,6 +263,13 @@ function BrandPageBody({ brand }: { brand: Brand }) {
           <li key={i}>{p}</li>
         ))}
       </ol>
+      {brand.logoStages.some((stage) => stage.image) && <>
+        <h2>Logo variations</h2>
+        {brand.logoStages.map((stage) => stage.image && <figure key={stage.label}>
+          <img src={stage.image} alt={`${brand.name} logo: ${stage.label}`} width={984} height={384} loading="lazy" />
+          <figcaption>{stage.label}</figcaption>
+        </figure>)}
+      </>}
       <h2>Colour palette</h2>
       <ul>
         {brand.palette.map((c) => (
@@ -297,7 +304,9 @@ function BrandPageBody({ brand }: { brand: Brand }) {
         </figure>
       ))}
       <p>
-        <a href={`/work/mockups?brand=${brand.slug}`}>See more mockups for {brand.name}</a> · <a href="/work/branding">More brand identity and media kit work</a> · <a href="/agency/contact">Start a project</a>
+        {mockups.some((item) => item.brandSlug === brand.slug) && <><a href={`/work/mockups?brand=${brand.slug}`}>See more mockups for {brand.name}</a> · </>}
+        {brand.contact.instagramUrl && <><a href={brand.contact.instagramUrl} target="_blank" rel="noopener noreferrer">Visit {brand.name} on Instagram</a> · </>}
+        <a href="/work/branding">More brand identity and media kit work</a> · <a href="/agency/contact">Start a project</a>
       </p>
     </Shell>
   );

@@ -52,9 +52,9 @@ function LogoSection({ brand }: { brand: Brand }) {
       <div className="overflow-hidden rounded-3xl border border-brand-ink/10">
         <div className="flex aspect-[16/10] items-center justify-center transition-colors duration-500" style={{ background: current.bg }}>
           <img
-            src={current.logo === "white" ? brand.logos.white : brand.logos.stacked}
+            src={current.image ?? (current.logo === "white" ? brand.logos.white : brand.logos.stacked)}
             alt={`${brand.name} logo, ${current.label.toLowerCase()}`}
-            className="h-2/5 max-h-56 w-auto object-contain transition-[filter] duration-500"
+            className="h-2/5 max-h-56 max-w-[85%] w-auto object-contain transition-[filter] duration-500"
             style={{ filter: current.filter ?? "none" }}
           />
         </div>
@@ -81,7 +81,7 @@ function LogoSection({ brand }: { brand: Brand }) {
         </div>
         <div className="relative flex aspect-[16/9] items-center justify-center rounded-3xl bg-white p-8 ring-1 ring-brand-ink/10">
           <div className="relative border border-dashed border-brand-accent p-6">
-            <img src={brand.logos.mark} alt="" loading="lazy" className="h-16 w-16 object-contain" />
+            <img src={brand.logos.mark} alt="" loading="lazy" className="h-16 w-auto max-w-44 object-contain" />
             <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[11px] font-bold text-brand-accent">x</span>
             <span className="absolute -left-5 top-1/2 -translate-y-1/2 text-[11px] font-bold text-brand-accent">x</span>
           </div>
@@ -258,7 +258,7 @@ function TemplatesSection({ brand }: { brand: Brand }) {
           </div>
         ))}
       </div>
-      <div role="group" aria-label="Filter posts by template" className="mt-6 flex gap-2 overflow-x-auto [scrollbar-width:none]">
+      {brand.templates.length > 1 && <div role="group" aria-label="Filter posts by template" className="mt-6 flex gap-2 overflow-x-auto [scrollbar-width:none]">
         {options.map((o) => (
           <button
             key={o.name}
@@ -276,8 +276,8 @@ function TemplatesSection({ brand }: { brand: Brand }) {
             <span className="opacity-60">{o.count}</span>
           </button>
         ))}
-      </div>
-      <ul className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
+      </div>}
+      <ul className={`mt-5 grid gap-3 sm:gap-4 ${visible.length === 1 ? "mx-auto max-w-md grid-cols-1" : "grid-cols-2 md:grid-cols-3"}`}>
         {visible.map((p, i) => (
           <li key={p.title}>
             <button
@@ -418,14 +418,18 @@ const WorkBrand = () => {
                   </div>
                 </dl>
               </div>
-              <div className="relative mx-auto aspect-square w-full max-w-sm">
+              {cover.image ? (
+                <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-2xl shadow-[0_24px_70px_-25px_rgba(0,0,0,0.4)]">
+                  <img src={cover.image} srcSet={`${brand.posts[0].thumb} 540w, ${cover.image} 1080w`} sizes="(min-width: 1024px) 384px, (min-width: 640px) 60vw, 90vw" alt={`${brand.name} launch post designed by Joseph Maina: ${brand.posts[0].title}`} width={1080} height={1350} decoding="async" className="aspect-[4/5] w-full object-contain" />
+                </div>
+              ) : <div className="relative mx-auto aspect-square w-full max-w-sm">
                 <div className="absolute inset-0 rounded-full shadow-[0_30px_80px_-30px_rgba(0,0,0,0.45)]" style={{ background: cover.disc }} />
                 <img
                   src={cover.logo === "white" ? brand.logos.white : brand.logos.stacked}
                   alt={`${brand.name} logo`}
                   className="relative h-full w-full object-contain p-[22%]"
                 />
-              </div>
+              </div>}
             </div>
           </div>
           <Divider brand={brand} className="h-20 sm:h-28" />
@@ -469,9 +473,9 @@ const WorkBrand = () => {
               </Link>
             )}
             <Mockups brand={brand} />
-            <Link to={`/work/mockups?brand=${brand.slug}`} className="mt-8 inline-flex min-h-11 items-center gap-3 rounded-full border border-current px-6 py-3 text-sm font-bold transition-opacity hover:opacity-70">
+            {featuredApplication && <Link to={`/work/mockups?brand=${brand.slug}`} className="mt-8 inline-flex min-h-11 items-center gap-3 rounded-full border border-current px-6 py-3 text-sm font-bold transition-opacity hover:opacity-70">
               See more mockups for {brand.name} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+            </Link>}
           </Chapter>
           <RulesSection brand={brand} />
         </div>

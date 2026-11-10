@@ -55,10 +55,10 @@ export function BrandCard({ brand }: { brand: Brand }) {
             height={675}
             loading="lazy"
             decoding="async"
-            className="absolute top-1/2 w-[38%] rounded-lg shadow-2xl ring-1 ring-black/20 transition-transform duration-500"
+            className={`absolute top-1/2 rounded-lg shadow-2xl ring-1 ring-black/20 transition-transform duration-500 ${fan.length === 1 ? "w-[52%]" : "w-[38%]"}`}
             style={{
-              left: `${8 + i * 27}%`,
-              transform: `translateY(-50%) rotate(${(i - 1) * 6}deg) translateY(${i === 1 ? -6 : 6}%)`,
+              left: `${fan.length === 1 ? 24 : 8 + i * 27}%`,
+              transform: fan.length === 1 ? "translateY(-50%) rotate(-3deg)" : `translateY(-50%) rotate(${(i - 1) * 6}deg) translateY(${i === 1 ? -6 : 6}%)`,
               zIndex: i === 1 ? 2 : 1,
             }}
           />
