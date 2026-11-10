@@ -23,8 +23,10 @@ export interface BlogSection {
   list?: string[];
   /** Comparison or numbers table rendered after the paragraphs. */
   table?: BlogSectionTable;
-  /** One highlighted takeaway, rendered last in the section. */
+  /** One highlighted takeaway, rendered after the section's lists and tables. */
   callout?: string;
+  /** Outbound references, rendered as real links under the section. */
+  sources?: BlogSectionSource[];
   /** Data visuals rendered after the paragraphs (paid-media case studies). */
   visuals?: MetaTurnaroundVisualKind[];
 }
@@ -57,6 +59,11 @@ export type BlogInfographic =
       note?: string;
     }
   | { kind: "stats"; title: string; items: { value: string; label: string }[]; note?: string; illustrative?: boolean };
+
+export interface BlogSectionSource {
+  label: string;
+  href: string;
+}
 
 export interface BlogSectionTable {
   headers: string[];
@@ -6864,6 +6871,91 @@ export const blogPosts: BlogPost[] = [
           "Meta's revenue is on a 7-day click and 1-day view window, and Google's is converted from US dollars at KES 129.89. These are platform claims, not audited sales. They are good for comparing campaigns and tracking direction, and they are not a forecast for your own business.",
         ],
         callout: "Read the individual case studies for the full detail: the Meta turnaround, the Google launch and the two-platform write-up.",
+      },
+    ],
+  },
+  {
+    slug: "hiring-lessons-127-internship-applications-kenya-2026",
+    category: "Hiring",
+    title: "127 Applications for One Internship: Hiring Lessons for Kenyan SMEs",
+    excerpt: "One internship post, 127 applicants, a reply to every one and a public pay correction. What small Kenyan businesses can copy.",
+    date: "2026-11-10",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "127 Applications for One Internship: Hiring Lessons for Kenyan SMEs",
+    metaDescription: "What a Nairobi firm's internship post, 127 applications, replies to every applicant and a public pay correction teach Kenyan small businesses about hiring.",
+    intro: "In early November 2026, Wahome Maina, founder of the Nairobi business technology consultancy Nuvana HQ, shared two LinkedIn posts about one internship. The first advertised a Frontend Development Intern role. The second reported 127 completed applications for that single role, a reply to every applicant, and a correction to the stipend shown in the first post. It is a small story with useful lessons for any Kenyan business hiring for the first time, and I have kept to what the posts and Nuvana's own website say.",
+    thumbnail: "https://images.unsplash.com/photo-1528901166007-3784c7dd3653?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two colleagues looking at code on a laptop in a busy open-plan office",
+
+    sections: [
+      {
+        id: "what-the-posts-said",
+        heading: "What the two posts said",
+        paragraphs: [
+          "The job post described what Nuvana HQ does: a small business technology consultancy that builds Nuvana Business, a retail software product for Kenyan small businesses, and delivers websites, e-commerce stores and ERP systems for clients. It then set out the role, hybrid between Nairobi and remote, the skills needed (Nuxt or Vue, Tailwind CSS, Git, SEO fundamentals and a GitHub or portfolio link), what the intern would learn, and the terms: three months with a one-month probation.",
+          "A few days later the follow-up post gave the results. One role drew 127 completed applications, and every applicant received a reply. It also corrected the pay: the stipend was KES 17,650 a month, as stated on the application page, while the LinkedIn post had shown KES 7,650.",
+        ],
+        infographic: {"kind":"stats","title":"The internship in numbers","items":[{"value":"127","label":"completed applications for one role"},{"value":"1","label":"internship role advertised"},{"value":"3 months","label":"with a one-month probation"},{"value":"KES 17,650","label":"monthly stipend, as corrected"}],"note":"Source: Wahome Maina's two LinkedIn posts, November 2026."},
+      },
+      {
+        id: "clear-post",
+        heading: "Lesson 1: A clear post does half the screening",
+        paragraphs: [
+          "The post did not say \"energetic self-starter wanted\". It named the technologies, asked for a portfolio people could open, said what the intern would learn and listed the terms. That tells applicants whether to apply, and it tells you which applications to read first. Many hiring posts leave all of this out and then complain about the quality of the replies.",
+        ],
+        infographic: {"kind":"compare","title":"A vague job post versus a clear one","columns":[{"heading":"Vague","tone":"bad","points":["\"Energetic marketer wanted\"","\"Competitive pay\"","\"Send your CV\"","No idea what you will learn or do"]},{"heading":"Clear","tone":"good","points":["What the business does, in one or two lines","The specific skills needed, and a portfolio link","What the person will learn","Length, location, probation and pay","One place to apply"]}]},
+      },
+      {
+        id: "pay",
+        heading: "Lesson 2: Say the pay, and say it once",
+        paragraphs: [
+          "Pay is the number every applicant reads first, which is why a wrong figure matters. Nuvana called the difference a mistake on its own side, said readers had flagged it, and promised to check the stipend in every ad before it goes live. One commenter called the acknowledgement commendable.",
+          "Whatever you think of the slip, the fix is worth copying: put the pay in one place, copy it from there, and have a second person read the ad. If a figure still goes out wrong, correct it publicly and say what changes.",
+        ],
+        infographic: {"kind":"steps","title":"Before any job ad goes live","items":[{"label":"Write the pay in one place","detail":"A single source of truth."},{"label":"Copy it, never retype it","detail":"Retyping is where errors creep in."},{"label":"Have a second person read it","detail":"Fresh eyes catch the typo."},{"label":"Match every platform","detail":"LinkedIn, your site and any job board."},{"label":"Correct it in public if wrong","detail":"Say what the right figure is."}],"note":"A suggested checklist of mine, built on the correction in the post."},
+      },
+      {
+        id: "reply",
+        heading: "Lesson 3: Reply to everyone, with a system",
+        paragraphs: [
+          "Wahome wrote that replying to every applicant took a long time but was the right thing to do, and one commenter called it very rare for a company to do so. Most applicants never hear back, which makes a reply a real way to stand out.",
+          "You do not need an HR team to do it. You need a process decided before the first application arrives.",
+        ],
+        infographic: {"kind":"steps","title":"Replying to 100+ applicants without a team","items":[{"label":"Send an automatic acknowledgement","detail":"People know it arrived."},{"label":"Fix your criteria first","detail":"Decide what a yes looks like before reading."},{"label":"Sort into yes, maybe and no","detail":"One pass, three piles."},{"label":"Use short templates","detail":"Add the person's name and one specific line."},{"label":"Reply in batches on set days","detail":"And tell people when they will hear."}],"note":"My own suggested process, not Nuvana's."},
+      },
+      {
+        id: "marketing",
+        heading: "Lesson 4: A job post is also marketing",
+        paragraphs: [
+          "In the follow-up, Wahome thanked readers for the new connections and business inquiries that came in during the same week. I cannot say how many, or that the post caused them, so treat it as a signal rather than a measurement. It is still a fair reminder that customers, competitors and future staff all read your hiring posts.",
+          "How you describe the work, state the pay and treat applicants says a lot about how you treat customers. That is employer brand, and it costs very little. It also fits what I wrote about replying to comments and messages: people judge you by how you handle the small things in public.",
+        ],
+      },
+      {
+        id: "your-business",
+        heading: "If you are hiring for marketing",
+        paragraphs: [
+          "The same approach works for a content creator, social media assistant or marketing intern.",
+        ],
+        list: [
+          "Say what your business does, and what the person would actually work on.",
+          "Ask for proof of work, such as a portfolio, a channel they run or a short sample.",
+          "State the length, the hours and the pay, and check the pay twice.",
+          "Decide your shortlist criteria before you open the first application.",
+          "Reply to everyone, even with two lines.",
+          "Weigh the cost honestly against outsourcing, as I set out in my comparison of hiring in-house and outsourcing.",
+        ],
+        callout: "Treat every hiring post as marketing: it will be read by customers, competitors and the people you want to hire.",
+      },
+      {
+        id: "about",
+        heading: "About the people in this story",
+        paragraphs: [
+          "According to Nuvana's team page, Wahome Maina is the founder of Nuvana HQ, a Nairobi business technology consultancy that works with Kenyan small and growing businesses on operations, software and ERP. He also publishes a separate site about business visibility, covering search, websites and advertising.",
+          "This article draws only on the two LinkedIn posts and on Nuvana's own pages. Details of the role may change, so check the originals.",
+        ],
+        sources: [{"label":"Wahome Maina on LinkedIn: the internship job post","href":"https://www.linkedin.com/feed/update/urn:li:activity:7524114812730077184/"},{"label":"Wahome Maina on LinkedIn: 127 applications and the stipend correction","href":"https://www.linkedin.com/feed/update/urn:li:activity:7525442434580008960/"},{"label":"Nuvana HQ: business systems and websites for Kenyan businesses","href":"https://nuvanahq.co.ke/"},{"label":"Nuvana HQ: the team","href":"https://nuvanahq.co.ke/team"},{"label":"Wahome Maina: business visibility in Kenya","href":"https://wahomemaina.co.ke/"}],
       },
     ],
   },

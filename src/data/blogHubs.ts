@@ -252,6 +252,7 @@ export const blogHubs: BlogHub[] = [
       "hire-in-house-marketer-or-outsource-kenya-2026",
       "marketing-retainer-vs-project-vs-commission-kenya-2026",
       "marketing-contract-checklist-kenya-2026",
+      "hiring-lessons-127-internship-applications-kenya-2026",
     ],
     service: {
       name: "Digital Marketing Audit",

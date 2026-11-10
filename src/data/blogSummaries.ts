@@ -1377,5 +1377,18 @@ export const blogSummaries: BlogSummary[] = [
     metaDescription: "Seven lessons from a real Kenyan case study of Meta Ads and Google Ads: KES 5.43M tracked revenue, the platform split, tracking, testing and the double-counting caveat.",
     thumbnail: "https://images.unsplash.com/photo-1787647562168-f268c163018e?q=80&w=1600&auto=format&fit=crop",
     thumbnailAlt: "Colleagues discussing data charts on a screen in a workspace",
+  },
+  {
+    slug: "hiring-lessons-127-internship-applications-kenya-2026",
+    category: "Hiring",
+    title: "127 Applications for One Internship: Hiring Lessons for Kenyan SMEs",
+    excerpt: "One internship post, 127 applicants, a reply to every one and a public pay correction. What small Kenyan businesses can copy.",
+    date: "2026-11-10",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "127 Applications for One Internship: Hiring Lessons for Kenyan SMEs",
+    metaDescription: "What a Nairobi firm's internship post, 127 applications, replies to every applicant and a public pay correction teach Kenyan small businesses about hiring.",
+    thumbnail: "https://images.unsplash.com/photo-1528901166007-3784c7dd3653?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two colleagues looking at code on a laptop in a busy open-plan office",
   }
 ];

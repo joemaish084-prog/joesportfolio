@@ -190,6 +190,20 @@ function PostPage({ post }: { post: BlogPost }) {
               </table>
             )}
             {section.callout && <p>{section.callout}</p>}
+            {section.sources && (
+              <>
+                <p>Sources and further reading</p>
+                <ul>
+                  {section.sources.map((source) => (
+                    <li key={source.href}>
+                      <a href={source.href} target="_blank" rel="noopener noreferrer">
+                        {source.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
             {section.image && (
               <figure>
                 <img src={section.image.src} alt={section.image.alt} width={section.image.width ?? 800} height={section.image.height} loading="lazy" />

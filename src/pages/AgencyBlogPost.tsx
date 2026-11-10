@@ -193,6 +193,27 @@ const AgencyBlogPost = () => {
                       {section.callout}
                     </p>
                   )}
+                  {section.sources && (
+                    <div className="mt-8 rounded-2xl border border-border p-5 sm:p-6">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                        Sources and further reading
+                      </p>
+                      <ul className="mt-3 space-y-2">
+                        {section.sources.map((source) => (
+                          <li key={source.href} className="text-base leading-relaxed">
+                            <a
+                              href={source.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary underline-offset-4 hover:underline"
+                            >
+                              {source.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {section.image && (
                     <figure className="mt-8">
                       <img

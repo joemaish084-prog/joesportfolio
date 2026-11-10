@@ -95,6 +95,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "whatsapp-lead-follow-up-system-kenya-2026",
   ],
   "digital-marketing-audit": [
+    "hiring-lessons-127-internship-applications-kenya-2026",
     "marketing-contract-checklist-kenya-2026",
     "marketing-retainer-vs-project-vs-commission-kenya-2026",
     "what-a-digital-marketing-audit-finds-kenya-2026",
