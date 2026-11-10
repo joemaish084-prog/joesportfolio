@@ -23,6 +23,7 @@ import { trackSpotlight } from "@/lib/spotlight";
 import { SectionLabel } from "@/components/SectionLabel";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
+import { CustomerJourney } from "@/components/agency/CustomerJourney";
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { track } from "@/lib/track";
 import { MarketToggle } from "@/components/MarketToggle";
@@ -496,6 +497,9 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               </p>
 
               <HeroCollageMobile />
+              <a href="#customer-journey" className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                Explore the customer journey <ArrowRight className="h-4 w-4" aria-hidden />
+              </a>
             </div>
 
             <div className="hidden lg:block">
@@ -595,6 +599,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
           </div>
         </section>
 
+        <CustomerJourney />
         <PaidMediaApproachSection />
 
 
