@@ -1,8 +1,8 @@
 import "@/lib/track";
 
 /**
- * GA4 is loaded by Google Tag Manager (see index.html), which
- * starts with Consent Mode denied. Call this once the visitor accepts cookies.
+ * The agency Google tag (see index.html) starts only after cookie acceptance.
+ * Enhanced measurement handles page views; track() forwards conversion events.
  */
 export function grantAnalyticsConsent() {
   if (typeof window === "undefined") return;
@@ -18,5 +18,7 @@ export function grantAnalyticsConsent() {
     ad_user_data: "granted",
     ad_personalization: "granted",
   });
+  window.analyticsConsentGranted = true;
+  window.loadGoogleAnalytics?.();
   window.loadMetaPixel?.();
 }

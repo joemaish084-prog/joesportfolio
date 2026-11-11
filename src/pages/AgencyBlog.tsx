@@ -1,15 +1,16 @@
 import { contentImageProps } from "@/lib/responsiveImage";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Seo } from "@/components/Seo";
 import { blogIndexHead } from "@/seo/pageHeads";
-import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock, Eye, Pause, Play, User } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock, Eye, Pause, Play, Search, Sparkles, User, X } from "lucide-react";
 import { blogSummaries as blogPosts, type BlogSummary as BlogPost } from "@/data/blogSummaries";
 import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
+import { isRecent, latestPosts, searchPosts } from "@/lib/blogSearch";
 
 const Meta = ({
   dateLabel,
@@ -172,9 +173,67 @@ function FeaturedRotator({ views }: { views: Record<string, number> }) {
   );
 }
 
+const HUB_PREVIEW = 4;
+const LATEST_COUNT = 6;
+
+function PostCard({ post, views, isNew }: { post: BlogPost; views?: number; isNew?: boolean }) {
+  return (
+    <article className="relative flex flex-col overflow-hidden rounded-2xl border border-border transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+      <div className="relative h-44">
+        <img
+          src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw")}
+          alt={post.thumbnailAlt}
+          loading="lazy"
+          width={800}
+          height={440}
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        <span className="absolute bottom-4 left-4 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-foreground">
+          {post.category}
+        </span>
+        {isNew && (
+          <span className="absolute right-4 top-4 rounded-full bg-background/95 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-primary shadow-sm">
+            New
+          </span>
+        )}
+      </div>
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="text-lg font-bold leading-snug tracking-tight">
+          <Link to={`/agency/blog/${post.slug}`} className="hover:text-primary">
+            {post.title}
+          </Link>
+        </h3>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
+        <div className="mt-5">
+          <Meta dateLabel={post.dateLabel} readTime={post.readTime} views={views} />
+        </div>
+        <Link
+          to={`/agency/blog/${post.slug}`}
+          // after: stretches the link over the whole card, so the card is one big tap target
+          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3 after:absolute after:inset-0 after:content-['']"
+        >
+          Read Article
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
+      </div>
+    </article>
+  );
+}
+
 const AgencyBlog = () => {
   const strays = getUnhubbedPosts();
   const views = useBlogViews();
+  const [query, setQuery] = useState("");
+  // Set after mount so the prerendered HTML and the first client render match.
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => setNow(new Date()), []);
+
+  const latest = useMemo(() => latestPosts(blogPosts, LATEST_COUNT), []);
+  const results = useMemo(() => searchPosts(blogPosts, query), [query]);
+  const trimmed = query.trim();
+  const searching = trimmed.length > 0;
+  const fresh = (post: BlogPost) => (now ? isRecent(post.date, now) : false);
 
   return (
     <>
@@ -199,8 +258,41 @@ const AgencyBlog = () => {
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
               Strategy notes, campaign breakdowns and honest numbers from running paid and organic
-              marketing for Kenyan brands. Pick a topic from the side, or start with the latest piece.
+              marketing for Kenyan brands. Search {blogPosts.length} articles, pick a topic, or start
+              with the latest piece.
             </p>
+
+            <form role="search" className="relative mt-8" onSubmit={(e) => e.preventDefault()}>
+              <label htmlFor="blog-search" className="sr-only">
+                Search articles
+              </label>
+              <Search
+                className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <input
+                id="blog-search"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") setQuery("");
+                }}
+                placeholder="Search: Meta ads budget, local SEO, TikTok..."
+                autoComplete="off"
+                className="w-full rounded-full border border-border bg-card py-3.5 pl-12 pr-12 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 [&::-webkit-search-cancel-button]:hidden"
+              />
+              {searching && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  aria-label="Clear search"
+                  className="absolute right-2 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-primary"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </form>
           </header>
 
           {/* Topic nav: horizontal chips on mobile/tablet, sticky sidebar from lg up */}
@@ -231,123 +323,95 @@ const AgencyBlog = () => {
 
           <div className="lg:flex lg:gap-14">
             <div className="min-w-0 flex-1">
-              <FeaturedRotator views={views} />
-
-              {/* Every article, grouped under its hub */}
-              {blogHubs.map((hub) => {
-                const posts = getHubPosts(hub);
-                if (posts.length === 0) return null;
-                return (
-                  <section key={hub.slug} id={hub.slug} className="mb-20 scroll-mt-24 border-t border-border pt-12">
-                    <div className="flex flex-wrap items-end justify-between gap-4">
-                      <div className="max-w-2xl">
-                        <h2 className="inline-flex items-center gap-2.5 text-2xl font-bold tracking-tight">
-                          <hub.icon className="h-5 w-5 text-primary" aria-hidden="true" />
-                          {hub.name}
-                        </h2>
-                        <p className="mt-2 text-base leading-relaxed text-muted-foreground">{hub.tagline}</p>
-                      </div>
-                      <Link
-                        to={`/agency/blog/topics/${hub.slug}`}
-                        className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
-                      >
-                        Open hub
-                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                      </Link>
-                    </div>
-
+              {searching ? (
+                <section aria-labelledby="search-results" className="mb-20">
+                  <h2 id="search-results" aria-live="polite" className="text-2xl font-bold tracking-tight">
+                    {results.length === 0
+                      ? `No articles match "${trimmed}"`
+                      : `${results.length} ${results.length === 1 ? "article" : "articles"} for "${trimmed}"`}
+                  </h2>
+                  {results.length === 0 ? (
+                    <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
+                      Try a broader word like Meta, SEO, leads or budget, or browse a topic instead.
+                    </p>
+                  ) : (
                     <div className="mt-8 grid gap-8 md:grid-cols-2">
-                      {posts.map((post) => (
-                        <article
-                          key={post.slug}
-                          className="relative flex flex-col overflow-hidden rounded-2xl border border-border transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
-                        >
-                          <div className="relative h-44">
-                            <img
-                              src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw")}
-                              alt={post.thumbnailAlt}
-                              loading="lazy"
-                              width={800}
-                              height={440}
-                              className="h-full w-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                            <span className="absolute bottom-4 left-4 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-foreground">
-                              {post.category}
-                            </span>
-                          </div>
-                          <div className="flex flex-1 flex-col p-6">
-                            <h3 className="text-lg font-bold leading-snug tracking-tight">
-                              <Link to={`/agency/blog/${post.slug}`} className="hover:text-primary">
-                                {post.title}
-                              </Link>
-                            </h3>
-                            <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
-                            <div className="mt-5">
-                              <Meta dateLabel={post.dateLabel} readTime={post.readTime} views={views[post.slug]} />
-                            </div>
-                            <Link
-                              to={`/agency/blog/${post.slug}`}
-                              // after: stretches the link over the whole card, so the card is one big tap target
-                              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3 after:absolute after:inset-0 after:content-['']"
-                            >
-                              Read Article
-                              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                            </Link>
-                          </div>
-                        </article>
+                      {results.map((post) => (
+                        <PostCard key={post.slug} post={post} views={views[post.slug]} isNew={fresh(post)} />
+                      ))}
+                    </div>
+                  )}
+                </section>
+              ) : (
+                <>
+                  <FeaturedRotator views={views} />
+
+                  <section id="latest" aria-labelledby="latest-heading" className="mb-20 scroll-mt-24">
+                    <h2 id="latest-heading" className="text-2xl font-bold tracking-tight">
+                      Latest articles
+                    </h2>
+                    <p className="mt-2 text-base leading-relaxed text-muted-foreground">Fresh writing, newest first.</p>
+                    <div className="mt-8 grid gap-8 md:grid-cols-2">
+                      {latest.map((post) => (
+                        <PostCard key={post.slug} post={post} views={views[post.slug]} isNew={fresh(post)} />
                       ))}
                     </div>
                   </section>
-                );
-              })}
 
-              {/* Anything not yet assigned to a hub */}
-              {strays.length > 0 && (
-                <section className="mb-20 border-t border-border pt-12">
-                  <h2 className="text-2xl font-bold tracking-tight">More writing</h2>
-                  <div className="mt-8 grid gap-8 md:grid-cols-2">
-                    {strays.map((post) => (
-                      <article
-                        key={post.slug}
-                        className="relative flex flex-col overflow-hidden rounded-2xl border border-border transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
-                      >
-                        <div className="relative h-44">
-                          <img
-                            src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw")}
-                            alt={post.thumbnailAlt}
-                            loading="lazy"
-                            width={800}
-                            height={440}
-                            className="h-full w-full object-cover"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                          <span className="absolute bottom-4 left-4 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary-foreground">
-                            {post.category}
-                          </span>
-                        </div>
-                        <div className="flex flex-1 flex-col p-6">
-                          <h3 className="text-lg font-bold leading-snug tracking-tight">
-                            <Link to={`/agency/blog/${post.slug}`} className="hover:text-primary">
-                              {post.title}
-                            </Link>
-                          </h3>
-                          <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
-                          <div className="mt-5">
-                            <Meta dateLabel={post.dateLabel} readTime={post.readTime} views={views[post.slug]} />
+                  {/* A preview of each hub; the hub page lists every article in reading order */}
+                  {blogHubs.map((hub) => {
+                    const posts = getHubPosts(hub);
+                    if (posts.length === 0) return null;
+                    return (
+                      <section key={hub.slug} id={hub.slug} className="mb-20 scroll-mt-24 border-t border-border pt-12">
+                        <div className="flex flex-wrap items-end justify-between gap-4">
+                          <div className="max-w-2xl">
+                            <h2 className="inline-flex items-center gap-2.5 text-2xl font-bold tracking-tight">
+                              <hub.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+                              {hub.name}
+                            </h2>
+                            <p className="mt-2 text-base leading-relaxed text-muted-foreground">{hub.tagline}</p>
                           </div>
                           <Link
-                            to={`/agency/blog/${post.slug}`}
-                            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3 after:absolute after:inset-0 after:content-['']"
+                            to={`/agency/blog/topics/${hub.slug}`}
+                            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"
                           >
-                            Read Article
+                            Open hub
                             <ArrowRight className="h-4 w-4" aria-hidden="true" />
                           </Link>
                         </div>
-                      </article>
-                    ))}
-                  </div>
-                </section>
+
+                        <div className="mt-8 grid gap-8 md:grid-cols-2">
+                          {posts.slice(0, HUB_PREVIEW).map((post) => (
+                            <PostCard key={post.slug} post={post} views={views[post.slug]} isNew={fresh(post)} />
+                          ))}
+                        </div>
+
+                        {posts.length > HUB_PREVIEW && (
+                          <Link
+                            to={`/agency/blog/topics/${hub.slug}`}
+                            className="mt-8 flex min-h-12 items-center justify-center gap-2 rounded-full border border-border px-6 py-3 text-center text-sm font-semibold text-foreground/90 transition-colors hover:border-primary hover:text-primary"
+                          >
+                            See all {posts.length} {hub.name} articles
+                            <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          </Link>
+                        )}
+                      </section>
+                    );
+                  })}
+
+                  {/* Anything not yet assigned to a hub */}
+                  {strays.length > 0 && (
+                    <section className="mb-20 border-t border-border pt-12">
+                      <h2 className="text-2xl font-bold tracking-tight">More writing</h2>
+                      <div className="mt-8 grid gap-8 md:grid-cols-2">
+                        {strays.map((post) => (
+                          <PostCard key={post.slug} post={post} views={views[post.slug]} isNew={fresh(post)} />
+                        ))}
+                      </div>
+                    </section>
+                  )}
+                </>
               )}
             </div>
 
@@ -361,12 +425,20 @@ const AgencyBlog = () => {
                   <p className="text-xs text-muted-foreground">{blogPosts.length} articles</p>
                 </div>
                 <nav aria-label="Browse by topic" className="mt-5 space-y-1">
+                  <a
+                    href="#latest"
+                    onClick={() => setQuery("")}
+                    className="group flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 transition-colors hover:border-border hover:bg-card"
+                  >
+                    <Sparkles className="h-4.5 w-4.5 flex-shrink-0 text-primary" aria-hidden="true" />
+                    <span className="flex-1 text-sm font-semibold text-foreground/90 group-hover:text-primary">Latest</span>
+                  </a>
                   {blogHubs.map((hub) => {
                     const count = getHubPosts(hub).length;
                     return (
-                      <a
+                      <Link
                         key={hub.slug}
-                        href={`#${hub.slug}`}
+                        to={`/agency/blog/topics/${hub.slug}`}
                         className="group flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 transition-colors hover:border-border hover:bg-card"
                       >
                         <hub.icon className="h-4.5 w-4.5 flex-shrink-0 text-primary" aria-hidden="true" />
@@ -374,7 +446,7 @@ const AgencyBlog = () => {
                           {hub.name}
                         </span>
                         <span className="text-xs text-muted-foreground">{count}</span>
-                      </a>
+                      </Link>
                     );
                   })}
                 </nav>

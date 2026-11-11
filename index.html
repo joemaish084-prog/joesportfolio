@@ -38,13 +38,47 @@
         else window.addEventListener('load', schedule, {once: true});
       }
     </script>
-    <!-- Google Tag Manager -->
-    <script>afterInitialRender(function(){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K789XFXX');});</script>
-    <!-- End Google Tag Manager -->
+    <!-- Agency GA4 Google tag. Enhanced measurement owns page views, including SPA navigation. -->
+    <script>
+      (function () {
+        var id = 'G-X86CZEY9GV';
+        var started = false;
+        window.analyticsConsentGranted = c === 'granted';
+        function updateRoute() {
+          var privatePage = /^\/(hub|portal|admin)(\/|$)/.test(window.location.pathname);
+          window['ga-disable-' + id] = privatePage || !window.analyticsConsentGranted;
+        }
+        window.loadGoogleAnalytics = function () {
+          updateRoute();
+          if (started || window['ga-disable-' + id]) return;
+          started = true;
+          gtag('js', new Date());
+          gtag('config', id, { send_page_view: true });
+          afterInitialRender(function () {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+            script.id = 'agency-google-tag';
+            document.head.appendChild(script);
+          });
+        };
+        // Update the opt-out flag before Google's history-change listener runs.
+        ['pushState', 'replaceState'].forEach(function (method) {
+          var original = history[method];
+          history[method] = function () {
+            var result = original.apply(this, arguments);
+            updateRoute();
+            window.loadGoogleAnalytics();
+            return result;
+          };
+        });
+        window.addEventListener('popstate', function () {
+          updateRoute();
+          window.loadGoogleAnalytics();
+        }, true);
+        updateRoute();
+      })();
+    </script>
     <!-- Meta Pixel Code: nothing loads or fires until cookies are accepted (see src/lib/analytics.ts) -->
     <script>
     window.loadMetaPixel=function(){if(window.fbq)return;
@@ -238,10 +272,6 @@
   </head>
 
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K789XFXX"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
 
     <!-- prerender:home-body -->
