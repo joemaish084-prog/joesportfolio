@@ -1,0 +1,86 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+#jm-shopify-concepts .jm-page{--jm-paper:light-dark(#fffdf9,#151513);--jm-ink:light-dark(#191915,#f5f3ed);--jm-soft:light-dark(#eeeae2,#292923);--jm-muted:light-dark(#625f55,#b9b6aa);--jm-line:light-dark(#ddd9cf,#414138);--jm-orange:#ef7426;--jm-round:18px;background:var(--jm-paper);color:var(--jm-ink);font:14px/1.6 Inter,Arial,sans-serif;min-height:790px;box-sizing:border-box;}
+#jm-shopify-concepts .jm-page *{box-sizing:border-box}#jm-shopify-concepts [hidden]{display:none!important}
+#jm-shopify-concepts .jm-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 28px;border-bottom:1px solid var(--jm-line);padding-right:100px;flex-wrap:wrap}
+#jm-shopify-concepts .jm-brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;letter-spacing:-.7px}#jm-shopify-concepts .jm-brand span{color:var(--jm-orange)}
+#jm-shopify-concepts .jm-links{display:flex;gap:18px;font-size:12px;color:var(--jm-muted)}
+#jm-shopify-concepts .jm-main{padding:38px 28px 24px}#jm-shopify-concepts .jm-kicker{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+#jm-shopify-concepts .jm-dot{width:7px;height:7px;background:#6f9e42;border-radius:50%;display:inline-block}
+#jm-shopify-concepts .jm-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:center;margin:28px 0 30px}
+#jm-shopify-concepts h1{font:600 clamp(32px,5.3vw,49px)/1.04 'Space Grotesk',sans-serif;letter-spacing:-2px;margin:0 0 20px}#jm-shopify-concepts h1 em{font-style:normal;color:var(--jm-orange)}
+#jm-shopify-concepts .jm-copy{color:var(--jm-muted);max-width:440px;margin:0 0 22px;font-size:13px}
+#jm-shopify-concepts .jm-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}#jm-shopify-concepts .jm-action{font:500 12px/1.4 Inter,sans-serif;color:var(--jm-ink);background:transparent;border:1px solid var(--jm-line);border-radius:8px;padding:12px 15px;text-decoration:none;display:inline-flex;gap:9px;align-items:center;min-height:44px}
+#jm-shopify-concepts .jm-action-primary{background:var(--jm-orange);color:#19130e;border-color:var(--jm-orange)}
+#jm-shopify-concepts .jm-visual{position:relative;padding:0 15px 25px 0;min-width:0}
+#jm-shopify-concepts .jm-window{background:var(--jm-soft);border:1px solid var(--jm-line);border-radius:var(--jm-round);overflow:hidden;transform:rotate(-3deg);transition:transform .35s ease}
+#jm-shopify-concepts .jm-window:hover{transform:rotate(0)}#jm-shopify-concepts .jm-browser{display:flex;align-items:center;gap:4px;padding:10px 12px;border-bottom:1px solid var(--jm-line)}#jm-shopify-concepts .jm-browser b{height:4px;width:4px;border-radius:50%;background:var(--jm-muted)}#jm-shopify-concepts .jm-browser span{font-size:10px;color:var(--jm-muted);margin:auto}
+#jm-shopify-concepts .jm-shop-head{display:flex;justify-content:space-between;font-size:10px;padding:12px 14px;font-weight:600;letter-spacing:1px}
+#jm-shopify-concepts .jm-shop-art{background:light-dark(#e2d8c4,#3f3b30);padding:20px 12px 0;position:relative;min-height:220px;overflow:hidden;color:light-dark(#302f24,#eee6d3)}
+#jm-shopify-concepts .jm-shop-art p{margin:0;font-family:Georgia,serif;font-size:26px;line-height:1.05;position:relative;z-index:1}#jm-shopify-concepts .jm-shop-art small{font-size:10px;display:block;margin-top:9px;max-width:105px}
+#jm-shopify-concepts .jm-bottles{position:absolute;right:15px;bottom:-10px;height:160px;width:120px;transform:rotate(8deg)}
+#jm-shopify-concepts .jm-bottle{position:absolute;bottom:0;right:8px;width:65px;height:129px;border-radius:14px 14px 9px 9px;background:linear-gradient(100deg,#8d983f,#b0b66c 45%,#727c34);box-shadow:10px 15px 25px #29241330}
+#jm-shopify-concepts .jm-bottle:before{content:'';position:absolute;top:-20px;left:17px;width:30px;height:23px;border-radius:3px 3px 0 0;background:#30362b}
+#jm-shopify-concepts .jm-bottle:after{content:'EVERYDAY / CARE';position:absolute;top:47px;left:8px;right:8px;padding:15px 4px;background:#f3eedc;color:#30362b;font-size:8px;letter-spacing:1px;line-height:1.4;text-align:center}
+#jm-shopify-concepts .jm-bottle-back{right:65px;transform:scale(.75);transform-origin:bottom;background:linear-gradient(100deg,#ab6f45,#ce9465,#97623f)}
+#jm-shopify-concepts .jm-phone{position:absolute;right:0;bottom:0;width:90px;padding:8px 5px;background:var(--jm-paper);border:3px solid var(--jm-ink);border-radius:16px;transform:rotate(5deg);color:var(--jm-ink)}#jm-shopify-concepts .jm-phone-picture{height:76px;background:light-dark(#e2d8c4,#3f3b30);position:relative;overflow:hidden;border-radius:7px}.jm-phone-picture .jm-bottle{transform:scale(.48);transform-origin:bottom;right:6px;bottom:-8px}#jm-shopify-concepts .jm-phone p{font-size:9px;line-height:1.4;margin:6px 0}#jm-shopify-concepts .jm-phone-bar{height:14px;background:var(--jm-orange);border-radius:3px}
+#jm-shopify-concepts .jm-caption{font-size:10px;color:var(--jm-muted);margin:10px 0 0}
+#jm-shopify-concepts .jm-route{border-top:1px solid var(--jm-line);padding-top:22px}#jm-shopify-concepts .jm-route-label{font-size:11px;color:var(--jm-muted);margin:0 0 12px}
+#jm-shopify-concepts .jm-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}#jm-shopify-concepts .jm-choice{background:var(--jm-paper);color:var(--jm-ink);border:1px solid var(--jm-line);border-radius:var(--jm-round);padding:15px 12px;text-align:left;font:500 13px/1.4 Inter,sans-serif;transition:transform .2s,border-color .2s;min-height:68px}#jm-shopify-concepts .jm-choice span{display:block;font-size:11px;font-weight:400;color:var(--jm-muted);margin-top:6px}#jm-shopify-concepts .jm-choice[aria-pressed=true]{border-color:var(--jm-orange);box-shadow:inset 0 3px var(--jm-orange)}#jm-shopify-concepts .jm-choice:hover{transform:translateY(-3px)}
+#jm-shopify-concepts .jm-detail{display:flex;gap:14px;justify-content:space-between;align-items:center;margin:17px 0 0;min-height:72px}#jm-shopify-concepts .jm-detail h2{font:500 17px/1.3 'Space Grotesk',sans-serif;margin:0 0 5px}#jm-shopify-concepts .jm-detail p{color:var(--jm-muted);font-size:12px;margin:0;max-width:480px}
+#jm-shopify-concepts .jm-foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;border-top:1px solid var(--jm-line);margin-top:24px;padding-top:16px;font-size:11px;color:var(--jm-muted)}
+#jm-shopify-concepts .jm-editorial .jm-main{padding-top:30px}#jm-shopify-concepts .jm-editorial .jm-topline{display:flex;justify-content:space-between;gap:12px;align-items:center}#jm-shopify-concepts .jm-editorial h1{font-size:clamp(34px,6.3vw,58px);max-width:550px;margin:25px 0 14px}#jm-shopify-concepts .jm-editorial .jm-intro-row{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:25px}#jm-shopify-concepts .jm-editorial .jm-copy{margin:0;max-width:320px}
+#jm-shopify-concepts .jm-spread{display:grid;grid-template-columns:1.6fr 1fr;gap:12px;margin-bottom:22px}#jm-shopify-concepts .jm-spread-main{background:light-dark(#e2d8c4,#3f3b30);border-radius:var(--jm-round);min-height:206px;position:relative;overflow:hidden;padding:24px;color:light-dark(#302f24,#eee6d3)}#jm-shopify-concepts .jm-spread-main p{font:400 29px/1.1 Georgia,serif;margin:0;max-width:170px}#jm-shopify-concepts .jm-spread-main small{display:block;margin-top:10px;font-size:11px}#jm-shopify-concepts .jm-spread-main .jm-bottles{right:28px;bottom:-20px;transform:rotate(-9deg)}
+#jm-shopify-concepts .jm-project-note{padding:20px;background:var(--jm-soft);border-radius:var(--jm-round);display:flex;flex-direction:column;justify-content:space-between;gap:20px}#jm-shopify-concepts .jm-project-note h2{font:500 21px/1.15 'Space Grotesk',sans-serif;margin:10px 0}#jm-shopify-concepts .jm-project-note p{font-size:12px;color:var(--jm-muted);margin:0}#jm-shopify-concepts .jm-project-note small{font-size:10px;letter-spacing:1px;text-transform:uppercase}
+@media(max-width:560px){#jm-shopify-concepts .jm-page{min-height:1070px}#jm-shopify-concepts .jm-nav{padding:18px 20px;padding-right:92px}.jm-links{flex-wrap:wrap}#jm-shopify-concepts .jm-main{padding:28px 20px 20px}#jm-shopify-concepts .jm-hero{grid-template-columns:1fr;gap:25px;margin-top:22px}#jm-shopify-concepts h1{font-size:38px;letter-spacing:-1.6px}#jm-shopify-concepts .jm-visual{max-width:340px;width:100%;margin:auto}#jm-shopify-concepts .jm-shop-art{min-height:185px}#jm-shopify-concepts .jm-choices{grid-template-columns:1fr}#jm-shopify-concepts .jm-choice{min-height:54px;padding:12px}#jm-shopify-concepts .jm-choice span{display:inline;margin-left:8px}#jm-shopify-concepts .jm-detail{align-items:start}#jm-shopify-concepts .jm-editorial .jm-intro-row{align-items:start;flex-direction:column}#jm-shopify-concepts .jm-spread{grid-template-columns:1fr}#jm-shopify-concepts .jm-project-note{gap:10px;padding:15px}#jm-shopify-concepts .jm-editorial h1{font-size:40px}#jm-shopify-concepts .jm-editorial .jm-topline{align-items:start}#jm-shopify-concepts .jm-kicker{font-size:10px}}
+@media(prefers-reduced-motion:reduce){#jm-shopify-concepts .jm-window,#jm-shopify-concepts .jm-choice{transition:none;transform:none}}
+</style>
+<div id="jm-shopify-concepts" class="viz-carousel" aria-label="Shopify service design directions">
+  <section data-variant="Storefront-led" aria-label="Storefront-led design">
+    <div class="jm-page" data-concept="Storefront-led" aria-label="Storefront-led appearance">
+      <header class="jm-nav"><div class="jm-brand">joseph maina<span>.</span></div><div class="jm-links"><span>Shopify services</span><span>Kenya + worldwide</span></div></header>
+      <main class="jm-main">
+        <div class="jm-kicker"><span class="jm-dot"></span> Shopify creation &amp; management</div>
+        <div class="jm-hero">
+          <div><h1>Your products.<br>Your brand.<br><em>Your next store.</em></h1><p class="jm-copy">I build, migrate, and manage Shopify stores for businesses in Kenya and worldwide.</p><div class="jm-actions"><a href="#jm-storefront-offer" class="jm-action jm-action-primary cursor-interaction">Find your service <i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div></div>
+          <div><div class="jm-visual"><div class="jm-window"><div class="jm-browser"><b></b><b></b><b></b><span>Storefront preview</span></div><div class="jm-shop-head"><span>EVERYDAY</span><span>SHOP / ABOUT</span></div><div class="jm-shop-art"><p>A little care.<br>Every day.</p><small>Everyday essentials, thoughtfully made.</small><div class="jm-bottles" aria-hidden="true"><div class="jm-bottle jm-bottle-back"></div><div class="jm-bottle"></div></div></div></div><div class="jm-phone" aria-label="Mobile storefront preview"><div class="jm-phone-picture"><div class="jm-bottle" aria-hidden="true"></div></div><p>Care for your everyday.</p><div class="jm-phone-bar"></div></div></div><p class="jm-caption">Illustrative storefront. Your live project would go here.</p></div>
+        </div>
+        <section class="jm-route" id="jm-storefront-offer" aria-label="Explore Shopify services"><p class="jm-route-label">Where are you with your store?</p><div class="jm-choices"><button class="jm-choice cursor-interaction" type="button" data-service="build" aria-pressed="true">Build a store <span>Start something new ↗</span></button><button class="jm-choice cursor-interaction" type="button" data-service="migrate" aria-pressed="false">Move to Shopify <span>Plan your migration ↗</span></button><button class="jm-choice cursor-interaction" type="button" data-service="manage" aria-pressed="false">Manage my store <span>Get ongoing support ↗</span></button></div><div class="jm-detail" aria-live="polite"><div><h2 data-offer-title>From your idea to a working store.</h2><p data-offer-text>Store design, product setup, navigation, and launch testing.</p></div><i data-lucide="arrow-up-right" aria-hidden="true"></i></div></section>
+        <div class="jm-foot"><span>Next: selected Shopify projects &amp; your role</span><span>Build · Migrate · Manage</span></div>
+      </main>
+    </div>
+  </section>
+  <section data-variant="Editorial" aria-label="Editorial design" hidden>
+    <div class="jm-page jm-editorial" data-concept="Editorial" aria-label="Editorial appearance">
+      <header class="jm-nav"><div class="jm-brand">joseph maina<span>.</span></div><div class="jm-links"><span>Shopify services</span><span>Kenya + worldwide</span></div></header>
+      <main class="jm-main">
+        <div class="jm-topline"><div class="jm-kicker"><span class="jm-dot"></span> Shopify stores, thoughtfully built.</div></div>
+        <h1>A better home<br>for <em>what you sell.</em></h1>
+        <div class="jm-intro-row"><p class="jm-copy">Design, migration, and ongoing management. A direct partnership for your Shopify store.</p><a href="#jm-editorial-offer" class="jm-action jm-action-primary cursor-interaction">Explore the services <i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
+        <div class="jm-spread"><div class="jm-spread-main" role="img" aria-label="Illustrative personal-care storefront design"><p>Good things.<br>Every day.</p><small>EVERYDAY / STOREFRONT CONCEPT</small><div class="jm-bottles" aria-hidden="true"><div class="jm-bottle jm-bottle-back"></div><div class="jm-bottle"></div></div></div><div class="jm-project-note"><div><small>Your work, up front</small><h2>A store.<br>A clear story.</h2><p>Your role, the brief, and the decisions behind the finished store.</p></div><p>Illustrative layout. Replace with a live project.</p></div></div>
+        <section class="jm-route" id="jm-editorial-offer" aria-label="Explore Shopify services"><div class="jm-choices"><button class="jm-choice cursor-interaction" type="button" data-service="build" aria-pressed="true">Build <span>A new Shopify store ↗</span></button><button class="jm-choice cursor-interaction" type="button" data-service="migrate" aria-pressed="false">Migrate <span>Move with a plan ↗</span></button><button class="jm-choice cursor-interaction" type="button" data-service="manage" aria-pressed="false">Manage <span>Keep moving forward ↗</span></button></div><div class="jm-detail" aria-live="polite"><div><h2 data-offer-title>From your idea to a working store.</h2><p data-offer-text>Store design, product setup, navigation, and launch testing.</p></div><i data-lucide="arrow-up-right" aria-hidden="true"></i></div></section>
+        <div class="jm-foot"><span>Next: project stories, process &amp; enquiries</span><span>Built around your business.</span></div>
+      </main>
+    </div>
+  </section>
+</div>
+<script>
+(function(){
+  const root=document.getElementById('jm-shopify-concepts');
+  const offers={build:['From your idea to a working store.','Store design, product setup, navigation, and launch testing.'],migrate:['Moving from WooCommerce? Start with a plan.','Review your products, content, important URLs, and required integrations.'],manage:['Keep your store moving.','Product updates, collections, promotions, and ongoing store improvements.']};
+  const pages=Array.from(root.querySelectorAll('[data-concept]'));
+  const selected={};
+  function choose(page,key){if(!offers[key])return;selected[page.dataset.concept]=key;page.querySelectorAll('[data-service]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.service===key)));page.querySelector('[data-offer-title]').textContent=offers[key][0];page.querySelector('[data-offer-text]').textContent=offers[key][1];}
+  function restore(snapshot){const prior=snapshot&&snapshot.modelContent&&snapshot.modelContent.selectedServices;if(prior)pages.forEach(page=>choose(page,prior[page.dataset.concept]||'build'));}
+  pages.forEach(page=>{
+    choose(page,'build');
+    page.querySelectorAll('[data-service]').forEach(button=>button.addEventListener('click',()=>{choose(page,button.dataset.service);if(window.openai&&window.openai.setWidgetState)window.openai.setWidgetState({modelContent:{selectedServices:{...selected}},privateContent:null}).catch(()=>{});}));
+    const appearance={radius:18,accent:'#ef7426'};
+    const render=()=>{page.style.setProperty('--jm-round',appearance.radius+'px');page.style.setProperty('--jm-orange',appearance.accent);};
+    render();
+    if(globalThis.Tweak){const tweak=new Tweak({container:page,onChange:render});tweak.addSlider(appearance,'radius',{label:'Corner radius',min:0,max:28,unit:'px'});tweak.addColorPicker(appearance,'accent',{label:'Brand accent',reference:'--jm-orange'});}
+  });
+  restore(window.openai&&window.openai.widgetState);
+  window.addEventListener('openai:set_globals',event=>{if(event.detail&&event.detail.globals)restore(event.detail.globals.widgetState);});
+})();
+</script>
