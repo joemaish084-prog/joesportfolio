@@ -48,6 +48,7 @@ const navLinks: NavLink[] = [
       { label: "Graphics", description: "Campaign creatives and social designs", href: "/work/design" },
       { label: "Branding", description: "Logo, colour, type and brand systems", badge: "New", href: "/work/branding" },
       { label: "Mockups", description: "Brand identities on paper, fabric and everyday objects", href: "/work/mockups" },
+      { label: "Shopify stores", description: "Live storefront work for Babyshop Dansar", href: "/#shopify" },
     ],
   },
   {
@@ -66,6 +67,7 @@ const navLinks: NavLink[] = [
     label: "Services",
     href: "/agency/services",
     children: [
+      { label: "Shopify Services", description: "Store creation, migration and ongoing management", href: "/agency/shopify-services" },
       { label: "Meta Ads Management", description: "Facebook and Instagram ads, optimised weekly", href: "/agency/meta-ads-management" },
       { label: "Google Ads Management", description: "Search, Shopping and Performance Max", href: "/agency/google-ads-management" },
       { label: "SEO Services", description: "Local SEO and Google Business Profile", href: "/agency/seo-services-nairobi" },

@@ -36,6 +36,8 @@ import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/Agency
 import { blogSummaries } from "@/data/blogSummaries";
 import { caseStudies } from "@/data/caseStudies";
 import { getLiveServicePages } from "@/data/servicePages";
+import { migrationReasons } from "@/data/shopify";
+import { ShopifyAgencyFeature } from "@/components/shopify/ShopifyAgencyFeature";
 import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, CardCover } from "@/components/agency/AgencyVisuals";
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
@@ -164,6 +166,7 @@ function SubHeading({ eyebrow, title, children, aside }: { eyebrow?: string; tit
 
 /** Pricing-table rows that have their own service page. */
 const SERVICE_PAGE_FOR_ROW: Record<string, string> = {
+  "shopify-services": "/agency/shopify-services",
   "meta-ads": "/agency/meta-ads-management",
   "google-ads": "/agency/google-ads-management",
   "social-media-management": "/agency/social-media-management",
@@ -172,6 +175,7 @@ const SERVICE_PAGE_FOR_ROW: Record<string, string> = {
 };
 
 const supportingServices = [
+  { icon: Building2, slug: "shopify-services", name: "Shopify Store Services", price: "Quoted for your scope", desc: "Store creation and migration per project; management scoped monthly. Shopify and third-party costs are separate.", proof: { label: "Explore Shopify services and Babyshop Dansar", to: "/agency/shopify-services" } },
   { icon: Share2, slug: "social-media-management", name: "Social Media Management", price: "from KES 40,000/mo", desc: "Content, scheduling and community management.", proof: { label: "Read: TikTok vs Instagram for Kenyan brands", to: "/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026" } },
   { icon: Search, slug: "seo-optimization", name: "SEO Optimization", price: "from KES 45,000/mo", desc: "On-page, technical and local SEO.", proof: { label: "Read: why your Nairobi business isn't on Google", to: "/agency/blog/why-your-nairobi-business-isnt-showing-up-on-google-2026" } },
   { icon: FileText, slug: "content-strategy", name: "Content Strategy", price: "from KES 45,000/mo", desc: "Editorial calendars and content plans.", proof: { label: "Read: my honest take on AI and marketing", to: "/agency/blog/ai-marketing-honest-take-2026" } },
@@ -183,6 +187,10 @@ const supportingServices = [
 ];
 
 const serviceOptions = [
+  "Shopify Store Services",
+  "Shopify Store Creation",
+  "Shopify Migration",
+  "Shopify Store Management",
   "Meta Ads Management",
   "Google Ads Management",
   "TikTok Ads Management",
@@ -203,6 +211,10 @@ const serviceOptions = [
 
 // ?service= values on links into the brief form.
 const serviceFromLink: Record<string, string> = {
+  "shopify-services": "Shopify Store Services",
+  "shopify-create": "Shopify Store Creation",
+  "shopify-migrate": "Shopify Migration",
+  "shopify-manage": "Shopify Store Management",
   "meta-ads-management": "Meta Ads Management",
   "google-ads-management": "Google Ads Management",
   "seo-services-nairobi": "SEO Optimization",
@@ -306,6 +318,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
+  const isShopifyBrief = form.service.startsWith("Shopify");
   const [spamTrap, setSpamTrap] = useState("");
   const [briefSent, setBriefSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -330,8 +343,10 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 
   useEffect(() => {
-    const service = serviceFromLink[new URLSearchParams(location.search).get("service") ?? ""];
-    if (service) setForm((f) => ({ ...f, service }));
+    const params = new URLSearchParams(location.search);
+    const service = serviceFromLink[params.get("service") ?? ""];
+    const reason = params.get("reason");
+    if (service) setForm((f) => ({ ...f, service, goals: f.goals || (service === "Shopify Migration" && migrationReasons.some(item => item === reason) ? `Migration reason: ${reason}` : "") }));
   }, [location.search]);
 
   useEffect(() => {
@@ -547,6 +562,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             </ul>
           </nav>
         </section>}
+        {pageKey === "home" && <ShopifyAgencyFeature />}
         {/* PROOF: real figures from the published case studies */}
         <section data-track-location="home_proof" className="container mx-auto px-4 pt-16 sm:pt-20">
           <div className="mx-auto max-w-6xl">
@@ -987,9 +1003,9 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                           </Select>
                         </div>
                         <div>
-                          <Label htmlFor="b-budget">Monthly ad budget</Label>
-                          <p className="mb-1.5 text-xs text-muted-foreground">Ad spend only, paid separately from my fees. A rough figure is fine.</p>
-                          <Select value={form.budget} onValueChange={(v) => setForm({ ...form, budget: v })}>
+                          <Label htmlFor="b-budget">{isShopifyBrief ? "Project or monthly support budget" : "Monthly ad budget"}</Label>
+                          <p className="mb-1.5 text-xs text-muted-foreground">{isShopifyBrief ? "Share an estimate and currency, or write 'Not sure yet' if you would like help defining the scope." : "Ad spend only, paid separately from my fees. A rough figure is fine."}</p>
+                          {isShopifyBrief ? <Input id="b-budget" value={form.budget} onChange={(event) => setForm({ ...form, budget: event.target.value })} placeholder="Budget and currency, or Not sure yet" /> : <Select value={form.budget} onValueChange={(v) => setForm({ ...form, budget: v })}>
                             <SelectTrigger id="b-budget"><SelectValue placeholder="Select budget" /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="<KES 30,000">Below KES 30,000</SelectItem>
@@ -998,15 +1014,15 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                               <SelectItem value="KES 200,000+">KES 200,000+</SelectItem>
                               <SelectItem value="Not sure yet">Not sure yet</SelectItem>
                             </SelectContent>
-                          </Select>
+                          </Select>}
                         </div>
                       </motion.div>
                     )}
                     {briefStep === 2 && (
                       <motion.div key="step-2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
                         <div>
-                          <Label htmlFor="b-goals">What should your marketing achieve?</Label>
-                          <Textarea id="b-goals" rows={3} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
+                          <Label htmlFor="b-goals">{isShopifyBrief ? "Tell me about your store" : "What should your marketing achieve?"}</Label>
+                          <Textarea id="b-goals" rows={3} placeholder={isShopifyBrief ? "Current store link, product count, what you need, target market, and intended launch date." : undefined} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
                         </div>
                       </motion.div>
                     )}

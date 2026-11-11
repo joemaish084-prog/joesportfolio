@@ -1,5 +1,6 @@
 import { BarChart3, ClipboardList, Magnet, MapPin, Share2, Target, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { shopifyServicePage } from "@/data/shopify";
 
 /**
  * "Money pages" — one focused page per search intent, so the agency section does
@@ -47,6 +48,8 @@ export interface ServiceSection {
 
 export interface ServicePage {
   slug: string;
+  /** Defaults to Kenya; individual services may also serve clients worldwide. */
+  areaServed?: string;
   icon: LucideIcon;
   /** H1. Targets one search intent. */
   name: string;
@@ -111,6 +114,7 @@ const SHARED_FAQS: ServiceFaq[] = [
 ];
 
 export const servicePages: ServicePage[] = [
+  shopifyServicePage,
   {
     slug: "digital-marketing-kenya",
     icon: TrendingUp,

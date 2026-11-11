@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.js";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Hero } from "@/components/Hero";
+import { ShopifyPortfolio } from "@/components/ShopifyPortfolio";
 import AgencyBlog from "@/pages/AgencyBlog";
 import Agency from "@/pages/Agency";
 import { AgencyServiceContent } from "@/pages/AgencyService";
@@ -326,7 +327,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
       body: html(
         <StaticRouter location="/">
         <SiteHeader />
-        <main className="min-h-screen"><Hero /></main>
+        <main className="min-h-screen"><Hero /><ShopifyPortfolio /></main>
         <Shell contentTag="div">
           <p>I'm Joseph Maina, a digital marketing specialist in Nairobi, Kenya, and the founder of Joseph Maina Marketing. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content.</p>
           <p><a href="/agency/contact">Book a Free Strategy Call</a></p>

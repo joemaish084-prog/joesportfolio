@@ -10,6 +10,7 @@ import { PrimaryServiceCard } from "./PrimaryServiceCard";
 import { ProcessTimeline } from "./ProcessTimeline";
 import { SecondaryServiceCard } from "./SecondaryServiceCard";
 import { ServicesCTA } from "./ServicesCTA";
+import { ShopifyAgencyFeature } from "@/components/shopify/ShopifyAgencyFeature";
 import { moreServices, primaryServices, secondaryHeading, secondaryServices, servicesHeader } from "./servicesContent";
 
 /** The /agency/services body: Google Ads and Meta Ads lead, everything else supports them. */
@@ -34,6 +35,7 @@ export function ServicesSection() {
         </div>
 
         <PlatformDecision />
+        <ShopifyAgencyFeature />
         <CampaignSnapshot />
         <ProcessTimeline />
 

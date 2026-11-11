@@ -1,0 +1,11 @@
+/* Public Shopify features only. Keep the client's colours inside its captures. */
+.shopify-project {
+  animation: shopify-project-enter 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes shopify-project-enter {
+  from { transform: translateY(12px); }
+  to { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shopify-project { animation: none; }
+}

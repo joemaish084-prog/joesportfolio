@@ -19,6 +19,7 @@ import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { ServiceGallery, ServiceHeroVisual, ServiceSideImage } from "@/components/services/ServiceVisuals";
 import { PROCESS_VISUAL, getServiceVisuals } from "@/data/serviceVisuals";
 import { localizePrice, useMarket } from "@/lib/market";
+import { ShopifyServiceContent } from "@/components/shopify/ShopifyServiceContent";
 
 /** The lower-commitment ways to get in touch, beside each page's main booking button. */
 function OtherContactOptions({ slug, name, briefIsPrimary, className = "" }: { slug: string; name: string; briefIsPrimary: boolean; className?: string }) {
@@ -72,6 +73,10 @@ const AgencyService = () => {
 /** Shared by the client route and build-time rendering, so search engines get
  * the same service scope, proof, FAQs and links that visitors see. */
 export function AgencyServiceContent({ page }: { page: ServicePage }) {
+  return page.slug === "shopify-services" ? <ShopifyServiceContent page={page} /> : <StandardAgencyServiceContent page={page} />;
+}
+
+function StandardAgencyServiceContent({ page }: { page: ServicePage }) {
   const market = useMarket();
 
   useEffect(() => {

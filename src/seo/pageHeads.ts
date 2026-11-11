@@ -217,6 +217,7 @@ export function blogPostHead(post: BlogPost): PageHead {
 
 export function serviceHead(page: ServicePage): PageHead {
   const path = `/agency/${page.slug}`;
+  const priceValue = page.price.value ?? Number(page.price.amount.match(/[\d,]+/)?.[0].replace(/,/g, "") ?? NaN);
   const faqs = page.faqs
     // Unanswered questions must not reach structured data.
     .filter((f) => !f.a.includes("[CONFIRM]"))
@@ -242,19 +243,19 @@ export function serviceHead(page: ServicePage): PageHead {
         description: page.metaDescription,
         url: canonicalUrl(path),
         serviceType: page.navLabel,
-        areaServed: { "@type": "Country", name: "Kenya" },
+        areaServed: page.areaServed ?? { "@type": "Country", name: "Kenya" },
         provider: { "@id": agencyOrganization["@id"] },
         mainEntityOfPage: { "@id": `${canonicalUrl(path)}#webpage` },
         offers: {
           "@type": "Offer",
           // Preserve "from" and monthly billing without putting display copy in a numeric price field.
-          priceSpecification: {
+          ...(Number.isFinite(priceValue) ? { priceSpecification: {
             "@type": "UnitPriceSpecification",
             [page.price.amount.startsWith("From ") ? "minPrice" : "price"]:
-              page.price.value ?? Number(page.price.amount.match(/[\d,]+/)![0].replace(/,/g, "")),
+              priceValue,
             priceCurrency: "KES",
             ...(page.price.amount.includes("/month") ? { unitText: "month" } : {}),
-          },
+          } } : {}),
           description: `${page.price.amount}. ${page.price.note}`,
         },
       },

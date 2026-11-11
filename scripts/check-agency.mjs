@@ -73,6 +73,17 @@ for (const match of pricing.matchAll(/href="\/agency\/services#([^"]+)"/g)) {
   assert(services.includes(`id="${match[1]}"`), `Pricing scope link must resolve: ${match[1]}`);
 }
 const portfolio = fs.readFileSync("dist/index.html", "utf8");
+const shopify = read("/agency/shopify-services");
+assert(links(services).includes("/agency/shopify-services") && links(home).includes("/agency/shopify-services"), "Shopify must be discoverable from agency home and services");
+assert(portfolio.includes('id="shopify"') && portfolio.includes("Babyshop Dansar"), "Portfolio renders the real Shopify project before JavaScript");
+assert(links(portfolio).includes("https://babyshopdansar.com/") && links(shopify).includes("https://babyshopdansar.com/"), "Shopify proof links to the supplied live store");
+assert(shopify.includes("Quoted for your scope"), "Shopify pricing remains quote-based");
+const shopifySchemas = [...shopify.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
+const shopifySchema = shopifySchemas.find(schema => schema["@type"] === "Service");
+assert.equal(shopifySchema.areaServed, "Worldwide", "Shopify serves Kenyan and international clients");
+assert(!shopifySchema.offers.priceSpecification, "Unpriced Shopify work must not invent a numeric price");
+for (const intent of ["create", "migrate", "manage"]) assert(shopify.includes(`id="${intent}"`), `Shopify supports the ${intent} entry point`);
+assert(links(pricing).includes("/agency/shopify-services"), "Pricing links to the quoted Shopify scope");
 assert(links(portfolio).includes("/agency"), "Portfolio must link to agency home");
 assert(home.includes("founder-led digital marketing agency in Nairobi"), "Agency home states the positioning");
 assert(new Set(links(home).filter(path => path.startsWith("/work/case-studies#"))).size === 3, "Agency home links to three case study results");

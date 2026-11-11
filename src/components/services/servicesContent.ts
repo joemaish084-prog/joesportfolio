@@ -26,8 +26,8 @@ export const CASE_STUDIES_URL = "/agency/results";
 /* -------------------------------------------------------------------------- */
 
 export const servicesHeader = {
-  label: "GOOGLE ADS · META ADS · LEAD GENERATION",
-  heading: "Paid campaigns built for measurable growth",
+  label: "GOOGLE ADS · META ADS · SHOPIFY",
+  heading: "Campaigns and stores built around your business",
   intro:
     "I help Kenyan businesses choose the right platform, build campaigns that make commercial sense, and improve performance without hiding behind complicated reports.",
   statement: "Strategy before spend. Creative meets data. Every decision tied to a business goal.",
