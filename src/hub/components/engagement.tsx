@@ -1,4 +1,4 @@
-import { CalendarClock, FileSignature, Repeat, Rocket, type LucideIcon } from "lucide-react";
+import { CalendarClock, FileSignature, FlaskConical, Repeat, Rocket, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ENGAGEMENT, timeLeft } from "../lib/engagement";
 import type { Client, EngagementType } from "../lib/types";
@@ -7,9 +7,10 @@ export const ENGAGEMENT_ICON: Record<EngagementType, LucideIcon> = {
   retainer: Repeat,
   contract: FileSignature,
   project: Rocket,
+  trial: FlaskConical,
 };
 
-/** "Retainer" / "Contract" / "Project" pill. */
+/** "Retainer" / "Contract" / "Project" / "Trial" pill. */
 export function EngagementBadge({ type, className }: { type: EngagementType | undefined; className?: string }) {
   const t = type ?? "retainer";
   const Icon = ENGAGEMENT_ICON[t];
@@ -17,7 +18,11 @@ export function EngagementBadge({ type, className }: { type: EngagementType | un
     <span
       className={cn(
         "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.6875rem] font-medium",
-        t === "project" ? "bg-tint text-on-tint" : "bg-secondary text-muted-foreground",
+        t === "project"
+          ? "bg-tint text-on-tint"
+          : t === "trial"
+            ? "bg-warning-soft text-warning"
+            : "bg-secondary text-muted-foreground",
         className,
       )}
     >

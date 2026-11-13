@@ -5,7 +5,7 @@ import type { Client, HubDocument, Invoice, Lead, OnboardingItem, Payment, Repor
 // Data shaping for the Overview page: the agenda (what's coming up) and the
 // activity feed (what just happened). Pure functions over rows already loaded.
 
-export type AgendaKind = "step" | "invoice" | "followup" | "report" | "deadline" | "contract";
+export type AgendaKind = "step" | "invoice" | "followup" | "report" | "deadline" | "contract" | "trial";
 
 export type AgendaItem = {
   id: string;
@@ -98,11 +98,16 @@ export function buildAgenda({
     if (!c.end_date || c.status === "ended" || c.engagement_type === "retainer" || !c.engagement_type) continue;
     if (c.end_date < today || c.end_date > horizon) continue;
     const project = c.engagement_type === "project";
+    const trial = c.engagement_type === "trial";
     all.push({
       id: `e-${c.id}`,
-      kind: project ? "deadline" : "contract",
-      title: project ? `${c.name} project due` : `${c.name} contract ends`,
-      detail: project ? "Project deadline" : "Renew, or wrap up and hand over",
+      kind: project ? "deadline" : trial ? "trial" : "contract",
+      title: project ? `${c.name} project due` : trial ? `${c.name} trial ends` : `${c.name} contract ends`,
+      detail: project
+        ? "Project deadline"
+        : trial
+          ? "Share results and ask them to sign on"
+          : "Renew, or wrap up and hand over",
       date: c.end_date,
       to: `/hub/clients/${c.id}`,
       amount: project ? (c.project_fee ?? undefined) : undefined,

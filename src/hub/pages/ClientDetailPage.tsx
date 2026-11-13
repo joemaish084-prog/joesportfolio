@@ -325,7 +325,10 @@ export default function ClientDetailPage() {
 
   const typeName = types.data?.find((t) => t.id === client.client_type_id)?.name;
 
-  const patch = (p: Partial<Pick<Client, "status" | "archived_at">>, message: string) =>
+  const patch = (
+    p: Partial<Pick<Client, "status" | "archived_at" | "engagement_type" | "end_date">>,
+    message: string,
+  ) =>
     updateClient.mutate(
       { id: client.id, patch: p },
       { onSuccess: () => toast.success(message), onError: (e) => toast.error(e.message) },
@@ -382,6 +385,38 @@ export default function ClientDetailPage() {
               >
                 <CheckCircle2 className="mr-1.5 h-4 w-4" /> Mark project done
               </Button>
+            )}
+            {client.engagement_type === "trial" && client.status !== "ended" && !client.archived_at && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="rounded-full">
+                    <CheckCircle2 className="mr-1.5 h-4 w-4" /> Trial outcome
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="rounded-xl">
+                  <DropdownMenuItem
+                    className="rounded-lg"
+                    onSelect={() =>
+                      patch(
+                        { engagement_type: "retainer", end_date: null, status: "active" },
+                        `${client.name} is now on a monthly retainer`,
+                      )
+                    }
+                  >
+                    Converted to retainer
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="rounded-lg">
+                    <Link to={`/hub/clients/${client.id}/edit`}>Converted to contract or project…</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="rounded-lg"
+                    onSelect={() => patch({ status: "ended" }, "Trial ended without converting")}
+                  >
+                    Didn't convert
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

@@ -91,7 +91,8 @@ export function InvoiceDialog({
   // New invoice: start with the client's fee as the first line, monthly or project.
   const selectedClient = clients.data?.find((c) => c.id === client);
   useEffect(() => {
-    if (!open || invoice || copyFrom || !selectedClient) return;
+    // Trials aren't billed a monthly fee, so there's nothing to prefill.
+    if (!open || invoice || copyFrom || !selectedClient || selectedClient.engagement_type === "trial") return;
     const project = selectedClient.engagement_type === "project";
     const amount = project ? selectedClient.project_fee : selectedClient.monthly_fee;
     if (!amount) return;

@@ -162,7 +162,13 @@ async function syncKpis(clientId: string, kpis: KpiDraft[]) {
 export function useUpdateClient() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, patch }: { id: string; patch: Partial<Pick<Client, "status" | "archived_at">> }) =>
+    mutationFn: async ({
+      id,
+      patch,
+    }: {
+      id: string;
+      patch: Partial<Pick<Client, "status" | "archived_at" | "engagement_type" | "end_date">>;
+    }) =>
       unwrap(await db.from("clients").update(patch).eq("id", id).select().single()) as Client,
     onSuccess: () => qc.invalidateQueries({ queryKey: hubKeys.clients }),
   });

@@ -375,7 +375,9 @@ export default function ClientFormPage() {
     }
     const endDate = form.engagement_type === "retainer" ? null : form.end_date || null;
     if (endDate && form.start_date && endDate < form.start_date) {
-      setError(`The ${form.engagement_type === "project" ? "deadline" : "end date"} is before the start date.`);
+      setError(
+        `The ${form.engagement_type === "project" ? "deadline" : form.engagement_type === "trial" ? "trial end" : "end date"} is before the start date.`,
+      );
       return;
     }
     const client: ClientDraft = {
@@ -547,7 +549,7 @@ export default function ClientFormPage() {
 
         <FormSection title="Engagement">
           <Field label="How you work together">
-            <div className="grid gap-2 sm:grid-cols-3" role="radiogroup" aria-label="How you work together">
+            <div className="grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label="How you work together">
               {ENGAGEMENT_TYPES.map((t) => {
                 const Icon = ENGAGEMENT_ICON[t];
                 const on = form.engagement_type === t;
@@ -625,7 +627,15 @@ export default function ClientFormPage() {
                 </div>
               </Field>
             ) : (
-              <Field label="Monthly fee" htmlFor="monthly_fee">
+              <Field
+                label={form.engagement_type === "trial" ? "Fee after trial" : "Monthly fee"}
+                htmlFor="monthly_fee"
+                hint={
+                  form.engagement_type === "trial"
+                    ? "What they'd pay monthly if they sign on. Not counted as income yet."
+                    : undefined
+                }
+              >
                 <div className="relative">
                   <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
                     KES
@@ -683,7 +693,9 @@ export default function ClientFormPage() {
                     }. You'll see it on the Overview as the date gets close.`
                   : form.engagement_type === "project"
                     ? "Pick a deadline, or tap a length. Short jobs of a few days are fine."
-                    : "Pick when the contract ends, or tap a length."}
+                    : form.engagement_type === "trial"
+                      ? "Pick when the trial ends, or tap a length. You'll get a nudge to convert them."
+                      : "Pick when the contract ends, or tap a length."}
               </p>
             </div>
           )}

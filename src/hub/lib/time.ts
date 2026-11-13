@@ -53,7 +53,9 @@ export function eligibleTimeClient(client: Client, today = agencyDate()) {
 
 export type TimeStatus = "No time yet" | "No fee set" | "Over time" | "Under" | "On track" | "Outside comparison";
 
-const monthlyKes = (client: Client) => client.currency === "KES" && client.engagement_type !== "project";
+// Trials can be timed (to see what a trial costs you) but have no fee to compare against.
+const monthlyKes = (client: Client) =>
+  client.currency === "KES" && client.engagement_type !== "project" && client.engagement_type !== "trial";
 
 export function timeSummary(
   clients: Client[], entries: TimeEntry[], preferences: TimeClient[], weeklyHours: number,

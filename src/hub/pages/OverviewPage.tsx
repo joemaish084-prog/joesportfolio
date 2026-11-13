@@ -20,6 +20,7 @@ import {
   FileText,
   MoreHorizontal,
   Filter,
+  FlaskConical,
   FolderUp,
   ListChecks,
   NotebookPen,
@@ -135,6 +136,7 @@ const AGENDA_ICON: Record<AgendaKind, LucideIcon> = {
   report: BarChart3,
   deadline: Rocket,
   contract: FileSignature,
+  trial: FlaskConical,
 };
 
 const ACTIVITY_ICON: Record<ActivityKind, LucideIcon> = {
@@ -274,6 +276,16 @@ export default function OverviewPage() {
           id: `deadline-${c.id}`,
           title: `${c.name} project is past its deadline`,
           detail: `Was due ${formatDate(c.end_date, "d MMM")} · mark it done or move the date`,
+          to: `/hub/clients/${c.id}`,
+          date: c.end_date ?? "",
+        })),
+      // Trials that have run out without a decision.
+      ...live
+        .filter((c) => c.engagement_type === "trial" && c.status !== "ended" && c.end_date && c.end_date < today)
+        .map((c) => ({
+          id: `trial-${c.id}`,
+          title: `${c.name} trial has ended`,
+          detail: `Ended ${formatDate(c.end_date, "d MMM")} · convert them, or end the trial`,
           to: `/hub/clients/${c.id}`,
           date: c.end_date ?? "",
         })),

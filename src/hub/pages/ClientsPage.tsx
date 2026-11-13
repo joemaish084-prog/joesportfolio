@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Archive, LayoutGrid, List, Plus, Search, Users } from "lucide-react";
+import { Archive, ChevronRight, FlaskConical, LayoutGrid, List, Plus, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,7 +11,7 @@ import { KesTicker } from "../components/motion/number-ticker";
 import { SpotlightCard } from "../components/motion/spotlight-card";
 import { ClientAvatar, EmptyState, PageHeader, ProgressBar, SkeletonBlock, StatusBadge } from "../components/ui";
 import { EngagementBadge, TimeLeft } from "../components/engagement";
-import { ENGAGEMENT, feeOf, isMonthly, timeLeft } from "../lib/engagement";
+import { ENGAGEMENT, feeOf, liveTrials, timeLeft } from "../lib/engagement";
 import { useClients, useClientTypes, useOnboardingByClient } from "../lib/queries";
 import {
   CLIENT_STATUSES,
@@ -84,6 +84,9 @@ export default function ClientsPage() {
   }, [clients.data, query, status, typeFilter, workFilter, showArchived]);
 
   const archivedCount = (clients.data ?? []).filter((c) => c.archived_at).length;
+  const trials = useMemo(() => liveTrials(clients.data ?? []), [clients.data]);
+  const trialValue = trials.reduce((sum, c) => sum + Number(c.monthly_fee ?? 0), 0);
+  const showTrials = trials.length > 0 && !showArchived && workFilter === "all";
   const hasFilters = !!query || status !== "all" || typeFilter !== "all" || workFilter !== "all";
   const typeLabel = (c: Client) => (c.client_type_id && typeName.get(c.client_type_id)) || "No type";
 
@@ -211,6 +214,64 @@ export default function ClientsPage() {
         </div>
       </BlurFade>
 
+      {showTrials && (
+        <BlurFade delay={0.06} className="mb-5">
+          <section className="hub-card p-4 md:p-5" aria-labelledby="trials-heading">
+            <header className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 id="trials-heading" className="flex items-center gap-2 font-semibold">
+                  <FlaskConical className="h-4 w-4 text-warning" /> On trial
+                </h2>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  {trials.length} {trials.length === 1 ? "client" : "clients"} trying out your ads
+                  {trialValue > 0 && " · worth "}
+                  {trialValue > 0 && <KesTicker value={trialValue} className="font-medium text-foreground" />}
+                  {trialValue > 0 && "/mo if they all sign on"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setParam("work", "trial")}
+                className="flex items-center gap-0.5 text-sm text-primary transition-opacity duration-150 hover:opacity-80"
+              >
+                See all <ChevronRight className="h-4 w-4" />
+              </button>
+            </header>
+            <ul className="divide-y divide-border/60">
+              {trials.map((c) => (
+                <li key={c.id}>
+                  <Link
+                    to={`/hub/clients/${c.id}`}
+                    className="-mx-2 flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors duration-150 hover:bg-secondary/60"
+                  >
+                    <ClientAvatar name={c.name} className="h-8 w-8 rounded-lg text-xs" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium">{c.name}</span>
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {c.services.length ? c.services.join(", ") : "No services picked"}
+                      </span>
+                    </span>
+                    <span className="flex shrink-0 flex-col items-end gap-0.5 text-right">
+                      {c.end_date ? (
+                        <TimeLeft client={c} />
+                      ) : (
+                        <span className="text-xs text-muted-foreground">No end date</span>
+                      )}
+                      {c.monthly_fee ? (
+                        <span className="text-xs text-muted-foreground">
+                          <KesTicker value={c.monthly_fee} />
+                          /mo after
+                        </span>
+                      ) : null}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </BlurFade>
+      )}
+
       {clients.error && (
         <p className="mb-6 rounded-2xl bg-destructive/10 px-4 py-3 text-sm text-destructive">
           Couldn't load clients: {clients.error.message}
@@ -302,7 +363,7 @@ export default function ClientsPage() {
                       {timeLeft(client) && (
                         <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">
-                            {client.engagement_type === "project" ? "Deadline" : "Contract ends"}
+                            {ENGAGEMENT[client.engagement_type ?? "retainer"].endLabel}
                           </span>
                           <TimeLeft client={client} />
                         </div>
@@ -373,9 +434,7 @@ export default function ClientsPage() {
                     </td>
                     <td className="px-5 py-3">
                       <KesTicker value={feeOf(client).amount} />
-                      <span className="block text-xs text-muted-foreground">
-                        {isMonthly(client) ? "per month" : "project total"}
-                      </span>
+                      <span className="block text-xs text-muted-foreground">{feeOf(client).note}</span>
                       <TimeLeft client={client} className="mt-0.5" />
                     </td>
                   </tr>

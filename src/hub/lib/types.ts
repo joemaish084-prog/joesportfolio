@@ -2,7 +2,7 @@
 // integrations/supabase/types.ts so regenerating that file never breaks the hub.
 import type { TimeClient, TimeEntry, TimeSettings } from "./time";
 
-export const ENGAGEMENT_TYPES = ["retainer", "contract", "project"] as const;
+export const ENGAGEMENT_TYPES = ["retainer", "contract", "project", "trial"] as const;
 export type EngagementType = (typeof ENGAGEMENT_TYPES)[number];
 
 export const CLIENT_STATUSES = ["prospect", "onboarding", "active", "paused", "ended"] as const;
