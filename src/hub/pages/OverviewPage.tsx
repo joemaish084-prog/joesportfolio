@@ -64,7 +64,7 @@ import { useClients, useClientTypes, useOnboardingByClient } from "../lib/querie
 import { billsMonthly } from "../lib/engagement";
 import { useSettings } from "../lib/settings";
 import { pctChange, useSiteAnalytics } from "../lib/website";
-import { LEAD_STAGE_LABEL, STATUS_LABEL, type ClientStatus, type LeadStage } from "../lib/types";
+import { LEAD_STAGE_LABEL, OPEN_LEAD_STAGES, STATUS_LABEL, type ClientStatus, type LeadStage } from "../lib/types";
 import { useHubAuth } from "../auth/HubAuthProvider";
 
 function MetricCard({ title, value, hint, to, icon: Icon, aside, loading }: {
@@ -217,7 +217,7 @@ export default function OverviewPage() {
 
   const pipeline = useMemo(() => {
     if (!leads.data) return null;
-    const openStages: LeadStage[] = ["new", "contacted", "meeting", "proposal"];
+    const openStages = OPEN_LEAD_STAGES;
     const open = leads.data.filter((l) => !l.archived_at && openStages.includes(l.stage));
     return {
       value: open.reduce((s, l) => s + Number(l.estimated_value ?? 0), 0),
@@ -258,7 +258,7 @@ export default function OverviewPage() {
         .filter(
           (l) =>
             !l.archived_at &&
-            ["new", "contacted", "meeting", "proposal"].includes(l.stage) &&
+            OPEN_LEAD_STAGES.includes(l.stage) &&
             l.next_follow_up &&
             l.next_follow_up < today,
         )

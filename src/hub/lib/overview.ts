@@ -1,6 +1,16 @@
 import { addDays, endOfMonth, format, startOfMonth, subMonths } from "date-fns";
 import { invoiceState, paidByInvoice } from "./finance";
-import type { Client, HubDocument, Invoice, Lead, OnboardingItem, Payment, Report, WorkLogEntry } from "./types";
+import {
+  OPEN_LEAD_STAGES as OPEN_STAGES_LIST,
+  type Client,
+  type HubDocument,
+  type Invoice,
+  type Lead,
+  type OnboardingItem,
+  type Payment,
+  type Report,
+  type WorkLogEntry,
+} from "./types";
 
 // Data shaping for the Overview page: the agenda (what's coming up) and the
 // activity feed (what just happened). Pure functions over rows already loaded.
@@ -20,7 +30,7 @@ export type AgendaItem = {
 
 export type AgendaGroups = { today: AgendaItem[]; week: AgendaItem[]; later: AgendaItem[]; todo: AgendaItem[] };
 
-const OPEN_LEAD_STAGES = new Set(["new", "contacted", "meeting", "proposal"]);
+const OPEN_LEAD_STAGES = new Set<string>(OPEN_STAGES_LIST);
 
 /**
  * Upcoming work, not yet late (late items live in "Needs attention"):

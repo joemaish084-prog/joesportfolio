@@ -337,13 +337,16 @@ export type Expense = {
   updated_at: string;
 };
 
-export const LEAD_STAGES = ["new", "contacted", "meeting", "proposal", "won", "lost"] as const;
+export const LEAD_STAGES = ["new", "contacted", "meeting", "proposal", "trial", "won", "lost"] as const;
 export type LeadStage = (typeof LEAD_STAGES)[number];
+/** Still being worked on: counted in the pipeline value and follow-ups. */
+export const OPEN_LEAD_STAGES: readonly LeadStage[] = ["new", "contacted", "meeting", "proposal", "trial"];
 export const LEAD_STAGE_LABEL: Record<LeadStage, string> = {
   new: "New",
   contacted: "Contacted",
   meeting: "Meeting",
   proposal: "Proposal",
+  trial: "Trial",
   won: "Won",
   lost: "Lost",
 };

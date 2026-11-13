@@ -39,6 +39,7 @@ import { EngagementBadge, TimeLeft } from "../components/engagement";
 import { ENGAGEMENT, durationLabel, feeOf } from "../lib/engagement";
 import { formatDate } from "../lib/format";
 import { useClient, useClientKpis, useClientTypes, useOnboardingByClient, useUpdateClient } from "../lib/queries";
+import { useTrialSync } from "../lib/trials";
 import {
   CLIENT_STATUSES,
   GOAL_LABEL,
@@ -290,6 +291,7 @@ export default function ClientDetailPage() {
   const types = useClientTypes();
   const onboarding = useOnboardingByClient();
   const updateClient = useUpdateClient();
+  const trialSync = useTrialSync();
 
   // Old links used ?tab=overview for what is now Profile.
   const requested = params.get("tab") === "overview" ? "profile" : params.get("tab");
@@ -332,6 +334,24 @@ export default function ClientDetailPage() {
     updateClient.mutate(
       { id: client.id, patch: p },
       { onSuccess: () => toast.success(message), onError: (e) => toast.error(e.message) },
+    );
+
+  // Trial outcome: update the client, then move its Trial card in the Pipeline to match.
+  const trialOutcome = (
+    p: Partial<Pick<Client, "status" | "engagement_type" | "end_date">>,
+    to: "won" | "lost",
+    message: string,
+  ) =>
+    updateClient.mutate(
+      { id: client.id, patch: p },
+      {
+        onSuccess: () =>
+          trialSync.syncLead(client.id, to).then(
+            (lead) => toast.success(lead ? `${message} · pipeline card moved to ${to === "won" ? "Won" : "Lost"}` : message),
+            (e: Error) => toast.error(e.message),
+          ),
+        onError: (e) => toast.error(e.message),
+      },
     );
 
   return (
@@ -398,20 +418,28 @@ export default function ClientDetailPage() {
                   <DropdownMenuItem
                     className="rounded-lg"
                     onSelect={() =>
-                      patch(
+                      trialOutcome(
                         { engagement_type: "retainer", end_date: null, status: "active" },
+                        "won",
                         `${client.name} is now on a monthly retainer`,
                       )
                     }
                   >
                     Converted to retainer
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="rounded-lg">
-                    <Link to={`/hub/clients/${client.id}/edit`}>Converted to contract or project…</Link>
+                  <DropdownMenuItem
+                    className="rounded-lg"
+                    onSelect={() => {
+                      // The new terms are set in the form; the pipeline card can move now.
+                      trialSync.syncLead(client.id, "won").catch((e: Error) => toast.error(e.message));
+                      navigate(`/hub/clients/${client.id}/edit`);
+                    }}
+                  >
+                    Converted to contract or project…
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="rounded-lg"
-                    onSelect={() => patch({ status: "ended" }, "Trial ended without converting")}
+                    onSelect={() => trialOutcome({ status: "ended" }, "lost", "Trial ended without converting")}
                   >
                     Didn't convert
                   </DropdownMenuItem>

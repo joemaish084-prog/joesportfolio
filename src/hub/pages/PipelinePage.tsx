@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type DragEvent } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { isSameMonth, parseISO } from "date-fns";
 import {
   Archive,
@@ -7,6 +7,7 @@ import {
   BellRing,
   CalendarClock,
   Filter,
+  FlaskConical,
   MoreHorizontal,
   Pencil,
   Phone,
@@ -32,27 +33,76 @@ import { BlurFade } from "../components/motion/blur-fade";
 import { KesTicker, NumberTicker } from "../components/motion/number-ticker";
 import { SpotlightCard } from "../components/motion/spotlight-card";
 import { LeadDialog } from "../components/pipeline/LeadDialog";
-import { EmptyState, PageHeader, Pill, SkeletonBlock, StatTile } from "../components/ui";
+import { ClientAvatar, EmptyState, PageHeader, Pill, SkeletonBlock, StatTile } from "../components/ui";
+import { TimeLeft } from "../components/engagement";
 import { tableKey, useMoveLead, useRows, useSaveRow } from "../lib/data";
 import { formatDate, isOverdue } from "../lib/format";
 import { useKes } from "../lib/privacy";
-import { useClientTypes, useSaveClient } from "../lib/queries";
-import { LEAD_SOURCE_LABEL, LEAD_STAGES, LEAD_STAGE_LABEL, type Lead, type LeadStage } from "../lib/types";
+import { useClients, useClientTypes, useSaveClient } from "../lib/queries";
+import { DEFAULT_TRIAL_DAYS, unlinkedTrialClients, useTrialSync } from "../lib/trials";
+import {
+  LEAD_SOURCE_LABEL,
+  LEAD_STAGES,
+  LEAD_STAGE_LABEL,
+  OPEN_LEAD_STAGES,
+  type Client,
+  type Lead,
+  type LeadStage,
+} from "../lib/types";
 import { useQueryClient } from "@tanstack/react-query";
 
-const OPEN_STAGES: LeadStage[] = ["new", "contacted", "meeting", "proposal"];
+const OPEN_STAGES = OPEN_LEAD_STAGES;
+/** Columns you can add a fresh lead to (a trial needs a client, so it starts from a lead). */
+const ADDABLE_STAGES: readonly LeadStage[] = ["new", "contacted", "meeting", "proposal"];
+
+/** A trial client added on the Clients side, shown in the Trial column so nothing on trial is missed. */
+function TrialClientCard({ client }: { client: Client }) {
+  const kes = useKes();
+  return (
+    <SpotlightCard className="hub-card rounded-2xl border border-dashed border-warning/40">
+      <Link to={`/hub/clients/${client.id}`} className="block p-3.5">
+        <div className="flex items-start gap-2">
+          <ClientAvatar name={client.name} className="h-7 w-7 rounded-lg text-[0.6875rem]" />
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-medium leading-snug">{client.name}</p>
+            {client.contact_person && (
+              <p className="truncate text-xs text-muted-foreground">{client.contact_person}</p>
+            )}
+          </div>
+        </div>
+        <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+          {client.monthly_fee != null && (
+            <span className="hub-tabular text-sm font-semibold">
+              {kes(Number(client.monthly_fee))}
+              <span className="text-xs font-normal text-muted-foreground">/mo after</span>
+            </span>
+          )}
+          <Pill tone="outline" className="ml-auto">
+            Client
+          </Pill>
+        </div>
+        <TimeLeft client={client} className="mt-2" />
+      </Link>
+    </SpotlightCard>
+  );
+}
 
 function LeadCard({
   lead,
+  client,
   onEdit,
   onMove,
   onConvert,
+  onTrial,
   onArchive,
 }: {
   lead: Lead;
+  /** The linked client, once converted or on trial. */
+  client?: Client;
   onEdit: () => void;
   onMove: (stage: LeadStage) => void;
   onConvert: () => void;
+  onTrial: () => void;
   onArchive: () => void;
 }) {
   const kes = useKes();
@@ -103,8 +153,20 @@ function LeadCard({
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
               {!lead.converted_client_id && lead.stage !== "lost" && (
+                <DropdownMenuItem onSelect={onTrial}>
+                  <FlaskConical className="mr-2 h-4 w-4" /> Start a {DEFAULT_TRIAL_DAYS}-day trial
+                </DropdownMenuItem>
+              )}
+              {!lead.converted_client_id && lead.stage !== "lost" && (
                 <DropdownMenuItem onSelect={onConvert}>
                   <UserPlus className="mr-2 h-4 w-4" /> Convert to client
+                </DropdownMenuItem>
+              )}
+              {lead.converted_client_id && (
+                <DropdownMenuItem asChild>
+                  <Link to={`/hub/clients/${lead.converted_client_id}`}>
+                    <UserPlus className="mr-2 h-4 w-4" /> Open client
+                  </Link>
                 </DropdownMenuItem>
               )}
               {lead.phone && (
@@ -146,7 +208,10 @@ function LeadCard({
         {lead.stage === "lost" && lead.lost_reason && (
           <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">{lead.lost_reason}</p>
         )}
-        {lead.converted_client_id && (
+        {lead.stage === "trial" && client?.engagement_type === "trial" && (
+          <TimeLeft client={client} className="mt-2" />
+        )}
+        {lead.converted_client_id && lead.stage !== "trial" && (
           <Pill tone="accent" className="mt-2">
             Client
           </Pill>
@@ -166,6 +231,8 @@ export default function PipelinePage() {
   const saveLead = useSaveRow("leads");
   const move = useMoveLead();
   const saveClient = useSaveClient();
+  const clients = useClients();
+  const trialSync = useTrialSync();
   const [dialog, setDialog] = useState<{ open: boolean; lead?: Lead | null; stage?: LeadStage }>({ open: false });
   const [dragOver, setDragOver] = useState<LeadStage | null>(null);
 
@@ -184,8 +251,16 @@ export default function PipelinePage() {
     return map;
   }, [live]);
 
+  const clientById = useMemo(() => new Map((clients.data ?? []).map((c) => [c.id, c])), [clients.data]);
+  // Trial clients added on the Clients side, with no card here: shown in the Trial column too.
+  const soloTrials = useMemo(
+    () => unlinkedTrialClients(clients.data ?? [], leads.data ?? []),
+    [clients.data, leads.data],
+  );
+  const soloTrialValue = soloTrials.reduce((s, c) => s + Number(c.monthly_fee ?? 0), 0);
+
   const open = live.filter((l) => OPEN_STAGES.includes(l.stage));
-  const pipelineValue = open.reduce((s, l) => s + Number(l.estimated_value ?? 0), 0);
+  const pipelineValue = open.reduce((s, l) => s + Number(l.estimated_value ?? 0), 0) + soloTrialValue;
   const now = new Date();
   const wonThisMonth = live.filter((l) => l.stage === "won" && isSameMonth(parseISO(l.updated_at), now));
   const won = live.filter((l) => l.stage === "won").length;
@@ -193,15 +268,42 @@ export default function PipelinePage() {
   const todayIso = now.toISOString().slice(0, 10);
   const followUps = open.filter((l) => l.next_follow_up && l.next_follow_up <= todayIso);
 
+  const startTrial = (lead: Lead) => {
+    if (trialSync.pending) return;
+    trialSync.startTrial(lead).then(
+      (client) =>
+        toast.success(`${client.name} is on a ${DEFAULT_TRIAL_DAYS}-day trial`, {
+          description: "Added to Clients as a trial. Change the end date there if needed.",
+          action: { label: "Open", onClick: () => navigate(`/hub/clients/${client.id}`) },
+        }),
+      (e: Error) => toast.error(e.message),
+    );
+  };
+
   const moveTo = (lead: Lead, stage: LeadStage) => {
     if (lead.stage === stage) return;
     if (stage === "won" && !lead.converted_client_id) return convert(lead, false);
+    if (stage === "trial" && !lead.converted_client_id) return startTrial(lead);
     const position = Math.max(0, ...(columns.get(stage) ?? []).map((l) => l.position)) + 1;
     move.mutate([{ id: lead.id, stage, position }], {
-      onSuccess: () => toast.success(`${lead.name} → ${LEAD_STAGE_LABEL[stage]}`),
+      onSuccess: () => afterStageChange(lead, stage),
       onError: (e) => toast.error(e.message),
     });
   };
+
+  // A trial lead that's won or lost takes its trial client with it.
+  const afterStageChange = (lead: Lead, stage: LeadStage) =>
+    trialSync.syncClient(lead, stage, clients.data).then(
+      (patch) =>
+        toast.success(
+          !patch
+            ? `${lead.name} → ${LEAD_STAGE_LABEL[stage]}`
+            : patch.engagement_type === "retainer"
+              ? `${lead.name} won · their trial is now a monthly retainer`
+              : `${lead.name} lost · their trial is marked ended`,
+        ),
+      (e: Error) => toast.error(e.message),
+    );
 
   const onDrop = (stage: LeadStage) => (e: DragEvent) => {
     e.preventDefault();
@@ -317,7 +419,7 @@ export default function PipelinePage() {
 
       {leads.isLoading ? (
         <SkeletonBlock className="h-96 rounded-[20px]" />
-      ) : live.length === 0 ? (
+      ) : live.length === 0 && soloTrials.length === 0 ? (
         <div className="hub-card">
           <EmptyState
             icon={Target}
@@ -335,7 +437,10 @@ export default function PipelinePage() {
           <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0">
             {LEAD_STAGES.map((stage) => {
               const list = columns.get(stage) ?? [];
-              const value = list.reduce((s, l) => s + Number(l.estimated_value ?? 0), 0);
+              const extra = stage === "trial" ? soloTrials : [];
+              const value =
+                list.reduce((s, l) => s + Number(l.estimated_value ?? 0), 0) +
+                (stage === "trial" ? soloTrialValue : 0);
               return (
                 <section
                   key={stage}
@@ -362,11 +467,13 @@ export default function PipelinePage() {
                             ? "bg-primary"
                             : stage === "lost"
                               ? "bg-muted-foreground/40"
-                              : "bg-primary/50",
+                              : stage === "trial"
+                                ? "bg-warning"
+                                : "bg-primary/50",
                         )}
                       />
                       <h2 className="text-sm font-semibold">{LEAD_STAGE_LABEL[stage]}</h2>
-                      <span className="hub-tabular text-xs text-muted-foreground">{list.length}</span>
+                      <span className="hub-tabular text-xs text-muted-foreground">{list.length + extra.length}</span>
                     </div>
                     {value > 0 && <span className="hub-tabular text-xs text-muted-foreground">{kes(value)}</span>}
                   </header>
@@ -375,13 +482,23 @@ export default function PipelinePage() {
                       <LeadCard
                         key={lead.id}
                         lead={lead}
+                        client={lead.converted_client_id ? clientById.get(lead.converted_client_id) : undefined}
                         onEdit={() => setDialog({ open: true, lead })}
                         onMove={(s) => moveTo(lead, s)}
                         onConvert={() => convert(lead)}
+                        onTrial={() => startTrial(lead)}
                         onArchive={() => archive(lead)}
                       />
                     ))}
-                    {OPEN_STAGES.includes(stage) && (
+                    {extra.map((c) => (
+                      <TrialClientCard key={c.id} client={c} />
+                    ))}
+                    {stage === "trial" && list.length + extra.length === 0 && (
+                      <p className="px-3 py-4 text-center text-xs leading-relaxed text-muted-foreground">
+                        Drag a lead here to start a {DEFAULT_TRIAL_DAYS}-day trial on their ads.
+                      </p>
+                    )}
+                    {ADDABLE_STAGES.includes(stage) && (
                       <button
                         type="button"
                         onClick={() => setDialog({ open: true, stage })}
@@ -404,6 +521,8 @@ export default function PipelinePage() {
         lead={dialog.lead}
         stage={dialog.stage}
         onWon={(lead) => convert(lead, false)}
+        onTrial={startTrial}
+        onStageChange={afterStageChange}
       />
     </>
   );

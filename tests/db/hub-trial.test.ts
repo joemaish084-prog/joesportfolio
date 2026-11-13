@@ -33,12 +33,30 @@ describe("trial engagement type", () => {
     ).rejects.toThrow(/clients_end_after_start_check/);
   });
 
+  it("accepts a trial stage on pipeline leads, linked to the trial client", async () => {
+    const [client] = await addClient("trial");
+    const [lead] = await db.admin<{ stage: string }>(
+      "insert into public.leads(name,stage,converted_client_id) values('Trial lead','trial',$1) returning stage",
+      [client.id],
+    );
+    expect(lead.stage).toBe("trial");
+    await expect(db.admin("insert into public.leads(name,stage) values('Bad','maybe')")).rejects.toThrow(
+      /leads_stage_check/,
+    );
+  });
+
   it("rollback turns trials into unpaid projects and restores the old constraint", async () => {
     await db.pg.exec(migration("20261113000000_hub_trial_engagement.rollback.sql"));
+    const [lead] = await db.admin<{ stage: string }>("select stage from public.leads where name='Trial lead'");
+    expect(lead.stage).toBe("proposal");
+    await expect(db.admin("insert into public.leads(name,stage) values('Again','trial')")).rejects.toThrow(
+      /leads_stage_check/,
+    );
     const [row] = await db.admin<{ engagement_type: string; monthly_fee: string | null; end_date: string }>(
       "select engagement_type, monthly_fee, to_char(end_date,'YYYY-MM-DD') as end_date from public.clients where name='trial'",
     );
     expect(row).toEqual({ engagement_type: "project", monthly_fee: null, end_date: "2026-11-30" });
+    // A client named 'trial' was added twice (first and third tests); both rolled back.
     await expect(addClient("trial")).rejects.toThrow(/clients_engagement_type_check/);
     // And forward again.
     await db.pg.exec(migration("20261113000000_hub_trial_engagement.sql"));

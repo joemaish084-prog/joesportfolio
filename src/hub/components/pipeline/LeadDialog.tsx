@@ -25,6 +25,8 @@ export function LeadDialog({
   lead,
   stage: initialStage = "new",
   onWon,
+  onTrial,
+  onStageChange,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -32,6 +34,10 @@ export function LeadDialog({
   stage?: LeadStage;
   /** Called after saving a lead as won that isn't a client yet. */
   onWon?: (lead: Lead) => void;
+  /** Called after saving a lead as on trial that isn't a client yet. */
+  onTrial?: (lead: Lead) => void;
+  /** Called after an existing lead's stage changed (other than the two above). */
+  onStageChange?: (lead: Lead, stage: LeadStage) => void;
 }) {
   const save = useSaveRow("leads");
   const leads = useRows("leads", "position", true);
@@ -107,6 +113,8 @@ export function LeadDialog({
           toast.success(lead ? "Lead updated" : "Lead added");
           onOpenChange(false);
           if (saved.stage === "won" && !saved.converted_client_id) onWon?.(saved);
+          else if (saved.stage === "trial" && !saved.converted_client_id) onTrial?.(saved);
+          else if (lead && lead.stage !== saved.stage) onStageChange?.(saved, saved.stage);
         },
         onError: (e) => setError(e.message),
       },
@@ -221,6 +229,11 @@ export function LeadDialog({
       <Field label="Interested in">
         <Chips options={SERVICES} value={services} onChange={setServices} />
       </Field>
+      {stage === "trial" && !lead?.converted_client_id && (
+        <p className="rounded-xl bg-warning-soft px-3 py-2 text-sm text-warning">
+          Saving adds them to Clients as a trial, ending in 2 weeks. You can change the end date there.
+        </p>
+      )}
       {stage === "lost" && (
         <Field label="Why was it lost?" htmlFor="lead-lost">
           <Input
