@@ -1,145 +1,100 @@
-import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
+﻿import { forwardRef, type CSSProperties, type HTMLAttributes } from "react";
 import { format, parseISO } from "date-fns";
-import { ArrowDown, ArrowUp, CalendarClock, CheckCircle2, Equal, Flame, ListChecks, type LucideIcon } from "lucide-react";
+import { ArrowDown, ArrowUp, CalendarDays, CheckCircle2, Equal, Flame, GripVertical, ListChecks, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { dueState } from "../../lib/tasks";
 import { TASK_PRIORITY_LABEL, type Task, type TaskPriority, type TaskStatus } from "../../lib/types";
 import { ClientAvatar } from "../ui";
 
-// Column accents. These mark the column, never the meaning of a number.
 export const STATUS_COLOR: Record<TaskStatus, string> = {
   todo: "#94a3b8",
   in_progress: "hsl(var(--primary))",
-  review: "#7c6cf0",
-  done: "#16a34a",
+  review: "#8b7cf6",
+  done: "#22a06b",
 };
 
 export const PRIORITY_STYLE: Record<TaskPriority, { icon: LucideIcon; className: string }> = {
   urgent: { icon: Flame, className: "bg-warning-soft text-warning" },
   high: { icon: ArrowUp, className: "bg-tint text-on-tint" },
   medium: { icon: Equal, className: "bg-secondary text-muted-foreground" },
-  low: { icon: ArrowDown, className: "bg-secondary text-muted-foreground/80" },
+  low: { icon: ArrowDown, className: "bg-secondary text-muted-foreground" },
 };
 
-const DUE_STYLE = {
-  overdue: "bg-warning-soft text-warning",
-  today: "bg-tint text-on-tint",
-  soon: "bg-secondary text-foreground",
-  later: "bg-secondary text-muted-foreground",
-} as const;
-
-function dueLabel(task: Task) {
-  const state = dueState(task);
+export function TaskDueDate({ task }: { task: Task }) {
   if (!task.due_date) return null;
-  if (state === "today") return "Today";
-  if (state === "overdue") return `Late · ${format(parseISO(task.due_date), "d MMM")}`;
-  return format(parseISO(task.due_date), "d MMM");
+  const due = dueState(task);
+  const label = due === "today" ? "Today" : `${due === "overdue" ? "Overdue · " : ""}${format(parseISO(task.due_date), "d MMM")}`;
+  return (
+    <span className={cn("inline-flex shrink-0 items-center gap-1.5 text-[0.6875rem] font-medium", due === "overdue" ? "text-warning" : due === "today" ? "text-on-tint" : "text-muted-foreground")}>
+      <CalendarDays className="h-3.5 w-3.5" strokeWidth={1.7} /> {label}
+    </span>
+  );
 }
 
 export type TaskCardProps = HTMLAttributes<HTMLDivElement> & {
   task: Task;
   clientName?: string;
-  /** Lifted copy that follows the pointer while dragging. */
   overlay?: boolean;
-  /** The placeholder left behind in the column while its card is dragged. */
   ghost?: boolean;
   style?: CSSProperties;
 };
 
 export const TaskCard = forwardRef<HTMLDivElement, TaskCardProps>(function TaskCard(
-  { task, clientName, overlay, ghost, className, ...rest },
-  ref,
+  { task, clientName, overlay, ghost, className, ...rest }, ref,
 ) {
-  const p = PRIORITY_STYLE[task.priority];
+  const priority = PRIORITY_STYLE[task.priority];
   const done = task.status === "done";
   const checklistDone = task.checklist.filter((c) => c.done).length;
-  const due = dueState(task);
-  const label = dueLabel(task);
+  const progress = task.checklist.length ? Math.round((checklistDone / task.checklist.length) * 100) : 0;
 
   return (
-    <div
-      ref={ref}
-      {...rest}
+    <div ref={ref} {...rest}
       className={cn(
-        "group relative cursor-grab touch-manipulation select-none rounded-2xl border border-border/70 bg-card p-3.5 text-left outline-none",
-        "shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-[box-shadow,transform,opacity] duration-200",
-        "hover:-translate-y-0.5 hover:shadow-hub focus-visible:ring-2 focus-visible:ring-ring",
-        overlay && "rotate-[1.5deg] scale-[1.03] cursor-grabbing shadow-[0_24px_48px_-12px_rgba(0,0,0,0.35)] ring-1 ring-primary/30",
-        ghost && "opacity-40 [&>*]:invisible",
-        ghost && "border-dashed border-primary/50 bg-tint/30 shadow-none",
+        "hub-task-card group relative cursor-grab touch-manipulation select-none rounded-2xl border border-border/70 bg-card p-4 text-left outline-none",
+        "shadow-[0_2px_4px_-2px_hsl(var(--foreground)/0.06)] transition-[box-shadow,border-color,opacity] duration-200",
+        "hover:border-border hover:shadow-hub focus-visible:ring-2 focus-visible:ring-ring",
+        overlay && "rotate-[1.5deg] scale-[1.03] cursor-grabbing shadow-hub-lg ring-1 ring-primary/30",
+        ghost && "border-dashed border-primary/50 bg-tint/30 opacity-40 shadow-none [&>*]:invisible",
         className,
-      )}
-    >
-      {/* Left edge in the priority's tone for urgent work, so it pops in a busy column. */}
-      {task.priority === "urgent" && !done && (
-        <span aria-hidden className="absolute inset-y-3 left-0 w-[3px] rounded-full bg-warning" />
-      )}
-
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex min-w-0 flex-wrap items-center gap-1.5">
-          <span
-            className={cn("flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.6875rem] font-medium", p.className)}
-          >
-            <p.icon className="h-3 w-3" />
-            {TASK_PRIORITY_LABEL[task.priority]}
-          </span>
-          {task.labels.slice(0, 2).map((l) => (
-            <span
-              key={l}
-              className="max-w-28 truncate rounded-full bg-secondary px-2 py-0.5 text-[0.6875rem] text-muted-foreground"
-            >
-              {l}
-            </span>
-          ))}
-          {task.labels.length > 2 && (
-            <span className="text-[0.6875rem] text-muted-foreground">+{task.labels.length - 2}</span>
-          )}
-        </div>
-        {clientName && (
-          <ClientAvatar name={clientName} className="h-6 w-6 shrink-0 rounded-full text-[0.625rem]" />
-        )}
+      )}>
+      {task.priority === "urgent" && !done && <span aria-hidden className="absolute inset-y-5 left-0 w-[3px] rounded-full bg-warning" />}
+      <div className="flex items-center justify-between gap-2">
+        <span className={cn("inline-flex items-center gap-1 rounded-md px-2 py-1 text-[0.625rem] font-semibold", priority.className)}>
+          <priority.icon className="h-3 w-3" /> {TASK_PRIORITY_LABEL[task.priority]}
+        </span>
+        <GripVertical aria-hidden className="h-4 w-4 text-muted-foreground/40 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100" />
       </div>
-
-      <p
-        className={cn(
-          "mt-2 flex items-start gap-1.5 text-[0.9375rem] font-medium leading-snug",
-          done && "text-muted-foreground line-through decoration-muted-foreground/50",
-        )}
-      >
-        {done && <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#16a34a]" />}
+      <p className={cn("mt-3 flex items-start gap-1.5 text-[0.9375rem] font-semibold leading-[1.45] tracking-[-0.015em]", done && "text-muted-foreground")}>
+        {done && <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />}
         <span className="min-w-0 break-words">{task.title}</span>
       </p>
-      {task.notes && !done && (
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{task.notes}</p>
-      )}
-
-      {task.checklist.length > 0 && !done && (
-        <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-secondary">
-          <div
-            className="h-full rounded-full transition-[width] duration-300"
-            style={{
-              width: `${(checklistDone / task.checklist.length) * 100}%`,
-              background: STATUS_COLOR[task.status],
-            }}
-          />
+      {task.notes && !done && <p className="mt-1.5 line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground">{task.notes}</p>}
+      {task.labels.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {task.labels.slice(0, 2).map((label) => <span key={label} className="max-w-32 truncate rounded-md border border-border/60 bg-secondary/40 px-2 py-0.5 text-[0.625rem] text-muted-foreground">{label}</span>)}
+          {task.labels.length > 2 && <span className="py-0.5 text-[0.625rem] text-muted-foreground">+{task.labels.length - 2}</span>}
         </div>
       )}
-
-      {(label || task.checklist.length > 0 || clientName) && (
-        <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[0.6875rem]">
-          {label && (
-            <span className={cn("flex items-center gap-1 rounded-full px-2 py-0.5 font-medium", done ? DUE_STYLE.later : DUE_STYLE[due ?? "later"])}>
-              <CalendarClock className="h-3 w-3" />
-              {done ? format(parseISO(task.due_date as string), "d MMM") : label}
+      {task.checklist.length > 0 && (
+        <div className="mt-4">
+          <div className="mb-1.5 flex items-center justify-between text-[0.625rem] text-muted-foreground">
+            <span className="flex items-center gap-1"><ListChecks className="h-3 w-3" /> Checklist</span>
+            <span className="hub-tabular">{checklistDone}/{task.checklist.length}</span>
+          </div>
+          <div className="h-1 overflow-hidden rounded-full bg-secondary" role="progressbar" aria-label="Checklist completed" aria-valuemin={0} aria-valuemax={task.checklist.length} aria-valuenow={checklistDone}>
+            <div className="h-full rounded-full transition-[width] duration-300 motion-reduce:transition-none" style={{ width: `${progress}%`, background: STATUS_COLOR[task.status] }} />
+          </div>
+        </div>
+      )}
+      {(task.due_date || clientName) && (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-border/50 pt-3">
+          <TaskDueDate task={task} />
+          {clientName && (
+            <span className="ml-auto flex min-w-0 items-center gap-1.5" title={clientName}>
+              <ClientAvatar name={clientName} className="h-5 w-5 shrink-0 rounded-full text-[0.5rem]" />
+              <span className="max-w-28 truncate text-[0.625rem] font-medium text-muted-foreground">{clientName}</span>
             </span>
           )}
-          {task.checklist.length > 0 && (
-            <span className="hub-tabular flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-muted-foreground">
-              <ListChecks className="h-3 w-3" />
-              {checklistDone}/{task.checklist.length}
-            </span>
-          )}
-          {clientName && <span className="ml-auto max-w-[9rem] truncate text-muted-foreground">{clientName}</span>}
         </div>
       )}
     </div>

@@ -363,6 +363,7 @@ function MoreNav({ items, isActive }: { items: NavItem[]; isActive: (item: NavIt
 }
 
 export function HubShell(props: ShellProps) {
+  const { pathname } = useLocation();
   const crmOnly = useHubAuth().status === "crm";
   const [menuOpen, setMenuOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -495,7 +496,7 @@ export function HubShell(props: ShellProps) {
       </header>
 
       <main className="md:pl-24 print:p-0">
-        <div className="mx-auto w-full max-w-6xl px-4 pb-32 pt-6 sm:px-6 md:px-10 md:pb-16 md:pt-10 print:max-w-none print:p-0">
+        <div className={cn("mx-auto w-full px-4 pb-32 pt-6 sm:px-6 md:px-10 md:pb-16 md:pt-10 print:max-w-none print:p-0", pathname === "/hub/tasks" ? "max-w-[1480px]" : "max-w-6xl")}>
           <Outlet />
         </div>
       </main>

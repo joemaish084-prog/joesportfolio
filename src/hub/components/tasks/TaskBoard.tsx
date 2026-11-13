@@ -21,7 +21,7 @@ import {
 } from "@dnd-kit/core";
 import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Archive, Plus } from "lucide-react";
+import { Archive, CheckCheck, Circle, CircleDot, Plus, ScanEye } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import {
@@ -45,6 +45,14 @@ function toColumns(tasks: Task[]): Columns {
 }
 
 const isStatus = (id: unknown): id is TaskStatus => (TASK_STATUSES as readonly unknown[]).includes(id);
+
+const COLUMN_ICON = { todo: Circle, in_progress: CircleDot, review: ScanEye, done: CheckCheck };
+const COLUMN_EMPTY = {
+  todo: "A fresh start. Add what's next.",
+  in_progress: "Ready when you are. Move a task here.",
+  review: "Work ready for a second look goes here.",
+  done: "The best column. Finish something to fill it.",
+};
 
 const dropAnimation: DropAnimation = {
   duration: 220,
@@ -112,6 +120,7 @@ function Column({
   const [draft, setDraft] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const color = STATUS_COLOR[status];
+  const Icon = COLUMN_ICON[status];
 
   useEffect(() => {
     if (adding) inputRef.current?.focus();
@@ -136,58 +145,59 @@ function Column({
     <section
       ref={setNodeRef}
       className={cn(
-        "flex w-[84vw] max-w-[22rem] shrink-0 snap-start flex-col rounded-[22px] bg-secondary/55 p-2 transition-[background-color,box-shadow] duration-200 sm:w-80 lg:w-auto lg:max-w-none",
+        "flex min-h-[26rem] w-[84vw] max-w-[22rem] shrink-0 snap-start flex-col rounded-[20px] border border-border/60 bg-secondary/35 p-2.5 transition-[background-color,box-shadow] duration-200 sm:w-80 xl:w-auto xl:min-w-0 xl:max-w-none",
         highlight && "bg-tint/50 ring-2 ring-inset ring-primary/25",
       )}
       aria-label={TASK_STATUS_LABEL[status]}
     >
-      <header className="flex items-center gap-2 px-2 pb-2.5 pt-1.5">
-        <span
-          className="h-2.5 w-2.5 rounded-full"
-          style={{ background: color, boxShadow: `0 0 0 4px color-mix(in srgb, ${color} 18%, transparent)` }}
-        />
-        <h2 className="text-sm font-semibold">{TASK_STATUS_LABEL[status]}</h2>
-        <span className="hub-tabular rounded-full bg-card px-2 py-0.5 text-xs font-medium text-muted-foreground shadow-hub">
-          {tasks.length}
-        </span>
-        <span className="sr-only">{STATUS_HINT[status]}</span>
-        <div className="ml-auto flex items-center">
-          {status === "done" && tasks.length > 0 && (
+      <header className="mb-2 px-1.5 pb-2 pt-1.5">
+        <div className="flex items-center gap-2">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg" style={{ color, background: `color-mix(in srgb, ${color} 12%, transparent)` }}>
+            <Icon className="h-4 w-4" strokeWidth={1.8} />
+          </span>
+          <h2 className="text-[0.8125rem] font-semibold tracking-tight">{TASK_STATUS_LABEL[status]}</h2>
+          <span className="hub-tabular text-xs text-muted-foreground">{tasks.length}</span>
+          <div className="ml-auto flex items-center">
+            {status === "done" && tasks.length > 0 && (
+              <button
+                type="button"
+                onClick={onClearDone}
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-card hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                title="Hide finished tasks from the board"
+                aria-label="Clear finished tasks"
+              >
+                <Archive className="h-3.5 w-3.5" />
+              </button>
+            )}
             <button
               type="button"
-              onClick={onClearDone}
-              className="flex h-7 items-center gap-1 rounded-lg px-2 text-xs text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
-              title="Hide finished tasks from the board"
+              onClick={() => setAdding(true)}
+              aria-label={`Add a task to ${TASK_STATUS_LABEL[status]}`}
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-card hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <Archive className="h-3.5 w-3.5" /> Clear
+              <Plus className="h-4 w-4" />
             </button>
-          )}
-          <button
-            type="button"
-            onClick={() => setAdding(true)}
-            aria-label={`Add a task to ${TASK_STATUS_LABEL[status]}`}
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
-          >
-            <Plus className="h-4 w-4" />
-          </button>
+          </div>
         </div>
+        <p className="mt-1.5 text-[0.625rem] text-muted-foreground">{STATUS_HINT[status]}</p>
       </header>
 
       <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
-        <div className="flex min-h-24 flex-1 flex-col gap-2 rounded-2xl p-0.5">
+        <div className="flex min-h-24 flex-1 flex-col gap-3 rounded-2xl">
           {tasks.map((t) => (
             <SortableCard key={t.id} task={t} clientName={clientName(t.client_id)} onOpen={onOpen} />
           ))}
           {tasks.length === 0 && !adding && (
-            <div className="flex flex-1 items-center justify-center rounded-2xl border-2 border-dashed border-border/80 px-4 py-8 text-center text-xs text-muted-foreground">
-              {status === "done" ? "Drag finished work here" : "Nothing here. Drop a task or press +"}
+            <div className="flex min-h-44 flex-1 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border px-5 py-8 text-center">
+              <Icon className="h-6 w-6 text-muted-foreground/40" strokeWidth={1.3} />
+              <p className="max-w-40 text-xs leading-relaxed text-muted-foreground">{COLUMN_EMPTY[status]}</p>
             </div>
           )}
         </div>
       </SortableContext>
 
       {adding ? (
-        <div className="mt-2 rounded-2xl border border-primary/30 bg-card p-2 shadow-hub">
+        <div className="mt-3 rounded-2xl border border-primary/30 bg-card p-3 shadow-hub">
           <input
             ref={inputRef}
             value={draft}
@@ -207,7 +217,7 @@ function Column({
         <button
           type="button"
           onClick={() => setAdding(true)}
-          className="mt-2 flex h-9 items-center gap-1.5 rounded-xl px-2.5 text-sm text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
+          className="mt-3 flex h-10 items-center justify-center gap-1.5 rounded-xl border border-dashed border-border/80 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/30 hover:bg-card hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <Plus className="h-4 w-4" /> Add task
         </button>
@@ -358,7 +368,7 @@ export function TaskBoard({
         setColumns(toColumns(tasks));
       }}
     >
-      <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0 lg:grid lg:snap-none lg:grid-cols-4 lg:overflow-visible">
+      <div className="-mx-4 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0 xl:grid xl:snap-none xl:grid-cols-4 xl:overflow-visible">
         {TASK_STATUSES.map((s) => (
           <Column
             key={s}

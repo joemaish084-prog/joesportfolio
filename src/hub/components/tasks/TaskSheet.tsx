@@ -1,6 +1,6 @@
 import { useEffect, useState, type KeyboardEvent } from "react";
 import { format, formatDistanceToNowStrict, parseISO } from "date-fns";
-import { Check, Plus, Tag, Trash2, X } from "lucide-react";
+import { Check, ListChecks, Loader2, Plus, SquareKanban, Tag, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -121,7 +121,9 @@ export function TaskSheet({
     };
 
   const save = () => {
+    if (create.isPending || update.isPending || archive.isPending) return;
     if (!draft.title.trim()) return setError("Give the task a title.");
+    setError(null);
     // Typed but not added yet: keep them.
     const labels = labelDraft.trim() ? [...draft.labels, labelDraft.trim()] : draft.labels;
     const checklist = stepDraft.trim()
@@ -135,9 +137,11 @@ export function TaskSheet({
           id: task.id,
           patch: moved ? { ...values, position: positionBetween(lastPosition(values.status), undefined) } : values,
         },
-        { onError: (e) => toast.error(e.message) },
+        {
+          onSuccess: () => { toast.success("Task updated"); onOpenChange(false); },
+          onError: (e) => setError(e.message),
+        },
       );
-      onOpenChange(false);
     } else {
       create.mutate(
         { ...values, position: positionBetween(lastPosition(values.status), undefined) },
@@ -155,10 +159,12 @@ export function TaskSheet({
   const remove = () => {
     if (!task) return;
     archive.mutate([task.id], {
-      onSuccess: () =>
-        toast("Task deleted", { action: { label: "Undo", onClick: () => restore.mutate([task.id]) } }),
+      onSuccess: () => {
+        toast("Task deleted", { action: { label: "Undo", onClick: () => restore.mutate([task.id]) } });
+        onOpenChange(false);
+      },
+      onError: (e) => setError(e.message),
     });
-    onOpenChange(false);
   };
 
   const suggestions = allLabels.filter(
@@ -170,12 +176,12 @@ export function TaskSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="flex w-full flex-col gap-0 border-border/70 bg-card p-0 sm:max-w-[30rem]"
+        className="flex w-full flex-col gap-0 border-border/70 bg-card p-0 sm:max-w-[34rem]"
       >
-        <SheetHeader className="space-y-1 border-b border-border/60 px-6 pb-4 pt-6 text-left">
+        <SheetHeader className="space-y-3 border-b border-border/60 bg-secondary/20 px-6 pb-6 pt-7 text-left">
           <SheetTitle className="sr-only">{task ? "Edit task" : "New task"}</SheetTitle>
-          <SheetDescription className="flex items-center gap-2 text-xs">
-            <span className="h-2 w-2 rounded-full" style={{ background: STATUS_COLOR[draft.status] }} />
+          <SheetDescription className="flex items-center gap-2 pr-6 text-xs">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-tint text-primary"><SquareKanban className="h-3.5 w-3.5" /></span>
             {task ? TASK_STATUS_LABEL[draft.status] : "New task"}
             {task?.completed_at && (
               <span> · finished {formatDistanceToNowStrict(parseISO(task.completed_at), { addSuffix: true })}</span>
@@ -188,11 +194,11 @@ export function TaskSheet({
             placeholder="Task title"
             autoFocus={!task}
             aria-label="Title"
-            className="w-full bg-transparent text-2xl font-bold tracking-tight outline-none placeholder:text-muted-foreground/60"
+            className="w-full rounded-md bg-transparent py-1 text-2xl font-semibold tracking-tight outline-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-ring"
           />
         </SheetHeader>
 
-        <div className="flex-1 space-y-6 overflow-y-auto px-6 py-5">
+        <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-6">
           <Field label="Status">
             <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4">
               {TASK_STATUSES.map((s) => (
@@ -202,7 +208,7 @@ export function TaskSheet({
                   aria-pressed={draft.status === s}
                   onClick={() => set("status", s)}
                   className={cn(
-                    "flex h-10 items-center justify-center gap-1.5 rounded-xl border text-xs font-medium transition-colors duration-150",
+                    "flex h-10 items-center justify-center gap-1.5 rounded-xl border text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     draft.status === s
                       ? "border-foreground/20 bg-foreground text-background"
                       : "border-border bg-background text-muted-foreground hover:text-foreground",
@@ -227,7 +233,7 @@ export function TaskSheet({
                     aria-pressed={on}
                     onClick={() => set("priority", p)}
                     className={cn(
-                      "flex h-10 items-center justify-center gap-1 rounded-xl border text-xs font-medium transition-colors duration-150",
+                      "flex h-10 items-center justify-center gap-1 rounded-xl border text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                       on ? cn("border-transparent", st.className) : "border-border bg-background text-muted-foreground hover:text-foreground",
                     )}
                   >
@@ -250,6 +256,15 @@ export function TaskSheet({
 
           <Field label={`Checklist${draft.checklist.length ? ` · ${stepsDone}/${draft.checklist.length}` : ""}`}>
             {draft.checklist.length > 0 && (
+              <div className="mb-3 flex items-center gap-2.5 text-xs text-muted-foreground">
+                <ListChecks className="h-4 w-4 shrink-0" />
+                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary" role="progressbar" aria-label="Checklist progress" aria-valuemin={0} aria-valuemax={draft.checklist.length} aria-valuenow={stepsDone}>
+                  <div className="h-full rounded-full bg-primary transition-[width] motion-reduce:transition-none" style={{ width: `${stepsDone / draft.checklist.length * 100}%` }} />
+                </div>
+                <span className="hub-tabular">{Math.round(stepsDone / draft.checklist.length * 100)}%</span>
+              </div>
+            )}
+            {draft.checklist.length > 0 && (
               <ul className="mb-2 space-y-1">
                 {draft.checklist.map((c) => (
                   <li key={c.id} className="group flex items-center gap-2.5 rounded-xl px-2 py-1.5 hover:bg-secondary/60">
@@ -264,12 +279,12 @@ export function TaskSheet({
                       aria-label={c.text}
                       className="h-[18px] w-[18px] rounded-md"
                     />
-                    <span className={cn("flex-1 text-sm", c.done && "text-muted-foreground line-through")}>{c.text}</span>
+                    <span className={cn("min-w-0 flex-1 break-words text-sm", c.done && "text-muted-foreground line-through")}>{c.text}</span>
                     <button
                       type="button"
                       onClick={() => set("checklist", draft.checklist.filter((x) => x.id !== c.id))}
                       aria-label={`Remove ${c.text}`}
-                      className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity hover:bg-secondary hover:text-foreground group-hover:opacity-100 focus-visible:opacity-100"
+                      className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-opacity hover:bg-secondary hover:text-foreground sm:opacity-0 sm:group-hover:opacity-100 focus-visible:opacity-100"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -285,7 +300,7 @@ export function TaskSheet({
                 onKeyDown={enter(addStep)}
                 placeholder="Add a step, press Enter"
                 aria-label="New checklist step"
-                className="h-10 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                className="h-10 min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
               />
             </div>
           </Field>
@@ -355,23 +370,25 @@ export function TaskSheet({
           )}
         </div>
 
-        <footer className="flex items-center gap-2 border-t border-border/60 px-6 py-4">
+        <footer className="flex flex-wrap items-center gap-2 border-t border-border/60 bg-secondary/20 px-4 py-4 sm:px-6">
           {task && (
             <Button
               type="button"
               variant="ghost"
-              className="mr-auto rounded-full bg-none text-destructive hover:bg-destructive/10 hover:text-destructive"
+              className="mr-auto gap-1.5 rounded-xl bg-none px-3 text-destructive hover:bg-destructive/10 hover:text-destructive"
               onClick={remove}
+              aria-label="Delete task"
+              disabled={create.isPending || update.isPending || archive.isPending}
             >
-              <Trash2 className="mr-1.5 h-4 w-4" /> Delete
+              <Trash2 className="h-4 w-4" /> <span className="hidden sm:inline">Delete</span>
             </Button>
           )}
-          <Button type="button" variant="ghost" className={cn("rounded-full", !task && "ml-auto")} onClick={() => onOpenChange(false)}>
+          <Button type="button" variant="ghost" className={cn("rounded-xl", !task && "ml-auto")} onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button type="button" className="min-w-24 rounded-full" onClick={save} disabled={create.isPending}>
-            <Check className="mr-1.5 h-4 w-4" />
-            {task ? "Save" : "Add task"}
+          <Button type="button" className="min-w-28 rounded-xl px-3" onClick={save} disabled={create.isPending || update.isPending || archive.isPending}>
+            {create.isPending || update.isPending ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : <Check className="mr-1.5 h-4 w-4" />}
+            {create.isPending || update.isPending ? "Saving…" : task ? "Save changes" : "Create task"}
           </Button>
         </footer>
       </SheetContent>
