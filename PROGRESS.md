@@ -6,7 +6,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 
 - [x] Step 1 — Audit and design direction
 - [x] Step 2 — Content data file
-- [ ] Step 3 — Hero and services bento grid
+- [x] Step 3 — Hero and services bento grid
 - [ ] Step 4 — Service card interactions
 - [ ] Step 5 — Image system
 - [ ] Step 6 — Proof and results section
@@ -33,6 +33,20 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **Still open from Step 1:** the KES 500K+ (hero trust number) vs KES 1.2M+ (iClear) figures disagree; both stay as published until Joseph says which is right (Q3). The Meta tile uses the published Meta case study (KES 5.33M, 41.3x, client not named), per the Q1 default.
   - TikTok has no service page, so its tile links to `/agency/contact#brief` for now.
 
+## Step 3 notes (2026-11-15)
+
+- **What changed:** `/agency/services` now opens with its own hero (breadcrumb, H1, subhead, "Book a Free Strategy Call", "See results", three trust numbers, one result card) and one bento grid of the 8 services, read from `src/data/services.ts`. Grid is 3 columns on desktop, 2 on tablet, 1 on phones; Meta Ads spans 2. The two lead cards, four secondary cards, the Shopify feature and the sample-data `CampaignSnapshot` are off this page (their files remain for Step 10). `Agency.tsx` skips its generic header and footer CTA for this page. Images are labelled gradient placeholders.
+- **Files touched:** new in `src/components/services/`: `ServicesHero.tsx`, `TrustNumbers.tsx`, `HeroResultCard.tsx`, `ServicesBento.tsx`, `ServiceTile.tsx`, `MoreServicesRow.tsx`, `ServiceImagePlaceholder.tsx`. Changed: `ServicesSection.tsx`, `src/pages/Agency.tsx`, `src/data/services.ts` (`bentoServices` now has a fixed tile order).
+- **Left open:**
+  - **Checks run:** lint on touched files, `npm test` (220 pass), `npm run build`, `check:agency`, `check:seo`, and a browser look at 1440, 768 and 360 in the dark theme. No horizontal scroll. Not checked: light theme, keyboard focus ring in a browser, the USD market view.
+  - **Run npm from PowerShell.** `npm run build` fails in Git Bash after `cd /c/...` with a "Could not resolve ... logo-mark.webp" error. It is a drive-letter casing problem, not a code problem.
+  - **"See results" goes to `/agency/results`** for now. Step 6 should point it at the proof section on this page.
+  - **The "Full service pages" link row stays** (slimmed to one line under the grid). `scripts/check-agency.mjs` requires it and matches it to the JSON-LD list, which includes the "Digital Marketing" overview page that has no tile.
+  - **For Step 4:** each tile is one link (the CTA is stretched over the card), ids are `service-<slug>`, and the large and tall sizes are set by slug in `ServicesBento.tsx`. In a filtered view every tile should be `standard`.
+  - **For Step 5:** swap `ServiceImagePlaceholder` for `ServiceImage` inside `ServiceTile.tsx`. The tile sets the box size and ratio (16:10 large, 4:5 tall on desktop, 4:3 standard, 96px square thumbnail on phones); the image only has to fill it.
+  - **For Step 9:** tiles are tall (about 850px for the top row and 660px for the others on desktop, about 500px each on phones, where the text sits in a narrow column beside the thumbnail). The Free Audit tile has empty space in its middle on desktop. The hero headline's orange phrase needs the light-theme contrast check.
+  - **Still waiting on Joseph:** Q3 (KES 500K+ vs KES 1.2M+) and Q4 (headline). The defaults are in use. TikTok and Shopify tiles show no "For" or proof line where the data is `null`.
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -58,4 +72,4 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 
 ## Next step
 
-Step 3 — use **Fable** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 3 only.`
+Step 4 — use **Sonnet** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 4 only.`

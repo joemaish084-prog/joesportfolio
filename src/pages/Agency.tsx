@@ -374,7 +374,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
       <AgencyNavigation />
 
       <main>
-        {pageKey !== "home" && <header className="relative overflow-hidden border-b border-border/50">
+        {/* The services page brings its own hero (ServicesHero). */}
+        {pageKey !== "home" && pageKey !== "services" && <header className="relative overflow-hidden border-b border-border/50">
           <div aria-hidden className="pointer-events-none absolute inset-0">
             <div className="absolute -top-40 right-[-10%] h-[28rem] w-[28rem] rounded-full bg-primary/[0.07] blur-[120px]" />
             <div className="absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_80%_90%_at_70%_0%,black_30%,transparent_100%)]" />
@@ -1045,8 +1046,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 
 </>}
-        {/* FOOTER CTA — the contact page is already the next step */}
-        {pageKey !== "contact" && <section className="container mx-auto px-4 pb-20">
+        {/* FOOTER CTA — the contact page is already the next step, and the services page ends on its own CTA */}
+        {pageKey !== "contact" && pageKey !== "services" && <section className="container mx-auto px-4 pb-20">
           <Card className="relative max-w-4xl mx-auto overflow-hidden rounded-3xl p-8 md:p-14 text-center border-primary/40 bg-gradient-to-br from-primary/[0.08] via-transparent to-transparent">
             <div aria-hidden className="pointer-events-none absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_70%_80%_at_50%_0%,black_20%,transparent_100%)]" />
             <div className="relative">

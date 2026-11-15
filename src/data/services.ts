@@ -347,7 +347,14 @@ export const serviceAnchorId = (slug: string): string => `service-${slug}`;
 /** Where a tile or table row should send the visitor. */
 export const serviceHref = (s: Service): string => s.pagePath ?? s.fallbackPath;
 
-export const bentoServices = services.filter((s) => s.bento);
+/** Tile order in the bento grid: the two lead services first, the free audit last. */
+const BENTO_ORDER = [
+  "meta-ads", "google-ads", "seo-optimization", "social-media-management",
+  "tiktok-ads", "lead-generation", "shopify-services", "digital-marketing-audit",
+];
+export const bentoServices = services
+  .filter((s) => s.bento)
+  .sort((a, b) => BENTO_ORDER.indexOf(a.slug) - BENTO_ORDER.indexOf(b.slug));
 export const alsoAvailableServices = services.filter((s) => !s.bento);
 
 export const serviceFilters: { key: ServiceCategory | "all"; label: string }[] = [
