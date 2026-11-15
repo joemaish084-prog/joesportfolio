@@ -10,7 +10,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - [x] Step 4 — Service card interactions
 - [x] Step 5 — Image system
 - [x] Step 6 — Proof and results section
-- [ ] Step 7 — Packages table and pricing fix
+- [x] Step 7 — Packages table and pricing fix
 - [ ] Step 8 — Process, FAQ, schema
 - [ ] Step 9 — Visual polish, motion, mobile, accessibility
 - [ ] Step 10 — Performance, SEO, cleanup, final QA
@@ -82,6 +82,18 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **TODO(joseph):** iClear "what I did" and period are not published, so those rows are hidden.
   - `Agency.tsx` still imports `useInView`/`useState`/`useEffect`; lint passes, so they are used elsewhere.
 
+## Step 7 notes (2026-11-15)
+
+- **What changed:** `/agency/services` now has a compact "Monthly retainers" section (Starter, Growth marked "Most popular", Scale) with stacked cards on phones and three columns from md up, a "Compare all three packages" link to `/agency/pricing`, and the existing fee note. Prices come from `src/data/services.ts`. The homepage FAQ ("How much does digital marketing cost", "affordable packages") and the `/agency/pricing` meta description and teaser now build their figures from the data file, so they cannot drift from the tiles. The `/agency/pricing` cards and comparison table were left as they were, per the Step 7 override.
+- **Files touched:** new `src/components/services/PackagesSummary.tsx`. Changed: `src/components/services/ServicesSection.tsx`, `src/data/services.ts` (new `packageFeeKes`), `src/data/faqs.ts`, `src/data/agencyPages.ts`, `src/data/services.test.ts` (1 new test: the FAQ and pricing copy quote the data figures).
+- **Left open:**
+  - **Checks run:** `npm test` (227 pass, 2 skipped), eslint on touched files (clean), `tsc` (only the 6 known errors in `src/lib/chatLead.ts`), `npm run build` (143 routes prerendered), `npm run check:agency` (passes). Prerendered HTML checked: `/agency/services` has the packages section, and the homepage FAQ and `/agency/pricing` description carry the data figures. In the browser at a 540px window (the 360px width could not be set), no horizontal overflow and the section DOM is correct, with 3 stacked cards. **Not verified visually:** Playwright screenshots of the section came out blank, so the layout has not been seen by eye. Please look at `/agency/services` at 360px.
+  - **Pricing prose still typed by hand** (matches the data today): `src/data/servicePages.ts` meta descriptions and FAQ answers (about 10 lines, e.g. "from KES 40,000/month", "KSh 30,000" Meta minimum), `src/data/adCalculatorContent.ts` (out of scope: the calculator page), `src/data/blogHubs.ts` (out of scope: blog). Template them in Step 10 or later.
+  - **`/agency/pricing` comparison table** still scrolls sideways on phones (`min-w-[34rem]`). It is the existing pricing page, so it was not changed; the services page uses stacked cards instead. Say if you want the pricing page to stack too.
+  - **Homepage `PricingNotes` block** still lists "Multi-platform retainers" next to the new packages section, so Growth's price appears twice on the same page. Harmless, but it can go if the page feels repetitive in Step 9.
+  - **Accidental change to a generated file:** `npm run build` ran the `@lovable.dev/mcp-js` Vite plugin, which rewrote `supabase/functions/mcp/index.ts` back to HEAD. That file had an uncommitted one-line change before this step (1 insertion, 1 deletion, per `git diff --stat` at the start of the session). I did not read that change before building, so it could not be restored. The file is marked "AUTO-GENERATED, do not edit", so the change probably belongs in the plugin source or should be re-made there.
+  - **Ad spend note:** the existing `packageFeeNote` ("Management fee only. Advertising spend is paid directly to Google or Meta.") shows under the section heading.
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -107,4 +119,4 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 
 ## Next step
 
-Step 7 — use **Haiku** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 7 only.`
+Step 8 — use **Haiku** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 8 only.`

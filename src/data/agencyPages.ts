@@ -1,3 +1,7 @@
+import { formatKes, packageFeeKes } from "@/data/services";
+
+const starterFee = formatKes(packageFeeKes("STARTER"));
+
 export const agencyPages = {
   home: {
     path: "/agency", label: "Agency Home",
@@ -27,9 +31,9 @@ export const agencyPages = {
     path: "/agency/pricing", label: "Pricing",
     title: "Digital Marketing Pricing in Kenya | Joseph Maina",
     heading: "Clear pricing, with room for your brief",
-    description: "Compare digital marketing retainers from KSh 40,000 per month, channel management fees and project services. Advertising spend is billed separately.",
+    description: `Compare digital marketing retainers from KSh ${starterFee} per month, channel management fees and project services. Advertising spend is billed separately.`,
     intro: "Compare the existing monthly packages and starting fees below. Management and creative fees are separate from your ad spend; the final scope is agreed in your proposal.",
-    teaser: "Retainers from KES 40,000/month. Your ad spend is billed separately.",
+    teaser: `Retainers from KES ${starterFee}/month. Your ad spend is billed separately.`,
   },
   contact: {
     path: "/agency/contact", label: "Contact",

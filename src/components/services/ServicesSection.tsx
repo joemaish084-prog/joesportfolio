@@ -4,6 +4,7 @@ import { trackSpotlight } from "@/lib/spotlight";
 import { getLiveServicePages } from "@/data/servicePages";
 import { alsoAvailableServices, bentoServices, packageFeeNote, serviceAnchorId, serviceHref } from "@/data/services";
 import { MoreServicesRow } from "./MoreServicesRow";
+import { PackagesSummary } from "./PackagesSummary";
 import { PlatformDecision } from "./PlatformDecision";
 import { PricingNotes } from "./PricingNotes";
 import { ProcessTimeline } from "./ProcessTimeline";
@@ -53,6 +54,7 @@ export function ServicesSection() {
 
           <PlatformDecision />
           <ProcessTimeline />
+          <PackagesSummary />
           <PricingNotes />
 
           {/* Free tool, kept from the previous page */}

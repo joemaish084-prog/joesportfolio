@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { caseStudies } from "@/data/caseStudies";
 import { servicePages } from "@/data/servicePages";
+import { faqs } from "@/data/faqs";
+import { agencyPages } from "@/data/agencyPages";
 import { localizePrice } from "@/lib/market";
 import {
   bentoServices, filterServices, formatKes, formatResultStat, getPackage, getProofItem, packageComparison, priceLabel, proofCardIds,
@@ -150,5 +152,16 @@ describe("service images", () => {
       if (s.imageSlot) expect(s.imageAlt?.trim(), s.slug).toBeTruthy();
       else expect(s.imageAlt, s.slug).toBeNull();
     }
+  });
+});
+
+describe("copy that quotes prices", () => {
+  it("homepage FAQ and /agency/pricing copy print the data figures", () => {
+    const cost = faqs.find((f) => f.question.startsWith("How much does digital marketing cost"));
+    expect(cost?.answer).toContain("start at KES 40,000/month; Google Ads and SEO start at KES 45,000/month");
+    expect(cost?.answer).toContain("Multi-platform retainers start at KES 70,000/month");
+    const starter = faqs.find((f) => f.question.startsWith("Do you offer affordable"));
+    expect(starter?.answer).toContain("Monthly retainers start at KES 40,000,");
+    expect(agencyPages.pricing.teaser).toBe("Retainers from KES 40,000/month. Your ad spend is billed separately.");
   });
 });

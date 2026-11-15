@@ -443,6 +443,13 @@ export const getPackage = (name: RetainerPackage["name"]): RetainerPackage => {
   return found;
 };
 
+/** The bare monthly KES fee for a package, for prose such as "starts at KES 40,000". */
+export const packageFeeKes = (name: RetainerPackage["name"]): number => {
+  const price = getPackage(name).price;
+  if (!("kes" in price)) throw new Error(`Package has no KES fee: ${name}`);
+  return price.kes;
+};
+
 /* -------------------------------------------------------------------------- */
 /* Trust numbers and proof                                                     */
 /* -------------------------------------------------------------------------- */
