@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { priceLabel, serviceAnchorId, serviceFilters, serviceHref, type Service } from "@/data/services";
 import { localizePrice, useMarket } from "@/lib/market";
 import { trackSpotlight } from "@/lib/spotlight";
-import { ServiceImagePlaceholder } from "./ServiceImagePlaceholder";
+import { ServiceImage } from "./ServiceImage";
 
 export type ServiceTileSize = "large" | "tall" | "standard";
 
@@ -21,6 +21,13 @@ const IMAGE: Record<ServiceTileSize, string> = {
   large: "aspect-[16/10] w-full",
   tall: "aspect-[16/10] w-full lg:aspect-[4/5]",
   standard: "m-4 mr-0 aspect-square w-24 shrink-0 self-start rounded-xl sm:w-36 md:m-0 md:aspect-[4/3] md:w-full md:rounded-none",
+};
+
+/** Rendered width per size, for the `sizes` attribute: phone thumbnail, then the desktop column. */
+const SIZES: Record<ServiceTileSize, string> = {
+  large: "(min-width: 1024px) 740px, 100vw",
+  tall: "(min-width: 1024px) 360px, 100vw",
+  standard: "(min-width: 768px) 360px, 144px",
 };
 
 const categoryLabel = (service: Service) =>
@@ -81,8 +88,10 @@ export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function 
       {/* The wrapper owns the box and clips the zoom, so Step 5 can swap the placeholder for the real image. */}
       {service.imageSlot && (
         <div className={`relative overflow-hidden ${IMAGE[size]}`}>
-          <ServiceImagePlaceholder
+          <ServiceImage
             slot={service.imageSlot}
+            alt={service.imageAlt ?? ""}
+            sizes={SIZES[size]}
             className="h-full w-full transition-transform duration-500 motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
             thumbOnMobile={size === "standard"}
           />

@@ -124,3 +124,12 @@ describe("filterServices", () => {
     }
   });
 });
+
+describe("service images", () => {
+  it("gives every slot image alt text, and none to tiles without an image", () => {
+    for (const s of services) {
+      if (s.imageSlot) expect(s.imageAlt?.trim(), s.slug).toBeTruthy();
+      else expect(s.imageAlt, s.slug).toBeNull();
+    }
+  });
+});

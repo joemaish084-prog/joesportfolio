@@ -8,7 +8,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - [x] Step 2 — Content data file
 - [x] Step 3 — Hero and services bento grid
 - [x] Step 4 — Service card interactions
-- [ ] Step 5 — Image system
+- [x] Step 5 — Image system
 - [ ] Step 6 — Proof and results section
 - [ ] Step 7 — Packages table and pricing fix
 - [ ] Step 8 — Process, FAQ, schema
@@ -57,6 +57,19 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **Chip counts:** the "Social" chip includes TikTok (it is tagged paid and social), so it shows 2 tiles. "Stores" shows 1 (Shopify). Say if either feels too thin.
   - **Step 5:** the image zoom wrapper lives in `ServiceTile.tsx` and clips the image, so `ServiceImage` can replace the placeholder inside it with no other change.
 
+## Step 5 notes (2026-11-15)
+
+- **What changed:** added `ServiceImage` (lazy `<img>`, width/height set, `srcset` of a 400px and a full-size WebP, `sizes` per tile size, grey fill until it loads, alt text from the data file). It finds files in `src/assets/services/` by name (`<slot>.webp`, optional `<slot>-400.webp`), so a new image only needs to be dropped in the folder. A slot with no file, or a file that fails to load, shows the existing labelled placeholder. `ServiceTile` now uses it. Five slots are wired to real work already on the site: Meta (iClear "Water is sweet" banner), Google (iClear promo, the brief's fallback), Social (iClear post), TikTok (iClear short-video still), Shopify (Babyshop Dansar storefront). SEO and Lead Gen keep placeholders.
+- **Files touched:** new `src/components/services/ServiceImage.tsx`, `scripts/build-service-images.py` (crops the existing images; needs Pillow from `site-review.local/image-tools`), `src/assets/services/*.webp` (10 files). Changed: `ServiceTile.tsx`, `src/data/services.ts` (new `imageAlt` field), `src/data/services.test.ts` (1 test).
+- **Left open:**
+  - **Checks run:** lint on touched files, `npm test` (223 pass), `npm run build`, `check:agency`; the built images are emitted and served by `npm run preview` (HTTP 200, image/webp). **Not checked in a browser:** the Playwright window was locked by another process, so the crops, the 1.04 zoom on real images and the 360px thumbnails have not been looked at. Please eyeball `/agency/services` before Step 9.
+  - **Google tile uses iClear ad creative, not a Google Ads dashboard.** Alt text says what it is. Replace it with a real dashboard screenshot when you have one.
+  - **TikTok crop:** a 9:16 video still cropped to 4:3, so it shows the iClear logo on the jacket and the sink. Check it reads well.
+  - **Meta crop** is 1125×703, a little under the 1600×1000 in the brief, because the source banner is only 703px tall. Fine at the 740px tile width on a normal screen; slightly soft on a 2x display.
+  - **`ServiceImagePlaceholder` is kept** as the fallback. Delete it in Step 10 only if both missing slots have been filled.
+  - **Case-study images (`proof-case-1..3`) are not wired.** They belong to Step 6.
+  - The Shopify image is a copy of the file in `public/work/shopify/`, so it is bundled and hashed with the rest.
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -75,11 +88,11 @@ The audit found the plan was written against an older version of the site. Follo
 
 Drop these in `src/assets/services/` as WebP. Blur client names and personal details.
 
-- `svc-google-ads.webp` — Google Ads dashboard screenshot, 1200×1500 (4:5)
-- `svc-seo.webp` — Search Console performance graph, 800×600 (4:3)
-- `svc-lead-gen.webp` — leads arriving by form or WhatsApp, 800×600 (4:3)
+- `svc-seo.webp` — Search Console performance graph, 800×600 (4:3). **Placeholder showing now.**
+- `svc-lead-gen.webp` — leads arriving by form or WhatsApp, 800×600 (4:3). **Placeholder showing now.**
+- `svc-google-ads.webp` — Google Ads dashboard screenshot, 1200×1500 (4:5). Optional: iClear ad creative is in use as a fallback. Also add `svc-google-ads-400.webp` (400px wide) and update its alt text in `src/data/services.ts`.
 - `proof-case-1.webp`, `proof-case-2.webp`, `proof-case-3.webp` — results screenshots for the three case studies shown, 1200×675 (16:9)
 
 ## Next step
 
-Step 5 — use **Sonnet** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 5 only.`
+Step 6 — use **Sonnet** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 6 only.`

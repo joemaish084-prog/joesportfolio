@@ -88,6 +88,8 @@ export interface Service {
   proof: ServiceProof | null;
   /** `null` = the tile uses an icon, not an image. */
   imageSlot: ImageSlot | null;
+  /** Alt text for the slot image. `null` when there is no image. */
+  imageAlt: string | null;
   /** Where the tile CTA goes when `pagePath` is null. */
   fallbackPath: string;
   cta: string;
@@ -111,6 +113,7 @@ export const services: Service[] = [
     // Published case study. Client not named. Brief question Q1: show it on the tile.
     proof: { line: "KES 5.33M attributed revenue at 41.3x ROAS (client not named)", source: "meta-ads-turnaround" },
     imageSlot: "svc-meta-ads",
+    imageAlt: "iClear Water is sweet Facebook ad creative",
     fallbackPath: "/agency/meta-ads-management",
     cta: "Explore Meta Ads",
     bento: true,
@@ -128,6 +131,7 @@ export const services: Service[] = [
     pagePath: "/agency/google-ads-management",
     proof: { line: "KES 1.94M attributed revenue at 15.5x ROAS (client not named)", source: "google-ads-launch" },
     imageSlot: "svc-google-ads",
+    imageAlt: "iClear promotional ad creative: kill your glow",
     fallbackPath: "/agency/google-ads-management",
     cta: "Explore Google Ads",
     bento: true,
@@ -146,6 +150,7 @@ export const services: Service[] = [
     pagePath: null, // No TikTok service page exists yet.
     proof: { line: "4M TikTok video views across a full year of social content", source: "social-media-2025" },
     imageSlot: "svc-tiktok-ads",
+    imageAlt: "Still from an iClear short-form video",
     fallbackPath: "/agency/contact#brief",
     cta: "Discuss TikTok Ads",
     bento: true,
@@ -163,6 +168,7 @@ export const services: Service[] = [
     pagePath: "/agency/seo-services-nairobi",
     proof: { line: "Search rankings improved from position 20 to 14, then 9 (Beauty Square Kenya)", source: "seo-services-nairobi" },
     imageSlot: "svc-seo",
+    imageAlt: "Search Console performance graph",
     fallbackPath: "/agency/seo-services-nairobi",
     cta: "Learn about SEO",
     bento: true,
@@ -180,6 +186,7 @@ export const services: Service[] = [
     pagePath: "/agency/social-media-management",
     proof: { line: "336 pieces of content and 4M TikTok video views in one year", source: "social-media-2025" },
     imageSlot: "svc-social",
+    imageAlt: "iClear social media post: kill your glow",
     fallbackPath: "/agency/social-media-management",
     cta: "Learn about social media",
     bento: true,
@@ -197,6 +204,7 @@ export const services: Service[] = [
     pagePath: "/agency/lead-generation",
     proof: { line: "10x increase in qualified leads in 6 months (Convey Communications)", source: "convey-communications-case-study-10x-leads" },
     imageSlot: "svc-lead-gen",
+    imageAlt: "Leads arriving from a form or WhatsApp",
     fallbackPath: "/agency/lead-generation",
     cta: "Explore lead generation",
     bento: true,
@@ -215,6 +223,7 @@ export const services: Service[] = [
     pagePath: "/agency/shopify-services",
     proof: null, // TODO(joseph): the live Babyshop Dansar store is the proof; no figure is published.
     imageSlot: "svc-shopify",
+    imageAlt: "Babyshop Dansar Shopify storefront home page",
     fallbackPath: "/agency/shopify-services",
     cta: "Explore Shopify services",
     bento: true,
@@ -232,6 +241,7 @@ export const services: Service[] = [
     pagePath: "/agency/digital-marketing-audit",
     proof: null,
     imageSlot: null,
+    imageAlt: null,
     fallbackPath: "/agency/digital-marketing-audit",
     cta: "Get the free audit",
     bento: true,
@@ -249,6 +259,7 @@ export const services: Service[] = [
     pagePath: null,
     proof: null,
     imageSlot: null,
+    imageAlt: null,
     fallbackPath: "/work/design",
     cta: "See creative work",
     bento: false,
@@ -266,6 +277,7 @@ export const services: Service[] = [
     pagePath: null,
     proof: null,
     imageSlot: null,
+    imageAlt: null,
     fallbackPath: "/agency/contact#brief",
     cta: "Discuss a video",
     bento: false,
@@ -283,6 +295,7 @@ export const services: Service[] = [
     pagePath: null,
     proof: null,
     imageSlot: null,
+    imageAlt: null,
     fallbackPath: "/agency/contact#brief",
     cta: "Discuss brand strategy",
     bento: false,
@@ -300,6 +313,7 @@ export const services: Service[] = [
     pagePath: null,
     proof: null,
     imageSlot: null,
+    imageAlt: null,
     fallbackPath: "/work/design",
     cta: "See design work",
     bento: false,
@@ -317,6 +331,7 @@ export const services: Service[] = [
     pagePath: null,
     proof: null,
     imageSlot: null,
+    imageAlt: null,
     fallbackPath: "/agency/contact#brief",
     cta: "Book a session",
     bento: false,
