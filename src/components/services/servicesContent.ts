@@ -405,9 +405,29 @@ export const pricingContent = {
 /* Closing CTA                                                                 */
 /* -------------------------------------------------------------------------- */
 
+/** Same number as the contact page and the agency pages, so the link is the same everywhere. */
+const WHATSAPP_NUMBER = "254704700160";
+const WHATSAPP_MESSAGE = "Hi Joseph! I visited josephmaina.co.ke/agency/services and I'd like to discuss working together.";
+
 export const ctaContent = {
   heading: "Not sure where your next customer should come from?",
   body: "I'll help you identify the right channel, the clearest opportunity, and the next practical step.",
   primary: { label: "Book a Free Strategy Call", to: CALENDLY_URL },
+  whatsapp: {
+    label: "Message me on WhatsApp",
+    to: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`,
+  },
   secondary: { label: "View Case Studies", to: CASE_STUDIES_URL },
+};
+
+/* -------------------------------------------------------------------------- */
+/* FAQ                                                                         */
+/* -------------------------------------------------------------------------- */
+
+/** The questions come from `agencyFaqs` in src/data/services.ts. Only the heading copy lives here. */
+export const faqContent = {
+  eyebrow: "FAQ",
+  heading: "Common questions",
+  intro: "Still unsure?",
+  askLabel: "Ask me directly",
 };

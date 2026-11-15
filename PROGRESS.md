@@ -11,7 +11,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - [x] Step 5 — Image system
 - [x] Step 6 — Proof and results section
 - [x] Step 7 — Packages table and pricing fix
-- [ ] Step 8 — Process, FAQ, schema
+- [x] Step 8 — Process, FAQ, schema
 - [ ] Step 9 — Visual polish, motion, mobile, accessibility
 - [ ] Step 10 — Performance, SEO, cleanup, final QA
 
@@ -94,6 +94,16 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **Accidental change to a generated file:** `npm run build` ran the `@lovable.dev/mcp-js` Vite plugin, which rewrote `supabase/functions/mcp/index.ts` back to HEAD. That file had an uncommitted one-line change before this step (1 insertion, 1 deletion, per `git diff --stat` at the start of the session). I did not read that change before building, so it could not be restored. The file is marked "AUTO-GENERATED, do not edit", so the change probably belongs in the plugin source or should be re-made there.
   - **Ad spend note:** the existing `packageFeeNote` ("Management fee only. Advertising spend is paid directly to Google or Meta.") shows under the section heading.
 
+## Step 8 notes (2026-11-15)
+
+- **What changed:** `/agency/services` has a six-question FAQ accordion, built from `agencyFaqs` in `src/data/services.ts`, placed just above the final CTA. Answers stay in the HTML while closed (`forceMount`), so the page text matches the schema. The services page FAQPage JSON-LD now lists all six agency FAQs; before, no agency FAQ was in any JSON-LD. The final CTA band keeps "Book a Free Strategy Call" (Q2 default), adds a "Message me on WhatsApp" button (same number and wording as the contact page), and moves "View Case Studies" to a text link. The process timeline was already the five steps from `servicesContent.ts`, so it is unchanged.
+- **Files touched:** new `src/components/services/ServicesFaq.tsx`. Changed: `ServicesSection.tsx`, `ServicesCTA.tsx`, `servicesContent.ts` (WhatsApp URL, FAQ heading copy), `src/seo/agencyHeads.ts` (FAQPage for `services` only), `src/data/services.test.ts` (3 tests: services FAQ schema matches the data, pricing adds no second FAQ schema, homepage schema lists every FAQ, 15 today).
+- **Left open:**
+  - **Checks run:** `npm test` (230 pass, 2 skipped; was 227 + 3 new), eslint on touched files (clean), `npm run build` (143 routes), `npm run check:agency` (passes). Prerendered `dist/agency/services.html`: 6 FAQ schema entries, all 6 answers in the static HTML, WhatsApp link present. Homepage FAQPage: 15 entries. Radix sets `hidden` on closed answers, so they stay out of view.
+  - **Not checked in a browser:** the Playwright browser was locked by another process again, so the accordion click, the CTA layout at 360/768/1440 and the light theme have not been seen. Please open `/agency/services` and try one FAQ and the WhatsApp button before Step 9.
+  - **`/agency/pricing` FAQ:** the same six questions render there as an accordion, but that page has no FAQPage schema. Out of scope for this step; say if you want it added.
+  - **Step 9 items:** the WhatsApp button and the case-study text link sit side by side on phones; check the wrap at 360px.
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -119,4 +129,4 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 
 ## Next step
 
-Step 8 — use **Haiku** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 8 only.`
+Step 9 — visual polish, motion, mobile, accessibility. Use **Fable** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 9 only.`

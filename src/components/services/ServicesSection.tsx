@@ -11,6 +11,7 @@ import { ProcessTimeline } from "./ProcessTimeline";
 import { ProofSection } from "./ProofSection";
 import { ServicesBento } from "./ServicesBento";
 import { ServicesCTA } from "./ServicesCTA";
+import { ServicesFaq } from "./ServicesFaq";
 import { ServicesHero } from "./ServicesHero";
 
 const moreServices = alsoAvailableServices.map((s) => ({
@@ -78,6 +79,7 @@ export function ServicesSection() {
             </span>
           </Link>
 
+          <ServicesFaq />
           <ServicesCTA />
         </div>
       </section>

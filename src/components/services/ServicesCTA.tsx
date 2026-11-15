@@ -1,4 +1,4 @@
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, MessageCircle } from "lucide-react";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { CtaLink } from "./CtaLink";
 import { ctaContent } from "./servicesContent";
@@ -20,13 +20,20 @@ export function ServicesCTA() {
             {ctaContent.primary.label}
           </CtaLink>
           <CtaLink
-            to={ctaContent.secondary.to}
+            to={ctaContent.whatsapp.to}
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-border bg-background/60 px-7 text-base font-semibold transition-colors hover:border-primary/50 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            {ctaContent.secondary.label}
-            <ArrowRight className="h-5 w-5" aria-hidden />
+            <MessageCircle className="h-5 w-5" aria-hidden />
+            {ctaContent.whatsapp.label}
           </CtaLink>
         </div>
+        <p className="mt-5 text-sm text-muted-foreground">
+          Prefer to see the work first?{" "}
+          <CtaLink to={ctaContent.secondary.to} className="inline-flex min-h-11 items-center gap-1 font-medium text-primary hover:underline">
+            {ctaContent.secondary.label}
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </CtaLink>
+        </p>
       </div>
     </section>
   );

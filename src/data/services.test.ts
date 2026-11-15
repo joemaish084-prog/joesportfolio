@@ -3,9 +3,11 @@ import { caseStudies } from "@/data/caseStudies";
 import { servicePages } from "@/data/servicePages";
 import { faqs } from "@/data/faqs";
 import { agencyPages } from "@/data/agencyPages";
+import { agencyHead } from "@/seo/agencyHeads";
+import { STATIC_HEADS } from "@/seo/heads";
 import { localizePrice } from "@/lib/market";
 import {
-  bentoServices, filterServices, formatKes, formatResultStat, getPackage, getProofItem, packageComparison, priceLabel, proofCardIds,
+  agencyFaqs, bentoServices, filterServices, formatKes, formatResultStat, getPackage, getProofItem, packageComparison, priceLabel, proofCardIds,
   proofItems, resultsStrip, retainerPackages, serviceAnchorId, servicePrice, services,
 } from "@/data/services";
 
@@ -152,6 +154,28 @@ describe("service images", () => {
       if (s.imageSlot) expect(s.imageAlt?.trim(), s.slug).toBeTruthy();
       else expect(s.imageAlt, s.slug).toBeNull();
     }
+  });
+});
+
+describe("FAQ schema", () => {
+  type FaqSchema = { "@type": string; mainEntity: { name: string; acceptedAnswer: { text: string } }[] };
+  const faqSchemaOf = (jsonLd: object[] | undefined) =>
+    (jsonLd ?? []).find((s): s is FaqSchema => (s as { "@type"?: string })["@type"] === "FAQPage");
+
+  it("services page marks up every agency FAQ, with the same wording the page shows", () => {
+    const schema = faqSchemaOf(agencyHead("services").jsonLd);
+    expect(schema?.mainEntity).toHaveLength(agencyFaqs.length);
+    expect(schema?.mainEntity.map((q) => q.name)).toEqual(agencyFaqs.map((f) => f.q));
+    expect(schema?.mainEntity.map((q) => q.acceptedAnswer.text)).toEqual(agencyFaqs.map((f) => f.a));
+  });
+
+  it("other agency pages do not add a second FAQ schema", () => {
+    expect(faqSchemaOf(agencyHead("pricing").jsonLd)).toBeUndefined();
+  });
+
+  it("homepage marks up every FAQ on the page, not a subset", () => {
+    const schema = faqSchemaOf(STATIC_HEADS.home.jsonLd);
+    expect(schema?.mainEntity).toHaveLength(faqs.length);
   });
 });
 
