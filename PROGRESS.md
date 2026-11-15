@@ -13,7 +13,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - [x] Step 7 — Packages table and pricing fix
 - [x] Step 8 — Process, FAQ, schema
 - [x] Step 9 — Visual polish, motion, mobile, accessibility
-- [ ] Step 10 — Performance, SEO, cleanup, final QA
+- [x] Step 10 — Performance, SEO, cleanup, final QA
 
 ## Step 1 notes (2026-11-15)
 
@@ -130,6 +130,37 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **For Step 10:** `PricingNotes.tsx` and `pricingContent.rows` / `heading` / `link` are now unused (the assurances are still used). `ServiceImagePlaceholder`'s `thumbOnMobile` is still used by the phone thumbnail.
   - **Still waiting on Joseph:** Q3 (KES 500K+ vs KES 1.2M+) and Q4 (headline).
 
+## Step 10 notes (2026-11-15)
+
+- **What changed:**
+  - **Counters show real figures before JS runs.** `CountUp` starts at the real value. Only counters below the fold reset to 0 and count up on scroll. The old `NumberTicker` in `PaidMediaApproachSection.tsx` (on `/agency`) started at 0 and was replaced with `CountUp`. Prerendered `/agency` has 10 counter values, none zero.
+  - **Gallery duplicates.** The `Marquee` clones (for a seamless loop) are now `aria-hidden`, so each design and logo is read once. The clones stay in the DOM, because removing them would break the loop.
+  - **Dead code removed:** `CampaignSnapshot`, `PricingNotes`, `PrimaryServiceCard`, `SecondaryServiceCard`, `PerformanceMetric`, `ProofPanel`. `servicesContent.ts` was cut to what is still imported (primary services, snapshots, secondary services, the old header, and the unused `pricingContent` rows are gone). `Marquee` lost its `any` index signature.
+  - **Head and SEO:** `/agency` and `/agency/services` already had unique titles and descriptions. Both prerendered pages have a canonical, OG tags, and the default OG image. Both URLs are in `sitemap.xml`. `/agency/services` has the 6-question FAQPage JSON-LD.
+- **Files touched:** `src/components/CountUp.tsx`, `src/components/PaidMediaApproachSection.tsx`, `src/components/ui/marquee.tsx`, `src/components/services/servicesContent.ts`, deleted the six components above, `PROGRESS.md`.
+- **Checks run:** `npm test` (230 pass, 2 skipped), eslint on touched files (clean), `npm run build` (143 routes), `check:agency`, `check:seo`, `check:performance` (197 KiB initial JS gzip) all pass. `tsc` reports only the 6 known `chatLead.ts` errors from earlier steps.
+- **Not done:**
+  - **Lighthouse (mobile) was not run.** The permission classifier denied `npx lighthouse`. Run `npx lighthouse http://localhost:4173/agency/services --form-factor=mobile` after `npm run preview`, then record the scores here. Anything under 90 needs a note.
+  - **No browser check of the Step 10 changes.** The Playwright browser was locked by another process. The counter reset-on-scroll and the gallery `aria-hidden` have not been seen in a browser.
+  - Earlier steps' open items are unchanged (below).
+- **Left open:**
+  - `ServiceImagePlaceholder` stays because `svc-seo`, `svc-lead-gen` and the proof images are still missing.
+  - `DESIGN_BRIEF.md` Q3 (KES 500K+ vs KES 1.2M+) and Q4 (headline) are still unanswered.
+  - Pricing prose in `servicePages.ts` is still typed by hand (Step 7 note).
+  - `supabase/functions/mcp/index.ts` change from Step 7 is still unrestored.
+
+### What changed (summary for the whole rebuild)
+
+`/agency/services` now has a benefit-led hero with trust numbers, a filterable bento grid of 8 services (Meta Ads spans two columns), a proof section with count-up results and three case cards, a compact packages summary, a "which platform" block, a five-step process, a six-question FAQ with matching JSON-LD, and a closing CTA with Calendly and WhatsApp. A mobile bottom bar and scroll reveals were added in Step 9. Prices, packages, proof and FAQ all come from `src/data/services.ts`.
+
+### Next ideas
+
+1. Upgrade `/agency/:service` pages to the new bento visual language and proof format. They still use the old layout.
+2. Replace the placeholders with real images: a Search Console graph for SEO, a lead-flow screenshot for Lead Gen, a Google Ads dashboard, and three blurred results screenshots.
+3. Answer Q3 and Q4 so the hero and the proof figures agree.
+4. Add a FAQPage schema to `/agency/pricing`, which already shows the same FAQ.
+5. Give TikTok its own service page. Its tile currently links to the contact form.
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -155,4 +186,4 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 
 ## Next step
 
-Step 10 — performance, SEO, cleanup, final QA. Use **Haiku** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 10 only.`
+Step 10 is done except the Lighthouse run and the browser check (see Step 10 notes). Remaining work is listed there under "Left open" and "Next ideas".

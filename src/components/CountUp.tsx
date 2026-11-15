@@ -10,19 +10,32 @@ interface CountUpProps {
 }
 
 /**
- * Counts up when it scrolls into view. The real value is always in the HTML
- * (`agency-counter-static`); `index.css` swaps in the animated copy only when JS
- * is on, so crawlers and no-JS visitors read the final number. With reduced
- * motion the animated copy starts at the final number and does not move.
+ * Shows the real figure from the first render, so the prerendered HTML and the
+ * page before JS runs read "KES 180K", not "KES 0K". A counter that starts below
+ * the fold resets to 0 and counts up when it scrolls into view. One already on
+ * screen at load keeps its final value, so nothing flashes.
+ * `index.css` shows the animated copy only when JS is on; without JS the static
+ * copy (same figure) is shown instead.
  */
 export function CountUp({ value, prefix = "", suffix = "", decimals = 0 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
   const reduceMotion = useReducedMotion();
-  const [n, setN] = useState(0);
+  const [n, setN] = useState(value);
+  const countsOnScroll = useRef(false);
+
+  // Runs after mount. Off-screen counters are reset here, before anyone can see them.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reduceMotion) return;
+    if (el.getBoundingClientRect().top >= window.innerHeight) {
+      countsOnScroll.current = true;
+      setN(0);
+    }
+  }, [reduceMotion]);
 
   useEffect(() => {
-    if (!inView || reduceMotion) return;
+    if (!inView || reduceMotion || !countsOnScroll.current) return;
     const duration = 1500;
     const start = performance.now();
     let raf = 0;
