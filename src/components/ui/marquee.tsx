@@ -1,13 +1,10 @@
 import { cn } from "@/lib/utils";
 
-interface MarqueeProps {
-  className?: string;
+interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {
   reverse?: boolean;
   pauseOnHover?: boolean;
-  children?: React.ReactNode;
   vertical?: boolean;
   repeat?: number;
-  [key: string]: any;
 }
 
 export function Marquee({
@@ -34,8 +31,11 @@ export function Marquee({
       {Array(repeat)
         .fill(0)
         .map((_, i) => (
+          // Copies after the first exist only so the loop has no gap. Hide them from
+          // assistive tech so each item is read once.
           <div
             key={i}
+            aria-hidden={i > 0 || undefined}
             className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
               "animate-marquee flex-row": !vertical,
               "animate-marquee-vertical flex-col": vertical,

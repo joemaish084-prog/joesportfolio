@@ -1,3 +1,8 @@
+import { formatKes, packageFeeKes, serviceFeeKes } from "@/data/services";
+
+// Fees are read from src/data/services.ts so this copy cannot drift from the pricing pages.
+const feeText = (slug: string) => formatKes(serviceFeeKes(slug));
+
 export const faqs = [
   {
     question: "Who is the best digital marketer in Nairobi?",
@@ -22,7 +27,7 @@ export const faqs = [
   {
     question: "How much does digital marketing cost in Kenya?",
     answer:
-      "Meta Ads and social media management start at KES 40,000/month; Google Ads and SEO start at KES 45,000/month. Multi-platform retainers start at KES 70,000/month. Advertising spend is separate from management fees. Book a free call for a quote based on your scope.",
+      `Meta Ads and social media management start at KES ${feeText("meta-ads")}/month; Google Ads and SEO start at KES ${feeText("google-ads")}/month. Multi-platform retainers start at KES ${formatKes(packageFeeKes("GROWTH"))}/month. Advertising spend is separate from management fees. Book a free call for a quote based on your scope.`,
   },
   {
     question: "Who is the best Meta Ads manager in Kenya?",
@@ -67,7 +72,7 @@ export const faqs = [
   {
     question: "Do you offer affordable digital marketing packages for small businesses in Kenya?",
     answer:
-      "Yes. Monthly retainers start at KES 40,000, with the scope agreed around your business needs. Advertising spend is separate from management fees. Book a free strategy call to find the right fit for your budget.",
+      `Yes. Monthly retainers start at KES ${formatKes(packageFeeKes("STARTER"))}, with the scope agreed around your business needs. Advertising spend is separate from management fees. Book a free strategy call to find the right fit for your budget.`,
   },
   {
     question: "Can you manage YouTube marketing and video campaigns in Kenya?",

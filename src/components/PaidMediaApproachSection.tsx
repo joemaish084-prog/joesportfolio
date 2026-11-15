@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SectionLabel } from "@/components/SectionLabel";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { CountUp } from "@/components/CountUp";
 
 const approachSteps = [
   {
@@ -130,34 +131,6 @@ const platformData: Record<
   },
 };
 
-function NumberTicker({ value, prefix = "", suffix = "", decimals = 0 }: Stat) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const [n, setN] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const duration = 1200;
-    const start = performance.now();
-    let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / duration);
-      setN(p * value);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, value]);
-
-  return (
-    <span ref={ref}>
-      {prefix}
-      {n.toFixed(decimals)}
-      {suffix}
-    </span>
-  );
-}
-
 function FunnelRow({ stages }: { stages: FunnelStage[] }) {
   return (
     <div className="flex items-center">
@@ -165,7 +138,7 @@ function FunnelRow({ stages }: { stages: FunnelStage[] }) {
         <div key={stage.label} className="flex items-center flex-1 last:flex-none">
           <div className="text-center px-1">
             <p className="text-xl font-display font-semibold tracking-tight whitespace-nowrap">
-              <NumberTicker {...stage} />
+              <CountUp {...stage} />
             </p>
             <p className="text-[10px] uppercase tracking-[0.12em] mt-0.5" style={{ color: "hsl(var(--panel-dark-muted))" }}>
               {stage.label}
@@ -279,7 +252,7 @@ function CampaignSnapshotPanel() {
                 {platformData[key].stats.map((s) => (
                   <div key={s.label}>
                     <p className="text-[1.75rem] leading-none font-display font-semibold tracking-tight">
-                      <NumberTicker {...s} />
+                      <CountUp {...s} />
                     </p>
                     <p className="text-xs mt-1.5" style={{ color: "hsl(var(--panel-dark-muted))" }}>
                       {s.label}

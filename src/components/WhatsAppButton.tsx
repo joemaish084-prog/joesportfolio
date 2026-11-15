@@ -19,13 +19,15 @@ function WhatsAppIcon() {
 export function WhatsAppButton() {
   const { pathname } = useLocation();
   if (pathname === "/admin") return null;
+  // The services page has its own bottom bar with WhatsApp on phones, so the floating button steps aside there.
+  const hasMobileBar = pathname.replace(/\/$/, "") === "/agency/services";
   return (
     <a
       href={whatsappUrl(pathname)}
       target="_blank"
       rel="noopener noreferrer"
       data-track-location="floating_button"
-      className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elegant flex items-center justify-center animate-fade-in hover:scale-110 hover:shadow-lg active:scale-95 transition-[transform,box-shadow]"
+      className={`${hasMobileBar ? "hidden md:flex" : "flex"} fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-12 h-12 rounded-full bg-[#25D366] text-white shadow-elegant items-center justify-center animate-fade-in hover:scale-110 hover:shadow-lg active:scale-95 transition-[transform,box-shadow]`}
       aria-label="Message me on WhatsApp"
     >
       <WhatsAppIcon />

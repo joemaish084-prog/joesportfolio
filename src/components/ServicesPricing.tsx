@@ -5,30 +5,37 @@ import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 import { MarketToggle } from "@/components/MarketToggle";
 import { localizePrice, pick, useMarket } from "@/lib/market";
+import { servicePrice } from "@/data/services";
+
+// Prices come from src/data/services.ts so they cannot drift from the agency pages.
+const fee = (slug: string) => {
+  const text = servicePrice(slug, { short: true });
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
 
 const services = [
   {
     icon: Target,
     title: "Meta Ads",
-    description: "From KES 40,000/mo + ad spend — Facebook & Instagram campaigns: strategy, audience research, creative direction, weekly optimization and monthly reporting.",
+    description: `${fee("meta-ads")} + ad spend — Facebook & Instagram campaigns: strategy, audience research, creative direction, weekly optimization and monthly reporting.`,
     className: "md:col-span-2",
   },
   {
     icon: Search,
     title: "Google Ads",
-    description: "From KES 45,000/mo + ad spend — Search, Display & YouTube campaigns: keyword strategy, bid management, conversion tracking and monthly reporting.",
+    description: `${fee("google-ads")} + ad spend — Search, Display & YouTube campaigns: keyword strategy, bid management, conversion tracking and monthly reporting.`,
     className: "md:col-span-1",
   },
   {
     icon: Share2,
     title: "Social Media Management",
-    description: "From KES 40,000/mo — Content planning, scheduling and community management for your social channels.",
+    description: `${fee("social-media-management")} — Content planning, scheduling and community management for your social channels.`,
     className: "md:col-span-1",
   },
   {
     icon: FileText,
     title: "SEO Optimization",
-    description: "From KES 45,000/mo — Keyword research, on-page optimization, technical audits and local SEO to help customers find your business.",
+    description: `${fee("seo-optimization")} — Keyword research, on-page optimization, technical audits and local SEO to help customers find your business.`,
     className: "md:col-span-1",
   },
 ];

@@ -1,6 +1,7 @@
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
 import { SITE_URL, canonicalUrl, type PageHead } from "./heads";
 import { getLiveServicePages } from "@/data/servicePages";
+import { agencyFaqs } from "@/data/services";
 
 export const agencyOrganization = {
   "@context": "https://schema.org",
@@ -52,7 +53,16 @@ export function agencyHead(key: AgencyPageKey): PageHead {
         },
       } : {}),
       ...(key !== "home" ? { isPartOf: { "@id": `${SITE_URL}/agency#webpage` } } : {}),
-    }, {
+    }, ...(key === "services" ? [{
+      // Every FAQ the services page shows (ServicesFaq reads the same list).
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: agencyFaqs.map(({ q, a }) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    }] : []), {
       "@context": "https://schema.org", "@type": "BreadcrumbList",
       itemListElement: crumbs.map((crumb, index) => ({
         "@type": "ListItem", position: index + 1, name: crumb.name, item: canonicalUrl(crumb.path),

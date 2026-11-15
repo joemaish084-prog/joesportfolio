@@ -472,6 +472,16 @@ html:not(.js) .agency-counter-animated { display: none; }
   }
 }
 
+/* Light theme only: orange text on white is 2.9:1. On the services page small
+   orange text uses a darker orange (about 5:1), and the large gradient figures
+   a darker pair (3.5:1 or better, enough for large text). Dark theme unchanged. */
+html:not(.dark) .services-page .text-primary {
+  color: hsl(25 100% 35%);
+}
+html:not(.dark) .services-page .text-gradient {
+  background-image: linear-gradient(to right, hsl(25 100% 35%), hsl(25 100% 43%));
+}
+
 /* Agency pages share one rounded card language; the portfolio keeps its own. */
 .agency-page .surface-card {
   border-radius: 1rem;

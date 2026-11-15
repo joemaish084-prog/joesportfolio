@@ -21,6 +21,7 @@ import {
 import { ShineBorder } from "@/components/ui/shine-border";
 import { trackSpotlight } from "@/lib/spotlight";
 import { SectionLabel } from "@/components/SectionLabel";
+import { CountUp } from "@/components/CountUp";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { CustomerJourney } from "@/components/agency/CustomerJourney";
@@ -36,6 +37,10 @@ import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/Agency
 import { blogSummaries } from "@/data/blogSummaries";
 import { caseStudies } from "@/data/caseStudies";
 import { getLiveServicePages } from "@/data/servicePages";
+import {
+  CALENDLY_URL, agencyFaqs as faqs, formatKes, getService, onboardingSteps, packageComparison,
+  priceLabel, retainerPackages as retainerPackageData, serviceFeeKes, servicePrice, trustNumbers as stats,
+} from "@/data/services";
 import { migrationReasons } from "@/data/shopify";
 import { ShopifyAgencyFeature } from "@/components/shopify/ShopifyAgencyFeature";
 import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, CardCover } from "@/components/agency/AgencyVisuals";
@@ -47,7 +52,6 @@ const EMAILJS_SERVICE_ID = "service_ae81bbn";
 const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
 const EMAILJS_PUBLIC_KEY = "2H5maWozuCEEd6vtl";
 
-const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
 const WHATSAPP_NUMBER = "254704700160";
 const WHATSAPP_MESSAGE = encodeURIComponent(
   "Hi Joseph! I visited josephmaina.co.ke/agency and I'd like to discuss working together."
@@ -56,12 +60,6 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`
 // These parameters are what make Calendly report a booking back to this page.
 const CALENDLY_EMBED_URL = `${CALENDLY_URL}?embed_domain=www.josephmaina.co.ke&embed_type=Inline`;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const stats = [
-  { value: 500, prefix: "KES ", suffix: "K+", label: "Ad budgets managed" },
-  { value: 20, prefix: "", suffix: "+", label: "Campaigns launched" },
-  { value: 3, prefix: "", suffix: "+", label: "Years experience" },
-];
 
 const whyCards = [
   { icon: Target, title: "Results You Can Measure", desc: "Every campaign tracked with clear KPIs — reach, leads, conversions and ROI. No vanity metrics." },
@@ -75,7 +73,7 @@ const singlePlatform = [
     icon: Target,
     slug: "meta-ads",
     name: "Meta Ads Management",
-    price: "From KES 40,000/month",
+    price: servicePrice("meta-ads"),
     image: { src: iclearFacebookBanner, alt: "iClear 'Water is Sweet' Facebook campaign banner", position: "object-[85%_center]" },
     features: ["Campaign strategy and setup", "Audience research", "Creative direction", "Weekly optimization", "Monthly reporting"],
     proof: { label: "Read: what Kenyan SMEs should spend on Meta Ads", to: "/agency/blog/how-much-should-a-kenyan-sme-spend-on-meta-ads" },
@@ -85,7 +83,7 @@ const singlePlatform = [
     icon: Search,
     slug: "google-ads",
     name: "Google Ads Management",
-    price: "From KES 45,000/month",
+    price: servicePrice("google-ads"),
     image: { src: iclearFilterPromo, alt: "iClear 'Buy standard, get a free filter' display ad", position: "object-[center_20%]" },
     features: ["Search, Display and YouTube campaigns", "Keyword research and strategy", "Bid management", "Conversion tracking", "Monthly reporting"],
     proof: { label: "Read: what Google Ads management costs in Kenya", to: "/agency/blog/google-ads-cost-kenya-2026" },
@@ -95,7 +93,7 @@ const singlePlatform = [
     icon: Video,
     slug: "tiktok-ads",
     name: "TikTok Ads Management",
-    price: "From KES 40,000/month",
+    price: servicePrice("tiktok-ads"),
     image: { src: iclearDishwashShort, alt: "Still from an iClear short-form installation video", position: "object-[center_35%]" },
     features: ["Campaign strategy", "Creative direction", "Audience targeting", "Weekly optimization", "Performance reporting"],
     proof: { label: "Case study: 0 to 4 million TikTok views", to: "/agency/blog/0-to-4-million-tiktok-views-behind-the-campaign" },
@@ -103,41 +101,9 @@ const singlePlatform = [
   },
 ];
 
-const retainerPackages = [
-  {
-    name: "STARTER",
-    label: "For small businesses",
-    price: "From KES 40,000/month",
-    note: "Ad spend under KES 50,000/month",
-    intlNote: "Ad spend from $1,500/month",
-    features: ["1 platform managed", "Campaign setup and strategy", "Audience research", "Monthly reporting", "Email support"],
-  },
-  {
-    name: "GROWTH",
-    label: "Most popular",
-    highlight: true,
-    price: "From KES 70,000/month",
-    note: "Ad spend KES 50,000 - 200,000/month",
-    intlNote: "Ad spend $3,000 - $8,000/month",
-    features: ["2 platforms managed", "Full campaign management", "Creative direction", "Weekly optimization", "Bi-weekly reporting", "WhatsApp support"],
-  },
-  {
-    name: "SCALE",
-    label: "For established brands",
-    price: "From KES 120,000/month",
-    note: "Ad spend KES 200,000+/month",
-    intlNote: "Ad spend $8,000+/month",
-    features: ["All platforms managed", "Full performance marketing", "Dedicated strategy sessions", "Daily monitoring", "Weekly reporting", "Priority WhatsApp support", "Quarterly strategy review"],
-  },
-];
-
-// Every value restates a line from the package's own feature list or note.
-const packageComparison = [
-  { label: "Monthly ad spend", values: ["Under KES 50,000", "KES 50,000 – 200,000", "KES 200,000+"], intlValues: ["From $1,500", "$3,000 – $8,000", "$8,000+"] },
-  { label: "Platforms managed", values: ["1", "2", "All"] },
-  { label: "Reporting", values: ["Monthly", "Bi-weekly", "Weekly"] },
-  { label: "Support", values: ["Email", "WhatsApp", "Priority WhatsApp"] },
-];
+// Packages and the comparison rows live in src/data/services.ts. The price is
+// formatted to the "From KES 40,000/month" string that PriceTag and localizePrice expect.
+const retainerPackages = retainerPackageData.map((p) => ({ ...p, price: priceLabel(p.price) }));
 
 const hubIcons = { services: LayoutGrid, results: TrendingUp, pricing: Tag, contact: MessageCircle } as const;
 
@@ -174,17 +140,22 @@ const SERVICE_PAGE_FOR_ROW: Record<string, string> = {
   "digital-marketing-audit": "/agency/digital-marketing-audit",
 };
 
-const supportingServices = [
-  { icon: Building2, slug: "shopify-services", name: "Shopify Store Services", price: "Quoted for your scope", desc: "Store creation and migration per project; management scoped monthly. Shopify and third-party costs are separate.", proof: { label: "Explore Shopify services and Babyshop Dansar", to: "/agency/shopify-services" } },
-  { icon: Share2, slug: "social-media-management", name: "Social Media Management", price: "from KES 40,000/mo", desc: "Content, scheduling and community management.", proof: { label: "Read: TikTok vs Instagram for Kenyan brands", to: "/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026" } },
-  { icon: Search, slug: "seo-optimization", name: "SEO Optimization", price: "from KES 45,000/mo", desc: "On-page, technical and local SEO.", proof: { label: "Read: why your Nairobi business isn't on Google", to: "/agency/blog/why-your-nairobi-business-isnt-showing-up-on-google-2026" } },
-  { icon: FileText, slug: "content-strategy", name: "Content Strategy", price: "from KES 45,000/mo", desc: "Editorial calendars and content plans.", proof: { label: "Read: my honest take on AI and marketing", to: "/agency/blog/ai-marketing-honest-take-2026" } },
-  { icon: Video, slug: "video-production", name: "Video Production", price: "from KES 40,000/project", desc: "Short-form ads and brand videos.", proof: { label: "Read: video ads vs static ads in Kenya", to: "/agency/blog/video-ads-vs-static-ads-kenya-2026" } },
-  { icon: Lightbulb, slug: "brand-strategy", name: "Brand Strategy", price: "from KES 60,000", desc: "Positioning, messaging and identity.", proof: { label: "Read: why most Kenyan SMEs fail at marketing", to: "/agency/blog/real-reason-kenyan-smes-fail-at-marketing" } },
-  { icon: Palette, slug: "graphic-design", name: "Graphic Design", price: "from KES 40,000/mo", desc: "Social graphics, ads and collateral.", proof: { label: "Read: ad creative testing for Kenyan brands", to: "/agency/blog/ad-creative-testing-kenyan-brands-2026" } },
-  { icon: ClipboardList, slug: "digital-marketing-audit", name: "Digital Marketing Audit", price: "Free for now", desc: "Performance review, with findings in a written report or call within 1-2 days.", proof: { label: "Read: what an audit actually finds", to: "/agency/blog/what-a-digital-marketing-audit-finds-kenya-2026" } },
-  { icon: MessageSquare, slug: "strategy-consultation", name: "Strategy Consultation", price: "KES 40,000/session", desc: "One-on-one advisory session.", proof: { label: "Read: how to choose an agency in Nairobi", to: "/agency/blog/how-to-choose-a-digital-marketing-agency-nairobi-2026" } },
-];
+// Name, price and scope come from src/data/services.ts. Only the icon and the reading link are chosen here.
+const supportingMeta: Record<string, { icon: typeof Building2; proof: { label: string; to: string } }> = {
+  "shopify-services": { icon: Building2, proof: { label: "Explore Shopify services and Babyshop Dansar", to: "/agency/shopify-services" } },
+  "social-media-management": { icon: Share2, proof: { label: "Read: TikTok vs Instagram for Kenyan brands", to: "/agency/blog/tiktok-vs-instagram-for-kenyan-brands-2026" } },
+  "seo-optimization": { icon: Search, proof: { label: "Read: why your Nairobi business isn't on Google", to: "/agency/blog/why-your-nairobi-business-isnt-showing-up-on-google-2026" } },
+  "content-strategy": { icon: FileText, proof: { label: "Read: my honest take on AI and marketing", to: "/agency/blog/ai-marketing-honest-take-2026" } },
+  "video-production": { icon: Video, proof: { label: "Read: video ads vs static ads in Kenya", to: "/agency/blog/video-ads-vs-static-ads-kenya-2026" } },
+  "brand-strategy": { icon: Lightbulb, proof: { label: "Read: why most Kenyan SMEs fail at marketing", to: "/agency/blog/real-reason-kenyan-smes-fail-at-marketing" } },
+  "graphic-design": { icon: Palette, proof: { label: "Read: ad creative testing for Kenyan brands", to: "/agency/blog/ad-creative-testing-kenyan-brands-2026" } },
+  "digital-marketing-audit": { icon: ClipboardList, proof: { label: "Read: what an audit actually finds", to: "/agency/blog/what-a-digital-marketing-audit-finds-kenya-2026" } },
+  "strategy-consultation": { icon: MessageSquare, proof: { label: "Read: how to choose an agency in Nairobi", to: "/agency/blog/how-to-choose-a-digital-marketing-agency-nairobi-2026" } },
+};
+const supportingServices = Object.keys(supportingMeta).map((slug) => {
+  const s = getService(slug);
+  return { ...supportingMeta[slug], slug, name: s.name, price: priceLabel(s.price, { short: true }), desc: s.scope };
+});
 
 const serviceOptions = [
   "Shopify Store Services",
@@ -227,13 +198,9 @@ const serviceFromLink: Record<string, string> = {
   scale: "Scale Retainer",
 };
 
-const steps = [
-  { icon: CalendarDays, title: "Free Strategy Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
-  { icon: ClipboardList, title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
-  { icon: PenLine, title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
-  { icon: Rocket, title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
-  { icon: BarChart3, title: "Report & Grow", desc: "Weekly updates and monthly reports. We optimize, scale and keep growing." },
-];
+// Text comes from src/data/services.ts; only the icons are chosen here.
+const stepIcons = [CalendarDays, ClipboardList, PenLine, Rocket, BarChart3];
+const steps = onboardingSteps.map((s, i) => ({ ...s, icon: stepIcons[i] }));
 
 
 const payments = [
@@ -241,35 +208,6 @@ const payments = [
   { icon: Building2, title: "Bank Transfer", desc: "Direct bank transfer for larger retainers. Details on invoice." },
   { icon: Receipt, title: "Invoice & Receipt", desc: "Professional invoice sent within 1 hour of booking confirmation. Receipt on payment." },
 ];
-
-const faqs = [
-  { q: "Do you require long-term contracts?", a: "No lock-in contracts. I work on monthly retainers with 30-day notice to end services. I believe in earning your business every month." },
-  { q: "How quickly can we get started?", a: "After the strategy call and proposal acceptance — we can launch within 3-5 business days." },
-  { q: "Do I provide the ad budget separately?", a: "Yes. My fee covers management only. Ad spend goes directly to Meta/Google/TikTok. This keeps everything transparent." },
-  { q: "What reports will I receive?", a: "Weekly performance updates via WhatsApp and detailed monthly reports delivered to your email and client portal." },
-  { q: "Can I see my campaign performance anytime?", a: "Yes — your client portal gives you 24/7 access to your campaign status, reports and files." },
-  { q: "What does founder-led mean for my business?", a: "Direct access to the person doing the work — not an account manager passing messages. Faster decisions, personal attention, better results." },
-];
-
-function CountUp({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const duration = 1500;
-    const start = performance.now();
-    let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / duration);
-      setN(Math.floor(p * value));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, value]);
-  return <span ref={ref}>{prefix}<span className="agency-counter-animated" aria-hidden="true">{n}</span><span className="agency-counter-static">{value}</span>{suffix}</span>;
-}
 
 function HeroProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
   const rotateX = useSpring(useTransform(mouseY, (v) => v * -5), { damping: 25, stiffness: 150 });
@@ -417,7 +355,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
       <AgencyNavigation />
 
       <main>
-        {pageKey !== "home" && <header className="relative overflow-hidden border-b border-border/50">
+        {/* The services page brings its own hero (ServicesHero). */}
+        {pageKey !== "home" && pageKey !== "services" && <header className="relative overflow-hidden border-b border-border/50">
           <div aria-hidden className="pointer-events-none absolute inset-0">
             <div className="absolute -top-40 right-[-10%] h-[28rem] w-[28rem] rounded-full bg-primary/[0.07] blur-[120px]" />
             <div className="absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_80%_90%_at_70%_0%,black_30%,transparent_100%)]" />
@@ -716,7 +655,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             </div>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground">For Meta Ads, the minimum advertising budget is {pick(market, "KSh 30,000", "$1,500")} per month, paid separately from the management fee. Video production is quoted separately when it goes beyond light social content.</p>
-              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground"><Link to="/agency/lead-generation" className="font-medium text-primary hover:underline">Lead generation starts at {pick(market, "KSh 50,000", "$1,200")}/month, including landing pages.</Link> Your team follows up with the leads.</p>
+              <p className="rounded-xl border border-border/70 bg-card/50 p-4 text-sm text-muted-foreground"><Link to="/agency/lead-generation" className="font-medium text-primary hover:underline">Lead generation starts at {pick(market, `KSh ${formatKes(serviceFeeKes("lead-generation"))}`, "$1,200")}/month, including landing pages.</Link> Your team follows up with the leads.</p>
             </div>
           </div>
 
@@ -1088,8 +1027,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 
 </>}
-        {/* FOOTER CTA — the contact page is already the next step */}
-        {pageKey !== "contact" && <section className="container mx-auto px-4 pb-20">
+        {/* FOOTER CTA — the contact page is already the next step, and the services page ends on its own CTA */}
+        {pageKey !== "contact" && pageKey !== "services" && <section className="container mx-auto px-4 pb-20">
           <Card className="relative max-w-4xl mx-auto overflow-hidden rounded-3xl p-8 md:p-14 text-center border-primary/40 bg-gradient-to-br from-primary/[0.08] via-transparent to-transparent">
             <div aria-hidden className="pointer-events-none absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_70%_80%_at_50%_0%,black_20%,transparent_100%)]" />
             <div className="relative">
