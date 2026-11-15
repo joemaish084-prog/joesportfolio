@@ -7,7 +7,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - [x] Step 1 — Audit and design direction
 - [x] Step 2 — Content data file
 - [x] Step 3 — Hero and services bento grid
-- [ ] Step 4 — Service card interactions
+- [x] Step 4 — Service card interactions
 - [ ] Step 5 — Image system
 - [ ] Step 6 — Proof and results section
 - [ ] Step 7 — Packages table and pricing fix
@@ -47,6 +47,16 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **For Step 9:** tiles are tall (about 850px for the top row and 660px for the others on desktop, about 500px each on phones, where the text sits in a narrow column beside the thumbnail). The Free Audit tile has empty space in its middle on desktop. The hero headline's orange phrase needs the light-theme contrast check.
   - **Still waiting on Joseph:** Q3 (KES 500K+ vs KES 1.2M+) and Q4 (headline). The defaults are in use. TikTok and Shopify tiles show no "For" or proof line where the data is `null`.
 
+## Step 4 notes (2026-11-15)
+
+- **What changed:** filter chips (All / Paid ads / SEO / Social / Stores) above the bento grid. Tiles fade and slide to their new place (framer-motion `layout="position"`); in a filtered view every tile is `standard`, so the large and tall sizes exist only under All. Chips are buttons with `aria-pressed`, and a screen-reader line announces "Showing N of 8 services". Tile hover and keyboard focus: lift 4px (already there), image zooms to 1.04, proof line fades in. On touch devices and with reduced motion the proof line is always visible and nothing animates. Tiles still go to their service page; no modal.
+- **Files touched:** `src/components/services/ServiceFilterChips.tsx` (new), `ServicesBento.tsx`, `ServiceTile.tsx` (now `forwardRef`, needed by `AnimatePresence`), `src/data/services.ts` (`filterServices`), `src/data/services.test.ts` (2 tests).
+- **Left open:**
+  - **Checks run:** lint on touched files, `npm test` (222 pass), `npm run build`, `check:agency`, and a desktop browser pass: each chip filters correctly, Tab then Enter selects a chip, hover takes the proof line from opacity 0 to 1 and zooms the image 1.04, no console errors. Not checked: real touch device, reduced-motion emulation (the code path is CSS and a hook, not exercised), light theme. The Playwright window would not go narrower than 517px, so 360px was not re-checked; the chip row scrolls sideways by design on phones.
+  - **Filtered view layout:** the Free Audit tile (accent, `md:col-span-2`) can land alone or beside one other tile. Look at it in Step 9.
+  - **Chip counts:** the "Social" chip includes TikTok (it is tagged paid and social), so it shows 2 tiles. "Stores" shows 1 (Shopify). Say if either feels too thin.
+  - **Step 5:** the image zoom wrapper lives in `ServiceTile.tsx` and clips the image, so `ServiceImage` can replace the placeholder inside it with no other change.
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -72,4 +82,4 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 
 ## Next step
 
-Step 4 — use **Sonnet** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 4 only.`
+Step 5 — use **Sonnet** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 5 only.`

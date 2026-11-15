@@ -365,6 +365,10 @@ export const serviceFilters: { key: ServiceCategory | "all"; label: string }[] =
   { key: "stores", label: "Stores" },
 ];
 
+/** Services matching a filter chip. "all" returns the list unchanged. */
+export const filterServices = (list: Service[], key: ServiceCategory | "all"): Service[] =>
+  key === "all" ? list : list.filter((s) => s.categories.includes(key));
+
 /* -------------------------------------------------------------------------- */
 /* Retainer packages                                                           */
 /* -------------------------------------------------------------------------- */

@@ -3,7 +3,7 @@ import { caseStudies } from "@/data/caseStudies";
 import { servicePages } from "@/data/servicePages";
 import { localizePrice } from "@/lib/market";
 import {
-  formatKes, getPackage, packageComparison, priceLabel, proofItems, retainerPackages, serviceAnchorId,
+  bentoServices, filterServices, formatKes, getPackage, packageComparison, priceLabel, proofItems, retainerPackages, serviceAnchorId,
   servicePrice, services,
 } from "@/data/services";
 
@@ -107,6 +107,20 @@ describe("proof", () => {
   it("never names a client the site does not name", () => {
     for (const id of ["google-ads-launch", "meta-ads-turnaround", "nyeri-county"]) {
       expect(proofItems.find((p) => p.id === id)?.client, id).toBeNull();
+    }
+  });
+});
+
+describe("filterServices", () => {
+  it("returns every tile for all", () => {
+    expect(filterServices(bentoServices, "all")).toHaveLength(bentoServices.length);
+  });
+
+  it("keeps only tiles in the chosen category, and no chip is empty", () => {
+    for (const key of ["paid", "seo", "social", "stores"] as const) {
+      const out = filterServices(bentoServices, key);
+      expect(out.length, key).toBeGreaterThan(0);
+      expect(out.every((s) => s.categories.includes(key)), key).toBe(true);
     }
   });
 });

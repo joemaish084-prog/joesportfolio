@@ -1,4 +1,6 @@
 import { ArrowRight, ClipboardList, TrendingUp } from "lucide-react";
+import { forwardRef } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { priceLabel, serviceAnchorId, serviceFilters, serviceHref, type Service } from "@/data/services";
 import { localizePrice, useMarket } from "@/lib/market";
@@ -41,6 +43,8 @@ function Price({ service, accent }: { service: Service; accent: boolean }) {
 interface ServiceTileProps {
   service: Service;
   size: ServiceTileSize;
+  /** From `useReducedMotion`: no reflow or fade, tiles just appear. */
+  reducedMotion?: boolean;
 }
 
 /**
@@ -48,13 +52,20 @@ interface ServiceTileProps {
  * the bottom is stretched over the card, so there is one tab stop per tile.
  * A service with no image slot (the free audit) renders as the accent tile.
  */
-export function ServiceTile({ service, size }: ServiceTileProps) {
+export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function ServiceTile({ service, size, reducedMotion = false }, ref) {
   const accent = service.imageSlot === null;
   const large = size === "large";
   const quiet = accent ? "text-primary-foreground/85" : "text-muted-foreground";
 
   return (
-    <li
+    <motion.li
+      ref={ref}
+      // "position" slides tiles to their new spot without stretching them when the size changes.
+      layout={reducedMotion ? false : "position"}
+      initial={reducedMotion ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={reducedMotion ? undefined : { opacity: 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
       id={serviceAnchorId(service.slug)}
       onMouseMove={accent ? undefined : trackSpotlight}
       className={[
@@ -67,7 +78,16 @@ export function ServiceTile({ service, size }: ServiceTileProps) {
         SPAN[size],
       ].join(" ")}
     >
-      {service.imageSlot && <ServiceImagePlaceholder slot={service.imageSlot} className={IMAGE[size]} thumbOnMobile={size === "standard"} />}
+      {/* The wrapper owns the box and clips the zoom, so Step 5 can swap the placeholder for the real image. */}
+      {service.imageSlot && (
+        <div className={`relative overflow-hidden ${IMAGE[size]}`}>
+          <ServiceImagePlaceholder
+            slot={service.imageSlot}
+            className="h-full w-full transition-transform duration-500 motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
+            thumbOnMobile={size === "standard"}
+          />
+        </div>
+      )}
 
       <div className={`flex min-w-0 flex-1 flex-col p-4 sm:p-5 ${large ? "lg:p-7" : ""}`}>
         {accent && (
@@ -90,7 +110,8 @@ export function ServiceTile({ service, size }: ServiceTileProps) {
           </p>
         )}
         {service.proof && (
-          <p className="mt-4 flex items-start gap-2 rounded-lg bg-primary/[0.08] px-3 py-2 text-sm font-medium leading-snug">
+          // Fades in on hover or focus where a mouse is in use. Touch and reduced motion always see it.
+          <p className="mt-4 flex items-start gap-2 rounded-lg bg-primary/[0.08] px-3 py-2 text-sm font-medium leading-snug transition-opacity duration-300 [@media(hover:hover)_and_(prefers-reduced-motion:no-preference)]:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100">
             <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
             {service.proof.line}
           </p>
@@ -110,6 +131,6 @@ export function ServiceTile({ service, size }: ServiceTileProps) {
           </div>
         </div>
       </div>
-    </li>
+    </motion.li>
   );
-}
+});
