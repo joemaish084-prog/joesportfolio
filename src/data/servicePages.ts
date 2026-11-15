@@ -1,6 +1,7 @@
 import { BarChart3, ClipboardList, Magnet, MapPin, Share2, Target, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { shopifyServicePage } from "@/data/shopify";
+import { CALENDLY_URL, getPackage, onboardingSteps, priceLabel, servicePrice } from "@/data/services";
 
 /**
  * "Money pages" — one focused page per search intent, so the agency section does
@@ -86,16 +87,11 @@ export interface ServicePage {
   reviewNotes: string[];
 }
 
-export const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
+// Re-exported so existing imports keep working. The value lives in src/data/services.ts.
+export { CALENDLY_URL };
 
 /** The real five-step onboarding process, shared by every service page. */
-export const SERVICE_PROCESS = [
-  { title: "Free Strategy Call", desc: "Free 30-minute call to understand your brand, goals and budget." },
-  { title: "Custom Proposal", desc: "I send a tailored proposal within 24 hours — services, pricing and timeline." },
-  { title: "Agreement & Deposit", desc: "We agree on terms. 50% deposit paid via M-Pesa to kick things off." },
-  { title: "We Launch", desc: "Campaigns go live. You get access to your client portal for real-time updates." },
-  { title: "Report & Grow", desc: "Weekly updates and monthly reports. We optimize, scale and keep growing." },
-];
+export const SERVICE_PROCESS = onboardingSteps;
 
 /** Real FAQs from the agency page, relevant to every retainer service. */
 const SHARED_FAQS: ServiceFaq[] = [
@@ -127,7 +123,7 @@ export const servicePages: ServicePage[] = [
       "Performance marketing for Kenyan small and medium businesses — Meta, Google and TikTok Ads, SEO and lead generation. Retainers from KES 40,000/month.",
     standfirst:
       "I help Kenyan businesses generate more leads and sales through paid and organic channels. One person doing the work, no account managers, no lock-in contracts.",
-    price: { amount: "From KES 40,000/month", note: "Management fees are separate from your advertising budget." },
+    price: { amount: priceLabel(getPackage("STARTER").price), note: "Management fees are separate from your advertising budget." },
     whoFor: [
       "Kenyan SMEs with a product or service that already sells, who want more of it",
       "Businesses spending on ads without knowing what they get back",
@@ -197,7 +193,7 @@ export const servicePages: ServicePage[] = [
       "Facebook and Instagram ads management for Kenyan businesses from KES 40,000/month. Campaign strategy, creative direction, weekly optimization and monthly reporting.",
     standfirst:
       "Facebook and Instagram are where most Kenyan SMEs get their cheapest reach — and where most of them waste the most money. I run the account so that does not happen.",
-    price: { amount: "From KES 40,000/month", note: "Management fee only. Ad spend goes directly to Meta." },
+    price: { amount: servicePrice("meta-ads"), note: "Management fee only. Ad spend goes directly to Meta." },
     whoFor: [
       "Businesses selling to Kenyan consumers who are not actively searching yet",
       "Brands with an offer that works offline and needs to work online",
@@ -289,7 +285,7 @@ export const servicePages: ServicePage[] = [
       "Google Ads management in Kenya from KES 45,000/month. Search, Shopping, Performance Max, Display and YouTube campaigns with conversion tracking and reporting.",
     standfirst:
       "Google works best when someone is already looking for what you sell. If that is your business, it is usually the cheapest lead you will ever buy — once the account stops wasting clicks.",
-    price: { amount: "From KES 45,000/month", note: "Management fee only. Ad spend goes directly to Google." },
+    price: { amount: servicePrice("google-ads"), note: "Management fee only. Ad spend goes directly to Google." },
     whoFor: [
       "Businesses whose customers actively search — services, repairs, B2B, professional practices",
       "Advertisers whose budget disappears on broad match with nothing to show",
@@ -364,7 +360,7 @@ export const servicePages: ServicePage[] = [
       "SEO services for Nairobi and Kenyan businesses from KES 45,000/month. On-page, technical and local SEO including Google Business Profile and Maps visibility.",
     standfirst:
       "Most Nairobi businesses are invisible in local search and nobody has ever told them why. The fixes are usually unglamorous, and they compound for years after you stop paying for clicks.",
-    price: { amount: "From KES 45,000/month", note: "Ongoing retainer. An initial audit is free for now if you want to understand what needs fixing first." },
+    price: { amount: servicePrice("seo-optimization"), note: "Ongoing retainer. An initial audit is free for now if you want to understand what needs fixing first." },
     whoFor: [
       "Businesses with a physical location or service area in Nairobi and beyond",
       "Companies that rank for their own name and nothing else",
@@ -426,7 +422,7 @@ export const servicePages: ServicePage[] = [
       "Social media management in Kenya from KES 40,000/month. Four posts a week on two platforms you choose, with community management and light video shoots.",
     standfirst:
       "Posting consistently is not the hard part. Posting things people actually stop for, on the platform where your buyers already are, is — and that is what this covers.",
-    price: { amount: "From KES 40,000/month", note: "Four posts a week on two platforms of your choice. Light video shoots included; larger productions and ad spend are separate." },
+    price: { amount: servicePrice("social-media-management"), note: "Four posts a week on two platforms of your choice. Light video shoots included; larger productions and ad spend are separate." },
     whoFor: [
       "Businesses whose accounts have gone quiet or inconsistent",
       "Brands getting reach but no enquiries from social",
@@ -496,7 +492,7 @@ export const servicePages: ServicePage[] = [
       "Lead generation campaigns in Kenya from KES 50,000/month. Landing pages included, with campaign management and tracking. Your team follows up with leads.",
     standfirst:
       "Traffic is rarely the problem. The gap is between the click and the enquiry, and then between the enquiry and someone actually following it up.",
-    price: { amount: "From KES 50,000/month", note: "Landing pages and campaign management across two platforms included. Ad spend is separate. Your team follows up with leads." },
+    price: { amount: servicePrice("lead-generation"), note: "Landing pages and campaign management across two platforms included. Ad spend is separate. Your team follows up with leads." },
     whoFor: [
       "Businesses getting clicks and impressions but few real enquiries",
       "Services and B2B companies where one client is worth a lot",
@@ -571,7 +567,7 @@ export const servicePages: ServicePage[] = [
       "Free digital marketing audit for Kenyan businesses. Review your ads, website, SEO and tracking, with findings in a written report or call within 1–2 days.",
     standfirst:
       "Find out what needs fixing before spending more on marketing. The audit is free for now, with findings shared in a written report or a call within 1–2 days.",
-    price: { amount: "Free for now", value: 0, note: "No audit fee and no obligation to book ongoing services." },
+    price: { amount: servicePrice("digital-marketing-audit"), value: 0, note: "No audit fee and no obligation to book ongoing services." },
     whoFor: [
       "Businesses paying for marketing and unsure what they are getting",
       "Owners about to hire an agency who want to know what to ask for",

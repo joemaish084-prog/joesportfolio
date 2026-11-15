@@ -3,6 +3,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { CALENDLY_URL } from "@/data/servicePages";
+import { getPackage, packageFeeNote, priceLabel, servicePrice } from "@/data/services";
 
 /**
  * Everything the /agency/services page says lives in this file, so copy, links
@@ -101,7 +102,7 @@ export const primaryServices: PrimaryService[] = [
       "Ongoing optimization",
     ],
     tags: ["Search campaigns", "Shopping", "Conversion tracking", "Keyword strategy", "Bid management"],
-    price: "From KES 45,000/month",
+    price: servicePrice("google-ads"),
     cta: { label: "Explore Google Ads", to: "/agency/google-ads-management" },
     // VERIFIED: from the Google Ads launch case study (src/data/googleAdsCaseStudy.ts).
     // Keep in step with that file and with the Google Ads service page.
@@ -149,7 +150,7 @@ export const primaryServices: PrimaryService[] = [
       "Monthly reporting",
     ],
     tags: ["Lead generation", "Creative testing", "Audience strategy", "Retargeting", "Conversion campaigns"],
-    price: "From KES 40,000/month",
+    price: servicePrice("meta-ads"),
     cta: { label: "Explore Meta Ads", to: "/agency/meta-ads-management" },
     // NO VERIFIED META FIGURE IS SHOWN HERE ON PURPOSE.
     // To add one: set status to "verified" and fill figures, period and link.
@@ -384,11 +385,12 @@ export const moreServices: { anchorId: string; label: string }[] = [
 
 export const pricingContent = {
   heading: "Simple starting points",
-  feeStatement: "Management fee only. Advertising spend is paid directly to Google or Meta.",
+  feeStatement: packageFeeNote,
+  // Meta and social share one price, Google and SEO share one. The data test checks both pairs match.
   rows: [
-    { label: "Meta Ads and social media management", price: "From KES 40,000/month" },
-    { label: "Google Ads and SEO", price: "From KES 45,000/month" },
-    { label: "Multi-platform retainers", price: "From KES 70,000/month" },
+    { label: "Meta Ads and social media management", price: servicePrice("meta-ads") },
+    { label: "Google Ads and SEO", price: servicePrice("google-ads") },
+    { label: "Multi-platform retainers", price: priceLabel(getPackage("GROWTH").price) },
   ],
   assurances: [
     "No lock-in contracts",

@@ -5,7 +5,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 ## Steps
 
 - [x] Step 1 — Audit and design direction
-- [ ] Step 2 — Content data file
+- [x] Step 2 — Content data file
 - [ ] Step 3 — Hero and services bento grid
 - [ ] Step 4 — Service card interactions
 - [ ] Step 5 — Image system
@@ -20,6 +20,18 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - **What changed:** audited the agency pages and wrote `DESIGN_BRIEF.md`. No production code touched. The rebuild target is `/agency/services` (`ServicesSection`), with the new bento reused in compact form on `/agency`.
 - **Files touched:** `DESIGN_BRIEF.md`, `PROGRESS.md`, `SERVICE_PAGE_PLAN.md` (scope and hosting corrections made before this step).
 - **Left open:** five questions for Joseph in `DESIGN_BRIEF.md` section 8 (Meta proof, CTA label, the KES 500K+ vs KES 1.2M+ figures, hero headline, sample dashboard). Each has a default, so Step 2 can start without answers.
+
+## Step 2 notes (2026-11-15)
+
+- **What changed:** added `src/data/services.ts` as the one place for services (13, with price, outcome, who it is for, proof line, category, image slot, CTA), the 3 retainer packages, comparison rows, trust numbers, 5 proof items, the 5 onboarding steps and the 6 agency FAQs. Prices are stored as numbers and printed with `priceLabel` / `servicePrice`, so the "From KES 40,000/month" form that `localizePrice` needs is kept. Homepage tiles, `Agency.tsx`, `servicesContent.ts`, `servicePages.ts` and `shopify.ts` now read from it. The file imports nothing from the app, so there are no import cycles.
+- **Files touched:** `src/data/services.ts` (new), `src/data/services.test.ts` (new, 13 tests), `src/components/ServicesPricing.tsx`, `src/components/services/servicesContent.ts`, `src/data/servicePages.ts`, `src/data/shopify.ts`, `src/pages/Agency.tsx`.
+- **Left open:**
+  - **Checks run:** the 13 new tests and the full suite (220 pass), lint on touched files, `npm run build` and `scripts/check-agency.mjs` all pass. `tsc` still reports 6 errors in `src/lib/chatLead.ts`; they exist on a clean checkout and are not from this step. The homepage price tiles are lazy-loaded, so they are not in `dist/index.html`; they were checked by type and test only, not in a browser.
+  - **Still typed by hand, on purpose:** price figures inside prose (service page `metaTitle` / `metaDescription` text, FAQ answers, the "KSh 30,000" Meta minimum ad budget, ad-spend notes in the packages). The data test checks the structured prices only. Step 7 should decide whether to template the prose.
+  - **Not merged:** `SHARED_FAQS` in `servicePages.ts` has different wording from `agencyFaqs`, and `servicesContent.ts` `processSteps` (Diagnose to Improve) is a different process from `onboardingSteps`. They are different content, so they were left alone. The services page FAQ in Step 8 should use `agencyFaqs`.
+  - **TODO for Joseph (marked `TODO(joseph)` in the file):** who TikTok Ads, Video production, Brand strategy, Graphic design and Strategy consultation are for; a proof line for Shopify (no figure is published); what was done and the period for the iClear result; the campaign period for the Nyeri write-up. Those fields are `null`, so Step 3 must not render them when empty.
+  - **Still open from Step 1:** the KES 500K+ (hero trust number) vs KES 1.2M+ (iClear) figures disagree; both stay as published until Joseph says which is right (Q3). The Meta tile uses the published Meta case study (KES 5.33M, 41.3x, client not named), per the Q1 default.
+  - TikTok has no service page, so its tile links to `/agency/contact#brief` for now.
 
 ## Step overrides (read before starting any step)
 
@@ -46,4 +58,4 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 
 ## Next step
 
-Step 2 — use **Sonnet**. Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 2 only.`
+Step 3 — use **Fable** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 3 only.`

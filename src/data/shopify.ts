@@ -1,5 +1,6 @@
 import { ShoppingBag } from "lucide-react";
 import type { ServicePage } from "@/data/servicePages";
+import { servicePrice } from "@/data/services";
 
 export const SHOPIFY_PATH = "/agency/shopify-services";
 export const SHOPIFY_BRIEF = "/agency/contact?service=shopify-services#brief";
@@ -66,7 +67,7 @@ export const shopifyServicePage: ServicePage = {
   metaTitle: "Shopify Design, Migration & Management | Joseph Maina",
   metaDescription: "Shopify store creation, WooCommerce migration, and ongoing management for businesses in Kenya and worldwide. Explore Babyshop Dansar and discuss your store.",
   standfirst: "I create, migrate, and manage Shopify stores for businesses in Kenya and worldwide. Launch a new shop, plan your move, or get help with an existing store.",
-  price: { amount: "Quoted for your scope", note: "Store builds and migrations are quoted per project. Management is scoped monthly. Shopify subscriptions, paid themes, apps, and transaction fees are separate." },
+  price: { amount: servicePrice("shopify-services"), note: "Store builds and migrations are quoted per project. Management is scoped monthly. Shopify subscriptions, paid themes, apps, and transaction fees are separate." },
   whoFor: ["Businesses launching their first online store", "WooCommerce owners considering a move to Shopify", "Shopify stores that need a redesign or improvements", "Owners who need ongoing catalogue and storefront support"],
   included: shopifyOffers.map(offer => ({ title: offer.title, desc: offer.description })),
   faqs: [
