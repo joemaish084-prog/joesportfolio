@@ -9,7 +9,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - [x] Step 3 — Hero and services bento grid
 - [x] Step 4 — Service card interactions
 - [x] Step 5 — Image system
-- [ ] Step 6 — Proof and results section
+- [x] Step 6 — Proof and results section
 - [ ] Step 7 — Packages table and pricing fix
 - [ ] Step 8 — Process, FAQ, schema
 - [ ] Step 9 — Visual polish, motion, mobile, accessibility
@@ -70,6 +70,18 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **Case-study images (`proof-case-1..3`) are not wired.** They belong to Step 6.
   - The Shopify image is a copy of the file in `public/work/shopify/`, so it is bundled and hashed with the rest.
 
+## Step 6 notes (2026-11-15)
+
+- **What changed:** a proof section on `/agency/services`, between the service grid and "Which platform?". A results strip of four count-up figures (41.3x Meta, 15.5x Google, 4.2x iClear, 10x Convey leads), then three case cards: iClear Kenya, Convey Communications, and the unnamed Meta turnaround (41.3x). Each card shows image slot, client, goal, what I did, result and a link to the write-up. A field with no published text (iClear "what I did") is left out. The hero "See results" button now jumps to this section (`#results`); "See all results" links to `/agency/results`. `CountUp` moved out of `Agency.tsx` into `src/components/CountUp.tsx`, now supports decimals and reduced motion; the real number is in the prerendered HTML (checked in `dist/agency/services.html`).
+- **Files touched:** new `src/components/CountUp.tsx`, `services/ResultsStrip.tsx`, `services/CaseStudyCard.tsx`, `services/ProofSection.tsx`. Changed: `ServicesSection.tsx`, `ServicesHero.tsx`, `ServiceImage.tsx`, `ServiceImagePlaceholder.tsx`, `src/pages/Agency.tsx`, `src/data/services.ts` (`proofCardIds`, `resultsStrip`, `getProofItem`, `ProofImageSlot`, `whatWasDone` may be null), `src/data/services.test.ts` (3 tests).
+- **Left open:**
+  - **Checks run:** lint on touched files, `npm test` (226 pass), `npm run build`, `check:agency`. **Not looked at in a browser** (Playwright was locked by another process again), so layout at 360/768/1440, the count-up on scroll and the placeholders have not been seen. Please eyeball `/agency/services` before Step 9.
+  - **Card choice differs from the brief:** the plan names iClear and Convey, so the cards are iClear, Convey, Meta turnaround. The Google Ads launch (15.5x) is in the strip only. Image slots were renumbered to match: `proof-case-1` iClear, `-2` Convey, `-3` Meta.
+  - **The strip mixes four different clients,** each labelled. The iClear label says "KES 1.2M+ ad spend", which still disagrees with the hero's "KES 500K+" (Q3 unanswered).
+  - **No testimonials:** none confirmed for reuse. A `TODO(joseph)` comment sits in `ProofSection.tsx`.
+  - **TODO(joseph):** iClear "what I did" and period are not published, so those rows are hidden.
+  - `Agency.tsx` still imports `useInView`/`useState`/`useEffect`; lint passes, so they are used elsewhere.
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -91,8 +103,8 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 - `svc-seo.webp` — Search Console performance graph, 800×600 (4:3). **Placeholder showing now.**
 - `svc-lead-gen.webp` — leads arriving by form or WhatsApp, 800×600 (4:3). **Placeholder showing now.**
 - `svc-google-ads.webp` — Google Ads dashboard screenshot, 1200×1500 (4:5). Optional: iClear ad creative is in use as a fallback. Also add `svc-google-ads-400.webp` (400px wide) and update its alt text in `src/data/services.ts`.
-- `proof-case-1.webp`, `proof-case-2.webp`, `proof-case-3.webp` — results screenshots for the three case studies shown, 1200×675 (16:9)
+- `proof-case-1.webp` (iClear Kenya), `proof-case-2.webp` (Convey), `proof-case-3.webp` (Meta turnaround, client unnamed) — results screenshots, 1200×675 (16:9). **Placeholders showing now.** Blur names.
 
 ## Next step
 
-Step 6 — use **Sonnet** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 6 only.`
+Step 7 — use **Haiku** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 7 only.`

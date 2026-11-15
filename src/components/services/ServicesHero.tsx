@@ -48,9 +48,9 @@ export function ServicesHero() {
                   </a>
                 </Button>
                 <Button size="lg" variant="outline" className="w-full rounded-full sm:w-auto" asChild>
-                  <Link to="/agency/results">
+                  <a href="#results">
                     See results <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-                  </Link>
+                  </a>
                 </Button>
               </div>
 

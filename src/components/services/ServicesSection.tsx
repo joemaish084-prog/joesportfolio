@@ -7,6 +7,7 @@ import { MoreServicesRow } from "./MoreServicesRow";
 import { PlatformDecision } from "./PlatformDecision";
 import { PricingNotes } from "./PricingNotes";
 import { ProcessTimeline } from "./ProcessTimeline";
+import { ProofSection } from "./ProofSection";
 import { ServicesBento } from "./ServicesBento";
 import { ServicesCTA } from "./ServicesCTA";
 import { ServicesHero } from "./ServicesHero";
@@ -47,6 +48,8 @@ export function ServicesSection() {
               ))}
             </ul>
           </nav>
+
+          <ProofSection />
 
           <PlatformDecision />
           <ProcessTimeline />

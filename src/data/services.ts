@@ -471,7 +471,8 @@ export interface ProofItem {
   client: string | null;
   period: string | null;
   goal: string;
-  whatWasDone: string;
+  /** `null` = no published description. The card leaves the row out; never fill it in. */
+  whatWasDone: string | null;
   /** Headline result, exactly as published. */
   result: string;
   /** Figures for the results strip. */
@@ -481,8 +482,11 @@ export interface ProofItem {
   /** Link to the full write-up. */
   readMore: string;
   /** Results screenshot slot, supplied in Step 5. */
-  imageSlot: "proof-case-1" | "proof-case-2" | "proof-case-3" | null;
+  imageSlot: ProofImageSlot | null;
 }
+
+/** Results screenshots for the case study cards (16:9). Drop `<slot>.webp` in `src/assets/services/`. */
+export type ProofImageSlot = "proof-case-1" | "proof-case-2" | "proof-case-3";
 
 export const proofItems: ProofItem[] = [
   {
@@ -499,7 +503,7 @@ export const proofItems: ProofItem[] = [
     ],
     source: "src/data/caseStudies.ts#google-ads-launch",
     readMore: "/work/case-studies#google-ads-launch",
-    imageSlot: "proof-case-1",
+    imageSlot: null,
   },
   {
     id: "meta-ads-turnaround",
@@ -515,7 +519,7 @@ export const proofItems: ProofItem[] = [
     ],
     source: "src/data/caseStudies.ts#meta-ads-turnaround",
     readMore: "/work/case-studies#meta-ads-turnaround",
-    imageSlot: "proof-case-2",
+    imageSlot: "proof-case-3",
   },
   {
     id: "convey-communications",
@@ -531,14 +535,14 @@ export const proofItems: ProofItem[] = [
     ],
     source: "src/data/servicePages.ts (digital-marketing-kenya, lead-generation)",
     readMore: "/agency/blog/convey-communications-case-study-10x-leads",
-    imageSlot: "proof-case-3",
+    imageSlot: "proof-case-2",
   },
   {
     id: "iclear-kenya",
     client: "iClear Kenya",
     period: null, // TODO(joseph): no period is published for this figure.
     goal: "Limited brand awareness in a saturated FMCG market.",
-    whatWasDone: "TODO(joseph): no published description of the work beyond the result.",
+    whatWasDone: null, // TODO(joseph): no published description of the work beyond the result.
     result: "KES 1.2M+ ad spend managed at 4.2x ROAS, with 180% follower growth.",
     stats: [
       { value: "4.2x", label: "ROAS" },
@@ -547,7 +551,7 @@ export const proofItems: ProofItem[] = [
     ],
     source: "src/data/servicePages.ts (meta-ads-management)",
     readMore: "/agency/blog/how-i-landed-national-press-coverage-for-iclear",
-    imageSlot: null,
+    imageSlot: "proof-case-1",
   },
   {
     id: "nyeri-county",
@@ -568,6 +572,37 @@ export const proofItems: ProofItem[] = [
 
 /** Shown when a result is a single campaign, not a promise. Already used on the services page. */
 export const proofDisclaimer = "Results are specific to each campaign.";
+
+/** The three case study cards on /agency/services, in order. iClear and Convey are named in the plan. */
+export const proofCardIds = ["iclear-kenya", "convey-communications", "meta-ads-turnaround"] as const;
+
+export const getProofItem = (id: string): ProofItem => {
+  const item = proofItems.find((p) => p.id === id);
+  if (!item) throw new Error(`Unknown proof item: ${id}`);
+  return item;
+};
+
+export interface ResultStat {
+  value: number;
+  decimals: number;
+  suffix: string;
+  label: string;
+  /** `proofItems` id the figure comes from. */
+  proofId: string;
+}
+
+/**
+ * The results strip. Each figure is one stat copied from a proof item; the test
+ * checks that `formatResultStat` matches a published stat so none can drift.
+ */
+export const resultsStrip: ResultStat[] = [
+  { value: 41.3, decimals: 1, suffix: "x", label: "Return on ad spend, Meta Ads", proofId: "meta-ads-turnaround" },
+  { value: 15.5, decimals: 1, suffix: "x", label: "Return on ad spend, Google Ads", proofId: "google-ads-launch" },
+  { value: 4.2, decimals: 1, suffix: "x", label: "ROAS on KES 1.2M+ ad spend, iClear Kenya", proofId: "iclear-kenya" },
+  { value: 10, decimals: 0, suffix: "x", label: "More qualified leads in 6 months, Convey", proofId: "convey-communications" },
+];
+
+export const formatResultStat = (s: ResultStat): string => `${s.value.toFixed(s.decimals)}${s.suffix}`;
 
 /* -------------------------------------------------------------------------- */
 /* Process                                                                     */

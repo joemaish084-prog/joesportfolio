@@ -1,6 +1,8 @@
 import { useState } from "react";
-import type { ImageSlot } from "@/data/services";
+import type { ImageSlot, ProofImageSlot } from "@/data/services";
 import { ServiceImagePlaceholder } from "./ServiceImagePlaceholder";
+
+type Slot = ImageSlot | ProofImageSlot;
 
 /**
  * Every webp in `src/assets/services/`. A slot is `<slot>.webp` (full size) with
@@ -10,7 +12,10 @@ import { ServiceImagePlaceholder } from "./ServiceImagePlaceholder";
 const files = import.meta.glob<string>("/src/assets/services/*.webp", { eager: true, query: "?url", import: "default" });
 
 /** Intrinsic size of the full-size file per slot. Sets width/height so nothing shifts. */
-const SIZE: Record<ImageSlot, { width: number; height: number }> = {
+const SIZE: Record<Slot, { width: number; height: number }> = {
+  "proof-case-1": { width: 1200, height: 675 },
+  "proof-case-2": { width: 1200, height: 675 },
+  "proof-case-3": { width: 1200, height: 675 },
   "svc-meta-ads": { width: 1125, height: 703 },
   "svc-google-ads": { width: 1200, height: 1500 },
   "svc-seo": { width: 800, height: 600 },
@@ -20,7 +25,7 @@ const SIZE: Record<ImageSlot, { width: number; height: number }> = {
   "svc-shopify": { width: 800, height: 600 },
 };
 
-function sources(slot: ImageSlot) {
+function sources(slot: Slot) {
   const full = files[`/src/assets/services/${slot}.webp`];
   if (!full) return null;
   const small = Object.entries(files).find(([path]) => path.endsWith(`/${slot}-400.webp`))?.[1];
@@ -29,7 +34,7 @@ function sources(slot: ImageSlot) {
 }
 
 interface ServiceImageProps {
-  slot: ImageSlot;
+  slot: Slot;
   /** Alt text from the data file. */
   alt: string;
   /** The `sizes` attribute: how wide the image renders at each breakpoint. */

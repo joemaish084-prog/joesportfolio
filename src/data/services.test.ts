@@ -3,8 +3,8 @@ import { caseStudies } from "@/data/caseStudies";
 import { servicePages } from "@/data/servicePages";
 import { localizePrice } from "@/lib/market";
 import {
-  bentoServices, filterServices, formatKes, getPackage, packageComparison, priceLabel, proofItems, retainerPackages, serviceAnchorId,
-  servicePrice, services,
+  bentoServices, filterServices, formatKes, formatResultStat, getPackage, getProofItem, packageComparison, priceLabel, proofCardIds,
+  proofItems, resultsStrip, retainerPackages, serviceAnchorId, servicePrice, services,
 } from "@/data/services";
 
 describe("price formatting", () => {
@@ -102,6 +102,25 @@ describe("proof", () => {
     const published = servicePages.flatMap((p) => (p.caseStudy ? [p.caseStudy.results] : []));
     expect(published).toContain(proofItems.find((p) => p.id === "convey-communications")?.result);
     expect(published).toContain(proofItems.find((p) => p.id === "iclear-kenya")?.result);
+  });
+
+  it("only puts published figures in the results strip", () => {
+    for (const stat of resultsStrip) {
+      const item = proofItems.find((p) => p.id === stat.proofId);
+      expect(item, stat.proofId).toBeDefined();
+      expect(item?.stats.map((s) => s.value), stat.proofId).toContain(formatResultStat(stat));
+    }
+  });
+
+  it("shows three case cards, each with a real client field and a slot", () => {
+    expect(proofCardIds).toHaveLength(3);
+    const slots = proofCardIds.map((id) => getProofItem(id).imageSlot);
+    expect(new Set(slots).size).toBe(3);
+    expect(slots).not.toContain(null);
+  });
+
+  it("leaves the iClear 'what was done' empty until Joseph supplies it", () => {
+    expect(getProofItem("iclear-kenya").whatWasDone).toBeNull();
   });
 
   it("never names a client the site does not name", () => {

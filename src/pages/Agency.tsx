@@ -21,6 +21,7 @@ import {
 import { ShineBorder } from "@/components/ui/shine-border";
 import { trackSpotlight } from "@/lib/spotlight";
 import { SectionLabel } from "@/components/SectionLabel";
+import { CountUp } from "@/components/CountUp";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
 import { CustomerJourney } from "@/components/agency/CustomerJourney";
@@ -207,26 +208,6 @@ const payments = [
   { icon: Building2, title: "Bank Transfer", desc: "Direct bank transfer for larger retainers. Details on invoice." },
   { icon: Receipt, title: "Invoice & Receipt", desc: "Professional invoice sent within 1 hour of booking confirmation. Receipt on payment." },
 ];
-
-function CountUp({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const duration = 1500;
-    const start = performance.now();
-    let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / duration);
-      setN(Math.floor(p * value));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, value]);
-  return <span ref={ref}>{prefix}<span className="agency-counter-animated" aria-hidden="true">{n}</span><span className="agency-counter-static">{value}</span>{suffix}</span>;
-}
 
 function HeroProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
   const rotateX = useSpring(useTransform(mouseY, (v) => v * -5), { damping: 25, stiffness: 150 });

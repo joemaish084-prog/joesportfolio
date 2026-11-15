@@ -1,8 +1,13 @@
 import { ImageIcon } from "lucide-react";
-import type { ImageSlot } from "@/data/services";
+import type { ImageSlot, ProofImageSlot } from "@/data/services";
+
+type Slot = ImageSlot | ProofImageSlot;
 
 /** What each slot will show once the real image arrives in Step 5. */
-const SLOT_LABEL: Record<ImageSlot, string> = {
+const SLOT_LABEL: Record<Slot, string> = {
+  "proof-case-1": "Results screenshot",
+  "proof-case-2": "Results screenshot",
+  "proof-case-3": "Results screenshot",
   "svc-meta-ads": "Meta ad creative",
   "svc-google-ads": "Google Ads dashboard",
   "svc-seo": "Search Console graph",
@@ -13,7 +18,7 @@ const SLOT_LABEL: Record<ImageSlot, string> = {
 };
 
 interface ServiceImagePlaceholderProps {
-  slot: ImageSlot;
+  slot: Slot;
   /** Sets the size and ratio of the box. */
   className?: string;
   /** The box is a small thumbnail below `md`, so the label is hidden there. */
