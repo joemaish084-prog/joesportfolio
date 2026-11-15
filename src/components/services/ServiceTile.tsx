@@ -16,18 +16,18 @@ const SPAN: Record<ServiceTileSize, string> = {
   standard: "",
 };
 
-/** Image box per size. Standard tiles use a thumbnail beside the text on phones. */
+/** Image box per size. Standard tiles drop the large image on phones and show a thumbnail beside the title instead. */
 const IMAGE: Record<ServiceTileSize, string> = {
   large: "aspect-[16/10] w-full",
   tall: "aspect-[16/10] w-full lg:aspect-[4/5]",
-  standard: "m-4 mr-0 aspect-square w-24 shrink-0 self-start rounded-xl sm:w-36 md:m-0 md:aspect-[4/3] md:w-full md:rounded-none",
+  standard: "hidden aspect-[4/3] w-full md:block",
 };
 
-/** Rendered width per size, for the `sizes` attribute: phone thumbnail, then the desktop column. */
+/** Rendered width per size, for the `sizes` attribute. */
 const SIZES: Record<ServiceTileSize, string> = {
   large: "(min-width: 1024px) 740px, 100vw",
   tall: "(min-width: 1024px) 360px, 100vw",
-  standard: "(min-width: 768px) 360px, 144px",
+  standard: "360px",
 };
 
 const categoryLabel = (service: Service) =>
@@ -52,6 +52,8 @@ interface ServiceTileProps {
   size: ServiceTileSize;
   /** From `useReducedMotion`: no reflow or fade, tiles just appear. */
   reducedMotion?: boolean;
+  /** A filter chip is active. The accent tile then keeps to one column, so it never strands a gap. */
+  filtered?: boolean;
 }
 
 /**
@@ -59,9 +61,11 @@ interface ServiceTileProps {
  * the bottom is stretched over the card, so there is one tab stop per tile.
  * A service with no image slot (the free audit) renders as the accent tile.
  */
-export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function ServiceTile({ service, size, reducedMotion = false }, ref) {
+export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function ServiceTile({ service, size, reducedMotion = false, filtered = false }, ref) {
   const accent = service.imageSlot === null;
   const large = size === "large";
+  // Phones: standard tiles swap the large image for a small one beside the title, so the text gets the full width.
+  const thumb = size === "standard" && !accent;
   const quiet = accent ? "text-primary-foreground/85" : "text-muted-foreground";
 
   return (
@@ -76,12 +80,11 @@ export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function 
       id={serviceAnchorId(service.slug)}
       onMouseMove={accent ? undefined : trackSpotlight}
       className={[
-        "group relative flex scroll-mt-24 overflow-hidden rounded-2xl transition-all duration-300 motion-safe:hover:-translate-y-1",
+        "group relative flex flex-col scroll-mt-24 overflow-hidden rounded-2xl transition-all duration-300 motion-safe:hover:-translate-y-1",
         "has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-ring has-[a:focus-visible]:ring-offset-2 has-[a:focus-visible]:ring-offset-background",
         accent
-          ? "flex-col border border-primary bg-primary text-primary-foreground md:col-span-2 lg:col-span-1"
+          ? `border border-primary bg-primary text-primary-foreground ${filtered ? "" : "md:col-span-2 lg:col-span-1"}`
           : "spotlight surface-card hover:border-primary/40",
-        size === "standard" && !accent ? "flex-row md:flex-col" : "flex-col",
         SPAN[size],
       ].join(" ")}
     >
@@ -93,24 +96,36 @@ export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function 
             alt={service.imageAlt ?? ""}
             sizes={SIZES[size]}
             className="h-full w-full transition-transform duration-500 motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
-            thumbOnMobile={size === "standard"}
           />
         </div>
       )}
 
       <div className={`flex min-w-0 flex-1 flex-col p-4 sm:p-5 ${large ? "lg:p-7" : ""}`}>
         {accent && (
-          <span className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-primary-foreground/10 ring-1 ring-primary-foreground/20">
-            <ClipboardList className="h-5 w-5" aria-hidden />
-          </span>
+          <>
+            {/* Decoration only: fills the tall tile on desktop without adding a claim. */}
+            <ClipboardList aria-hidden strokeWidth={1} className="pointer-events-none absolute -right-8 -top-8 hidden h-44 w-44 text-primary-foreground/[0.08] lg:block" />
+            <span className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-primary-foreground/10 ring-1 ring-primary-foreground/20">
+              <ClipboardList className="h-5 w-5" aria-hidden />
+            </span>
+          </>
         )}
-        <p className={`mono-accent text-[11px] font-semibold uppercase tracking-[0.16em] ${accent ? quiet : "text-primary"}`}>
-          {categoryLabel(service)}
-        </p>
-        <h3 className={`mt-1.5 font-display font-semibold tracking-tight ${large ? "text-2xl sm:text-3xl" : "text-xl"}`}>
-          {service.tileName}
-        </h3>
-        <p className={`mt-2 leading-relaxed ${large ? "max-w-xl text-base" : "text-sm"} ${accent ? "" : "text-foreground/90"}`}>
+        <div className="flex items-center gap-3">
+          {thumb && service.imageSlot && (
+            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl md:hidden">
+              <ServiceImage slot={service.imageSlot} alt="" sizes="56px" className="h-full w-full" thumbOnMobile />
+            </div>
+          )}
+          <div className="min-w-0">
+            <p className={`mono-accent text-[11px] font-semibold uppercase tracking-[0.16em] ${accent ? quiet : "text-primary"}`}>
+              {categoryLabel(service)}
+            </p>
+            <h3 className={`mt-1 font-display font-semibold tracking-tight ${large ? "text-2xl sm:text-3xl" : accent ? "text-xl lg:text-2xl" : "text-xl"}`}>
+              {service.tileName}
+            </h3>
+          </div>
+        </div>
+        <p className={`mt-3 leading-relaxed ${large ? "max-w-xl text-base" : accent ? "text-sm lg:text-base" : "text-sm"} ${accent ? "" : "text-foreground/90"}`}>
           {service.outcome}
         </p>
         {service.whoFor && (

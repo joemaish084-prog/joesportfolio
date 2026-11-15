@@ -3,12 +3,13 @@ import { ArrowRight, Calculator } from "lucide-react";
 import { trackSpotlight } from "@/lib/spotlight";
 import { getLiveServicePages } from "@/data/servicePages";
 import { alsoAvailableServices, bentoServices, packageFeeNote, serviceAnchorId, serviceHref } from "@/data/services";
+import { MobileCtaBar } from "./MobileCtaBar";
 import { MoreServicesRow } from "./MoreServicesRow";
 import { PackagesSummary } from "./PackagesSummary";
 import { PlatformDecision } from "./PlatformDecision";
-import { PricingNotes } from "./PricingNotes";
 import { ProcessTimeline } from "./ProcessTimeline";
 import { ProofSection } from "./ProofSection";
+import { Reveal } from "./Reveal";
 import { ServicesBento } from "./ServicesBento";
 import { ServicesCTA } from "./ServicesCTA";
 import { ServicesFaq } from "./ServicesFaq";
@@ -24,7 +25,8 @@ const moreServices = alsoAvailableServices.map((s) => ({
 export function ServicesSection() {
   const servicePages = getLiveServicePages();
   return (
-    <>
+    // `services-page` scopes the light-theme contrast fix in index.css.
+    <div className="services-page">
       <ServicesHero />
 
       <section id="services" className="container mx-auto scroll-mt-20 px-4 py-14 sm:py-20">
@@ -51,21 +53,21 @@ export function ServicesSection() {
             </ul>
           </nav>
 
-          <ProofSection />
-
-          <PlatformDecision />
+          <Reveal><ProofSection /></Reveal>
+          <Reveal><PlatformDecision /></Reveal>
+          {/* The timeline reveals its own steps one by one. */}
           <ProcessTimeline />
-          <PackagesSummary />
-          <PricingNotes />
+          <Reveal><PackagesSummary /></Reveal>
 
           {/* Free tool, kept from the previous page */}
+          <Reveal>
           <Link
             to="/agency/ad-budget-calculator"
             onMouseMove={trackSpotlight}
-            className="spotlight surface-card group mt-10 flex flex-col gap-5 p-6 transition-colors duration-300 hover:border-primary/40 sm:flex-row sm:items-center sm:p-8"
+            className="spotlight surface-card group mt-20 flex flex-col gap-5 p-6 transition-colors duration-300 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:mt-24 sm:flex-row sm:items-center sm:p-8"
           >
             <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-orange">
-              <Calculator className="h-7 w-7 text-white" aria-hidden />
+              <Calculator className="h-7 w-7 text-primary-foreground" aria-hidden />
             </span>
             <span className="flex-1">
               <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-primary">Free tool</span>
@@ -78,11 +80,14 @@ export function ServicesSection() {
               Try the calculator <ArrowRight className="h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
             </span>
           </Link>
+          </Reveal>
 
-          <ServicesFaq />
-          <ServicesCTA />
+          <Reveal><ServicesFaq /></Reveal>
+          <Reveal><ServicesCTA /></Reveal>
         </div>
       </section>
-    </>
+
+      <MobileCtaBar afterId="services-hero-cta" untilId="services-cta" />
+    </div>
   );
 }

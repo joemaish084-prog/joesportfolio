@@ -5,7 +5,7 @@ import { processHeading, processSteps } from "./servicesContent";
 export function ProcessTimeline() {
   return (
     <section aria-labelledby="process-title" className="mt-20 sm:mt-24">
-      <h2 id="process-title" className="max-w-2xl font-display text-2xl font-bold tracking-tight sm:text-3xl">{processHeading}</h2>
+      <h2 id="process-title" className="max-w-2xl text-balance font-display text-3xl font-bold tracking-tight sm:text-4xl">{processHeading}</h2>
 
       <ol className="mt-10 grid gap-0 lg:grid-cols-5 lg:gap-6">
         {processSteps.map((step, i) => {

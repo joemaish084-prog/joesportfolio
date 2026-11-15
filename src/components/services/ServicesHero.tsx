@@ -22,9 +22,9 @@ export function ServicesHero() {
 
       <div className="container relative mx-auto px-4 pb-12 pt-8 sm:pb-16 sm:pt-12">
         <div className="mx-auto max-w-6xl">
-          <nav aria-label="Breadcrumb" className="mb-8 text-sm text-muted-foreground">
+          <nav aria-label="Breadcrumb" className="mb-5 text-sm text-muted-foreground">
             <ol className="flex flex-wrap items-center gap-1.5">
-              <li><Link to="/agency" className="transition-colors hover:text-primary">Agency</Link></li>
+              <li><Link to="/agency" className="inline-flex min-h-11 items-center transition-colors hover:text-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Agency</Link></li>
               <li aria-hidden="true"><ChevronRight className="h-3.5 w-3.5" /></li>
               <li><span aria-current="page" className="text-foreground">Services</span></li>
             </ol>
@@ -41,7 +41,7 @@ export function ServicesHero() {
                 Paid ads, SEO, social media and Shopify stores. Pick one channel or combine them, and work directly with me.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div id="services-hero-cta" className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button size="lg" className="w-full rounded-full sm:w-auto" asChild>
                   <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
                     <Calendar className="mr-2 h-5 w-5" aria-hidden /> Book a Free Strategy Call

@@ -18,16 +18,16 @@ export function CaseStudyCard({ study }: { study: ProofItem }) {
         <ServiceImage
           slot={study.imageSlot}
           alt={`Results screenshot for the ${clientName} campaign. ${study.result}`}
-          sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
           className="aspect-video w-full"
         />
       )}
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <p className="mono-accent text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
+        <h3 className="mono-accent text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">
           {clientName}
           {study.period && <span className="text-muted-foreground"> · {study.period}</span>}
-        </p>
+        </h3>
 
         <dl className="mt-4 space-y-3 text-sm leading-relaxed">
           {rows.map((row) => (
@@ -40,7 +40,7 @@ export function CaseStudyCard({ study }: { study: ProofItem }) {
 
         <div className="mt-5 border-t border-border/60 pt-4">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">Result</p>
-          <p className="mt-1 font-display text-lg font-semibold leading-snug">{study.result}</p>
+          <p className="mt-1 font-display text-lg font-semibold leading-snug md:max-lg:text-base">{study.result}</p>
         </div>
 
         <Link

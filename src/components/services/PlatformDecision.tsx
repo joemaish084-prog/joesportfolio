@@ -7,7 +7,7 @@ import { decisionHeading, decisionOptions } from "./servicesContent";
 export function PlatformDecision() {
   return (
     <section aria-labelledby="platform-decision-title" className="mt-20 sm:mt-24">
-      <h2 id="platform-decision-title" className="max-w-2xl font-display text-2xl font-bold tracking-tight sm:text-3xl">
+      <h2 id="platform-decision-title" className="max-w-2xl text-balance font-display text-3xl font-bold tracking-tight sm:text-4xl">
         {decisionHeading}
       </h2>
 

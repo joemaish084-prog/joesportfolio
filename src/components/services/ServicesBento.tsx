@@ -27,6 +27,7 @@ export function ServicesBento({ services }: { services: Service[] }) {
               key={service.slug}
               service={service}
               size={filter === "all" ? SIZE[service.slug] ?? "standard" : "standard"}
+              filtered={filter !== "all"}
               reducedMotion={reduced}
             />
           ))}

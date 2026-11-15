@@ -5,7 +5,7 @@ import { ctaContent } from "./servicesContent";
 
 export function ServicesCTA() {
   return (
-    <section aria-labelledby="services-cta-title" data-track-location="services-cta" className="relative mt-20 overflow-hidden rounded-3xl border border-primary/30 bg-card/60 p-8 text-center sm:mt-24 sm:p-14">
+    <section id="services-cta" aria-labelledby="services-cta-title" data-track-location="services-cta" className="relative mt-20 overflow-hidden rounded-3xl border border-primary/30 bg-card/60 px-5 py-10 text-center sm:mt-24 sm:p-14">
       <ShineBorder shineColor={["hsl(25 100% 50%)", "hsl(38 92% 50%)"]} borderWidth={1} duration={16} />
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-48 w-96 -translate-x-1/2 rounded-full bg-primary/15 blur-[90px]" />
       <div className="relative">
@@ -29,7 +29,7 @@ export function ServicesCTA() {
         </div>
         <p className="mt-5 text-sm text-muted-foreground">
           Prefer to see the work first?{" "}
-          <CtaLink to={ctaContent.secondary.to} className="inline-flex min-h-11 items-center gap-1 font-medium text-primary hover:underline">
+          <CtaLink to={ctaContent.secondary.to} className="inline-flex min-h-11 items-center gap-1 font-medium text-primary hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             {ctaContent.secondary.label}
             <ArrowRight className="h-4 w-4" aria-hidden />
           </CtaLink>

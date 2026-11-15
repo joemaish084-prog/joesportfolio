@@ -12,7 +12,7 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
 - [x] Step 6 — Proof and results section
 - [x] Step 7 — Packages table and pricing fix
 - [x] Step 8 — Process, FAQ, schema
-- [ ] Step 9 — Visual polish, motion, mobile, accessibility
+- [x] Step 9 — Visual polish, motion, mobile, accessibility
 - [ ] Step 10 — Performance, SEO, cleanup, final QA
 
 ## Step 1 notes (2026-11-15)
@@ -104,6 +104,32 @@ Plan: `SERVICE_PAGE_PLAN.md`. Design decisions: `DESIGN_BRIEF.md`. Branch: `serv
   - **`/agency/pricing` FAQ:** the same six questions render there as an accordion, but that page has no FAQPage schema. Out of scope for this step; say if you want it added.
   - **Step 9 items:** the WhatsApp button and the case-study text link sit side by side on phones; check the wrap at 360px.
 
+## Step 9 notes (2026-11-15)
+
+- **What changed:**
+  - **Bug fixed:** the FAQ showed all six answers at once. Radix does not hide a force-mounted panel, so closed answers are now hidden by state. They are still in the HTML for the schema.
+  - **Phones:** service tiles no longer squeeze the text beside a 96px image. A 56px thumbnail sits beside the title and the text uses the full width. The page is about 1,400px shorter at 360px.
+  - **Mobile bottom bar** (`MobileCtaBar`): "Book a Free Strategy Call" (Calendly) plus a WhatsApp button. It appears after the hero buttons scroll away and leaves at the closing CTA. The site-wide floating WhatsApp button is hidden below `md` on this page only, because it sat on top of the "Ad budgets managed" figure and would overlap the bar.
+  - **Scroll reveals** (`Reveal`): proof, platform tabs, packages, calculator link, FAQ and closing CTA fade up once. Opacity and transform only. The hero and the service grid do not animate, so the first paint is unchanged.
+  - **Rhythm:** every section heading is now the same size (`text-3xl sm:text-4xl`), section gaps are the same, case cards are three across on tablets (one was stranded), the Free Audit tile has larger type and a faint icon on desktop, and in a filtered view it no longer spans two columns on tablets.
+  - **Repetition removed:** the "Simple starting points" block repeated the prices right after the packages. It is off the page; its four "how I work" lines now sit under the package cards.
+  - **Contrast:** white text on orange (2.9:1) replaced with dark text on the "Most popular" badge, the Growth button and the calculator icon. In the light theme, small orange text and the gradient figures on this page use a darker orange (about 5.3:1 and 3.5:1 or better). Dark theme is unchanged.
+  - **Accessibility:** each case card has a heading, heading order has no skips (h1, h2, h3), focus rings added to the breadcrumb, calculator card, FAQ rows and text links.
+- **Files touched:** new `src/components/services/Reveal.tsx`, `MobileCtaBar.tsx`. Changed: `ServicesSection.tsx`, `ServicesHero.tsx`, `ServiceTile.tsx`, `ServicesBento.tsx`, `ProofSection.tsx`, `CaseStudyCard.tsx`, `PlatformDecision.tsx`, `ProcessTimeline.tsx`, `PackagesSummary.tsx`, `ServicesFaq.tsx`, `ServicesCTA.tsx`, `src/components/WhatsAppButton.tsx`, `src/index.css`.
+- **Left open:**
+  - **Checks run:** eslint on touched files (clean), `tsc` (only the 6 known `chatLead.ts` errors), `npm test` (230 pass, 2 skipped), `npm run build` (143 routes), `check:agency` (passes). In a browser at true 360, 768 and 1440 widths: no horizontal scroll, no console errors, FAQ opens one answer at a time by tap and by Tab + Enter, the bar shows mid-page and hides at the hero and the closing CTA, filter chips reflow, the tile focus ring and proof line show on keyboard focus, every reveal ends visible, light-theme colours apply.
+  - **Seen by eye only in part.** Playwright still paints only the first screen of this window, so full-page captures are stitched and offset. Phone layout was seen top to bottom; desktop was seen for the hero, grid and proof. Not seen by eye: packages, FAQ and closing CTA at 1440, the light theme, a real touch device. Please scroll `/agency/services` once on a phone and once in the light theme.
+  - **How to get true widths in Playwright here:** the browser is zoomed 1.5x. Set the viewport to width / 1.5 (240 for 360px) in a new context.
+  - **Still weak:**
+    - Five image placeholders remain (SEO, Lead Gen, three case cards). They are the biggest thing holding the page back.
+    - Desktop tiles are tall, with a gap in the middle of the short ones (TikTok, Free Audit), because the proof line only shows on hover.
+    - "Also available" and "Read more" are two link rows one after the other. `check:agency` needs the second, so it stayed.
+    - On phones the packages run Starter, Growth, Scale. The brief wanted Growth first.
+    - The orange focus ring is about 2.9:1 on white in the light theme (3:1 wanted). It is a site-wide token, so it was not changed here.
+    - `/agency/pricing` has the same accordion but it is not force-mounted, so it does not have the FAQ bug.
+  - **For Step 10:** `PricingNotes.tsx` and `pricingContent.rows` / `heading` / `link` are now unused (the assurances are still used). `ServiceImagePlaceholder`'s `thumbOnMobile` is still used by the phone thumbnail.
+  - **Still waiting on Joseph:** Q3 (KES 500K+ vs KES 1.2M+) and Q4 (headline).
+
 ## Step overrides (read before starting any step)
 
 The audit found the plan was written against an older version of the site. Follow these where they differ from the plan.
@@ -129,4 +155,4 @@ Drop these in `src/assets/services/` as WebP. Blur client names and personal det
 
 ## Next step
 
-Step 9 — visual polish, motion, mobile, accessibility. Use **Fable** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 9 only.`
+Step 10 — performance, SEO, cleanup, final QA. Use **Haiku** (`/model`). Paste: `Read SERVICE_PAGE_PLAN.md and PROGRESS.md. Do Step 10 only.`

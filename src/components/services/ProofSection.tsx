@@ -12,7 +12,7 @@ const cards = proofCardIds.map(getProofItem);
  */
 export function ProofSection() {
   return (
-    <section id="results" aria-labelledby="results-heading" className="mt-16 scroll-mt-20 sm:mt-24">
+    <section id="results" aria-labelledby="results-heading" className="mt-20 scroll-mt-20 sm:mt-24">
       <div className="mb-8 flex flex-col gap-3 sm:mb-10 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
         <h2 id="results-heading" className="font-display text-3xl font-bold tracking-tight sm:text-4xl">What the numbers looked like</h2>
         <p className="max-w-md text-sm text-muted-foreground lg:text-right">
@@ -22,7 +22,7 @@ export function ProofSection() {
 
       <ResultsStrip items={resultsStrip} />
 
-      <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid gap-5 md:grid-cols-3 md:gap-4 lg:gap-5">
         {cards.map((study) => (
           <CaseStudyCard key={study.id} study={study} />
         ))}
