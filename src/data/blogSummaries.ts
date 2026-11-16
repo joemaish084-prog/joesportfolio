@@ -1414,8 +1414,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "4 min read",
     metaTitle: "Shopify Store Cost in Kenya: A Budget Guide",
     metaDescription: "Planning a Shopify store in Kenya? Understand setup costs, subscriptions, themes, apps and management, plus what to ask before accepting a quote.",
-    thumbnail: "/work/shopify/babyshop-dansar-desktop.webp",
-    thumbnailAlt: "Babyshop Dansar Shopify homepage with product categories and promotional sections",
+    thumbnail: "https://images.unsplash.com/photo-1642043175009-5997b3a078d8?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Calculator, pencil and ruler on grid paper for planning a store budget",
   },
   {
     slug: "shopify-mpesa-payments-kenya",
@@ -1427,8 +1427,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "4 min read",
     metaTitle: "Shopify M-Pesa Payments in Kenya: Launch Guide",
     metaDescription: "Want M-Pesa on a Shopify store in Kenya? Learn what to verify about providers, manual payments, order confirmation and checkout testing before launch.",
-    thumbnail: "/work/shopify/babyshop-dansar-mobile.webp",
-    thumbnailAlt: "Babyshop Dansar mobile Shopify product page showing product details and purchase options",
+    thumbnail: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person in a white shirt tapping on a smartphone",
   },
   {
     slug: "woocommerce-to-shopify-migration-kenya",
@@ -1440,8 +1440,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "4 min read",
     metaTitle: "WooCommerce to Shopify Migration Checklist",
     metaDescription: "Considering WooCommerce to Shopify migration in Kenya? Plan data, customer accounts, redirects, checkout testing and handover before switching your store.",
-    thumbnail: "/work/shopify/babyshop-dansar-desktop.webp",
-    thumbnailAlt: "Babyshop Dansar storefront showing a Shopify collection-led navigation layout",
+    thumbnail: "https://images.unsplash.com/photo-1487523117656-d5d117ad47c5?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two computer monitors showing website designs on a desk",
   },
   {
     slug: "shopify-seo-kenya-product-collection-pages",
@@ -1453,8 +1453,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "4 min read",
     metaTitle: "Shopify SEO Kenya: Product and Collection Guide",
     metaDescription: "Improve your Shopify SEO foundations in Kenya with useful product copy, clear collections, internal links and a practical search measurement plan.",
-    thumbnail: "/work/shopify/babyshop-dansar-desktop.webp",
-    thumbnailAlt: "Shopify homepage for Babyshop Dansar with navigation to baby and maternity product categories",
+    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop screen showing website statistics and charts on a glass table",
   },
   {
     slug: "shopify-store-management-kenya",
@@ -1466,8 +1466,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "4 min read",
     metaTitle: "Shopify Store Management in Kenya: Monthly Scope",
     metaDescription: "Need Shopify store management in Kenya? Learn how to scope product updates, collections, promotions, app reviews and support before agreeing a retainer.",
-    thumbnail: "/work/shopify/babyshop-dansar-mobile.webp",
-    thumbnailAlt: "Babyshop Dansar Shopify product page on mobile with product information and variant choices",
+    thumbnail: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand moving a card on a planning board covered in printed plans and notes",
   },
   {
     slug: "shopify-traffic-no-sales-kenya",
@@ -1479,7 +1479,7 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "4 min read",
     metaTitle: "Shopify Traffic but No Sales? A Store Checklist",
     metaDescription: "Shopify visitors leaving without buying? Check your traffic, product pages, mobile experience, shipping and payments before increasing your ad budget.",
-    thumbnail: "/work/shopify/babyshop-dansar-mobile.webp",
-    thumbnailAlt: "Mobile Shopify product details on the Babyshop Dansar storefront",
+    thumbnail: "https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shopping bags and gift boxes arranged on a table",
   }
 ];
