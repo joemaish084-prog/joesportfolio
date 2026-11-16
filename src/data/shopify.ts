@@ -6,6 +6,7 @@ export const SHOPIFY_PATH = "/agency/shopify-services";
 export const SHOPIFY_BRIEF = "/agency/contact?service=shopify-services#brief";
 
 export const shopifyGuideSlugs = [
+  "shopify-inventory-overselling-kenya",
   "shopify-store-cost-kenya",
   "shopify-mpesa-payments-kenya",
   "woocommerce-to-shopify-migration-kenya",

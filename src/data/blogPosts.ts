@@ -8331,6 +8331,691 @@ export const blogPosts: BlogPost[] = [
       }
     ]
   },
+  {
+    slug: "shopify-inventory-overselling-kenya",
+    category: "Shopify",
+    title: "The Last Item Sold Twice: Fixing Shopify Stock Across Your Shop and DMs",
+    excerpt: "Prevent avoidable Shopify stock mistakes when orders arrive through your website, walk-in shop and DMs. Plan counts, reservations and out-of-stock rules.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify Inventory Kenya: Stop Selling the Last Item Twice",
+    metaDescription: "Prevent avoidable Shopify stock mistakes when orders arrive through your website, walk-in shop and DMs. Plan counts, reservations and out-of-stock rules.",
+    intro: "One customer pays through the website while another pays for the same last item in your shop. The dashboard did not know about the conversation at the counter. Inventory problems often start at that handover between sales channels. Before buying a stock app, trace who records a sale and when the quantity changes.",
+    thumbnail: "https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shopping bags and gift boxes arranged on a table",
+    sections: [
+      {
+        id: "count-the-actual-options",
+        heading: "Count the sellable options, not just the product names",
+        paragraphs: [
+          "An illustrative clothing shop may have ten shirts overall but no blue medium shirts left. A total at product level cannot answer the customer’s actual choice. Start with a physical count of the options you sell and agree which item identifiers staff use across the shop, website and stock sheet.",
+          "Separate sellable stock from damaged items, display pieces and stock reserved for another purpose. Record where the items are held and which location can fulfil online orders. A number is only useful if the person packing an order can find the corresponding product."
+        ]
+      },
+      {
+        id: "agree-one-recording-process",
+        heading: "Make every sales route update an agreed record",
+        paragraphs: [
+          "List how orders arrive: Shopify, Instagram messages, WhatsApp and walk-in purchases. For each route, name the person who records the sale and the point at which it is recorded. If a tool synchronises channels, verify that exact workflow rather than assuming every payment channel updates every stock record.",
+          "Decide how reservations work. If a customer asks you to hold an item before paying, state who records the hold and when it expires. Otherwise an unpaid promise in a chat can look identical to available stock on the website. Keep the process simple enough for a busy employee to follow."
+        ],
+        table: {
+          headers: [
+            "Event",
+            "Decision to document"
+          ],
+          rows: [
+            [
+              "Walk-in purchase",
+              "Who records the item and option immediately?"
+            ],
+            [
+              "Unpaid reservation",
+              "Where is the hold recorded and when does it expire?"
+            ],
+            [
+              "Cancelled order",
+              "Who confirms whether the item becomes sellable again?"
+            ],
+            [
+              "Returned item",
+              "Who inspects its condition before returning it to available stock?"
+            ]
+          ]
+        }
+      },
+      {
+        id: "check-out-of-stock-behaviour",
+        heading: "Review what happens at zero before a promotion",
+        paragraphs: [
+          "Shopify allows tracked products to continue selling when out of stock if that option is enabled. This may fit an intentional preorder, but it needs a clear customer promise. Review the actual product or variant settings and location configuration before assuming zero quantity stops every kind of sale.",
+          "A preorder needs confirmed availability expectations and an exception process. Do not silently sell unavailable items as immediate stock. Test the storefront with a representative sold-out option and confirm how staff handle purchases in other channels, whose behaviour can differ."
+        ],
+        sources: [
+          {
+            label: "Shopify out-of-stock and overselling considerations",
+            href: "https://help.shopify.com/en/manual/inventory-and-locations/setup/selling-when-out-of-stock"
+          }
+        ]
+      },
+      {
+        id: "reconcile-the-differences",
+        heading: "Investigate stock differences while the trail is fresh",
+        paragraphs: [
+          "Choose a manageable set of fast-moving items for regular checks. When a quantity differs, look for an unrecorded counter sale, an expired hold, a return awaiting inspection or a mistaken option. Correct the cause as well as the number; otherwise the next count will reveal the same gap.",
+          "Track cancellations caused by stock errors as an operating measure. A store can receive more orders while creating more refunds and support work. Use that evidence to decide whether you need a clearer process, training or a properly scoped integration."
+        ]
+      },
+      {
+        id: "discuss-stock-support",
+        heading: "Bring your sales routes to a Shopify support review",
+        paragraphs: [
+          "Share the channels you sell through, approximate catalogue size and where discrepancies occur. I can scope a Shopify catalogue and storefront review around that workflow. Start with the process before choosing an app."
+        ],
+        sources: [
+          {
+            label: "Plan monthly Shopify store management",
+            href: "/agency/blog/shopify-store-management-kenya"
+          },
+          {
+            label: "Evaluate Shopify apps before subscribing",
+            href: "/agency/blog/shopify-apps-small-business"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "when-to-increase-meta-ads-budget-kenya",
+    category: "Meta Ads",
+    title: "Your Meta Ads Had a Good Weekend. Is That Enough to Raise the Budget?",
+    excerpt: "Decide when to increase your Meta Ads budget using confirmed outcomes, contribution, fulfilment capacity and a clear review plan instead of one good day.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "When to Increase Your Meta Ads Budget in Kenya",
+    metaDescription: "Decide when to increase your Meta Ads budget using confirmed outcomes, contribution, fulfilment capacity and a clear review plan instead of one good day.",
+    intro: "A campaign has its best weekend and the obvious question arrives: should we double the budget? Perhaps. But a good result is only the start of that conversation. You need to know whether the orders are real, what remains after costs and whether the business can handle more demand. This is the budget review I would have before agreeing an increase.",
+    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop screen showing website statistics and charts on a glass table",
+    sections: [
+      {
+        id: "verify-the-result",
+        heading: "Check the outcomes behind the dashboard",
+        paragraphs: [
+          "Compare reported purchases or leads with the business’s actual records for the same period. Identify test activity, cancellations and enquiries outside your service area. A result can look inexpensive in the advertising report while producing little usable business.",
+          "Write down what success means before changing spend. For a shop, it could be fulfilled orders with acceptable contribution. For a service business, it could be qualified enquiries that become appointments. Use a definition both the marketer and owner can inspect rather than quietly changing the target after a strong day."
+        ]
+      },
+      {
+        id: "check-the-pattern",
+        heading: "Separate a repeatable pattern from a lucky basket",
+        paragraphs: [
+          "Look at the period behind the average. Did one unusually large purchase account for most of the revenue? Was there a promotion, payday or stock clearance? Those events can be valuable, but they change what you can reasonably expect from the next period.",
+          "There is no universal number of days that proves every campaign is ready to scale. Consider how often customers buy, the size of the sample and the delay between enquiry and sale. If your business takes a week to close a lead, a two-day snapshot cannot reveal the final outcome."
+        ]
+      },
+      {
+        id: "calculate-room-to-grow",
+        heading: "Estimate what the next order can cost",
+        paragraphs: [
+          "Use an illustrative product selling at KES 4,000 with KES 2,400 of product and order-level variable costs. That leaves KES 1,600 before advertising and overheads. If advertising costs KES 700 per fulfilled order, KES 900 remains before overheads. Change the inputs to match your actual economics.",
+          "Now ask how much deterioration the business could tolerate. A budget increase is a test of additional spend, not a guarantee that the current average will hold. Agree an acceptable outcome and a spending limit before starting, so the decision does not depend on enthusiasm alone."
+        ],
+        callout: "Use the economics of fulfilled orders or qualified sales opportunities, not the cheapest visible dashboard event."
+      },
+      {
+        id: "check-capacity-and-review",
+        heading: "Make fulfilment and follow-up part of the decision",
+        paragraphs: [
+          "Confirm stock, delivery capacity and who will answer the extra enquiries. Scaling an advert while the team cannot respond creates a new bottleneck. If the product is nearly sold out, restocking or advertising a suitable alternative may need attention first.",
+          "Record the budget change, other changes made at the same time and the review window. Keep enough stability to interpret the result and avoid changing the offer, creative and landing page without a reasoned plan. Review confirmed outcomes before deciding the next step."
+        ]
+      },
+      {
+        id: "request-a-budget-review",
+        heading: "Bring the numbers you can verify",
+        paragraphs: [
+          "For a Meta Ads review, share your current spend, reported outcomes and aggregate confirmed sales or lead-quality information. I can discuss whether the next priority is more budget, better measurement, creative work or fixing the sales journey."
+        ],
+        sources: [
+          {
+            label: "Read your Meta Ads report",
+            href: "/agency/blog/how-to-read-meta-ads-report-kenya-2026"
+          },
+          {
+            label: "Plan a Kenyan SME Meta Ads budget",
+            href: "/agency/blog/how-much-should-a-kenyan-sme-spend-on-meta-ads"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "branded-vs-non-branded-google-ads-kenya",
+    category: "Google Ads",
+    title: "Google Ads Looks Profitable. How Many Customers Were Searching Your Name?",
+    excerpt: "Separate branded and non-branded Google Ads searches to understand existing demand, acquisition costs and what your campaign totals can actually prove.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Branded vs Non-Branded Google Ads: A Kenya Guide",
+    metaDescription: "Separate branded and non-branded Google Ads searches to understand existing demand, acquisition costs and what your campaign totals can actually prove.",
+    intro: "Someone searching your exact business name has a different starting point from someone searching for a service they have never bought before. If both appear in one campaign total, you can miss that distinction. Reviewing branded and non-branded Google Ads traffic helps you ask a better question than whether the average cost per lead went down.",
+    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop screen displaying charts and website statistics",
+    sections: [
+      {
+        id: "define-the-search-groups",
+        heading: "Classify the customer’s search, not just your keyword",
+        paragraphs: [
+          "Google’s search terms report shows available searches that triggered ads; those terms can differ from the keywords you added. Review the actual terms available in the report. A keyword label on its own is not a reliable description of everything matched to it.",
+          "For an illustrative cleaning business called Acacia Clean, “Acacia Clean contacts” is a branded search, while “office cleaning Nairobi” is a generic service search. Keep ambiguous names, competitor names and product brands separate where necessary. Write the classification rule so someone else could apply it consistently."
+        ],
+        sources: [
+          {
+            label: "Google Ads search terms report",
+            href: "https://support.google.com/google-ads/answer/2472708"
+          }
+        ]
+      },
+      {
+        id: "understand-the-different-jobs",
+        heading: "Existing demand and discovery need different questions",
+        paragraphs: [
+          "A branded searcher may be returning, responding to an offline recommendation or following another campaign. That does not make the paid click worthless. It does mean you should be cautious about treating the resulting sale as proof that the advert introduced the business to a new customer.",
+          "A non-branded search can be closer to a discovery task, but it is not automatically a first-time customer either. Ask whether you have reliable customer history and whether the enquiry fits the service. Use search classification to sharpen the discussion, not to invent certainty about a person’s entire journey."
+        ]
+      },
+      {
+        id: "compare-like-with-like",
+        heading: "Build a report that keeps the mix visible",
+        paragraphs: [
+          "Review spend, meaningful outcomes and outcome quality for each group over the same dates. Keep the conversion definition consistent. If one group contains phone clicks while another contains completed purchases, the cost-per-result comparison needs an explanation.",
+          "For a service business, add aggregate qualified enquiries and booked work where available. A campaign can improve its blended cost simply because a larger share of enquiries comes from people already seeking the business by name. That is a change in the mix, not necessarily an improvement in finding new demand."
+        ],
+        table: {
+          headers: [
+            "Search group",
+            "Useful review question"
+          ],
+          rows: [
+            [
+              "Your business name",
+              "Are we helping existing demand reach the right destination?"
+            ],
+            [
+              "Generic service",
+              "Are these enquiries relevant and commercially useful?"
+            ],
+            [
+              "Competitor or ambiguous terms",
+              "Does this traffic fit an intentional, reviewed strategy?"
+            ],
+            [
+              "Unclear or unavailable terms",
+              "What limits remain in the classification?"
+            ]
+          ]
+        }
+      },
+      {
+        id: "test-budget-decisions",
+        heading: "Do not turn the distinction into an automatic pause rule",
+        paragraphs: [
+          "Whether to bid on branded searches depends on the actual account, competition, search results and business objective. Avoid a universal instruction to keep or remove them. If you test a change, agree the dates, measurement and other factors that could influence total enquiries.",
+          "Check the wider business outcome alongside advertising reports. A lower branded campaign total alone does not establish a loss of total sales; customers may have used another route. Equally, an efficient branded campaign alone does not establish that a wider acquisition strategy is working."
+        ]
+      },
+      {
+        id: "request-a-search-review",
+        heading: "Ask for the search mix in your next campaign review",
+        paragraphs: [
+          "Bring your campaign objective and the conversion actions being reported. I can review the search mix and discuss how the account should be structured and measured. Share aggregate reports rather than private customer records."
+        ],
+        sources: [
+          {
+            label: "Use negative keywords carefully",
+            href: "/agency/blog/negative-keywords-google-ads-kenya-2026"
+          },
+          {
+            label: "Check Google Ads conversion tracking",
+            href: "/agency/blog/google-ads-conversion-tracking-kenya-2026"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "google-business-profile-service-area-nairobi",
+    category: "SEO",
+    title: "No Walk-In Office? How a Nairobi Service Business Should Describe Its Location",
+    excerpt: "Understand Google Business Profile service-area rules for Nairobi businesses, including when to hide an address and how to describe the areas you actually serve.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Google Business Profile Service Areas in Nairobi",
+    metaDescription: "Understand Google Business Profile service-area rules for Nairobi businesses, including when to hide an address and how to describe the areas you actually serve.",
+    intro: "A customer finds your business on Maps, travels to the displayed address and discovers that nobody receives visitors there. That is a broken customer promise before the first conversation begins. If you clean homes, repair equipment or deliver services at the customer’s location, your Google Business Profile and website need to describe that operating model accurately.",
+    thumbnail: "https://images.unsplash.com/photo-1741991110666-88115e724741?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Nairobi skyline with modern high-rise buildings",
+    sections: [
+      {
+        id: "identify-your-business-type",
+        heading: "Start with where customers actually receive the service",
+        paragraphs: [
+          "Google distinguishes storefront, service-area and hybrid businesses. Its guidance says a service-area business visits or delivers to customers and does not serve them at its business address; a hybrid business does both. Review the current eligibility guidance for your particular business before editing a profile.",
+          "For an illustrative mobile repair service operating from the owner’s home, publishing that home as a walk-in workshop could mislead people. If customers do visit a genuine staffed location, the information should reflect the service and hours available there. Choose the model that matches the operation."
+        ],
+        sources: [
+          {
+            label: "Google’s business representation guidelines",
+            href: "https://support.google.com/business/answer/3038177"
+          }
+        ]
+      },
+      {
+        id: "set-an-honest-address",
+        heading: "Hide a service-area address when customers are not served there",
+        paragraphs: [
+          "Google instructs service-area businesses to hide their address from customers and describe the area they serve. A borrowed address or a virtual office does not automatically create an eligible customer-facing location. Review the specific rules instead of buying an address solely to appear in a preferred neighbourhood.",
+          "Before changing information, confirm that the business owner has legitimate account access and understands the proposed correction. Keep the real operating details consistent across the website and customer communications. Do not create extra profiles simply to claim more neighbourhoods."
+        ],
+        sources: [
+          {
+            label: "Manage a Google Business Profile address",
+            href: "https://support.google.com/business/answer/2853879"
+          }
+        ]
+      },
+      {
+        id: "choose-practical-service-areas",
+        heading: "Your service area should match the jobs you can accept",
+        paragraphs: [
+          "List areas where your team can provide the advertised service reliably. Google’s service-area settings use named areas such as cities or postal codes, rather than a radius you draw. Check the current limits in the guidance when configuring the profile.",
+          "Operationally, ask what happens when an enquiry arrives from the edge of your coverage. Is there an additional travel charge, a different appointment window or no service at all? Make the relevant information easy to find before the customer spends time requesting a visit."
+        ],
+        sources: [
+          {
+            label: "Google service-area configuration guidance",
+            href: "https://support.google.com/business/answer/9157481"
+          }
+        ]
+      },
+      {
+        id: "make-the-website-agree",
+        heading: "Write location information that helps someone book",
+        paragraphs: [
+          "Explain which services you provide, the areas you cover and how to arrange a visit. Use useful examples or genuine service differences where they exist. A page that merely swaps one Nairobi neighbourhood name for another gives the visitor little reason to trust it.",
+          "Check the contact page, booking form and directions links together. A service-area business should not invite a walk-in appointment that staff cannot honour. Ask a person unfamiliar with the operation to explain where they think the service happens and what they must do next."
+        ]
+      },
+      {
+        id: "review-the-profile",
+        heading: "Fix accuracy before asking for more visibility",
+        paragraphs: [
+          "Send your public Business Profile link, website and a description of how customers receive your service. I can scope a local SEO review around profile accuracy and the booking journey. Service-area changes do not guarantee rankings in every location you list."
+        ],
+        sources: [
+          {
+            label: "Set up a Google Business Profile",
+            href: "/agency/blog/google-business-profile-setup-nairobi-2026"
+          },
+          {
+            label: "Build useful location pages",
+            href: "/agency/blog/location-pages-seo-nairobi-2026"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "reduce-appointment-no-shows-leads-kenya",
+    category: "Lead Generation",
+    title: "Your Leads Booked a Call. Why Is Nobody Turning Up?",
+    excerpt: "Reduce avoidable appointment no-shows by checking booking intent, confirmation details, reminders and rescheduling before blaming your lead-generation ads.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Reduce Appointment No-Shows from Marketing Leads in Kenya",
+    metaDescription: "Reduce avoidable appointment no-shows by checking booking intent, confirmation details, reminders and rescheduling before blaming your lead-generation ads.",
+    intro: "The calendar is full, but the salesperson spends the morning waiting. It is tempting to decide the campaign attracted bad leads. Sometimes it did. Sometimes the booking process never made the purpose, timing or next step clear. Before buying more enquiries, examine the gap between someone agreeing to a call and actually attending it.",
+    thumbnail: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two people shaking hands across a table in a business meeting",
+    sections: [
+      {
+        id: "define-a-real-booking",
+        heading: "Separate interest from an agreed appointment",
+        paragraphs: [
+          "“Call me sometime tomorrow” is not the same as a confirmed meeting with a time and purpose. Record what the prospect actually agreed to. If a team member chooses a slot without receiving confirmation, label it accurately rather than counting it as a customer commitment.",
+          "For an illustrative property enquiry, a person asking for a brochure may not yet be ready for a viewing. Offer the next step that fits their question. Pushing every enquiry into the same appointment can inflate the calendar while hiding the real stage of the conversation."
+        ]
+      },
+      {
+        id: "make-the-details-clear",
+        heading: "A confirmation should answer five practical questions",
+        paragraphs: [
+          "State what the meeting is for, who it is with, when it happens, where it happens and how to change the arrangement. Include the timezone when relevant and check that a remote meeting link works. For a site visit, explain the meeting point and any preparation the visitor actually needs.",
+          "Keep the message short enough to use. Avoid making the prospect search through a long promotional paragraph to find the time. If staff change a booking, ensure the new arrangement reaches the customer and replaces the old information in the team’s record."
+        ],
+        list: [
+          "Confirm a specific date, time and meeting purpose.",
+          "Provide the correct link, address or meeting point.",
+          "Name the person or team receiving the appointment.",
+          "Explain a simple rescheduling route.",
+          "Record whether the prospect acknowledged the arrangement."
+        ]
+      },
+      {
+        id: "make-reminders-useful",
+        heading: "Remind people without turning the booking into a chase",
+        paragraphs: [
+          "Agree a reasonable reminder process suited to the appointment and the customer’s communication preferences. A reminder can repeat the time and provide a rescheduling option. It should not imply urgency, a reservation or a fee that the business has not actually agreed.",
+          "Assign ownership for replies. A customer who says they cannot attend needs a useful response, not another automatic reminder for the same slot. Keep sensitive details out of reminder messages, particularly where a service involves private personal matters."
+        ]
+      },
+      {
+        id: "measure-the-stage",
+        heading: "Report attendance alongside booked appointments",
+        paragraphs: [
+          "Track the path from enquiry to agreed booking, attendance and a meaningful next step. Use the same definitions across reporting periods. Distinguish customer cancellations, business cancellations and missed appointments so improvements target the right part of the process.",
+          "An illustrative campaign produces 40 enquiries, 12 confirmed bookings and six attended calls. Counting only the 12 bookings hides half the next-stage loss. These example figures are a way to structure a review, not a benchmark for your business. Compare your own sources, timing and booking process."
+        ]
+      },
+      {
+        id: "review-the-booking-path",
+        heading: "Bring the booking process to the campaign conversation",
+        paragraphs: [
+          "Share the service you sell, how appointments are confirmed and aggregate attendance counts. I can review the lead-generation journey and scope campaign or follow-up changes. More advertising spend should follow a clear diagnosis of where the useful opportunities are lost."
+        ],
+        sources: [
+          {
+            label: "Qualify enquiries before booking",
+            href: "/agency/blog/lead-qualification-questions-whatsapp-kenya-2026"
+          },
+          {
+            label: "Build a WhatsApp follow-up system",
+            href: "/agency/blog/whatsapp-lead-follow-up-system-kenya-2026"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "changing-marketing-agency-handover-kenya",
+    category: "Strategy",
+    title: "Changing Marketing Agencies? Arrange the Handover Before the Goodbye",
+    excerpt: "Plan a marketing agency handover with an account inventory, campaign notes, asset ownership and access checks so your business can keep operating during the change.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Marketing Agency Handover Checklist for Kenyan Businesses",
+    metaDescription: "Plan a marketing agency handover with an account inventory, campaign notes, asset ownership and access checks so your business can keep operating during the change.",
+    intro: "The new agency is ready to start. Then someone asks who controls the domain, where the approved creative files live and which conversion action the campaigns use. A supplier change becomes an account-recovery project. A good handover starts with the business’s operating records before the final meeting with the outgoing team.",
+    thumbnail: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand moving a card on a planning board covered in printed plans and notes",
+    sections: [
+      {
+        id: "inventory-the-accounts",
+        heading: "Build an inventory of business-critical accounts",
+        paragraphs: [
+          "List the website, domain, advertising accounts, analytics, social profiles, product feeds and other tools used in the work. Record the business owner, access administrators and billing contact for each. Do not put passwords or recovery codes in a shared spreadsheet.",
+          "Check access through the platform’s supported user or partner permissions. A supplier’s screenshot of a dashboard does not prove that your business can manage the account. Ask an authorised business representative to verify access while the outgoing supplier is still available to answer questions."
+        ]
+      },
+      {
+        id: "request-the-working-context",
+        heading: "Request decisions and open tasks, not just files",
+        paragraphs: [
+          "A useful campaign handover explains what is live, what is being tested and what has already been ruled out. Ask for the current objectives, conversion definitions, reporting dates, significant changes and known measurement limitations. Those notes help the next team interpret the account.",
+          "For creative work, request the agreed deliverables, source files where included in the agreement, usage rights and any expiry dates. Separate completed assets from drafts and identify promotions that must be removed. Review the actual agreement before assuming every working file belongs in the handover."
+        ],
+        table: {
+          headers: [
+            "Handover area",
+            "What the next team needs"
+          ],
+          rows: [
+            [
+              "Live campaigns",
+              "Objectives, budgets, destinations and upcoming changes"
+            ],
+            [
+              "Measurement",
+              "Conversion definitions, reporting windows and known gaps"
+            ],
+            [
+              "Creative and content",
+              "Approved files, permitted uses and offer expiry dates"
+            ],
+            [
+              "Open work",
+              "Owner, deadline, status and decision required"
+            ]
+          ]
+        }
+      },
+      {
+        id: "sequence-the-change",
+        heading: "Choose who controls each action during the transition",
+        paragraphs: [
+          "Agree a handover window and a named decision maker. If both suppliers can edit live campaigns, state who is responsible at each stage. Otherwise one team can undo the other’s changes or assume someone else is monitoring the account.",
+          "For time-sensitive promotions, decide whether to complete the event under the existing arrangement or transfer it with an explicit checklist. There is no universal need to rebuild campaigns immediately. The incoming team should understand the current setup before recommending changes that affect live activity."
+        ]
+      },
+      {
+        id: "verify-before-removing-access",
+        heading: "Check the business can operate before retiring access",
+        paragraphs: [
+          "Confirm the incoming authorised team can perform the agreed work and the business retains appropriate control. Check scheduled content, billing, landing pages and integrations. Remove old access through the platform’s supported process once responsibilities have transferred and retention requirements are understood.",
+          "Keep a short acceptance record of what was received and what remains unresolved. This is an operational checklist, not a substitute for the contract. Disputed deliverables, charges or intellectual-property questions should be resolved against the actual agreement with suitable advice where needed."
+        ]
+      },
+      {
+        id: "start-with-a-transition-review",
+        heading: "An audit can give the new brief a factual starting point",
+        paragraphs: [
+          "If you are changing suppliers, share the services involved and the state of the handover. I can review the public customer journey and scope an account audit once appropriate access is available. You do not need to send passwords in an initial enquiry."
+        ],
+        sources: [
+          {
+            label: "Understand account ownership",
+            href: "/agency/blog/who-owns-your-ad-account-kenya-2026"
+          },
+          {
+            label: "Review your marketing agreement",
+            href: "/agency/blog/marketing-contract-checklist-kenya-2026"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "repeatable-short-video-series-business-kenya",
+    category: "Social Media",
+    title: "Stop Starting from a Blank Page: Build a Short-Video Series Customers Can Follow",
+    excerpt: "Build a repeatable TikTok or Instagram video series around customer questions, demonstrations and buying decisions instead of inventing a new format for every post.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Short-Video Content Series for Kenyan Businesses",
+    metaDescription: "Build a repeatable TikTok or Instagram video series around customer questions, demonstrations and buying decisions instead of inventing a new format for every post.",
+    intro: "Monday arrives and the team asks what to film. Again. The problem may not be a lack of interesting products; it may be the absence of a repeatable editorial idea. A useful short-video series gives every episode a recognisable job while leaving room for a different question, demonstration or result.",
+    thumbnail: "https://images.unsplash.com/photo-1553446472-8f625ae729ad?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hands holding a camera with a red microphone on top",
+    sections: [
+      {
+        id: "choose-the-question-family",
+        heading: "Build around a question customers keep asking",
+        paragraphs: [
+          "Start with your sales conversations and support notes. Group recurring questions into a family: choosing a size, comparing materials, avoiding a common mistake or preparing for a service visit. Select a theme your team can explain accurately through several distinct episodes.",
+          "For an illustrative furniture business, “Will it fit?” could become a series showing how to measure a doorway, compare room layouts and check the dimensions around a dining table. The shared promise is useful measurement advice. Each episode still needs a specific answer."
+        ]
+      },
+      {
+        id: "create-an-episode-shape",
+        heading: "Give the series a simple structure",
+        paragraphs: [
+          "Open with the question or visible problem, demonstrate the relevant detail and finish with a clear takeaway. Decide which elements repeat, such as the framing, title treatment or presenter. Consistency should make production easier without forcing every answer into identical wording.",
+          "Write a short outline before filming: the exact question, what needs to be shown and the fact the viewer should remember. If the answer needs a physical demonstration, film the demonstration rather than covering the screen with abstract advice."
+        ],
+        table: {
+          headers: [
+            "Series idea",
+            "A distinct episode"
+          ],
+          rows: [
+            [
+              "Will it fit?",
+              "Measuring a doorway before ordering a sofa"
+            ],
+            [
+              "Before you book",
+              "What to prepare before a repair visit"
+            ],
+            [
+              "One detail to compare",
+              "How two fabric finishes look under the same light"
+            ],
+            [
+              "Answer from the inbox",
+              "A real recurring product question, with customer details removed"
+            ]
+          ]
+        }
+      },
+      {
+        id: "batch-without-rushing",
+        heading: "Batch the setup, keep the answers specific",
+        paragraphs: [
+          "Prepare several questions that use the same location or equipment, then film them in one session if practical. Keep a product checklist and verify specifications before recording. The efficiency comes from preparing the shoot, not from making unsupported claims quickly.",
+          "Check sound, lighting, captions and whether the demonstration is visible at phone size. Reuse approved visual elements where appropriate, but adapt the edit and publishing details to the channel. You do not need to promise that one format will perform identically on TikTok and Instagram."
+        ]
+      },
+      {
+        id: "evaluate-the-series",
+        heading: "Judge whether viewers get the intended answer",
+        paragraphs: [
+          "Review attention alongside the questions, profile visits and useful enquiries the episodes produce. A video can attract broad attention without reaching likely customers. Ask whether the comments show that viewers understood the subject or reveal a missing explanation.",
+          "Keep a short editorial log with the question, demonstration, publication date and next improvement. Test a different opening or clearer demonstration when the evidence suggests it. Do not abandon the entire series solely because one episode underperformed, or keep it forever because one episode went viral."
+        ]
+      },
+      {
+        id: "turn-the-idea-into-a-brief",
+        heading: "Bring a product and three recurring questions",
+        paragraphs: [
+          "Share the audience you want to reach, a product or service to demonstrate and the questions your team hears repeatedly. I can scope social content planning and production support around an achievable series, with clear roles for filming and approvals."
+        ],
+        sources: [
+          {
+            label: "Plan a practical content calendar",
+            href: "/agency/blog/social-media-content-calendar-small-business-kenya-2026"
+          },
+          {
+            label: "Improve the opening of a short video",
+            href: "/agency/blog/video-hooks-first-three-seconds-kenya-2026"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "google-ads-case-study-weakest-campaign-kenya",
+    category: "Case Study",
+    title: "The Weakest Campaign in a Strong Google Ads Account: What the Average Hid",
+    excerpt: "A closer reading of an existing Kenyan Google Ads case study: why a 7.9x campaign deserved scrutiny inside an account reporting 15.5x overall return.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Google Ads Case Study Kenya: What the Account Average Hid",
+    metaDescription: "A closer reading of an existing Kenyan Google Ads case study: why a 7.9x campaign deserved scrutiny inside an account reporting 15.5x overall return.",
+    intro: "An account reporting 15.5x return on ad spend sounds like an easy success story. But the average can hide a very different result inside one campaign. This article revisits the published Google Ads launch case study for an anonymised Kenyan beauty retailer, focusing on its weakest campaign. It is a closer analysis of the existing report, not a new client result or a new measurement period.",
+    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop screen showing statistics and charts on a glass table",
+    sections: [
+      {
+        id: "keep-the-source-visible",
+        heading: "Start with the scope of the original report",
+        paragraphs: [
+          "The published case study covers 1 August to 8 October 2026. It records KES 1,942,243 in platform-tracked revenue against KES 125,422 of spend, with 339 tracked orders and 15.5x overall return. The report converts Google’s figures at KES 129.89 per US dollar.",
+          "Those are attributed reporting figures, not audited profit or proof that every order was caused by advertising. The original report also notes gaps in its weekly log, so the account total and logged breakdowns should not be forced into a perfect reconciliation. Keep the original scope visible when quoting a smaller part of the account."
+        ],
+        sources: [
+          {
+            label: "Original Google Ads launch case study",
+            href: "/agency/blog/google-ads-launch-case-study-kenya-2026"
+          }
+        ]
+      },
+      {
+        id: "inspect-the-weakest-line",
+        heading: "The consultation campaign had different economics",
+        paragraphs: [
+          "The local skin consultation search campaign recorded KES 10,257 of spend, KES 81,265 of tracked revenue and 13 tracked orders. Its reported return was 7.9x and cost per tracked order KES 789. General product search reported 18.0x and KES 326 per tracked order.",
+          "The useful observation is the difference inside the same account. An overall figure can look strong while one service or offer acquires an attributed result at a much higher cost. That difference deserves investigation even when the campaign itself reports revenue above spend."
+        ],
+        table: {
+          headers: [
+            "Published campaign or ad group",
+            "Tracked ROAS",
+            "Cost per tracked order"
+          ],
+          rows: [
+            [
+              "General product search",
+              "18.0x",
+              "KES 326"
+            ],
+            [
+              "Shopping, all products",
+              "14.9x",
+              "KES 356"
+            ],
+            [
+              "Local skin consultation search",
+              "7.9x",
+              "KES 789"
+            ]
+          ],
+          note: "Figures from the existing anonymised Google Ads launch report. Campaigns and ad groups are different reporting levels; these are selected comparisons, not an exhaustive additive table."
+        }
+      },
+      {
+        id: "separate-observation-from-cause",
+        heading: "The report identifies the gap, not its complete cause",
+        paragraphs: [
+          "The available figures do not establish whether the weaker result came from the search traffic, landing page, offer, appointment process or another factor. Nor do they establish the margin on a consultation-related order. A convincing explanation would need more evidence than a return column.",
+          "Before recommending a change, I would inspect the conversion definition, search intent, landing experience and business-side outcome. Those are proposed next checks, not actions this article claims were performed. Distinguishing the observation from the explanation keeps the case study useful."
+        ]
+      },
+      {
+        id: "make-the-budget-decision",
+        heading: "A lower return is a question to investigate",
+        paragraphs: [
+          "A consultation may serve a different commercial purpose from an immediate product sale. To evaluate that possibility, the business would need reliable downstream records and an agreed comparison period. It would be speculative to claim future value from those 13 tracked orders without that evidence.",
+          "The practical lesson is to review material campaigns individually and connect their reported outcomes to business economics. Neither keeping every campaign because the account average is strong nor pausing the weakest line automatically is a complete decision process. The next step should answer a defined uncertainty."
+        ]
+      },
+      {
+        id: "use-the-lesson",
+        heading: "Ask what your own account average leaves out",
+        paragraphs: [
+          "In a campaign review, ask to see the important services, product groups or campaign lines alongside the total. Bring the commercial outcomes you can verify. I can scope a marketing review that separates the reporting facts, their limits and the next questions worth testing."
+        ],
+        sources: [
+          {
+            label: "Compare Meta and Google reporting carefully",
+            href: "/agency/blog/meta-and-google-ads-together-case-study-kenya-2026"
+          },
+          {
+            label: "Check Google Ads conversion tracking",
+            href: "/agency/blog/google-ads-conversion-tracking-kenya-2026"
+          }
+        ]
+      }
+    ]
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

@@ -12,6 +12,7 @@ import { shopifyGuideSlugs } from "@/data/shopify";
 const SERVICE_POSTS: Record<string, string[]> = {
   "shopify-services": shopifyGuideSlugs,
   "meta-ads-management": [
+    "when-to-increase-meta-ads-budget-kenya",
     "ad-creative-fatigue-signs-kenya-2026",
     "meta-ads-account-structure-small-budget-kenya-2026",
     "how-much-should-a-kenyan-sme-spend-on-meta-ads",
@@ -30,6 +31,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "how-to-read-meta-ads-report-kenya-2026",
   ],
   "google-ads-management": [
+    "branded-vs-non-branded-google-ads-kenya",
     "responsive-search-ads-headlines-kenya-2026",
     "google-ads-bidding-strategies-explained-kenya-2026",
     "google-ads-cost-kenya-2026",
@@ -49,6 +51,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "youtube-ads-for-kenyan-businesses-2026",
   ],
   "seo-services-nairobi": [
+    "google-business-profile-service-area-nairobi",
     "core-web-vitals-website-speed-kenya-2026",
     "how-google-maps-ranks-businesses-nairobi-2026",
     "why-your-nairobi-business-isnt-showing-up-on-google-2026",
@@ -61,6 +64,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "location-pages-seo-nairobi-2026",
   ],
   "social-media-management": [
+    "repeatable-short-video-series-business-kenya",
     "short-video-editing-workflow-small-business-kenya-2026",
     "community-management-replying-to-comments-kenya-2026",
     "social-media-marketing-services-kenya-cost-2026",
@@ -83,6 +87,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "video-hooks-first-three-seconds-kenya-2026",
   ],
   "lead-generation": [
+    "reduce-appointment-no-shows-leads-kenya",
     "why-tech-builders-struggle-to-market-and-sell-kenya-2026",
     "property-leads-lost-in-the-inbox-case-study-2026",
     "whatsapp-broadcast-vs-email-marketing-kenya-2026",
@@ -98,6 +103,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "whatsapp-lead-follow-up-system-kenya-2026",
   ],
   "digital-marketing-audit": [
+    "changing-marketing-agency-handover-kenya",
     "hiring-lessons-127-internship-applications-kenya-2026",
     "marketing-contract-checklist-kenya-2026",
     "marketing-retainer-vs-project-vs-commission-kenya-2026",
@@ -118,6 +124,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "brand-strategy-before-running-ads-kenya-2026",
   ],
   "digital-marketing-kenya": [
+    "google-ads-case-study-weakest-campaign-kenya",
     "seven-lessons-two-platforms-one-retailer-case-study-2026",
     "digital-marketing-for-ecommerce-kenya-2027",
     "digital-marketing-for-real-estate-kenya-2027",
