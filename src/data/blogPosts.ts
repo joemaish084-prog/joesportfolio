@@ -7444,6 +7444,893 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "shopify-vs-woocommerce-kenya",
+    category: "Shopify",
+    title: "Shopify vs WooCommerce in Kenya: Who Will Run the Store on Monday?",
+    excerpt: "Compare Shopify and WooCommerce around maintenance, payments, content and team capacity before choosing a platform for your Kenyan online store.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify vs WooCommerce Kenya: A Practical Comparison",
+    metaDescription: "Compare Shopify and WooCommerce around maintenance, payments, content and team capacity before choosing a platform for your Kenyan online store.",
+    intro: "Imagine two shops with the same products and the same sales target. One owner enjoys managing WordPress and already has reliable technical support. The other wants to upload products between serving customers and dispatching orders. They should not automatically choose the same ecommerce platform. The useful Shopify vs WooCommerce comparison starts with the person opening the dashboard on Monday morning.",
+    thumbnail: "https://images.unsplash.com/photo-1487523117656-d5d117ad47c5?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two computer monitors showing website designs on a desk",
+    sections: [
+      {
+        id: "compare-the-workload",
+        heading: "Compare the operating workload before the feature lists",
+        paragraphs: [
+          "WooCommerce runs within WordPress, and its official guidance covers hosting requirements plus updates to WordPress, extensions, themes and payment gateways. Ask who will own that maintenance and what happens when an update needs testing. Having a developer available is a business arrangement, not something to assume because the shop worked at launch.",
+          "Shopify includes hosted storefront infrastructure, while your team still owns catalogue accuracy, app decisions, merchandising and order handling. Moving to it does not remove those jobs. It changes which technical tasks sit with the platform and which choices remain yours. Compare the responsibilities you would actually be buying."
+        ],
+        sources: [
+          {
+            label: "WooCommerce update responsibilities",
+            href: "https://woocommerce.com/document/how-to-update-woocommerce/"
+          },
+          {
+            label: "Shopify storefront infrastructure and performance",
+            href: "https://help.shopify.com/en/manual/online-store/web-performance/improving-web-performance"
+          }
+        ]
+      },
+      {
+        id: "compare-real-workflows",
+        heading: "Give both options the same three shopping tasks",
+        paragraphs: [
+          "For an illustrative clothing shop, those tasks might be buying a blue dress in a specific size, paying through the required Kenyan payment method, and selecting delivery outside Nairobi. Demonstrate the complete flow on each proposed setup. A homepage demo does not prove that the difficult parts work.",
+          "Add the staff-side task: change a price, correct stock and process a return. Watch the person who will actually do this work. If a routine change needs three messages to a developer, include that dependency in your decision rather than treating it as a small inconvenience."
+        ],
+        table: {
+          headers: [
+            "Question",
+            "What a useful answer includes"
+          ],
+          rows: [
+            [
+              "Who maintains the setup?",
+              "Named owner, update process and support cost"
+            ],
+            [
+              "Can customers pay?",
+              "Verified provider eligibility and a tested payment journey"
+            ],
+            [
+              "Can staff update products?",
+              "A demonstration using your catalogue"
+            ],
+            [
+              "What does a year cost?",
+              "Build, platform or hosting, tools and support"
+            ]
+          ]
+        }
+      },
+      {
+        id: "when-staying-makes-sense",
+        heading: "An existing WordPress store needs a reason to move",
+        paragraphs: [
+          "If your current WooCommerce store works, the team understands it and technical support is reliable, a migration needs a stronger reason than a fashionable theme. Write down the recurring problem and estimate its operating impact. Missing product information, for example, will remain missing after an import.",
+          "A business with substantial editorial content should also review its publishing workflow and important search pages. Include those pages in a platform demonstration. The right decision may be improving the current setup, moving the commerce operation, or first cleaning up the catalogue. Decide the outcome before buying the project."
+        ]
+      },
+      {
+        id: "compare-total-cost",
+        heading: "Compare the first year, including your team’s time",
+        paragraphs: [
+          "Prepare two budgets using the same catalogue and launch scope. Include setup, recurring tools, hosting or subscription charges, payment costs and planned support. Mark uncertain charges as questions to resolve. A low initial build fee is difficult to interpret without knowing what the business must purchase afterwards.",
+          "Then discuss the time your team can give the store. If nobody can approve products or manage orders, neither platform solves the bottleneck. I would rather scope a manageable catalogue and clear handover than propose an elaborate store that nobody can keep current."
+        ]
+      },
+      {
+        id: "choose-your-next-step",
+        heading: "Bring a requirements list to the platform conversation",
+        paragraphs: [
+          "Send your existing store link, three essential customer journeys and the work your team finds difficult. I can review whether a Shopify build or migration fits those requirements. If you are already committed to moving, the migration checklist below covers the separate cutover work."
+        ],
+        sources: [
+          {
+            label: "Plan a WooCommerce to Shopify migration",
+            href: "/agency/blog/woocommerce-to-shopify-migration-kenya"
+          },
+          {
+            label: "Understand Shopify store costs in Kenya",
+            href: "/agency/blog/shopify-store-cost-kenya"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "instagram-shop-to-shopify-kenya",
+    category: "Shopify",
+    title: "From Instagram DMs to Shopify: Keep the Conversation, Fix the Order Queue",
+    excerpt: "Moving an Instagram business to Shopify? Plan product information, stock, checkout and WhatsApp support without losing the conversations customers value.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Instagram to Shopify Kenya: Turn DMs into Clear Orders",
+    metaDescription: "Moving an Instagram business to Shopify? Plan product information, stock, checkout and WhatsApp support without losing the conversations customers value.",
+    intro: "A customer asks whether the dress is available. You reply. They ask for the price, then delivery, then the payment details. By the time money arrives, another person has asked for the same last size. If this sounds familiar, the reason to build a Shopify store is the order process behind those messages. Your Instagram account can remain the place people discover and talk to the business.",
+    thumbnail: "https://images.unsplash.com/photo-1647964186247-7d0a3d24c7a1?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a phone showing a brand’s Instagram profile",
+    sections: [
+      {
+        id: "find-the-repeated-questions",
+        heading: "Turn repeated questions into your first product brief",
+        paragraphs: [
+          "Review a small sample of recent customer conversations and tally the questions. Do people ask about sizes, delivery areas, authenticity, care instructions or what comes in a set? Remove personal details from your notes. The repeated questions tell you what the product page needs before you choose colours for the homepage.",
+          "For an illustrative accessories shop, the list could become material, dimensions, available colours, packaging and delivery timing. Prepare one complete product record first. If the business cannot provide that information for one item, importing the whole Instagram feed will not create a useful catalogue."
+        ]
+      },
+      {
+        id: "build-a-small-catalogue",
+        heading: "Launch a catalogue you can keep accurate",
+        paragraphs: [
+          "Start with a range whose prices, availability and photos you can verify. Decide who changes stock when a product sells through a walk-in customer or a message. A store that says available while your team apologises in WhatsApp creates a new problem instead of reducing the old one.",
+          "Use collection names customers understand and link a product-specific post to the actual product when possible. A customer who taps a handbag advert should not have to search a homepage for the handbag. Keep a clear route back to the wider range for people who are still browsing."
+        ],
+        list: [
+          "Confirm the product name, price and available options.",
+          "Assign an owner for stock changes across sales channels.",
+          "Prepare delivery and returns information before launch.",
+          "Decide which questions need personal advice and which belong on the page."
+        ]
+      },
+      {
+        id: "keep-human-support",
+        heading: "Use WhatsApp for questions that need a person",
+        paragraphs: [
+          "A storefront need not end the conversation. Keep support visible for fit advice, unusual delivery requests or problems with an order. Give customers a clear way to mention the product or order they need help with. That is more useful than sending every visitor into a blank chat.",
+          "The boundary matters: the store should answer routine questions consistently, while a person handles exceptions. Do not make customers complete checkout merely to discover that the business cannot deliver to them. Equally, do not ask for payment credentials in a message to work around an unclear checkout."
+        ]
+      },
+      {
+        id: "rehearse-the-handover",
+        heading: "Rehearse one order from Instagram to dispatch",
+        paragraphs: [
+          "Ask someone unfamiliar with the business to follow a product link, select an option, check delivery and attempt the agreed test payment. Then ask the fulfilment person to identify the order and prepare the right item. Record every moment when someone needs an explanation.",
+          "After launch, track a few practical signals: repeated questions, orders needing manual clarification and products frequently reported as unavailable. Those observations help improve the process. Follower count alone cannot tell you whether the new order workflow is working."
+        ],
+        sources: [
+          {
+            label: "Shopify store setup and testing checklist",
+            href: "https://help.shopify.com/en/manual/intro-to-shopify/initial-setup/new-to-shopify-checklists/general-checklist"
+          }
+        ]
+      },
+      {
+        id: "discuss-your-first-store",
+        heading: "A useful brief starts with your busiest inbox problem",
+        paragraphs: [
+          "Share your Instagram business link, approximate product count and the questions you answer most often. I can scope a Shopify store around the buying journey and explain which product information your team needs to prepare. You do not need to send private customer conversations."
+        ],
+        sources: [
+          {
+            label: "Write stronger fashion product pages",
+            href: "/agency/blog/shopify-fashion-product-pages-kenya"
+          },
+          {
+            label: "Plan M-Pesa and checkout testing",
+            href: "/agency/blog/shopify-mpesa-payments-kenya"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "shopify-fashion-product-pages-kenya",
+    category: "Shopify",
+    title: "Your Shopify Fashion Store Needs a Fit Answer, Not Another “Premium Quality” Claim",
+    excerpt: "Build better Shopify fashion product pages with clear sizing, fabric details, variant photos and delivery answers that help shoppers choose confidently.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify Fashion Product Pages: Sizing, Photos and Copy",
+    metaDescription: "Build better Shopify fashion product pages with clear sizing, fabric details, variant photos and delivery answers that help shoppers choose confidently.",
+    intro: "“Premium quality. Available in all sizes. Order now.” That description could belong to thousands of dresses. It cannot tell a customer whether this one fits, stretches or needs special care. For a Shopify clothing store, the most persuasive page is often the one that answers a specific worry clearly enough for someone to choose a size without opening another chat.",
+    thumbnail: "https://images.unsplash.com/photo-1753161024820-a10728a1eb80?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Woman on a phone call browsing a clothes rail in a shop",
+    sections: [
+      {
+        id: "write-a-useful-first-paragraph",
+        heading: "Replace adjectives with observable product facts",
+        paragraphs: [
+          "Start with what the garment is, how it is cut and when someone might wear it. Add verified fabric composition, lining, fastening and care details where relevant. If a supplier has not confirmed a specification, ask rather than filling the gap with confident wording.",
+          "Here is an illustrative rewrite: “A relaxed-fit, short-sleeved shirt with a button front and curved hem. Check the garment measurements below before choosing a size.” That is still incomplete until the real measurements and material are supplied, but it gives the buyer a useful direction instead of a vague promise."
+        ]
+      },
+      {
+        id: "make-sizing-specific",
+        heading: "Explain what your size chart actually measures",
+        paragraphs: [
+          "A chart headed S, M and L is not enough when different suppliers use different sizing. State whether the numbers refer to body measurements or the finished garment, include units and explain how to measure. Only publish model measurements or fit notes when they have been verified.",
+          "Use product-specific advice when cuts differ. A fitted jacket and a loose shirt may need different explanations, even if both use letter sizes. Place the chart near the selection decision and make it usable on a phone. A tiny chart buried in an image gallery makes customers work harder."
+        ],
+        list: [
+          "State measurement units and what is being measured.",
+          "Explain relevant fit differences between styles.",
+          "Verify each available size and colour combination.",
+          "Give an honest route to ask for fit advice when needed."
+        ]
+      },
+      {
+        id: "match-options-to-photos",
+        heading: "Make a colour choice look like a colour choice",
+        paragraphs: [
+          "If a customer selects navy, they should be able to recognise the navy garment in the imagery. Check the relationship between option labels, available combinations and photos. Shopify supports variants for choices such as size and colour, and provides variant image settings; verify the behaviour in your chosen theme.",
+          "Plan photos around buying questions: front, back, fabric detail and a useful view of length or scale. Avoid editing that misrepresents the colour or texture. A consistent shoot with accurate product identification can save more catalogue work than an impressive mix of unrelated supplier images."
+        ],
+        sources: [
+          {
+            label: "Shopify product variants",
+            href: "https://help.shopify.com/en/manual/products/variants/"
+          },
+          {
+            label: "Shopify variant image guidance",
+            href: "https://help.shopify.com/en/manual/products/product-media/add-images-variants"
+          }
+        ]
+      },
+      {
+        id: "answer-after-purchase-questions",
+        heading: "Delivery and exchanges belong in the buying decision",
+        paragraphs: [
+          "Before paying, customers should be able to find delivery information and your actual exchange conditions. Explain the process in plain language and make sure the support team can honour it. Do not borrow another retailer’s policy merely because the wording sounds professional.",
+          "For the page review, ask a fresh reader to choose a garment for a stated occasion and explain their size decision. Where do they hesitate? Improve that specific missing detail. Treat changes in returns or conversion as something to measure over time, not an automatic result of rewriting a paragraph."
+        ]
+      },
+      {
+        id: "request-a-product-template-review",
+        heading: "Fix one product template before uploading fifty more",
+        paragraphs: [
+          "Send a representative product link, the options you sell and the information your team has available. I can review the Shopify product-page structure and scope a reusable layout. Photography and copy preparation need explicit owners in the project."
+        ],
+        sources: [
+          {
+            label: "Choose a Shopify theme around your catalogue",
+            href: "/agency/blog/free-vs-paid-shopify-theme"
+          },
+          {
+            label: "Plan ongoing catalogue management",
+            href: "/agency/blog/shopify-store-management-kenya"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "shopify-shipping-delivery-kenya",
+    category: "Shopify",
+    title: "Shopify Delivery in Kenya: “We Deliver Countrywide” Is Not a Shipping Plan",
+    excerpt: "Plan Shopify shipping in Kenya with clear delivery areas, rates, bulky-item exceptions and test addresses before promising countrywide delivery.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify Shipping Kenya: Delivery Areas, Rates and Testing",
+    metaDescription: "Plan Shopify shipping in Kenya with clear delivery areas, rates, bulky-item exceptions and test addresses before promising countrywide delivery.",
+    intro: "Countrywide delivery sounds simple until a customer orders a bulky item to a location your usual rider does not serve. Now someone must call, quote a new fee and explain why checkout accepted a different amount. A useful Shopify shipping setup begins with the deliveries your business can fulfil, including the awkward ones.",
+    thumbnail: "https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shopping bags and gift boxes arranged on a table",
+    sections: [
+      {
+        id: "write-the-delivery-matrix",
+        heading: "Build the delivery matrix before entering rates",
+        paragraphs: [
+          "List your actual service areas and the delivery method for each. Separate local rider delivery, courier delivery and collection if the business offers them. Confirm the dispatch location, service timing and who handles address clarification. Do not assume one rate represents every parcel and destination.",
+          "For an illustrative homeware shop, a mug and a flat-pack desk need different handling conversations. Identify which products fit the normal parcel process and which require an agreed quotation or a separate arrangement. Make that distinction visible before checkout promises something your team cannot deliver."
+        ],
+        table: {
+          headers: [
+            "Delivery case",
+            "Decision to make"
+          ],
+          rows: [
+            [
+              "Local small parcel",
+              "Area boundary, charge, dispatch window and recipient contact"
+            ],
+            [
+              "Courier parcel",
+              "Served destinations, collection or doorstep arrangement, tracking process"
+            ],
+            [
+              "Bulky or fragile product",
+              "Handling requirement and how the customer receives an accurate quote"
+            ],
+            [
+              "Customer collection",
+              "Collection location, opening hours and readiness notification"
+            ]
+          ]
+        }
+      },
+      {
+        id: "local-delivery-is-specific",
+        heading: "Local delivery needs a defined boundary",
+        paragraphs: [
+          "Shopify’s local-delivery feature can use a distance or specified postal codes around a fulfilment location. Review its current eligibility rules and compatibility with the checkout methods your customers use. That feature is not the same thing as a courier contract covering every town.",
+          "Test the boundary using the address format customers actually enter. Include an address comfortably inside the area, one near the edge and one outside it. If the business uses neighbourhood names in conversations, check how those instructions relate to the address and delivery settings rather than assuming a match."
+        ],
+        sources: [
+          {
+            label: "Shopify local delivery setup and eligibility",
+            href: "https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/local-delivery"
+          }
+        ]
+      },
+      {
+        id: "make-the-promise-specific",
+        heading: "Separate dispatch timing from arrival timing",
+        paragraphs: [
+          "“Dispatch within one working day” describes a different event from “arrives tomorrow.” Write the promise your team and delivery provider can support. Explain order cut-off times, weekend handling and products that need preparation. Give the support team the same wording customers see.",
+          "If a delivery needs a phone call to confirm the route or recipient, decide who makes that call and when. The checkout should give customers a usable expectation without exposing internal logistics detail. An order confirmation can explain the next step more clearly than a generic thank-you message."
+        ]
+      },
+      {
+        id: "test-a-shipping-basket",
+        heading: "Use a test basket that tries to break your rules",
+        paragraphs: [
+          "Check a normal item, multiple items, an item with special handling and any mixed basket your store allows. Try a valid destination and an unsupported destination. Confirm that rates and messages match the agreed delivery matrix rather than checking only that a shipping option appears.",
+          "If you offer a free-delivery threshold, test just below, exactly at and above it, including any active discount. Ask what happens when a product is out of stock or the address is incomplete. Record the expected outcome before testing so an unexpected price does not get accepted by habit."
+        ]
+      },
+      {
+        id: "scope-delivery-setup",
+        heading: "Bring your delivery rules to the store build",
+        paragraphs: [
+          "Send your dispatch location, current delivery arrangements, typical product sizes and the destinations you serve. I can scope the Shopify configuration and testing around that information. Carrier charges and service coverage need confirmation from your delivery provider."
+        ],
+        sources: [
+          {
+            label: "Check profitable free-delivery offers",
+            href: "/agency/blog/shopify-discounts-profit-margin"
+          },
+          {
+            label: "Use the Shopify launch checklist",
+            href: "/agency/blog/shopify-store-launch-checklist-kenya"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "free-vs-paid-shopify-theme",
+    category: "Shopify",
+    title: "Free vs Paid Shopify Themes: Test the Product Page Before Buying the Demo",
+    excerpt: "Choosing a Shopify theme? Compare free and paid options using your own products, mobile tasks and editing needs instead of a polished demo homepage.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Free vs Paid Shopify Theme: A Catalogue-First Buying Guide",
+    metaDescription: "Choosing a Shopify theme? Compare free and paid options using your own products, mobile tasks and editing needs instead of a polished demo homepage.",
+    intro: "A theme demo has perfect photography, carefully selected products and exactly the right amount of copy. Your store may have long product names, mixed image sizes and twelve colour choices. Before paying for a Shopify theme, make it handle your real catalogue. The demo tells you what the designer prepared; your trial tells you what your team will operate.",
+    thumbnail: "https://images.unsplash.com/photo-1487523117656-d5d117ad47c5?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two computer monitors showing website designs on a desk",
+    sections: [
+      {
+        id: "start-with-required-tasks",
+        heading: "Write five tasks the theme must support",
+        paragraphs: [
+          "Choose tasks based on your products: compare two items, find the right size, select a colour, understand delivery and return to a collection. A furniture shop might need dimensions near the purchase controls. A fashion shop might need a usable fit guide. Those requirements should drive the shortlist.",
+          "Include a staff task too. Can the person responsible for promotions change a banner and select featured products without a developer? A theme that is easy for a visitor but awkward for the team can become expensive to keep current. Ask for a demonstration using the controls available in the proposed setup."
+        ]
+      },
+      {
+        id: "preview-real-products",
+        heading: "Try the awkward products, not just the best sellers",
+        paragraphs: [
+          "Shopify lets you add free themes and preview paid Theme Store themes before buying; a paid theme must be purchased before publication. Use that preview to test a long title, a sold-out item, a product with many options and an ordinary photo from your current library.",
+          "Check what happens when a description is short and when it is detailed. Read the page at a phone width and inspect the cart. Do not reject a theme solely because the demo’s colours differ from your brand. Do reject a proposal that cannot explain how an essential customer task will work."
+        ],
+        sources: [
+          {
+            label: "Shopify theme previews, purchases and licences",
+            href: "https://help.shopify.com/en/manual/online-store/themes/adding-themes"
+          }
+        ]
+      },
+      {
+        id: "compare-the-true-cost",
+        heading: "A paid theme may save work, but make the saving explicit",
+        paragraphs: [
+          "Compare the purchase price with the specific work or apps the theme would replace. If it includes the layout your business needs, it may simplify the build. If the sales pitch is just “looks more premium,” ask what meaningful difference the customer or editor will experience.",
+          "Conversely, a free theme with a clear catalogue and strong photography may be entirely suitable. Count the planned customisation hours, maintenance implications and any tool subscriptions on both options. Buy the feature set you will use, with an appropriate licence for the store."
+        ],
+        table: {
+          headers: [
+            "Test",
+            "Record this before deciding"
+          ],
+          rows: [
+            [
+              "Product selection",
+              "Can customers identify the right option on mobile?"
+            ],
+            [
+              "Content editing",
+              "Can staff update the agreed sections?"
+            ],
+            [
+              "Required features",
+              "Included, custom work or separate app?"
+            ],
+            [
+              "Ownership cost",
+              "Theme purchase plus build and ongoing tools"
+            ]
+          ]
+        }
+      },
+      {
+        id: "performance-and-support",
+        heading: "Check performance and the support route",
+        paragraphs: [
+          "A fast demo does not prove that your finished store will perform the same way. Images, installed apps and extra code can change the experience. Review the completed setup with realistic content rather than treating the theme name as a performance guarantee.",
+          "Ask which changes use the theme editor and which require code. Record who handles updates and whether custom modifications need checking when the theme changes. Keep the scope small enough that the business understands what it is buying and can maintain it after handover."
+        ]
+      },
+      {
+        id: "get-a-theme-shortlist",
+        heading: "Shortlist around your products and team",
+        paragraphs: [
+          "Share three representative products, the features you need and who will edit the store. I can review a theme shortlist as part of scoping your Shopify build or redesign. The first useful deliverable is a reasoned choice, rather than a long list of attractive demos."
+        ],
+        sources: [
+          {
+            label: "Improve clothing product-page decisions",
+            href: "/agency/blog/shopify-fashion-product-pages-kenya"
+          },
+          {
+            label: "Review apps before adding subscriptions",
+            href: "/agency/blog/shopify-apps-small-business"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "shopify-apps-small-business",
+    category: "Shopify",
+    title: "Which Shopify Apps Do You Actually Need? Give Every Subscription a Job",
+    excerpt: "Choose Shopify apps for a small business by testing their purpose, recurring cost, permissions and storefront impact before adding another subscription.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify Apps for Small Business: What You Actually Need",
+    metaDescription: "Choose Shopify apps for a small business by testing their purpose, recurring cost, permissions and storefront impact before adding another subscription.",
+    intro: "A review widget, a popup, a bundle tool, a countdown, a chat bubble. Each one has a convincing demo. Together they can turn a straightforward product page into a committee meeting. Before asking which Shopify apps are best, ask which job your store cannot currently do and how you will know that an app helped.",
+    thumbnail: "https://images.unsplash.com/photo-1528901166007-3784c7dd3653?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two colleagues looking at code on a laptop in an open-plan office",
+    sections: [
+      {
+        id: "write-the-job",
+        heading: "Describe the problem without naming an app",
+        paragraphs: [
+          "“We need more sales” is too broad to evaluate a tool. “Customers cannot find care instructions for this product range” is a problem you can investigate. The answer might be better content in the existing template rather than another monthly subscription.",
+          "Write the proposed outcome in one sentence and assign an owner. For an illustrative shop, a review tool might be intended to collect genuine post-purchase feedback and display it on relevant products. Decide who will configure requests, moderate submissions and check that the widget displays correctly. The installation is only part of the job."
+        ]
+      },
+      {
+        id: "audit-what-is-installed",
+        heading: "Check what you already pay for",
+        paragraphs: [
+          "Shopify’s app management screens expose billing, usage charges, permissions and other app details. Review those records alongside your own supplier subscriptions. List the app, its owner, current purpose and renewal arrangement before approving another tool with overlapping features.",
+          "Do not uninstall everything in one afternoon. Some tools may support fulfilment, subscriptions or records your team depends on. Review dependencies, export requirements and the developer’s removal guidance first. If a tool has external billing, confirm its cancellation process instead of assuming a dashboard action settles every charge."
+        ],
+        sources: [
+          {
+            label: "Shopify app management and billing details",
+            href: "https://help.shopify.com/en/manual/apps/managing-apps"
+          }
+        ]
+      },
+      {
+        id: "cost-the-stack",
+        heading: "Add the subscriptions together before adding another",
+        paragraphs: [
+          "An illustrative stack of four tools charging USD 9, USD 19, USD 15 and USD 12 per month totals USD 55 monthly, or USD 660 over twelve unchanged billing cycles. That example excludes usage charges, tax and exchange costs. Your actual subscriptions may differ, but the habit of adding them up is useful.",
+          "For each proposed purchase, ask whether the theme or existing setup can meet the requirement. Compare the cost of the simplest workable approach with the cost of the app, its configuration and the time needed to operate it. Avoid buying a large feature set to solve a small content gap."
+        ]
+      },
+      {
+        id: "test-the-customer-impact",
+        heading: "A trial needs a test, an owner and an end date",
+        paragraphs: [
+          "Before installation, record the relevant customer task and current experience. After configuration, repeat the task on mobile, including any cart or checkout steps the app touches. Review whether the page becomes crowded or the controls harder to use. Shopify identifies apps and additional code as potential performance factors.",
+          "Set a review date before the trial ends. Keep the tool if it solves the agreed problem at an acceptable cost and your team can operate it. Otherwise investigate removal carefully. A month without complaints is not enough evidence that an app is contributing value."
+        ],
+        list: [
+          "Name the customer or staff problem.",
+          "Check existing theme and platform capabilities.",
+          "Review permissions, billing and dependencies.",
+          "Run a realistic task before and after configuration.",
+          "Decide whether to retain the app before the trial renews."
+        ]
+      },
+      {
+        id: "request-an-app-review",
+        heading: "Ask for a store review with your app list",
+        paragraphs: [
+          "Share your store URL and the names of tools you are unsure about. I can include a storefront and app-purpose review in a scoped Shopify support project. Do not send access tokens, customer exports or private billing documents in an initial enquiry."
+        ],
+        sources: [
+          {
+            label: "Scope monthly Shopify management",
+            href: "/agency/blog/shopify-store-management-kenya"
+          },
+          {
+            label: "Compare free and paid themes",
+            href: "/agency/blog/free-vs-paid-shopify-theme"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "shopify-store-launch-checklist-kenya",
+    category: "Shopify",
+    title: "The Shopify Launch Rehearsal: Can a Stranger Buy and Your Team Dispatch?",
+    excerpt: "Use this Shopify launch checklist for Kenyan stores to test products, payments, delivery, notifications and staff handover before announcing your shop.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify Launch Checklist Kenya: Test Before Announcing",
+    metaDescription: "Use this Shopify launch checklist for Kenyan stores to test products, payments, delivery, notifications and staff handover before announcing your shop.",
+    intro: "The launch graphic is ready and the homepage looks finished. There is one rehearsal left: can someone who did not build the store place an order, and can someone else fulfil it correctly? This Shopify launch checklist follows that order from the first link to dispatch. It is designed to uncover operational gaps before the first customer does.",
+    thumbnail: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand moving a card on a planning board covered in printed plans and notes",
+    sections: [
+      {
+        id: "prepare-the-rehearsal",
+        heading: "Give the tester a buying task, not a guided tour",
+        paragraphs: [
+          "Choose someone unfamiliar with the build. Ask them to buy a particular product in an available option for delivery to a supported location. Let them start from the link you plan to share publicly. Watch where they hesitate without explaining the navigation in advance.",
+          "Keep a test sheet with the expected result, observed result and owner of each fix. Distinguish launch blockers from improvements that can wait. A broken purchase path is a blocker; an optional decorative section usually is not. Set that rule before the final design review grows into another project."
+        ],
+        sources: [
+          {
+            label: "Shopify’s general store setup checklist",
+            href: "https://help.shopify.com/en/manual/intro-to-shopify/initial-setup/new-to-shopify-checklists/general-checklist"
+          }
+        ]
+      },
+      {
+        id: "verify-the-catalogue",
+        heading: "Check representative products, including an awkward one",
+        paragraphs: [
+          "Choose a normal item, one with options and one with a special requirement such as bulky delivery. Verify names, prices, photos, option combinations and availability against the business’s approved information. Check that each product appears where a customer would expect to find it.",
+          "Ask the tester to explain what they believe they are purchasing. A correct answer in the dashboard does not help if the storefront wording suggests something else. Check contact details, delivery information and policy links too. Remove placeholder copy and offers that will not be valid at launch."
+        ]
+      },
+      {
+        id: "test-checkout",
+        heading: "Test the complete payment and delivery journey",
+        paragraphs: [
+          "Run the appropriate test-order process and inspect the order outcome. Shopify recommends test orders during setup and when payment settings change. For an external provider, follow its specific testing guidance too; a generic simulated transaction does not demonstrate every integration.",
+          "Use supported and unsupported delivery addresses, then check notifications and the amount shown to the customer. Confirm what happens if the customer cancels or payment fails. Before going live, verify the intended live payment configuration. Any real payment test should be agreed with the merchant, including possible fees and refunds."
+        ],
+        sources: [
+          {
+            label: "Shopify test-order guidance",
+            href: "https://help.shopify.com/en/manual/checkout-settings/test-orders"
+          }
+        ]
+      },
+      {
+        id: "test-the-team",
+        heading: "Hand the order to the person doing fulfilment",
+        paragraphs: [
+          "Ask staff to identify the item, option, recipient and payment status without help from the developer. Walk through packing, dispatch communication and a sample support question. Confirm who can correct a product issue and who has the access needed to do their own work.",
+          "Then rehearse an exception: the product is unavailable or a customer asks to change the address. You do not need to automate every case, but you need an owner and an agreed process. A launch-ready business can handle an ordinary problem without the entire team searching the same message thread."
+        ],
+        list: [
+          "Approved catalogue and current offers.",
+          "Verified delivery areas and payment outcomes.",
+          "Working confirmations and visible contact details.",
+          "Named fulfilment and customer-support owners.",
+          "A final issue list with launch blockers resolved."
+        ]
+      },
+      {
+        id: "agree-the-launch-decision",
+        heading: "Choose a launch window with support available",
+        paragraphs: [
+          "Agree who gives final approval and who watches the first real orders. Share the store when the people responsible for checkout, catalogue and fulfilment can respond. If you need a Shopify build or launch review, send your planned date and the parts of the journey that still need testing."
+        ],
+        sources: [
+          {
+            label: "Plan delivery areas and rates",
+            href: "/agency/blog/shopify-shipping-delivery-kenya"
+          },
+          {
+            label: "Move from Instagram orders to Shopify",
+            href: "/agency/blog/instagram-shop-to-shopify-kenya"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "shopify-abandoned-checkout-recovery",
+    category: "Shopify",
+    title: "Shopify Abandoned Checkouts: The Customer May Need an Answer, Not a Coupon",
+    excerpt: "Improve Shopify abandoned-checkout recovery by separating payment problems, delivery uncertainty and unfinished decisions before sending discounts.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify Abandoned Checkout Recovery: Beyond Coupons",
+    metaDescription: "Improve Shopify abandoned-checkout recovery by separating payment problems, delivery uncertainty and unfinished decisions before sending discounts.",
+    intro: "A customer reaches checkout and disappears. The easy response is a discount. But what if delivery was unavailable, payment failed or they simply needed to confirm a size? A coupon does not answer every unfinished decision. A better Shopify recovery plan starts by separating the cases you can understand from the cases you are guessing about.",
+    thumbnail: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person in a white shirt tapping on a smartphone",
+    sections: [
+      {
+        id: "distinguish-the-stages",
+        heading: "An abandoned checkout is a specific stage",
+        paragraphs: [
+          "A visitor leaving a product page, a shopper adding to a cart and a person starting checkout represent different levels of progress. Use the records and reports available in your setup to distinguish them. Do not assume you have an email address or a recoverable checkout for everyone who browsed.",
+          "Review a manageable sample and look for recorded issues, repeated delivery questions or a particular product pattern. Keep private customer details out of shared review notes. Your aim is to identify a repeated barrier, rather than invent a personal explanation for every person who did not buy."
+        ]
+      },
+      {
+        id: "investigate-before-emailing",
+        heading: "Fix payment and delivery failures at their source",
+        paragraphs: [
+          "Shopify’s abandoned-checkout guidance lists circumstances in which recovery emails are not sent, including some payment processing errors and unsupported delivery addresses. Review your current automation and eligibility rules. A lack of recovery emails does not necessarily mean a template is broken.",
+          "If failures cluster around a payment step, reproduce that journey with the provider’s test process. If delivery coverage is the problem, correct the targeting or configuration. Repeatedly reminding someone to complete an order that still cannot be delivered is unlikely to resolve their problem."
+        ],
+        sources: [
+          {
+            label: "Shopify abandoned-checkout recovery and email exceptions",
+            href: "https://help.shopify.com/en/manual/promoting-marketing/create-marketing/abandoned-checkouts"
+          }
+        ]
+      },
+      {
+        id: "write-a-useful-message",
+        heading: "Write the first reminder as useful help",
+        paragraphs: [
+          "An illustrative message could say: “Still deciding? Return to your checkout below. If you need help choosing a size or checking delivery, contact us here.” Adapt it to the real support the business offers and avoid implying that unavailable stock is being held for the recipient.",
+          "Use a clear sender, a working recovery link and an easy route to help. Keep the message consistent with your actual policy and customer communication preferences. Do not upload abandoned-checkout contacts into unrelated promotional lists simply because they entered an email during purchase."
+        ]
+      },
+      {
+        id: "decide-whether-to-discount",
+        heading: "Only use an incentive when the numbers and reason fit",
+        paragraphs: [
+          "If you test a discount, define the eligible products, duration and margin limit. Explain the offer accurately in the message. A recovery offer may replace another incentive or interact with existing promotions, so test the customer’s final basket rather than assuming the advertised percentages tell the whole story.",
+          "Measure recovered orders alongside discount cost, delivery subsidy and the original checkout problem. A higher recovery count can coexist with weaker contribution per order. Treat attribution cautiously: some customers would have returned without the message or coupon."
+        ],
+        table: {
+          headers: [
+            "Observed issue",
+            "First response to investigate"
+          ],
+          rows: [
+            [
+              "Payment error",
+              "Provider outcome and checkout testing"
+            ],
+            [
+              "Unsupported address",
+              "Delivery eligibility and customer-facing guidance"
+            ],
+            [
+              "Fit or specification question",
+              "Product information and an honest support route"
+            ],
+            [
+              "Price sensitivity",
+              "A controlled offer that preserves acceptable contribution"
+            ]
+          ]
+        }
+      },
+      {
+        id: "review-the-recovery-journey",
+        heading: "Bring the pattern, not a customer export",
+        paragraphs: [
+          "Share your store link, the stage where customers leave and aggregate counts for a consistent period. I can scope a Shopify checkout and storefront review. If recovery automation needs configuration, we will agree the tool, communication rules and testing work separately."
+        ],
+        sources: [
+          {
+            label: "Check discount contribution before running an offer",
+            href: "/agency/blog/shopify-discounts-profit-margin"
+          },
+          {
+            label: "Diagnose Shopify traffic without sales",
+            href: "/agency/blog/shopify-traffic-no-sales-kenya"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "shopify-discounts-profit-margin",
+    category: "Shopify",
+    title: "Your Shopify Sale Can Grow Revenue and Shrink What You Keep",
+    excerpt: "Plan Shopify discounts with a simple contribution calculation, clear offer rules and basket tests so extra orders do not hide an unprofitable promotion.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Shopify Discounts: Protect Margin Before Running a Sale",
+    metaDescription: "Plan Shopify discounts with a simple contribution calculation, clear offer rules and basket tests so extra orders do not hide an unprofitable promotion.",
+    intro: "“Twenty per cent off” sounds like a small concession until the product only has a narrow amount left after costs. A sale can make the dashboard look busy while leaving less money to run the business. Before configuring a Shopify discount, calculate what remains on a realistic order and decide which customer behaviour the offer is meant to change.",
+    thumbnail: "https://images.unsplash.com/photo-1642043175009-5997b3a078d8?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Calculator, pencil and ruler on grid paper",
+    sections: [
+      {
+        id: "calculate-order-contribution",
+        heading: "Start with what remains after the order’s variable costs",
+        paragraphs: [
+          "Use a simple planning calculation: selling price minus product cost and relevant order-level variable costs. Include packaging, payment charges and any delivery subsidy you expect to absorb. This contribution is not your final business profit; rent, salaries and other overheads still need funding.",
+          "Consider an illustrative product priced at KES 3,000. If product cost is KES 1,800 and other variable costs total KES 300, the order leaves KES 900 before overheads. A 20% product discount takes KES 600 off the selling price. Holding the example’s costs constant, the contribution falls to KES 300."
+        ],
+        table: {
+          headers: [
+            "Illustrative order",
+            "No discount",
+            "20% discount"
+          ],
+          rows: [
+            [
+              "Selling price",
+              "KES 3,000",
+              "KES 2,400"
+            ],
+            [
+              "Product cost",
+              "KES 1,800",
+              "KES 1,800"
+            ],
+            [
+              "Other variable costs",
+              "KES 300",
+              "KES 300"
+            ],
+            [
+              "Contribution before overheads",
+              "KES 900",
+              "KES 300"
+            ]
+          ],
+          note: "Illustration only. Real fees and costs can change with the basket and payment method."
+        }
+      },
+      {
+        id: "choose-the-behaviour",
+        heading: "What should the offer persuade someone to do?",
+        paragraphs: [
+          "A first-order offer, clearance event and basket-building promotion serve different purposes. State the objective before choosing the discount type. If the aim is clearing a specific range, a storewide code may give away margin on items that did not need help.",
+          "For a free-delivery threshold, inspect typical baskets and the actual delivery subsidy. You want the extra contribution from a larger basket to make sense after that subsidy. A threshold copied from a competitor says nothing about your product costs or courier arrangement."
+        ]
+      },
+      {
+        id: "configure-the-rules",
+        heading: "Write the promotion as a set of unambiguous rules",
+        paragraphs: [
+          "Shopify supports discount codes, automatic discounts and sale pricing, with different discount types. Choose the method that fits the customer journey, then verify the current configuration options in your store. Avoid assuming that every discount combines with every other promotion.",
+          "Record eligible products, minimum purchase, dates, customer eligibility and any combination rules you choose. Make the same conditions visible in the banner, product messaging and support brief. The customer should not discover the important exclusion only after a code is rejected."
+        ],
+        sources: [
+          {
+            label: "Shopify discount methods and types",
+            href: "https://help.shopify.com/en/manual/discounts"
+          }
+        ]
+      },
+      {
+        id: "test-the-baskets",
+        heading: "Try the baskets your promotional graphic does not show",
+        paragraphs: [
+          "Test below and above the minimum, an excluded item, a mixed basket, a returning customer where relevant and an existing code. Check the final payable amount and delivery charge. If an offer has an end time, agree the timezone and remove the supporting banners when it ends.",
+          "After the campaign, review contribution as well as revenue and order count. Include returns, fulfilment effort and the cost of acquiring the orders when those figures are available. Compare against a suitable baseline and acknowledge other changes; a sale period alone cannot prove the discount caused every purchase."
+        ]
+      },
+      {
+        id: "scope-a-promotion",
+        heading: "Ask for a promotion setup with the rules already discussed",
+        paragraphs: [
+          "I can scope Shopify promotional banners, merchandising and discount testing around an approved offer. Send the products, dates and intended rules in your enquiry. Your business should approve pricing and margin decisions before the storefront changes are published."
+        ],
+        sources: [
+          {
+            label: "Review abandoned-checkout incentives",
+            href: "/agency/blog/shopify-abandoned-checkout-recovery"
+          },
+          {
+            label: "Plan shipping and delivery charges",
+            href: "/agency/blog/shopify-shipping-delivery-kenya"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    slug: "sell-internationally-shopify-from-kenya",
+    category: "Shopify",
+    title: "Selling Internationally on Shopify from Kenya: Prove One Route Before “Worldwide”",
+    excerpt: "Plan international Shopify selling from Kenya around one destination, with payment currency, delivery costs, returns and market eligibility checked first.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "3 min read",
+    metaTitle: "Sell Internationally on Shopify from Kenya: A First-Market Plan",
+    metaDescription: "Plan international Shopify selling from Kenya around one destination, with payment currency, delivery costs, returns and market eligibility checked first.",
+    intro: "An overseas visitor can admire a product long before your business is ready to deliver it overseas. Changing a banner to “worldwide shipping” does not settle payment currency, delivery cost or what happens if the parcel comes back. For a Kenyan Shopify business, a more useful first international launch is one tested destination with a buying journey you can explain.",
+    thumbnail: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two people shaking hands across a table during a business meeting",
+    sections: [
+      {
+        id: "choose-one-route",
+        heading: "Choose the first destination for operational reasons",
+        paragraphs: [
+          "Start with evidence you already have: genuine enquiries, a delivery relationship or a product with a workable shipping profile. Check whether the destination makes sense for your catalogue and support capacity. A fragile, bulky product may have a very different first-market case from a compact accessory.",
+          "Build an illustrative landed-order worksheet with product price, packaging, freight and the other charges the buyer or seller may face. Obtain current answers from your carrier and relevant advisers for the actual product and route. If you cannot explain who pays which charges, the offer is not ready for a confident checkout promise."
+        ]
+      },
+      {
+        id: "check-payment-currency",
+        heading: "A currency display is not proof of a matching payment currency",
+        paragraphs: [
+          "Shopify Markets can tailor experiences by market, but features have plan and payment-provider requirements. Shopify currently states that processing payments in multiple currencies requires Shopify Payments or Adyen; other providers use the store’s default currency. Verify eligibility for your business and provider before promising local-currency payment.",
+          "Ask what the customer sees at checkout, what currency is charged and how refunds are handled. Test the actual configuration with the provider’s approved process. Do not assume that a currency conversion widget changes the currency the payment provider can process."
+        ],
+        sources: [
+          {
+            label: "Shopify Markets requirements and considerations",
+            href: "https://help.shopify.com/en/manual/markets/getting-started/requirements-and-considerations"
+          },
+          {
+            label: "Shopify market currency and payment requirements",
+            href: "https://help.shopify.com/en/manual/markets/customizations/local-currencies"
+          }
+        ]
+      },
+      {
+        id: "make-delivery-and-returns-real",
+        heading: "Price the return journey before advertising the outward one",
+        paragraphs: [
+          "Get a carrier quote for a realistic packaged order, not just the product’s unboxed weight. Ask about tracking, remote destinations, delivery exceptions and what happens after a failed delivery. Confirm the information needed for the route with the provider responsible for carrying it.",
+          "Then consider a return. Who authorises it, where does the customer send it, and who pays under your actual policy? State applicable conditions clearly and have destination-specific requirements reviewed when necessary. A low-value product can become commercially awkward if one return costs more than the original contribution."
+        ],
+        list: [
+          "One representative product and destination.",
+          "Confirmed payment eligibility and charged currency.",
+          "A realistic packaged-shipment quote.",
+          "A clear process for failed delivery and returns.",
+          "Accurate customer-facing timing and charge information."
+        ]
+      },
+      {
+        id: "localise-what-matters",
+        heading: "Localise the decisions, not just the greeting",
+        paragraphs: [
+          "Review product measurements, delivery expectations, price presentation and the language of key support information for the chosen audience. Make sure the market sees products you can actually supply there. A translated welcome message is of limited use if the delivery page still describes only Nairobi orders.",
+          "Run a rehearsal using a representative destination address and the relevant market experience. Record checkout eligibility, charges, notifications and the staff-side fulfilment steps. Start promotion only after the business approves that journey and can respond to the first exceptions."
+        ]
+      },
+      {
+        id: "discuss-an-international-setup",
+        heading: "Bring one destination and one product to the first conversation",
+        paragraphs: [
+          "Share the country you want to serve, a representative product and the payment and delivery providers you are considering. I can review the Shopify storefront and market configuration scope. Provider onboarding, carrier services and specialist compliance advice remain separate requirements to confirm."
+        ],
+        sources: [
+          {
+            label: "Verify Shopify payment setup for your business",
+            href: "/agency/blog/shopify-mpesa-payments-kenya"
+          },
+          {
+            label: "Choose between Shopify and WooCommerce",
+            href: "/agency/blog/shopify-vs-woocommerce-kenya"
+          }
+        ]
+      }
+    ]
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

@@ -12,6 +12,16 @@ export const shopifyGuideSlugs = [
   "shopify-seo-kenya-product-collection-pages",
   "shopify-store-management-kenya",
   "shopify-traffic-no-sales-kenya",
+  "shopify-vs-woocommerce-kenya",
+  "instagram-shop-to-shopify-kenya",
+  "shopify-fashion-product-pages-kenya",
+  "shopify-shipping-delivery-kenya",
+  "free-vs-paid-shopify-theme",
+  "shopify-apps-small-business",
+  "shopify-store-launch-checklist-kenya",
+  "shopify-abandoned-checkout-recovery",
+  "shopify-discounts-profit-margin",
+  "sell-internationally-shopify-from-kenya",
 ];
 
 // Joseph supplied this store as his work. These captions describe the public
