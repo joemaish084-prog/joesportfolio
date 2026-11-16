@@ -107,8 +107,8 @@ export function blogIndexHead(): PageHead {
   return {
     title: "Digital Marketing Blog Kenya | Joseph Maina Agency",
     description:
-      "Practical digital marketing insights for Kenyan brands, organised by topic: SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies.",
-    ogDescription: "SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies for Kenyan brands.",
+      "Practical guides for Kenyan brands: Shopify stores, SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies, organised by topic.",
+    ogDescription: "Shopify stores, SEO, Meta Ads, Google Ads, TikTok strategy and campaign case studies for Kenyan brands.",
     path,
     ...ogCardImage(path, "Joseph Maina's digital marketing blog for Kenyan brands"),
     jsonLd: [

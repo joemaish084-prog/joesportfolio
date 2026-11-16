@@ -5,6 +5,15 @@ import { servicePrice } from "@/data/services";
 export const SHOPIFY_PATH = "/agency/shopify-services";
 export const SHOPIFY_BRIEF = "/agency/contact?service=shopify-services#brief";
 
+export const shopifyGuideSlugs = [
+  "shopify-store-cost-kenya",
+  "shopify-mpesa-payments-kenya",
+  "woocommerce-to-shopify-migration-kenya",
+  "shopify-seo-kenya-product-collection-pages",
+  "shopify-store-management-kenya",
+  "shopify-traffic-no-sales-kenya",
+];
+
 // Joseph supplied this store as his work. These captions describe the public
 // storefront; they do not attribute individual features or claim sales results.
 export const shopifyProject = {
@@ -63,7 +72,7 @@ export const shopifyServicePage: ServicePage = {
   navLabel: "Shopify Services",
   topic: "Shopify store services",
   areaServed: "Worldwide",
-  updated: "2026-11-11",
+  updated: "2026-11-16",
   metaTitle: "Shopify Design, Migration & Management | Joseph Maina",
   metaDescription: "Shopify store creation, WooCommerce migration, and ongoing management for businesses in Kenya and worldwide. Explore Babyshop Dansar and discuss your store.",
   standfirst: "I create, migrate, and manage Shopify stores for businesses in Kenya and worldwide. Launch a new shop, plan your move, or get help with an existing store.",
@@ -78,8 +87,8 @@ export const shopifyServicePage: ServicePage = {
     { q: "What does ongoing Shopify management include?", a: "Management can cover product uploads, collections, promotional banners, merchandising, and storefront reviews. The proposal sets the monthly tasks, update allowance, and support schedule. SEO and advertising are scoped separately." },
     { q: "How much will my Shopify project cost?", a: "Pricing depends on catalogue size, design requirements, integrations, and any migration work. Builds and migrations are quoted per project; ongoing management is scoped monthly. Shopify subscriptions, paid themes, apps, and transaction fees are separate from my fee." },
   ],
-  hubSlug: "",
-  relatedPosts: [],
+  hubSlug: "shopify",
+  relatedPosts: shopifyGuideSlugs,
   cta: { heading: "Tell me about your store", body: "Share your current store link, what you need, and the customers you want to reach. We will agree the scope and next step.", label: "Discuss your Shopify project", href: SHOPIFY_BRIEF },
   draft: false,
   reviewNotes: [],

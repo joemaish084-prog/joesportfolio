@@ -7057,6 +7057,393 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "shopify-store-cost-kenya",
+    category: "Shopify",
+    title: "How Much Does a Shopify Store Cost in Kenya?",
+    excerpt: "Separate the store build from subscriptions, apps, payment fees and ongoing support before you compare Shopify quotes.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Shopify Store Cost in Kenya: A Budget Guide",
+    metaDescription: "Planning a Shopify store in Kenya? Understand setup costs, subscriptions, themes, apps and management, plus what to ask before accepting a quote.",
+    intro: "A Shopify quote is difficult to compare when one person includes product uploads and another only includes the theme setup. For a Kenyan business, the useful question is what it will cost to launch, take payments and keep the store current. Here is how I would break down that budget before discussing a build.",
+    thumbnail: "/work/shopify/babyshop-dansar-desktop.webp",
+    thumbnailAlt: "Babyshop Dansar Shopify homepage with product categories and promotional sections",
+    sections: [
+      {
+        id: "separate-the-costs",
+        heading: "Separate the project fee from the running costs",
+        paragraphs: [
+          "My Shopify builds and migrations are quoted per project, while store management is scoped monthly. The proposal depends on your catalogue, design requirements and integrations. A small shop with ready-to-upload product information needs a different scope from a store with incomplete photography and hundreds of variants.",
+          "Your setup budget should identify who supplies copy, images and product details, who checks the payment flow, and who trains the person managing orders. Ask how many revision rounds are included and what counts as an extra request. Those details make two quotes much easier to compare.",
+        ],
+        table: {
+          headers: ["Cost", "What to clarify"],
+          rows: [
+            ["Build or migration", "Catalogue size, templates, integrations, testing and handover"],
+            ["Shopify subscription", "Current plan, billing period and features your store needs"],
+            ["Theme and apps", "Upfront purchases, recurring charges and who approves them"],
+            ["Payment processing", "Provider charges and any applicable Shopify transaction fees"],
+            ["Ongoing support", "Monthly tasks, update allowance and response arrangements"],
+          ],
+        },
+      },
+      {
+        id: "budget-for-running-costs",
+        heading: "Check subscription and app costs before committing",
+        paragraphs: [
+          "Use Shopify's current billing guidance when choosing a plan. Pricing, promotions and included features can change, so a headline introductory offer is a poor basis for a full-year budget. Confirm the regular renewal cost and billing currency before approving the project.",
+          "For your own planning, record each supplier's charge in its billing currency, then estimate the KES amount using your payment method's exchange rate. Keep a separate line for the domain and any email service you choose. This is a budgeting worksheet, rather than a fixed price I can promise for every business.",
+          "Start your app list with a business requirement. If you only need basic product browsing, there is little reason to approve several recurring tools before the store has orders. Ask what the theme already handles and what would happen if you cancelled each proposed app.",
+        ],
+        sources: [{ label: "Shopify pricing plans and billing overview", href: "https://help.shopify.com/en/manual/intro-to-shopify/pricing-plans/pricing-overview" }],
+      },
+      {
+        id: "what-changes-the-quote",
+        heading: "What makes one Shopify project more expensive than another?",
+        paragraphs: [
+          "Count the work behind the product total. Twenty products with straightforward prices can be easier to prepare than five products with complicated options, size charts and missing images. A migration also needs an inventory of existing pages, important URLs and tools that the business relies on.",
+          "For example, a clothing shop might need size information, variant images and collection filters agreed before design begins. A homeware shop might need delivery rules for bulky items. These are different customer journeys, even when both shops have the same number of products.",
+        ],
+        list: [
+          "Provide the approximate product count and the options customers select.",
+          "List required payment methods and delivery areas.",
+          "Identify existing content or customer data that needs to move.",
+          "Show two or three design references and explain what you like about them.",
+          "Confirm who will approve the work and manage the store after launch.",
+        ],
+      },
+      {
+        id: "questions-before-hiring",
+        heading: "Questions to ask before paying for a Shopify build",
+        paragraphs: [
+          "Will I own the store account and domain? Which tasks are included in launch testing? Can my team update products without coming back for every small change? What support is included after handover? Get these answers in the proposal while everyone is still agreeing the work.",
+          "The lowest quote can be suitable when the scope is small and clear. A higher quote needs a clear explanation of the extra work. Share your product list, current website if you have one, and your launch priorities when you enquire about my Shopify services. I can then scope the project around your business rather than guess from a single budget number.",
+        ],
+        callout: "Ask for a launch cost and a running-cost breakdown. You need both to decide whether the store fits your budget.",
+      },
+    ],
+  },
+  {
+    slug: "shopify-mpesa-payments-kenya",
+    category: "Shopify",
+    title: "Shopify and M-Pesa in Kenya: What to Check Before Launch",
+    excerpt: "What to ask about M-Pesa providers, manual payments, order confirmation and delivery before your Shopify checkout goes live.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Shopify M-Pesa Payments in Kenya: Launch Guide",
+    metaDescription: "Want M-Pesa on a Shopify store in Kenya? Learn what to verify about providers, manual payments, order confirmation and checkout testing before launch.",
+    intro: "For a Shopify store serving Kenyan customers, payment planning belongs near the start of the project. You need to know how a customer pays, how your team confirms the money arrived, and what happens when payment fails. Adding an M-Pesa logo to a page does not answer any of those questions.",
+    thumbnail: "/work/shopify/babyshop-dansar-mobile.webp",
+    thumbnailAlt: "Babyshop Dansar mobile Shopify product page showing product details and purchase options",
+    sections: [
+      {
+        id: "verify-provider-fit",
+        heading: "Can your business use the proposed M-Pesa integration?",
+        paragraphs: [
+          "Verify the provider's current Shopify integration and eligibility for your business before approving it. Availability can depend on store location and the provider's own requirements. Ask the provider to confirm the specific M-Pesa payment flow it supports; do not assume that every gateway accepts the same methods.",
+          "Request written answers about onboarding documents, settlement timing, refunds, support and the currencies supported for your account. These are provider-specific questions. A recommendation made for a different merchant or country may not fit your store.",
+        ],
+        list: [
+          "Is this integration currently available for my store and business location?",
+          "What does the customer see on a phone during payment?",
+          "How does a successful payment update the Shopify order?",
+          "What happens after a timeout, cancellation or duplicate attempt?",
+          "Which provider charges and Shopify transaction fees apply?",
+        ],
+        sources: [{ label: "Shopify guidance on third-party payment providers", href: "https://help.shopify.com/en/manual/payments/third-party-providers" }],
+      },
+      {
+        id: "manual-payment-option",
+        heading: "How is a manual M-Pesa payment different?",
+        paragraphs: [
+          "A manual arrangement gives the customer instructions for paying outside the checkout payment flow. Shopify supports custom manual payment methods: the order remains unpaid until the merchant confirms receipt and marks it paid. This does not automatically verify an M-Pesa transaction.",
+          "If you use this approach, write instructions around an approved business payment channel, the order reference and the person responsible for checking receipts. Confirm the transaction against your business records before dispatch. A screenshot sent in a message should not be your only reconciliation process.",
+          "Choose the workflow your team can operate consistently. A manual process needs someone available to match payments to orders. An integrated process still needs a plan for exceptions. Ask about both the usual checkout and the cases where the customer needs help.",
+        ],
+        sources: [{ label: "Shopify manual payment methods and unpaid orders", href: "https://help.shopify.com/en/manual/payments/manual-payments" }],
+      },
+      {
+        id: "test-full-order-journey",
+        heading: "Test payment, order status and delivery together",
+        paragraphs: [
+          "Write a test sheet before launch. Start from a product page on a phone, choose an option, add it to the cart and enter a delivery address. Check that the customer understands the total and the next step before attempting payment.",
+          "Then inspect the order from your team's side. Does the status match the payment outcome? Are the confirmation messages understandable? Can staff identify what to dispatch and where? Follow the provider's testing instructions. A simulated Shopify checkout test alone does not prove that a separate M-Pesa integration settles correctly.",
+          "Shopify recommends placing test orders during setup and after payment-setting changes. If a live transaction is needed to validate a provider, agree the amount and refund process with the merchant first; real processing fees may apply. Make sure test mode is turned off before accepting customer orders.",
+        ],
+        sources: [{ label: "Shopify guidance on placing test orders", href: "https://help.shopify.com/en/manual/checkout-settings/test-orders" }],
+      },
+      {
+        id: "payment-setup-brief",
+        heading: "What should you send when asking for checkout help?",
+        paragraphs: [
+          "Share your store link, business location, required payment methods, delivery areas and the provider you are considering. If checkout is already failing, describe the step where it fails and whether an order appears in Shopify. Remove customer details from any examples you share.",
+          "I scope payment and shipping setup as part of Shopify store work. The first step is checking the available integration and your operating process, then agreeing the build and testing tasks. Use the enquiry below if you want to talk through a new checkout or an existing payment problem.",
+        ],
+        callout: "A launch-ready checkout needs a clear payment outcome for the customer and a reliable order status for your team.",
+      },
+    ],
+  },
+  {
+    slug: "woocommerce-to-shopify-migration-kenya",
+    category: "Shopify",
+    title: "Moving from WooCommerce to Shopify: A Migration Checklist",
+    excerpt: "Plan your products, customer accounts, important URLs and launch checks before moving your WooCommerce store to Shopify.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "WooCommerce to Shopify Migration Checklist",
+    metaDescription: "Considering WooCommerce to Shopify migration in Kenya? Plan data, customer accounts, redirects, checkout testing and handover before switching your store.",
+    intro: "Moving a store means changing a working business process. The product catalogue is only one part of it. Before moving from WooCommerce to Shopify, I would review what your customers use, what your team needs, and which pages already bring people to the store. That review helps decide whether the move is sensible and what the project should include.",
+    thumbnail: "/work/shopify/babyshop-dansar-desktop.webp",
+    thumbnailAlt: "Babyshop Dansar storefront showing a Shopify collection-led navigation layout",
+    sections: [
+      {
+        id: "confirm-reason-to-move",
+        heading: "Start with the problem you want the move to solve",
+        paragraphs: [
+          "Write down the reason for considering Shopify. Is it difficult to update products? Does maintenance take too much time? Is the mobile shopping experience confusing? A platform change needs to address a specific operating problem to justify the work.",
+          "List features your team depends on before discussing design. Include delivery rules, discounts, stock processes and connections to other tools. Review each requirement against the proposed Shopify setup. If a critical workflow needs replacing, put the replacement and its cost in the proposal before committing to the move.",
+        ],
+        callout: "Agree what the new store must do before deciding what it should look like.",
+      },
+      {
+        id: "plan-data-transfer",
+        heading: "What data can move, and what needs extra work?",
+        paragraphs: [
+          "Shopify's WooCommerce migration guidance distinguishes products and customers from content needing additional steps. Reviews, historical orders, blog posts and coupons need separate planning; do not assume one catalogue export contains everything. Customer passwords cannot transfer. Plan the sign-in experience and any customer communication around the account system you choose.",
+          "For your project, create a data inventory with an owner and an agreed acceptance check for each item. Decide whether old records need to remain available in an archive or appear in the new store. Keep a backup of the original store and agree who retains access during the transition.",
+        ],
+        table: {
+          headers: ["Item to review", "Project acceptance check"],
+          rows: [
+            ["Products and options", "Sample prices, SKUs, images and variant combinations match the agreed source"],
+            ["Customers and accounts", "Required fields are mapped and the sign-in plan is documented"],
+            ["Reviews and order history", "Transfer method, cost and any exclusions are agreed"],
+            ["Pages and discounts", "Required content and active offers have named owners"],
+          ],
+        },
+        sources: [{ label: "Shopify's WooCommerce migration guide and data limitations", href: "https://help.shopify.com/en/manual/migrating-to-shopify/migrating-from-woocommerce" }],
+      },
+      {
+        id: "protect-useful-pages",
+        heading: "Map important URLs before changing the live store",
+        paragraphs: [
+          "Build a list of existing product, category and content URLs. Use your available analytics and Search Console data to identify pages attracting search visits or links. Give each important URL a destination in the new store instead of leaving those decisions until launch day.",
+          "Review page titles, descriptions and useful content as part of that map. A new layout should still answer the buying questions that made the old page useful. Test the agreed redirects and important internal links after the move. Search visibility can change during migration, so no proposal should promise fixed rankings throughout the transition.",
+        ],
+      },
+      {
+        id: "agree-launch-window",
+        heading: "Agree the stock cutover and launch responsibilities",
+        paragraphs: [
+          "If the old shop continues taking orders while the new one is being prepared, decide how you will reconcile stock and records before switching. Record who approves the final catalogue, who handles domain changes and who responds if checkout fails. Choose a launch window when the responsible people are available.",
+          "Walk through the store with the person who will fulfil orders. Check representative products, delivery areas, notifications and account access. Record issues in one list and separate launch blockers from improvements that can follow later. Keep the agreed recovery option available until the launch checks are complete.",
+        ],
+      },
+      {
+        id: "request-migration-review",
+        heading: "What do I need to review your migration?",
+        paragraphs: [
+          "Send your WooCommerce store link, approximate catalogue size, the tools you rely on and your reason for moving. Mention any upcoming promotion or operational deadline. That is enough to begin a scope discussion without sending a full customer export.",
+          "My migration service starts with that review, followed by data mapping, important-page redirects and a testing plan. If fixing the existing store better fits the problem, that should be considered during the review too. Ask about your move using the Shopify enquiry below.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "shopify-seo-kenya-product-collection-pages",
+    category: "Shopify",
+    title: "Shopify SEO in Kenya: Help Customers Find Your Products",
+    excerpt: "A practical starting point for product pages, collections, buying guides and search measurement on a Shopify store.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Shopify SEO Kenya: Product and Collection Guide",
+    metaDescription: "Improve your Shopify SEO foundations in Kenya with useful product copy, clear collections, internal links and a practical search measurement plan.",
+    intro: "A Shopify store can look finished while telling a search visitor very little about what it sells. Products called Item 01, empty collection pages and copied descriptions make it harder for customers to judge whether they have found the right shop. Start your SEO work with the information people need to choose a product.",
+    thumbnail: "/work/shopify/babyshop-dansar-desktop.webp",
+    thumbnailAlt: "Shopify homepage for Babyshop Dansar with navigation to baby and maternity product categories",
+    sections: [
+      {
+        id: "choose-search-intent",
+        heading: "Give product pages and collection pages different jobs",
+        paragraphs: [
+          "Shopify's SEO guidance recommends matching content and store structure to relevant searches. For your shop, distinguish a customer browsing a category from someone seeking a specific item. Both journeys deserve useful destinations.",
+          "As an example, a person searching for a particular cot model may need a product page with dimensions, stock and delivery details. Someone comparing baby cots in Nairobi may need a collection that makes the available options easy to understand. Use terms that accurately describe your range, and only mention locations your business actually serves.",
+          "Start with a small page map: your main categories, priority products and the questions customers ask before buying. Assign each question to the most useful page. This gives you a clearer brief than trying to repeat the same phrase across the whole site.",
+        ],
+        sources: [{ label: "Shopify's SEO overview and content guidance", href: "https://help.shopify.com/en/manual/promoting-marketing/seo/seo-overview" }],
+      },
+      {
+        id: "write-product-details",
+        heading: "Write product descriptions that reduce buying uncertainty",
+        paragraphs: [
+          "Put the product's actual details ahead of broad claims about quality. Depending on your catalogue, customers may need dimensions, material, compatibility, available sizes, care instructions or what is included in the box. Ask your sales team which missing details lead to repeat messages.",
+          "For a clothing product, a useful first pass might include the fit, fabric, measurements and care instructions. For homeware, dimensions and delivery handling may matter more. Do not invent specifications to make a description longer. Get the facts from the business and make gaps visible during content preparation.",
+        ],
+        list: [
+          "Use a clear product name and an accurate page title.",
+          "Explain the product's relevant features in your own words.",
+          "Make options, price and availability easy to understand.",
+          "Place delivery and return information where customers can find it.",
+          "Describe informative images accurately in their alternative text.",
+        ],
+      },
+      {
+        id: "build-helpful-collections",
+        heading: "Make collections and buying guides help people choose",
+        paragraphs: [
+          "Organise collections around how customers shop. An internal warehouse label may mean little to someone visiting for the first time. Review category names with someone outside your team and ask where they would look for three common products.",
+          "Add a short introduction where it helps explain the range, then let the products do their job. If customers need help choosing sizes or comparing materials, write a focused guide and connect it to the relevant collection. Link back from that guide to products that meet the criteria you explain.",
+          "Avoid creating lots of near-identical pages for every location or wording variation. A useful page needs a distinct purpose and accurate information. One strong category guide is easier for a small team to maintain than many thin pages that all say the same thing.",
+        ],
+      },
+      {
+        id: "measure-search-progress",
+        heading: "Measure useful search visits and purchases",
+        paragraphs: [
+          "Agree a baseline before editing: which pages get search visits, which searches bring people in, and where those visitors go next. Use Search Console to review search visibility and your store reporting to understand orders. Keep those measures distinct so an increase in impressions is not mistaken for an increase in revenue.",
+          "Review a manageable set of pages, record the changes and allow time for search engines to revisit them. Prioritise pages with clear buying intent and products the business can supply reliably. Search outcomes depend on competition and other factors; publishing a page does not guarantee a first-place ranking.",
+          "I can review your Shopify storefront and discuss the content and structure it needs. SEO work is scoped separately from routine store management. Share your store link and the products you want to be found for when you enquire.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "shopify-store-management-kenya",
+    category: "Shopify",
+    title: "Shopify Store Management: What Monthly Support Should Include",
+    excerpt: "Define product updates, promotions, storefront checks and reporting before hiring someone to manage your Shopify store.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Shopify Store Management in Kenya: Monthly Scope",
+    metaDescription: "Need Shopify store management in Kenya? Learn how to scope product updates, collections, promotions, app reviews and support before agreeing a retainer.",
+    intro: "Launching a Shopify store creates a new set of recurring tasks. Products change, promotions end and customers spot information that your team missed. Monthly support becomes useful when it has a defined workload, clear approvals and someone responsible for checking the result. Here is what I would agree before taking over store updates.",
+    thumbnail: "/work/shopify/babyshop-dansar-mobile.webp",
+    thumbnailAlt: "Babyshop Dansar Shopify product page on mobile with product information and variant choices",
+    sections: [
+      {
+        id: "define-recurring-work",
+        heading: "Start with the work your store actually needs",
+        paragraphs: [
+          "List a normal month's requests before choosing a support arrangement. A shop adding new clothing every week has different needs from a shop selling a stable range of household items. Estimate the number of product updates, collection changes and promotions, and identify where the source information comes from.",
+          "My Shopify management work can cover catalogue updates, collections, promotional banners, merchandising and storefront reviews. We agree the update allowance and support schedule in the proposal. A request outside that allowance needs a scope decision so both sides know what can be completed in the month.",
+        ],
+        table: {
+          headers: ["Work area", "Example of an agreed task"],
+          rows: [
+            ["Catalogue", "Upload approved products and check images, options and prices"],
+            ["Collections", "Update category membership and featured products"],
+            ["Promotions", "Publish approved banners and remove them when the offer ends"],
+            ["Storefront", "Review key mobile pages and report broken journeys"],
+            ["Apps", "Review the purpose and owner of installed tools"],
+            ["Monthly review", "Record completed work, open issues and upcoming priorities"],
+          ],
+        },
+      },
+      {
+        id: "set-approval-process",
+        heading: "Decide who supplies information and approves changes",
+        paragraphs: [
+          "Give each request a source of truth. Product prices should come from an approved list, images from the agreed asset folder, and offer dates from the person responsible for the promotion. A chat message saying change the price is difficult to verify if several people send different numbers.",
+          "For a weekend sale, agree the products, discount, start and end time, stock availability and delivery message together. Have one named approver confirm the final setup. Then include the removal or replacement of the promotion in the task, so an expired banner does not stay on the homepage.",
+          "Use an agreed access arrangement for store work and keep ownership with the business. You should be able to see which tools and accounts are involved. Discuss what happens to access and outstanding tasks if the support arrangement ends.",
+        ],
+      },
+      {
+        id: "include-quality-checks",
+        heading: "Check the customer journey after meaningful updates",
+        paragraphs: [
+          "Open updated products on a phone. Confirm that the right images appear, options make sense, prices match the brief and the item can be added to the cart. Check the collection where the product should be found. A correct product record is less useful if customers cannot discover it.",
+          "Review new storefront features before adding more. Shopify identifies themes, apps and extra third-party code as performance factors. Ask what a proposed tool contributes and review the experience after it is added. Keep an issues list with priorities instead of installing another app for every request.",
+        ],
+        sources: [{ label: "Shopify guidance on apps, themes and storefront performance", href: "https://help.shopify.com/en/manual/online-store/web-performance/improving-web-performance" }],
+      },
+      {
+        id: "agree-boundaries-and-reporting",
+        heading: "Clarify support hours, reporting and additional work",
+        paragraphs: [
+          "Agree how requests are submitted, when they are reviewed and which problems require urgent attention. Routine monthly support should have a stated response arrangement. If the business needs weekend or out-of-hours cover, discuss that requirement explicitly before a busy promotion.",
+          "Keep the monthly review practical: what changed, what remains open and what is coming next. Sales figures can provide context, but they should not be used to claim that a banner update alone caused a revenue increase. Advertising, SEO, customer service and fulfilment need their own owners and scopes.",
+          "Send your store link, typical monthly update volume and the tasks your team struggles to keep up with. I will use those details to scope management support. If you only need a one-time cleanup or redesign, mention that in the enquiry so we can discuss the right project.",
+        ],
+        callout: "A useful management proposal names the tasks, allowance, approver and support schedule.",
+      },
+    ],
+  },
+  {
+    slug: "shopify-traffic-no-sales-kenya",
+    category: "Shopify",
+    title: "Shopify Getting Traffic but No Sales? What to Check First",
+    excerpt: "Work through product clarity, mobile usability, delivery costs and payment problems before spending more to send people to your Shopify store.",
+    date: "2026-11-16",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Shopify Traffic but No Sales? A Store Checklist",
+    metaDescription: "Shopify visitors leaving without buying? Check your traffic, product pages, mobile experience, shipping and payments before increasing your ad budget.",
+    intro: "Visits show that people reached your Shopify store. They do not explain why those people left. If sales are missing, start by locating the point where the shopping journey breaks down. The next useful change might be a clearer delivery message, a working payment method or better alignment between an advert and its landing page.",
+    thumbnail: "/work/shopify/babyshop-dansar-mobile.webp",
+    thumbnailAlt: "Mobile Shopify product details on the Babyshop Dansar storefront",
+    sections: [
+      {
+        id: "locate-the-drop-off",
+        heading: "First, check what the traffic and order numbers mean",
+        paragraphs: [
+          "Compare visits, product views, add-to-cart activity, checkout activity and actual orders for the same period. Check whether test visits, staff activity or reporting problems distort the picture. A small number of visits may also be too little evidence to judge a store's performance.",
+          "Then split the traffic into useful groups such as campaign, landing page and device. A broad social post can attract people who are curious without being ready to buy. An advert promising a specific item should lead to a page where that item and the advertised offer are easy to find.",
+        ],
+        table: {
+          headers: ["What you observe", "Where to investigate"],
+          rows: [
+            ["Visits with little product activity", "Traffic relevance, landing-page clarity and navigation"],
+            ["Product views without cart activity", "Price, availability, product details and purchase controls"],
+            ["Carts without checkout activity", "Cart usability, delivery information and unexpected costs"],
+            ["Checkout activity without orders", "Payment outcomes, shipping eligibility and checkout errors"],
+          ],
+          note: "These are investigation prompts, not proof of a single cause.",
+        },
+      },
+      {
+        id: "answer-buying-questions",
+        heading: "Can a new customer make a buying decision?",
+        paragraphs: [
+          "Choose a product and read its page as someone who has never heard of the business. Can you tell what you receive, which option fits, whether it is available and when it can arrive? Ask a person outside your team to try the same task without coaching them.",
+          "Look for uncertainty before adding persuasion. A good photo cannot replace missing dimensions. A discount cannot fix an unclear size selection. Put accurate product details and accessible delivery and return information where the customer needs them. Use reviews only when they are authentic and relate to the product or business.",
+        ],
+      },
+      {
+        id: "check-mobile-experience",
+        heading: "Try the journey on a phone and a normal connection",
+        paragraphs: [
+          "Start from the actual advert or link a customer uses, rather than always entering through the homepage. Check whether overlays hide the product, option labels are readable and the add-to-cart control responds. Try more than one product template if your catalogue has different types of items.",
+          "Use performance evidence alongside your own observations. Shopify's web performance guidance explains that storefront features can affect loading and interaction. Review heavy media, unused app features and extra scripts when they appear to cause problems. Record the issue before changing the store so you can check whether the fix helped.",
+        ],
+        sources: [{ label: "Shopify guidance on improving storefront performance", href: "https://help.shopify.com/en/manual/online-store/web-performance/improving-web-performance" }],
+      },
+      {
+        id: "check-delivery-and-payments",
+        heading: "Verify delivery eligibility and payment outcomes",
+        paragraphs: [
+          "Try the delivery locations your campaigns target. Confirm that a customer can find the relevant rate and that the delivery promise matches what the business can fulfil. If a product needs special handling or a delivery quote, make the next step clear before the customer reaches a dead end.",
+          "For payments, check the customer's outcome and the order status together. A provider error, unclear manual payment instruction or unsupported address can require very different fixes. Follow the provider's test process and include failed or cancelled attempts in the review. Shopify also recommends a test order when payment settings change.",
+        ],
+        sources: [{ label: "Shopify checkout and test-order guidance", href: "https://help.shopify.com/en/manual/checkout-settings/test-orders" }],
+      },
+      {
+        id: "prioritise-fixes",
+        heading: "Fix the clearest blockers, then review the evidence",
+        paragraphs: [
+          "Prioritise broken purchase controls, unavailable payment paths and incorrect delivery information. Then improve unclear product information and page usability. Make a short change log and compare the same measures over a meaningful period, allowing for changes in traffic and promotions. Avoid promising that a redesign will produce a particular sales lift.",
+          "If you want help reviewing the store, send the URL, the main traffic source and where you think people stop. Include aggregate counts if you have them, without customer records. I can discuss the storefront work your Shopify store needs and scope any advertising or SEO support separately.",
+        ],
+        callout: "Find the failing step in the buying journey before deciding whether the next task is design, content, checkout setup or campaign work.",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

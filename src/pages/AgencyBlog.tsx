@@ -278,7 +278,7 @@ const AgencyBlog = () => {
                 onKeyDown={(e) => {
                   if (e.key === "Escape") setQuery("");
                 }}
-                placeholder="Search: Meta ads budget, local SEO, TikTok..."
+                placeholder="Search: Shopify, Meta ads budget, local SEO..."
                 autoComplete="off"
                 className="w-full rounded-full border border-border bg-card py-3.5 pl-12 pr-12 text-base text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 [&::-webkit-search-cancel-button]:hidden"
               />

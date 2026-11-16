@@ -1,7 +1,8 @@
-import { BarChart3, ClipboardList, Magnet, MapPin, Share2, Tag, Target, Video } from "lucide-react";
+import { BarChart3, ClipboardList, Magnet, MapPin, Share2, ShoppingBag, Tag, Target, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { blogSummaries as blogPosts, type BlogSummary as BlogPost } from "@/data/blogSummaries";
 import { getServicePageBySlug } from "@/data/servicePages";
+import { SHOPIFY_BRIEF, SHOPIFY_PATH, shopifyGuideSlugs } from "@/data/shopify";
 
 export interface HubService {
   name: string;
@@ -42,6 +43,32 @@ export interface BlogHub {
 const CALENDLY_URL = "https://calendly.com/joemaish084/30min";
 
 export const blogHubs: BlogHub[] = [
+  {
+    slug: "shopify",
+    name: "Shopify Stores",
+    icon: ShoppingBag,
+    tagline: "Costs, payments, migration and the work that keeps your store selling.",
+    intro: [
+      "Planning a Shopify store, moving from WooCommerce, or trying to improve a shop you already have? Start with the practical questions: what the project includes, how customers will pay, and who will manage the store after launch.",
+      "These guides are written for businesses in Kenya, with planning advice that also applies to international stores. Read the topic closest to your situation, then send your store link and questions if you want help agreeing the next step.",
+    ],
+    postSlugs: shopifyGuideSlugs,
+    service: {
+      name: "Shopify Store Design, Migration & Management",
+      price: "Quoted for your scope",
+      blurb: "New store creation, WooCommerce migration and monthly storefront support. Shopify subscriptions and third-party costs are separate.",
+      href: SHOPIFY_PATH,
+      pageSlug: "shopify-services",
+    },
+    cta: {
+      heading: "Have a question about your Shopify store?",
+      body: "Share your store link, or tell me what you plan to sell. Include your question about setup, migration, payments or ongoing support so we can discuss the right next step.",
+      label: "Ask a Shopify question",
+      href: SHOPIFY_BRIEF,
+    },
+    metaTitle: "Shopify Kenya Guides: Costs, Payments & Migration",
+    metaDescription: "Practical Shopify guides for Kenyan businesses: store costs, M-Pesa payments, WooCommerce migration, SEO, monthly management and checkout improvements.",
+  },
   {
     slug: "meta-ads",
     name: "Meta Ads",

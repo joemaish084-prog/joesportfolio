@@ -1,4 +1,5 @@
 import { getServicePageBySlug, type ServicePage } from "@/data/servicePages";
+import { shopifyGuideSlugs } from "@/data/shopify";
 
 /**
  * Which service page each article sends readers to. Every article links to the
@@ -9,6 +10,7 @@ import { getServicePageBySlug, type ServicePage } from "@/data/servicePages";
  * Digital Marketing for Kenyan SMEs.
  */
 const SERVICE_POSTS: Record<string, string[]> = {
+  "shopify-services": shopifyGuideSlugs,
   "meta-ads-management": [
     "ad-creative-fatigue-signs-kenya-2026",
     "meta-ads-account-structure-small-budget-kenya-2026",

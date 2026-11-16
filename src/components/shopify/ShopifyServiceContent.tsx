@@ -7,11 +7,16 @@ import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { Button } from "@/components/ui/button";
 import { serviceHead } from "@/seo/pageHeads";
 import type { ServicePage } from "@/data/servicePages";
+import { blogSummaries } from "@/data/blogSummaries";
 import { SHOPIFY_BRIEF, SHOPIFY_PATH, migrationReasons, shopifyOffers, shopifyProject } from "@/data/shopify";
 import { track } from "@/lib/track";
 import { ShopifyProjectVisual } from "./ShopifyProjectVisual";
 
 export function ShopifyServiceContent({ page }: { page: ServicePage }) {
+  const guides = page.relatedPosts.flatMap(slug => {
+    const post = blogSummaries.find(item => item.slug === slug);
+    return post ? [post] : [];
+  });
   const location = useLocation();
   const [selected, setSelected] = useState<string>("create");
   const [reason, setReason] = useState<string>("");
@@ -140,6 +145,28 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
             ))}
           </dl>
         </section>
+
+        {guides.length > 0 && (
+          <section aria-labelledby="shopify-guides-title" className="border-t border-foreground/15 py-12 sm:py-20">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <p className="shopify-kicker">Shopify guides</p>
+                <h2 id="shopify-guides-title" className="shopify-heading mt-5">Before your next step.<br /><span className="shopify-serif">Start with a question.</span></h2>
+              </div>
+              <Link to={`/agency/blog/topics/${page.hubSlug}`} className="shopify-text-link">Explore all Shopify guides<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
+            </div>
+            <div className="mt-8 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+              {guides.map(post => (
+                <Link key={post.slug} to={`/agency/blog/${post.slug}`} className="group border-t border-foreground/15 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <p className="text-xs text-muted-foreground">{post.readTime}</p>
+                  <h3 className="mt-3 font-display text-xl font-medium leading-snug tracking-tight group-hover:text-primary">{post.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold">Read guide<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section data-track-location="shopify_contact" aria-labelledby="shopify-contact-title" className="shopify-closing">
           <h2 id="shopify-contact-title" className="shopify-heading">Let’s talk<br /><span className="shopify-serif">about your store.</span></h2>
