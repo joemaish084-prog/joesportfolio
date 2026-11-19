@@ -8,7 +8,7 @@ import type { PageHead } from "@/seo/heads";
 
 interface WorkPageLayoutProps {
   seo: PageHead;
-  /** Where "Back to portfolio" returns to, e.g. "/#graphic-design". */
+  /** Where "Back to portfolio" returns to, e.g. "/portfolio#graphic-design". */
   backHref: string;
   eyebrow: string;
   title: ReactNode;

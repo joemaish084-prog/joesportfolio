@@ -1,12 +1,14 @@
 import { localImageProps } from "@/lib/imageVariants";
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
+import { PublicViewLink } from "@/components/PublicViewLink";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, FileText, Menu, X } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { caseStudies } from "@/data/caseStudies";
+import { AUDIT_PATH } from "@/lib/publicViews";
 import { MOUNT_ALL_SECTIONS_EVENT } from "@/pages/homeSections";
 
 const CVViewer = lazy(() => import("./CVViewer").then((m) => ({ default: m.CVViewer })));
@@ -31,10 +33,10 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { label: "Home", href: "/#home" },
+  { label: "Portfolio", href: "/portfolio#selected-work" },
   {
     label: "Videos",
-    href: "/#videos",
+    href: "/portfolio#videos",
     children: [
       { label: "Long form", description: "Brand films, interviews and documentaries", href: "/work/videos?type=long" },
       { label: "Short form", description: "Reels and social clips", href: "/work/videos?type=short" },
@@ -43,17 +45,17 @@ const navLinks: NavLink[] = [
   },
   {
     label: "Design",
-    href: "/#graphic-design",
+    href: "/portfolio#graphic-design",
     children: [
       { label: "Graphics", description: "Campaign creatives and social designs", href: "/work/design" },
       { label: "Branding", description: "Logo, colour, type and brand systems", badge: "New", href: "/work/branding" },
       { label: "Mockups", description: "Brand identities on paper, fabric and everyday objects", href: "/work/mockups" },
-      { label: "Shopify stores", description: "Live storefront work for Babyshop Dansar", href: "/#shopify" },
+      { label: "Shopify stores", description: "Live storefront work for Babyshop Dansar", href: "/portfolio#shopify" },
     ],
   },
   {
     label: "Cases",
-    href: "/#case-study",
+    href: "/portfolio#case-study",
     children: caseStudies.map((cs) => ({
       label: cs.title,
       eyebrow: cs.tag,
@@ -90,24 +92,24 @@ const navLinks: NavLink[] = [
     ],
     footer: { label: "All articles", href: "/agency/blog" },
   },
-  { label: "Experience", href: "/#experience", wideOnly: true },
+  { label: "Experience", href: "/portfolio#experience", wideOnly: true },
   {
     label: "About",
-    href: "/#about",
+    href: "/portfolio#about",
     children: [
-      { label: "My story", description: "Who I am and how I work", href: "/#about" },
-      { label: "How I work", description: "From the first brief to campaign reporting", href: "/#process" },
-      { label: "Skills & tools", description: "What I do and what I use", href: "/#skills" },
-      { label: "Certifications", description: "Courses and achievements", href: "/#certifications" },
-      { label: "Press coverage", description: "Featured in the Daily Nation", href: "/#press" },
-      { label: "Testimonials", description: "What people I've worked with say", href: "/#testimonials" },
+      { label: "My story", description: "Who I am and how I work", href: "/portfolio#about" },
+      { label: "How I work", description: "From the first brief to campaign reporting", href: "/portfolio#process" },
+      { label: "Skills & tools", description: "What I do and what I use", href: "/portfolio#skills" },
+      { label: "Certifications", description: "Courses and achievements", href: "/portfolio#certifications" },
+      { label: "Press coverage", description: "Featured in the Daily Nation", href: "/portfolio#press" },
+      { label: "Testimonials", description: "What people I've worked with say", href: "/portfolio#testimonials" },
     ],
   },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/portfolio#contact" },
 ];
 
-const getHash = (href: string) => "#" + href.split("#")[1];
-const isHomeAnchor = (href: string) => href.startsWith("/#");
+const getHash = (href: string) => href.includes("#") ? href.slice(href.indexOf("#")) : "";
+const isHomeAnchor = (href: string) => href.startsWith("/portfolio#");
 
 /** Homepage anchors smooth-scroll in place; everything else is a router link. */
 function NavAnchor({
@@ -134,9 +136,9 @@ function NavAnchor({
   return <Link to={href} onClick={onClick} {...props} />;
 }
 
-function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
+function Logo() {
   return (
-    <a href="/#home" onClick={onClick} aria-label="Joseph Maina — home" className="flex items-center shrink-0">
+    <PublicViewLink to="/" aria-label="Joseph Maina Marketing home" className="flex items-center shrink-0">
       <img
         src="/logo/jm-lockup.png" {...localImageProps("/logo/jm-lockup.png", "(min-width: 640px) 116px, 105px")}
         alt="JM Creative"
@@ -144,19 +146,21 @@ function Logo({ onClick }: { onClick?: (e: React.MouseEvent) => void }) {
         height={134}
         className="h-10 w-auto sm:h-11"
       />
-    </a>
+    </PublicViewLink>
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ portfolio = false }: { portfolio?: boolean }) {
   const [cvOpen, setCvOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeHref, setActiveHref] = useState("#home");
+  const [activeHref, setActiveHref] = useState("#selected-work");
   const [menu, setMenu] = useState<string | null>(null);
   const [mobileSub, setMobileSub] = useState<string | null>(null);
   const menuCloseTimer = useRef<number>();
   const reduceMotion = useReducedMotion();
+  const desktopOnly = portfolio ? "hidden xl:flex" : "hidden lg:flex";
+  const mobileOnly = portfolio ? "xl:hidden" : "lg:hidden";
 
   // Desktop dropdowns: the short close delay lets the pointer cross the gap to the panel
   const openMenu = useCallback((label: string) => {
@@ -190,7 +194,8 @@ export function SiteHeader() {
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     navLinks.forEach((link) => {
-      const id = getHash(link.href).replace("#", "");
+      const id = getHash(link.href).slice(1);
+      if (!id) return;
       const el = document.getElementById(id);
       if (!el) return;
       const observer = new IntersectionObserver(
@@ -248,22 +253,22 @@ export function SiteHeader() {
 
   // Close on desktop breakpoint
   useEffect(() => {
-    const mql = window.matchMedia("(min-width: 1024px)");
+    const mql = window.matchMedia(portfolio ? "(min-width: 1280px)" : "(min-width: 1024px)");
     const onChange = () => mql.matches && setOpen(false);
     mql.addEventListener("change", onChange);
     return () => mql.removeEventListener("change", onChange);
-  }, []);
+  }, [portfolio]);
 
   const handleAnchor = useCallback((e: React.MouseEvent, href: string) => {
     if (!isHomeAnchor(href)) return;
     const hash = getHash(href);
-    // Off the homepage, let the browser do a normal navigation to "/#id"
-    if (window.location.pathname !== "/") return;
+    // Off the homepage, let the browser do a normal navigation to "/portfolio#id"
+    if (window.location.pathname !== "/portfolio") return;
     e.preventDefault();
     setOpen(false);
     const el = document.querySelector(hash);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ block: "start" });
       return;
     }
     // The homepage adds lower sections gradually; render them all, then scroll
@@ -272,7 +277,7 @@ export function SiteHeader() {
     const giveUpAt = Date.now() + 8000;
     const tryScroll = () => {
       const target = document.querySelector(hash);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target) target.scrollIntoView({ block: "start" });
       else if (Date.now() < giveUpAt) window.setTimeout(tryScroll, 100);
     };
     window.setTimeout(tryScroll, 50);
@@ -283,17 +288,20 @@ export function SiteHeader() {
   return (
     <>
       <header
+        data-portfolio-nav={portfolio || undefined}
         className={`fixed top-0 inset-x-0 z-50 h-14 lg:h-16 transition-all duration-200 ${
-          scrolled
+          portfolio
+            ? "border-[#383630] bg-[#141412] text-[#f6f2ea]"
+            : scrolled
             ? "bg-background/70 backdrop-blur-xl border-b border-border/60 shadow-sm"
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="container mx-auto px-6 h-full flex items-center justify-between gap-4">
-          <Logo onClick={(e) => handleAnchor(e, "/#home")} />
+        <div className="container mx-auto px-3 sm:px-6 h-full flex items-center justify-between gap-2 sm:gap-4">
+          <Logo />
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-7" aria-label="Primary">
+          <nav className={`${desktopOnly} items-center gap-5 xl:gap-7`} aria-label="Primary">
             {navLinks.map((link) => {
               const isActive = activeHref === getHash(link.href);
               const isOpen = menu === link.label;
@@ -405,18 +413,23 @@ export function SiteHeader() {
           </nav>
 
           {/* Desktop right */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className={`${desktopOnly} items-center gap-3`}>
             <ThemeToggle />
-            <Button size="sm" variant="outline" onClick={() => setCvOpen(true)} className="rounded-full" aria-label="View CV">
+            <Button size="sm" variant="outline" onClick={() => setCvOpen(true)} className={portfolio ? "hidden rounded-full xl:inline-flex" : "rounded-full"} aria-label="View CV">
               <FileText className="h-4 w-4 xl:mr-1.5" aria-hidden="true" />
               <span className="hidden xl:inline">View CV</span>
             </Button>
+            {portfolio && <PublicViewLink to={AUDIT_PATH} className="portfolio-nav-audit">Book a Free Audit</PublicViewLink>}
             <Button size="sm" asChild className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href="/agency">Agency</a>
+              <PublicViewLink to="/">Agency</PublicViewLink>
             </Button>
           </div>
 
           {/* Mobile toggle */}
+          {portfolio && <div className="ml-auto flex items-center gap-1.5 xl:hidden">
+            <PublicViewLink to={AUDIT_PATH} className="portfolio-nav-audit">Book a Free Audit</PublicViewLink>
+            <Button size="sm" asChild className="min-h-11 rounded-full"><PublicViewLink to="/">Agency</PublicViewLink></Button>
+          </div>}
           <button
             ref={hamburgerRef}
             type="button"
@@ -424,7 +437,7 @@ export function SiteHeader() {
             aria-label="Open menu"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            className="lg:hidden h-11 w-11 rounded-full text-foreground inline-flex items-center justify-center"
+            className={`${mobileOnly} h-11 w-11 shrink-0 rounded-full text-foreground inline-flex items-center justify-center`}
           >
             <Menu className="h-6 w-6" />
           </button>
@@ -440,14 +453,14 @@ export function SiteHeader() {
               aria-modal="true"
               aria-label="Site menu"
               ref={panelRef}
-              className="fixed inset-0 z-[100] bg-background lg:hidden overflow-y-auto"
+              className={`fixed inset-0 z-[100] bg-background overflow-y-auto ${mobileOnly}`}
               initial={reduceMotion ? { opacity: 0 } : { x: "100%" }}
               animate={reduceMotion ? { opacity: 1 } : { x: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { x: "100%" }}
               transition={reduceMotion ? { duration: 0.12 } : { duration: 0.26, ease: "easeOut" }}
             >
               <div className="h-14 px-6 flex items-center justify-between">
-                <Logo onClick={(e) => handleAnchor(e, "/#home")} />
+                <Logo />
                 <button
                   ref={closeRef}
                   type="button"
@@ -535,7 +548,7 @@ export function SiteHeader() {
                 <div className="border-t border-border my-4" />
 
                 <Button asChild className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  <a href="/agency">Agency</a>
+                  <PublicViewLink to="/">Agency</PublicViewLink>
                 </Button>
 
                 <Button

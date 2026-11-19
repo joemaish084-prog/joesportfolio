@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -24,15 +24,15 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { CountUp } from "@/components/CountUp";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
+import { PublicViewLink } from "@/components/PublicViewLink";
 import { CustomerJourney } from "@/components/agency/CustomerJourney";
 import { ServicesSection } from "@/components/services/ServicesSection";
-import { track } from "@/lib/track";
 import { MarketToggle } from "@/components/MarketToggle";
 import { localizePrice, pick, useMarket } from "@/lib/market";
-import { getAttribution, leadSource } from "@/lib/attribution";
+import { saveAgencyLead } from "@/lib/saveAgencyLead";
 import { Seo } from "@/components/Seo";
-import { agencyHead } from "@/seo/agencyHeads";
-import { agencyPages, legacyAgencyTarget, type AgencyPageKey } from "@/data/agencyPages";
+import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
+import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
 import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 import { blogSummaries } from "@/data/blogSummaries";
 import { caseStudies } from "@/data/caseStudies";
@@ -47,10 +47,6 @@ import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, Card
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 import iclearDishwashShort from "@/assets/short-iclear-dishwash.webp";
-
-const EMAILJS_SERVICE_ID = "service_ae81bbn";
-const EMAILJS_TEMPLATE_ID = "template_rnofd4m";
-const EMAILJS_PUBLIC_KEY = "2H5maWozuCEEd6vtl";
 
 const WHATSAPP_NUMBER = "254704700160";
 const WHATSAPP_MESSAGE = encodeURIComponent(
@@ -253,7 +249,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const market = useMarket();
   const page = agencyPages[pageKey];
   const location = useLocation();
-  const navigate = useNavigate();
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
   const isShopifyBrief = form.service.startsWith("Shopify");
@@ -288,18 +283,12 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   }, [location.search]);
 
   useEffect(() => {
-    const legacy = pageKey === "home" ? legacyAgencyTarget(location.hash) : undefined;
-    if (legacy) {
-      const target = new URL(legacy, window.location.origin);
-      navigate({ pathname: target.pathname, search: location.search, hash: target.hash }, { replace: true });
-      return;
-    }
-    if (!location.hash) { window.scrollTo(0, 0); return; }
+    if (!location.hash) { window.scrollTo({ top: 0, behavior: "instant" }); return; }
     const frame = requestAnimationFrame(() => {
-      document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "start" });
     });
     return () => cancelAnimationFrame(frame);
-  }, [pageKey, location.pathname, location.hash, location.search, navigate]);
+  }, [pageKey, location.pathname, location.hash, location.search]);
 
   const submitBrief = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -309,12 +298,9 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
     }
     // Only bots fill the hidden field. They see success, and nothing is saved.
     if (spamTrap) { setBriefSent(true); return; }
-    const attribution = getAttribution();
-    const source = leadSource(attribution);
     setSending(true);
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { error } = await supabase.from("agency_leads").insert({
+      await saveAgencyLead({
         name: form.name,
         email: form.email,
         phone: form.phone || null,
@@ -322,21 +308,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         service_interest: form.service,
         budget_range: form.budget,
         goals: form.goals,
-        source,
-      });
-      if (error) throw error;
-      try {
-        const { default: emailjs } = await import("@emailjs/browser");
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          from_name: form.name,
-          from_email: form.email,
-          message: `New Agency Brief\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "—"}\nBrand: ${form.brand}\nService: ${form.service}\nBudget: ${form.budget}\nSource: ${source}\nFirst page: ${attribution.landing}\n\nGoals:\n${form.goals}`,
-          to_name: "Joseph Maina",
-        }, EMAILJS_PUBLIC_KEY);
-      } catch (emailErr) {
-        console.error("EmailJS send failed (lead already saved):", emailErr);
-      }
-      track("generate_lead", { form_location: "agency_brief", service: form.service });
+      }, "agency_brief");
       setForm({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
       setBriefStep(0);
       setBriefSent(true);
@@ -351,7 +323,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   return (
     <MotionConfig reducedMotion="user">
     <div className="agency-page min-h-screen bg-background">
-      <Seo {...agencyHead(pageKey)} />
+      <Seo {...(pageKey === "home" ? agencyOverviewHead : agencyHead(pageKey))} />
       <AgencyNavigation />
 
       <main>
@@ -365,7 +337,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             <div className="mx-auto max-w-6xl">
               <nav aria-label="Breadcrumb" className="mb-8 text-sm text-muted-foreground">
                 <ol className="flex flex-wrap items-center gap-1.5">
-                  <li><Link to="/agency" className="hover:text-primary transition-colors">Agency</Link></li>
+                  <li><Link to="/" className="hover:text-primary transition-colors">Agency</Link></li>
                   <li aria-hidden="true"><ChevronRight className="h-3.5 w-3.5" /></li>
                   <li><span aria-current="page" className="text-foreground">{page.label}</span></li>
                 </ol>
@@ -1050,7 +1022,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
       <footer className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 whitespace-nowrap border-t border-border/40 px-4 py-8 text-sm text-muted-foreground leading-8">
         <span>© {new Date().getFullYear()} Joseph Maina</span>
         <span>·</span>
-        <Link to="/" className="hover:text-foreground">Portfolio</Link>
+        <PublicViewLink to="/portfolio" className="hover:text-foreground">Portfolio</PublicViewLink>
         <span>·</span>
         <Link to="/agency/blog" className="hover:text-foreground">Blog</Link>
         <span>·</span>

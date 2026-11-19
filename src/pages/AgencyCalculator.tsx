@@ -193,7 +193,7 @@ const AgencyCalculator = () => {
       <div className="min-h-screen bg-background text-foreground">
         <div className="mx-auto max-w-6xl px-4 pb-24 pt-28 sm:px-8 sm:pt-32">
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            <Link to="/agency" className="inline-flex items-center gap-2 transition-colors hover:text-primary">
+            <Link to="/" className="inline-flex items-center gap-2 transition-colors hover:text-primary">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Agency
             </Link>

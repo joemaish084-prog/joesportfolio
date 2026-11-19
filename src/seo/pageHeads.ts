@@ -270,7 +270,7 @@ export function serviceHead(page: ServicePage): PageHead {
       {
         "@context": "https://schema.org",
         ...breadcrumbs([
-          { name: "Agency", path: "/agency" },
+          { name: "Agency", path: "/" },
           { name: "Services", path: "/agency/services" },
           { name: page.navLabel, path },
         ]),
@@ -314,7 +314,7 @@ export function calculatorHead(): PageHead {
       {
         "@context": "https://schema.org",
         ...breadcrumbs([
-          { name: "Agency", path: "/agency" },
+          { name: "Agency", path: "/" },
           { name: "Ad Budget Calculator", path },
         ]),
       },

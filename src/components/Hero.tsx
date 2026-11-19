@@ -102,7 +102,8 @@ function ProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
   );
 }
 
-export function Hero() {
+export function Hero({ archive = false }: { archive?: boolean }) {
+  const Heading = archive ? motion.h2 : motion.h1;
   const containerRef = useRef<HTMLElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -126,7 +127,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      id="home"
+      id={archive ? undefined : "home"}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="scroll-mt-20 lg:scroll-mt-24 relative w-full min-h-screen supports-[min-height:100svh]:min-h-svh bg-background overflow-hidden"
@@ -134,8 +135,8 @@ export function Hero() {
       <HeroBackground />
 
       {/* svh, not vh: on phones 100vh includes the area behind the browser's address bar */}
-      <div className="relative z-10 min-h-screen supports-[min-height:100svh]:min-h-svh grid lg:grid-cols-2 gap-16 items-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto pt-20 pb-28 sm:py-32 lg:py-20">
-        <div className="text-left">
+      <div className="relative z-10 min-h-screen supports-[min-height:100svh]:min-h-svh grid grid-cols-1 lg:grid-cols-2 gap-16 items-center px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto pt-20 pb-28 sm:py-32 lg:py-20">
+        <div className="min-w-0 text-left">
           <motion.span
             initial={false}
             animate={{ opacity: 1, y: 0 }}
@@ -146,7 +147,7 @@ export function Hero() {
             Digital Marketing Specialist — Nairobi, Kenya
           </motion.span>
 
-          <motion.h1
+          <Heading
             initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5, ease: appleEase }}
@@ -154,7 +155,7 @@ export function Hero() {
           >
             Digital Marketing That Turns Attention Into
             <span className="text-primary"> Real Growth</span>
-          </motion.h1>
+          </Heading>
 
           <motion.p
             initial={false}
@@ -191,17 +192,17 @@ export function Hero() {
               ["3+", "Years experience"],
             ].map(([value, label]) => (
               <div key={value}>
-                <p className="text-base sm:text-lg font-display font-semibold text-foreground whitespace-nowrap">{value}</p>
+                <p className="text-sm sm:text-lg font-display font-semibold text-foreground sm:whitespace-nowrap">{value}</p>
                 <p className="text-xs text-muted-foreground">{label}</p>
               </div>
             ))}
           </motion.div>
 
-          <HeroCollageMobile items={collageItems} />
+          <HeroCollageMobile items={collageItems} loading={archive ? "lazy" : undefined} />
         </div>
 
         <div className="hidden lg:block">
-          <HeroCollage mouseX={mouseX} mouseY={mouseY} items={collageItems} panelClassName="left-[10%] top-[44%] w-[19rem]">
+          <HeroCollage mouseX={mouseX} mouseY={mouseY} items={collageItems} loading={archive ? "lazy" : undefined} panelClassName="left-[10%] top-[44%] w-[19rem]">
             <ProofPanel mouseX={mouseX} mouseY={mouseY} />
           </HeroCollage>
         </div>

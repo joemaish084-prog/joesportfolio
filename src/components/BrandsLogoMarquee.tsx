@@ -13,6 +13,12 @@ import logoDuara from "@/assets/marquee/duara.webp";
 import logoDansar from "@/assets/marquee/dansar.webp";
 import logoBeulah from "@/assets/marquee/beulah.webp";
 import logoSurbubia from "@/assets/marquee/surbubia.webp";
+import logoConveySmall from "@/assets/marquee/convey-240.webp";
+import logoTechmindsetSmall from "@/assets/marquee/techmindset-240.webp";
+import logoJoanSmall from "@/assets/marquee/joan-240.webp";
+import logoIclearSmall from "@/assets/marquee/iclear-240.webp";
+import logoNorthgateSmall from "@/assets/marquee/northgate-240.webp";
+import logoDuaraSmall from "@/assets/marquee/duara-240.webp";
 
 const brands = [
   { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },
@@ -29,7 +35,16 @@ const brands = [
   { name: "Surbubia Homes", industry: "Real Estate", logo: logoSurbubia },
 ];
 
-export function BrandsLogoMarquee() {
+const compactLogos = [logoIclearSmall, logoConveySmall, logoJoanSmall, logoTechmindsetSmall, logoNorthgateSmall, logoDuaraSmall];
+
+export function BrandsLogoMarquee({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return <ul className="studio-client-logos" aria-label="Selected clients">
+      {brands.slice(0, compactLogos.length).map(({ name }, index) => (
+        <li key={name}><img src={compactLogos[index]} alt={name} width={240} height={160} loading="lazy" decoding="async" /></li>
+      ))}
+    </ul>;
+  }
   return (
     <section className="py-12 sm:py-16 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-6">

@@ -4,10 +4,10 @@ const starterFee = formatKes(packageFeeKes("STARTER"));
 
 export const agencyPages = {
   home: {
-    path: "/agency", label: "Agency Home",
+    path: "/", label: "Agency Home",
     title: "Digital Marketing Agency Nairobi | Joseph Maina Marketing",
     heading: "Digital marketing for Kenyan businesses",
-    description: "Joseph Maina Marketing is a founder-led agency in Nairobi. Paid ads, SEO, content and Shopify store services for Kenyan and international businesses.",
+    description: "Book a free marketing audit with Joseph Maina Marketing, a Nairobi agency helping Kenyan and African businesses increase sales with paid ads, SEO and social media.",
     intro: "A direct partnership for paid media, SEO and content, built around your business goals.",
     teaser: "",
   },
@@ -46,15 +46,3 @@ export const agencyPages = {
 } as const;
 
 export type AgencyPageKey = keyof typeof agencyPages;
-
-// Old fragments aren't sent to the server. Resolve them in the browser, while
-// new internal links go straight to the relevant crawlable page.
-export const legacyAgencyTargets: Record<string, string> = {
-  services: "/agency/services", results: "/agency/results", pricing: "/agency/pricing",
-  booking: "/agency/contact", contact: "/agency/contact",
-};
-
-export function legacyAgencyTarget(hash: string) {
-  const id = hash.replace(/^#/, "");
-  return legacyAgencyTargets[id] ?? (id.startsWith("service-") ? `/agency/services#${id}` : undefined);
-}

@@ -174,7 +174,7 @@ describe("FAQ schema", () => {
   });
 
   it("homepage marks up every FAQ on the page, not a subset", () => {
-    const schema = faqSchemaOf(STATIC_HEADS.home.jsonLd);
+    const schema = faqSchemaOf(STATIC_HEADS.portfolio.jsonLd);
     expect(schema?.mainEntity).toHaveLength(faqs.length);
   });
 });

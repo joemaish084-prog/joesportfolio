@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const origin = "https://www.josephmaina.co.ke";
-const routes = ["/agency", "/agency/services", "/agency/results", "/agency/pricing", "/agency/contact"];
-const read = path => fs.readFileSync(`dist${path}.html`, "utf8");
+const routes = ["/", "/agency/services", "/agency/results", "/agency/pricing", "/agency/contact"];
+const read = path => fs.readFileSync(path === "/" ? "dist/index.html" : `dist${path}.html`, "utf8");
 const links = html => [...html.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(match => match[1]);
 const sitemap = fs.readFileSync("dist/sitemap.xml", "utf8");
 const mainContent = new Set();
@@ -20,19 +20,23 @@ for (const path of routes) {
   const nav = root.match(/<nav aria-label="Agency pages"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
   assert(nav, `${path}: crawlable agency navigation`);
   for (const destination of routes) assert(links(nav).includes(destination), `${path}: missing navigation to ${destination}`);
-  assert(links(root).includes("/"), `${path}: portfolio link`);
+  assert(links(root).includes("/portfolio"), `${path}: portfolio link`);
   const schemas = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
-  const organizations = schemas.filter(schema => schema["@type"] === "Organization");
+  const organizations = schemas.filter(schema => [].concat(schema["@type"] ?? []).includes("Organization"));
   assert.equal(organizations.length, 1, `${path}: one consistent agency organization`);
   assert.equal(organizations[0]["@id"], `${origin}/agency#organization`);
   assert(!JSON.stringify(organizations[0]).includes("aggregateRating"), "No invented ratings");
-  assert(schemas.some(schema => schema["@type"] === "BreadcrumbList"), `${path}: breadcrumbs`);
+  if (path === "/") assert(organizations[0]["@type"].includes("LocalBusiness"), "Agency home identifies a Nairobi business");
+  else assert(schemas.some(schema => schema["@type"] === "BreadcrumbList"), `${path}: breadcrumbs`);
 }
 const services = read("/agency/services");
 const pricing = read("/agency/pricing");
 const results = read("/agency/results");
 const contact = read("/agency/contact");
-const home = read("/agency");
+const home = read("/");
+const legacyHome = read("/agency");
+assert(legacyHome.includes(`rel="canonical" href="${origin}/"`), "The legacy agency entry canonicalizes to home");
+assert(!sitemap.includes(`<loc>${origin}/agency</loc>`), "The legacy home alias is excluded from the sitemap");
 const catalogSchemas = [...services.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
 const catalog = catalogSchemas.find(schema => schema["@type"] === "CollectionPage")?.mainEntity;
 assert.equal(catalog?.["@type"], "ItemList", "Services directory needs a factual service list");
@@ -63,7 +67,10 @@ for (const slug of ["digital-marketing-kenya", "meta-ads-management", "google-ad
   assert(links(services).includes(`/agency/${slug}`), `Existing service retained: ${slug}`);
   assert(sitemap.includes(`<loc>${origin}/agency/${slug}</loc>`), `Existing service in sitemap: ${slug}`);
 }
-assert(!home.includes('id="booking"') && !home.includes('id="results"'), "Homepage should link to detailed sections rather than duplicate them");
+assert(!home.includes('id="booking"') && home.includes('id="agency-results"'), "The homepage links to selected results and keeps the full booking experience on Contact");
+const audit = home.match(/<form\b[^>]*aria-label="Free audit request"[\s\S]*?<\/form>/)?.[0];
+assert(audit, "The agency home has an audit form");
+assert.deepEqual([...audit.matchAll(/<(?:input|select)\b[^>]*name="([^"]+)"/g)].map(match => match[1]), ["name", "phone", "business", "budget", "website"]);
 assert(pricing.includes("STARTER") && pricing.includes("GROWTH") && pricing.includes("SCALE") && pricing.includes("<table"), "Pricing page retains packages and fee comparison");
 assert(!services.includes("Retainer Packages"), "Detailed packages belong on Pricing");
 assert(results.includes("Read the campaign breakdowns"), "Results page needs campaign context");
@@ -72,7 +79,7 @@ assert(contact.includes("<form") && links(contact).includes("mailto:joemaish084@
 for (const match of pricing.matchAll(/href="\/agency\/services#([^"]+)"/g)) {
   assert(services.includes(`id="${match[1]}"`), `Pricing scope link must resolve: ${match[1]}`);
 }
-const portfolio = fs.readFileSync("dist/index.html", "utf8");
+const portfolio = read("/portfolio");
 const shopify = read("/agency/shopify-services");
 assert(links(services).includes("/agency/shopify-services") && links(home).includes("/agency/shopify-services"), "Shopify must be discoverable from agency home and services");
 assert(portfolio.includes('id="shopify"') && portfolio.includes("Babyshop Dansar"), "Portfolio renders the real Shopify project before JavaScript");
@@ -84,7 +91,7 @@ assert.equal(shopifySchema.areaServed, "Worldwide", "Shopify serves Kenyan and i
 assert(!shopifySchema.offers.priceSpecification, "Unpriced Shopify work must not invent a numeric price");
 for (const intent of ["create", "migrate", "manage"]) assert(shopify.includes(`id="${intent}"`), `Shopify supports the ${intent} entry point`);
 assert(links(pricing).includes("/agency/shopify-services"), "Pricing links to the quoted Shopify scope");
-assert(links(portfolio).includes("/agency"), "Portfolio must link to agency home");
+assert(links(portfolio).includes("/"), "Portfolio must link to agency home");
 assert(home.includes("founder-led digital marketing agency in Nairobi"), "Agency home states the positioning");
 assert(new Set(links(home).filter(path => path.startsWith("/work/case-studies#"))).size === 3, "Agency home links to three case study results");
 for (const pack of ["starter", "growth", "scale"]) assert(links(pricing).includes(`/agency/contact?service=${pack}#brief`), `Pricing preselects the ${pack} package`);

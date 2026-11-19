@@ -54,7 +54,7 @@ const collage: CollageItem[] = [
   },
 ];
 
-function CollageCard({ item, mouseX, mouseY, index }: { item: CollageItem; mouseX: MotionValue<number>; mouseY: MotionValue<number>; index: number }) {
+function CollageCard({ item, mouseX, mouseY, index, loading }: { item: CollageItem; mouseX: MotionValue<number>; mouseY: MotionValue<number>; index: number; loading: "lazy" | "eager" }) {
   const x = useSpring(useTransform(mouseX, (v) => v * item.depth), { damping: 25, stiffness: 120 });
   const y = useSpring(useTransform(mouseY, (v) => v * item.depth), { damping: 25, stiffness: 120 });
 
@@ -75,7 +75,7 @@ function CollageCard({ item, mouseX, mouseY, index }: { item: CollageItem; mouse
             src={item.src}
             {...localImageProps(item.src, "(min-width: 1024px) 240px, 112px")}
             alt={item.alt}
-            loading="eager"
+            loading={loading}
             decoding="async"
             className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
           />
@@ -100,18 +100,20 @@ export function HeroCollage({
   mouseY,
   children,
   items = collage,
+  loading = "eager",
   panelClassName = "left-[6%] top-[30%] w-[19rem]",
 }: {
   mouseX: MotionValue<number>;
   mouseY: MotionValue<number>;
   children: ReactNode;
   items?: CollageItem[];
+  loading?: "lazy" | "eager";
   panelClassName?: string;
 }) {
   return (
     <div className="relative mx-auto h-[560px] w-full max-w-lg">
       {items.map((item, i) => (
-        <CollageCard key={item.src} item={item} mouseX={mouseX} mouseY={mouseY} index={i} />
+        <CollageCard key={item.src} item={item} mouseX={mouseX} mouseY={mouseY} index={i} loading={loading} />
       ))}
       <div className={`absolute z-10 ${panelClassName}`}>{children}</div>
     </div>
@@ -119,7 +121,7 @@ export function HeroCollage({
 }
 
 /** Compact fanned stack for small screens, where the full collage would crowd the CTAs. */
-export function HeroCollageMobile({ items = collage }: { items?: CollageItem[] }) {
+export function HeroCollageMobile({ items = collage, loading }: { items?: CollageItem[]; loading?: "lazy" | "eager" }) {
   return (
     <div className="mt-12 flex justify-center lg:hidden" aria-hidden>
       {items.map((item, i) => (
@@ -130,7 +132,7 @@ export function HeroCollageMobile({ items = collage }: { items?: CollageItem[] }
           transition={{ delay: 0.45 + i * 0.1, duration: 0.7, ease: EASE }}
           className={`relative w-28 sm:w-36 aspect-[4/5] overflow-hidden rounded-2xl border border-border/60 bg-card shadow-xl ${i === 1 ? "z-10 -mx-4" : ""}`}
         >
-          <img src={item.src} {...localImageProps(item.src, "(min-width: 640px) 144px, 112px")} alt="" decoding="async" className="h-full w-full object-cover object-top" />
+          <img src={item.src} {...localImageProps(item.src, "(min-width: 640px) 144px, 112px")} alt="" loading={loading} decoding="async" className="h-full w-full object-cover object-top" />
         </motion.div>
       ))}
     </div>

@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { headTags, type PageHead } from "@/seo/heads";
+import { headTags, type PageHead } from "@/seo/headMeta";
 
 /** Renders a page's <head> from a PageHead (see src/seo/heads.ts). */
 export function Seo(head: PageHead) {

@@ -1,9 +1,9 @@
-import { Suspense, lazy, useEffect, type ReactNode } from "react";
+import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route, useLocation, useNavigationType } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -12,7 +12,8 @@ import { MetaPixelRouteTracker } from "@/components/MetaPixelRouteTracker";
 import { ConversionTracker } from "@/components/ConversionTracker";
 import { PulseTracker } from "@/components/PulseTracker";
 import { preloadHomeSections } from "./pages/homeSections";
-const Index = lazy(() => import("./pages/Index"));
+import { AgencyHomeView, PortfolioView } from "./pages/primaryViews";
+import { PORTFOLIO_PATH, isLegacyPortfolioAnchor, legacyAgencyTarget } from "@/lib/publicViews";
 const Agency = lazy(() => import("./pages/Agency"));
 const AgencyBlog = lazy(() => import("./pages/AgencyBlog"));
 const AgencyBlogHub = lazy(() => import("./pages/AgencyBlogHub"));
@@ -39,10 +40,12 @@ const PortalApp = lazy(() => import("./portal/PortalApp"));
 const WhatsAppButton = lazy(() => import("@/components/WhatsAppButton").then((m) => ({ default: m.WhatsAppButton })));
 // Retain the trusted build-generated page while its route chunk loads. The
 // initial createRoot render would otherwise replace visible HTML with a blank.
+if (window.location.pathname === "/agency" && (!window.location.hash || window.location.hash === "#audit")) {
+  window.history.replaceState(window.history.state, "", `/${window.location.search}${window.location.hash}`);
+}
 const initialPath = window.location.pathname;
-// Fetch the first homepage sections alongside Index. Index fetches the rest once
-// the page is up, so on a phone connection they don't compete with the first screen.
-if (initialPath === "/") preloadHomeSections(window.location.hash ? undefined : ["CaseStudy", "Videos"]);
+// An old portfolio deep link needs its archive section as soon as possible.
+if (initialPath === PORTFOLIO_PATH && window.location.hash && window.location.hash !== "#selected-work") preloadHomeSections();
 let initialMarkup = document.getElementById("root")?.innerHTML ?? "";
 function RouteFallback() {
   const { pathname } = useLocation();
@@ -52,6 +55,50 @@ function RouteFallback() {
     : <div className="min-h-screen bg-background" />;
 }
 const pageFallback = <RouteFallback />;
+
+function AgencyEntry({ legacy = false }: { legacy?: boolean }) {
+  const { hash, search } = useLocation();
+  if (legacy) {
+    const destination = new URL(legacyAgencyTarget(hash) ?? "/", window.location.origin);
+    return <Navigate replace to={{ pathname: destination.pathname, search, hash: destination.hash || (destination.pathname === "/" ? hash : "") }} />;
+  }
+  if (isLegacyPortfolioAnchor(hash)) return <Navigate replace to={{ pathname: PORTFOLIO_PATH, hash, search }} />;
+  return <AgencyHomeView />;
+}
+
+function PrimaryViewScroll() {
+  const { pathname, hash } = useLocation();
+  const navigationType = useNavigationType();
+  const previous = useRef(pathname);
+  useEffect(() => {
+    if (![PORTFOLIO_PATH, "/agency/overview", "/agency/services", "/work/case-studies"].includes(pathname) ||
+        document.getElementById("legacy-serif-font")) return;
+    const stylesheet = document.createElement("link");
+    stylesheet.id = "legacy-serif-font";
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap";
+    document.head.append(stylesheet);
+  }, [pathname]);
+  useLayoutEffect(() => {
+    const primary = (path: string) => path === "/" || path === PORTFOLIO_PATH;
+    const switching = previous.current !== pathname && primary(previous.current) && primary(pathname);
+    previous.current = pathname;
+    const main = document.querySelector<HTMLElement>("main[tabindex='-1']");
+    if (pathname === "/" && (hash === "#audit" || hash.startsWith("#agency-"))) {
+      document.getElementById(hash.slice(1))?.scrollIntoView({ block: "start", behavior: navigationType === "POP" ? "auto" : "instant" });
+    } else if (primary(pathname) && !hash && navigationType !== "POP") {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      main?.focus({ preventScroll: true });
+    }
+    if (switching && (navigationType === "POP" || !document.startViewTransition) &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const animation = main?.animate?.([{ opacity: 0.7, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }],
+        { duration: 260, easing: "cubic-bezier(.22, 1, .36, 1)" });
+      return () => animation?.cancel();
+    }
+  }, [pathname, hash, navigationType]);
+  return null;
+}
 
 const isHubPath = (path: string) =>
   path === "/hub" || path.startsWith("/hub/") || path === "/portal" || path.startsWith("/portal/");
@@ -65,13 +112,24 @@ const skipHubEvents = <T extends { url: string }>(event: T) =>
 
 
 const queryClient = new QueryClient();
+const isLocalPreview = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(window.location.hostname);
 
-const App = () => (
+function ViewReady({ onReady }: { onReady: () => void }) {
+  useEffect(onReady, [onReady]);
+  return null;
+}
+
+const App = ({ hydratePrimary = false }: { hydratePrimary?: boolean }) => {
+  // Each primary route is prerendered. Mount client widgets after
+  // the route has hydrated so React can keep the original first-paint DOM.
+  const [widgetsReady, setWidgetsReady] = useState(!hydratePrimary);
+  const showWidgets = useCallback(() => setWidgetsReady(true), []);
+  return (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
+        {widgetsReady && <Toaster />}
+        {widgetsReady && <Sonner />}
         <BrowserRouter>
           <PublicOnly>
             <MetaPixelRouteTracker />
@@ -80,8 +138,10 @@ const App = () => (
           </PublicOnly>
           <Suspense fallback={pageFallback}>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/agency" element={<Agency />} />
+            <Route path="/" element={<AgencyEntry />} />
+            <Route path={PORTFOLIO_PATH} element={<PortfolioView />} />
+            <Route path="/agency" element={<AgencyEntry legacy />} />
+            <Route path="/agency/overview" element={<Agency />} />
             <Route path="/agency/services" element={<Agency pageKey="services" />} />
             <Route path="/agency/results" element={<Agency pageKey="results" />} />
             <Route path="/agency/pricing" element={<Agency pageKey="pricing" />} />
@@ -115,17 +175,20 @@ const App = () => (
             <Route path="/portal/*" element={<PortalApp />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <PrimaryViewScroll />
+          {!widgetsReady && <ViewReady onReady={showWidgets} />}
           </Suspense>
-          <PublicOnly>
+          {widgetsReady && <PublicOnly>
             <Suspense fallback={null}><WhatsAppButton /></Suspense>
             <CookieConsent />
-          </PublicOnly>
+          </PublicOnly>}
         </BrowserRouter>
-        <Analytics beforeSend={skipHubEvents} />
-        <SpeedInsights beforeSend={skipHubEvents} />
+        {!isLocalPreview && <Analytics beforeSend={skipHubEvents} />}
+        {!isLocalPreview && <SpeedInsights beforeSend={skipHubEvents} />}
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;

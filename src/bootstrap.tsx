@@ -1,9 +1,10 @@
 // Must run before React renders anything.
 import "@/lib/domGuard";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
 import { RootErrorBoundary } from "@/components/RootErrorBoundary";
+import { isLegacyPortfolioAnchor, PORTFOLIO_PATH } from "@/lib/publicViews";
 
 const bootWindow = window as Window & { __jmAppMounted?: boolean };
 
@@ -21,12 +22,21 @@ if (!bootWindow.__jmAppMounted) {
     window.location.reload();
   });
 
-  createRoot(document.getElementById("root")!).render(
+  const container = document.getElementById("root")!;
+  const { pathname, hash } = window.location;
+  const hydrateAgency = pathname === "/" && !isLegacyPortfolioAnchor(hash) &&
+    Boolean(container.querySelector(":scope > .studio-agency"));
+  const hydratePortfolio = pathname === PORTFOLIO_PATH && (!hash || hash === "#selected-work") &&
+    Boolean(container.querySelector(".studio-portfolio"));
+  const hydratePrimary = hydrateAgency || hydratePortfolio;
+  const app = (
     <RootErrorBoundary>
       <HelmetProvider>
-        <App />
+        <App hydratePrimary={hydratePrimary} />
       </HelmetProvider>
     </RootErrorBoundary>
   );
+  if (hydratePrimary) hydrateRoot(container, app);
+  else createRoot(container).render(app);
   bootWindow.__jmAppMounted = true;
 }

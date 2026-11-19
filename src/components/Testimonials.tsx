@@ -21,7 +21,18 @@ const testimonials = [
   },
 ];
 
-export function Testimonials() {
+export function Testimonials({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return <div className="studio-quote-grid">
+      {testimonials.map(({ quote, name, role }) => (
+        <figure key={name}>
+          <Quote size={22} aria-hidden />
+          <blockquote><p>{quote}</p></blockquote>
+          <figcaption><strong>{name}</strong><span>{role}</span></figcaption>
+        </figure>
+      ))}
+    </div>;
+  }
   return (
     <section id="testimonials" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

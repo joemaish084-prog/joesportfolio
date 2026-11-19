@@ -5,7 +5,7 @@ import { gzipSync } from "node:zlib";
 
 const html = fs.readFileSync("dist/index.html", "utf8");
 const root = html.slice(html.indexOf('<div id="root">'));
-assert(root.indexOf("<h1") >= 0 && root.indexOf("<h1") < root.indexOf('data-prerender="'), "The real homepage heading must be outside the hidden crawler fallback");
+assert(root.indexOf("<h1") >= 0 && !root.slice(0, root.indexOf("<h1")).includes('data-prerender="'), "The real homepage heading must be outside the hidden crawler fallback");
 assert.match(root, /<header\b/, "The header must be available before the app loads");
 const heading = root.match(/<h1\b([^>]*)>/)?.[1] ?? "";
 assert(!/opacity:\s*0(?:;|$)/.test(heading), "The initial headline must not start invisible");
@@ -23,13 +23,18 @@ for (const match of root.matchAll(/<img\b[^>]*srcSet="([^"]+)"/gi)) {
     variants++;
   }
 }
-assert(variants >= 12, "Hero images must expose responsive variants");
+const heroImage = root.match(/<img\b[^>]*alt="The iClear team[^"]*"[^>]*>/)?.[0];
+assert(heroImage?.match(/srcSet="[^"]+360w,[^"]+720w,[^"]+960w"/), "The agency hero delivers three responsive image sizes");
+const heroSource = heroImage.match(/\bsrc="([^"]+)"/)[1];
+assert(fs.statSync(`dist${heroSource}`).size < 80 * 1024, "The default hero image must stay below 80 KiB");
+assert.match(heroImage, /fetchPriority="high"/i, "Prioritize the above-the-fold hero image");
+assert(variants >= 5, "Hero and logo images must expose responsive variants");
 const blog = fs.readFileSync("dist/agency/blog.html", "utf8");
 const blogRoot = blog.slice(blog.indexOf('<div id="root">'));
 assert.match(blogRoot, /<h1\b[^>]*>Digital marketing, written plainly\.<\/h1>/, "The actual blog heading must be in the initial HTML");
 assert(!blogRoot.includes('data-prerender="'), "The blog must not hide its content until JavaScript loads");
 for (const page of [html, blog]) {
-  assert.match(page, /rel="modulepreload"[^>]*href="\/assets\/(?:Index|AgencyBlog)-/, "The initial route must be preloaded");
+  assert.match(page, /rel="modulepreload"[^>]*href="\/assets\/(?:AgencyHome|AgencyBlog)-/, "The initial route must be preloaded");
   for (const font of ["space-grotesk-latin-700-normal.woff2", "inter-latin-400-normal.woff2"]) {
     assert(page.includes(`href="/fonts/${font}"`), `Missing critical font preload: ${font}`);
     assert(fs.existsSync(`dist/fonts/${font}`), `Missing local font: ${font}`);
@@ -55,12 +60,13 @@ function staticDependencies(key, seen = new Set()) {
   for (const dependency of manifest[key]?.imports ?? []) staticDependencies(dependency, seen);
   return seen;
 }
-for (const name of ["Index", "Agency", "HubApp", "PortalApp"]) {
+for (const name of ["Index", "AgencyHome", "Agency", "HubApp", "PortalApp"]) {
   const route = Object.entries(manifest).find(([, chunk]) => chunk.name === name && chunk.isDynamicEntry);
   assert(route, `${name} must be present in the production manifest`);
   assert(staticDependencies(route[0]).has(reactKey), `${name} must share the app's React runtime`);
 }
-assert(!staticDependencies("src/pages/AgencyBlog.tsx").has("src/pages/Index.tsx"), "The blog must not load the homepage route");
+assert(!staticDependencies("src/pages/AgencyBlog.tsx").has("src/pages/AgencyHome.tsx"), "The blog must not load the homepage route");
+assert(!staticDependencies("src/pages/AgencyHome.tsx").has("src/pages/Index.tsx"), "The homepage must not load the portfolio route");
 for (const key of staticDependencies("src/pages/AgencyBlog.tsx")) {
   assert(!/\/blogPosts-/.test(manifest[key].file), "The blog listing must not download full article bodies");
 }

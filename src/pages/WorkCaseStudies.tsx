@@ -47,7 +47,7 @@ const WorkCaseStudies = () => {
   return (
     <WorkPageLayout
       seo={STATIC_HEADS.workCaseStudies}
-      backHref="/#case-study"
+      backHref="/portfolio#case-study"
       eyebrow="Case studies"
       title={
         <>
@@ -180,7 +180,7 @@ const WorkCaseStudies = () => {
           Tell me about your brand and your numbers, and I will tell you plainly what I would change first.
         </p>
         <Button variant="gradient" size="lg" asChild className="mt-7">
-          <a href="/#contact" className="gap-2">
+          <a href="/portfolio#contact" className="gap-2">
             Let's work together
             <ArrowRight className="h-5 w-5" />
           </a>

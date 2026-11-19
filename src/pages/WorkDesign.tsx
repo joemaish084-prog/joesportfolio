@@ -44,7 +44,7 @@ const WorkDesign = () => {
   return (
     <WorkPageLayout
       seo={STATIC_HEADS.workDesign}
-      backHref="/#graphic-design"
+      backHref="/portfolio#graphic-design"
       eyebrow="Design"
       title={
         <>
@@ -135,7 +135,7 @@ const WorkDesign = () => {
           Social graphics, ad creatives and campaign artwork, built to match your brand and your offer.
         </p>
         <Button variant="gradient" size="lg" asChild className="mt-7">
-          <a href="/#contact" className="gap-2">
+          <a href="/portfolio#contact" className="gap-2">
             Start a project
             <ArrowRight className="h-5 w-5" />
           </a>

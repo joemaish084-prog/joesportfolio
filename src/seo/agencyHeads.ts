@@ -1,36 +1,20 @@
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
-import { SITE_URL, canonicalUrl, type PageHead } from "./heads";
+import { SITE_URL, canonicalUrl, type PageHead } from "./headMeta";
 import { getLiveServicePages } from "@/data/servicePages";
 import { agencyFaqs } from "@/data/services";
+import { agencyHomeHead, agencyOrganization } from "./agencyHomeHead";
 
-export const agencyOrganization = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${SITE_URL}/agency#organization`,
-  name: "Joseph Maina Marketing",
-  description: "Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi, led by Joseph Maina, a digital marketing specialist.",
-  url: `${SITE_URL}/agency`,
-  logo: `${SITE_URL}/icon-512.png`,
-  email: "joemaish084@gmail.com",
-  telephone: "+254704700160",
-  address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
-  areaServed: { "@type": "Country", name: "Kenya" },
-  founder: { "@type": "Person", name: "Joseph Maina", jobTitle: "Digital Marketing Specialist", url: SITE_URL },
-  sameAs: [
-    "https://www.linkedin.com/in/joseph-isaac-m-33a9a611b/",
-    "https://www.instagram.com/m_k_ush_/",
-  ],
-};
+export { agencyOrganization } from "./agencyHomeHead";
 
 export function agencyHead(key: AgencyPageKey): PageHead {
+  if (key === "home") return agencyHomeHead;
   const page = agencyPages[key];
-  const crumbs = [{ name: "Portfolio", path: "/" }, { name: "Agency", path: "/agency" }];
-  if (key !== "home") crumbs.push({ name: page.label, path: page.path });
+  const crumbs = [{ name: "Agency", path: "/" }, { name: page.label, path: page.path }];
   return {
     title: page.title, description: page.description, path: page.path,
     jsonLd: [agencyOrganization, {
       "@context": "https://schema.org",
-      "@type": key === "contact" ? "ContactPage" : key === "home" ? "WebPage" : "CollectionPage",
+      "@type": key === "contact" ? "ContactPage" : "CollectionPage",
       "@id": `${canonicalUrl(page.path)}#webpage`,
       name: page.title, description: page.description, url: canonicalUrl(page.path),
       about: { "@id": agencyOrganization["@id"] },
@@ -52,9 +36,8 @@ export function agencyHead(key: AgencyPageKey): PageHead {
           })),
         },
       } : {}),
-      ...(key !== "home" ? { isPartOf: { "@id": `${SITE_URL}/agency#webpage` } } : {}),
+      isPartOf: { "@id": `${SITE_URL}/#webpage` },
     }, ...(key === "services" ? [{
-      // Every FAQ the services page shows (ServicesFaq reads the same list).
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: agencyFaqs.map(({ q, a }) => ({
@@ -70,3 +53,9 @@ export function agencyHead(key: AgencyPageKey): PageHead {
     }],
   };
 }
+
+export const agencyOverviewHead: PageHead = {
+  title: "Agency Overview | Joseph Maina Marketing",
+  description: "Meet Joseph Maina Marketing, see the team’s campaign work, and explore services, pricing, and ways to get in touch.",
+  path: "/agency/overview",
+};

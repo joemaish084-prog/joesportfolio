@@ -8,13 +8,13 @@ const socialLinks = [
 ];
 
 const portfolioLinks = [
-  { name: "About", href: "/#about" },
-  { name: "Case Studies", href: "/#case-study" },
-  { name: "Experience", href: "/#experience" },
-  { name: "Videos", href: "/#videos" },
-  { name: "Design Work", href: "/#graphic-design" },
+  { name: "About", href: "/portfolio#about" },
+  { name: "Case Studies", href: "/portfolio#case-study" },
+  { name: "Experience", href: "/portfolio#experience" },
+  { name: "Videos", href: "/portfolio#videos" },
+  { name: "Design Work", href: "/portfolio#graphic-design" },
   { name: "Blog", href: "/agency/blog" },
-  { name: "Testimonials", href: "/#testimonials" },
+  { name: "Testimonials", href: "/portfolio#testimonials" },
 ];
 
 const agencyServices = [

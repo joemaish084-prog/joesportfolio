@@ -30,16 +30,18 @@ await build({
   },
 });
 
-const { getPrerenderRoutes, headTags, renderOgCard, SITE_URL } = await import(
+const { getPrerenderRoutes, headTags, ogCardPath, renderOgCard, SITE_URL } = await import(
   pathToFileURL(path.join(cacheDir, "routes.mjs")).href
 );
 
 const template = fs.readFileSync(path.join(dist, "index.html"), "utf8");
 const manifest = JSON.parse(fs.readFileSync(path.join(dist, ".vite/manifest.json"), "utf8"));
 const initialRouteModules = {
-  "/": "src/pages/Index.tsx",
+  "/": "src/pages/AgencyHome.tsx",
+  "/portfolio": "src/pages/Index.tsx",
   "/agency/blog": "src/pages/AgencyBlog.tsx",
-  "/agency": "src/pages/Agency.tsx",
+  "/agency": "src/pages/AgencyHome.tsx",
+  "/agency/overview": "src/pages/Agency.tsx",
   "/agency/services": "src/pages/Agency.tsx",
   "/agency/results": "src/pages/Agency.tsx",
   "/agency/pricing": "src/pages/Agency.tsx",
@@ -51,14 +53,19 @@ const initialRouteModules = {
 // routes or their dynamic imports (CV, galleries and other optional features).
 function routePreloads(routePath) {
   const files = new Set();
+  const styles = new Set();
   function visit(key) {
     const chunk = manifest[key];
     if (!chunk || files.has(chunk.file)) return;
     files.add(chunk.file);
+    for (const css of chunk.css ?? []) styles.add(css);
     for (const dependency of chunk.imports ?? []) visit(dependency);
   }
   visit(initialRouteModules[routePath] ?? (serviceRoutePaths.has(routePath) ? "src/pages/AgencyService.tsx" : undefined));
-  return [...files].map(file => `<link rel="modulepreload" href="/${file}" crossorigin>`).join("\n");
+  return [
+    ...[...styles].map(file => `<link rel="stylesheet" href="/${file}" crossorigin>`),
+    ...[...files].map(file => `<link rel="modulepreload" href="/${file}" crossorigin>`),
+  ].join("\n");
 }
 
 const escapeAttr = (value) =>
@@ -96,14 +103,17 @@ const stripHomeOnly = (html) =>
 
 function renderPage(route) {
   let html = replaceRegion(template, "head", renderHead(route.head));
+  html = replaceRegion(html, "critical-media", route.criticalMedia ?? "");
   html = html.replace("</head>", () => `${routePreloads(route.path)}\n</head>`);
   // The homepage now has regular HTML in #root, just like every public route.
   html = replaceRegion(html, "home-body", "");
-  if (route.path !== "/") html = stripHomeOnly(html);
+  if (route.path === "/" || route.path === "/agency") html = replaceRegion(html, "legacy-fonts", "");
+  if (route.path !== "/portfolio") html = stripHomeOnly(html);
   if (route.body) {
     if (!html.includes('<div id="root"></div>')) throw new Error("prerender: empty #root not found");
     html = html.replace('<div id="root"></div>', () => `<div id="root">${route.body}</div>`);
   }
+  if (route.noScriptBody) html = html.replace("</body>", () => `<noscript>${route.noScriptBody}</noscript>\n</body>`);
   return html;
 }
 
@@ -135,7 +145,7 @@ const ogAssets = {
 };
 let cards = 0;
 for (const route of routes) {
-  const expected = `/og${route.path}.png`;
+  const expected = ogCardPath(route.path);
   if (route.head.image === expected && !route.card) {
     throw new Error(`prerender: ${route.path} uses ${expected} but has no card`);
   }
@@ -150,6 +160,7 @@ for (const route of routes) {
 // Fallback for routes that are not prerendered (the private hub, admin, 404s).
 // Same app, generic head, never indexed.
 const home = routes.find((r) => r.path === "/");
+fs.writeFileSync(path.join(dist, "agency.html"), renderPage({ ...home, path: "/agency" }));
 fs.writeFileSync(
   path.join(dist, "spa-shell.html"),
   stripHomeOnly(replaceRegion(template, "head", renderHead({ ...home.head, noindex: true }))),
@@ -164,7 +175,7 @@ fs.writeFileSync(path.join(dist, "404.html"), renderPage({
     path: "/404",
     noindex: true,
   },
-  body: '<main style="max-width:880px;margin:auto;padding:24px;font-family:system-ui"><h1>Page not found</h1><p>This page may have moved or the address may be incorrect.</p><p><a href="/">Visit the portfolio</a> · <a href="/agency">Explore services</a> · <a href="/agency/blog">Read the blog</a></p></main>',
+  body: '<main style="max-width:880px;margin:auto;padding:24px;font-family:system-ui"><h1>Page not found</h1><p>This page may have moved or the address may be incorrect.</p><p><a href="/">Agency home</a> · <a href="/portfolio">Visit the portfolio</a> · <a href="/agency/blog">Read the blog</a></p></main>',
 }));
 
 const sitemapEntries = routes

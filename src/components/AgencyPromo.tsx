@@ -60,7 +60,7 @@ export function AgencyPromo() {
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button size="lg" asChild className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-                <a href="/agency">
+                <a href="/">
                   Explore the Agency <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>

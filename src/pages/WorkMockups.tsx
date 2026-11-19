@@ -25,7 +25,7 @@ export default function WorkMockups() {
   };
   const filterClass = (active: boolean) => `inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card/60 text-muted-foreground hover:border-primary/60 hover:text-foreground"}`;
   return (
-    <WorkPageLayout seo={STATIC_HEADS.workMockups} backHref="/#mockups" eyebrow="Mockups / Brand applications"
+    <WorkPageLayout seo={STATIC_HEADS.workMockups} backHref="/portfolio#mockups" eyebrow="Mockups / Brand applications"
       title={<>Design, out in <span className="text-gradient">the world.</span></>}
       intro="Brand identities imagined on paper, fabric and everyday objects. Explore the details that make a brand feel like itself, wherever it appears."
       meta={[`${mockups.length} scenes`, `${mockupBrands.length} brands`, `${mockups.filter((item) => item.model).length} interactive 3D views`]}>
@@ -67,7 +67,7 @@ export default function WorkMockups() {
       )}
       <section className="mt-16 flex flex-col justify-between gap-6 rounded-3xl border border-border bg-card/50 p-7 sm:p-10 md:flex-row md:items-center">
         <div><h2 className="font-display text-2xl font-bold sm:text-3xl">Your brand. In every detail.</h2><p className="mt-3 max-w-xl text-muted-foreground">Let's build an identity that carries through from your first post to your next printed piece.</p></div>
-        <Button variant="gradient" size="lg" asChild><a href="/#contact" className="gap-2">Start a project <ArrowRight className="h-5 w-5" /></a></Button>
+        <Button variant="gradient" size="lg" asChild><a href="/portfolio#contact" className="gap-2">Start a project <ArrowRight className="h-5 w-5" /></a></Button>
       </section>
       <MockupLightbox items={visible} selectedId={selectedId} onSelect={setSelectedId} />
     </WorkPageLayout>

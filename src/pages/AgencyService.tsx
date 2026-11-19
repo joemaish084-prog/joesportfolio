@@ -103,7 +103,7 @@ function StandardAgencyServiceContent({ page }: { page: ServicePage }) {
         <main className="mx-auto max-w-5xl px-5 pb-24 pt-10 sm:px-8">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-[#666666]">
-            <Link to="/agency" className="inline-flex items-center gap-2 transition-colors hover:text-[#F97316]">
+            <Link to="/" className="inline-flex items-center gap-2 transition-colors hover:text-[#F97316]">
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Agency
             </Link>

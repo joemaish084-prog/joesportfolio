@@ -19,7 +19,7 @@ export type Database = {
           budget_range: string | null
           business_name: string | null
           created_at: string
-          email: string
+          email: string | null
           goals: string | null
           id: string
           name: string
@@ -32,7 +32,7 @@ export type Database = {
           budget_range?: string | null
           business_name?: string | null
           created_at?: string
-          email: string
+          email?: string | null
           goals?: string | null
           id?: string
           name: string
@@ -45,7 +45,7 @@ export type Database = {
           budget_range?: string | null
           business_name?: string | null
           created_at?: string
-          email?: string
+          email?: string | null
           goals?: string | null
           id?: string
           name?: string

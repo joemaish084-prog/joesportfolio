@@ -488,7 +488,7 @@ const WorkBrand = () => {
               <span className="text-brand-highlight" style={accentType}>holds together?</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-brand-on-primary/80">Logo, colour, type and templates your team can keep using long after launch.</p>
-            <a href="/#contact" className="mt-8 inline-flex min-h-11 items-center gap-4 rounded-full bg-brand-highlight py-2 pl-6 pr-2 text-lg font-bold text-brand-on-highlight transition-transform hover:-translate-y-0.5">
+            <a href="/portfolio#contact" className="mt-8 inline-flex min-h-11 items-center gap-4 rounded-full bg-brand-highlight py-2 pl-6 pr-2 text-lg font-bold text-brand-on-highlight transition-transform hover:-translate-y-0.5">
               Start a project
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-on-highlight text-brand-highlight">
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />

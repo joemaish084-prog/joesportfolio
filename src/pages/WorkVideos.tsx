@@ -34,7 +34,7 @@ const WorkVideos = () => {
   return (
     <WorkPageLayout
       seo={STATIC_HEADS.workVideos}
-      backHref="/#videos"
+      backHref="/portfolio#videos"
       eyebrow="Video production"
       title={
         <>
@@ -109,7 +109,7 @@ const WorkVideos = () => {
           Short-form ads, social content and brand films, planned around what you are selling.
         </p>
         <Button variant="gradient" size="lg" asChild className="mt-7">
-          <a href="/#contact" className="gap-2">
+          <a href="/portfolio#contact" className="gap-2">
             Start a project
             <ArrowRight className="h-5 w-5" />
           </a>

@@ -6,7 +6,7 @@ import { brandingIndexHead } from "@/seo/pageHeads";
 const WorkBranding = () => (
   <WorkPageLayout
     seo={brandingIndexHead(brands)}
-    backHref="/#branding"
+    backHref="/portfolio#branding"
     eyebrow="Branding"
     title={
       <>

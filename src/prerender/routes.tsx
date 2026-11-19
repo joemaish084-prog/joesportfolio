@@ -1,17 +1,19 @@
 import { STATIC_HEADS, type PageHead } from "@/seo/heads";
 /* eslint-disable react-refresh/only-export-components -- build-time module, never hot-reloaded */
-import type { ReactNode } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
+import { Suspense, type ReactNode } from "react";
+import { renderToStaticMarkup, renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server.js";
-import { SiteHeader } from "@/components/SiteHeader";
-import { Hero } from "@/components/Hero";
-import { ShopifyPortfolio } from "@/components/ShopifyPortfolio";
+import { shopifyProject } from "@/data/shopify";
 import AgencyBlog from "@/pages/AgencyBlog";
 import Agency from "@/pages/Agency";
+import AgencyHome from "@/pages/AgencyHome";
+import Index from "@/pages/Index";
 import { AgencyServiceContent } from "@/pages/AgencyService";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
-import { agencyHead } from "@/seo/agencyHeads";
+import { agencyHeroPhoto } from "@/data/agencyHeroMedia";
+import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
+import { ThemeProvider } from "next-themes";
 import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
 import type { BlogSummary } from "@/data/blogSummaries";
 import { blogHubs, getHubPosts, getRelatedByHub, getPrimaryHubForPost, hubServiceLinkLabel, resolveHubServiceHref } from "@/data/blogHubs";
@@ -48,7 +50,7 @@ import {
 import { InfographicStatic } from "@/components/blog/InfographicStatic";
 import type { OgCard } from "@/prerender/ogCard";
 
-export { SITE_URL, headTags } from "@/seo/heads";
+export { SITE_URL, headTags, ogCardPath } from "@/seo/heads";
 export { renderOgCard } from "@/prerender/ogCard";
 
 export interface PrerenderRoute {
@@ -56,6 +58,8 @@ export interface PrerenderRoute {
   head: PageHead;
   /** Markup placed in #root, readable before JavaScript loads. */
   body?: string;
+  criticalMedia?: string;
+  noScriptBody?: string;
   /** Text for the generated social card at /og/<path>.png (see ogCardImage). */
   card?: OgCard;
   sitemap?: { priority: number; changefreq: "weekly" | "monthly" | "yearly"; lastmod?: string };
@@ -65,7 +69,7 @@ export interface PrerenderRoute {
 
 const NAV = [
   { href: "/", label: "Home" },
-  { href: "/agency", label: "Agency" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "/agency/services", label: "Agency Services" },
   { href: "/agency/results", label: "Agency Results" },
   { href: "/agency/pricing", label: "Agency Pricing" },
@@ -315,6 +319,18 @@ function BrandPageBody({ brand }: { brand: Brand }) {
 
 const html = (node: ReactNode) => renderToStaticMarkup(<>{node}</>);
 
+function renderPrimary(location: string, page: ReactNode) {
+  return renderToString(
+    <HelmetProvider>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <StaticRouter location={location}>
+          <Suspense fallback={null}>{page}</Suspense>
+        </StaticRouter>
+      </ThemeProvider>
+    </HelmetProvider>,
+  );
+}
+
 const newest = (posts: { date: string }[]) => posts.map((p) => p.date).sort().pop();
 
 // -------------------------------------------------------------------- routes
@@ -323,12 +339,29 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
   const routes: PrerenderRoute[] = [
     {
       path: "/",
-      head: STATIC_HEADS.home,
-      body: html(
-        <StaticRouter location="/">
-        <SiteHeader />
-        <main className="min-h-screen"><Hero /><ShopifyPortfolio /></main>
+      head: agencyHead("home"),
+      criticalMedia: html(<>
+        <link rel="preload" as="image" type="image/avif" media={agencyHeroPhoto.mobileMedia}
+          imageSrcSet={agencyHeroPhoto.avif} imageSizes={agencyHeroPhoto.mobileSizes} {...{ fetchpriority: "high" }} />
+        <link rel="preload" as="image" type="image/webp" media="(min-width: 900px)"
+          imageSrcSet={agencyHeroPhoto.srcSet} imageSizes={agencyHeroPhoto.sizes} {...{ fetchpriority: "high" }} />
+      </>),
+      body: renderPrimary("/", <AgencyHome />),
+      card: { eyebrow: "Digital Marketing Agency", title: "Make your marketing bring in more sales.", cta: "Book a Free Audit" },
+      sitemap: { priority: 1, changefreq: "monthly" },
+    },
+    {
+      path: "/portfolio",
+      head: STATIC_HEADS.portfolio,
+      card: { eyebrow: "Portfolio", title: "Selected work by Joseph Maina", meta: "Campaign results, creative work and storefronts", cta: "Explore the portfolio" },
+      body: renderPrimary("/portfolio", <Index />),
+      noScriptBody: html(
         <Shell contentTag="div">
+          <section id="shopify">
+            <h2>{shopifyProject.name}</h2>
+            <p>{shopifyProject.description}</p>
+            <a href={shopifyProject.url}>Visit the live store</a>
+          </section>
           <p>I'm Joseph Maina, a digital marketing specialist in Nairobi, Kenya, and the founder of Joseph Maina Marketing. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content.</p>
           <p><a href="/agency/contact">Book a Free Strategy Call</a></p>
           <h2>Services</h2>
@@ -340,15 +373,20 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
           <h2>Frequently asked questions</h2>
           {faqs.map(({ question, answer }) => <section key={question}><h3>{question}</h3><p>{answer}</p></section>)}
         </Shell>
-        </StaticRouter>,
       ),
-      sitemap: { priority: 1.0, changefreq: "monthly" },
+      sitemap: { priority: 0.9, changefreq: "monthly" },
     },
-    ...(Object.entries(agencyPages) as [AgencyPageKey, (typeof agencyPages)[AgencyPageKey]][]).map(([key, page]) => ({
+    {
+      path: agencyOverviewHead.path,
+      head: agencyOverviewHead,
+      body: html(<HelmetProvider><StaticRouter location={agencyOverviewHead.path}><Agency /></StaticRouter></HelmetProvider>),
+      sitemap: { priority: 0.7, changefreq: "monthly" },
+    },
+    ...(Object.entries(agencyPages) as [AgencyPageKey, (typeof agencyPages)[AgencyPageKey]][]).filter(([key]) => key !== "home").map(([key, page]) => ({
       path: page.path,
       head: agencyHead(key),
       body: html(<HelmetProvider><StaticRouter location={page.path}><Agency pageKey={key} /></StaticRouter></HelmetProvider>),
-      sitemap: { priority: key === "home" ? 0.9 : 0.8, changefreq: "monthly" as const },
+      sitemap: { priority: 0.8, changefreq: "monthly" as const },
     })),
     {
       path: "/agency/blog",
@@ -521,7 +559,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     body: html(
       <Shell>
         <p>
-          <a href="/agency">Agency</a> › Ad Budget Calculator
+          <a href="/">Agency</a> › Ad Budget Calculator
         </p>
         <h1>{CALCULATOR_TITLE}</h1>
         <p>{CALCULATOR_INTRO}</p>

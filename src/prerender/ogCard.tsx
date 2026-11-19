@@ -15,6 +15,7 @@ export interface OgCard {
   title: string;
   /** One line under the title, e.g. "6 min read · October 2026". */
   meta?: string;
+  cta?: string;
 }
 
 export interface OgAssets {
@@ -104,7 +105,7 @@ export async function renderOgCard(card: OgCard, assets: OgAssets): Promise<Buff
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, paddingBottom: 28 }}>
           <div style={{ display: "flex", color: "#D4D4D4" }}>josephmaina.co.ke</div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, color: ORANGE_LIGHT, fontWeight: 600 }}>
-            Book a free strategy call
+            {card.cta ?? "Book a free strategy call"}
             {/* Drawn rather than typed: the Latin font subset has no arrow glyph. */}
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={ORANGE_LIGHT} strokeWidth="2.5">
               <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
