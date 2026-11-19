@@ -7,10 +7,12 @@ import { shopifyProject } from "@/data/shopify";
 import AgencyBlog from "@/pages/AgencyBlog";
 import Agency from "@/pages/Agency";
 import AgencyHome from "@/pages/AgencyHome";
+import AgencyResults from "@/pages/AgencyResults";
 import Index from "@/pages/Index";
 import { AgencyServiceContent } from "@/pages/AgencyService";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
 import { agencyHeroPhoto } from "@/data/agencyHeroMedia";
+import { portfolioLeadCover } from "@/data/caseStudies";
 import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
@@ -353,6 +355,10 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     {
       path: "/portfolio",
       head: STATIC_HEADS.portfolio,
+      criticalMedia: html(
+        <link rel="preload" as="image" type="image/webp" imageSrcSet={portfolioLeadCover.srcSet}
+          imageSizes={portfolioLeadCover.sizes} {...{ fetchpriority: "high" }} />,
+      ),
       card: { eyebrow: "Portfolio", title: "Selected work by Joseph Maina", meta: "Campaign results, creative work and storefronts", cta: "Explore the portfolio" },
       body: renderPrimary("/portfolio", <Index />),
       noScriptBody: html(
@@ -385,7 +391,9 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     ...(Object.entries(agencyPages) as [AgencyPageKey, (typeof agencyPages)[AgencyPageKey]][]).filter(([key]) => key !== "home").map(([key, page]) => ({
       path: page.path,
       head: agencyHead(key),
-      body: html(<HelmetProvider><StaticRouter location={page.path}><Agency pageKey={key} /></StaticRouter></HelmetProvider>),
+      body: key === "results"
+        ? renderPrimary(page.path, <AgencyResults />)
+        : html(<HelmetProvider><StaticRouter location={page.path}><Agency pageKey={key} /></StaticRouter></HelmetProvider>),
       sitemap: { priority: 0.8, changefreq: "monthly" as const },
     })),
     {

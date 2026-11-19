@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { Suspense, lazy, startTransition, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +15,7 @@ import { preloadHomeSections } from "./pages/homeSections";
 import { AgencyHomeView, PortfolioView } from "./pages/primaryViews";
 import { PORTFOLIO_PATH, isLegacyPortfolioAnchor, legacyAgencyTarget } from "@/lib/publicViews";
 const Agency = lazy(() => import("./pages/Agency"));
+const AgencyResults = lazy(() => import("./pages/AgencyResults"));
 const AgencyBlog = lazy(() => import("./pages/AgencyBlog"));
 const AgencyBlogHub = lazy(() => import("./pages/AgencyBlogHub"));
 const AgencyService = lazy(() => import("./pages/AgencyService"));
@@ -123,7 +124,7 @@ const App = ({ hydratePrimary = false }: { hydratePrimary?: boolean }) => {
   // Each primary route is prerendered. Mount client widgets after
   // the route has hydrated so React can keep the original first-paint DOM.
   const [widgetsReady, setWidgetsReady] = useState(!hydratePrimary);
-  const showWidgets = useCallback(() => setWidgetsReady(true), []);
+  const showWidgets = useCallback(() => startTransition(() => setWidgetsReady(true)), []);
   return (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
@@ -143,7 +144,7 @@ const App = ({ hydratePrimary = false }: { hydratePrimary?: boolean }) => {
             <Route path="/agency" element={<AgencyEntry legacy />} />
             <Route path="/agency/overview" element={<Agency />} />
             <Route path="/agency/services" element={<Agency pageKey="services" />} />
-            <Route path="/agency/results" element={<Agency pageKey="results" />} />
+            <Route path="/agency/results" element={<AgencyResults />} />
             <Route path="/agency/pricing" element={<Agency pageKey="pricing" />} />
             <Route path="/agency/contact" element={<Agency pageKey="contact" />} />
             <Route path="/agency/blog" element={<AgencyBlog />} />

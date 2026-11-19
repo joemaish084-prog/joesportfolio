@@ -1,4 +1,5 @@
-import { Quote } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Pause, Play, Quote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -22,17 +23,7 @@ const testimonials = [
 ];
 
 export function Testimonials({ compact = false }: { compact?: boolean }) {
-  if (compact) {
-    return <div className="studio-quote-grid">
-      {testimonials.map(({ quote, name, role }) => (
-        <figure key={name}>
-          <Quote size={22} aria-hidden />
-          <blockquote><p>{quote}</p></blockquote>
-          <figcaption><strong>{name}</strong><span>{role}</span></figcaption>
-        </figure>
-      ))}
-    </div>;
-  }
+  if (compact) return <StudioTestimonials />;
   return (
     <section id="testimonials" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,5 +59,69 @@ export function Testimonials({ compact = false }: { compact?: boolean }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function StudioTestimonials() {
+  const carousel = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+  const PauseIcon = paused ? Play : Pause;
+
+  function advance(direction: number) {
+    const rail = carousel.current;
+    if (!rail) return;
+    const slides = Array.from(rail.children);
+    const left = rail.getBoundingClientRect().left;
+    const current = slides.findIndex(slide => Math.abs(slide.getBoundingClientRect().left - left) < 8);
+    const next = slides[(Math.max(0, current) + direction + slides.length) % slides.length];
+    rail.scrollTo({
+      left: next.getBoundingClientRect().left - left + rail.scrollLeft,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
+  }
+
+  useEffect(() => {
+    const rail = carousel.current;
+    if (!rail || paused) return;
+    const mobile = window.matchMedia("(max-width: 623px) and (prefers-reduced-motion: no-preference)");
+    let timer = 0;
+    const refresh = (visible: boolean) => {
+      window.clearInterval(timer);
+      if (visible && mobile.matches) timer = window.setInterval(() => {
+        if (!document.hidden && !rail.matches(":hover, :focus-within")) advance(1);
+      }, 8500);
+    };
+    let visible = false;
+    const update = () => refresh(visible);
+    const observe = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }, { threshold: 0.5 });
+    observe.observe(rail);
+    mobile.addEventListener("change", update);
+    return () => { window.clearInterval(timer); observe.disconnect(); mobile.removeEventListener("change", update); };
+  }, [paused]);
+
+  return (
+    <div className="studio-carousel" data-reveal>
+      <div className="studio-quote-grid" ref={carousel} role="region" onPointerDown={() => setPaused(true)}
+        tabIndex={0} aria-label="Client testimonials" data-lenis-prevent>
+        {testimonials.map(({ quote, name, role }) => (
+          <Card className="studio-quote-card studio-glow-card" key={name}>
+            <figure>
+              <Quote size={24} aria-hidden />
+              <blockquote><p>{quote}</p></blockquote>
+              <figcaption>
+                <span className="studio-quote-avatar" aria-hidden>{name.split(" ").slice(0, 2).map(word => word[0]).join("")}</span>
+                <span><strong>{name}</strong><span>{role}</span></span>
+              </figcaption>
+            </figure>
+          </Card>
+        ))}
+      </div>
+      <div className="studio-carousel-controls">
+        <button type="button" className="studio-motion-control" aria-label="Previous testimonial" onClick={() => { setPaused(true); advance(-1); }}><ArrowLeft size={17} aria-hidden /></button>
+        <button type="button" className="studio-motion-control studio-carousel-pause"
+          aria-label={paused ? "Play testimonials" : "Pause testimonials"} onClick={() => setPaused(current => !current)}><PauseIcon size={15} aria-hidden /></button>
+        <button type="button" className="studio-motion-control" aria-label="Next testimonial" onClick={() => { setPaused(true); advance(1); }}><ArrowRight size={17} aria-hidden /></button>
+      </div>
+    </div>
   );
 }

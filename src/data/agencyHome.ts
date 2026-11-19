@@ -3,6 +3,14 @@ import { caseStudies } from "@/data/caseStudies";
 export const PRIVACY_PATH = "/privacy-policy";
 export const AUDIT_WHATSAPP = "https://wa.me/254704700160?text=Hi%20Joseph%21%20I%27d%20like%20to%20discuss%20a%20free%20marketing%20audit.";
 
+export const auditBudgets = [
+  "Under KES 50,000",
+  "KES 50,000 to 99,999",
+  "KES 100,000 to 249,999",
+  "KES 250,000 or more",
+  "Still deciding",
+] as const;
+
 export const homeServices = [
   { name: "Meta Ads", path: "/agency/meta-ads-management", copy: "Reach new customers on Facebook and Instagram, test what sells, and track what comes back." },
   { name: "Google Ads", path: "/agency/google-ads-management", copy: "Show up when people are already searching for what you sell." },

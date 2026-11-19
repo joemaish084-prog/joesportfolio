@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Pause, Play } from "lucide-react";
 import { Marquee } from "@/components/ui/marquee";
 // Background-stripped, trimmed and size-balanced copies on a shared 480×320 canvas,
 // so every logo sits the same way on the white tiles below.
@@ -5,7 +7,7 @@ import logoConvey from "@/assets/marquee/convey.webp";
 import logoTechmindset from "@/assets/marquee/techmindset.webp";
 import logoJoan from "@/assets/marquee/joan.webp";
 import logoIclear from "@/assets/marquee/iclear.webp";
-import logoNorthgate from "@/assets/marquee/northgate.webp";
+import logoNorthgate from "@/assets/marquee/northgate-crest.webp";
 import logoPowwater from "@/assets/marquee/powwater.webp";
 import logoGlowskin from "@/assets/marquee/glowskin.webp";
 import logoBeautysquare from "@/assets/marquee/beautysquare.webp";
@@ -17,7 +19,6 @@ import logoConveySmall from "@/assets/marquee/convey-240.webp";
 import logoTechmindsetSmall from "@/assets/marquee/techmindset-240.webp";
 import logoJoanSmall from "@/assets/marquee/joan-240.webp";
 import logoIclearSmall from "@/assets/marquee/iclear-240.webp";
-import logoNorthgateSmall from "@/assets/marquee/northgate-240.webp";
 import logoDuaraSmall from "@/assets/marquee/duara-240.webp";
 
 const brands = [
@@ -35,16 +36,34 @@ const brands = [
   { name: "Surbubia Homes", industry: "Real Estate", logo: logoSurbubia },
 ];
 
-const compactLogos = [logoIclearSmall, logoConveySmall, logoJoanSmall, logoTechmindsetSmall, logoNorthgateSmall, logoDuaraSmall];
+const compactLogos = [logoIclearSmall, logoConveySmall, logoJoanSmall, logoTechmindsetSmall, logoNorthgate, logoDuaraSmall];
+
+function StudioLogos() {
+  const [paused, setPaused] = useState(false);
+  const Icon = paused ? Play : Pause;
+  return (
+    <div className="studio-client-logos" data-paused={paused} data-scroll-loop data-lenis-prevent role="region" aria-label="Selected clients">
+      <div className="studio-logo-heading">
+        <p className="studio-kicker">Selected clients</p>
+        <button type="button" className="studio-motion-control" onClick={() => setPaused(current => !current)}
+          aria-label={paused ? "Play logo marquee" : "Pause logo marquee"}>
+          <Icon size={15} aria-hidden />
+        </button>
+      </div>
+      <Marquee pauseOnHover repeat={2} className="studio-logo-marquee">
+        {brands.slice(0, compactLogos.length).map(({ name }, index) => (
+          <div key={name} className="studio-logo-tile" data-brand={index === 4 ? "northgate" : undefined}>
+            <img src={compactLogos[index]} alt={name} width={index === 4 ? 160 : 240}
+              height={index === 4 ? 256 : 160} loading="lazy" decoding="async" />
+          </div>
+        ))}
+      </Marquee>
+    </div>
+  );
+}
 
 export function BrandsLogoMarquee({ compact = false }: { compact?: boolean }) {
-  if (compact) {
-    return <ul className="studio-client-logos" aria-label="Selected clients">
-      {brands.slice(0, compactLogos.length).map(({ name }, index) => (
-        <li key={name}><img src={compactLogos[index]} alt={name} width={240} height={160} loading="lazy" decoding="async" /></li>
-      ))}
-    </ul>;
-  }
+  if (compact) return <StudioLogos />;
   return (
     <section className="py-12 sm:py-16 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-6">

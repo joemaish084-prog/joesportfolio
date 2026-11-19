@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { AgencyPageCta, AgencyPageFooter, AgencyPageHeader, SubHeading } from "@/components/agency/AgencyPageSections";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,14 +10,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
 import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform, MotionConfig, type MotionValue } from "framer-motion";
-import type { ReactNode } from "react";
 import { Stepper } from "@/components/ui/stepper";
 import { useRef } from "react";
 import {
   Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
-  CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt, Star,
+  CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt,
   Video, Search, Lightbulb, ArrowRight, Share2, FileText, Palette, MessageSquare, Calculator,
-  ChevronRight, Mail, ExternalLink, LayoutGrid, TrendingUp, Tag,
+  Mail, ExternalLink, LayoutGrid, TrendingUp, Tag,
 } from "lucide-react";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { trackSpotlight } from "@/lib/spotlight";
@@ -24,7 +24,6 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { CountUp } from "@/components/CountUp";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
-import { PublicViewLink } from "@/components/PublicViewLink";
 import { CustomerJourney } from "@/components/agency/CustomerJourney";
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { MarketToggle } from "@/components/MarketToggle";
@@ -33,8 +32,7 @@ import { saveAgencyLead } from "@/lib/saveAgencyLead";
 import { Seo } from "@/components/Seo";
 import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
-import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/AgencyNavigation";
-import { blogSummaries } from "@/data/blogSummaries";
+import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { caseStudies } from "@/data/caseStudies";
 import { getLiveServicePages } from "@/data/servicePages";
 import {
@@ -43,7 +41,7 @@ import {
 } from "@/data/services";
 import { migrationReasons } from "@/data/shopify";
 import { ShopifyAgencyFeature } from "@/components/shopify/ShopifyAgencyFeature";
-import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase, CardCover } from "@/components/agency/AgencyVisuals";
+import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase } from "@/components/agency/AgencyVisuals";
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 import iclearDishwashShort from "@/assets/short-iclear-dishwash.webp";
@@ -115,17 +113,6 @@ function PriceTag({ price: kePrice, size = "lg" }: { price: string; size?: "lg" 
 }
 
 /** Left-aligned heading row used to break up the inner agency pages. */
-function SubHeading({ eyebrow, title, children, aside }: { eyebrow?: string; title: ReactNode; children?: ReactNode; aside?: ReactNode }) {
-  return <div className="mb-8 flex flex-col gap-4 border-b border-border/60 pb-5 sm:flex-row sm:items-end sm:justify-between">
-    <div className="max-w-2xl">
-      {eyebrow && <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">{eyebrow}</p>}
-      <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h2>
-      {children && <p className="mt-2 text-sm text-muted-foreground sm:text-base">{children}</p>}
-    </div>
-    {aside}
-  </div>;
-}
-
 /** Pricing-table rows that have their own service page. */
 const SERVICE_PAGE_FOR_ROW: Record<string, string> = {
   "shopify-services": "/agency/shopify-services",
@@ -328,31 +315,13 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
       <main>
         {/* The services page brings its own hero (ServicesHero). */}
-        {pageKey !== "home" && pageKey !== "services" && <header className="relative overflow-hidden border-b border-border/50">
-          <div aria-hidden className="pointer-events-none absolute inset-0">
-            <div className="absolute -top-40 right-[-10%] h-[28rem] w-[28rem] rounded-full bg-primary/[0.07] blur-[120px]" />
-            <div className="absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_80%_90%_at_70%_0%,black_30%,transparent_100%)]" />
-          </div>
-          <div className="relative container mx-auto px-4 pt-10 pb-12 sm:pt-16 sm:pb-16">
-            <div className="mx-auto max-w-6xl">
-              <nav aria-label="Breadcrumb" className="mb-8 text-sm text-muted-foreground">
-                <ol className="flex flex-wrap items-center gap-1.5">
-                  <li><Link to="/" className="hover:text-primary transition-colors">Agency</Link></li>
-                  <li aria-hidden="true"><ChevronRight className="h-3.5 w-3.5" /></li>
-                  <li><span aria-current="page" className="text-foreground">{page.label}</span></li>
-                </ol>
-              </nav>
-              <SectionLabel>JOSEPH MAINA MARKETING</SectionLabel>
-              <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{page.intro}</p>
+        {pageKey !== "home" && pageKey !== "services" && <AgencyPageHeader page={page}>
               {pageKey === "contact" && <p className="mt-8 flex flex-wrap gap-2.5 text-sm">
                 <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="mailto:joemaish084@gmail.com"><Mail className="h-4 w-4 text-primary" aria-hidden />joemaish084@gmail.com</a>
                 <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="tel:+254704700160"><Phone className="h-4 w-4 text-primary" aria-hidden />+254 704 700 160</a>
                 <span className="inline-flex min-h-10 items-center gap-2 rounded-full px-2 text-muted-foreground"><MapPin className="h-4 w-4" aria-hidden />Nairobi, Kenya</span>
               </p>}
-            </div>
-          </div>
-        </header>}
+        </AgencyPageHeader>}
 
 {pageKey === "home" && <>
         {/* HERO */}
@@ -721,72 +690,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 
 </>}
-{pageKey === "results" && <>
-        {/* RESULTS */}
-        <section id="results" className="container mx-auto px-4 py-20 scroll-mt-20">
-          <div className="max-w-6xl mx-auto">
-          <SubHeading eyebrow="Case studies" title="Real Results for Real Brands"
-            aside={<Link to="/work/case-studies" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">All case studies in full <ArrowRight className="h-4 w-4" aria-hidden /></Link>}>
-            Tracked campaigns with the numbers, strategy and attribution behind them. Clients in these case studies are not named; the figures are real.
-          </SubHeading>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {caseStudies.map((cs, i) => (
-              <motion.div
-                key={cs.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: (i % 3) * 0.1 }}
-              >
-              <Link to={`/work/case-studies#${cs.id}`} onMouseMove={trackSpotlight}
-                className="spotlight surface-card group flex h-full flex-col overflow-hidden hover:border-primary/40 hover:-translate-y-1 transition-all duration-300">
-                {/* Stock illustration, not the client: request a card-sized crop. */}
-                <CardCover src={cs.cover.src.replace(/w=\d+/, "w=800")} alt={cs.cover.alt} className="aspect-[16/9]">
-                  {i === 0 && <span className="absolute left-4 top-4 rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">Latest</span>}
-                </CardCover>
-                <div className="flex flex-1 flex-col p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{cs.tag} · {cs.period}</p>
-                  <h3 className="mt-2 font-display text-lg font-semibold leading-snug transition-colors group-hover:text-primary">{cs.title}</h3>
-                  <p className="mt-2 mb-5 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{cs.summary}</p>
-                  <dl className="mt-auto grid grid-cols-3 gap-3 border-t border-border/60 pt-5">
-                    {cs.stats.map((st) => (
-                      <div key={st.label} className="min-w-0">
-                        <dt className="sr-only">{st.label}</dt>
-                        <dd className="whitespace-nowrap font-display text-base font-bold leading-tight text-gradient tabular-nums xl:text-lg">{st.value}</dd>
-                        <dd className="mt-1 text-[11px] leading-snug text-muted-foreground">{st.label}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                    Read the full case study <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
-                  </span>
-                </div>
-              </Link>
-              </motion.div>
-            ))}
-          </div>
-          </div>
-          <div className="max-w-6xl mx-auto mt-16">
-            <SubHeading eyebrow="Go deeper" title="Read the campaign breakdowns">The portfolio contains the wider creative work. These articles explain the marketing decisions, campaign context and reported results.</SubHeading>
-            <div className="grid sm:grid-cols-2 gap-4">{[
-              "meta-ads-turnaround-case-study-kenya-2026", "convey-communications-case-study-10x-leads",
-              "0-to-4-million-tiktok-views-behind-the-campaign", "nyeri-county-campaign-hyper-local-marketing",
-            ].map(slug => blogSummaries.find(post => post.slug === slug)).filter(Boolean).map(post => <Link key={post!.slug} to={`/agency/blog/${post!.slug}`} onMouseMove={trackSpotlight} className="spotlight surface-card flex flex-col p-6 group hover:border-primary/40 transition-colors">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Case study</p>
-              <h3 className="font-display text-lg font-semibold leading-snug group-hover:text-primary transition-colors">{post!.title}</h3><p className="mt-2 flex-1 text-sm text-muted-foreground">{post!.excerpt}</p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Read the breakdown <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden /></span>
-            </Link>)}</div>
-            <p className="mt-6 text-sm text-muted-foreground">My work with Convey began as an employee and later continued as a consultant. Each linked case study provides its own context; these outcomes are not a promise of future results.</p>
-          </div>
-          <div className="text-center mt-8">
-            <Button variant="outline" className="rounded-full" asChild>
-              <Link to="/work/case-studies">See All Case Studies <ArrowRight className="h-4 w-4" aria-hidden /></Link>
-            </Button>
-          </div>
-        </section>
-
-
-</>}
 {pageKey === "contact" && <>
         {/* BOOKING */}
         <section id="booking" className="container mx-auto px-4 py-20 scroll-mt-20">
@@ -1000,34 +903,10 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
 </>}
         {/* FOOTER CTA — the contact page is already the next step, and the services page ends on its own CTA */}
-        {pageKey !== "contact" && pageKey !== "services" && <section className="container mx-auto px-4 pb-20">
-          <Card className="relative max-w-4xl mx-auto overflow-hidden rounded-3xl p-8 md:p-14 text-center border-primary/40 bg-gradient-to-br from-primary/[0.08] via-transparent to-transparent">
-            <div aria-hidden className="pointer-events-none absolute inset-0 dot-grid [mask-image:radial-gradient(ellipse_70%_80%_at_50%_0%,black_20%,transparent_100%)]" />
-            <div className="relative">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4">
-                <Star className="h-3 w-3 fill-primary" /> Work Together
-              </div>
-              <h2 className="text-balance text-3xl md:text-4xl font-display font-bold mb-3">Find the right next step for your brand</h2>
-              <p className="text-muted-foreground mb-8 max-w-lg mx-auto">I take on a limited number of clients to ensure quality and attention to detail.</p>
-              <div className="flex flex-col justify-center gap-3 sm:flex-row">
-                <Button size="lg" className="rounded-full" asChild><Link to="/agency/contact">Book a Free Strategy Call <ArrowRight className="h-4 w-4" aria-hidden /></Link></Button>
-                {pageKey !== "pricing" && <Button size="lg" variant="outline" className="rounded-full" asChild><Link to="/agency/pricing">View Pricing</Link></Button>}
-              </div>
-            </div>
-          </Card>
-        </section>}
+        {pageKey !== "contact" && pageKey !== "services" && <AgencyPageCta showPricing={pageKey !== "pricing"} />}
       </main>
 
-      <div className="container mx-auto px-4 pb-10"><AgencySectionLinks className="justify-center text-muted-foreground" /></div>
-      <footer className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 whitespace-nowrap border-t border-border/40 px-4 py-8 text-sm text-muted-foreground leading-8">
-        <span>© {new Date().getFullYear()} Joseph Maina</span>
-        <span>·</span>
-        <PublicViewLink to="/portfolio" className="hover:text-foreground">Portfolio</PublicViewLink>
-        <span>·</span>
-        <Link to="/agency/blog" className="hover:text-foreground">Blog</Link>
-        <span>·</span>
-        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} className="hover:text-foreground" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      </footer>
+      <AgencyPageFooter whatsappNumber={WHATSAPP_NUMBER} />
     </div>
     </MotionConfig>
   );

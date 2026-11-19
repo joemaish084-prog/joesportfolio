@@ -43,7 +43,7 @@ const initialRouteModules = {
   "/agency": "src/pages/AgencyHome.tsx",
   "/agency/overview": "src/pages/Agency.tsx",
   "/agency/services": "src/pages/Agency.tsx",
-  "/agency/results": "src/pages/Agency.tsx",
+  "/agency/results": "src/pages/AgencyResults.tsx",
   "/agency/pricing": "src/pages/Agency.tsx",
   "/agency/contact": "src/pages/Agency.tsx",
   "/work/case-studies": "src/pages/WorkCaseStudies.tsx",
@@ -61,7 +61,15 @@ function routePreloads(routePath) {
     for (const css of chunk.css ?? []) styles.add(css);
     for (const dependency of chunk.imports ?? []) visit(dependency);
   }
-  visit(initialRouteModules[routePath] ?? (serviceRoutePaths.has(routePath) ? "src/pages/AgencyService.tsx" : undefined));
+  const routeModule = initialRouteModules[routePath] ?? (serviceRoutePaths.has(routePath) ? "src/pages/AgencyService.tsx" : undefined);
+  if (routeModule) {
+    // A dynamic entry shared by multiple importers can have a generated manifest key.
+    const entryKey = manifest[routeModule] ? routeModule : Object.keys(manifest).find(key => {
+      const chunk = manifest[key];
+      return chunk.isDynamicEntry && chunk.name === path.basename(routeModule, ".tsx");
+    });
+    visit(entryKey);
+  }
   return [
     ...[...styles].map(file => `<link rel="stylesheet" href="/${file}" crossorigin>`),
     ...[...files].map(file => `<link rel="modulepreload" href="/${file}" crossorigin>`),

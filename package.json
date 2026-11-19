@@ -71,6 +71,7 @@
     "input-otp": "^1.4.2",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
+    "lenis": "^1.3.27",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.3.0",
     "ogl": "^1.0.11",

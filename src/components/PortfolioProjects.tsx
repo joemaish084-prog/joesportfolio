@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { caseStudies } from "@/data/caseStudies";
+import { caseStudies, portfolioLeadCover } from "@/data/caseStudies";
 import { shopifyProject } from "@/data/shopify";
-import metaImage from "@/assets/services/svc-meta-ads-400.webp";
-import googleImage from "@/assets/services/svc-google-ads-400.webp";
-import socialImage from "@/assets/services/svc-social-400.webp";
-import shortFilm from "@/assets/responsive/2-short-maji-ni-uhai-480.webp";
 import seoImage from "@/assets/marquee/beautysquare.webp";
 import shopifyCard from "@/assets/agency/babyshop-dansar-card.webp";
 import "@/components/agency/studio.css";
@@ -19,45 +15,46 @@ interface Project {
   title: string;
   services: Service[];
   image: string;
+  alt?: string;
   problem: string;
   work: string;
   result: string;
   more: string;
 }
 
-const paidAndSocial: Record<string, Pick<Project, "services" | "image" | "problem" | "work">> = {
+const paidAndSocial: Record<string, Pick<Project, "services" | "problem" | "work">> = {
   "property-lead-funnel": {
-    services: ["Meta Ads", "Media Buying"], image: metaImage,
+    services: ["Meta Ads", "Media Buying"],
     problem: "A residential developer needed to see how many ad enquiries turned into serious buyers.",
     work: "Reviewed Meta lead forms and Instagram conversations, then mapped how many people progressed at each step.",
   },
   "meta-google-combined": {
-    services: ["Meta Ads", "Google Ads", "Media Buying"], image: googleImage,
+    services: ["Meta Ads", "Google Ads", "Media Buying"],
     problem: "A Kenyan beauty retailer wanted to reach new customers and capture shoppers already searching for its products.",
     work: "Ran Meta and Google campaigns and combined the platform reports into one view of spend, orders, and attributed revenue.",
   },
   "google-ads-launch": {
-    services: ["Google Ads", "Media Buying"], image: googleImage,
+    services: ["Google Ads", "Media Buying"],
     problem: "A Kenyan retailer had never run Google Search or Shopping ads.",
     work: "Started with one Search campaign, then added Shopping once the Search campaign had enough data.",
   },
   "meta-ads-turnaround": {
-    services: ["Meta Ads", "Media Buying"], image: metaImage,
+    services: ["Meta Ads", "Media Buying"],
     problem: "A Nairobi beauty retailer needed its Facebook and Instagram campaigns to drive purchases.",
     work: "Reviewed campaign performance, focused spend on the strongest product campaigns, and tracked purchases in Meta Ads Manager.",
   },
   "instagram-spike": {
-    services: ["Social Media Management"], image: socialImage,
+    services: ["Social Media Management"],
     problem: "A skincare clinic needed more people to discover its Instagram content.",
     work: "Reviewed the posts behind the spike, separating views and reach from follower growth to understand which pieces contributed.",
   },
   "awareness-campaigns": {
-    services: ["Meta Ads", "Media Buying"], image: metaImage,
+    services: ["Meta Ads", "Media Buying"],
     problem: "A small budget had to reach as many people as possible across several campaigns.",
     work: "Ran four awareness campaigns and compared reach, spending, and cost per thousand impressions.",
   },
   "social-media-2025": {
-    services: ["Social Media Management"], image: shortFilm,
+    services: ["Social Media Management"],
     problem: "iClear needed a consistent stream of content across TikTok, Instagram, and Facebook.",
     work: "Planned, filmed, and edited a year of video-first content, then measured the response by channel.",
   },
@@ -68,7 +65,7 @@ const projects: Project[] = [
     const detail = paidAndSocial[study.id];
     if (!detail) return [];
     return [{
-      ...detail, id: study.id, title: study.title,
+      ...detail, id: study.id, title: study.title, image: study.cover.src, alt: study.cover.alt,
       result: study.stats.slice(0, 2).map(({ value, label }) => `${value} ${label.toLowerCase()}`).join(" · "),
       more: `/work/case-studies#${study.id}`,
     }];
@@ -109,9 +106,12 @@ export function PortfolioProjects() {
               <Dialog>
                 <DialogTrigger asChild>
                   <button type="button" className="studio-project-card" aria-controls={`project-detail-${project.id}`}>
-                    <img src={project.image} alt="" width={400} height={225} decoding="async"
+                    <img src={project.image} alt={project.alt ?? ""} width={400} height={225} decoding="async"
                       loading={project.id === projects[0].id ? "eager" : "lazy"}
-                      {...(project.id === projects[0].id ? { fetchpriority: "high" } : {})} />
+                      {...(project.id === projects[0].id ? {
+                        ...portfolioLeadCover,
+                        fetchpriority: "high",
+                      } : {})} />
                     <span className="studio-project-body">
                       <span className="studio-kicker">{project.services[0]}</span>
                       <span className="studio-project-title">{project.title}</span>

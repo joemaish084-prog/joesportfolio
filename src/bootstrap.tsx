@@ -3,6 +3,7 @@ import "@/lib/domGuard";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./App";
+import { preloadPrimaryView } from "./pages/primaryViews";
 import { RootErrorBoundary } from "@/components/RootErrorBoundary";
 import { isLegacyPortfolioAnchor, PORTFOLIO_PATH } from "@/lib/publicViews";
 
@@ -28,7 +29,9 @@ if (!bootWindow.__jmAppMounted) {
     Boolean(container.querySelector(":scope > .studio-agency"));
   const hydratePortfolio = pathname === PORTFOLIO_PATH && (!hash || hash === "#selected-work") &&
     Boolean(container.querySelector(".studio-portfolio"));
-  const hydratePrimary = hydrateAgency || hydratePortfolio;
+  const hydrateResults = pathname === "/agency/results" &&
+    Boolean(container.querySelector(":scope > [data-agency-results]"));
+  const hydratePrimary = hydrateAgency || hydratePortfolio || hydrateResults;
   const app = (
     <RootErrorBoundary>
       <HelmetProvider>
@@ -36,7 +39,13 @@ if (!bootWindow.__jmAppMounted) {
       </HelmetProvider>
     </RootErrorBoundary>
   );
-  if (hydratePrimary) hydrateRoot(container, app);
-  else createRoot(container).render(app);
   bootWindow.__jmAppMounted = true;
+  if (hydrateAgency) {
+    // Resolve the prerendered view before React hydrates its Suspense boundary.
+    void preloadPrimaryView("/").then(() => hydrateRoot(container, app), () => hydrateRoot(container, app));
+  } else if (hydratePrimary) {
+    hydrateRoot(container, app);
+  } else {
+    createRoot(container).render(app);
+  }
 }

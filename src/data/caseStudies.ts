@@ -1,3 +1,17 @@
+import propertyLeadFunnelCover from "@/assets/case-covers/property-lead-funnel.webp";
+import propertyCoverSmall from "@/assets/case-covers/property-lead-funnel-480.webp";
+import metaGoogleCombinedCover from "@/assets/case-covers/meta-google-combined.webp";
+import googleAdsLaunchCover from "@/assets/case-covers/google-ads-launch.webp";
+import metaAdsTurnaroundCover from "@/assets/case-covers/meta-ads-turnaround.webp";
+import instagramSpikeCover from "@/assets/case-covers/instagram-spike.webp";
+import awarenessCampaignsCover from "@/assets/case-covers/awareness-campaigns.webp";
+import socialMedia2025Cover from "@/assets/case-covers/social-media-2025.webp";
+
+export const portfolioLeadCover = {
+  srcSet: `${propertyCoverSmall} 480w, ${propertyLeadFunnelCover} 840w`,
+  sizes: "(min-width: 900px) 32vw, (min-width: 624px) 48vw, 92vw",
+};
+
 export interface CaseStudyImage {
   src: string;
   alt: string;
@@ -44,7 +58,7 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "KES 2,864", label: "Per hot buyer" },
     ],
     cover: {
-      src: unsplash("1600596542815-ffad4c1539a9", 1600),
+      src: propertyLeadFunnelCover,
       alt: "Modern white two-storey house with large windows beside a swimming pool",
     },
     gallery: [
@@ -79,7 +93,7 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "938", label: "Tracked orders" },
     ],
     cover: {
-      src: unsplash("1519389950473-47ba0277781c", 1600),
+      src: metaGoogleCombinedCover,
       alt: "Desk seen from above with several laptops, phones and notebooks in use",
     },
     gallery: [
@@ -114,7 +128,7 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "339", label: "Tracked orders" },
     ],
     cover: {
-      src: unsplash("1573804633927-bfcbcd909acd", 1600),
+      src: googleAdsLaunchCover,
       alt: "The Google logo as a multicoloured neon sign on a dark wall",
     },
     gallery: [
@@ -149,7 +163,7 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "953", label: "Tracked purchases" },
     ],
     cover: {
-      src: unsplash("1596462502278-27bfdc403348", 1600),
+      src: metaAdsTurnaroundCover,
       alt: "Makeup brushes, lipstick, mascara and powder compacts laid out on a beige surface",
     },
     gallery: [
@@ -184,7 +198,7 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "345", label: "New followers that week" },
     ],
     cover: {
-      src: unsplash("1570172619644-dfd03ed5d881", 1600),
+      src: instagramSpikeCover,
       alt: "Therapist brushing a clay mask onto the face of a client during a facial",
     },
     gallery: [
@@ -219,7 +233,7 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "KES 13.67", label: "Per 1,000 impressions" },
     ],
     cover: {
-      src: unsplash("1541535650810-10d26f5c2ab3", 1600),
+      src: awarenessCampaignsCover,
       alt: "City square surrounded by large illuminated advertising billboards",
     },
     gallery: [
@@ -254,7 +268,7 @@ export const caseStudies: CaseStudySummary[] = [
       { value: "336", label: "Pieces of content" },
     ],
     cover: {
-      src: unsplash("1744135995241-3afc337786fd", 1600),
+      src: socialMedia2025Cover,
       alt: "Smartphone on a tripod recording a video",
     },
     gallery: [
