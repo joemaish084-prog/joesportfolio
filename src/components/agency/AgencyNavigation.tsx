@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar, Menu, MessageCircle, X } from "lucide-react";
 import { PublicViewLink } from "@/components/PublicViewLink";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { agencyPages } from "@/data/agencyPages";
 import { localImageProps } from "@/lib/imageVariants";
@@ -80,15 +81,16 @@ export function AgencyNavigation({ solid = false, home = false }: { solid?: bool
       <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-1.5 sm:gap-4">
         <div className="flex items-center gap-3 shrink-0">
           <Link to="/" aria-label="Joseph Maina Marketing home" className="group flex items-center gap-2 min-h-11">
-            <img src="/logo/jm-lockup.png" {...localImageProps("/logo/jm-lockup.png", "105px")} alt="" width={352} height={134} className="h-7 w-auto sm:h-9" />
+            <img src="/logo/jm-lockup.png" {...localImageProps("/logo/jm-lockup.png", "105px")} alt="" width={352} height={134} className="h-7 w-auto brightness-75 dark:brightness-100 sm:h-9" />
           </Link>
         </div>
         <div className="hidden lg:block"><AgencySectionLinks pill className="text-muted-foreground" /></div>
         <div className="flex items-center gap-1 shrink-0">
           {home
             ? <a href="#audit" className="studio-nav-audit">Book a Free Audit</a>
-            : <Button size="sm" className="h-10 sm:h-9 rounded-full px-3" asChild><Link to="/agency/contact"><span className="xl:hidden">Book a Call</span><span className="hidden xl:inline">Book a Free Strategy Call</span></Link></Button>}
+            : <Button size="sm" className="h-10 rounded-full px-3 max-[369px]:hidden sm:h-9" asChild><Link to="/agency/contact"><span className="xl:hidden">Book a Call</span><span className="hidden xl:inline">Book a Free Strategy Call</span></Link></Button>}
           <Button size="sm" asChild className={home ? "studio-nav-switch" : "h-10 rounded-full bg-primary px-3 text-primary-foreground hover:bg-primary/90"}><PublicViewLink to="/portfolio">Portfolio</PublicViewLink></Button>
+          <ThemeToggle />
           <button ref={menuButton} type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} aria-controls="agency-mobile-nav"
             className="lg:hidden h-11 w-9 rounded-full inline-flex items-center justify-center shrink-0 hover:bg-muted/25"><Menu className="h-5 w-5" /></button>
         </div>
@@ -98,7 +100,10 @@ export function AgencyNavigation({ solid = false, home = false }: { solid?: bool
       className={`fixed inset-0 z-[100] lg:hidden overflow-y-auto flex flex-col ${home ? "studio-mobile-menu" : "bg-background"}`} initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ duration: 0.26, ease: "easeOut" }}>
       <div className="h-16 px-4 flex items-center justify-between border-b border-border/40 shrink-0">
         <span className="section-label"><span className="slashes">//</span> Agency</span>
-        <button ref={closeButton} type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="h-11 w-11 -mr-2 rounded-full inline-flex items-center justify-center"><X className="h-6 w-6" /></button>
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <button ref={closeButton} type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="h-11 w-11 -mr-2 rounded-full inline-flex items-center justify-center"><X className="h-6 w-6" /></button>
+        </div>
       </div>
       <nav aria-label="Agency mobile" className="px-4 pt-2 flex flex-col">
         {links.map((link) => {

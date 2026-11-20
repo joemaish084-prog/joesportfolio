@@ -18,6 +18,9 @@ import { localImageProps } from "./imageVariants";
 
 /** Responsive sources without changing the caller's chosen crop or layout. */
 export function contentImageProps(src: string, sizes: string) {
+  if (src.startsWith("/media/blog-covers/") && src.endsWith("-800.webp")) {
+    return { src, srcSet: `${src.replace(/-800\.webp$/, "-400.webp")} 400w, ${src} 800w`, sizes };
+  }
   if (src.startsWith("https://images.unsplash.com/")) {
     const { width: _width, height: _height, ...image } = unsplashImageProps(src, sizes);
     return image;

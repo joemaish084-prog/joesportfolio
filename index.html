@@ -10,6 +10,7 @@
         var dark = true;
         try { dark = localStorage.getItem('theme') !== 'light'; } catch(e) {}
         document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.classList.toggle('light', !dark);
         document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
       })();
     </script>

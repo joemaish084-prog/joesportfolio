@@ -1,5 +1,7 @@
 import { useState } from "react";
 import type { ImageSlot, ProofImageSlot } from "@/data/services";
+import { serviceImageReplacements } from "@/data/serviceVisuals";
+import { contentImageProps } from "@/lib/responsiveImage";
 import { ServiceImagePlaceholder } from "./ServiceImagePlaceholder";
 
 type Slot = ImageSlot | ProofImageSlot;
@@ -53,7 +55,11 @@ interface ServiceImageProps {
  */
 export function ServiceImage({ slot, alt, sizes, priority = false, className = "", thumbOnMobile = false }: ServiceImageProps) {
   const [failed, setFailed] = useState(false);
-  const image = sources(slot);
+  const replacement = serviceImageReplacements[slot];
+  const image = replacement
+    ? { ...replacement, ...contentImageProps(replacement.src, sizes), ...(replacement.srcSet && { srcSet: replacement.srcSet }) }
+    : sources(slot);
+  const size = replacement ?? SIZE[slot];
 
   if (!image || failed) return <ServiceImagePlaceholder slot={slot} className={className} thumbOnMobile={thumbOnMobile} />;
 
@@ -62,8 +68,9 @@ export function ServiceImage({ slot, alt, sizes, priority = false, className = "
       src={image.src}
       srcSet={image.srcSet}
       sizes={sizes}
-      alt={alt}
-      {...SIZE[slot]}
+      alt={alt ? replacement?.alt ?? alt : ""}
+      width={size.width}
+      height={size.height}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       onError={() => setFailed(true)}

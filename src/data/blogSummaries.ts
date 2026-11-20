@@ -17,8 +17,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "6 min read",
     metaTitle: "From Under KES 10,000 to KES 5.3 Million: A Meta Ads Turnaround",
     metaDescription: "A real Meta Ads case study: how a Nairobi beauty retailer's ad account went from under KES 10,000 in monthly attributable revenue to over KES 5.3 million in tracked sales, with the actual numbers.",
-    thumbnail: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Makeup brushes, lipstick, mascara and powder compacts laid out on a beige surface",
+    thumbnail: "/media/blog-covers/beauty-campaign-800.webp",
+    thumbnailAlt: "Lipstick, brushes and makeup compacts laid out on a beige surface",
   },
   {
     slug: "why-your-nairobi-business-isnt-showing-up-on-google-2026",
@@ -31,8 +31,8 @@ export const blogSummaries: BlogSummary[] = [
     metaTitle: "Why Your Nairobi Business Isn't Showing Up on Google in 2026",
     metaDescription:
       "The real reasons Nairobi businesses stay invisible on Google search, and the practical SEO fixes that get you ranking locally in 2026.",
-    thumbnail: "https://images.unsplash.com/photo-1741991110666-88115e724741?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Nairobi city skyline with modern high-rise buildings under a bright sky",
+    thumbnail: "/media/blog-covers/nairobi-skyline-800.webp",
+    thumbnailAlt: "Nairobi skyline with high-rise buildings under a bright sky",
   },
   {
     slug: "how-much-should-a-kenyan-sme-spend-on-meta-ads",
@@ -45,8 +45,8 @@ export const blogSummaries: BlogSummary[] = [
     metaTitle: "How Much Should a Kenyan SME Spend on Meta Ads?",
     metaDescription:
       "A practical Meta Ads budget guide for Kenyan SMEs, with realistic daily spend, testing budgets and the numbers to watch before scaling.",
-    thumbnail: "https://images.unsplash.com/photo-1675352162363-ac40c3bb8265?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Close-up of a smartphone screen showing the Facebook app",
+    thumbnail: "/media/blog-covers/facebook-app-800.webp",
+    thumbnailAlt: "Smartphone screen showing the Facebook app in the app store",
   },
   {
     slug: "tiktok-vs-instagram-for-kenyan-brands-2026",
@@ -59,8 +59,8 @@ export const blogSummaries: BlogSummary[] = [
     metaTitle: "TikTok vs Instagram for Kenyan Brands in 2026",
     metaDescription:
       "A data-backed comparison of TikTok and Instagram for Kenyan brands in 2026: reach, cost per result, audience intent and where to invest.",
-    thumbnail: "https://images.unsplash.com/photo-1745848413099-13adc3aaf308?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Smartphone screen showing a folder of social media apps including Instagram and TikTok icons",
+    thumbnail: "/media/blog-covers/social-apps-800.webp",
+    thumbnailAlt: "Hand holding a phone with a folder of social media apps open",
   },
   {
     slug: "0-to-4-million-tiktok-views-behind-the-campaign",
@@ -73,8 +73,8 @@ export const blogSummaries: BlogSummary[] = [
     metaTitle: "From 0 to 4 Million TikTok Views — Behind the Campaign",
     metaDescription:
       "A behind-the-scenes breakdown of the content strategy, posting cadence and creative decisions that took a Kenyan brand to 4 million TikTok views.",
-    thumbnail: "https://images.unsplash.com/photo-1744135995241-3afc337786fd?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Smartphone mounted on a tripod filming a short-form video",
+    thumbnail: "/media/blog-covers/phone-filming-800.webp",
+    thumbnailAlt: "Smartphone on a tripod filming a row of bottles",
   },
   {
     slug: "ad-mistakes-nairobi-smes-keep-making-2026",
@@ -87,8 +87,8 @@ export const blogSummaries: BlogSummary[] = [
     metaTitle: "5 Ad Mistakes Nairobi SMEs Keep Making on Google and Meta",
     metaDescription:
       "The most common Google and Meta Ads mistakes I see Nairobi SMEs make, and the fixes that actually move sales instead of vanity metrics.",
-    thumbnail: "https://images.unsplash.com/photo-1683721003111-070bcc053d8b?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Social media platform logos representing brand awareness and digital marketing strategies",
+    thumbnail: "/media/blog-covers/platform-icons-800.webp",
+    thumbnailAlt: "Icons for Facebook, YouTube, TikTok, Instagram, Twitter and LinkedIn",
   },
   {
     slug: "ai-marketing-honest-take-2026",
@@ -140,8 +140,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "How Much Does SEO Cost for a Kenyan SME in 2026?",
     metaDescription: "A practical breakdown of SEO pricing in Kenya: what a retainer actually covers, typical price ranges, what moves the price, and red flags to avoid.",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Laptop screen showing statistics and charts on a glass-top table",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
   },
   {
     slug: "lead-generation-campaigns-kenya-2026",
@@ -153,8 +153,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "Lead Generation Campaigns That Actually Work for Kenyan Businesses",
     metaDescription: "A practical guide to running lead-generation campaigns in Kenya: defining a real lead, choosing the right format, landing pages, follow-up speed, and realistic cost per lead.",
-    thumbnail: "https://images.unsplash.com/photo-1558731991-cb3430a08bb7?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Person holding a smartphone mid-call against a grey city window",
+    thumbnail: "/media/blog-covers/business-phone-call-800.webp",
+    thumbnailAlt: "Person on a phone call by a window overlooking the city",
   },
   {
     slug: "how-to-choose-a-digital-marketing-agency-nairobi-2026",
@@ -166,8 +166,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "6 min read",
     metaTitle: "How to Choose a Digital Marketing Agency in Nairobi (2026 Checklist)",
     metaDescription: "A practical checklist for picking a digital marketing agency in Nairobi: what to ask, what pricing structure to expect, and the warning signs to walk away from.",
-    thumbnail: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Two people shaking hands across a table during a business meeting",
+    thumbnail: "/media/blog-covers/team-discussion-800.webp",
+    thumbnailAlt: "Two colleagues high-fiving across a desk during an office meeting",
   },
   {
     slug: "google-ads-vs-meta-ads-kenya-2026",
@@ -179,8 +179,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "Google Ads vs Meta Ads for Kenyan Businesses: Which Should You Start With?",
     metaDescription: "A practical comparison of Google Ads and Meta Ads for Kenyan SMEs: how buyer intent, budget size and business type should decide which platform you start with.",
-    thumbnail: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Person comparing two mobile app icons on a smartphone screen",
+    thumbnail: "/media/blog-covers/paid-channel-comparison-800.webp",
+    thumbnailAlt: "Social media app icons on a smartphone at an angle",
   },
   {
     slug: "google-ads-cost-kenya-2026",
@@ -192,8 +192,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "How Much Does Google Ads Management Cost in Kenya?",
     metaDescription: "A breakdown of Google Ads costs in Kenya: management fees versus ad spend, typical cost-per-click by industry, and the minimum budget needed to get real data.",
-    thumbnail: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Person reviewing charts and figures on a laptop with a calculator nearby",
+    thumbnail: "/media/blog-covers/campaign-budget-800.webp",
+    thumbnailAlt: "Person counting banknotes",
   },
   {
     slug: "convey-communications-case-study-10x-leads",
@@ -205,8 +205,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "Convey Communications: 10x Qualified Leads in 6 Months",
     metaDescription: "How a combination of Meta Ads, TikTok strategy and content production took Convey Communications from stagnant lead flow to a 10x increase in qualified leads.",
-    thumbnail: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Team reviewing marketing performance charts on a screen in an office",
+    thumbnail: "/media/blog-covers/strategy-workshop-800.webp",
+    thumbnailAlt: "Colleagues in a workshop with sticky notes arranged on a wall",
   },
   {
     slug: "nyeri-county-campaign-hyper-local-marketing",
@@ -218,8 +218,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "Nyeri County Campaign: Reaching a Hyper-Local Audience on a Small Budget",
     metaDescription: "How a hyper-local video production and Meta Ads strategy generated over 500,000 views and filled 22 community events to capacity in Nyeri County on a limited budget.",
-    thumbnail: "https://images.unsplash.com/photo-1516382799247-87df95d790b7?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Rural Kenyan town street with local shops and community activity",
+    thumbnail: "/media/blog-covers/community-campaign-800.webp",
+    thumbnailAlt: "Hand holding a magnifying glass over a laptop keyboard",
   },
   {
     slug: "whatsapp-as-a-sales-channel-kenya-2026",
@@ -231,8 +231,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "WhatsApp as a Sales Channel: What Kenyan Businesses Get Wrong",
     metaDescription: "Why WhatsApp outperforms lead forms and DMs for Kenyan businesses, and the common mistakes, from slow replies to no catalog, that quietly cost sales.",
-    thumbnail: "https://images.unsplash.com/photo-1611746872915-64382b5c76da?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Hands typing a message on a smartphone chat app",
+    thumbnail: "/media/blog-covers/message-followup-800.webp",
+    thumbnailAlt: "Smartphone displaying a folder of messaging apps",
   },
   {
     slug: "what-a-digital-marketing-audit-finds-kenya-2026",
@@ -244,8 +244,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "What a Digital Marketing Audit Actually Finds",
     metaDescription: "What's inside a full-channel digital marketing audit for a Kenyan business: what gets checked, what usually turns up, and why it's worth doing before spending on ads or SEO.",
-    thumbnail: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Person annotating a printed report with a red pen next to a laptop",
+    thumbnail: "/media/blog-covers/audit-notes-800.webp",
+    thumbnailAlt: "Person writing notes on a printed document with a pen",
   },
   {
     slug: "peak-season-marketing-kenya-2026",
@@ -270,8 +270,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "Video Ads vs Static Ads: What Converts Better on Kenyan Social Media",
     metaDescription: "A practical comparison of video and static ads for Kenyan social media campaigns: when each format wins, production cost, and how to decide without guessing.",
-    thumbnail: "https://images.unsplash.com/photo-1626544827763-d516dce335e2?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Camera and lighting equipment set up for a video shoot",
+    thumbnail: "/media/blog-covers/video-production-800.webp",
+    thumbnailAlt: "Woman filming herself with a camera on a tripod",
   },
   {
     slug: "google-business-profile-setup-nairobi-2026",
@@ -283,8 +283,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "How to Set Up Your Google Business Profile the Right Way in Nairobi",
     metaDescription: "A practical Google Business Profile setup guide for Nairobi businesses: category, service area, photos, posts, reviews, and the mistakes that cost you visibility.",
-    thumbnail: "https://images.unsplash.com/photo-1669127300649-940337f1487e?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "The Nairobi Expressway and city skyline in Westlands, Nairobi",
+    thumbnail: "/media/blog-covers/nairobi-expressway-800.webp",
+    thumbnailAlt: "The Nairobi Expressway and city skyline in Westlands",
   },
   {
     slug: "ad-creative-testing-kenyan-brands-2026",
@@ -322,8 +322,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "6 min read",
     metaTitle: "The Real Reason Most Kenyan SMEs Fail at Marketing (It's Not the Budget)",
     metaDescription: "Why marketing fails for most Kenyan SMEs isn't usually budget size. An honest look at the decision-making and follow-through problems that quietly sink campaigns.",
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Small business owner standing in their shop, looking thoughtfully out toward the street",
+    thumbnail: "/media/blog-covers/planning-session-800.webp",
+    thumbnailAlt: "Colleagues reviewing work on laptops in a meeting room",
   },
   {
     slug: "what-nobody-tells-you-about-pricing-your-services-kenya",
@@ -478,8 +478,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "How to Create a Google Ads Account: A Step-by-Step Setup Guide for Kenyan Businesses",
     metaDescription: "A step-by-step guide to creating a Google Ads account in Kenya: billing setup, conversion tracking, linking Google Analytics, and the setup mistakes to avoid from day one.",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Person setting up an online advertising account on a laptop",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
   },
   {
     slug: "google-ads-manager-mcc-explained-kenya-2026",
@@ -556,8 +556,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "5 min read",
     metaTitle: "What's Included in Social Media Marketing Services in Kenya (and What It Costs)",
     metaDescription: "A clear breakdown of what social media marketing services should include in Kenya, typical pricing, and the questions to ask before hiring someone to run your pages.",
-    thumbnail: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Person scheduling social media posts on a laptop and phone side by side",
+    thumbnail: "/media/blog-covers/paid-channel-comparison-800.webp",
+    thumbnailAlt: "Social media app icons on a smartphone at an angle",
   },
   {
     slug: "how-to-develop-social-media-marketing-strategy-kenya-2026",
@@ -569,8 +569,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "6 min read",
     metaTitle: "How to Develop an Effective Social Media Marketing Strategy for a Kenyan Business",
     metaDescription: "A step-by-step guide to building a social media marketing strategy for a Kenyan business: goals, platform choice, content pillars, and how to actually measure it.",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Marketing strategy notes and a content calendar laid out on a desk",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
   },
   {
     slug: "best-social-media-platforms-for-marketing-kenya-2026",
@@ -634,8 +634,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "6 min read",
     metaTitle: "Meta Ads Manager: A Setup Guide for Kenyan Businesses",
     metaDescription: "A step-by-step setup guide for Meta Ads Manager in Kenya: Business Manager structure, the Meta Pixel, payment setup, and the mistakes that waste early budget.",
-    thumbnail: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Smartphone showing the Meta Business Suite interface in someone's hand",
+    thumbnail: "/media/blog-covers/paid-channel-comparison-800.webp",
+    thumbnailAlt: "Social media app icons on a smartphone at an angle",
   },
   {
     slug: "tiktok-marketing-strategy-brand-awareness-kenya-2026",
@@ -1453,8 +1453,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "4 min read",
     metaTitle: "Shopify SEO Kenya: Product and Collection Guide",
     metaDescription: "Improve your Shopify SEO foundations in Kenya with useful product copy, clear collections, internal links and a practical search measurement plan.",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Laptop screen showing website statistics and charts on a glass table",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
   },
   {
     slug: "shopify-store-management-kenya",
@@ -1609,8 +1609,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "3 min read",
     metaTitle: "Sell Internationally on Shopify from Kenya: A First-Market Plan",
     metaDescription: "Plan international Shopify selling from Kenya around one destination, with payment currency, delivery costs, returns and market eligibility checked first.",
-    thumbnail: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Two people shaking hands across a table during a business meeting",
+    thumbnail: "/media/blog-covers/team-discussion-800.webp",
+    thumbnailAlt: "Two colleagues high-fiving across a desk during an office meeting",
   },
   {
     slug: "shopify-inventory-overselling-kenya",
@@ -1635,8 +1635,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "3 min read",
     metaTitle: "When to Increase Your Meta Ads Budget in Kenya",
     metaDescription: "Decide when to increase your Meta Ads budget using confirmed outcomes, contribution, fulfilment capacity and a clear review plan instead of one good day.",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Laptop screen showing website statistics and charts on a glass table",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
   },
   {
     slug: "branded-vs-non-branded-google-ads-kenya",
@@ -1648,8 +1648,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "3 min read",
     metaTitle: "Branded vs Non-Branded Google Ads: A Kenya Guide",
     metaDescription: "Separate branded and non-branded Google Ads searches to understand existing demand, acquisition costs and what your campaign totals can actually prove.",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Laptop screen displaying charts and website statistics",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
   },
   {
     slug: "google-business-profile-service-area-nairobi",
@@ -1661,8 +1661,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "3 min read",
     metaTitle: "Google Business Profile Service Areas in Nairobi",
     metaDescription: "Understand Google Business Profile service-area rules for Nairobi businesses, including when to hide an address and how to describe the areas you actually serve.",
-    thumbnail: "https://images.unsplash.com/photo-1741991110666-88115e724741?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Nairobi skyline with modern high-rise buildings",
+    thumbnail: "/media/blog-covers/nairobi-skyline-800.webp",
+    thumbnailAlt: "Nairobi skyline with high-rise buildings under a bright sky",
   },
   {
     slug: "reduce-appointment-no-shows-leads-kenya",
@@ -1674,8 +1674,8 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "3 min read",
     metaTitle: "Reduce Appointment No-Shows from Marketing Leads in Kenya",
     metaDescription: "Reduce avoidable appointment no-shows by checking booking intent, confirmation details, reminders and rescheduling before blaming your lead-generation ads.",
-    thumbnail: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Two people shaking hands across a table in a business meeting",
+    thumbnail: "/media/blog-covers/team-discussion-800.webp",
+    thumbnailAlt: "Two colleagues high-fiving across a desk during an office meeting",
   },
   {
     slug: "changing-marketing-agency-handover-kenya",
@@ -1713,7 +1713,7 @@ export const blogSummaries: BlogSummary[] = [
     readTime: "3 min read",
     metaTitle: "Google Ads Case Study Kenya: What the Account Average Hid",
     metaDescription: "A closer reading of an existing Kenyan Google Ads case study: why a 7.9x campaign deserved scrutiny inside an account reporting 15.5x overall return.",
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-    thumbnailAlt: "Laptop screen showing statistics and charts on a glass table",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
   }
 ];

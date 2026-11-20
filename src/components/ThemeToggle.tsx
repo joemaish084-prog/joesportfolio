@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -12,22 +12,24 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <Button variant="ghost" size="icon" className="w-10 h-10" />;
+    return <Button type="button" aria-label="Toggle theme" variant="ghost" size="icon" className="h-10 w-10 shrink-0" disabled />;
   }
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="w-10 h-10 hover:bg-primary/10 transition-colors"
+      type="button"
+      aria-label="Toggle theme"
+      title={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="h-10 w-10 shrink-0 hover:bg-primary/10 transition-colors"
     >
-      {theme === "dark" ? (
-        <Sun className="h-5 w-5 text-primary" />
+      {resolvedTheme === "dark" ? (
+        <Sun className="h-5 w-5 text-primary" aria-hidden />
       ) : (
-        <Moon className="h-5 w-5 text-primary" />
+        <Moon className="h-5 w-5 text-primary" aria-hidden />
       )}
-      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

@@ -215,7 +215,7 @@ export function blogPostHead(post: BlogPost): PageHead {
   };
 }
 
-export function serviceHead(page: ServicePage): PageHead {
+export function serviceHead(page: ServicePage, hero?: { src: string; alt: string; caption: string; width: number; height: number }): PageHead {
   const path = `/agency/${page.slug}`;
   const priceValue = page.price.value ?? Number(page.price.amount.match(/[\d,]+/)?.[0].replace(/,/g, "") ?? NaN);
   const faqs = page.faqs
@@ -264,6 +264,14 @@ export function serviceHead(page: ServicePage): PageHead {
         "@id": `${canonicalUrl(path)}#webpage`,
         name: page.metaTitle, description: page.metaDescription, url: canonicalUrl(path),
         mainEntity: { "@id": `${canonicalUrl(path)}#service` },
+        ...(hero && { primaryImageOfPage: {
+          "@type": "ImageObject",
+          contentUrl: absoluteUrl(hero.src),
+          name: hero.alt,
+          caption: hero.caption,
+          width: hero.width,
+          height: hero.height,
+        } }),
         isPartOf: { "@id": `${SITE_URL}/agency/services#webpage` },
       },
       ...(faqs.length > 0 ? [{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs }] : []),

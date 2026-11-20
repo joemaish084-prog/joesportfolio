@@ -8,7 +8,10 @@ import { contentImageProps } from "@/lib/responsiveImage";
 /** src, srcSet and size for an image: resized variants for Unsplash, the file itself otherwise. */
 function imageProps(visual: ServiceVisual, sizes: string) {
   const resized = contentImageProps(visual.src, sizes);
-  return { src: visual.src, ...resized, width: visual.width, height: visual.height, alt: visual.alt };
+  return {
+    src: visual.src, ...resized, ...(visual.srcSet && { srcSet: visual.srcSet, sizes }),
+    width: visual.width, height: visual.height, alt: visual.alt,
+  };
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -43,18 +46,18 @@ export function ServiceHeroVisual({ visuals }: { visuals: ServiceVisuals }) {
   return (
     <div onPointerMove={track} onPointerLeave={reset} className="relative mx-auto w-full max-w-sm pb-10 pl-8 [perspective:1000px] lg:max-w-none">
       <motion.figure
-        initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: EASE }}
         style={reduceMotion ? undefined : { rotateX, rotateY }}
-        className="relative overflow-hidden rounded-3xl bg-[#F3F3F3] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.25)]"
+        className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-[0_30px_60px_-20px_rgba(0,0,0,0.25)]"
       >
         <img
           {...imageProps(hero, "(min-width: 1024px) 380px, 384px")}
           {...{ fetchpriority: "high" }}
           className="aspect-[4/5] w-full object-cover"
         />
-        <figcaption className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-[#111111] shadow-sm backdrop-blur">
+        <figcaption className="absolute left-4 top-4 rounded-full bg-background/95 px-3 py-1.5 text-xs font-semibold text-foreground shadow-sm">
           {visuals.heroLabel}
         </figcaption>
       </motion.figure>
@@ -64,7 +67,7 @@ export function ServiceHeroVisual({ visuals }: { visuals: ServiceVisuals }) {
           animate={{ opacity: 1, scale: 1, rotate: -4 }}
           transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           style={reduceMotion ? undefined : { x: accentX, y: accentY }}
-          className={`absolute bottom-0 left-0 ${wideAccent ? "w-[68%]" : "w-[46%]"} overflow-hidden rounded-2xl border-4 border-white bg-[#F3F3F3] shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]`}
+          className={`absolute bottom-0 left-0 ${wideAccent ? "w-[68%]" : "w-[46%]"} overflow-hidden rounded-2xl border-4 border-background bg-muted shadow-[0_20px_40px_-12px_rgba(0,0,0,0.35)]`}
         >
           <img
             {...imageProps(accent, "260px")}
@@ -87,7 +90,7 @@ export function ServiceGallery({ title, intro, items }: { title: string; intro: 
   return (
     <section className="mt-20" aria-labelledby="service-gallery">
       <h2 id="service-gallery" className="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
-      <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#555555]">{intro}</p>
+      <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">{intro}</p>
       <ul className={`mt-7 grid grid-cols-2 gap-4 ${items.length >= 4 ? "lg:grid-cols-4" : "sm:grid-cols-3"}`}>
         {items.map((item, i) => (
           <motion.li
@@ -100,7 +103,7 @@ export function ServiceGallery({ title, intro, items }: { title: string; intro: 
             <button
               type="button"
               onClick={() => setOpen(i)}
-              className="group relative block w-full overflow-hidden rounded-2xl bg-[#F3F3F3] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2"
+              className="group relative block w-full overflow-hidden rounded-2xl bg-muted text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label={`View full size: ${item.caption}`}
             >
               <img
@@ -171,7 +174,7 @@ export function ServiceSideImage({ visual, className = "" }: { visual: ServiceVi
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{ duration: 0.7, ease: EASE }}
-      className={`group relative overflow-hidden rounded-3xl bg-[#F3F3F3] lg:sticky lg:top-28 ${className}`}
+      className={`group relative overflow-hidden rounded-3xl bg-muted lg:sticky lg:top-28 ${className}`}
     >
       <img
         {...imageProps(visual, "(min-width: 1024px) 340px, 100vw")}

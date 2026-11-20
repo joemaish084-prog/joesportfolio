@@ -28,7 +28,7 @@ if (!bootWindow.__jmAppMounted) {
   const hydrateAgency = pathname === "/" && !isLegacyPortfolioAnchor(hash) &&
     Boolean(container.querySelector(":scope > [data-agency-home]"));
   const hydratePortfolio = pathname === PORTFOLIO_PATH && (!hash || hash === "#selected-work") &&
-    Boolean(container.querySelector(".studio-portfolio"));
+    Boolean(container.querySelector("[data-portfolio-home]"));
   const hydrateResults = pathname === "/agency/results" &&
     Boolean(container.querySelector(":scope > [data-agency-results]"));
   const hydratePrimary = hydrateAgency || hydratePortfolio || hydrateResults;
@@ -40,9 +40,9 @@ if (!bootWindow.__jmAppMounted) {
     </RootErrorBoundary>
   );
   bootWindow.__jmAppMounted = true;
-  if (hydrateAgency) {
+  if (hydrateAgency || hydratePortfolio) {
     // Resolve the prerendered view before React hydrates its Suspense boundary.
-    void preloadPrimaryView("/").then(() => hydrateRoot(container, app), () => hydrateRoot(container, app));
+    void preloadPrimaryView(hydrateAgency ? "/" : PORTFOLIO_PATH).then(() => hydrateRoot(container, app), () => hydrateRoot(container, app));
   } else if (hydratePrimary) {
     hydrateRoot(container, app);
   } else {

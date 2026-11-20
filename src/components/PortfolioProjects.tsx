@@ -94,7 +94,7 @@ export function PortfolioProjects() {
     <section className="studio studio-portfolio" id="selected-work" aria-labelledby="portfolio-heading">
       <div className="studio-container">
         <p className="studio-kicker">Joseph Maina · Portfolio</p>
-        <h1 id="portfolio-heading">Selected work.</h1>
+        <h2 id="portfolio-heading">Selected work.</h2>
         <p className="studio-portfolio-intro">Explore the brief, the work, and the result behind campaigns and storefronts I’ve worked on.</p>
         <div className="studio-project-filters" role="group" aria-label="Filter projects by service">
           {filters.map(service => <button key={service} type="button" aria-pressed={filter === service} onClick={() => setFilter(service)}>{service}</button>)}
@@ -107,10 +107,9 @@ export function PortfolioProjects() {
                 <DialogTrigger asChild>
                   <button type="button" className="studio-project-card" aria-controls={`project-detail-${project.id}`}>
                     <img src={project.image} alt={project.alt ?? ""} width={400} height={225} decoding="async"
-                      loading={project.id === projects[0].id ? "eager" : "lazy"}
+                      loading="lazy"
                       {...(project.id === projects[0].id ? {
                         ...portfolioLeadCover,
-                        fetchpriority: "high",
                       } : {})} />
                     <span className="studio-project-body">
                       <span className="studio-kicker">{project.services[0]}</span>
@@ -138,7 +137,7 @@ export function PortfolioProjects() {
             </li>)}
           </ul>
         ) : (
-          <p className="studio-project-note">[PLACEHOLDER] Add a verified TikTok Ads case study here. <Link className="studio-text-link" to="/agency/services#service-tiktok-ads">Explore TikTok Ads management</Link>.</p>
+          <p className="studio-project-note">Explore <Link className="studio-text-link" to="/work/videos">short-form video work</Link> or <Link className="studio-text-link" to="/agency/services#service-tiktok-ads">TikTok Ads management</Link>.</p>
         )}
       </div>
     </section>

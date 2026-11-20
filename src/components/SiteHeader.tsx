@@ -290,9 +290,7 @@ export function SiteHeader({ portfolio = false }: { portfolio?: boolean }) {
       <header
         data-portfolio-nav={portfolio || undefined}
         className={`fixed top-0 inset-x-0 z-50 h-14 lg:h-16 transition-all duration-200 ${
-          portfolio
-            ? "border-[#383630] bg-[#141412] text-[#f6f2ea]"
-            : scrolled
+          scrolled
             ? "bg-background/70 backdrop-blur-xl border-b border-border/60 shadow-sm"
             : "bg-transparent border-b border-transparent"
         }`}

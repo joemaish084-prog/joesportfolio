@@ -10,8 +10,8 @@ import AgencyHome from "@/pages/AgencyHome";
 import AgencyResults from "@/pages/AgencyResults";
 import Index from "@/pages/Index";
 import { AgencyServiceContent } from "@/pages/AgencyService";
+import { getServiceVisuals } from "@/data/serviceVisuals";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
-import { portfolioLeadCover } from "@/data/caseStudies";
 import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
@@ -348,10 +348,6 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     {
       path: "/portfolio",
       head: STATIC_HEADS.portfolio,
-      criticalMedia: html(
-        <link rel="preload" as="image" type="image/webp" imageSrcSet={portfolioLeadCover.srcSet}
-          imageSizes={portfolioLeadCover.sizes} {...{ fetchpriority: "high" }} />,
-      ),
       card: { eyebrow: "Portfolio", title: "Selected work by Joseph Maina", meta: "Campaign results, creative work and storefronts", cta: "Explore the portfolio" },
       body: renderPrimary("/portfolio", <Index />),
       noScriptBody: html(
@@ -457,7 +453,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
   }
 
   for (const page of servicePages) {
-    const head = serviceHead(page);
+    const head = serviceHead(page, getServiceVisuals(page.slug)?.hero);
     routes.push({
       path: head.path,
       head,

@@ -6,6 +6,7 @@ const origin = "https://www.josephmaina.co.ke";
 const routes = ["/", "/agency/services", "/agency/results", "/agency/pricing", "/agency/contact"];
 const read = path => fs.readFileSync(path === "/" ? "dist/index.html" : `dist${path}.html`, "utf8");
 const links = html => [...html.matchAll(/<a\b[^>]*href="([^"]+)"/g)].map(match => match[1]);
+const isHotlinked = html => /<img\b[^>]*\bsrc="https?:\/\//i.test(html);
 const sitemap = fs.readFileSync("dist/sitemap.xml", "utf8");
 const mainContent = new Set();
 for (const path of routes) {
@@ -58,6 +59,15 @@ for (const [index, entry] of catalog.itemListElement.entries()) {
   assert.equal(service?.["@id"], entry.item["@id"], `${path}: directory and detail share the service identity`);
   assert.equal(page?.mainEntity?.["@id"], service["@id"], `${path}: page describes its service`);
   assert.equal(service.mainEntityOfPage?.["@id"], page["@id"], `${path}: service links to its page`);
+  if (path !== "/agency/shopify-services") {
+    assert(!isHotlinked(root), `${path}: serve gallery and related-post images locally`);
+    const hero = page.primaryImageOfPage;
+    assert.equal(hero?.["@type"], "ImageObject", `${path}: describe the visible hero image`);
+    const image = new URL(hero.contentUrl);
+    assert.equal(image.origin, origin, `${path}: host the hero image on the site`);
+    assert(fs.existsSync(`dist${image.pathname}`), `${path}: primary image must exist`);
+    assert(hero.name && hero.width > 0 && hero.height > 0, `${path}: provide a meaningful hero image description and dimensions`);
+  }
   const faq = schemas.find(schema => schema["@type"] === "FAQPage");
   const faqContent = root.match(/<section aria-labelledby="service-faqs"[^>]*>([\s\S]*?)<\/section>/)?.[1];
   if (faq) assert.equal(faq.mainEntity.length, (faqContent?.match(/<dt\b/g) ?? []).length, `${path}: schema FAQs match visible FAQ entries`);
@@ -74,6 +84,7 @@ assert.deepEqual([...audit.matchAll(/<(?:input|select)\b[^>]*name="([^"]+)"/g)].
 assert(pricing.includes("STARTER") && pricing.includes("GROWTH") && pricing.includes("SCALE") && pricing.includes("<table"), "Pricing page retains packages and fee comparison");
 assert(!services.includes("Retainer Packages"), "Detailed packages belong on Pricing");
 assert(results.includes("Read the campaign breakdowns"), "Results page needs campaign context");
+assert(!isHotlinked(results), "Results images should load from the site");
 assert(new Set(links(results).filter(path => path.startsWith("/agency/blog/") && !path.includes("/topics/"))).size >= 3, "Results must link to full campaign case studies");
 assert(contact.includes("<form") && links(contact).includes("mailto:joemaish084@gmail.com") && links(contact).includes("tel:+254704700160"), "Contact keeps its brief form and direct channels");
 for (const match of pricing.matchAll(/href="\/agency\/services#([^"]+)"/g)) {
@@ -81,6 +92,11 @@ for (const match of pricing.matchAll(/href="\/agency\/services#([^"]+)"/g)) {
 }
 const portfolio = read("/portfolio");
 const shopify = read("/agency/shopify-services");
+const portfolioMain = portfolio.match(/<main\b[^>]*data-portfolio-home[^>]*>[\s\S]*?<\/main>/)?.[0];
+assert(portfolioMain, "Portfolio needs its real content before JavaScript");
+assert.match(portfolioMain, /<h1\b[^>]*>Digital Marketing That Turns Attention Into/, "Portfolio opens on its original hero");
+const portfolioHero = portfolioMain.indexOf('id="home"');
+assert(portfolioHero >= 0 && portfolioHero < portfolioMain.indexOf('id="selected-work"'), "The portfolio hero leads the project grid");
 assert(links(services).includes("/agency/shopify-services") && links(home).includes("/agency/shopify-services"), "Shopify must be discoverable from agency home and services");
 assert(portfolio.includes('id="shopify"') && portfolio.includes("Babyshop Dansar"), "Portfolio renders the real Shopify project before JavaScript");
 assert(links(portfolio).includes("https://babyshopdansar.com/") && links(shopify).includes("https://babyshopdansar.com/"), "Shopify proof links to the supplied live store");

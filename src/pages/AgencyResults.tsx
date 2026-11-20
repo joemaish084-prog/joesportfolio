@@ -10,6 +10,7 @@ import { agencyPages } from "@/data/agencyPages";
 import { blogSummaries } from "@/data/blogSummaries";
 import { caseStudies } from "@/data/caseStudies";
 import { trackSpotlight } from "@/lib/spotlight";
+import { contentImageProps } from "@/lib/responsiveImage";
 import { agencyHead } from "@/seo/agencyHeads";
 
 export default function AgencyResults() {
@@ -60,10 +61,16 @@ export default function AgencyResults() {
             <div className="grid sm:grid-cols-2 gap-4">{[
               "meta-ads-turnaround-case-study-kenya-2026", "convey-communications-case-study-10x-leads",
               "0-to-4-million-tiktok-views-behind-the-campaign", "nyeri-county-campaign-hyper-local-marketing",
-            ].map(slug => blogSummaries.find(post => post.slug === slug)).filter(Boolean).map(post => <Link key={post!.slug} to={`/agency/blog/${post!.slug}`} onMouseMove={trackSpotlight} className="spotlight surface-card flex flex-col p-6 group hover:border-primary/40 transition-colors">
+            ].map(slug => blogSummaries.find(post => post.slug === slug)).filter(post => post !== undefined).map(post => <Link key={post.slug} to={`/agency/blog/${post.slug}`} onMouseMove={trackSpotlight} className="spotlight surface-card group flex flex-col overflow-hidden transition-colors hover:border-primary/40">
+              <div className="aspect-video overflow-hidden bg-muted">
+                <img src={post.thumbnail} {...contentImageProps(post.thumbnail, "(min-width: 1280px) 568px, (min-width: 640px) 50vw, 100vw")} alt={post.thumbnailAlt}
+                  width={640} height={360} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" />
+              </div>
+              <div className="flex flex-1 flex-col p-6">
               <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary">Case study</p>
-              <h3 className="font-display text-lg font-semibold leading-snug group-hover:text-primary transition-colors">{post!.title}</h3><p className="mt-2 flex-1 text-sm text-muted-foreground">{post!.excerpt}</p>
+              <h3 className="font-display text-lg font-semibold leading-snug group-hover:text-primary transition-colors">{post.title}</h3><p className="mt-2 flex-1 text-sm text-muted-foreground">{post.excerpt}</p>
               <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">Read the breakdown <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden /></span>
+              </div>
             </Link>)}</div>
             <p className="mt-6 text-sm text-muted-foreground">My work with Convey began as an employee and later continued as a consultant. Each linked case study provides its own context; these outcomes are not a promise of future results.</p>
           </div>

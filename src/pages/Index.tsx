@@ -1,9 +1,10 @@
-import { Suspense, lazy, useEffect, useRef, useState, type ReactNode } from "react";
+import { Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { CollapsibleWrapper } from "@/components/CollapsibleWrapper";
 import { ExpandCollapseAll } from "@/components/ExpandCollapseAll";
 import { PressFeatures } from "@/components/PressFeatures";
 import { PortfolioProjects } from "@/components/PortfolioProjects";
+import { Hero } from "@/components/Hero";
 import { Video, Palette, BarChart3, Briefcase, HelpCircle } from "lucide-react";
 import { MotionConfig } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -35,8 +36,6 @@ import {
   preloadHomeSections,
   whenIdle,
 } from "./homeSections";
-
-const ArchiveHero = lazy(() => import("@/components/Hero").then(({ Hero }) => ({ default: Hero })));
 
 // Each section has its own boundary, so one still loading never hides the ones
 // already on screen. The placeholder keeps some height while its chunk loads.
@@ -100,45 +99,26 @@ const SECTIONS: { key: string; node: ReactNode }[] = [
 
 const Index = () => {
   const { hash } = useLocation();
-  const archiveLink = Boolean(hash && hash !== "#selected-work");
   const [interactive, setInteractive] = useState(false);
-  const [archiveNear, setArchiveNear] = useState(archiveLink);
-  const [mounted, setMounted] = useState(archiveLink ? SECTIONS.length : 0);
+  const [mounted, setMounted] = useState(0);
   const allMounted = mounted >= SECTIONS.length;
-  const archiveRef = useRef<HTMLDivElement>(null);
   const spacerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setInteractive(true), []);
 
-  // The case study grid is the first screen. Fetch the original galleries
-  // only when the visitor approaches them or asks for a section directly.
-  useEffect(() => {
-    if (archiveNear || !archiveRef.current) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setArchiveNear(true);
-    }, { rootMargin: "800px 0px" });
-    observer.observe(archiveRef.current);
-    return () => observer.disconnect();
-  }, [archiveNear]);
-
-  useEffect(() => {
-    if (archiveNear) return whenIdle(() => preloadHomeSections());
-  }, [archiveNear]);
+  useEffect(() => whenIdle(() => preloadHomeSections(["CaseStudy", "Videos", "GraphicDesign"])), []);
 
   // Add the next section whenever the main thread is free. Animations keep a
   // phone from ever going fully idle, so cap the wait to keep the page filling in.
   useEffect(() => {
-    if (!archiveNear || allMounted) return;
+    if (allMounted) return;
     return whenIdle(() => setMounted((n) => Math.min(n + 1, SECTIONS.length)), 300);
-  }, [mounted, archiveNear, allMounted]);
+  }, [mounted, allMounted]);
 
   // Nav links ask for everything before scrolling. Any other in-page link whose
   // target isn't rendered yet does the same, then scrolls once it exists.
   useEffect(() => {
-    const mountAll = () => {
-      setArchiveNear(true);
-      setMounted(SECTIONS.length);
-    };
+    const mountAll = () => setMounted(SECTIONS.length);
     let retry = 0;
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented) return; // already handled, e.g. by the header nav
@@ -167,8 +147,11 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (!hash || hash === "#selected-work") return;
-    setArchiveNear(true);
+    if (!hash) return;
+    if (hash === "#selected-work" && !allMounted) {
+      setMounted(SECTIONS.length);
+      return;
+    }
     const id = hash.slice(1);
     setMounted(SECTIONS.length);
     let timer = 0;
@@ -180,31 +163,28 @@ const Index = () => {
     };
     timer = window.setTimeout(scroll, 50);
     return () => window.clearTimeout(timer);
-  }, [hash]);
+  }, [hash, allMounted]);
 
   // A visitor scrolling faster than sections are added gets the rest at once.
   useEffect(() => {
     const spacer = spacerRef.current;
-    if (!archiveNear || allMounted || !spacer) return;
+    if (allMounted || !spacer) return;
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setMounted(SECTIONS.length),
       { rootMargin: "1200px 0px" },
     );
     observer.observe(spacer);
     return () => observer.disconnect();
-  }, [archiveNear, allMounted]);
+  }, [allMounted]);
 
   return (
     <MotionConfig reducedMotion="user">
       <Seo {...STATIC_HEADS.portfolio} />
       {interactive && <Suspense fallback={null}><ScrollProgress /></Suspense>}
       <SiteHeader portfolio />
-      <main id="main-content" tabIndex={-1} className="min-h-screen">
-        <PortfolioProjects />
-        <div ref={archiveRef} id="home" className="min-h-px scroll-mt-20">
-          {archiveNear && <Suspense fallback={sectionFallback}><ArchiveHero archive /></Suspense>}
-        </div>
-        {archiveNear && <ExpandCollapseAll />}
+      <main id="main-content" data-portfolio-home tabIndex={-1} className="min-h-screen">
+        <Hero />
+        {interactive && <ExpandCollapseAll />}
         {SECTIONS.slice(0, mounted).map(({ key, node }) => (
           <Suspense key={key} fallback={sectionFallback}>
             {node}
@@ -213,8 +193,9 @@ const Index = () => {
         {/* Reserve the height of sections not added yet, so the page doesn't
             end abruptly under a visitor who scrolls ahead of them. */}
         {!allMounted && (
-          <div ref={spacerRef} aria-hidden style={{ minHeight: `${archiveNear ? (SECTIONS.length - mounted) * 600 : 600}px` }} />
+          <div ref={spacerRef} aria-hidden className="min-h-96" />
         )}
+        <PortfolioProjects />
       </main>
       {allMounted && (
         <Suspense fallback={null}>

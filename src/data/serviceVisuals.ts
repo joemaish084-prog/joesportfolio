@@ -15,6 +15,8 @@ import communityEvent from "@/assets/agency/iclear-community-event.webp";
 import handover from "@/assets/agency/iclear-handover.webp";
 import pressDailyNation from "@/assets/press-daily-nation.webp";
 import portrait from "@/assets/joseph-maina-portrait.webp";
+import metaTurnaround from "@/assets/case-covers/meta-ads-turnaround.webp";
+import type { ImageSlot, ProofImageSlot } from "./services";
 
 /**
  * Real work shown on each service page. Every image is already published
@@ -27,6 +29,7 @@ export interface ServiceVisual {
   caption: string;
   width: number;
   height: number;
+  srcSet?: string;
 }
 
 export interface ServiceVisuals {
@@ -65,31 +68,33 @@ const img = {
  * blog descriptions turned out not to match their photos. Captions describe
  * only what is in the photo and never present it as client work.
  */
-const unsplash = (id: string, alt: string, caption: string, width = 1600, height = 1067): ServiceVisual => ({
-  src: `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=80`,
-  alt,
-  caption,
-  width,
-  height,
+const photos = import.meta.glob<string>("/src/assets/service-editorial/*.webp", {
+  eager: true, query: "?url", import: "default",
 });
 
+function editorial(name: string, alt: string, caption: string): ServiceVisual {
+  const src = photos[`/src/assets/service-editorial/${name}-800.webp`];
+  const small = photos[`/src/assets/service-editorial/${name}-400.webp`];
+  return { src, srcSet: `${small} 400w, ${src} 800w`, alt, caption, width: 800, height: 533 };
+}
+
 const stock = {
-  facebookApp: unsplash("photo-1675352162363-ac40c3bb8265", "Smartphone screen showing the Facebook app in the app store", "Facebook and Instagram advertising"),
-  googleSearch: unsplash("photo-1586125674857-4eb86880905d", "Google search home page on a computer screen", "Search advertising on Google"),
-  nairobiSkyline: unsplash("photo-1741991110666-88115e724741", "Nairobi city skyline with high-rise buildings under a bright sky", "Local search for Nairobi businesses"),
-  nairobiStreet: unsplash("photo-1611144727915-ef30a08aaeb3", "High-rise buildings above a busy Nairobi street", "Businesses competing for attention in Nairobi"),
-  nairobiExpressway: unsplash("photo-1669127300649-940337f1487e", "The Nairobi Expressway and city skyline in Westlands", "Marketing for businesses across Nairobi and Kenya"),
-  filming: unsplash("photo-1758521540269-58fe43602d39", "Woman sitting on the floor filming herself with a camera on a tripod", "Short-form video content"),
-  whatsapp: unsplash("photo-1754331732644-f7b381eccd9f", "Hand holding a phone showing a WhatsApp screen", "Enquiries arriving on WhatsApp"),
-  chat: unsplash("photo-1519069060891-f8c50519bf39", "Hand holding a smartphone with a chat open on the screen", "An enquiry arriving in the chat"),
-  phoneCall: unsplash("photo-1758876204260-bdb299fa4374", "Man talking on the phone at a desk", "A lead followed up by phone"),
-  handshake: unsplash("photo-1758520144427-ddb02ac74e9d", "Two women shaking hands across a desk in an office", "A lead that turns into a customer"),
-  dashboards: unsplash("photo-1551288049-bebda4e38f71", "Analytics dashboard with charts and graphs on a monitor", "Tracking and analytics"),
-  barCharts: unsplash("photo-1746014601017-4e515ef51722", "Laptop on a wooden table showing bar charts, with a cup of coffee beside it", "Ad account performance"),
-  laptopStats: unsplash("photo-1460925895917-afdab827c52f", "Laptop screen showing statistics and charts on a glass-top table", "Website and search visibility"),
-  writing: unsplash("photo-1450101499163-c8848c66ca85", "Person writing notes on paper with a pen", "Findings written up in plain language"),
-  checklist: unsplash("photo-1693045181229-3eddc1a2e242", "Printed checklist on a clipboard with pencils beside it", "A prioritised list of fixes"),
-  meeting: unsplash("photo-1758873271772-6bbc792c1514", "Two colleagues talking across a table with a laptop in an office", "It starts with a free strategy call"),
+  facebookApp: { src: "/media/blog-covers/facebook-app-800.webp", alt: "Smartphone screen showing the Facebook app in the app store", caption: "Facebook and Instagram advertising", width: 800, height: 533 },
+  googleSearch: editorial("googleSearch", "Google search home page on a computer screen", "Search advertising on Google"),
+  nairobiSkyline: { src: "/media/blog-covers/nairobi-skyline-800.webp", alt: "Nairobi city skyline with high-rise buildings under a bright sky", caption: "Local search for Nairobi businesses", width: 800, height: 533 },
+  nairobiStreet: editorial("nairobiStreet", "High-rise buildings above a busy Nairobi street", "Businesses competing for attention in Nairobi"),
+  nairobiExpressway: { src: "/media/blog-covers/nairobi-expressway-800.webp", alt: "The Nairobi Expressway and city skyline in Westlands", caption: "Marketing for businesses across Nairobi and Kenya", width: 800, height: 533 },
+  filming: { src: "/media/blog-covers/video-production-800.webp", alt: "Woman sitting on the floor filming herself with a camera on a tripod", caption: "Short-form video content", width: 800, height: 533 },
+  whatsapp: editorial("whatsapp", "Hand holding a phone showing a WhatsApp screen", "Enquiries arriving on WhatsApp"),
+  chat: editorial("chat", "Hand holding a smartphone with a chat open on the screen", "An enquiry arriving in the chat"),
+  phoneCall: editorial("phoneCall", "Man talking on the phone at a desk", "A lead followed up by phone"),
+  handshake: editorial("handshake", "Two women shaking hands across a desk in an office", "A lead that turns into a customer"),
+  dashboards: editorial("dashboards", "Analytics dashboard with charts and graphs on a monitor", "Tracking and analytics"),
+  barCharts: editorial("barCharts", "Laptop on a wooden table showing bar charts, with a cup of coffee beside it", "Ad account performance"),
+  laptopStats: { src: "/media/blog-covers/website-analytics-800.webp", alt: "Laptop screen showing statistics and charts on a glass-top table", caption: "Website and search visibility", width: 800, height: 533 },
+  writing: { src: "/media/blog-covers/audit-notes-800.webp", alt: "Person writing notes on a printed document", caption: "Findings written up in plain language", width: 800, height: 533 },
+  checklist: editorial("checklist", "Printed checklist on a clipboard with pencils beside it", "A prioritised list of fixes"),
+  meeting: editorial("meeting", "Two colleagues talking across a table with a laptop in an office", "It starts with a free strategy call"),
 };
 
 /** Photo beside the shared five-step process on every service page. */
@@ -174,3 +179,17 @@ export const serviceVisuals: Record<string, ServiceVisuals> = {
 };
 
 export const getServiceVisuals = (slug: string): ServiceVisuals | undefined => serviceVisuals[slug];
+
+export const serviceImageReplacements: Partial<Record<ImageSlot | ProofImageSlot, ServiceVisual>> = {
+  "svc-seo": stock.nairobiSkyline,
+  "svc-lead-gen": stock.whatsapp,
+  "proof-case-1": img.facebook,
+  "proof-case-2": img.convey,
+  "proof-case-3": {
+    src: metaTurnaround,
+    alt: "Illustration of makeup brushes, lipstick and powder compacts on a beige surface",
+    caption: "Beauty retail campaign illustration",
+    width: 840,
+    height: 840,
+  },
+};
