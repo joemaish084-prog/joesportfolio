@@ -59,7 +59,7 @@ export function AuditFormView({ register, errors = {}, status, isSubmitting = fa
           </fieldset>
           <div hidden aria-hidden="true"><label>Website<input {...field("website")} tabIndex={-1} autoComplete="off" /></label></div>
           {status === "error" && <p role="alert" className="studio-form-error">Your request couldn’t be sent. Try again or message me on WhatsApp.</p>}
-          <Button type="submit" className="studio-button studio-button-primary" disabled={!register || isSubmitting}>
+          <Button type="submit" className="w-full rounded-full" disabled={!register || isSubmitting}>
             {isSubmitting ? "Sending request…" : "Request My Free Audit"}
           </Button>
           <p className="studio-form-note">I’ll use your details to respond to this request. <Link to={PRIVACY_PATH}>Privacy policy</Link></p>

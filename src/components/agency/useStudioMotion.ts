@@ -80,7 +80,7 @@ export function useStudioMotion(root: RefObject<HTMLElement>) {
 
 function observeAuditBar(scene: HTMLElement) {
   const bar = scene.querySelector<HTMLElement>("[data-mobile-audit]");
-  const hero = scene.querySelector(".studio-hero [data-magnetic]");
+  const hero = scene.querySelector("[data-hero-audit]");
   const audit = scene.querySelector("#audit");
   if (!bar || !hero || !audit) return () => {};
   const visible = new Map<Element, boolean>([[hero, true], [audit, false]]);

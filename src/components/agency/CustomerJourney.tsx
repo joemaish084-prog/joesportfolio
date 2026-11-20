@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { animate, motion, useInView, useMotionValue, useMotionValueEvent, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, BriefcaseBusiness, Check, Compass, Eye, Flag, LayoutPanelLeft, Map, MessageCircle, MousePointer2, Pause, Play, RotateCcw, ShoppingBag, Store, UserRound } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SectionLabel } from "@/components/SectionLabel";
+import { CustomerJourneyIntro } from "@/components/agency/CustomerJourneyIntro";
 import { JourneyScene } from "@/components/agency/JourneyScene";
 import { journeyScenarios, type JourneyType } from "@/components/agency/journey-scenarios";
 import "./customer-journey.css";
@@ -173,16 +173,7 @@ export function CustomerJourney() {
   return (
     <section ref={sectionRef} id="customer-journey" aria-labelledby="customer-journey-heading" className="customer-journey container mx-auto scroll-mt-24 px-4 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-9 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-          <div className="max-w-2xl">
-            <SectionLabel>THE CUSTOMER JOURNEY</SectionLabel>
-            <h2 id="customer-journey-heading" className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-5xl">
-              Strangers. Visitors.<br /><span className="font-serif font-normal italic text-primary">Your next customers.</span>
-            </h2>
-            <p className="mt-4 max-w-lg leading-relaxed text-muted-foreground">Good marketing connects the dots. Follow the moments that turn a first impression into a purchase.</p>
-          </div>
-          <p className="journey-instruction"><MousePointer2 className="h-4 w-4" aria-hidden />Don't just follow the story. Try it.</p>
-        </div>
+        <CustomerJourneyIntro />
 
         <div className="journey-scenario-picker">
           <div><p className="journey-scenario-label">ONE JOURNEY. TWO PERSPECTIVES.</p><p className="journey-scenario-description">{scenario.description}</p></div>

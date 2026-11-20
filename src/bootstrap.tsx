@@ -26,7 +26,7 @@ if (!bootWindow.__jmAppMounted) {
   const container = document.getElementById("root")!;
   const { pathname, hash } = window.location;
   const hydrateAgency = pathname === "/" && !isLegacyPortfolioAnchor(hash) &&
-    Boolean(container.querySelector(":scope > .studio-agency"));
+    Boolean(container.querySelector(":scope > [data-agency-home]"));
   const hydratePortfolio = pathname === PORTFOLIO_PATH && (!hash || hash === "#selected-work") &&
     Boolean(container.querySelector(".studio-portfolio"));
   const hydrateResults = pathname === "/agency/results" &&

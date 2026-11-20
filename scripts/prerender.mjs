@@ -115,7 +115,6 @@ function renderPage(route) {
   html = html.replace("</head>", () => `${routePreloads(route.path)}\n</head>`);
   // The homepage now has regular HTML in #root, just like every public route.
   html = replaceRegion(html, "home-body", "");
-  if (route.path === "/" || route.path === "/agency") html = replaceRegion(html, "legacy-fonts", "");
   if (route.path !== "/portfolio") html = stripHomeOnly(html);
   if (route.body) {
     if (!html.includes('<div id="root"></div>')) throw new Error("prerender: empty #root not found");

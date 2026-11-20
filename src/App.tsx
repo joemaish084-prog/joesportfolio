@@ -85,7 +85,7 @@ function PrimaryViewScroll() {
     const switching = previous.current !== pathname && primary(previous.current) && primary(pathname);
     previous.current = pathname;
     const main = document.querySelector<HTMLElement>("main[tabindex='-1']");
-    if (pathname === "/" && (hash === "#audit" || hash.startsWith("#agency-"))) {
+    if (pathname === "/" && (hash === "#audit" || hash === "#customer-journey" || hash.startsWith("#agency-"))) {
       document.getElementById(hash.slice(1))?.scrollIntoView({ block: "start", behavior: navigationType === "POP" ? "auto" : "instant" });
     } else if (primary(pathname) && !hash && navigationType !== "POP") {
       window.scrollTo({ top: 0, behavior: "instant" });

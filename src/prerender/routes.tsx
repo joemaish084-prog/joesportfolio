@@ -11,7 +11,6 @@ import AgencyResults from "@/pages/AgencyResults";
 import Index from "@/pages/Index";
 import { AgencyServiceContent } from "@/pages/AgencyService";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
-import { agencyHeroPhoto } from "@/data/agencyHeroMedia";
 import { portfolioLeadCover } from "@/data/caseStudies";
 import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
@@ -342,12 +341,6 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     {
       path: "/",
       head: agencyHead("home"),
-      criticalMedia: html(<>
-        <link rel="preload" as="image" type="image/avif" media={agencyHeroPhoto.mobileMedia}
-          imageSrcSet={agencyHeroPhoto.avif} imageSizes={agencyHeroPhoto.mobileSizes} {...{ fetchpriority: "high" }} />
-        <link rel="preload" as="image" type="image/webp" media="(min-width: 900px)"
-          imageSrcSet={agencyHeroPhoto.srcSet} imageSizes={agencyHeroPhoto.sizes} {...{ fetchpriority: "high" }} />
-      </>),
       body: renderPrimary("/", <AgencyHome />),
       card: { eyebrow: "Digital Marketing Agency", title: "Make your marketing bring in more sales.", cta: "Book a Free Audit" },
       sitemap: { priority: 1, changefreq: "monthly" },

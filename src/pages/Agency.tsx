@@ -9,21 +9,21 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useToast } from "@/hooks/use-toast";
-import { motion, useInView, AnimatePresence, useMotionValue, useSpring, useTransform, MotionConfig, type MotionValue } from "framer-motion";
+import { motion, useInView, AnimatePresence, MotionConfig } from "framer-motion";
 import { Stepper } from "@/components/ui/stepper";
-import { useRef } from "react";
 import {
   Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
-  CalendarDays, ClipboardList, PenLine, Rocket, BarChart3, CreditCard, Building2, Receipt,
+  ClipboardList, CreditCard, Building2, Receipt,
   Video, Search, Lightbulb, ArrowRight, Share2, FileText, Palette, MessageSquare, Calculator,
   Mail, ExternalLink, LayoutGrid, TrendingUp, Tag,
 } from "lucide-react";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { trackSpotlight } from "@/lib/spotlight";
 import { SectionLabel } from "@/components/SectionLabel";
-import { CountUp } from "@/components/CountUp";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { PaidMediaApproachSection } from "@/components/PaidMediaApproachSection";
+import { AgencyHero } from "@/components/agency/AgencyHero";
+import { AgencyProcess } from "@/components/agency/AgencyProcess";
 import { CustomerJourney } from "@/components/agency/CustomerJourney";
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { MarketToggle } from "@/components/MarketToggle";
@@ -36,12 +36,12 @@ import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { caseStudies } from "@/data/caseStudies";
 import { getLiveServicePages } from "@/data/servicePages";
 import {
-  CALENDLY_URL, agencyFaqs as faqs, formatKes, getService, onboardingSteps, packageComparison,
-  priceLabel, retainerPackages as retainerPackageData, serviceFeeKes, servicePrice, trustNumbers as stats,
+  CALENDLY_URL, agencyFaqs as faqs, formatKes, getService, packageComparison,
+  priceLabel, retainerPackages as retainerPackageData, serviceFeeKes, servicePrice,
 } from "@/data/services";
 import { migrationReasons } from "@/data/shopify";
 import { ShopifyAgencyFeature } from "@/components/shopify/ShopifyAgencyFeature";
-import { HeroCollage, HeroCollageMobile, FieldworkVisual, CreativeShowcase } from "@/components/agency/AgencyVisuals";
+import { FieldworkVisual, CreativeShowcase } from "@/components/agency/AgencyVisuals";
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 import iclearDishwashShort from "@/assets/short-iclear-dishwash.webp";
@@ -182,55 +182,11 @@ const serviceFromLink: Record<string, string> = {
 };
 
 // Text comes from src/data/services.ts; only the icons are chosen here.
-const stepIcons = [CalendarDays, ClipboardList, PenLine, Rocket, BarChart3];
-const steps = onboardingSteps.map((s, i) => ({ ...s, icon: stepIcons[i] }));
-
-
 const payments = [
   { icon: CreditCard, title: "M-Pesa", desc: "Pay instantly via M-Pesa STK push. Paybill or Till number provided on invoice." },
   { icon: Building2, title: "Bank Transfer", desc: "Direct bank transfer for larger retainers. Details on invoice." },
   { icon: Receipt, title: "Invoice & Receipt", desc: "Professional invoice sent within 1 hour of booking confirmation. Receipt on payment." },
 ];
-
-function HeroProofPanel({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
-  const rotateX = useSpring(useTransform(mouseY, (v) => v * -5), { damping: 25, stiffness: 150 });
-  const rotateY = useSpring(useTransform(mouseX, (v) => v * 5), { damping: 25, stiffness: 150 });
-
-  return (
-    <div className="relative mx-auto w-full max-w-sm" style={{ perspective: 1200 }}>
-      <div
-        aria-hidden
-        className="absolute -top-10 -right-6 font-serif italic text-[10rem] leading-none text-primary/10 select-none pointer-events-none"
-      >
-        &rdquo;
-      </div>
-
-      <motion.div
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        initial={{ opacity: 0, y: 24, scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
-        className="relative z-10 rounded-2xl border border-border/60 bg-card/70 backdrop-blur-2xl p-8 sm:p-10 shadow-2xl"
-      >
-        <div className="relative flex items-center gap-2 mb-7">
-          <span className="h-px w-6 bg-primary" />
-          <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-medium">Trusted by brands across Kenya</span>
-        </div>
-
-        <div className="relative space-y-5">
-          {stats.map((s, i) => (
-            <div key={s.label} className={i > 0 ? "pt-5 border-t border-border/60" : ""}>
-              <p className="text-4xl font-display font-bold text-foreground tracking-tight">
-                <CountUp value={s.value} prefix={s.prefix} suffix={s.suffix} />
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-    </div>
-  );
-}
 
 const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const market = useMarket();
@@ -243,24 +199,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const [briefSent, setBriefSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [briefStep, setBriefStep] = useState(0);
-  const heroRef = useRef<HTMLElement>(null);
-  const heroMouseX = useMotionValue(0);
-  const heroMouseY = useMotionValue(0);
-
-  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!heroRef.current) return;
-    const rect = heroRef.current.getBoundingClientRect();
-    heroMouseX.set((e.clientX - (rect.left + rect.width / 2)) / rect.width);
-    heroMouseY.set((e.clientY - (rect.top + rect.height / 2)) / rect.height);
-    heroRef.current.style.setProperty("--spot-x", `${((e.clientX - rect.left) / rect.width) * 100}%`);
-    heroRef.current.style.setProperty("--spot-y", `${((e.clientY - rect.top) / rect.height) * 100}%`);
-  };
-
-  const handleHeroMouseLeave = () => {
-    heroMouseX.set(0);
-    heroMouseY.set(0);
-  };
-
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -324,86 +262,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         </AgencyPageHeader>}
 
 {pageKey === "home" && <>
-        {/* HERO */}
-        <section
-          ref={heroRef}
-          data-track-location="hero"
-          onMouseMove={handleHeroMouseMove}
-          onMouseLeave={handleHeroMouseLeave}
-          className="relative w-full overflow-hidden bg-background"
-        >
-          {/* Editorial background — theme-aware, so it never fights the site's light/dark mode */}
-          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-[-15%] right-[0%] w-[36rem] h-[36rem] rounded-full bg-primary/[0.07] blur-[130px] animate-drift-a" />
-            <div className="absolute bottom-[-20%] left-[-5%] w-[30rem] h-[30rem] rounded-full bg-primary/[0.05] blur-[140px] animate-drift-b" />
-          </div>
-          <div className="absolute inset-0 z-[1] dot-grid pointer-events-none [mask-image:radial-gradient(ellipse_90%_70%_at_50%_0%,black_40%,transparent_100%)]" />
-          <div className="absolute inset-0 z-[1] hero-spotlight opacity-60 pointer-events-none transition-[background] duration-300" />
-
-          <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto pt-20 md:pt-28 pb-20 md:pb-28">
-            <div className="text-left">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45 }}
-                className="flex items-center gap-3 mb-7"
-              >
-                <span className="h-px w-8 bg-primary" />
-                <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-medium">Joseph Maina Marketing · Nairobi, Kenya</span>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.5 }}
-                className="text-4xl sm:text-5xl lg:text-[3.75rem] font-display font-semibold tracking-tight text-foreground max-w-xl leading-[1.08]"
-              >
-                More leads and sales for{" "}
-                <span className="font-serif italic font-normal text-primary">Kenyan businesses</span>
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.22, duration: 0.5 }}
-                className="mt-6 text-lg text-muted-foreground max-w-md"
-              >
-                Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi. You work directly with me, Joseph Maina, on paid ads, SEO and content.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.34, duration: 0.5 }}
-                className="mt-10 flex flex-col sm:flex-row gap-4"
-              >
-                <Button size="lg" className="w-full sm:w-auto rounded-full" asChild>
-                  <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
-                    <Calendar className="mr-2 h-5 w-5" /> Book a Free Strategy Call
-                  </a>
-                </Button>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto rounded-full" asChild><Link to="/agency/pricing">
-                  View Pricing
-                </Link></Button>
-              </motion.div>
-              <p className="mt-4 text-sm text-muted-foreground">
-                Prefer to chat?{" "}
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-primary hover:underline">Message me on WhatsApp</a>
-              </p>
-
-              <HeroCollageMobile />
-              <a href="#customer-journey" className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                Explore the customer journey <ArrowRight className="h-4 w-4" aria-hidden />
-              </a>
-            </div>
-
-            <div className="hidden lg:block">
-              <HeroCollage mouseX={heroMouseX} mouseY={heroMouseY}>
-                <HeroProofPanel mouseX={heroMouseX} mouseY={heroMouseY} />
-              </HeroCollage>
-            </div>
-          </div>
-        </section>
+        <AgencyHero whatsappUrl={WHATSAPP_URL} />
 
         {pageKey === "home" && <section className="container mx-auto px-4 pt-4 sm:pt-8">
           <div className="mx-auto grid max-w-7xl gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
@@ -645,48 +504,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 {pageKey === "home" && <>
         <CreativeShowcase />
 
-        {/* HOW IT WORKS */}
-        <section id="how" className="container mx-auto px-4 py-20 scroll-mt-20">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-12 text-center space-y-3">
-              <SectionLabel>HOW IT WORKS</SectionLabel>
-              <h2 className="text-3xl md:text-4xl font-display font-bold">Working Together Is Simple</h2>
-              <p className="text-muted-foreground">From the first call to monthly reporting, in five steps.</p>
-            </div>
-            {/* The wrapper watches the viewport: the connector starts at zero size, so it can't. */}
-            <motion.div className="relative" initial="hidden" whileInView="shown" viewport={{ once: true, margin: "-120px" }}>
-              {/* Connector that draws in once; starts hidden only for JS visitors (see index.css). */}
-              <div aria-hidden className="absolute left-6 top-6 bottom-6 w-px bg-border lg:left-[10%] lg:right-[10%] lg:bottom-auto lg:h-px lg:w-auto">
-                <motion.div
-                  variants={{ hidden: { opacity: 0, scaleY: 0, scaleX: 0 }, shown: { opacity: 1, scaleY: 1, scaleX: 1 } }}
-                  transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="h-full w-full origin-top bg-gradient-to-b from-primary to-orange-light lg:origin-left lg:bg-gradient-to-r"
-                />
-              </div>
-            <ol className="relative grid gap-8 lg:grid-cols-5 lg:gap-6">
-              {steps.map((s, i) => (
-                <motion.li
-                  key={s.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ delay: 0.15 + i * 0.12, duration: 0.5 }}
-                  className="relative flex gap-5 lg:flex-col lg:items-center lg:text-center lg:gap-0"
-                >
-                  <span className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-primary/30 shadow-[0_0_0_6px_hsl(var(--background))] lg:mb-5">
-                    <s.icon className="h-5 w-5 text-primary" aria-hidden />
-                  </span>
-                  <div className="pt-1 lg:pt-0">
-                    <p className="mono-accent text-xs text-muted-foreground">Step {i + 1}</p>
-                    <h3 className="mt-1 font-display text-lg font-semibold">{s.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground lg:mx-auto lg:max-w-[14rem]">{s.desc}</p>
-                  </div>
-                </motion.li>
-              ))}
-            </ol>
-            </motion.div>
-          </div>
-        </section>
+        <AgencyProcess />
 
 
 </>}

@@ -23,12 +23,13 @@ for (const match of root.matchAll(/<img\b[^>]*srcSet="([^"]+)"/gi)) {
     variants++;
   }
 }
-const heroImage = root.match(/<img\b[^>]*alt="The iClear team[^"]*"[^>]*>/)?.[0];
-assert(heroImage?.match(/srcSet="[^"]+360w,[^"]+720w,[^"]+960w"/), "The agency hero delivers three responsive image sizes");
-const heroSource = heroImage.match(/\bsrc="([^"]+)"/)[1];
-assert(fs.statSync(`dist${heroSource}`).size < 80 * 1024, "The default hero image must stay below 80 KiB");
-assert.match(heroImage, /fetchPriority="high"/i, "Prioritize the above-the-fold hero image");
-assert(variants >= 5, "Hero and logo images must expose responsive variants");
+const hero = root.match(/<section\b[^>]*data-track-location="hero"[^>]*>[\s\S]*?<\/section>/)?.[0];
+assert(hero, "The original Agency hero must render in the initial HTML");
+assert.match(hero, /font-serif[^>]*>Kenyan businesses</, "The original Agency headline accent must be visible");
+assert.equal((hero.match(/<img\b[^>]*srcSet="[^"]+"/gi) ?? []).length, 6, "All three collage images must be responsive in both layouts");
+assert.match(hero, /href="#customer-journey"/, "The hero links to the customer journey");
+assert.match(root, /id="customer-journey"/, "The roadmap section must render in the initial HTML");
+assert(variants >= 18, "Agency images must expose responsive variants");
 const blog = fs.readFileSync("dist/agency/blog.html", "utf8");
 const blogRoot = blog.slice(blog.indexOf('<div id="root">'));
 assert.match(blogRoot, /<h1\b[^>]*>Digital marketing, written plainly\.<\/h1>/, "The actual blog heading must be in the initial HTML");
