@@ -9016,6 +9016,524 @@ export const blogPosts: BlogPost[] = [
       }
     ]
   },
+  {
+    slug: "meta-ad-library-competitor-ads-kenya-2026",
+    category: "Meta Ads",
+    title: "See Every Ad Your Competitor Is Running, Free: The Meta Ad Library",
+    excerpt: "Your competitors' Facebook and Instagram ads are public. Here is how to read them like a strategist, not a copycat.",
+    date: "2026-11-17",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "See Every Ad Your Competitor Is Running, Free: The Meta Ad Library",
+    metaDescription: "How Kenyan businesses can use the free Meta Ad Library to see competitors' active Facebook and Instagram ads, what to look for, and how to learn without copying.",
+    intro: "Most business owners have no idea that every active ad on Facebook and Instagram is public. Meta runs a searchable Ad Library where anyone can look up a brand and see the ads it is running right now: the images, the videos, the wording and when each ad started. It is the cheapest piece of market research you will ever do, and very few small Kenyan businesses use it.",
+    thumbnail: "https://images.unsplash.com/photo-1626148749358-5b3b3f45b41a?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Magnifying glass beside a notebook and pencil on a white desk",
+
+    sections: [
+      {
+        id: "what-it-is",
+        heading: "What the Ad Library shows",
+        paragraphs: [
+          "Search the Ad Library at facebook.com/ads/library, choose Kenya or All countries, and type a brand name. You will see the ads that brand is running across Meta's apps, with the start date of each one. On Instagram you can also reach it from a business profile, through the account's active ads.",
+          "It shows active ads. Ads that are paused or finished generally disappear from the commercial view, so check regularly if you want to follow a competitor over time. Political and social-issue ads are kept for longer and include more detail, but that rarely matters for an ordinary business.",
+        ],
+        infographic: {"kind":"steps","title":"Researching a competitor in ten minutes","items":[{"label":"Search the brand","detail":"Set the country to Kenya or All, and the type to All ads."},{"label":"Note the oldest ads","detail":"An ad still running after weeks is usually earning its keep."},{"label":"Group the offers","detail":"Discounts, bundles, free delivery, new arrivals."},{"label":"Check the formats","detail":"Video, carousel, single image, and in which ratios."},{"label":"Tap through","detail":"See where each ad sends people: WhatsApp, a website or a form."}]},
+      },
+      {
+        id: "what-to-look-for",
+        heading: "Read it like a strategist",
+        paragraphs: [
+          "The most useful signal is how long an ad has been running. Businesses rarely keep paying for ads that do not work, so an ad that started weeks ago and is still live is a strong hint. Lots of versions of the same idea suggest a brand is testing it.",
+          "Look at what they lead with, too: price, quality, speed, trust or status. If every competitor in your category leads with price, a different angle may be your opening rather than a cheaper offer.",
+        ],
+      },
+      {
+        id: "learn-not-copy",
+        heading: "Learn from it, do not copy it",
+        paragraphs: [
+          "Copying a competitor's ad word for word or reusing their designs is lazy, and it can break copyright and Meta's rules. It also rarely works: their customers already know the original, and your offer, prices and proof are different.",
+        ],
+        infographic: {"kind":"compare","title":"Copying versus learning","columns":[{"heading":"Copying","tone":"bad","points":["Reusing their images or videos","Lifting their wording","Matching their discount to the shilling"]},{"heading":"Learning","tone":"good","points":["Noting which offers keep running","Spotting formats your market responds to","Finding the angle nobody is using","Testing your own version of a proven idea"]}]},
+      },
+      {
+        id: "google-too",
+        heading: "Do the same for Google",
+        paragraphs: [
+          "Google has a similar public tool, the Ads Transparency Center, where you can look up an advertiser and see the search, display and YouTube ads they have run. Between the two, you can see most of what a competitor is paying to show customers.",
+        ],
+        list: [
+          "Check your top three competitors on the first Monday of each month.",
+          "Save screenshots in one folder with the date, so you can see what changed.",
+          "Write down one idea to test from each session, then actually test it.",
+          "Look up your own brand as well, to see what customers see.",
+        ],
+        callout: "Your competitors are spending money to learn what works. The Ad Library lets you see part of that for free.",
+      },
+    ],
+  },
+  {
+    slug: "first-meta-ads-test-kes-10000-kenya-2026",
+    category: "Meta Ads",
+    title: "Your First KES 10,000 on Meta Ads: A Two-Week Test Plan",
+    excerpt: "A small first budget will not make you rich, but it can teach you a lot if you plan it like a test instead of a gamble.",
+    date: "2026-11-17",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Your First KES 10,000 on Meta Ads: A Two-Week Test Plan",
+    metaDescription: "A practical two-week Meta Ads test plan for Kenyan businesses spending their first KES 10,000: setup, VAT, daily budget, what to check each day and how to decide.",
+    intro: "Many Kenyan business owners spend their first KES 10,000 on ads by boosting a few posts, then decide that ads \"don't work\". The money was not wasted because the budget was small. It was wasted because nothing was being tested. Here is how to use a small first budget to answer a real question in two weeks.",
+    thumbnail: "https://images.unsplash.com/photo-1771169084487-4c9d3c6a1ef2?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Four test tubes with coloured liquids and a syringe on a table",
+
+    sections: [
+      {
+        id: "the-numbers",
+        heading: "The numbers first",
+        paragraphs: [
+          "Meta adds 16% VAT for advertisers in Kenya, so plan around the total cost, not the ad budget. Spread over two weeks, a KES 10,000 budget is roughly KES 700 a day, which is enough to learn something, but not enough to run ten different experiments at once.",
+        ],
+        infographic: {"kind":"stats","title":"A KES 10,000 test, in round numbers","items":[{"value":"KES 11,600","label":"total cost including 16% VAT"},{"value":"14 days","label":"long enough to see a pattern"},{"value":"~KES 714","label":"ad budget per day"},{"value":"3 ads","label":"one question, three angles"}]},
+      },
+      {
+        id: "one-question",
+        heading: "Ask one question",
+        paragraphs: [
+          "Decide what you want to learn before you spend anything. Good first questions are simple: which of three angles brings the cheapest WhatsApp enquiries, or can ads bring paying customers at all at this price? Pick the result you will judge it on, such as cost per enquiry, and write it down.",
+          "Then keep everything else simple: one campaign, one broad audience in the area you serve, and three ads that differ in their message, not just their colour. One could lead with price, one with proof, one with the problem you solve.",
+        ],
+      },
+      {
+        id: "timeline",
+        heading: "The two weeks, day by day",
+        paragraphs: [
+        ],
+        infographic: {"kind":"steps","title":"Two-week test plan","items":[{"label":"Days 1 to 3: hands off","detail":"Let delivery settle. Do not edit anything."},{"label":"Day 4: check it is working","detail":"Spending, getting clicks, enquiries arriving."},{"label":"Day 7: first read","detail":"Compare cost per enquiry across the three ads."},{"label":"Days 8 to 14: back the leader","detail":"Pause the clear loser if one exists."},{"label":"Day 15: decide","detail":"Scale, change the offer, or try another channel."}]},
+      },
+      {
+        id: "what-you-learn",
+        heading: "What a small test can and cannot tell you",
+        paragraphs: [
+          "With a small budget, results are noisy. One lucky sale can make an ad look brilliant. So look for big, clear differences rather than small ones, and treat the test as a direction, not a verdict.",
+          "Most importantly, count what happens after the click. Reply fast, keep a simple sheet of who enquired from which ad and who bought, and judge the ads on that. A cheap enquiry that never answers your reply is not a win.",
+        ],
+        list: [
+          "Use your own Business Manager and ad account, not a friend's.",
+          "Send people where you can actually answer quickly, usually WhatsApp.",
+          "Do not boost a random post; build the three ads on purpose.",
+          "Write down the result before the next test, so you build on it.",
+        ],
+        callout: "A small budget spent as a test teaches you something. The same budget spent as a gamble just disappears.",
+      },
+    ],
+  },
+  {
+    slug: "black-friday-kenya-should-small-business-bother-2026",
+    category: "Pricing",
+    title: "Black Friday in Kenya: Should Your Small Business Even Bother?",
+    excerpt: "Big retailers have been running deals for weeks. Before you cut prices too, do the arithmetic.",
+    date: "2026-11-18",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Black Friday in Kenya: Should Your Small Business Even Bother?",
+    metaDescription: "Should a Kenyan small business run a Black Friday sale? How discounts affect profit, who should bother and who should skip, honest pricing rules and better alternatives.",
+    intro: "Black Friday falls on 27 November this year, and large online retailers in Kenya have been promoting deals for much of the month. It is tempting to join in with a big percentage off. Sometimes that is smart. Often it means more work, higher ad costs and less profit, all to compete in the noisiest week of the year. Here is how to decide.",
+    thumbnail: "https://images.unsplash.com/photo-1760565030346-4b947220fe3a?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding up several paper shopping bags",
+
+    sections: [
+      {
+        id: "the-maths",
+        heading: "What a discount does to your profit",
+        paragraphs: [
+          "A discount comes straight out of your margin, not your revenue. If you make 40% gross margin, a 20% discount cuts the profit on each sale in half, which means you need to sell twice as many units just to earn the same. Many sales look busy and leave the owner with less money.",
+        ],
+        infographic: {"kind":"bars","title":"Units you must sell to keep the same profit, at a 40% margin","illustrative":true,"items":[{"label":"No discount","value":1,"display":"1x"},{"label":"10% off","value":1.33,"display":"1.33x"},{"label":"20% off","value":2,"display":"2x"},{"label":"30% off","value":4,"display":"4x","highlight":true}],"note":"Simple arithmetic on an assumed 40% gross margin, before ad costs and delivery. Run it with your own margin."},
+      },
+      {
+        id: "bother-or-skip",
+        heading: "Who should bother, and who should skip",
+        paragraphs: [
+        ],
+        infographic: {"kind":"compare","title":"Black Friday: bother or skip?","columns":[{"heading":"Worth considering if","tone":"good","points":["Your margins can absorb a discount","You sell gifts or things people buy for December","You have stock you need to clear","You can deliver extra orders on time"]},{"heading":"Probably skip if","tone":"bad","points":["Your margins are already thin","You sell services with fixed capacity","Your brand is built on premium pricing","A rush of orders would break your delivery"]}]},
+      },
+      {
+        id: "honest-prices",
+        heading: "Keep the discount honest",
+        paragraphs: [
+          "Kenyan consumers have grown used to inflated \"was\" prices that were never charged. Apart from damaging trust, misleading price claims can fall foul of the law: Kenya's Competition Act and Consumer Protection Act both prohibit false or misleading representations to consumers. If you say \"was KES 5,000\", it should genuinely have sold at that price.",
+        ],
+      },
+      {
+        id: "alternatives",
+        heading: "Better options than a blanket discount",
+        paragraphs: [
+          "You can take part in the season without slashing every price.",
+        ],
+        list: [
+          "Give past customers early access by WhatsApp, before ad costs peak.",
+          "Bundle products instead of discounting them, so the order value rises.",
+          "Add value: free delivery, gift wrapping or an extra item.",
+          "Discount only the slow-moving stock you want to clear.",
+          "Save your push for December gifting or the January school-fees season, if that suits your buyers better.",
+        ],
+      },
+      {
+        id: "if-you-go",
+        heading: "If you do run it",
+        paragraphs: [
+          "Set a clear end date, check your stock and delivery capacity first, and prepare your replies for the extra messages. Ad prices are often higher in busy weeks, so warm your audience and your past customers rather than relying only on cold ads. For more on the hidden cost of sales, see my piece on how a sale can grow revenue and shrink what you keep.",
+        ],
+        callout: "The question is not whether everyone else is discounting. It is whether a discount will leave you with more money in December.",
+      },
+    ],
+  },
+  {
+    slug: "bidding-on-competitor-names-google-ads-kenya-2026",
+    category: "Google Ads",
+    title: "Bidding on a Competitor's Name in Google Ads: Smart Move or Mistake?",
+    excerpt: "It is common, it is often allowed, and it is often a waste of money. Here is when it works.",
+    date: "2026-11-18",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Bidding on a Competitor's Name in Google Ads: Smart Move or Mistake?",
+    metaDescription: "Should Kenyan businesses bid on competitor brand names in Google Ads? What Google's trademark policy covers, the costs, when it works, and an honest way to test it.",
+    intro: "Somebody searches for your biggest competitor by name, and your ad appears above theirs. It feels like a clever shortcut, and plenty of advertisers do it. Sometimes it brings in good customers. More often it brings expensive clicks from people who wanted the other business and leave as soon as they notice. Here is how to think it through.",
+    thumbnail: "https://images.unsplash.com/photo-1764105720693-268d9c92f3c1?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Chess pieces arranged on a wooden board",
+
+    sections: [
+      {
+        id: "allowed",
+        heading: "Is it allowed?",
+        paragraphs: [
+          "Google generally lets advertisers use another company's name as a keyword. Its trademark policy is mainly about the ad text: if a trademark owner complains, Google reviews the complaint and may restrict use of the trademark in ads. Whatever Google allows, never pretend to be the other business, and make sure any comparison you make is true. Kenya's consumer protection rules prohibit misleading representations. This is not legal advice, so ask a lawyer if a competitor raises it with you.",
+        ],
+      },
+      {
+        id: "economics",
+        heading: "Why it often costs more than it earns",
+        paragraphs: [
+          "People searching a brand name usually want that brand. Your ad is less relevant to them, so fewer click, and Google tends to charge less relevant ads more per click. Those who do click often leave when they realise you are someone else.",
+        ],
+        infographic: {"kind":"compare","title":"When competitor bidding tends to work, and when it backfires","columns":[{"heading":"Tends to work","tone":"good","points":["Searches like \"[competitor] alternative\" or \"[competitor] vs\"","You are clearly cheaper, faster or better in one way","A comparison page that answers the real question","The competitor is known for a weakness you fix"]},{"heading":"Tends to backfire","tone":"bad","points":["Bidding on their bare name, with nothing to offer","Ads that imply you are them","Vague claims like \"better quality\"","Sending clicks to your home page"]}]},
+      },
+      {
+        id: "better-first",
+        heading: "Do these first",
+        paragraphs: [
+          "Before chasing a competitor's searches, make sure you own your own. Bid on your own brand if competitors do, make sure your Google Business Profile is complete, and cover the general searches for what you sell. These usually bring cheaper, more willing customers.",
+        ],
+      },
+      {
+        id: "test",
+        heading: "If you want to try it, test it properly",
+        paragraphs: [
+        ],
+        infographic: {"kind":"steps","title":"A fair competitor-name test","items":[{"label":"Separate campaign","detail":"Its own budget, so it cannot eat your main campaigns."},{"label":"Narrow keywords","detail":"Start with \"alternative\" and \"vs\" searches."},{"label":"Honest ad","detail":"Say who you are and what you do differently."},{"label":"A matching page","detail":"A fair comparison, not your home page."},{"label":"Judge on cost per lead","detail":"Compare it with your other campaigns after a few weeks."}]},
+        callout: "If you have to trick people into clicking, the click was not worth buying.",
+      },
+    ],
+  },
+  {
+    slug: "google-your-business-name-what-customers-see-kenya-2026",
+    category: "SEO",
+    title: "Google Your Own Business Name: What Customers See Before They Call",
+    excerpt: "Before they call, most customers check you. Do it first, and fix what they would find.",
+    date: "2026-11-19",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Google Your Own Business Name: What Customers See Before They Call",
+    metaDescription: "What Kenyan customers see when they Google your business name, and a 15-minute check of your profile, reviews, website listing, social links and competitor ads.",
+    intro: "A friend recommends you, or someone sees your ad, and the next thing they do is search your business name. What appears in the next ten seconds decides whether they call, carry on to WhatsApp, or quietly move on. Most owners never look. Take fifteen minutes and see your business the way a cautious stranger does.",
+    thumbnail: "https://images.unsplash.com/photo-1594663653925-365bcbf7ef86?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding a smartphone showing the Google search page",
+
+    sections: [
+      {
+        id: "check",
+        heading: "The 15-minute check",
+        paragraphs: [
+          "Search on a phone, in a private window, from the area you serve. Then go through what appears in order.",
+        ],
+        infographic: {"kind":"steps","title":"Your brand search check","items":[{"label":"The Business Profile panel","detail":"Correct hours, phone, location, photos and rating?"},{"label":"Your website listing","detail":"Does the title and description say what you do?"},{"label":"Reviews and replies","detail":"Recent ones, and calm replies to the bad ones?"},{"label":"Your social profiles","detail":"Active, consistent and linked?"},{"label":"Ads above your name","detail":"Is a competitor bidding on it?"},{"label":"Anything old or wrong","detail":"Old numbers, closed branches, outdated directories."}]},
+      },
+      {
+        id: "reassure-or-worry",
+        heading: "What reassures and what worries",
+        paragraphs: [
+        ],
+        infographic: {"kind":"compare","title":"First impressions from a name search","columns":[{"heading":"Reassures","tone":"good","points":["A full profile with recent photos","Recent reviews with owner replies","A website that matches the profile","Consistent name, number and location everywhere"]},{"heading":"Worries","tone":"bad","points":["No profile, or \"permanently closed\" by mistake","Unanswered complaints","Different phone numbers on different sites","A social page last active two years ago"]}]},
+      },
+      {
+        id: "fix-it",
+        heading: "Fixing what you find",
+        paragraphs: [
+          "Most fixes are free and quick. Update your Business Profile, ask recent customers for honest reviews, reply to the old ones, and correct or remove outdated listings. Give your home page a clear title that names what you do and where. My guides to Google Business Profile setup and getting more Google reviews go into each of these in detail.",
+          "If a competitor's ad appears above your name, consider bidding on your own brand. It is usually cheap, and it stops someone else catching people who were already looking for you.",
+        ],
+      },
+      {
+        id: "repeat",
+        heading: "Make it a monthly habit",
+        paragraphs: [
+          "Search your name on the first of each month, and ask a friend to search it on their phone too. Results change as reviews arrive and listings update, and the earlier you notice something wrong, the easier it is to fix.",
+        ],
+        callout: "Your ads and your reputation meet on one screen: the results for your own name.",
+      },
+    ],
+  },
+  {
+    slug: "look-trustworthy-online-scam-fears-kenya-2026",
+    category: "Lead Generation",
+    title: "\"Is This a Scam?\" How to Look Trustworthy to Kenyan Buyers Online",
+    excerpt: "Your buyers have seen the fake shops and the vanishing sellers. Here is how to show them you are real before they ask.",
+    date: "2026-11-19",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "\"Is This a Scam?\" How to Look Trustworthy to Kenyan Buyers Online",
+    metaDescription: "How Kenyan businesses can look trustworthy online and overcome scam fears: business-name payments, real photos, location, reviews, delivery terms and a trust checklist.",
+    intro: "Ask anyone in Kenya about buying online and you will hear a story: the phone that never arrived, the Instagram shop that blocked them after payment. Your buyers bring those memories to your page. Even if you are completely genuine, you have to prove it quickly, because suspicion costs you sales you never hear about.",
+    thumbnail: "https://images.unsplash.com/photo-1741794852942-c4956a127ba2?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Customer paying with a phone at a shop's card terminal",
+
+    sections: [
+      {
+        id: "signals",
+        heading: "What scam-wary buyers look for",
+        paragraphs: [
+          "Buyers rarely say \"I think you are a scam\". They simply leave. These are the signals that decide it.",
+        ],
+        infographic: {"kind":"compare","title":"Looks risky versus looks real","columns":[{"heading":"Looks risky","tone":"bad","points":["Payment to a personal number","Only stock photos","No location, or \"we deliver countrywide\" only","Prices far below everyone else","Comments turned off"]},{"heading":"Looks real","tone":"good","points":["A till or paybill in the business name","Real photos and videos of real stock","A location with a landmark, even if visits are by appointment","Reviews from real people","Questions answered in public"]}]},
+      },
+      {
+        id: "payment",
+        heading: "Make paying feel safe",
+        paragraphs: [
+          "Payment is where trust is tested hardest. A Buy Goods till or paybill registered to your business shows the business name on the M-Pesa confirmation, which reassures people far more than a personal number. If you can, offer pay on delivery or a deposit for first orders, and say clearly what happens if something goes wrong.",
+        ],
+      },
+      {
+        id: "proof",
+        heading: "Show proof, not promises",
+        paragraphs: [
+          "\"Genuine products, trusted seller\" means nothing; everyone says it. Show it instead: short videos of orders being packed, customers receiving items, your shop or workspace, and the faces of the people behind the business. A Google Business Profile with reviews also matters, because it is a third party vouching for you, not you vouching for yourself.",
+        ],
+        infographic: {"kind":"steps","title":"A trust checklist for your page","items":[{"label":"Business name everywhere","detail":"Profile, website, till and receipts match."},{"label":"Real photos and video","detail":"Your stock, your team, your space."},{"label":"Location and hours","detail":"A landmark people recognise."},{"label":"Reviews you did not write","detail":"Google reviews and tagged customer posts."},{"label":"Clear terms","detail":"Delivery times, costs, returns and refunds."},{"label":"Fast, polite replies","detail":"Scammers rarely answer questions well."}]},
+      },
+      {
+        id: "consistency",
+        heading: "Be the same everywhere",
+        paragraphs: [
+          "If your Instagram, WhatsApp, website and Google listing show different names, numbers or prices, a cautious buyer reads that as a warning. Pick one name, one main number and one price list, and make every channel match. Then keep your accounts active: a page that went silent months ago looks abandoned, or worse.",
+        ],
+        callout: "Trust is built in the small details buyers check in seconds. Make every one of them easy to verify.",
+      },
+    ],
+  },
+  {
+    slug: "why-instagram-followers-dont-buy-kenya-2026",
+    category: "Social Media",
+    title: "Why Your Instagram Followers Don't Buy, and What to Do About It",
+    excerpt: "Ten thousand followers and a quiet till. The problem is usually not the number; it is what happens between the follow and the sale.",
+    date: "2026-11-20",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Why Your Instagram Followers Don't Buy, and What to Do About It",
+    metaDescription: "Why Instagram followers don't turn into customers for Kenyan businesses, what real account data shows, and practical steps to turn followers into buyers.",
+    intro: "Plenty of Kenyan businesses have a respectable Instagram following and very few sales from it. It is frustrating, and it leads people to chase more followers, more giveaways and more trends. But the number of followers was never the problem. The gap is between people watching and people buying, and that gap needs its own work.",
+    thumbnail: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Excited crowd cheering at a concert",
+
+    sections: [
+      {
+        id: "real-numbers",
+        heading: "What one real account's numbers show",
+        paragraphs: [
+          "In one week in September, a Nairobi skincare clinic I worked with had 577,300 Instagram views and reached 239,000 people. That same week brought 1,100 link clicks and 345 new followers. Huge attention, and a much smaller number of people taking any step towards buying.",
+        ],
+        infographic: {"kind":"stats","title":"One week on a clinic's Instagram","items":[{"value":"577,300","label":"views"},{"value":"239,000","label":"people reached"},{"value":"1,100","label":"link clicks"},{"value":"345","label":"new followers"}],"note":"From the anonymised Instagram case study, week of 14 September 2026."},
+      },
+      {
+        id: "why",
+        heading: "Why followers do not turn into buyers",
+        paragraphs: [
+        ],
+        list: [
+          "They followed for a giveaway or a funny video, not because they need what you sell.",
+          "Your posts entertain but never say what you sell, what it costs or how to buy it.",
+          "Followers do not see most of your posts; the feed only shows them a share.",
+          "There is no easy next step: no price, no link, no clear way to order.",
+          "Messages go unanswered for hours, so interest cools.",
+        ],
+      },
+      {
+        id: "fix",
+        heading: "Turning followers into buyers",
+        paragraphs: [
+          "None of this needs a bigger audience. It needs a clearer path from looking to buying.",
+        ],
+        infographic: {"kind":"steps","title":"From follow to first order","items":[{"label":"Pin how to buy","detail":"A pinned post with prices, delivery and how to order."},{"label":"Highlights that sell","detail":"Prices, reviews, delivery and FAQs as story highlights."},{"label":"A weekly offer post","detail":"Something specific to buy, with a reason to act."},{"label":"Fast DM replies","detail":"Answer the price question within minutes."},{"label":"Retarget the engaged","detail":"Show ads to people who engaged but never bought."}]},
+      },
+      {
+        id: "measure",
+        heading: "Measure the right number",
+        paragraphs: [
+          "Track enquiries and orders that came from Instagram each week, not followers. Ask every new customer where they found you. If the follower count grows and orders do not, you are building an audience, not a business, and the content needs to sell more clearly.",
+        ],
+        callout: "A smaller audience that knows how to buy beats a large one that only watches.",
+      },
+    ],
+  },
+  {
+    slug: "fake-followers-bought-likes-cost-kenya-2026",
+    category: "Social Media",
+    title: "Fake Followers and Bought Likes: What They Really Cost a Kenyan Brand",
+    excerpt: "A few hundred shillings buys ten thousand followers. Here is what they quietly cost you afterwards.",
+    date: "2026-11-20",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Fake Followers and Bought Likes: What They Really Cost a Kenyan Brand",
+    metaDescription: "The real cost of buying followers and likes for Kenyan businesses: weaker engagement, polluted ad audiences, lost trust, platform rules and how to spot fakes.",
+    intro: "Ads promising \"10K Instagram followers for KES 500\" are everywhere, and it is easy to see the appeal. A big number looks like success, and success attracts customers. But bought followers are not people who will ever buy from you, and the costs arrive later, in places most owners do not connect back to that cheap purchase.",
+    thumbnail: "https://images.unsplash.com/photo-1533915828531-55b274d98dc5?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Old toy robots lined up on a shelf",
+
+    sections: [
+      {
+        id: "costs",
+        heading: "The hidden costs",
+        paragraphs: [
+        ],
+        infographic: {"kind":"compare","title":"Bought audience versus earned audience","columns":[{"heading":"Bought","tone":"bad","points":["Accounts that never like, comment or buy","Engagement looks weak against the follower count","Audiences for ads include fake profiles","People notice the mismatch and trust you less"]},{"heading":"Earned","tone":"good","points":["Real people who chose to follow","Engagement that matches the size","Clean audiences for retargeting","Social proof that holds up to a closer look"]}]},
+      },
+      {
+        id: "engagement",
+        heading: "Your engagement looks worse, not better",
+        paragraphs: [
+          "If 20,000 followers produce 15 likes, anyone who looks closely sees that something is off. Fake accounts rarely engage, so your posts appear to perform badly next to your follower count. Platforms show content partly based on how people respond to it, so a large silent audience does nothing to help your posts travel.",
+        ],
+      },
+      {
+        id: "ads-and-rules",
+        heading: "Ads and platform rules",
+        paragraphs: [
+          "If you ever run ads to your followers, or build audiences from people who engaged with you, fake accounts dilute those audiences with profiles that will never buy. You end up paying to reach bots.",
+          "Instagram's rules also prohibit artificially collecting likes, followers or shares. Platforms regularly remove fake accounts, so bought numbers can drop suddenly, and accounts that keep doing it risk restrictions.",
+        ],
+      },
+      {
+        id: "spot-it",
+        heading: "How to spot a fake audience on a creator's account",
+        paragraphs: [
+          "This matters most when you pay creators. Before you hire one, check:",
+        ],
+        infographic: {"kind":"steps","title":"Five quick checks","items":[{"label":"Likes against followers","detail":"Tiny engagement on a big account is a warning."},{"label":"The comments","detail":"Real conversation, or the same emojis from odd accounts?"},{"label":"Follower profiles","detail":"No photos, no posts, random names."},{"label":"Sudden jumps","detail":"Thousands gained in a day, with no viral post."},{"label":"Audience location","detail":"Ask for insights showing how many are in Kenya."}]},
+        callout: "Followers you paid for will never become customers. Spend the same money on one small ad test with real people.",
+      },
+    ],
+  },
+  {
+    slug: "what-mama-mboga-teaches-about-marketing-kenya-2026",
+    category: "Brand Strategy",
+    title: "What Mama Mboga Can Teach Your Business About Marketing",
+    excerpt: "No website, no ads, no strategy deck, and a loyal customer base most brands would envy. The lessons are hiding in plain sight.",
+    date: "2026-11-21",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "What Mama Mboga Can Teach Your Business About Marketing",
+    metaDescription: "Marketing lessons from Kenya's mama mboga: knowing customers by name, selling in affordable sizes, convenience, trust, credit, phone orders and the perfect upsell.",
+    intro: "Every Kenyan neighbourhood has one: the mama mboga who knows your name, knows you like your sukuma cut thin, and somehow always has dhania when you forgot it. She has no website and runs no ads, yet customers walk past bigger shops to buy from her. Most of what she does is good marketing. Here is what any business can borrow.",
+    thumbnail: "https://images.unsplash.com/photo-1687422809654-579d81c29d32?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Smiling market vendor holding a phone at her fruit stall",
+
+    sections: [
+      {
+        id: "knows-you",
+        heading: "She knows her customers",
+        paragraphs: [
+          "She remembers who buys what, who pays at month-end and whose child is sick this week. That is customer relationship management, done in her head. For a business, the same idea means keeping simple notes on your customers, what they buy and when, and using them to serve them better.",
+        ],
+      },
+      {
+        id: "lessons",
+        heading: "Six lessons from the kibanda",
+        paragraphs: [
+        ],
+        infographic: {"kind":"compare","title":"What mama mboga does, and the business version","columns":[{"heading":"At the kibanda","tone":"neutral","points":["Knows customers by name","Sells in small, affordable bundles","Is right on your way home","Gives trusted customers credit","Takes orders by phone","\"Unataka dhania pia?\""]},{"heading":"In your business","tone":"good","points":["A customer list with notes","Pack sizes and prices people can afford today","Be easy to find on Google and WhatsApp","Build trust before asking for big commitments","Make ordering by WhatsApp effortless","Suggest the obvious add-on at checkout"]}]},
+      },
+      {
+        id: "affordable",
+        heading: "She sells in sizes people can afford",
+        paragraphs: [
+          "Mama mboga does not insist you buy a whole bag. She sells a bunch, a few tomatoes, a small cup of something, priced for today's budget. Many businesses lose customers simply because their smallest option costs too much for a first try. A starter size, a trial session or a smaller package can open the door.",
+        ],
+      },
+      {
+        id: "convenience",
+        heading: "Convenience beats everything",
+        paragraphs: [
+          "She is on your way home, open when you pass, and she accepts M-Pesa. Online, your version of being on the route home is being easy to find when someone searches, being easy to reach on WhatsApp, and making payment simple. Every extra step you add is a reason for a customer to go to the next stall.",
+        ],
+      },
+      {
+        id: "upsell",
+        heading: "The perfect upsell",
+        paragraphs: [
+          "\"Unataka dhania pia?\" is a lesson in selling. It is relevant, it is helpful, it is small and it is asked at exactly the right moment. Compare that with a pop-up offering random products. Suggest the thing your customer is most likely to need next, at the moment they are buying.",
+        ],
+        callout: "Mama mboga's whole strategy is to know her customers and make buying easy. That is still the strategy that wins.",
+      },
+    ],
+  },
+  {
+    slug: "keyword-stuffed-business-name-google-profile-kenya-2026",
+    category: "SEO",
+    title: "Why \"Best Cheap Plumber Nairobi\" as Your Business Name Can Backfire",
+    excerpt: "Stuffing keywords into your Google Business Profile name looks like a shortcut. Google treats it as a violation.",
+    date: "2026-11-21",
+    dateLabel: "November 2026",
+    readTime: "4 min read",
+    metaTitle: "Why \"Best Cheap Plumber Nairobi\" as Your Business Name Can Backfire",
+    metaDescription: "Why adding keywords, locations or taglines to your Google Business Profile name breaks Google's guidelines, how it can lead to suspension, and what to do instead.",
+    intro: "Search for almost any service on Google Maps in Nairobi and you will spot them: listings named something like \"Best Affordable Plumber Nairobi 24/7\". It looks like a clever ranking trick. But Google's guidelines are clear that your business name must be your real-world name, and stuffing it with keywords can lead to edits, suspension and a lot of lost calls.",
+    thumbnail: "https://images.unsplash.com/photo-1548296479-467c3a445115?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shop sign reading Everything 99c, over 10,000 items",
+
+    sections: [
+      {
+        id: "the-rule",
+        heading: "What Google's guidelines say",
+        paragraphs: [
+          "Google says your name should reflect your business's real-world name, as used consistently on your storefront, website, stationery and as known to customers. Its guidelines list what must not be added to the name, including marketing taglines, service or product information, location information, phone numbers and website addresses.",
+        ],
+        infographic: {"kind":"compare","title":"Business names: allowed and not allowed","columns":[{"heading":"Not allowed","tone":"bad","points":["\"Wanjiru Plumbing | Best Plumber Nairobi\"","\"Glow Salon 24 Hours Kilimani\"","\"ABC Clinic - Call 07XX XXX XXX\"","\"Top Movers CHEAP & FAST\""]},{"heading":"Allowed","tone":"good","points":["\"Wanjiru Plumbing\", if that is the real name","\"Glow Salon\"","\"ABC Clinic\"","\"Top Movers\""]}],"note":"Illustrative names. A real registered name that genuinely includes a word like Plumbing is fine."},
+      },
+      {
+        id: "why-risky",
+        heading: "Why it is risky",
+        paragraphs: [
+          "Profiles that break the guidelines can be edited by Google or suspended, and a suspended profile disappears from Maps exactly when customers are looking. Anyone can also suggest an edit to your listing, including competitors, and Google provides a way to report listings that misrepresent themselves. A shortcut that depends on nobody noticing is not a strategy.",
+        ],
+      },
+      {
+        id: "do-instead",
+        heading: "What helps instead",
+        paragraphs: [
+          "The things Google actually wants to see are also the things that help you rank honestly.",
+        ],
+        infographic: {"kind":"steps","title":"Ranking without breaking the rules","items":[{"label":"Use your real name","detail":"Exactly as it appears on your sign and documents."},{"label":"Choose precise categories","detail":"A specific primary category, plus true secondary ones."},{"label":"List your services","detail":"Every service you offer, in plain words."},{"label":"Earn reviews","detail":"Steady, honest reviews from real customers."},{"label":"Match your website","detail":"Same name, address and phone, with service pages."}]},
+      },
+      {
+        id: "fixing",
+        heading: "If your profile name is already stuffed",
+        paragraphs: [
+          "Change it back to your real name now, before Google does it for you, and keep everything else up to date. If you are rebranding, change your signage and documents first, then update the profile so they match. My guide to how Google Maps ranks businesses explains what actually moves your position.",
+        ],
+        callout: "Your business name is not a keyword field. Rank with relevance and reviews, and keep the name honest.",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

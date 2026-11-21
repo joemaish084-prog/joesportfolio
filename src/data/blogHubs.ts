@@ -79,6 +79,8 @@ export const blogHubs: BlogHub[] = [
       "These are the pieces I point clients to most often before we launch anything on Meta — what to spend, what to test, and what to stop doing.",
     ],
     postSlugs: [
+      "meta-ad-library-competitor-ads-kenya-2026",
+      "first-meta-ads-test-kes-10000-kenya-2026",
       "when-to-increase-meta-ads-budget-kenya",
       "how-much-should-a-kenyan-sme-spend-on-meta-ads",
       "ad-mistakes-nairobi-smes-keep-making-2026",
@@ -128,6 +130,7 @@ export const blogHubs: BlogHub[] = [
       "Start here if you are deciding between search and social, or trying to work out what a fair retainer looks like.",
     ],
     postSlugs: [
+      "bidding-on-competitor-names-google-ads-kenya-2026",
       "branded-vs-non-branded-google-ads-kenya",
       "google-ads-cost-kenya-2026",
       "google-ads-vs-meta-ads-kenya-2026",
@@ -178,6 +181,8 @@ export const blogHubs: BlogHub[] = [
       "These articles cover the diagnosis, the realistic cost of fixing it, and the local search work that moves the needle fastest.",
     ],
     postSlugs: [
+      "google-your-business-name-what-customers-see-kenya-2026",
+      "keyword-stuffed-business-name-google-profile-kenya-2026",
       "google-business-profile-service-area-nairobi",
       "why-your-nairobi-business-isnt-showing-up-on-google-2026",
       "google-business-profile-setup-nairobi-2026",
@@ -220,6 +225,7 @@ export const blogHubs: BlogHub[] = [
       "This hub covers where leads come from, why ads get clicks but no calls, and what happens on WhatsApp after the lead lands.",
     ],
     postSlugs: [
+      "look-trustworthy-online-scam-fears-kenya-2026",
       "reduce-appointment-no-shows-leads-kenya",
       "lead-generation-campaigns-kenya-2026",
       "dm-for-price-is-costing-you-sales-kenya-2026",
@@ -266,6 +272,7 @@ export const blogHubs: BlogHub[] = [
       "These are the honest ones: what things cost, how to vet whoever you are about to hire, what an audit actually surfaces, and why I turn work down.",
     ],
     postSlugs: [
+      "black-friday-kenya-should-small-business-bother-2026",
       "changing-marketing-agency-handover-kenya",
       "seo-pricing-for-kenyan-smes-2026",
       "google-ads-cost-kenya-2026",
@@ -316,6 +323,8 @@ export const blogHubs: BlogHub[] = [
       "Here is how I think about platform choice, what a campaign that reached four million views actually looked like, and where the sale eventually closes.",
     ],
     postSlugs: [
+      "why-instagram-followers-dont-buy-kenya-2026",
+      "fake-followers-bought-likes-cost-kenya-2026",
       "repeatable-short-video-series-business-kenya",
       "tiktok-vs-instagram-for-kenyan-brands-2026",
       "0-to-4-million-tiktok-views-behind-the-campaign",

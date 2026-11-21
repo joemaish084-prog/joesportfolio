@@ -12,6 +12,8 @@ import { shopifyGuideSlugs } from "@/data/shopify";
 const SERVICE_POSTS: Record<string, string[]> = {
   "shopify-services": shopifyGuideSlugs,
   "meta-ads-management": [
+    "first-meta-ads-test-kes-10000-kenya-2026",
+    "meta-ad-library-competitor-ads-kenya-2026",
     "when-to-increase-meta-ads-budget-kenya",
     "ad-creative-fatigue-signs-kenya-2026",
     "meta-ads-account-structure-small-budget-kenya-2026",
@@ -31,6 +33,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "how-to-read-meta-ads-report-kenya-2026",
   ],
   "google-ads-management": [
+    "bidding-on-competitor-names-google-ads-kenya-2026",
     "branded-vs-non-branded-google-ads-kenya",
     "responsive-search-ads-headlines-kenya-2026",
     "google-ads-bidding-strategies-explained-kenya-2026",
@@ -51,6 +54,8 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "youtube-ads-for-kenyan-businesses-2026",
   ],
   "seo-services-nairobi": [
+    "keyword-stuffed-business-name-google-profile-kenya-2026",
+    "google-your-business-name-what-customers-see-kenya-2026",
     "google-business-profile-service-area-nairobi",
     "core-web-vitals-website-speed-kenya-2026",
     "how-google-maps-ranks-businesses-nairobi-2026",
@@ -64,6 +69,8 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "location-pages-seo-nairobi-2026",
   ],
   "social-media-management": [
+    "fake-followers-bought-likes-cost-kenya-2026",
+    "why-instagram-followers-dont-buy-kenya-2026",
     "repeatable-short-video-series-business-kenya",
     "short-video-editing-workflow-small-business-kenya-2026",
     "community-management-replying-to-comments-kenya-2026",
@@ -87,6 +94,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "video-hooks-first-three-seconds-kenya-2026",
   ],
   "lead-generation": [
+    "look-trustworthy-online-scam-fears-kenya-2026",
     "reduce-appointment-no-shows-leads-kenya",
     "why-tech-builders-struggle-to-market-and-sell-kenya-2026",
     "property-leads-lost-in-the-inbox-case-study-2026",
@@ -103,6 +111,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "whatsapp-lead-follow-up-system-kenya-2026",
   ],
   "digital-marketing-audit": [
+    "black-friday-kenya-should-small-business-bother-2026",
     "changing-marketing-agency-handover-kenya",
     "hiring-lessons-127-internship-applications-kenya-2026",
     "marketing-contract-checklist-kenya-2026",
@@ -124,6 +133,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "brand-strategy-before-running-ads-kenya-2026",
   ],
   "digital-marketing-kenya": [
+    "what-mama-mboga-teaches-about-marketing-kenya-2026",
     "google-ads-case-study-weakest-campaign-kenya",
     "seven-lessons-two-platforms-one-retailer-case-study-2026",
     "digital-marketing-for-ecommerce-kenya-2027",
