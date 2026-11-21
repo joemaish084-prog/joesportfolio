@@ -23,8 +23,8 @@ export const agencyPages = {
     path: "/agency/results", label: "Results",
     title: "Digital Marketing Results & Case Studies | Joseph Maina",
     heading: "The work behind the results",
-    description: "Explore Joseph Maina's Kenyan campaign results, including Convey Communications and iClear. Read the briefs, creative decisions and campaign breakdowns.",
-    intro: "A result is more useful with the campaign behind it. See the challenges, channels and outcomes below, then read the full breakdowns. Past results are specific to each campaign.",
+    description: "Explore Kenyan digital marketing case studies with charts for Meta and Google Ads revenue, return on ad spend, and how property enquiries were qualified.",
+    intro: "See how campaigns performed across paid search, social and lead generation. Explore the numbers, then read how each campaign was planned, measured and improved.",
     teaser: "Six tracked case studies covering revenue, return on ad spend and reach, plus written breakdowns.",
   },
   pricing: {
@@ -32,7 +32,7 @@ export const agencyPages = {
     title: "Digital Marketing Pricing in Kenya | Joseph Maina",
     heading: "Clear pricing, with room for your brief",
     description: `Compare digital marketing retainers from KSh ${starterFee} per month, channel management fees and project services. Advertising spend is billed separately.`,
-    intro: "Compare the existing monthly packages and starting fees below. Management and creative fees are separate from your ad spend; the final scope is agreed in your proposal.",
+    intro: "Compare monthly packages and standalone services. Your proposal sets out the channels, creative and reporting that fit your brief.",
     teaser: `Retainers from KES ${starterFee}/month. Your ad spend is billed separately.`,
   },
   contact: {

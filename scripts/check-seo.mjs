@@ -46,11 +46,22 @@ for (const route of routes) {
     assert.equal(url.protocol, "https:", `${label}: HTTPS social image`);
     if (url.origin === SITE_URL) assert(fs.existsSync(localFile(url)), `${label}: missing social image ${url.pathname}`);
   }
+  if (route.head.imageAlt) {
+    for (const name of ["og:image:alt", "twitter:image:alt"]) {
+      assert.deepEqual(meta(name).map((tag) => tag.content), [route.head.imageAlt], `${label}: ${name}`);
+    }
+  }
   for (const image of tags(html, "img")) {
     images++;
     assert(Object.hasOwn(image, "alt"), `${label}: image needs alt (empty for decorative images)`);
     const url = new URL(image.src, canonical);
     if (url.origin === SITE_URL) assert(fs.existsSync(localFile(url)), `${label}: missing image ${url.pathname}`);
+    const candidates = (image.srcSet ?? image.srcset ?? "").split(",");
+    for (const candidate of candidates) {
+      const src = candidate.trim().split(/\s+/)[0];
+      if (!src.startsWith("/")) continue;
+      assert(fs.existsSync(localFile(new URL(src, canonical))), `${label}: missing responsive image ${src}`);
+    }
   }
   for (const link of tags(html, "a")) {
     if (!link.href) continue;

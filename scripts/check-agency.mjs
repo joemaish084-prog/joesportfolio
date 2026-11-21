@@ -35,6 +35,24 @@ const pricing = read("/agency/pricing");
 const results = read("/agency/results");
 const contact = read("/agency/contact");
 const home = read("/");
+for (const [key, html] of [["services", services], ["pricing", pricing], ["results", results]]) {
+  assert(html.includes(`property="og:image" content="${origin}/og/agency/${key}.png"`), `${key}: unique prerendered share image`);
+}
+for (const [key, html, photo] of [["pricing", pricing, "pricing-planning"], ["results", results, "results-reporting"]]) {
+  const heroImage = html.match(new RegExp(`<img\\b[^>]*src="/media/agency/${photo}-960.webp"[^>]*>`))?.[0];
+  assert(heroImage?.includes('loading="eager"'), `${key}: load the initial hero image eagerly`);
+  assert(heroImage.includes('fetchpriority="high"'), `${key}: prioritize the hero image`);
+  assert(html.includes(`"contentUrl":"${origin}/media/agency/${photo}-960.webp"`), `${key}: describe the visible hero in structured data`);
+}
+const serviceCards = [...services.matchAll(/<li\b[^>]*\bid="service-([^"]+)"[^>]*>([\s\S]*?)<\/li>/g)];
+assert(serviceCards.length >= 13, "Core and additional service cards are present before JavaScript");
+for (const [, slug, card] of serviceCards) {
+  const image = card.match(new RegExp(`<img\\b[^>]*src="/media/agency/${slug}-960.webp"[^>]*>`))?.[0];
+  assert(image && /\balt="[^"]+"/.test(image), `${slug}: unique service photo with descriptive alt text`);
+  assert(image.includes(`/media/agency/${slug}-480.webp 480w`) && image.includes('loading="lazy"'), `${slug}: responsive lazy-loaded service photo`);
+}
+assert(pricing.includes("Starting monthly management fees"), "Pricing compares monthly fees in the initial HTML");
+assert(results.includes("Attributed revenue by period") && results.includes("Where the property enquiries went"), "Results charts appear in the initial HTML");
 const legacyHome = read("/agency");
 assert(legacyHome.includes(`rel="canonical" href="${origin}/"`), "The legacy agency entry canonicalizes to home");
 assert(!sitemap.includes(`<loc>${origin}/agency</loc>`), "The legacy home alias is excluded from the sitemap");

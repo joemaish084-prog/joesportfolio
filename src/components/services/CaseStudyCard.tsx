@@ -17,7 +17,6 @@ export function CaseStudyCard({ study }: { study: ProofItem }) {
       {study.imageSlot && (
         <ServiceImage
           slot={study.imageSlot}
-          alt={`Results screenshot for the ${clientName} campaign. ${study.result}`}
           sizes="(min-width: 1024px) 360px, (min-width: 768px) 33vw, 100vw"
           className="aspect-video w-full"
         />

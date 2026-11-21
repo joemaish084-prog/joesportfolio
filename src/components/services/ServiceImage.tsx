@@ -1,77 +1,29 @@
 import { useState } from "react";
-import type { ImageSlot, ProofImageSlot } from "@/data/services";
+import type { ProofImageSlot } from "@/data/services";
 import { serviceImageReplacements } from "@/data/serviceVisuals";
 import { contentImageProps } from "@/lib/responsiveImage";
 import { ServiceImagePlaceholder } from "./ServiceImagePlaceholder";
 
-type Slot = ImageSlot | ProofImageSlot;
-
-/**
- * Every webp in `src/assets/services/`. A slot is `<slot>.webp` (full size) with
- * an optional `<slot>-<width>.webp` smaller copy. Drop a file in the folder and
- * it is used; no import to add. Made by `scripts/build-service-images.py`.
- */
-const files = import.meta.glob<string>("/src/assets/services/*.webp", { eager: true, query: "?url", import: "default" });
-
-/** Intrinsic size of the full-size file per slot. Sets width/height so nothing shifts. */
-const SIZE: Record<Slot, { width: number; height: number }> = {
-  "proof-case-1": { width: 1200, height: 675 },
-  "proof-case-2": { width: 1200, height: 675 },
-  "proof-case-3": { width: 1200, height: 675 },
-  "svc-meta-ads": { width: 1125, height: 703 },
-  "svc-google-ads": { width: 1200, height: 1500 },
-  "svc-seo": { width: 800, height: 600 },
-  "svc-social": { width: 800, height: 600 },
-  "svc-tiktok-ads": { width: 800, height: 600 },
-  "svc-lead-gen": { width: 800, height: 600 },
-  "svc-shopify": { width: 800, height: 600 },
-};
-
-function sources(slot: Slot) {
-  const full = files[`/src/assets/services/${slot}.webp`];
-  if (!full) return null;
-  const small = Object.entries(files).find(([path]) => path.endsWith(`/${slot}-400.webp`))?.[1];
-  const { width } = SIZE[slot];
-  return { src: full, srcSet: small ? `${small} 400w, ${full} ${width}w` : undefined };
-}
-
-interface ServiceImageProps {
-  slot: Slot;
-  /** Alt text from the data file. */
-  alt: string;
-  /** The `sizes` attribute: how wide the image renders at each breakpoint. */
+export function ServiceImage({ slot, sizes, className = "" }: {
+  slot: ProofImageSlot;
   sizes: string;
-  /** Above the fold only. Every slot on the services page is below it. */
-  priority?: boolean;
-  /** Sets the size and ratio of the box. */
   className?: string;
-  /** Passed to the placeholder shown when the slot has no file yet. */
-  thumbOnMobile?: boolean;
-}
-
-/**
- * Lazy-loaded slot image with a solid colour behind it until it arrives.
- * A slot with no file (or a file that fails to load) shows the labelled placeholder.
- */
-export function ServiceImage({ slot, alt, sizes, priority = false, className = "", thumbOnMobile = false }: ServiceImageProps) {
+}) {
   const [failed, setFailed] = useState(false);
-  const replacement = serviceImageReplacements[slot];
-  const image = replacement
-    ? { ...replacement, ...contentImageProps(replacement.src, sizes), ...(replacement.srcSet && { srcSet: replacement.srcSet }) }
-    : sources(slot);
-  const size = replacement ?? SIZE[slot];
+  const visual = serviceImageReplacements[slot];
+  const image = { src: visual.src, srcSet: undefined, ...contentImageProps(visual.src, sizes) };
 
-  if (!image || failed) return <ServiceImagePlaceholder slot={slot} className={className} thumbOnMobile={thumbOnMobile} />;
+  if (failed) return <ServiceImagePlaceholder slot={slot} className={className} />;
 
   return (
     <img
       src={image.src}
-      srcSet={image.srcSet}
+      srcSet={visual.srcSet ?? image.srcSet}
       sizes={sizes}
-      alt={alt ? replacement?.alt ?? alt : ""}
-      width={size.width}
-      height={size.height}
-      loading={priority ? "eager" : "lazy"}
+      alt={visual.alt}
+      width={visual.width}
+      height={visual.height}
+      loading="lazy"
       decoding="async"
       onError={() => setFailed(true)}
       data-image-slot={slot}

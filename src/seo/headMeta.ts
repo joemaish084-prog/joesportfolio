@@ -89,5 +89,6 @@ export function headTags(head: PageHead): HeadTag[] {
     meta("name", "twitter:title", ogTitle),
     meta("name", "twitter:description", ogDescription),
     meta("name", "twitter:image", image),
+    ...(head.imageAlt ? [meta("name", "twitter:image:alt", head.imageAlt)] : []),
   ];
 }

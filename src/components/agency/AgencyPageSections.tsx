@@ -18,8 +18,9 @@ export function SubHeading({ eyebrow, title, children, aside }: { eyebrow?: stri
   </div>;
 }
 
-export function AgencyPageHeader({ page, children }: {
+export function AgencyPageHeader({ page, visual, children }: {
   page: { label: string; heading: string; intro: string };
+  visual?: ReactNode;
   children?: ReactNode;
 }) {
   return (
@@ -37,10 +38,15 @@ export function AgencyPageHeader({ page, children }: {
               <li><span aria-current="page" className="text-foreground">{page.label}</span></li>
             </ol>
           </nav>
-          <SectionLabel>JOSEPH MAINA MARKETING</SectionLabel>
-          <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{page.intro}</p>
-          {children}
+          <div className={visual ? "grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-16" : undefined}>
+            <div className="min-w-0">
+              <SectionLabel>JOSEPH MAINA MARKETING</SectionLabel>
+              <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{page.intro}</p>
+              {children}
+            </div>
+            {visual}
+          </div>
         </div>
       </div>
     </header>

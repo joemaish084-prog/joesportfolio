@@ -2,13 +2,17 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
+import { AgencyPhoto } from "@/components/agency/AgencyPhoto";
 import { AgencyPageCta, AgencyPageFooter, AgencyPageHeader, SubHeading } from "@/components/agency/AgencyPageSections";
 import { CardCover } from "@/components/agency/CardCover";
 import { ResultsInsights } from "@/components/agency/ResultsInsights";
 import { Seo } from "@/components/Seo";
 import { agencyPages } from "@/data/agencyPages";
+import { agencyHeroPhotos } from "@/data/agencyPageMedia";
 import { blogSummaries } from "@/data/blogSummaries";
 import { caseStudies } from "@/data/caseStudies";
+import { combinedAds } from "@/data/combinedAdsCaseStudy";
+import { formatKes } from "@/data/services";
 import { trackSpotlight } from "@/lib/spotlight";
 import { contentImageProps } from "@/lib/responsiveImage";
 import { agencyHead } from "@/seo/agencyHeads";
@@ -19,7 +23,23 @@ export default function AgencyResults() {
       <Seo {...agencyHead("results")} />
       <AgencyNavigation />
       <main>
-        <AgencyPageHeader page={agencyPages.results} />
+        <AgencyPageHeader page={agencyPages.results} visual={
+          <figure className="surface-card overflow-hidden">
+            <div className="aspect-[16/10] overflow-hidden">
+              <AgencyPhoto {...agencyHeroPhotos.results} sizes="(min-width: 1280px) 470px, (min-width: 1024px) 44vw, 100vw" priority className="object-bottom" />
+            </div>
+            <figcaption className="p-5 sm:p-6">
+              <span className="block text-sm font-medium text-muted-foreground">Attributed revenue</span>
+              <strong className="mt-1 block font-display text-3xl font-bold tracking-tight text-primary tabular-nums sm:text-4xl">
+                KES {formatKes(combinedAds.after.value)}
+              </strong>
+              <span className="mt-2 block text-sm text-muted-foreground">{combinedAds.platform} · {combinedAds.period}</span>
+            </figcaption>
+          </figure>
+        }>
+          <Button className="mt-8 rounded-full" asChild><a href="#campaign-metrics">Explore campaign charts</a></Button>
+        </AgencyPageHeader>
+        <ResultsInsights />
         <section id="results" className="container mx-auto px-4 py-20 scroll-mt-20">
           <div className="max-w-6xl mx-auto">
           <SubHeading eyebrow="Case studies" title="Real Results for Real Brands"
@@ -55,7 +75,6 @@ export default function AgencyResults() {
             ))}
           </div>
           </div>
-          <ResultsInsights />
           <div className="max-w-6xl mx-auto mt-16">
             <SubHeading eyebrow="Go deeper" title="Read the campaign breakdowns">The portfolio contains the wider creative work. These articles explain the marketing decisions, campaign context and reported results.</SubHeading>
             <div className="grid sm:grid-cols-2 gap-4">{[

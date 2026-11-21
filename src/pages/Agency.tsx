@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AgencyPageCta, AgencyPageFooter, AgencyPageHeader, SubHeading } from "@/components/agency/AgencyPageSections";
+import { PricingOverview } from "@/components/agency/PricingOverview";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -253,7 +254,12 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 
       <main>
         {/* The services page brings its own hero (ServicesHero). */}
-        {pageKey !== "home" && pageKey !== "services" && <AgencyPageHeader page={page}>
+        {pageKey !== "home" && pageKey !== "services" && <AgencyPageHeader page={page}
+          visual={pageKey === "pricing" ? <PricingOverview market={market} /> : undefined}>
+              {pageKey === "pricing" && <div className="mt-8 flex flex-wrap items-start gap-4">
+                <Button className="shrink-0 rounded-full" asChild><a href="#services">Compare packages</a></Button>
+                <MarketToggle className="items-start" />
+              </div>}
               {pageKey === "contact" && <p className="mt-8 flex flex-wrap gap-2.5 text-sm">
                 <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="mailto:joemaish084@gmail.com"><Mail className="h-4 w-4 text-primary" aria-hidden />joemaish084@gmail.com</a>
                 <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="tel:+254704700160"><Phone className="h-4 w-4 text-primary" aria-hidden />+254 704 700 160</a>
@@ -376,20 +382,15 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
             <p className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-3.5 py-1.5 text-sm text-muted-foreground">
               <Receipt className="h-4 w-4 shrink-0 text-primary" aria-hidden /> Management fees are separate from your advertising budget.
             </p>
-            {pageKey === "pricing" && <MarketToggle className="items-start pt-2" />}
           </div>
 
 {pageKey === "pricing" && <>
           {/* Retainer Packages — 60% visual weight */}
           <div className="mb-16">
             <div className="grid md:grid-cols-3 gap-6 md:items-stretch pt-3">
-              {retainerPackages.map((p, i) => (
-                <motion.div
+              {retainerPackages.map((p) => (
+                <div
                   key={p.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
                   onMouseMove={trackSpotlight}
                   className={`spotlight surface-card p-6 sm:p-7 flex flex-col relative hover:-translate-y-1 transition-all duration-300 ${p.highlight ? "border-primary/50 shadow-elegant md:-my-3 md:py-10" : "hover:border-primary/40"}`}
                 >
@@ -418,7 +419,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                   <Button className="w-full rounded-full" variant={p.highlight ? "default" : "outline"} asChild><Link to={`/agency/contact?service=${p.name.toLowerCase()}#brief`}>
                     Get Custom Quote
                   </Link></Button>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -447,8 +448,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               <table className="w-full text-left text-sm max-sm:block">
                 <caption className="sr-only">Starting fees for existing agency services; ad spend is separate</caption>
                 <thead className="bg-muted/60 max-sm:sr-only"><tr><th scope="col" className="p-4">Service</th><th scope="col" className="p-4">Starting fee</th><th scope="col" className="p-4">Scope</th></tr></thead>
-                <tbody className="max-sm:grid max-sm:gap-3">{[...singlePlatform.map(item => ({...item, desc: item.features.join(", ")})), ...supportingServices].map(item => <tr key={item.slug} className="border-t border-border transition-colors hover:bg-muted/40 max-sm:grid max-sm:grid-cols-[1fr_auto] max-sm:gap-x-4 max-sm:gap-y-1.5 max-sm:rounded-2xl max-sm:border max-sm:bg-card/60 max-sm:p-4">
-                  <th scope="row" className="p-4 font-medium max-sm:p-0"><Link to={SERVICE_PAGE_FOR_ROW[item.slug] ?? `/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
+                <tbody className="max-sm:grid max-sm:gap-3">{[...singlePlatform.map(item => ({...item, desc: item.features.join(", ")})), ...supportingServices].map(item => <tr key={item.slug} className="border-t border-border transition-colors hover:bg-muted/40 max-sm:grid max-sm:grid-cols-[minmax(0,1fr)_auto] max-sm:gap-x-4 max-sm:gap-y-1.5 max-sm:rounded-2xl max-sm:border max-sm:bg-card/60 max-sm:p-4">
+                  <th scope="row" className="p-4 font-medium max-sm:break-words max-sm:p-0"><Link to={SERVICE_PAGE_FOR_ROW[item.slug] ?? `/agency/services#service-${item.slug}`} className="hover:text-primary">{item.name}</Link></th>
                   <td className="p-4 font-semibold text-primary whitespace-nowrap max-sm:p-0 max-sm:text-right first-letter:uppercase">{localizePrice(item.price, market)}</td><td className="p-4 text-muted-foreground max-sm:col-span-2 max-sm:p-0">{item.desc}</td>
                 </tr>)}</tbody>
               </table>

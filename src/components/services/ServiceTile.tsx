@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { priceLabel, serviceAnchorId, serviceFilters, serviceHref, type Service } from "@/data/services";
 import { localizePrice, useMarket } from "@/lib/market";
 import { trackSpotlight } from "@/lib/spotlight";
-import { ServiceImage } from "./ServiceImage";
+import { AgencyPhoto } from "@/components/agency/AgencyPhoto";
 
 export type ServiceTileSize = "large" | "tall" | "standard";
 
@@ -16,18 +16,18 @@ const SPAN: Record<ServiceTileSize, string> = {
   standard: "",
 };
 
-/** Image box per size. Standard tiles drop the large image on phones and show a thumbnail beside the title instead. */
+/** Keep the photography visible at each breakpoint. */
 const IMAGE: Record<ServiceTileSize, string> = {
   large: "aspect-[16/10] w-full",
   tall: "aspect-[16/10] w-full lg:aspect-[4/5]",
-  standard: "hidden aspect-[4/3] w-full md:block",
+  standard: "aspect-[3/2] w-full",
 };
 
 /** Rendered width per size, for the `sizes` attribute. */
 const SIZES: Record<ServiceTileSize, string> = {
-  large: "(min-width: 1024px) 740px, 100vw",
-  tall: "(min-width: 1024px) 360px, 100vw",
-  standard: "360px",
+  large: "(min-width: 1280px) 760px, (min-width: 1024px) 65vw, 100vw",
+  tall: "(min-width: 1280px) 374px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
+  standard: "(min-width: 1280px) 374px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
 };
 
 const categoryLabel = (service: Service) =>
@@ -59,13 +59,11 @@ interface ServiceTileProps {
 /**
  * One service in the bento grid. The whole tile is a single link: the CTA at
  * the bottom is stretched over the card, so there is one tab stop per tile.
- * A service with no image slot (the free audit) renders as the accent tile.
+ * The free audit renders as the accent tile.
  */
 export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function ServiceTile({ service, size, reducedMotion = false, filtered = false }, ref) {
-  const accent = service.imageSlot === null;
+  const accent = service.slug === "digital-marketing-audit";
   const large = size === "large";
-  // Phones: standard tiles swap the large image for a small one beside the title, so the text gets the full width.
-  const thumb = size === "standard" && !accent;
   const quiet = accent ? "text-primary-foreground/85" : "text-muted-foreground";
 
   return (
@@ -88,34 +86,18 @@ export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function 
         SPAN[size],
       ].join(" ")}
     >
-      {/* The wrapper owns the box and clips the zoom, so Step 5 can swap the placeholder for the real image. */}
-      {service.imageSlot && (
-        <div className={`relative overflow-hidden ${IMAGE[size]}`}>
-          <ServiceImage
-            slot={service.imageSlot}
-            alt={service.imageAlt ?? ""}
-            sizes={SIZES[size]}
-            className="h-full w-full transition-transform duration-500 motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
-          />
-        </div>
-      )}
+      <div className={`relative overflow-hidden ${IMAGE[size]} ${accent && !filtered ? "md:max-lg:aspect-[3/1]" : ""}`}>
+        <AgencyPhoto
+          name={service.slug}
+          alt={service.imageAlt}
+          sizes={accent && !filtered ? SIZES.large : SIZES[size]}
+          className="transition-transform duration-500 motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
+        />
+      </div>
 
       <div className={`flex min-w-0 flex-1 flex-col p-4 sm:p-5 ${large ? "lg:p-7" : ""}`}>
-        {accent && (
-          <>
-            {/* Decoration only: fills the tall tile on desktop without adding a claim. */}
-            <ClipboardList aria-hidden strokeWidth={1} className="pointer-events-none absolute -right-8 -top-8 hidden h-44 w-44 text-primary-foreground/[0.08] lg:block" />
-            <span className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-primary-foreground/10 ring-1 ring-primary-foreground/20">
-              <ClipboardList className="h-5 w-5" aria-hidden />
-            </span>
-          </>
-        )}
         <div className="flex items-center gap-3">
-          {thumb && service.imageSlot && (
-            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl md:hidden">
-              <ServiceImage slot={service.imageSlot} alt="" sizes="56px" className="h-full w-full" thumbOnMobile />
-            </div>
-          )}
+          {accent && <ClipboardList className="h-6 w-6 shrink-0" aria-hidden />}
           <div className="min-w-0">
             <p className={`mono-accent text-[11px] font-semibold uppercase tracking-[0.16em] ${accent ? quiet : "text-primary"}`}>
               {categoryLabel(service)}

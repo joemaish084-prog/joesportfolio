@@ -16,7 +16,7 @@ import handover from "@/assets/agency/iclear-handover.webp";
 import pressDailyNation from "@/assets/press-daily-nation.webp";
 import portrait from "@/assets/joseph-maina-portrait.webp";
 import metaTurnaround from "@/assets/case-covers/meta-ads-turnaround.webp";
-import type { ImageSlot, ProofImageSlot } from "./services";
+import type { ProofImageSlot } from "./services";
 
 /**
  * Real work shown on each service page. Every image is already published
@@ -180,9 +180,7 @@ export const serviceVisuals: Record<string, ServiceVisuals> = {
 
 export const getServiceVisuals = (slug: string): ServiceVisuals | undefined => serviceVisuals[slug];
 
-export const serviceImageReplacements: Partial<Record<ImageSlot | ProofImageSlot, ServiceVisual>> = {
-  "svc-seo": stock.nairobiSkyline,
-  "svc-lead-gen": stock.whatsapp,
+export const serviceImageReplacements: Record<ProofImageSlot, ServiceVisual> = {
   "proof-case-1": img.facebook,
   "proof-case-2": img.convey,
   "proof-case-3": {

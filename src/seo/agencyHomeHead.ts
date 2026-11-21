@@ -2,6 +2,8 @@ import { agencyPages } from "@/data/agencyPages";
 import { homeFaqs } from "@/data/agencyHome";
 import { SITE_URL, canonicalUrl, ogCardImage, type PageHead } from "./headMeta";
 
+export const websiteId = `${SITE_URL}/#website`;
+
 export const agencyOrganization = {
   "@context": "https://schema.org",
   "@type": ["Organization", "LocalBusiness"],
@@ -33,10 +35,19 @@ export const agencyHomeHead: PageHead = {
     agencyOrganization,
     {
       "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: canonicalUrl(path),
+      name: agencyOrganization.name,
+      publisher: { "@id": agencyOrganization["@id"] },
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "WebPage",
       "@id": `${canonicalUrl(path)}#webpage`,
       name: title, description, url: canonicalUrl(path),
       about: { "@id": agencyOrganization["@id"] },
+      isPartOf: { "@id": websiteId },
     },
     {
       "@context": "https://schema.org",

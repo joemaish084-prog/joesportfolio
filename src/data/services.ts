@@ -49,16 +49,6 @@ export function priceLabel(price: Price, opts: { short?: boolean } = {}): string
 
 export type ServiceCategory = "paid" | "seo" | "social" | "stores";
 
-/** Image slots. Files arrive in Step 5; until then the page shows a placeholder. */
-export type ImageSlot =
-  | "svc-meta-ads"
-  | "svc-google-ads"
-  | "svc-seo"
-  | "svc-social"
-  | "svc-tiktok-ads"
-  | "svc-lead-gen"
-  | "svc-shopify";
-
 export interface ServiceProof {
   /** One short line, shown on the tile. */
   line: string;
@@ -86,10 +76,8 @@ export interface Service {
   pagePath: string | null;
   /** One verified proof line. `null` = TODO(joseph): nothing published for this service. */
   proof: ServiceProof | null;
-  /** `null` = the tile uses an icon, not an image. */
-  imageSlot: ImageSlot | null;
-  /** Alt text for the slot image. `null` when there is no image. */
-  imageAlt: string | null;
+  /** Alt text for the service's photo in public/media/agency. */
+  imageAlt: string;
   /** Where the tile CTA goes when `pagePath` is null. */
   fallbackPath: string;
   cta: string;
@@ -112,8 +100,7 @@ export const services: Service[] = [
     pagePath: "/agency/meta-ads-management",
     // Published case study. Client not named. Brief question Q1: show it on the tile.
     proof: { line: "KES 5.33M attributed revenue at 41.3x ROAS (client not named)", source: "meta-ads-turnaround" },
-    imageSlot: "svc-meta-ads",
-    imageAlt: "iClear Water is sweet Facebook ad creative",
+    imageAlt: "Laptop showing a bar chart and a rising trend line beside printed reports", // Pexels 5466250
     fallbackPath: "/agency/meta-ads-management",
     cta: "Explore Meta Ads",
     bento: true,
@@ -130,8 +117,7 @@ export const services: Service[] = [
     scope: "Search, Display and YouTube campaigns, Keyword research and strategy, Bid management, Conversion tracking, Monthly reporting",
     pagePath: "/agency/google-ads-management",
     proof: { line: "KES 1.94M attributed revenue at 15.5x ROAS (client not named)", source: "google-ads-launch" },
-    imageSlot: "svc-google-ads",
-    imageAlt: "iClear promotional ad creative: kill your glow",
+    imageAlt: "Person using Google Search on a laptop", // Pexels 7350921
     fallbackPath: "/agency/google-ads-management",
     cta: "Explore Google Ads",
     bento: true,
@@ -149,8 +135,7 @@ export const services: Service[] = [
     scope: "Campaign strategy, Creative direction, Audience targeting, Weekly optimization, Performance reporting",
     pagePath: null, // No TikTok service page exists yet.
     proof: { line: "4M TikTok video views across a full year of social content", source: "social-media-2025" },
-    imageSlot: "svc-tiktok-ads",
-    imageAlt: "Still from an iClear short-form video",
+    imageAlt: "Creator recording with a phone and a ring light", // Pexels 6954092
     fallbackPath: "/agency/contact#brief",
     cta: "Discuss TikTok Ads",
     bento: true,
@@ -167,8 +152,7 @@ export const services: Service[] = [
     scope: "On-page, technical and local SEO.",
     pagePath: "/agency/seo-services-nairobi",
     proof: { line: "Search rankings improved from position 20 to 14, then 9 (Beauty Square Kenya)", source: "seo-services-nairobi" },
-    imageSlot: "svc-seo",
-    imageAlt: "Search Console performance graph",
+    imageAlt: "Laptop displaying website performance charts beside a desk lamp", // Pexels 6120209
     fallbackPath: "/agency/seo-services-nairobi",
     cta: "Learn about SEO",
     bento: true,
@@ -185,8 +169,7 @@ export const services: Service[] = [
     scope: "Content, scheduling and community management.",
     pagePath: "/agency/social-media-management",
     proof: { line: "336 pieces of content and 4M TikTok video views in one year", source: "social-media-2025" },
-    imageSlot: "svc-social",
-    imageAlt: "iClear social media post: kill your glow",
+    imageAlt: "Smartphone displaying an Instagram post", // Pexels 15525898
     fallbackPath: "/agency/social-media-management",
     cta: "Learn about social media",
     bento: true,
@@ -203,8 +186,7 @@ export const services: Service[] = [
     scope: "Landing pages and campaign management across two platforms. Your team follows up with the leads.",
     pagePath: "/agency/lead-generation",
     proof: { line: "10x increase in qualified leads in 6 months (Convey Communications)", source: "convey-communications-case-study-10x-leads" },
-    imageSlot: "svc-lead-gen",
-    imageAlt: "Leads arriving from a form or WhatsApp",
+    imageAlt: "Person taking a phone call at a desk with an open laptop", // Pexels 7643724
     fallbackPath: "/agency/lead-generation",
     cta: "Explore lead generation",
     bento: true,
@@ -222,8 +204,7 @@ export const services: Service[] = [
     scope: "Store creation and migration per project; management scoped monthly. Shopify and third-party costs are separate.",
     pagePath: "/agency/shopify-services",
     proof: null, // TODO(joseph): the live Babyshop Dansar store is the proof; no figure is published.
-    imageSlot: "svc-shopify",
-    imageAlt: "Babyshop Dansar Shopify storefront home page",
+    imageAlt: "Online storefront editor open on a laptop", // Pexels 17485350
     fallbackPath: "/agency/shopify-services",
     cta: "Explore Shopify services",
     bento: true,
@@ -240,8 +221,7 @@ export const services: Service[] = [
     scope: "Performance review, with findings in a written report or call within 1-2 days.",
     pagePath: "/agency/digital-marketing-audit",
     proof: null,
-    imageSlot: null,
-    imageAlt: null,
+    imageAlt: "Magnifying glass over a printed report with charts", // Pexels 7947749
     fallbackPath: "/agency/digital-marketing-audit",
     cta: "Get the free audit",
     bento: true,
@@ -258,8 +238,7 @@ export const services: Service[] = [
     scope: "Editorial calendars and content plans.",
     pagePath: null,
     proof: null,
-    imageSlot: null,
-    imageAlt: null,
+    imageAlt: "Open planner with Content Strategy written on the page", // Pexels 15635240
     fallbackPath: "/work/design",
     cta: "See creative work",
     bento: false,
@@ -276,8 +255,7 @@ export const services: Service[] = [
     scope: "Short-form ads and brand videos.",
     pagePath: null,
     proof: null,
-    imageSlot: null,
-    imageAlt: null,
+    imageAlt: "Video camera mounted on a tripod in a production studio", // Pexels 7709678
     fallbackPath: "/agency/contact#brief",
     cta: "Discuss a video",
     bento: false,
@@ -294,8 +272,7 @@ export const services: Service[] = [
     scope: "Positioning, messaging and identity.",
     pagePath: null,
     proof: null,
-    imageSlot: null,
-    imageAlt: null,
+    imageAlt: "Team discussing ideas on a wall covered with sticky notes", // Pexels 39219951
     fallbackPath: "/agency/contact#brief",
     cta: "Discuss brand strategy",
     bento: false,
@@ -312,8 +289,7 @@ export const services: Service[] = [
     scope: "Social graphics, ads and collateral.",
     pagePath: null,
     proof: null,
-    imageSlot: null,
-    imageAlt: null,
+    imageAlt: "Color swatches and a printed design spread on a desk", // Pexels 38840594
     fallbackPath: "/work/design",
     cta: "See design work",
     bento: false,
@@ -330,8 +306,7 @@ export const services: Service[] = [
     scope: "One-on-one advisory session.",
     pagePath: null,
     proof: null,
-    imageSlot: null,
-    imageAlt: null,
+    imageAlt: "Colleagues discussing work around a laptop", // Pexels 7652054
     fallbackPath: "/agency/contact#brief",
     cta: "Book a session",
     bento: false,
@@ -393,7 +368,7 @@ export interface RetainerPackage {
   name: "STARTER" | "GROWTH" | "SCALE";
   label: string;
   highlight?: boolean;
-  price: Price;
+  price: Extract<Price, { kes: number }>;
   note: string;
   intlNote: string;
   features: string[];

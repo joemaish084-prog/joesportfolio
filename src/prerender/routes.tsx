@@ -12,7 +12,7 @@ import Index from "@/pages/Index";
 import { AgencyServiceContent } from "@/pages/AgencyService";
 import { getServiceVisuals } from "@/data/serviceVisuals";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
-import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
+import { agencyHead, agencyOverviewHead, agencySocialCards } from "@/seo/agencyHeads";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
 import { blogPosts, AUTHOR, type BlogPost } from "@/data/blogPosts";
@@ -380,6 +380,7 @@ export function getPrerenderRoutes(): PrerenderRoute[] {
     ...(Object.entries(agencyPages) as [AgencyPageKey, (typeof agencyPages)[AgencyPageKey]][]).filter(([key]) => key !== "home").map(([key, page]) => ({
       path: page.path,
       head: agencyHead(key),
+      card: key !== "home" && key !== "contact" ? agencySocialCards[key] : undefined,
       body: key === "results"
         ? renderPrimary(page.path, <AgencyResults />)
         : html(<HelmetProvider><StaticRouter location={page.path}><Agency pageKey={key} /></StaticRouter></HelmetProvider>),

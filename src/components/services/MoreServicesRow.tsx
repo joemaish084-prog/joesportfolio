@@ -1,26 +1,30 @@
 import { Link } from "react-router-dom";
+import { AgencyPhoto } from "@/components/agency/AgencyPhoto";
+import { serviceAnchorId, serviceHref, type Service } from "@/data/services";
 
-interface MoreServicesRowProps {
-  items: { anchorId: string; label: string; to: string }[];
-}
-
-/** Services with no tile of their own. Pricing links to these anchors, so each keeps its id. */
-export function MoreServicesRow({ items }: MoreServicesRowProps) {
+/** Pricing links to these anchors, so each card keeps its service id. */
+export function MoreServicesRow({ items }: { items: Service[] }) {
   return (
-    <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
-      <span>Also available:</span>
-      <ul className="flex flex-wrap gap-2">
+    <section className="mt-12" aria-labelledby="more-services-title">
+      <h3 id="more-services-title" className="mb-4 font-display text-xl font-semibold sm:text-2xl">Also available</h3>
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
-          <li key={item.anchorId} id={item.anchorId} className="scroll-mt-24">
+          <li key={item.slug} id={serviceAnchorId(item.slug)} className="scroll-mt-24">
             <Link
-              to={item.to}
-              className="inline-flex min-h-11 items-center rounded-full border border-border/70 px-4 text-foreground/90 transition-colors hover:border-primary/50 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              to={serviceHref(item)}
+              className="surface-card group grid h-full grid-cols-[5rem_minmax(0,1fr)] items-center gap-3 p-3 transition-colors hover:border-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[6rem_minmax(0,1fr)] sm:gap-4"
             >
-              {item.label}
+              <span className="aspect-square overflow-hidden rounded-lg">
+                <AgencyPhoto name={item.slug} alt={item.imageAlt} sizes="(min-width: 640px) 96px, 80px" className="transition-transform duration-300 motion-safe:group-hover:scale-105" />
+              </span>
+              <span className="min-w-0">
+                <span className="block font-display font-semibold text-foreground group-hover:text-primary">{item.tileName}</span>
+                <span className="mt-1 block text-sm leading-snug text-muted-foreground">{item.scope}</span>
+              </span>
             </Link>
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 }

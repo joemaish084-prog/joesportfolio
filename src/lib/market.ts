@@ -23,7 +23,8 @@ const USD_FOR_KES: Record<number, number> = {
 
 /** Fallback for a fee not listed above: roughly 3x the shilling value, rounded to $50. */
 const KES_PER_USD = 129;
-function usdForKes(kes: number): number {
+export function marketFee(kes: number, market: Market): number {
+  if (market === "KE") return kes;
   return USD_FOR_KES[kes] ?? Math.round((kes * 3) / KES_PER_USD / 50) * 50;
 }
 
@@ -37,7 +38,7 @@ export const formatUsd = (n: number) => `$${n.toLocaleString("en-US")}`;
 export function localizePrice(text: string, market: Market): string {
   if (market === "KE") return text;
   return text.replace(/\b(?:KES|KSh)\s?([\d,]+)/gi, (_, amount: string) =>
-    formatUsd(usdForKes(Number(amount.replace(/,/g, "")))),
+    formatUsd(marketFee(Number(amount.replace(/,/g, "")), market)),
   );
 }
 

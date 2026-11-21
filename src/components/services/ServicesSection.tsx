@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Calculator } from "lucide-react";
 import { trackSpotlight } from "@/lib/spotlight";
 import { getLiveServicePages } from "@/data/servicePages";
-import { alsoAvailableServices, bentoServices, packageFeeNote, serviceAnchorId, serviceHref } from "@/data/services";
+import { alsoAvailableServices, bentoServices, packageFeeNote } from "@/data/services";
 import { MobileCtaBar } from "./MobileCtaBar";
 import { MoreServicesRow } from "./MoreServicesRow";
 import { PackagesSummary } from "./PackagesSummary";
@@ -15,13 +15,7 @@ import { ServicesCTA } from "./ServicesCTA";
 import { ServicesFaq } from "./ServicesFaq";
 import { ServicesHero } from "./ServicesHero";
 
-const moreServices = alsoAvailableServices.map((s) => ({
-  anchorId: serviceAnchorId(s.slug),
-  label: s.tileName,
-  to: serviceHref(s),
-}));
-
-/** The /agency/services page: hero, then every service in one bento grid. */
+/** The /agency/services page: hero, core services and additional services. */
 export function ServicesSection() {
   const servicePages = getLiveServicePages();
   return (
@@ -37,7 +31,7 @@ export function ServicesSection() {
           </div>
 
           <ServicesBento services={bentoServices} />
-          <MoreServicesRow items={moreServices} />
+          <MoreServicesRow items={alsoAvailableServices} />
 
           {/* Every dedicated service page stays one click away. scripts/check-agency.mjs matches this list to the JSON-LD catalog. */}
           <nav aria-label="Full service pages" className="mt-6 border-t border-border/60 pt-5">

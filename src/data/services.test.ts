@@ -85,10 +85,9 @@ describe("services list", () => {
     for (const s of services) if (s.pagePath) expect(live.has(s.pagePath), s.slug).toBe(true);
   });
 
-  it("gives the large Meta tile a proof line and an image slot", () => {
+  it("gives the large Meta tile a proof line", () => {
     const meta = services.find((s) => s.slug === "meta-ads");
     expect(meta?.proof).not.toBeNull();
-    expect(meta?.imageSlot).toBe("svc-meta-ads");
   });
 });
 
@@ -149,11 +148,8 @@ describe("filterServices", () => {
 });
 
 describe("service images", () => {
-  it("gives every slot image alt text, and none to tiles without an image", () => {
-    for (const s of services) {
-      if (s.imageSlot) expect(s.imageAlt?.trim(), s.slug).toBeTruthy();
-      else expect(s.imageAlt, s.slug).toBeNull();
-    }
+  it("gives every service photo descriptive alt text", () => {
+    for (const s of services) expect(s.imageAlt.trim(), s.slug).toBeTruthy();
   });
 });
 
