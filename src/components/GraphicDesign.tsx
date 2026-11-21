@@ -5,6 +5,10 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/SectionLabel";
 import { ScrollReveal } from "./ScrollReveal";
+import { DesignSphere } from "@/components/design-views/DesignSphere";
+import { DriftWall } from "@/components/design-views/DriftWall";
+import { DesignViewToggle } from "@/components/design-views/DesignViewToggle";
+import type { DesignView } from "@/components/design-views/views";
 import { HOME_PREVIEW_COUNT, LATEST_COUNT, designs, type Design } from "@/data/designs";
 
 // The homepage shows only the newest work; the full gallery lives at /work/design.
@@ -12,6 +16,9 @@ const preview = designs.slice(0, HOME_PREVIEW_COUNT);
 
 export function GraphicDesign() {
   const [selectedDesign, setSelectedDesign] = useState<Design | null>(null);
+  const [view, setView] = useState<DesignView>("grid");
+  // The wall and sphere need volume, so they show every design rather than the preview.
+  const openDesign = (index: number) => setSelectedDesign(designs[index]);
 
   return (
     <section id="graphic-design" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 bg-muted/30 overflow-hidden">
@@ -29,39 +36,48 @@ export function GraphicDesign() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-          {preview.map((design, index) => (
-            <ScrollReveal key={design.title} direction="up" delay={(index % 4) * 0.08}>
-              <button
-                onClick={() => setSelectedDesign(design)}
-                aria-label={`View ${design.title}`}
-                className="corner-brackets w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/60 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
-              >
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={design.image}
-                    alt={`${design.title} - ${design.description}`}
-                    width={500}
-                    height={667}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 sm:p-6 text-left">
-                    <h3 className="text-base sm:text-xl font-display font-bold text-white mb-1 sm:mb-2">
-                      {design.title}
-                    </h3>
-                    <p className="text-white/90 text-sm hidden sm:block">{design.description}</p>
-                  </div>
-                  {index < LATEST_COUNT && (
-                    <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">
-                      New
-                    </span>
-                  )}
-                </div>
-              </button>
-            </ScrollReveal>
-          ))}
+        <div className="mb-6 flex justify-center sm:mb-8">
+          <DesignViewToggle value={view} onChange={setView} />
         </div>
+
+        {view === "wall" && <DriftWall items={designs} onSelect={openDesign} />}
+        {view === "sphere" && <DesignSphere items={designs} onSelect={openDesign} />}
+
+        {view === "grid" && (
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+            {preview.map((design, index) => (
+              <ScrollReveal key={design.title} direction="up" delay={(index % 4) * 0.08}>
+                <button
+                  onClick={() => setSelectedDesign(design)}
+                  aria-label={`View ${design.title}`}
+                  className="corner-brackets w-full group relative overflow-hidden rounded-lg border-2 border-border hover:border-primary/60 transition-all duration-300 bg-background shadow-soft hover:shadow-elegant cursor-pointer"
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden">
+                    <img
+                      src={design.image}
+                      alt={`${design.title} - ${design.description}`}
+                      width={500}
+                      height={667}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 sm:p-6 text-left">
+                      <h3 className="text-base sm:text-xl font-display font-bold text-white mb-1 sm:mb-2">
+                        {design.title}
+                      </h3>
+                      <p className="text-white/90 text-sm hidden sm:block">{design.description}</p>
+                    </div>
+                    {index < LATEST_COUNT && (
+                      <span className="absolute left-3 top-3 rounded-full bg-primary px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">
+                        New
+                      </span>
+                    )}
+                  </div>
+                </button>
+              </ScrollReveal>
+            ))}
+          </div>
+        )}
 
         <ScrollReveal direction="up">
           <div className="mt-10 sm:mt-12 flex flex-col items-center gap-3">
@@ -72,7 +88,9 @@ export function GraphicDesign() {
               </Link>
             </Button>
             <p className="text-sm text-muted-foreground">
-              Showing the {preview.length} newest. The full gallery is organised by brand.
+              {view === "grid"
+                ? `Showing the ${preview.length} newest. The full gallery is organised by brand.`
+                : "The full gallery is organised by brand."}
             </p>
           </div>
         </ScrollReveal>

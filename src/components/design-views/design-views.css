@@ -1,0 +1,115 @@
+/* ---------- Drift wall ---------- */
+
+.drift-wall {
+  perspective: 1200px;
+  perspective-origin: 50% 40%;
+}
+
+.drift-wall__plane {
+  --gap: 14px;
+  transform-style: preserve-3d;
+  transform: rotateX(calc(16deg - var(--py, 0) * 6deg)) rotateY(calc(-14deg + var(--px, 0) * 8deg)) scale(1.3);
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.drift-wall__column {
+  transform-style: preserve-3d;
+}
+
+.drift-wall__track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  transform-style: preserve-3d;
+  animation: drift-wall-up var(--duration, 40s) linear infinite;
+  will-change: transform;
+}
+
+.drift-wall__track[data-reverse="true"] {
+  animation-name: drift-wall-down;
+}
+
+/* Pause while the visitor points at or tabs through the wall, so tiles are easy to pick. */
+@media (hover: hover) {
+  .drift-wall:hover .drift-wall__track {
+    animation-play-state: paused;
+  }
+}
+.drift-wall:focus-within .drift-wall__track {
+  animation-play-state: paused;
+}
+
+.drift-wall__tile {
+  opacity: 0.62;
+  transform: translateZ(0);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.45s ease, box-shadow 0.45s ease;
+}
+
+.drift-wall__tile:hover,
+.drift-wall__tile:focus-visible {
+  opacity: 1;
+  transform: translateZ(64px);
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.6);
+}
+
+/* The track holds two copies of the column, so moving it by half loops seamlessly. */
+@keyframes drift-wall-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, calc(-50% - var(--gap) / 2), 0);
+  }
+}
+
+@keyframes drift-wall-down {
+  from {
+    transform: translate3d(0, calc(-50% - var(--gap) / 2), 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ---------- Sphere ---------- */
+
+.design-sphere {
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+
+.design-sphere[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.design-sphere__scene {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.design-sphere__tile {
+  position: absolute;
+  backface-visibility: hidden;
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+
+.design-sphere__tile[data-dim="true"] {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift-wall__track {
+    animation: none;
+  }
+  .drift-wall__plane,
+  .drift-wall__tile {
+    transition: none;
+  }
+}
