@@ -6,7 +6,8 @@ import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/Agency
 import { AgencyHero } from "@/components/agency/AgencyHero";
 import { AgencyJourney } from "@/components/agency/AgencyJourney";
 import { AgencyProcess } from "@/components/agency/AgencyProcess";
-import { CreativeShowcase, FieldworkVisual } from "@/components/agency/AgencyVisuals";
+import { CreativeShowcase } from "@/components/agency/AgencyVisuals";
+import { MeetBadge } from "@/components/agency/MeetBadge";
 import { SubHeading } from "@/components/agency/AgencyPageSections";
 import { AuditForm } from "@/components/agency/AuditForm";
 import { useStudioMotion } from "@/components/agency/useStudioMotion";
@@ -19,7 +20,6 @@ import { Button } from "@/components/ui/button";
 import { agencyHomeHead } from "@/seo/agencyHomeHead";
 import { AUDIT_WHATSAPP, homeFaqs, homeResults, homeServices } from "@/data/agencyHome";
 import { trackSpotlight } from "@/lib/spotlight";
-import portrait from "@/assets/responsive/1-joseph-maina-portrait-240.webp";
 import "@/components/agency/studio.css";
 
 export default function AgencyHome() {
@@ -61,9 +61,8 @@ export default function AgencyHome() {
 
           <section className="container mx-auto overflow-x-clip px-4 py-20" aria-labelledby="agency-meet-title">
             <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-              <FieldworkVisual />
+              <MeetBadge />
               <div className="space-y-4">
-                <img src={portrait} alt="Portrait of Joseph Maina" width={240} height={240} loading="lazy" decoding="async" className="h-20 w-20 rounded-full border border-border object-cover" />
                 <SectionLabel>Digital marketing · Nairobi, Kenya</SectionLabel>
                 <h2 id="agency-meet-title" className="font-display text-3xl font-bold md:text-4xl">Meet <span className="font-serif font-normal italic text-primary">Joseph</span></h2>
                 <p className="leading-relaxed text-muted-foreground">I’m a digital marketing manager based in Nairobi. I work across paid ads, SEO, and content. I’ve worked with brands including iClear, PowWater, and Convey Communications.</p>
