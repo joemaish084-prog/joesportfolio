@@ -531,3 +531,18 @@ html:not(.js) .agency-counter-animated { display: none; }
     transform: scaleX(1);
   }
 }
+
+/* Animated theme toggle (src/components/ui/animated-theme-toggler.tsx): the new theme
+   is revealed by a growing clip-path instead of the default cross-fade. Scoped to the
+   toggle so it overrides the agency page-switch transition only while it runs. */
+:root[data-theme-vt="active"]::view-transition-group(root) {
+  animation-duration: var(--theme-vt-duration, 450ms);
+}
+:root[data-theme-vt="active"]::view-transition-old(root),
+:root[data-theme-vt="active"]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+:root[data-theme-vt="active"]::view-transition-new(root) {
+  clip-path: var(--theme-vt-clip-from);
+}

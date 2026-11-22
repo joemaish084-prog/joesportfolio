@@ -1,8 +1,12 @@
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { buttonVariants } from "@/components/ui/button";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import { cn } from "@/lib/utils";
 
+const buttonClass = cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-10 w-10 shrink-0 hover:bg-primary/10 transition-colors");
+
+/** Light/dark switch. The new theme sweeps across the page in a circle from the button. */
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -12,24 +16,18 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <Button type="button" aria-label="Toggle theme" variant="ghost" size="icon" className="h-10 w-10 shrink-0" disabled />;
+    return <button type="button" aria-label="Toggle theme" className={buttonClass} disabled />;
   }
 
+  const theme = resolvedTheme === "light" ? "light" : "dark";
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      type="button"
+    <AnimatedThemeToggler
+      theme={theme}
+      onThemeChange={setTheme}
       aria-label="Toggle theme"
-      title={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="h-10 w-10 shrink-0 hover:bg-primary/10 transition-colors"
-    >
-      {resolvedTheme === "dark" ? (
-        <Sun className="h-5 w-5 text-primary" aria-hidden />
-      ) : (
-        <Moon className="h-5 w-5 text-primary" aria-hidden />
-      )}
-    </Button>
+      title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      className={buttonClass}
+      iconClassName="h-5 w-5 text-primary"
+    />
   );
 }
