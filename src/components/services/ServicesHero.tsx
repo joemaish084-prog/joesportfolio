@@ -42,11 +42,14 @@ const cardFocus =
 /** Page header for /agency/services: a framed landing hero with a proof row underneath. */
 export function ServicesHero() {
   return (
-    <header data-track-location="services-hero" className="relative overflow-hidden bg-primary/[0.06] pb-10 pt-6 sm:pb-14 sm:pt-8">
-      <div aria-hidden className="pointer-events-none absolute -top-48 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-primary/10 blur-[140px]" />
+    <header data-track-location="services-hero" className="relative overflow-hidden border-b border-border/50 pb-10 pt-6 sm:pb-14 sm:pt-8">
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-40 right-[-10%] h-[30rem] w-[30rem] rounded-full bg-primary/[0.08] blur-[130px]" />
+        <div className="absolute -bottom-40 left-[-10%] h-[24rem] w-[24rem] rounded-full bg-primary/[0.05] blur-[120px]" />
+      </div>
 
       <div className="container relative mx-auto px-4">
-        <div className="mx-auto max-w-6xl rounded-[2rem] border border-border/60 bg-background p-4 shadow-elegant sm:p-7 lg:p-9">
+        <div className="mx-auto max-w-7xl">
           <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
             <ol className="flex flex-wrap items-center gap-1.5">
               <li><Link to="/agency" className="inline-flex min-h-11 items-center transition-colors hover:text-primary focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Agency</Link></li>
