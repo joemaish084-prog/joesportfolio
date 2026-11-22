@@ -16,14 +16,16 @@ import { formatKes } from "@/data/services";
 import { trackSpotlight } from "@/lib/spotlight";
 import { contentImageProps } from "@/lib/responsiveImage";
 import { agencyHead } from "@/seo/agencyHeads";
+import { TypePairScope } from "@/components/type/TypePair";
+import { PAGE_TYPE_PAIRS } from "@/lib/typePairs";
 
 export default function AgencyResults() {
   return (
     <div className="agency-page min-h-screen bg-background" data-agency-results>
       <Seo {...agencyHead("results")} />
       <AgencyNavigation />
-      <main>
-        <AgencyPageHeader page={agencyPages.results} visual={
+      <TypePairScope as="main" pair={PAGE_TYPE_PAIRS.results.pair}>
+        <AgencyPageHeader page={agencyPages.results} pairMain={PAGE_TYPE_PAIRS.results.main} visual={
           <figure className="surface-card overflow-hidden">
             <div className="aspect-[16/10] overflow-hidden">
               <AgencyPhoto {...agencyHeroPhotos.results} sizes="(min-width: 1280px) 470px, (min-width: 1024px) 44vw, 100vw" priority className="object-bottom" />
@@ -100,7 +102,7 @@ export default function AgencyResults() {
           </div>
         </section>
         <AgencyPageCta />
-      </main>
+      </TypePairScope>
       <AgencyPageFooter />
     </div>
   );

@@ -9,6 +9,8 @@ import { blogHubs, getHubPosts, getUnhubbedPosts } from "@/data/blogHubs";
 import { Footer } from "@/components/Footer";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AgencySectionLinks } from "@/components/agency/AgencyNavigation";
+import { PairedTitle, TypePairScope } from "@/components/type/TypePair";
+import { PAGE_TYPE_PAIRS } from "@/lib/typePairs";
 import { useBlogViews, formatViews, SHOW_BLOG_VIEWS } from "@/lib/useBlogViews";
 import { isRecent, latestPosts, searchPosts } from "@/lib/blogSearch";
 
@@ -241,7 +243,7 @@ const AgencyBlog = () => {
 
       <SiteHeader />
       <div className="min-h-screen bg-background text-foreground">
-        <div className="mx-auto max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+        <TypePairScope pair={PAGE_TYPE_PAIRS.blog.pair} className="mx-auto max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
           <AgencySectionLinks className="mb-6 text-muted-foreground" />
           <Link
             to="/"
@@ -253,9 +255,7 @@ const AgencyBlog = () => {
 
           <header className="mt-10 mb-10 max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Insights</p>
-            <h1 className="font-display mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-              Digital marketing, written plainly.
-            </h1>
+            <PairedTitle className="mt-5" main={PAGE_TYPE_PAIRS.blog.main} accent="written plainly." />
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
               Strategy notes, campaign breakdowns and honest numbers from running paid and organic
               marketing for Kenyan brands. Search {blogPosts.length} articles, pick a topic, or start
@@ -453,7 +453,7 @@ const AgencyBlog = () => {
               </div>
             </aside>
           </div>
-        </div>
+        </TypePairScope>
         <Footer />
       </div>
     </>

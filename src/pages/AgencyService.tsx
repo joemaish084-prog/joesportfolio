@@ -20,6 +20,8 @@ import { ServiceGallery, ServiceHeroVisual, ServiceSideImage } from "@/component
 import { PROCESS_VISUAL, getServiceVisuals } from "@/data/serviceVisuals";
 import { localizePrice, useMarket } from "@/lib/market";
 import { ShopifyServiceContent } from "@/components/shopify/ShopifyServiceContent";
+import { PairedTitle, TypePairScope } from "@/components/type/TypePair";
+import { SERVICE_TYPE_PAIRS, splitHeadline } from "@/lib/typePairs";
 
 /** The lower-commitment ways to get in touch, beside each page's main booking button. */
 function OtherContactOptions({ slug, name, briefIsPrimary, className = "" }: { slug: string; name: string; briefIsPrimary: boolean; className?: string }) {
@@ -93,6 +95,8 @@ function StandardAgencyServiceContent({ page }: { page: ServicePage }) {
   const otherServices = servicePages.filter((s) => s.slug !== page.slug && !s.draft);
   const headings = serviceHeadings(page);
   const visuals = getServiceVisuals(page.slug);
+  const typeSetting = SERVICE_TYPE_PAIRS[page.slug];
+  const [titleMain, titleAccent] = splitHeadline(page.name, typeSetting?.main);
 
   return (
     <>
@@ -100,7 +104,7 @@ function StandardAgencyServiceContent({ page }: { page: ServicePage }) {
 
       <div className="service-page min-h-screen bg-background text-foreground">
         <AgencyNavigation solid />
-        <main className="mx-auto max-w-5xl px-5 pb-24 pt-10 sm:px-8">
+        <TypePairScope as="main" pair={typeSetting?.pair} className="mx-auto max-w-5xl px-5 pb-24 pt-10 sm:px-8">
           {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <Link to="/" className="inline-flex items-center gap-2 transition-colors hover:text-primary">
@@ -143,7 +147,9 @@ function StandardAgencyServiceContent({ page }: { page: ServicePage }) {
               <page.icon className="h-4 w-4" aria-hidden="true" />
               Service
             </p>
-            <h1 className="mt-4 text-balance font-display text-3xl font-bold leading-tight tracking-tight sm:text-5xl">{page.name}</h1>
+            {typeSetting
+              ? <PairedTitle className="mt-5" main={titleMain} accent={titleAccent} />
+              : <h1 className="mt-4 text-balance font-display text-3xl font-bold leading-tight tracking-tight sm:text-5xl">{page.name}</h1>}
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{page.standfirst}</p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <PrimaryCta cta={page.cta} />
@@ -422,7 +428,7 @@ function StandardAgencyServiceContent({ page }: { page: ServicePage }) {
               ))}
             </div>
           </section>
-        </main>
+        </TypePairScope>
         <Footer />
       </div>
     </>

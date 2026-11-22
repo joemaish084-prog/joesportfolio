@@ -1,0 +1,613 @@
+/*
+ * Font pairings for agency pages and services. Definitions and page
+ * assignments live in src/lib/typePairs.ts; this file sets each pairing's
+ * faces and the arrangement of its headline (.pair-main + .pair-accent).
+ *
+ * Headline sizes use container units (cqi) measured on the heading itself,
+ * so a lockup fits a narrow hero column as well as a full-width header.
+ */
+
+/* ---------- Shared scope ---------- */
+
+.type-pair {
+  font-family: var(--tp-body), "Inter", system-ui, sans-serif;
+  /* Single-weight display faces render at their real weight, never faux-bold. */
+  font-synthesis-weight: none;
+}
+
+/* Eyebrow labels (small uppercase h2s) keep the body face. */
+.type-pair :is(h2, h3, h4):not(.uppercase),
+.type-pair .font-display {
+  font-family: var(--tp-heading), "Space Grotesk", system-ui, sans-serif;
+}
+.type-pair :is(h3, h4):not(.uppercase) {
+  font-family: var(--tp-subheading, var(--tp-heading)), "Space Grotesk", system-ui, sans-serif;
+}
+
+.pair-title {
+  container-type: inline-size;
+  font-family: var(--tp-display), "Space Grotesk", system-ui, sans-serif;
+  text-wrap: balance;
+}
+.pair-title .pair-main,
+.pair-title .pair-accent {
+  display: block;
+}
+.pair-title .pair-accent {
+  position: relative;
+  font-family: var(--tp-accent), var(--tp-display), serif;
+  font-weight: 400;
+}
+
+/* ---------- Team Sync · Services (condensed serif over Inter Tight Black, Inter body) ---------- */
+
+[data-type-pair="sync"] {
+  --tp-display: "Instrument Serif";
+  --tp-accent: "Inter Tight";
+  --tp-heading: "Inter Tight";
+  --tp-subheading: "Inter";
+  --tp-body: "Inter";
+}
+[data-type-pair="sync"] h2:not(.uppercase) { font-weight: 800; letter-spacing: -0.035em; }
+[data-type-pair="sync"] h3:not(.uppercase) { font-weight: 600; letter-spacing: -0.015em; }
+[data-type-pair="sync"] .pair-main {
+  font-size: 2.2rem;
+  font-size: clamp(2rem, 7.6cqi, 4.1rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+[data-type-pair="sync"] .pair-accent {
+  margin-top: 0.06em;
+  font-size: 3rem;
+  font-size: clamp(2.7rem, 12cqi, 6.4rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  word-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ---------- 2X Growth · Results (Archivo Black Expanded stack + Work Sans) ---------- */
+
+[data-type-pair="growth"] {
+  --tp-display: "Archivo";
+  --tp-accent: "Archivo";
+  --tp-heading: "Archivo";
+  --tp-subheading: "Work Sans";
+  --tp-body: "Work Sans";
+}
+[data-type-pair="growth"] h2:not(.uppercase) { font-weight: 800; font-stretch: 112%; letter-spacing: -0.025em; }
+[data-type-pair="growth"] h3:not(.uppercase) { font-weight: 600; }
+[data-type-pair="growth"] .font-display { font-weight: 900; font-stretch: 125%; letter-spacing: -0.03em; }
+/* The big result line sits on top, the caption under it, as in "2X / REVENUE GROWTH";
+   the heading still reads in its written order. */
+[data-type-pair="growth"] .pair-title { display: flex; flex-direction: column-reverse; }
+[data-type-pair="growth"] .pair-main {
+  margin-top: 0.55em;
+  font-size: 1.4rem;
+  font-size: clamp(1.25rem, 5.2cqi, 2.5rem);
+  font-weight: 900;
+  font-stretch: 125%;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+[data-type-pair="growth"] .pair-accent {
+  font-size: 3.6rem;
+  font-size: clamp(3.2rem, 15cqi, 8rem);
+  font-weight: 900;
+  font-stretch: 125%;
+  line-height: 0.84;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+/* ---------- Net Revenue · Pricing (Italianno over tall Antonio caps, Inter body) ---------- */
+
+[data-type-pair="revenue"] {
+  --tp-display: "Italianno";
+  --tp-accent: "Antonio";
+  --tp-heading: "Antonio";
+  --tp-subheading: "Inter";
+  --tp-body: "Inter";
+}
+[data-type-pair="revenue"] h2:not(.uppercase) { font-weight: 600; letter-spacing: 0.005em; text-transform: uppercase; }
+[data-type-pair="revenue"] h3:not(.uppercase) { font-weight: 600; }
+[data-type-pair="revenue"] .font-display { font-weight: 600; }
+[data-type-pair="revenue"] .pair-main {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  margin-bottom: -0.18em;
+  padding-left: 0.08em;
+  color: hsl(var(--primary));
+  font-size: 2.8rem;
+  font-size: clamp(2.6rem, 11cqi, 5.6rem);
+  font-weight: 400;
+  line-height: 0.9;
+}
+[data-type-pair="revenue"] .pair-accent {
+  font-size: 3rem;
+  font-size: clamp(2.8rem, 12.5cqi, 6.6rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+/* ---------- Couture (alternative) (Playfair Display Black Italic + Parisienne) ---------- */
+
+[data-type-pair="couture"] {
+  --tp-display: "Playfair Display";
+  --tp-accent: "Parisienne";
+  --tp-heading: "Playfair Display";
+  --tp-subheading: "Manrope";
+  --tp-body: "Manrope";
+}
+[data-type-pair="couture"] h2:not(.uppercase) { font-weight: 800; letter-spacing: -0.015em; }
+[data-type-pair="couture"] .pair-main {
+  font-size: 2.3rem;
+  font-size: clamp(2rem, 8.2cqi, 4.6rem);
+  font-style: italic;
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+[data-type-pair="couture"] .pair-accent {
+  width: fit-content;
+  margin-top: -0.26em;
+  padding-left: 14%;
+  color: hsl(var(--primary));
+  font-size: 3rem;
+  font-size: clamp(2.6rem, 12cqi, 6.4rem);
+  line-height: 1;
+  transform: rotate(-4deg);
+  transform-origin: left center;
+  text-shadow: 0 0 0.2em hsl(var(--background)), 0 0 0.08em hsl(var(--background));
+}
+
+/* ---------- Stroke (alternative) (outlined Bebas Neue + Lobster) ---------- */
+
+[data-type-pair="stroke"] {
+  --tp-display: "Bebas Neue";
+  --tp-accent: "Lobster";
+  --tp-heading: "Bebas Neue";
+  --tp-subheading: "Barlow";
+  --tp-body: "Barlow";
+}
+[data-type-pair="stroke"] h2:not(.uppercase) { font-weight: 400; letter-spacing: 0.015em; text-transform: uppercase; }
+[data-type-pair="stroke"] h3:not(.uppercase) { font-weight: 700; }
+[data-type-pair="stroke"] .font-display { font-weight: 400; letter-spacing: 0.02em; }
+[data-type-pair="stroke"] .pair-main {
+  font-size: 3.6rem;
+  font-size: clamp(3.4rem, 17cqi, 8.6rem);
+  font-weight: 400;
+  line-height: 0.84;
+  letter-spacing: 0.012em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: max(1.5px, 0.012em) hsl(var(--foreground));
+}
+[data-type-pair="stroke"] .pair-accent {
+  width: fit-content;
+  margin-top: -0.6em;
+  padding-left: 16%;
+  color: hsl(var(--primary));
+  font-size: 2.6rem;
+  font-size: clamp(2.4rem, 10.5cqi, 5.6rem);
+  line-height: 1.05;
+  transform: rotate(-7deg);
+  transform-origin: left center;
+  text-shadow: 0 0.05em 0 hsl(var(--background)), 0 0 0.22em hsl(var(--background));
+}
+
+/* ---------- Fresca (alternative) (Bodoni Moda + Josefin Sans Light) ---------- */
+
+[data-type-pair="fresca"] {
+  --tp-display: "Bodoni Moda";
+  --tp-accent: "Josefin Sans";
+  --tp-heading: "Bodoni Moda";
+  --tp-body: "Karla";
+}
+[data-type-pair="fresca"] h2:not(.uppercase) { font-weight: 600; letter-spacing: -0.012em; }
+[data-type-pair="fresca"] h3:not(.uppercase) { font-weight: 700; letter-spacing: 0.01em; }
+[data-type-pair="fresca"] .pair-main {
+  font-size: 3rem;
+  font-size: clamp(2.7rem, 12.5cqi, 6.6rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+[data-type-pair="fresca"] .pair-main::first-letter {
+  color: hsl(var(--primary));
+  font-style: italic;
+  font-weight: 800;
+}
+[data-type-pair="fresca"] .pair-accent {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  margin-top: 1.15em;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 3cqi, 1.3rem);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+[data-type-pair="fresca"] .pair-accent::before {
+  content: "";
+  flex: none;
+  width: 3.2em;
+  height: 1px;
+  background: hsl(var(--primary));
+}
+
+/* ---------- Sweet · Contact (Fraunces Soft + Nunito) ---------- */
+
+[data-type-pair="sweet"] {
+  --tp-display: "Fraunces";
+  --tp-accent: "Nunito";
+  --tp-heading: "Fraunces";
+  --tp-subheading: "Nunito";
+  --tp-body: "Nunito";
+}
+[data-type-pair="sweet"] h2:not(.uppercase),
+[data-type-pair="sweet"] .pair-main {
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+[data-type-pair="sweet"] h2:not(.uppercase) { font-weight: 800; letter-spacing: -0.02em; }
+[data-type-pair="sweet"] h3:not(.uppercase) { font-weight: 800; }
+[data-type-pair="sweet"] .pair-main {
+  font-size: 3.4rem;
+  font-size: clamp(3.2rem, 15cqi, 8rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+}
+[data-type-pair="sweet"] .pair-accent {
+  margin-top: 0.18em;
+  color: hsl(var(--primary));
+  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 5.6cqi, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Journal · Blog (DM Serif Display + Caveat) ---------- */
+
+[data-type-pair="journal"] {
+  --tp-display: "DM Serif Display";
+  --tp-accent: "Caveat";
+  --tp-heading: "DM Serif Display";
+  --tp-body: "Source Serif 4";
+}
+[data-type-pair="journal"] h2:not(.uppercase),
+[data-type-pair="journal"] h3:not(.uppercase) { font-weight: 400; letter-spacing: -0.01em; }
+[data-type-pair="journal"] .pair-main {
+  font-size: 3rem;
+  font-size: clamp(2.8rem, 10cqi, 5.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+[data-type-pair="journal"] .pair-accent {
+  width: fit-content;
+  margin-top: 0.08em;
+  padding-inline: 0.18em;
+  color: hsl(var(--primary));
+  font-size: 2.6rem;
+  font-size: clamp(2.4rem, 9cqi, 4.6rem);
+  font-weight: 700;
+  line-height: 1.05;
+  transform: rotate(-2.5deg);
+  transform-origin: left center;
+  background: linear-gradient(transparent 58%, hsl(var(--primary) / 0.2) 58%, hsl(var(--primary) / 0.2) 86%, transparent 86%);
+}
+
+/* ---------- Beauty · Digital Marketing (Pinyon Script initial + Archivo Expanded) ---------- */
+
+[data-type-pair="beauty"] {
+  --tp-display: "Archivo";
+  --tp-accent: "Archivo";
+  --tp-heading: "Archivo";
+  --tp-body: "Archivo";
+}
+[data-type-pair="beauty"] h2:not(.uppercase) { font-weight: 800; font-stretch: 112%; letter-spacing: -0.02em; }
+[data-type-pair="beauty"] .pair-main {
+  font-size: 2.6rem;
+  font-size: clamp(2.3rem, 9.6cqi, 5rem);
+  font-weight: 800;
+  font-stretch: 125%;
+  line-height: 0.98;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+}
+[data-type-pair="beauty"] .pair-main::first-letter {
+  margin-right: -0.02em;
+  color: hsl(var(--primary));
+  font-family: "Pinyon Script", serif;
+  font-size: 1.9em;
+  font-weight: 400;
+  font-stretch: 100%;
+  line-height: 0;
+  vertical-align: -0.08em;
+  text-transform: none;
+}
+[data-type-pair="beauty"] .pair-accent {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  margin-top: 1em;
+  color: hsl(var(--foreground) / 0.75);
+  font-size: 0.95rem;
+  font-size: clamp(0.8rem, 3cqi, 1.3rem);
+  font-weight: 300;
+  font-stretch: 125%;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+[data-type-pair="beauty"] .pair-accent::before {
+  content: "";
+  flex: none;
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 999px;
+  background: hsl(var(--primary));
+}
+
+/* ---------- Mono. · Meta Ads (Yellowtail + spaced Montserrat caps) ---------- */
+
+[data-type-pair="mono"] {
+  --tp-display: "Yellowtail";
+  --tp-accent: "Montserrat";
+  --tp-heading: "Montserrat";
+  --tp-body: "Work Sans";
+}
+[data-type-pair="mono"] h2:not(.uppercase) { font-weight: 800; letter-spacing: -0.025em; }
+[data-type-pair="mono"] h3:not(.uppercase) { font-weight: 700; letter-spacing: -0.01em; }
+[data-type-pair="mono"] .pair-main {
+  width: fit-content;
+  padding: 0.06em 0.12em 0 0;
+  font-size: 3.8rem;
+  font-size: clamp(3.6rem, 19cqi, 8.6rem);
+  font-weight: 400;
+  line-height: 1;
+  transform: rotate(-5deg);
+  transform-origin: left bottom;
+}
+[data-type-pair="mono"] .pair-main::after {
+  content: ".";
+  color: hsl(var(--primary));
+}
+[data-type-pair="mono"] .pair-accent {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin-top: 0.9em;
+  color: hsl(var(--primary));
+  font-size: 0.9rem;
+  font-size: clamp(0.78rem, 2.8cqi, 1.2rem);
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+[data-type-pair="mono"] .pair-accent::before,
+[data-type-pair="mono"] .pair-accent::after {
+  content: "";
+  flex: none;
+  width: 1.2em;
+  height: 2px;
+  background: currentColor;
+}
+
+/* ---------- Pairing · Google Ads (Jost + Mrs Saint Delafield) ---------- */
+
+[data-type-pair="pairing"] {
+  --tp-display: "Jost";
+  --tp-accent: "Mrs Saint Delafield";
+  --tp-heading: "Jost";
+  --tp-body: "Jost";
+}
+[data-type-pair="pairing"] h2:not(.uppercase) { font-weight: 600; letter-spacing: -0.01em; }
+[data-type-pair="pairing"] .pair-main {
+  font-size: 3.2rem;
+  font-size: clamp(3rem, 14.5cqi, 7.4rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+[data-type-pair="pairing"] .pair-accent {
+  width: fit-content;
+  margin-top: -0.12em;
+  padding-left: 24%;
+  color: hsl(var(--primary));
+  font-size: 2.8rem;
+  font-size: clamp(2.6rem, 11cqi, 6rem);
+  line-height: 0.95;
+  transform: rotate(-4deg);
+  transform-origin: left center;
+  -webkit-text-stroke: 0.01em currentColor;
+  text-shadow: 0 0 0.18em hsl(var(--background)), 0 0 0.06em hsl(var(--background));
+}
+
+/* ---------- Screen · SEO (Sansita Swashed + spaced Syne caps) ---------- */
+
+[data-type-pair="screen"] {
+  --tp-display: "Sansita Swashed";
+  --tp-accent: "Syne";
+  --tp-heading: "Sansita Swashed";
+  --tp-subheading: "Figtree";
+  --tp-body: "Figtree";
+}
+[data-type-pair="screen"] h2:not(.uppercase) { font-weight: 800; letter-spacing: -0.005em; }
+[data-type-pair="screen"] h3:not(.uppercase) { font-weight: 700; }
+[data-type-pair="screen"] .pair-main {
+  width: fit-content;
+  font-size: 5rem;
+  font-size: clamp(4.6rem, 30cqi, 11rem);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+  transform: rotate(-4deg);
+  transform-origin: left bottom;
+}
+[data-type-pair="screen"] .pair-accent {
+  width: fit-content;
+  margin-top: 0.8em;
+  padding-left: 0.3em;
+  color: hsl(var(--primary));
+  font-size: 1rem;
+  font-size: clamp(0.85rem, 3.4cqi, 1.45rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+/* ---------- Retro · Social Media (Bricolage Grotesque + Kaushan Script) ---------- */
+
+[data-type-pair="retro"] {
+  --tp-display: "Bricolage Grotesque";
+  --tp-accent: "Kaushan Script";
+  --tp-heading: "Bricolage Grotesque";
+  --tp-body: "Bricolage Grotesque";
+}
+[data-type-pair="retro"] h2:not(.uppercase) { font-weight: 800; letter-spacing: -0.035em; }
+[data-type-pair="retro"] .pair-main {
+  font-size: 2.8rem;
+  font-size: clamp(2.6rem, 11cqi, 5.8rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+[data-type-pair="retro"] .pair-accent {
+  width: fit-content;
+  margin-top: 0.15em;
+  padding-left: 0.1em;
+  color: hsl(var(--primary));
+  font-size: 1.9rem;
+  font-size: clamp(1.7rem, 6.6cqi, 3.4rem);
+  line-height: 1.2;
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+
+/* ---------- Focus · Lead Generation (Abril Fatface + Pacifico cut-out) ---------- */
+
+[data-type-pair="focus"] {
+  --tp-display: "Abril Fatface";
+  --tp-accent: "Pacifico";
+  --tp-heading: "Abril Fatface";
+  --tp-subheading: "Libre Franklin";
+  --tp-body: "Libre Franklin";
+}
+[data-type-pair="focus"] h2:not(.uppercase) { font-weight: 400; letter-spacing: 0; }
+[data-type-pair="focus"] h3:not(.uppercase) { font-weight: 700; }
+[data-type-pair="focus"] .pair-main {
+  font-size: 2.8rem;
+  font-size: clamp(2.6rem, 11.5cqi, 6rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+[data-type-pair="focus"] .pair-accent {
+  --halo: hsl(var(--background));
+  width: fit-content;
+  margin-top: -0.16em;
+  padding-left: 18%;
+  color: hsl(var(--primary));
+  font-size: 2rem;
+  font-size: clamp(1.8rem, 7.2cqi, 3.9rem);
+  line-height: 1.2;
+  transform: rotate(-5deg);
+  transform-origin: left center;
+  /* Cut-out edge where the script crosses the serif, as in the reference. */
+  text-shadow:
+    0.045em 0.045em 0 var(--halo), -0.045em 0.045em 0 var(--halo),
+    0.045em -0.045em 0 var(--halo), -0.045em -0.045em 0 var(--halo),
+    0 0.06em 0 var(--halo), 0 -0.06em 0 var(--halo),
+    0.06em 0 0 var(--halo), -0.06em 0 0 var(--halo);
+}
+
+/* ---------- Ledger · Marketing Audit (Instrument Serif + IBM Plex Mono) ---------- */
+
+[data-type-pair="ledger"] {
+  --tp-display: "Instrument Serif";
+  --tp-accent: "IBM Plex Mono";
+  --tp-heading: "Instrument Serif";
+  --tp-subheading: "IBM Plex Sans";
+  --tp-body: "IBM Plex Sans";
+}
+[data-type-pair="ledger"] h2:not(.uppercase) { font-weight: 400; letter-spacing: -0.015em; }
+[data-type-pair="ledger"] h3:not(.uppercase) { font-weight: 600; }
+[data-type-pair="ledger"] .pair-main {
+  width: fit-content;
+  padding-bottom: 0.1em;
+  border-bottom: 1px dashed hsl(var(--primary) / 0.6);
+  font-size: 3.2rem;
+  font-size: clamp(3rem, 12.5cqi, 7rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+}
+[data-type-pair="ledger"] .pair-accent {
+  margin-top: 1em;
+  color: hsl(var(--primary));
+  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2.9cqi, 1.2rem);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+[data-type-pair="ledger"] .pair-accent::before { content: "[ "; color: hsl(var(--muted-foreground)); }
+[data-type-pair="ledger"] .pair-accent::after { content: " ]"; color: hsl(var(--muted-foreground)); }
+
+/* ---------- Type lab (only with ?typelab) ---------- */
+
+.type-lab {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 80;
+  width: min(280px, calc(100vw - 96px));
+  padding: 14px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 16px;
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  box-shadow: 0 18px 50px rgb(0 0 0 / 0.25);
+  font: 13px/1.4 "Inter", system-ui, sans-serif;
+}
+.type-lab-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.type-lab-head button { width: 28px; height: 28px; border-radius: 999px; font-size: 18px; line-height: 1; }
+.type-lab-head button:hover { background: hsl(var(--muted)); }
+.type-lab select {
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 10px;
+  background: hsl(var(--background));
+  color: inherit;
+  font: inherit;
+}
+.type-lab dl { display: grid; gap: 4px; margin: 10px 0; }
+.type-lab dl > div { display: flex; gap: 8px; }
+.type-lab dt { flex: none; width: 52px; color: hsl(var(--muted-foreground)); }
+.type-lab-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.type-lab-actions button {
+  min-height: 36px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 10px;
+  font-weight: 600;
+}
+.type-lab-actions button:hover:not(:disabled) { border-color: hsl(var(--primary)); color: hsl(var(--primary)); }
+.type-lab-actions button:disabled { opacity: 0.45; }

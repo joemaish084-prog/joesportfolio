@@ -6,6 +6,7 @@ import { caseStudies } from "@/data/caseStudies";
 import { CALENDLY_URL, trustNumbers } from "@/data/services";
 import { HeroResultCard } from "./HeroResultCard";
 import { TrustNumbers } from "./TrustNumbers";
+import { PairedTitle } from "@/components/type/TypePair";
 
 /** The published study shown beside the headline. */
 const HERO_STUDY_ID = "meta-google-combined";
@@ -33,10 +34,7 @@ export function ServicesHero() {
           <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-center lg:gap-14">
             <div>
               <SectionLabel>JOSEPH MAINA MARKETING · NAIROBI</SectionLabel>
-              <h1 className="mt-4 text-balance font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-                Digital marketing services in Nairobi that{" "}
-                <span className="font-serif font-normal italic text-primary">pay back in KES.</span>
-              </h1>
+              <PairedTitle className="mt-5" main="Digital marketing services in Nairobi that" accent="pay back in KES." />
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
                 Paid ads, SEO, social media and Shopify stores. Pick one channel or combine them, and work directly with me.
               </p>

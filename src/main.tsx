@@ -1,5 +1,6 @@
 // Keep styles in the HTML's initial dependency graph for the prerendered page.
 import "./index.css";
+import "./styles/type-pairs.css";
 
 // Keep React and all app imports out of this entry module. A module requested
 // from the bare domain can redirect to www and then be imported again by a lazy

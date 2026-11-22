@@ -28,6 +28,8 @@ import { AgencyProcess } from "@/components/agency/AgencyProcess";
 import { CustomerJourney } from "@/components/agency/CustomerJourney";
 import { ServicesSection } from "@/components/services/ServicesSection";
 import { MarketToggle } from "@/components/MarketToggle";
+import { TypePairScope } from "@/components/type/TypePair";
+import { pageTypePair } from "@/lib/typePairs";
 import { localizePrice, pick, useMarket } from "@/lib/market";
 import { saveAgencyLead } from "@/lib/saveAgencyLead";
 import { Seo } from "@/components/Seo";
@@ -192,6 +194,7 @@ const payments = [
 const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const market = useMarket();
   const page = agencyPages[pageKey];
+  const typeSetting = pageTypePair(pageKey);
   const location = useLocation();
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
@@ -252,9 +255,9 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
       <Seo {...(pageKey === "home" ? agencyOverviewHead : agencyHead(pageKey))} />
       <AgencyNavigation />
 
-      <main>
+      <TypePairScope as="main" pair={typeSetting?.pair}>
         {/* The services page brings its own hero (ServicesHero). */}
-        {pageKey !== "home" && pageKey !== "services" && <AgencyPageHeader page={page}
+        {pageKey !== "home" && pageKey !== "services" && <AgencyPageHeader page={page} pairMain={typeSetting?.main}
           visual={pageKey === "pricing" ? <PricingOverview market={market} /> : undefined}>
               {pageKey === "pricing" && <div className="mt-8 flex flex-wrap items-start gap-4">
                 <Button className="shrink-0 rounded-full" asChild><a href="#services">Compare packages</a></Button>
@@ -723,7 +726,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 </>}
         {/* FOOTER CTA — the contact page is already the next step, and the services page ends on its own CTA */}
         {pageKey !== "contact" && pageKey !== "services" && <AgencyPageCta showPricing={pageKey !== "pricing"} />}
-      </main>
+      </TypePairScope>
 
       <AgencyPageFooter />
     </div>

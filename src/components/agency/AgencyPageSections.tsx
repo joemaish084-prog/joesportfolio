@@ -6,6 +6,8 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { AgencySectionLinks } from "./AgencyNavigation";
+import { PairedTitle } from "@/components/type/TypePair";
+import { splitHeadline } from "@/lib/typePairs";
 
 export function SubHeading({ eyebrow, title, children, aside }: { eyebrow?: string; title: ReactNode; children?: ReactNode; aside?: ReactNode }) {
   return <div className="mb-8 flex flex-col gap-4 border-b border-border/60 pb-5 sm:flex-row sm:items-end sm:justify-between">
@@ -18,11 +20,14 @@ export function SubHeading({ eyebrow, title, children, aside }: { eyebrow?: stri
   </div>;
 }
 
-export function AgencyPageHeader({ page, visual, children }: {
+export function AgencyPageHeader({ page, visual, children, pairMain }: {
   page: { label: string; heading: string; intro: string };
   visual?: ReactNode;
   children?: ReactNode;
+  /** Opening words set in the page's display face; the rest take the accent face. */
+  pairMain?: string;
 }) {
+  const [main, accent] = splitHeadline(page.heading, pairMain);
   return (
     <header className="relative overflow-hidden border-b border-border/50">
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -41,7 +46,9 @@ export function AgencyPageHeader({ page, visual, children }: {
           <div className={visual ? "grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-16" : undefined}>
             <div className="min-w-0">
               <SectionLabel>JOSEPH MAINA MARKETING</SectionLabel>
-              <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>
+              {pairMain
+                ? <PairedTitle className="mt-5 max-w-4xl" main={main} accent={accent} />
+                : <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>}
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">{page.intro}</p>
               {children}
             </div>
