@@ -18,6 +18,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { Seo } from "@/components/Seo";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Highlighter } from "@/components/ui/highlighter";
 import { agencyHomeHead } from "@/seo/agencyHomeHead";
 import { AUDIT_WHATSAPP, homeFaqs, homeResults, homeServices } from "@/data/agencyHome";
 import { trackSpotlight } from "@/lib/spotlight";
@@ -64,9 +65,24 @@ export default function AgencyHome() {
             <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
               <MeetBadge />
               <div className="space-y-4">
-                <SectionLabel>Digital marketing · Nairobi, Kenya</SectionLabel>
-                <h2 id="agency-meet-title" className="font-display text-3xl font-bold md:text-4xl">Meet <span className="font-serif font-normal italic text-primary">Joseph</span></h2>
-                <p className="leading-relaxed text-muted-foreground">I’m a digital marketing manager based in Nairobi. I work across paid ads, SEO, and content. I’ve worked with brands including iClear, PowWater, and Convey Communications.</p>
+                <SectionLabel>Founder &amp; CEO · JM Marketing · Nairobi, Kenya</SectionLabel>
+                <h2 id="agency-meet-title" className="font-display text-3xl font-bold md:text-4xl">
+                  Meet{" "}
+                  <Highlighter action="underline" color="#F97316" strokeWidth={2.5} padding={1} isView>
+                    <span className="font-serif font-normal italic text-primary">Joseph</span>
+                  </Highlighter>
+                </h2>
+                <p className="leading-relaxed text-muted-foreground">
+                  I’m the founder and CEO of JM Marketing, a digital marketing agency in Nairobi. I help businesses get{" "}
+                  <Highlighter action="highlight" color="rgba(249, 115, 22, 0.28)" isView delay={300}>
+                    <span className="font-medium text-foreground">more customers and more sales</span>
+                  </Highlighter>
+                  , and I judge my work on that. I don’t judge it on{" "}
+                  <Highlighter action="strike-through" color="#F97316" strokeWidth={2} isView delay={900}>
+                    likes or reach
+                  </Highlighter>
+                  .
+                </p>
                 <Button asChild className="rounded-full"><a href="#audit">Book a Free Audit <ArrowUpRight className="h-4 w-4" aria-hidden /></a></Button>
               </div>
             </div>
