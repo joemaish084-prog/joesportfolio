@@ -68,6 +68,22 @@
   text-transform: uppercase;
 }
 
+/* Services hero: the closing word takes the brand orange and a drawn underline. */
+.services-hero-swoosh {
+  position: relative;
+  display: inline-block;
+  color: hsl(var(--primary));
+}
+.services-hero-swoosh-line {
+  position: absolute;
+  left: -4%;
+  bottom: -0.2em;
+  width: 108%;
+  height: 0.26em;
+  color: hsl(var(--primary));
+  pointer-events: none;
+}
+
 /* ---------- 2X Growth · Results (Archivo Black Expanded stack + Work Sans) ---------- */
 
 [data-type-pair="growth"] {
