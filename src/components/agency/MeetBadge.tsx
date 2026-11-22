@@ -44,7 +44,7 @@ export function MeetBadge() {
         ref={ref}
         role="img"
         aria-label="Joseph Maina's lanyard badge: Digital Marketing Manager, paid ads, SEO and content, Nairobi, Kenya"
-        className="relative h-[480px] overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-b from-muted/70 to-background sm:h-[560px] lg:h-[620px]"
+        className="relative h-[480px] sm:h-[560px] lg:h-[620px]"
       >
         <div
           aria-hidden

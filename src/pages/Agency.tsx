@@ -725,7 +725,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         {pageKey !== "contact" && pageKey !== "services" && <AgencyPageCta showPricing={pageKey !== "pricing"} />}
       </main>
 
-      <AgencyPageFooter whatsappNumber={WHATSAPP_NUMBER} />
+      <AgencyPageFooter />
     </div>
     </MotionConfig>
   );

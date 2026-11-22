@@ -101,7 +101,7 @@ export default function AgencyResults() {
         </section>
         <AgencyPageCta />
       </main>
-      <AgencyPageFooter whatsappNumber="254704700160" />
+      <AgencyPageFooter />
     </div>
   );
 }

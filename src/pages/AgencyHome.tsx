@@ -12,6 +12,7 @@ import { SubHeading } from "@/components/agency/AgencyPageSections";
 import { AuditForm } from "@/components/agency/AuditForm";
 import { useStudioMotion } from "@/components/agency/useStudioMotion";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
+import { Footer } from "@/components/Footer";
 import { SectionLabel } from "@/components/SectionLabel";
 import { Testimonials } from "@/components/Testimonials";
 import { Seo } from "@/components/Seo";
@@ -128,17 +129,10 @@ export default function AgencyHome() {
             </div>
           </section>
         </main>
-        <footer className="container mx-auto px-4 pb-24 pt-12 text-sm text-muted-foreground md:pb-12">
+        <div className="container mx-auto px-4 py-10 text-sm text-muted-foreground">
           <AgencySectionLinks className="justify-center" />
-          <div className="mt-8 flex flex-wrap justify-center gap-x-5 gap-y-3 border-t border-border/60 pt-6">
-            <span>© {new Date().getFullYear()} Joseph Maina Marketing</span>
-            <Link to="/agency/overview" className="hover:text-foreground">Agency overview</Link>
-            <Link to="/privacy-policy" className="hover:text-foreground">Privacy</Link>
-            <Link to="/cookie-policy" className="hover:text-foreground">Cookies</Link>
-            <Link to="/terms" className="hover:text-foreground">Terms</Link>
-            <a href={AUDIT_WHATSAPP} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">WhatsApp</a>
-          </div>
-        </footer>
+        </div>
+        <Footer />
         <div className="studio-mobile-audit" data-mobile-audit hidden>
           <Button asChild className="w-full rounded-full"><a href="#audit">Book a Free Audit <ArrowUpRight className="h-4 w-4" aria-hidden /></a></Button>
         </div>

@@ -1,6 +1,32 @@
+/* ---------- Shared ---------- */
+
+/* Break out of the text column so the views fill the page width (capped on very wide screens). */
+.design-bleed {
+  width: min(100vw, 1800px);
+  margin-left: calc(50% - min(50vw, 900px));
+}
+
+/* Fade the edges to transparent instead of drawing a box, so the views blend into any background. */
+.design-fade {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 86%, transparent),
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 86%, transparent),
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-composite: intersect;
+}
+
+.design-sphere__stage.design-fade {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 60%, transparent 90%),
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 60%, transparent 90%),
+    linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
 /* ---------- Drift wall ---------- */
 
-.drift-wall {
+/* The stage holds the perspective: the edge mask flattens 3D, so it must sit on the same element. */
+.drift-wall__stage {
   perspective: 1200px;
   perspective-origin: 50% 40%;
 }

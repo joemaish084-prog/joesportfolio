@@ -29,7 +29,7 @@ const rad = (deg: number) => (deg * Math.PI) / 180;
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
 function buildGeometry(width: number, n: number) {
-  const tileW = Math.round(clamp(width * 0.3, 140, 240));
+  const tileW = Math.round(clamp(width * 0.3, 140, 270));
   const tileH = Math.round(tileW * 1.25);
   const radius = Math.round((tileH * 1.18) / rad(RING_STEP));
   const tiles: Tile[] = [];
@@ -306,10 +306,13 @@ export function DesignSphere({ items, onSelect }: DesignSphereProps) {
       onPointerUp={() => endDrag(false)}
       onPointerCancel={() => endDrag(true)}
       onKeyDown={onKeyDown}
-      className="design-sphere relative h-[min(78vh,760px)] min-h-[500px] overflow-hidden rounded-3xl border border-border bg-card/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-      style={geometry ? { perspective: `${Math.round(geometry.radius * 1.5)}px` } : undefined}
+      className="design-sphere design-bleed relative h-[min(88vh,900px)] min-h-[540px] overflow-hidden rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {geometry && (
+        <div
+          className="design-sphere__stage design-fade absolute inset-0"
+          style={{ perspective: `${Math.round(geometry.radius * 1.5)}px` }}
+        >
         <div ref={sceneRef} className="design-sphere__scene" aria-hidden="true">
           {geometry.tiles.map((t, i) => {
             const design = items[t.item];
@@ -338,11 +341,10 @@ export function DesignSphere({ items, onSelect }: DesignSphereProps) {
             );
           })}
         </div>
+        </div>
       )}
 
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-background via-background/80 to-transparent" />
-
-      <p className="pointer-events-none absolute left-4 top-4 rounded-full border border-border bg-background/80 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+      <p className="pointer-events-none absolute left-1/2 top-4 -translate-x-1/2 whitespace-nowrap rounded-full border border-border bg-background/80 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
         Drag to spin · tap the front design to open it
       </p>
 

@@ -23,7 +23,7 @@ export function DriftWall({ items, onSelect }: DriftWallProps) {
     if (!el) return;
     const observer = new ResizeObserver(([entry]) => {
       const w = entry.contentRect.width;
-      setColumns(w < 520 ? 3 : w < 900 ? 4 : 5);
+      setColumns(w < 520 ? 3 : w < 900 ? 4 : w < 1400 ? 5 : 6);
     });
     observer.observe(el);
     return () => observer.disconnect();
@@ -60,8 +60,9 @@ export function DriftWall({ items, onSelect }: DriftWallProps) {
       ref={rootRef}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
-      className="drift-wall relative h-[min(78vh,760px)] min-h-[460px] overflow-hidden rounded-3xl border border-border bg-card/40"
+      className="drift-wall design-bleed relative h-[min(88vh,900px)] min-h-[520px] overflow-hidden"
     >
+      <div className="drift-wall__stage design-fade absolute inset-0">
       <div ref={planeRef} className="drift-wall__plane absolute inset-0 flex gap-[var(--gap)] px-[var(--gap)]">
         {grid.map((column, c) => (
           <div key={c} className="drift-wall__column min-w-0 flex-1">
@@ -102,12 +103,7 @@ export function DriftWall({ items, onSelect }: DriftWallProps) {
           </div>
         ))}
       </div>
-
-      {/* Edge fades, in the page colour so they work in light and dark themes. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background to-transparent" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background to-transparent" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent sm:w-16" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent sm:w-16" />
+      </div>
 
       <p className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-border bg-background/80 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
         Hover to pause · tap a design to open it

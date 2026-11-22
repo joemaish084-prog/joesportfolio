@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronRight, Star } from "lucide-react";
-import { PublicViewLink } from "@/components/PublicViewLink";
+import { Footer } from "@/components/Footer";
 import { SectionLabel } from "@/components/SectionLabel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -74,17 +74,10 @@ export function AgencyPageCta({ showPricing = true }: { showPricing?: boolean })
   );
 }
 
-export function AgencyPageFooter({ whatsappNumber }: { whatsappNumber: string }) {
+/** Agency section links, then the same site-wide footer the portfolio uses. */
+export function AgencyPageFooter() {
   return <>
     <div className="container mx-auto px-4 pb-10"><AgencySectionLinks className="justify-center text-muted-foreground" /></div>
-    <footer className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 whitespace-nowrap border-t border-border/40 px-4 py-8 text-sm text-muted-foreground leading-8">
-      <span>© {new Date().getFullYear()} Joseph Maina</span>
-      <span>·</span>
-      <PublicViewLink to="/portfolio" className="hover:text-foreground">Portfolio</PublicViewLink>
-      <span>·</span>
-      <Link to="/agency/blog" className="hover:text-foreground">Blog</Link>
-      <span>·</span>
-      <a href={`https://wa.me/${whatsappNumber}`} className="hover:text-foreground" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-    </footer>
+    <Footer />
   </>;
 }
