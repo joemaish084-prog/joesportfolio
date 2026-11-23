@@ -549,3 +549,28 @@ html:not(.js) .agency-counter-animated { display: none; }
 :root[data-theme-vt="active"]::view-transition-new(root) {
   clip-path: var(--theme-vt-clip-from);
 }
+
+/* Safety net for ScrollReveal: once an element is due to show, force it fully
+   visible after a short delay even if the JS animation stalls. The end state
+   matches the animation's own end state, so a normal reveal is unaffected. */
+@keyframes jm-reveal-fallback {
+  to { opacity: 1; transform: none; }
+}
+[data-scroll-reveal="shown"] {
+  animation: jm-reveal-fallback 0.01s linear 2.5s forwards;
+}
+/* Prerendered pages ship reveal blocks with an inline opacity: 0. If the app
+   script is slow or never loads, show them anyway: at once without JS, after a
+   few seconds while still waiting for the app to start. */
+/* The style selector catches other framer-motion fade-ins (section labels,
+   headings) without touching scale-based effects such as progress lines. */
+html:not(.js) [data-scroll-reveal],
+html:not(.js) #root [style^="opacity:0;transform:translate"],
+html:not([data-app-ready]) [data-scroll-reveal],
+html:not([data-app-ready]) #root [style^="opacity:0;transform:translate"] {
+  animation: jm-reveal-fallback 0.01s linear 4s forwards;
+}
+html:not(.js) [data-scroll-reveal],
+html:not(.js) #root [style^="opacity:0;transform:translate"] {
+  animation-delay: 0s;
+}

@@ -92,8 +92,11 @@ function ShowcaseTile({ title, image, description }: { title: string; image: str
       <img
         src={image}
         alt={`${title}: ${description}`}
+        width={224}
+        height={280}
         loading="lazy"
         decoding="async"
+        {...{ fetchpriority: "low" }}
         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
       <figcaption className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/85 to-transparent p-4 pt-10 text-white transition-transform duration-300 group-hover:translate-y-0">

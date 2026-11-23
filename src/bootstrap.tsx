@@ -40,12 +40,19 @@ if (!bootWindow.__jmAppMounted) {
     </RootErrorBoundary>
   );
   bootWindow.__jmAppMounted = true;
+  // Tells the CSS safety net in index.css that React now drives scroll reveals.
+  const markReady = () => document.documentElement.setAttribute("data-app-ready", "");
+  const hydrate = () => {
+    hydrateRoot(container, app);
+    markReady();
+  };
   if (hydrateAgency || hydratePortfolio) {
     // Resolve the prerendered view before React hydrates its Suspense boundary.
-    void preloadPrimaryView(hydrateAgency ? "/" : PORTFOLIO_PATH).then(() => hydrateRoot(container, app), () => hydrateRoot(container, app));
+    void preloadPrimaryView(hydrateAgency ? "/" : PORTFOLIO_PATH).then(hydrate, hydrate);
   } else if (hydratePrimary) {
-    hydrateRoot(container, app);
+    hydrate();
   } else {
     createRoot(container).render(app);
+    markReady();
   }
 }
