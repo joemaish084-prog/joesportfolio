@@ -94,6 +94,44 @@ describe("agency conversion events", () => {
     expect(gtag).not.toHaveBeenCalled();
   });
 
+  it("sends ChatGPT Ads conversions on public pages only", () => {
+    const oaiq = vi.fn();
+    vi.stubGlobal("window", { location: { pathname: "/agency/contact" }, analyticsConsentGranted: true, oaiq });
+    track("generate_lead");
+    track("calendly_booked");
+    track("whatsapp_click");
+    track("some_other_event");
+    expect(oaiq.mock.calls).toEqual([
+      ["measure", "lead_created", { type: "customer_action" }],
+      ["measure", "appointment_scheduled", { type: "customer_action" }],
+      ["measure", "custom", { type: "custom" }, { custom_event_name: "whatsapp_click" }],
+    ]);
+    vi.stubGlobal("window", { location: { pathname: "/hub/crm" }, analyticsConsentGranted: true, oaiq });
+    track("generate_lead");
+    expect(oaiq).toHaveBeenCalledTimes(3);
+  });
+
+  it("does not load the ChatGPT Ads pixel before consent", () => {
+    const pixel = html.split("<!-- ChatGPT Ads (OpenAI) Measurement Pixel")[1].match(/<script>([\s\S]*?)<\/script>/)![1];
+    const browser: Record<string, unknown> = { location: { pathname: "/agency" } };
+    const scheduled: (() => void)[] = [];
+    let stored: string | null = null;
+    runInNewContext(pixel, {
+      window: browser,
+      localStorage: { getItem: () => stored },
+      afterInitialRender: (callback: () => void) => scheduled.push(callback),
+      document: {},
+    });
+    expect(browser.oaiq).toBeUndefined();
+    expect(scheduled).toHaveLength(0);
+    stored = "accepted";
+    (browser.loadOpenAIPixel as () => void)();
+    const queue = (browser.oaiq as unknown as { q: unknown[][] }).q.map(args => Array.from(args));
+    expect(queue[0]).toEqual(["init", { pixelId: "Y8ev7YsBCibRAWV2Uwmx1Z" }]);
+    expect(queue[1].slice(0, 2)).toEqual(["measure", "page_viewed"]);
+    expect(scheduled).toHaveLength(1);
+  });
+
   it("updates consent before starting the Google tag", () => {
     const loadGoogleAnalytics = vi.fn();
     const browser = { dataLayer: [] as unknown[], loadGoogleAnalytics, loadMetaPixel: vi.fn(), analyticsConsentGranted: false };

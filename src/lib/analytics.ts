@@ -21,4 +21,5 @@ export function grantAnalyticsConsent() {
   window.analyticsConsentGranted = true;
   window.loadGoogleAnalytics?.();
   window.loadMetaPixel?.();
+  window.loadOpenAIPixel?.();
 }

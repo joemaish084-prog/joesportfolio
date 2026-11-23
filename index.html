@@ -99,6 +99,19 @@
     try{if(localStorage.getItem('cookie-consent-v1')==='accepted')window.loadMetaPixel();}catch(e){}
     </script>
     <!-- End Meta Pixel Code -->
+    <!-- ChatGPT Ads (OpenAI) Measurement Pixel: nothing loads or fires until cookies are accepted (see src/lib/analytics.ts) -->
+    <script>
+    window.loadOpenAIPixel=function(){if(window.oaiq)return;
+    (function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments);};q.q=[];w.oaiq=q;
+    afterInitialRender(function(){var js=d.createElement(s);js.async=true;js.src=u;
+    var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(js,f);});
+    })(window,document,'script','https://bzrcdn.openai.com/sdk/oaiq.min.js');
+    window.oaiq('init',{pixelId:'Y8ev7YsBCibRAWV2Uwmx1Z'});
+    if(!/^\/(hub|portal|admin)(\/|$)/.test(window.location.pathname))
+    window.oaiq('measure','page_viewed',{type:'contents',contents:[{id:window.location.pathname,content_type:'page'}]});};
+    try{if(localStorage.getItem('cookie-consent-v1')==='accepted')window.loadOpenAIPixel();}catch(e){}
+    </script>
+    <!-- End ChatGPT Ads Pixel -->
     <!-- Per-page tags. scripts/prerender.mjs rewrites this region for every route at build time. -->
     <!-- prerender:head -->
     <title>Digital Marketing Agency Nairobi | Joseph Maina Marketing</title>

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { trackOpenAIPageView } from "@/lib/track";
 
 export function MetaPixelRouteTracker() {
   const location = useLocation();
@@ -10,10 +11,8 @@ export function MetaPixelRouteTracker() {
       isFirstRender.current = false;
       return;
     }
-    const fbq = (window as any).fbq;
-    if (typeof fbq === "function") {
-      fbq("track", "PageView");
-    }
+    window.fbq?.("track", "PageView");
+    trackOpenAIPageView(location.pathname);
   }, [location.pathname]);
 
   return null;
