@@ -91,25 +91,29 @@ html:not(.js) .agency-counter-animated { display: none; }
   :root {
     --chart-good: 142 72% 29%;
     --chart-warn: 32 95% 35%;
-    --background: 0 0% 100%;
-    --foreground: 0 0% 7%;
-    --card: 0 0% 97%;
-    --card-foreground: 0 0% 7%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
+    /* Brand palette: Oatmilk Latte #EBEBDF (light canvas), Navy #1A1A2E
+       (ink and dark canvas), orange gradient (accent). */
+    --oatmilk: 60 23% 90%;
+    --navy: 240 28% 14%;
+
+    --background: 60 23% 90%;
+    --foreground: 240 28% 14%;
+    --card: 60 25% 94%;
+    --card-foreground: 240 28% 14%;
+    --popover: 60 25% 94%;
+    --popover-foreground: 240 28% 14%;
     --primary: 25 100% 50%;
-    --primary-foreground: 0 0% 7%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
+    --primary-foreground: 240 28% 14%;
+    --secondary: 240 28% 14%;
+    --secondary-foreground: 60 23% 90%;
+    --muted: 60 16% 85%;
     --accent: 25 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 240 28% 14%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --muted-foreground: 0 0% 38%;
+    --border: 60 12% 80%;
+    --input: 60 12% 80%;
+    --muted-foreground: 240 12% 36%;
     --ring: 25 100% 50%;
     --radius: 1.25rem;
     --ease-out-apple: cubic-bezier(0.22, 1, 0.36, 1);
@@ -122,15 +126,15 @@ html:not(.js) .agency-counter-animated { display: none; }
     --gradient-orange-end: 33 100% 58%;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --shadow-elegant: 0 10px 40px -10px hsl(25 100% 50% / 0.2);
-    --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.05);
+    --shadow-soft: 0 2px 20px hsl(240 28% 14% / 0.06);
     --shadow-orange-glow: 0 4px 20px hsl(25 100% 50% / 0.35);
 
     /* Case study section */
-    --case-study-bg: 220 20% 10%;
-    --case-study-card: 220 15% 14%;
-    --case-study-card-border: 220 10% 22%;
-    --case-study-text: 0 0% 92%;
-    --case-study-muted: 0 0% 55%;
+    --case-study-bg: 240 30% 11%;
+    --case-study-card: 240 26% 16%;
+    --case-study-card-border: 240 18% 24%;
+    --case-study-text: 60 23% 90%;
+    --case-study-muted: 60 8% 62%;
 
     /* Platform accents */
     --tiktok: 170 70% 45%;
@@ -140,59 +144,59 @@ html:not(.js) .agency-counter-animated { display: none; }
     /* Paid Media Approach — illustrative "Campaign Snapshot" panel.
        Always-dark regardless of light/dark theme, so it stays a contained
        dark card inside the page rather than flipping with --foreground. */
-    --panel-dark-bg: 220 20% 9%;
-    --panel-dark-card: 220 15% 13%;
-    --panel-dark-border: 220 10% 22%;
-    --panel-dark-text: 0 0% 94%;
-    --panel-dark-muted: 0 0% 62%;
+    --panel-dark-bg: 240 30% 10%;
+    --panel-dark-card: 240 26% 15%;
+    --panel-dark-border: 240 18% 24%;
+    --panel-dark-text: 60 23% 92%;
+    --panel-dark-muted: 60 8% 64%;
 
     /* Sidebar (admin dashboard) — aliased to the neutral palette above */
-    --sidebar-background: 0 0% 97%;
-    --sidebar-foreground: 0 0% 7%;
+    --sidebar-background: 60 25% 94%;
+    --sidebar-foreground: 240 28% 14%;
     --sidebar-primary: 25 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 92%;
-    --sidebar-accent-foreground: 0 0% 7%;
-    --sidebar-border: 0 0% 88%;
+    --sidebar-primary-foreground: 240 28% 14%;
+    --sidebar-accent: 60 16% 85%;
+    --sidebar-accent-foreground: 240 28% 14%;
+    --sidebar-border: 60 12% 80%;
     --sidebar-ring: 25 100% 50%;
   }
 
   .dark {
     --chart-good: 142 69% 58%;
     --chart-warn: 43 96% 56%;
-    --background: 0 0% 5%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 98%;
+    --background: 240 28% 14%;
+    --foreground: 60 23% 90%;
+    --card: 240 26% 18%;
+    --card-foreground: 60 23% 90%;
+    --popover: 240 26% 18%;
+    --popover-foreground: 60 23% 90%;
     --primary: 25 100% 50%;
-    --primary-foreground: 0 0% 7%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
+    --primary-foreground: 240 28% 14%;
+    --secondary: 240 22% 23%;
+    --secondary-foreground: 60 23% 90%;
+    --muted: 240 22% 20%;
+    --muted-foreground: 60 8% 68%;
     --accent: 25 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 240 28% 14%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 240 18% 25%;
+    --input: 240 18% 25%;
     --ring: 25 100% 50%;
     --orange-light: 30 100% 58%;
     --gradient-orange-start: 25 100% 50%;
     --gradient-orange-end: 33 100% 58%;
     --shadow-elegant: 0 10px 40px -10px hsl(25 100% 50% / 0.3);
-    --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.3);
+    --shadow-soft: 0 2px 20px hsl(240 40% 5% / 0.35);
     --shadow-orange-glow: 0 4px 20px hsl(25 100% 50% / 0.45);
 
-    --sidebar-background: 0 0% 8%;
-    --sidebar-foreground: 0 0% 98%;
+    --sidebar-background: 240 26% 18%;
+    --sidebar-foreground: 60 23% 90%;
     --sidebar-primary: 25 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 14%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 16%;
+    --sidebar-primary-foreground: 240 28% 14%;
+    --sidebar-accent: 240 22% 23%;
+    --sidebar-accent-foreground: 60 23% 90%;
+    --sidebar-border: 240 18% 26%;
     --sidebar-ring: 25 100% 50%;
   }
 }
@@ -349,7 +353,7 @@ html:not(.js) .agency-counter-animated { display: none; }
   /* 1. Section labels */
   .section-label {
     @apply font-mono text-xs font-bold tracking-widest uppercase;
-    color: #C2410C;
+    color: hsl(25 100% 33%);
   }
   .dark .section-label {
     color: #F97316;
@@ -368,8 +372,8 @@ html:not(.js) .agency-counter-animated { display: none; }
     transition: background-color 300ms ease, border-color 300ms ease;
   }
   .dark .surface-card {
-    border-color: rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.4);
+    border-color: rgba(235, 235, 223, 0.1);
+    background: hsl(var(--card) / 0.6);
   }
   .surface-card:hover {
     background: rgba(0, 0, 0, 0.03);
@@ -474,15 +478,15 @@ html:not(.js) .agency-counter-animated { display: none; }
 
 /* Keep the brand orange readable on public light surfaces. */
 .light :is(.agency-page, .service-page, .shopify-premium, [data-portfolio-home]) {
-  --primary: 25 100% 35%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 25 100% 33%;
+  --primary-foreground: 60 23% 94%;
   --ring: var(--primary);
 }
 .light :is(.agency-page, .service-page, .shopify-premium, [data-portfolio-home]) .text-gradient {
-  background-image: linear-gradient(to right, hsl(25 100% 35%), hsl(25 100% 43%));
+  background-image: linear-gradient(to right, hsl(25 100% 33%), hsl(25 100% 41%));
 }
 .light :is(.agency-page, .service-page, .shopify-premium, [data-portfolio-home]) .bg-gradient-orange.text-white {
-  color: hsl(0 0% 7%);
+  color: hsl(240 28% 14%);
 }
 
 /* Agency pages share one rounded card language; the portfolio keeps its own. */

@@ -93,12 +93,12 @@ export function ServicesHero() {
             <li className="col-span-2 lg:col-span-1">
               <Link
                 to={VIDEO_VIEWS.href}
-                className={`group flex h-full flex-col justify-between gap-6 rounded-3xl bg-[linear-gradient(105deg,#1d1713_52%,hsl(var(--primary)/0.9))] p-5 text-white ring-1 ring-white/10 transition-transform motion-safe:hover:-translate-y-0.5 sm:flex-row sm:items-center sm:p-7 ${cardFocus}`}
+                className={`group flex h-full flex-col justify-between gap-6 rounded-3xl bg-[linear-gradient(105deg,#1A1A2E_52%,hsl(var(--primary)/0.9))] p-5 text-white ring-1 ring-white/10 transition-transform motion-safe:hover:-translate-y-0.5 sm:flex-row sm:items-center sm:p-7 ${cardFocus}`}
               >
                 <div>
                   <ul className="flex -space-x-3" aria-label="Some of the brands I've worked with">
                     {clientLogos.map((logo) => (
-                      <li key={logo.name} className="flex h-12 w-12 items-center justify-center rounded-full bg-white p-1.5 ring-2 ring-[#1d1713] sm:h-14 sm:w-14">
+                      <li key={logo.name} className="flex h-12 w-12 items-center justify-center rounded-full bg-white p-1.5 ring-2 ring-[#1A1A2E] sm:h-14 sm:w-14">
                         <img src={logo.src} alt={logo.name} width={240} height={160} decoding="async" className="h-full w-full object-contain" />
                       </li>
                     ))}
