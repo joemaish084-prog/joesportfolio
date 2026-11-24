@@ -39,9 +39,9 @@ export const agencyPages = {
     path: "/agency/contact", label: "Contact",
     title: "Contact Joseph Maina Marketing | Nairobi",
     heading: "Let's talk about your business",
-    description: "Contact Joseph Maina Marketing in Nairobi for digital marketing support. Book a free 30-minute strategy call, send a project brief or start a conversation on WhatsApp.",
-    intro: "Tell me what you sell, who you want to reach and what is getting in the way. Book a free strategy call, send a brief or get in touch directly.",
-    teaser: "Book a free 30-minute call, send a project brief or message on WhatsApp.",
+    description: "Contact Joseph Maina Marketing in Nairobi for digital marketing support. Book a free 30-minute strategy call or discuss your project on WhatsApp.",
+    intro: "Tell me what you sell, who you want to reach and what is getting in the way. Book a free strategy call or message me on WhatsApp.",
+    teaser: "Book a free 30-minute call or message me on WhatsApp.",
   },
 } as const;
 

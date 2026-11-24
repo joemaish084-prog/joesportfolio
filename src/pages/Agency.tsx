@@ -4,14 +4,10 @@ import { Button } from "@/components/ui/button";
 import { AgencyPageCta, AgencyPageFooter, AgencyPageHeader, SubHeading } from "@/components/agency/AgencyPageSections";
 import { PricingOverview } from "@/components/agency/PricingOverview";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { motion, useInView, MotionConfig } from "framer-motion";
-import { Stepper } from "@/components/ui/stepper";
 import {
-  Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
+  Calendar, Phone, MessageCircle, Check, Target, ShieldCheck, MapPin, Zap,
   ClipboardList, CreditCard, Building2, Receipt,
   Video, Search, Lightbulb, ArrowRight, Share2, FileText, Palette, MessageSquare, Calculator,
   Mail, ExternalLink, LayoutGrid, TrendingUp, Tag,
@@ -29,7 +25,7 @@ import { MarketToggle } from "@/components/MarketToggle";
 import { TypePairScope } from "@/components/type/TypePair";
 import { pageTypePair } from "@/lib/typePairs";
 import { localizePrice, pick, useMarket } from "@/lib/market";
-import { saveAgencyLead } from "@/lib/saveAgencyLead";
+import { loadCalendlyWidget } from "@/lib/calendly";
 import { Seo } from "@/components/Seo";
 import { agencyHead, agencyOverviewHead } from "@/seo/agencyHeads";
 import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
@@ -53,8 +49,6 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
   "Hi Joseph! I visited josephmaina.co.ke/agency and I'd like to discuss working together."
 );
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
-// These parameters are what make Calendly report a booking back to this page.
-const CALENDLY_EMBED_URL = `${CALENDLY_URL}?embed_domain=www.josephmaina.co.ke&embed_type=Inline`;
 
 const whyCards = [
   { icon: Target, title: "Results You Can Measure", desc: "Every campaign tracked with clear KPIs — reach, leads, conversions and ROI. No vanity metrics." },
@@ -141,30 +135,7 @@ const supportingServices = Object.keys(supportingMeta).map((slug) => {
   return { ...supportingMeta[slug], slug, name: s.name, price: priceLabel(s.price, { short: true }), desc: s.scope };
 });
 
-const serviceOptions = [
-  "Shopify Store Services",
-  "Shopify Store Creation",
-  "Shopify Migration",
-  "Shopify Store Management",
-  "Meta Ads Management",
-  "Google Ads Management",
-  "TikTok Ads Management",
-  "Lead Generation",
-  "Starter Retainer",
-  "Growth Retainer",
-  "Scale Retainer",
-  "Social Media Management",
-  "SEO Optimization",
-  "Content Strategy",
-  "Video Production",
-  "Brand Strategy",
-  "Graphic Design",
-  "Digital Marketing Audit",
-  "Strategy Consultation",
-  "Not sure yet",
-];
-
-// ?service= values on links into the brief form.
+// Services linked from pricing and service pages into the WhatsApp contact card.
 const serviceFromLink: Record<string, string> = {
   "shopify-services": "Shopify Store Services",
   "shopify-create": "Shopify Store Creation",
@@ -182,6 +153,19 @@ const serviceFromLink: Record<string, string> = {
   scale: "Scale Retainer",
 };
 
+function getContactWhatsAppUrl(search: string) {
+  const params = new URLSearchParams(search);
+  const service = serviceFromLink[params.get("service") ?? ""];
+  if (typeof service !== "string" || service === "Not sure yet") return WHATSAPP_URL;
+
+  const reason = params.get("reason");
+  const message = [`Hi Joseph! I visited your website and I'd like to discuss ${service}.`];
+  if (service === "Shopify Migration" && migrationReasons.some(option => option === reason)) {
+    message.push(`Migration reason: ${reason}`);
+  }
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message.join("\n"))}`;
+}
+
 // Text comes from src/data/services.ts; only the icons are chosen here.
 const payments = [
   { icon: CreditCard, title: "M-Pesa", desc: "Pay instantly via M-Pesa STK push. Paybill or Till number provided on invoice." },
@@ -194,40 +178,37 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const page = agencyPages[pageKey];
   const typeSetting = pageTypePair(pageKey);
   const location = useLocation();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
-  const isShopifyBrief = form.service.startsWith("Shopify");
-  const [spamTrap, setSpamTrap] = useState("");
-  const [briefSent, setBriefSent] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [briefStep, setBriefStep] = useState(0);
-  const [briefError, setBriefError] = useState("");
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const [calendarReady, setCalendarReady] = useState(false);
-  const nextBriefField = useRef<string>();
-  const calendar = useRef<HTMLIFrameElement>(null);
-
-  function goToBriefStep(step: number) {
-    nextBriefField.current = ["b-name", "b-brand", "b-goals"][step];
-    setBriefStep(step);
-    setBriefError("");
-  }
+  const [calendarStatus, setCalendarStatus] = useState<"loading" | "ready" | "error">("loading");
+  const calendar = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!nextBriefField.current) return;
-    document.getElementById(nextBriefField.current)?.focus();
-    nextBriefField.current = undefined;
-  }, [briefStep]);
+    const container = calendar.current;
+    if (!calendarOpen || !container) return;
+    let cancelled = false;
 
-  useEffect(() => {
-    if (calendarOpen) calendar.current?.focus({ preventScroll: true });
+    const onLoad = (event: Event) => {
+      if (!(event.target instanceof HTMLIFrameElement) || !container.contains(event.target)) return;
+      event.target.title = "Book a free strategy call with Joseph Maina";
+      setCalendarStatus("ready");
+    };
+    container.addEventListener("load", onLoad, true);
+    container.focus({ preventScroll: true });
+
+    void loadCalendlyWidget().then(() => {
+      if (cancelled) return;
+      if (!window.Calendly?.initInlineWidget) throw new Error("Calendly inline widget unavailable");
+      window.Calendly.initInlineWidget({ url: CALENDLY_URL, parentElement: container });
+    }).catch(() => {
+      if (!cancelled) setCalendarStatus("error");
+    });
+
+    return () => {
+      cancelled = true;
+      container.removeEventListener("load", onLoad, true);
+      container.replaceChildren();
+    };
   }, [calendarOpen]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const service = serviceFromLink[params.get("service") ?? ""];
-    const reason = params.get("reason");
-    if (service) setForm((f) => ({ ...f, service, goals: f.goals || (service === "Shopify Migration" && migrationReasons.some(item => item === reason) ? `Migration reason: ${reason}` : "") }));
-  }, [location.search]);
 
   useEffect(() => {
     if (!location.hash) { window.scrollTo({ top: 0, behavior: "instant" }); return; }
@@ -236,37 +217,6 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
     });
     return () => cancelAnimationFrame(frame);
   }, [pageKey, location.pathname, location.hash, location.search]);
-
-  const submitBrief = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name.trim() || !form.email.trim() || !form.brand.trim() || !form.service || !form.budget || !form.goals.trim()) {
-      setBriefError("Describe what you’d like to achieve before sending your brief.");
-      document.getElementById("b-goals")?.focus();
-      return;
-    }
-    // Only bots fill the hidden field. They see success, and nothing is saved.
-    if (spamTrap) { setBriefSent(true); return; }
-    setSending(true);
-    setBriefError("");
-    try {
-      await saveAgencyLead({
-        name: form.name,
-        email: form.email,
-        phone: form.phone || null,
-        business_name: form.brand,
-        service_interest: form.service,
-        budget_range: form.budget,
-        goals: form.goals,
-      }, "agency_brief");
-      setForm({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
-      setBriefStep(0);
-      setBriefSent(true);
-    } catch {
-      setBriefError("Your brief couldn’t be sent. Try again or message me on WhatsApp.");
-    } finally {
-      setSending(false);
-    }
-  };
 
   return (
     <MotionConfig reducedMotion="user">
@@ -536,7 +486,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
         {/* BOOKING */}
         <section id="booking" className="container mx-auto scroll-mt-20 px-4 py-12 sm:py-20">
           <div className="max-w-6xl mx-auto">
-          <SubHeading eyebrow="Get in touch" title="Ready to Grow Your Brand?">Book a free 30-minute strategy call — no commitment, just a conversation.</SubHeading>
+          <SubHeading eyebrow="Get in touch" title="Ready to Grow Your Brand?">Book a free 30-minute strategy call or tell me about your project on WhatsApp.</SubHeading>
 
           <div className="grid items-start gap-6 lg:grid-cols-[1.1fr_1fr]">
             {/* Calendly */}
@@ -548,154 +498,39 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                   <p className="text-xs text-muted-foreground">Free · 30 minutes · Pick a time that suits you</p>
                 </div>
               </div>
-              {calendarOpen ? <div className="rounded-lg border border-border/60 bg-muted/30">
-                <p role="status" className={calendarReady ? "sr-only" : "p-3 text-sm text-muted-foreground"}>
-                  {calendarReady ? "Booking calendar loaded." : "Loading the booking calendar…"}
-                </p>
-                <iframe
-                  ref={calendar}
-                  src={CALENDLY_EMBED_URL}
-                  title="Book a free strategy call with Joseph Maina"
-                  width="520"
-                  height="550"
-                  className="block w-full rounded-lg border-0"
-                  onLoad={() => setCalendarReady(true)}
-                />
-              </div> : <Button type="button" size="lg" className="w-full rounded-full px-4" onClick={() => setCalendarOpen(true)}>Show booking calendar</Button>}
+              {calendarOpen ? (
+                <div className="rounded-lg border border-border/60 bg-muted/30">
+                  <p role="status" className={calendarStatus === "ready" ? "sr-only" : "p-3 text-sm text-muted-foreground"}>
+                    {calendarStatus === "ready" ? "Booking calendar loaded." : calendarStatus === "error"
+                      ? "The calendar couldn't load here. Use the link below to book directly."
+                      : "Loading the booking calendar…"}
+                  </p>
+                  <div ref={calendar} tabIndex={-1} aria-label="Booking calendar" className="relative h-[550px] overflow-hidden rounded-lg" hidden={calendarStatus === "error"} />
+                </div>
+              ) : (
+                <Button type="button" size="lg" data-track="calendly_click" className="w-full rounded-full px-4" onClick={() => setCalendarOpen(true)}>
+                  Show booking calendar
+                </Button>
+              )}
               <a href={CALENDLY_URL} data-calendly-direct target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary hover:underline">Open Calendly in a new tab <ExternalLink className="h-3.5 w-3.5" aria-hidden /></a>
             </Card>
 
-            {/* WhatsApp + Brief */}
-            <div className="space-y-6">
-              <Card className="p-5 sm:p-6 rounded-2xl">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><MessageCircle className="h-5 w-5 text-primary" aria-hidden /></span>
-                    <div>
-                      <h3 className="font-display text-xl font-semibold leading-tight">Chat on WhatsApp</h3>
-                      <p className="text-sm text-muted-foreground">Prefer WhatsApp? Let's talk there.</p>
-                    </div>
-                  </div>
-                  <Button asChild size="lg" className="rounded-full shrink-0">
-                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                      <Phone className="h-4 w-4" /> Message me
-                    </a>
-                  </Button>
+            <Card id="brief" data-track-location="agency_contact" className="scroll-mt-24 rounded-2xl p-5 sm:p-6">
+              <div className="mb-4 flex items-center gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20">
+                  <MessageCircle className="h-5 w-5 text-primary" aria-hidden />
+                </span>
+                <div>
+                  <h3 className="font-display text-xl font-semibold leading-tight">Chat on WhatsApp</h3>
+                  <p className="text-sm text-muted-foreground">Tell me about your project and what you need help with.</p>
                 </div>
-              </Card>
-
-              <Card id="brief" className="p-5 sm:p-6 rounded-2xl scroll-mt-24">
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20"><FileText className="h-5 w-5 text-primary" aria-hidden /></span>
-                  <div>
-                    <h3 className="font-display text-xl font-semibold leading-tight">Send Brief Directly</h3>
-                    <p className="text-sm text-muted-foreground">Three short steps. I reply within 24 hours.</p>
-                  </div>
-                </div>
-                {briefSent ? (
-                  <div role="status" className="rounded-xl border border-primary/30 bg-primary/[0.06] p-5">
-                    <p className="flex items-center gap-2 font-display text-lg font-semibold"><Check className="h-5 w-5 text-primary" aria-hidden /> Brief received. Thank you.</p>
-                    <p className="mt-2 text-sm text-muted-foreground">I'll reply within 24 hours. Want to move faster? Book a call or message me now.</p>
-                    <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                      <Button className="rounded-full" asChild><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Book a Free Strategy Call</a></Button>
-                      <Button variant="outline" className="rounded-full" asChild><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">Message me on WhatsApp</a></Button>
-                    </div>
-                  </div>
-                ) : <>
-                <Stepper steps={["Contact", "Business", "Goals"]} currentStep={briefStep} onStepClick={goToBriefStep} className="mb-6" />
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (briefStep === 0) {
-                      if (!form.name.trim()) {
-                        setBriefError("Enter your name to continue.");
-                        document.getElementById("b-name")?.focus();
-                        return;
-                      }
-                      goToBriefStep(1);
-                    } else if (briefStep === 1) {
-                      if (!form.brand.trim() || !form.service || !form.budget) {
-                        setBriefError("Enter your brand name and choose a service and budget.");
-                        document.getElementById(!form.brand.trim() ? "b-brand" : !form.service ? "b-service" : "b-budget")?.focus();
-                        return;
-                      }
-                      goToBriefStep(2);
-                    } else {
-                      submitBrief(e);
-                    }
-                  }}
-                  className="space-y-3"
-                  aria-label="Send a project brief"
-                  aria-busy={sending}
-                >
-                  <div hidden><input type="text" name="company_website" value={spamTrap} onChange={(e) => setSpamTrap(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
-                    {briefStep === 0 && (
-                      <div className="space-y-3">
-                        <div>
-                          <Label htmlFor="b-name">Name</Label>
-                          <Input id="b-name" className="h-11" required autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-                        </div>
-                        <div>
-                          <Label htmlFor="b-email">Email</Label>
-                          <Input id="b-email" className="h-11" type="email" pattern={String.raw`[^\s@]+@[^\s@]+\.[^\s@]+`} required autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-                        </div>
-                        <div>
-                          <Label htmlFor="b-phone">WhatsApp or phone (optional)</Label>
-                          <Input id="b-phone" className="h-11" type="tel" autoComplete="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-                        </div>
-                      </div>
-                    )}
-                    {briefStep === 1 && (
-                      <div className="space-y-3">
-                        <div>
-                          <Label htmlFor="b-brand">Brand name</Label>
-                          <Input id="b-brand" className="h-11" required autoComplete="organization" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
-                        </div>
-                        <div>
-                          <Label htmlFor="b-service">Service interested in</Label>
-                          <select id="b-service" required value={form.service} onChange={(event) => setForm({ ...form, service: event.target.value })}
-                            className="h-11 w-full min-w-0 rounded-md border border-input bg-background px-3 text-base">
-                            <option value="" disabled>Select a service</option>
-                            {serviceOptions.map((name) => <option key={name}>{name}</option>)}
-                          </select>
-                        </div>
-                        <div>
-                          <Label htmlFor="b-budget">{isShopifyBrief ? "Project or monthly support budget" : "Monthly ad budget"}</Label>
-                          <p id="b-budget-hint" className="mb-1.5 text-sm text-muted-foreground">{isShopifyBrief ? "Share an estimate and currency, or write 'Not sure yet' if you would like help defining the scope." : "Ad spend only, paid separately from my fees. A rough figure is fine."}</p>
-                          {isShopifyBrief ? <Input className="h-11" id="b-budget" required aria-describedby="b-budget-hint" value={form.budget} onChange={(event) => setForm({ ...form, budget: event.target.value })} placeholder="Budget and currency, or Not sure yet" /> :
-                            <select id="b-budget" required value={form.budget} onChange={(event) => setForm({ ...form, budget: event.target.value })}
-                              aria-describedby="b-budget-hint" className="h-11 w-full min-w-0 rounded-md border border-input bg-background px-3 text-base">
-                              <option value="" disabled>Select budget</option>
-                              <option value="<KES 30,000">Below KES 30,000</option>
-                              <option value="KES 30,000 - 50,000">KES 30,000 – 50,000</option>
-                              <option value="KES 50,000 - 200,000">KES 50,000 – 200,000</option>
-                              <option value="KES 200,000+">KES 200,000+</option>
-                              <option>Not sure yet</option>
-                            </select>}
-                        </div>
-                      </div>
-                    )}
-                    {briefStep === 2 && (
-                      <div className="space-y-3">
-                        <div>
-                          <Label htmlFor="b-goals">{isShopifyBrief ? "Tell me about your store" : "What should your marketing achieve?"}</Label>
-                          <Textarea id="b-goals" required rows={3} placeholder={isShopifyBrief ? "Current store link, product count, what you need, target market, and intended launch date." : undefined} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
-                        </div>
-                      </div>
-                    )}
-                  {briefError && <p role="alert" className="text-sm text-primary">{briefError}</p>}
-                  <div className="flex gap-3 pt-1">
-                    {briefStep > 0 && (
-                      <Button type="button" size="lg" variant="outline" className="flex-1 px-4" disabled={sending} onClick={() => goToBriefStep(briefStep - 1)}>Back</Button>
-                    )}
-                    <Button type="submit" size="lg" className="flex-1 px-4" disabled={sending}>
-                      {briefStep < 2 ? "Next" : sending ? <><Loader2 aria-hidden className="h-4 w-4 motion-safe:animate-spin" /> Sending…</> : "Send Brief"}
-                    </Button>
-                  </div>
-                </form>
-                </>}
-              </Card>
-            </div>
+              </div>
+              <Button asChild size="lg" className="w-full rounded-full sm:w-auto">
+                <a href={getContactWhatsAppUrl(location.search)} target="_blank" rel="noopener noreferrer">
+                  Message me on WhatsApp
+                </a>
+              </Button>
+            </Card>
           </div>
           </div>
         </section>

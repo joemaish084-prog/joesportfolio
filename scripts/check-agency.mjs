@@ -104,7 +104,7 @@ assert(!services.includes("Retainer Packages"), "Detailed packages belong on Pri
 assert(results.includes("Read the campaign breakdowns"), "Results page needs campaign context");
 assert(!isHotlinked(results), "Results images should load from the site");
 assert(new Set(links(results).filter(path => path.startsWith("/agency/blog/") && !path.includes("/topics/"))).size >= 3, "Results must link to full campaign case studies");
-assert(contact.includes("<form") && links(contact).includes("mailto:joemaish084@gmail.com") && links(contact).includes("tel:+254704700160"), "Contact keeps its brief form and direct channels");
+assert(links(contact).includes("mailto:joemaish084@gmail.com") && links(contact).includes("tel:+254704700160"), "Contact keeps its direct contact details");
 for (const match of pricing.matchAll(/href="\/agency\/services#([^"]+)"/g)) {
   assert(services.includes(`id="${match[1]}"`), `Pricing scope link must resolve: ${match[1]}`);
 }
@@ -128,15 +128,16 @@ assert(links(pricing).includes("/agency/shopify-services"), "Pricing links to th
 assert(links(portfolio).includes("/"), "Portfolio must link to agency home");
 assert(home.includes("founder-led digital marketing agency in Nairobi"), "Agency home states the positioning");
 assert(new Set(links(home).filter(path => path.startsWith("/work/case-studies#"))).size === 3, "Agency home links to three case study results");
-for (const pack of ["starter", "growth", "scale"]) assert(links(pricing).includes(`/agency/contact?service=${pack}#brief`), `Pricing preselects the ${pack} package`);
-assert(contact.includes('id="brief"'), "Contact has the brief form anchor");
+for (const pack of ["starter", "growth", "scale"]) assert(links(pricing).includes(`/agency/contact?service=${pack}#brief`), `Pricing passes the ${pack} package to Contact`);
 const contactMain = contact.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1] ?? "";
+assert(!/<form\b/.test(contactMain), "Contact directs project enquiries to WhatsApp");
+assert(contactMain.includes('id="brief"') && links(contactMain).some(url => url.startsWith("https://wa.me/")), "Brief links land on a crawlable WhatsApp contact option");
 assert(contactMain.includes("Show booking calendar"), "Contact offers an on-demand booking calendar");
 assert(!/<iframe\b/.test(contactMain), "Contact must not request the booking iframe before activation");
 assert(links(contactMain).some(url => url.startsWith("https://calendly.com/")), "Contact has a direct booking link");
 const manifest = JSON.parse(fs.readFileSync("dist/.vite/manifest.json", "utf8"));
 const agencyModule = Object.entries(manifest).find(([key, chunk]) => key === "src/pages/Agency.tsx" || (chunk.name === "Agency" && chunk.isDynamicEntry))?.[1];
-assert(agencyModule && fs.readFileSync(`dist/${agencyModule.file}`, "utf8").includes("embed_domain="), "Booking embed can report bookings back to the page");
+assert(agencyModule && fs.readFileSync(`dist/${agencyModule.file}`, "utf8").includes("initInlineWidget"), "Contact uses Calendly's event-capable inline widget");
 assert(!portfolio.includes("Live results"), "Fixed figures must not be labelled as live");
 for (const [label, html] of [["portfolio", portfolio], ["contact", contact]]) {
   const gate = html.indexOf("window.loadMetaPixel=function");
