@@ -130,7 +130,13 @@ assert(home.includes("founder-led digital marketing agency in Nairobi"), "Agency
 assert(new Set(links(home).filter(path => path.startsWith("/work/case-studies#"))).size === 3, "Agency home links to three case study results");
 for (const pack of ["starter", "growth", "scale"]) assert(links(pricing).includes(`/agency/contact?service=${pack}#brief`), `Pricing preselects the ${pack} package`);
 assert(contact.includes('id="brief"'), "Contact has the brief form anchor");
-assert(contact.includes("embed_domain="), "Booking embed can report bookings back to the page");
+const contactMain = contact.match(/<main\b[^>]*>([\s\S]*?)<\/main>/)?.[1] ?? "";
+assert(contactMain.includes("Show booking calendar"), "Contact offers an on-demand booking calendar");
+assert(!/<iframe\b/.test(contactMain), "Contact must not request the booking iframe before activation");
+assert(links(contactMain).some(url => url.startsWith("https://calendly.com/")), "Contact has a direct booking link");
+const manifest = JSON.parse(fs.readFileSync("dist/.vite/manifest.json", "utf8"));
+const agencyModule = Object.entries(manifest).find(([key, chunk]) => key === "src/pages/Agency.tsx" || (chunk.name === "Agency" && chunk.isDynamicEntry))?.[1];
+assert(agencyModule && fs.readFileSync(`dist/${agencyModule.file}`, "utf8").includes("embed_domain="), "Booking embed can report bookings back to the page");
 assert(!portfolio.includes("Live results"), "Fixed figures must not be labelled as live");
 for (const [label, html] of [["portfolio", portfolio], ["contact", contact]]) {
   const gate = html.indexOf("window.loadMetaPixel=function");

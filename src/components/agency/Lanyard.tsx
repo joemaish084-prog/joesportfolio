@@ -1,9 +1,9 @@
 // Lanyard by React Bits (https://reactbits.dev/c/components/lanyard),
 // vendored from DavidHDev/react-bits src/ts-tailwind/Components/Lanyard/Lanyard.tsx.
-// Kept as upstream apart from this header so it can be diffed against future releases.
+// The flip control also exposes the action to keyboard users.
 
 import { useEffect, useRef } from 'react';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, MutableRefObject } from 'react';
 import * as THREE from 'three';
 
 type Orientation = 'portrait' | 'landscape';
@@ -41,6 +41,8 @@ export interface LanyardProps {
   breeze?: number;
   interactive?: boolean;
   intro?: boolean;
+  flipControl?: MutableRefObject<(() => void) | null>;
+  onUnavailable?: () => void;
   className?: string;
   style?: CSSProperties;
 }
@@ -890,6 +892,8 @@ const Lanyard = ({
   breeze = 0.5,
   interactive = true,
   intro = true,
+  flipControl,
+  onUnavailable,
   className = '',
   style
 }: LanyardProps) => {
@@ -932,6 +936,7 @@ const Lanyard = ({
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     } catch {
+      onUnavailable?.();
       return undefined;
     }
     renderer.setClearColor(0x000000, 0);
@@ -1355,6 +1360,11 @@ const Lanyard = ({
       body.angular.addScaledVector(up, FLIP_SPIN * direction);
     };
 
+    if (flipControl) flipControl.current = () => {
+      flip(sim.body.position);
+      start();
+    };
+
     const onPointerDown = (event: PointerEvent) => {
       if (!settingsRef.current!.interactive || event.button > 0) return;
       toPointer(event);
@@ -1439,6 +1449,7 @@ const Lanyard = ({
       alive = false;
       cancelAnimationFrame(raf);
       applyRef.current = null;
+      if (flipControl) flipControl.current = null;
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
@@ -1455,7 +1466,7 @@ const Lanyard = ({
       renderer.dispose();
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };
-  }, []);
+  }, [flipControl, onUnavailable]);
 
   return (
     <div ref={containerRef} className={`relative w-full h-full overflow-hidden ${className}`.trim()} style={style} />

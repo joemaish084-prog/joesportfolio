@@ -196,7 +196,7 @@ export function CustomerJourney() {
           <div className="journey-map">
             <div className="journey-map-heading">
               <div><p className="journey-kicker">FIVE MOMENTS THAT MATTER</p><p className="font-display text-xl font-semibold sm:text-2xl">The path to purchase<span className="text-orange-600">.</span></p></div>
-              <span className="journey-map-stamp" aria-label={`${visited.length} of 5 stops explored`}><svg viewBox="0 0 48 48" aria-hidden><circle cx="24" cy="24" r="21" fill="none" stroke="#d7d3c7" strokeWidth="2" /><motion.circle cx="24" cy="24" r="21" fill="none" stroke="#514c3d" strokeWidth="2" strokeLinecap="round" initial={false} animate={{ pathLength: visited.length / 5 }} transition={{ duration: reducedMotion ? 0 : 0.4 }} transform="rotate(-90 24 24)" /></svg><span aria-hidden>{visited.length}<small>/5</small></span></span>
+              <span className="journey-map-stamp" role="img" aria-label={`${visited.length} of 5 stops explored`}><svg viewBox="0 0 48 48" aria-hidden><circle cx="24" cy="24" r="21" fill="none" stroke="#d7d3c7" strokeWidth="2" /><motion.circle cx="24" cy="24" r="21" fill="none" stroke="#514c3d" strokeWidth="2" strokeLinecap="round" initial={false} animate={{ pathLength: visited.length / 5 }} transition={{ duration: reducedMotion ? 0 : 0.4 }} transform="rotate(-90 24 24)" /></svg><span aria-hidden>{visited.length}<small>/5</small></span></span>
             </div>
             <div className="journey-route">
               <svg viewBox="0 0 600 550" preserveAspectRatio="none" aria-hidden className="journey-route-svg">
@@ -215,7 +215,7 @@ export function CustomerJourney() {
                     <span className="journey-stop-disc" style={{ backgroundColor: stage.color }}><Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden /><span className="journey-stop-number" aria-hidden>{String(index + 1).padStart(2, "0")}</span></span>
                     <span className="journey-stop-label">{content.label}</span>
                     <span className="journey-stop-caption">{content.caption}</span>
-                    {visited.includes(index) && index !== activeIndex && <span className="journey-explored" aria-label="Explored"><Check className="h-2.5 w-2.5" aria-hidden /></span>}
+                    {visited.includes(index) && index !== activeIndex && <span className="journey-explored"><Check className="h-2.5 w-2.5" aria-hidden /><span className="sr-only">Explored</span></span>}
                     {index === activeIndex && <span className="journey-here" aria-hidden>YOU ARE HERE</span>}
                   </TabsTrigger>;
                 })}

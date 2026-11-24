@@ -36,6 +36,7 @@ const { getPrerenderRoutes, headTags, ogCardPath, renderOgCard, SITE_URL } = awa
 
 const template = fs.readFileSync(path.join(dist, "index.html"), "utf8");
 const manifest = JSON.parse(fs.readFileSync(path.join(dist, ".vite/manifest.json"), "utf8"));
+const entryStyles = new Set(manifest["index.html"].css);
 const initialRouteModules = {
   "/": "src/pages/AgencyHome.tsx",
   "/portfolio": "src/pages/Index.tsx",
@@ -58,7 +59,7 @@ function routePreloads(routePath) {
     const chunk = manifest[key];
     if (!chunk || files.has(chunk.file)) return;
     files.add(chunk.file);
-    for (const css of chunk.css ?? []) styles.add(css);
+    for (const css of chunk.css ?? []) if (!entryStyles.has(css)) styles.add(css);
     for (const dependency of chunk.imports ?? []) visit(dependency);
   }
   const routeModule = initialRouteModules[routePath] ?? (serviceRoutePaths.has(routePath) ? "src/pages/AgencyService.tsx" : undefined);
@@ -72,7 +73,7 @@ function routePreloads(routePath) {
   }
   return [
     ...[...styles].map(file => `<link rel="stylesheet" href="/${file}" crossorigin>`),
-    ...[...files].map(file => `<link rel="modulepreload" href="/${file}" crossorigin>`),
+    ...[...files].map((file, index) => `<link rel="modulepreload" href="/${file}" crossorigin${routePath === "/" && index > 1 ? ' fetchpriority="low"' : ""}>`),
   ].join("\n");
 }
 

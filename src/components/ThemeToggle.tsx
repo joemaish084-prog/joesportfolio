@@ -4,7 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { cn } from "@/lib/utils";
 
-const buttonClass = cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-10 w-10 shrink-0 hover:bg-primary/10 transition-colors");
+const buttonClass = cn(buttonVariants({ variant: "ghost", size: "icon" }), "h-11 w-11 shrink-0 hover:bg-primary/10 transition-colors");
 
 /** Light/dark switch. The new theme sweeps across the page in a circle from the button. */
 export function ThemeToggle() {

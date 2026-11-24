@@ -1,124 +1,56 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Marquee } from "@/components/ui/marquee";
 import { designs } from "@/data/designs";
-import communityEvent from "@/assets/agency/iclear-community-event.webp";
-import handover from "@/assets/agency/iclear-handover.webp";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
-export { HeroCollage, HeroCollageMobile, type CollageItem } from "@/components/HeroCollage";
 
 /* ------------------------------------------------------------------ */
-/* Fieldwork: on-the-ground proof for the "Why" section.               */
-/* ------------------------------------------------------------------ */
-
-export function FieldworkVisual() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-
-  return (
-    <div ref={ref} className="relative pb-10 pr-6 sm:pr-10">
-      <motion.figure
-        initial={{ clipPath: "inset(10% 10% 10% 10% round 24px)", opacity: 0 }}
-        whileInView={{ clipPath: "inset(0% 0% 0% 0% round 24px)", opacity: 1 }}
-        viewport={{ once: true, margin: "-15% 0px" }}
-        transition={{ duration: 1, ease: EASE }}
-        className="relative aspect-[4/3] lg:aspect-square overflow-hidden rounded-3xl bg-muted"
-      >
-        <motion.img
-          src={communityEvent}
-          alt="The iClear team with Baobab School students and staff at the water purifier handover"
-          loading="lazy"
-          decoding="async"
-          style={{ y: imgY, scale: 1.14 }}
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-        <figcaption className="absolute bottom-0 left-0 right-0 p-5 pr-32 sm:p-7 sm:pr-44 text-white">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">In the field · iClear Kenya</p>
-          <p className="mt-2 max-w-sm font-display text-lg sm:text-xl font-semibold leading-snug">
-            A CSR campaign that reached 90 students and earned Daily Nation coverage.
-          </p>
-          <Link
-            to="/agency/blog/how-i-landed-national-press-coverage-for-iclear"
-            className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-white/85 hover:text-white"
-          >
-            Read the story <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-          </Link>
-        </figcaption>
-      </motion.figure>
-
-      <motion.div
-        initial={{ opacity: 0, x: 40, rotate: 0 }}
-        whileInView={{ opacity: 1, x: 0, rotate: 4 }}
-        viewport={{ once: true, margin: "-15% 0px" }}
-        transition={{ delay: 0.45, duration: 0.8, ease: EASE }}
-        className="absolute bottom-0 right-0 w-32 sm:w-44 overflow-hidden rounded-2xl border-4 border-background shadow-2xl"
-      >
-        <img
-          src={handover}
-          alt="iClear team handing over water purifier units at Baobab School"
-          loading="lazy"
-          decoding="async"
-          className="aspect-square w-full object-cover"
-        />
-      </motion.div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Creative showcase: two counter-scrolling rows of shipped work.      */
+/* Creative showcase: browsable previews of shipped work.             */
 /* ------------------------------------------------------------------ */
 
 const ROW_A = [
-  "Fuel Your Grind", "Download PowWater Today", "TECNO x iClear Collaboration", "School Admission 2026",
-  "Free Filter Campaign", "Weekend Basket Bonanza", "iClear Engineered for Home", "MKUSH Music Album Cover",
+  ["Fuel Your Grind", "fuel"], ["Download PowWater Today", "powwater-app"],
+  ["TECNO x iClear Collaboration", "tecno-1"], ["School Admission 2026", "school-admission"],
+  ["Free Filter Campaign", "free-filter-campaign"], ["Weekend Basket Bonanza", "weekend"],
+  ["iClear Engineered for Home", "iclear-engineered"], ["MKUSH Music Album Cover", "mkush"],
 ];
 const ROW_B = [
-  "TECNO Product Campaign", "We Handle The Heavy Lifting", "Fresh Living", "Innovative Learning",
-  "Standard Water Purifier", "iClear Nakuru Location", "TECNO Mobile Promotion", "iClear Brand Campaign",
+  ["TECNO Product Campaign", "tecno-2"], ["We Handle The Heavy Lifting", "heavy-lifting"],
+  ["Fresh Living", "iclear-fresh-living"], ["Innovative Learning", "school-innovative"],
+  ["Standard Water Purifier", "standard"], ["iClear Nakuru Location", "iclear-nakuru"],
+  ["TECNO Mobile Promotion", "tecno-3"], ["iClear Brand Campaign", "water-journey"],
 ];
 
-const pick = (titles: string[]) =>
-  titles.map((t) => designs.find((d) => d.title === t)).filter((d): d is (typeof designs)[number] => Boolean(d));
+const previews = import.meta.glob<string>("/src/assets/showcase/*.webp", { eager: true, import: "default" });
 
-function ShowcaseTile({ title, image, description }: { title: string; image: string; description: string }) {
+function ShowcaseTile({ title, image, description, preview }: { title: string; image: string; description: string; preview: string }) {
+  const small = previews[`/src/assets/showcase/${preview}-240.webp`];
+  const large = previews[`/src/assets/showcase/${preview}-480.webp`];
   return (
-    <figure className="group relative w-44 sm:w-56 aspect-[4/5] shrink-0 overflow-hidden rounded-2xl border border-border/60 bg-muted">
+    <figure className="h-full overflow-hidden rounded-2xl border border-border/60 bg-card">
       <img
-        src={image}
-        alt={`${title}: ${description}`}
-        width={224}
-        height={280}
+        src={small ?? image}
+        srcSet={small && large ? `${small} 240w, ${large} 480w` : undefined}
+        sizes="(min-width: 640px) 224px, 176px"
+        alt=""
+        width={240}
+        height={300}
         loading="lazy"
         decoding="async"
         {...{ fetchpriority: "low" }}
-        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+        className="aspect-[4/5] w-full object-cover"
       />
-      <figcaption className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/85 to-transparent p-4 pt-10 text-white transition-transform duration-300 group-hover:translate-y-0">
+      <figcaption className="p-3">
         <p className="text-sm font-semibold leading-tight">{title}</p>
-        <p className="mt-0.5 text-xs text-white/75">{description}</p>
+        <p className="mt-0.5 text-sm leading-snug text-muted-foreground">{description}</p>
       </figcaption>
     </figure>
   );
 }
 
 export function CreativeShowcase() {
-  const rowA = pick(ROW_A);
-  const rowB = pick(ROW_B);
-
   return (
-    <section className="py-20 overflow-hidden">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6, ease: EASE }}
-        className="container mx-auto px-4 mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 max-w-6xl"
+    <section id="agency-creative" className="container mx-auto max-w-6xl px-4 py-14 sm:py-20">
+      <div
+        className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4"
       >
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Creative that ships</p>
@@ -126,18 +58,18 @@ export function CreativeShowcase() {
             Ads and content I've made for <span className="text-gradient">real brands</span>
           </h2>
         </div>
-        <Link to="/work/design" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all shrink-0">
+        <Link to="/work/design" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary hover:underline">
           See the full portfolio <ArrowRight className="h-4 w-4" aria-hidden />
         </Link>
-      </motion.div>
-
-      <div className="relative [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <Marquee pauseOnHover repeat={2} className="[--duration:60s]">
-          {rowA.map((d) => <ShowcaseTile key={d.title} {...d} />)}
-        </Marquee>
-        <Marquee pauseOnHover reverse repeat={2} className="[--duration:70s]">
-          {rowB.map((d) => <ShowcaseTile key={d.title} {...d} />)}
-        </Marquee>
+      </div>
+      <div role="region" aria-label="Campaign creative gallery" tabIndex={0}
+        className="overflow-x-auto overscroll-x-contain rounded-lg pb-3">
+        <ul className="grid w-max grid-flow-col grid-rows-2 gap-3">
+          {[...ROW_A, ...ROW_B].map(([title, preview]) => {
+            const design = designs.find((item) => item.title === title);
+            return design && <li key={title} className="w-44 sm:w-56"><ShowcaseTile {...design} preview={preview} /></li>;
+          })}
+        </ul>
       </div>
     </section>
   );

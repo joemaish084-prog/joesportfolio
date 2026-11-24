@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 interface SectionLabelProps {
   children: string;
   className?: string;
@@ -8,15 +6,9 @@ interface SectionLabelProps {
 /** Small mono uppercase orange label rendered above a section heading. */
 export function SectionLabel({ children, className = "" }: SectionLabelProps) {
   return (
-    <motion.p
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.8, ease: [0.2, 0, 0, 1] }}
-      className={`section-label ${className}`}
-    >
-      <span className="slashes">//</span> {children}
-    </motion.p>
+    <p className={`section-label ${className}`}>
+      <span className="slashes" aria-hidden>//</span> {children}
+    </p>
   );
 }
 

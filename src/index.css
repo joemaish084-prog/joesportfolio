@@ -1,65 +1,33 @@
 @font-face {
   font-family: "Inter";
   font-style: normal;
-  font-weight: 300;
+  font-weight: 300 700;
   font-display: optional;
-  src: url("/fonts/inter-latin-300-normal.woff2") format("woff2");
+  src: url("/fonts/inter-latin-v20-variable.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: optional;
+  src: url("/fonts/space-grotesk-latin-v22-variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Instrument Serif";
   font-style: normal;
   font-weight: 400;
   font-display: optional;
-  src: url("/fonts/inter-latin-400-normal.woff2") format("woff2");
+  src: url("/fonts/instrument-serif-latin-v5-normal.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
+  font-family: "Instrument Serif";
+  font-style: italic;
+  font-weight: 400;
   font-display: optional;
-  src: url("/fonts/inter-latin-500-normal.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  font-display: optional;
-  src: url("/fonts/inter-latin-600-normal.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-  src: url("/fonts/inter-latin-700-normal.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 500;
-  font-display: optional;
-  src: url("/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 600;
-  font-display: optional;
-  src: url("/fonts/space-grotesk-latin-600-normal.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 700;
-  font-display: optional;
-  src: url("/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+  src: url("/fonts/instrument-serif-latin-v5-italic.woff2") format("woff2");
 }
 
 @tailwind base;
@@ -488,9 +456,57 @@ html:not(.js) .agency-counter-animated { display: none; }
   color: hsl(0 0% 7%);
 }
 
+.agency-page .bg-gradient-orange.text-white,
+[data-cookie-consent] .bg-gradient-orange {
+  color: hsl(0 0% 7%);
+}
+
+.light [data-cookie-consent] { --primary: 25 100% 33%; --ring: var(--primary); }
+
+:is(.agency-page, [data-cookie-consent]) :focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 3px;
+  scroll-margin-top: 4.5rem;
+}
+
+html:has([data-cookie-consent]) { scroll-padding-bottom: 9rem; }
+
+@media (max-width: 639px) {
+  body:has([data-cookie-consent]) [data-track-location="floating_button"] { display: none; }
+}
+
+@media (pointer: coarse) {
+  .agency-page footer a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+}
+
 /* Agency pages share one rounded card language; the portfolio keeps its own. */
 .agency-page .surface-card {
   border-radius: 1rem;
+}
+
+/* Keep the prerendered lower sections accessible while postponing their layout. */
+.agency-home :is(#client-brands, #agency-services, #agency-creative, #agency-process, #agency-testimonials, #agency-faq) {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto var(--section-content-height, 32rem);
+}
+
+.agency-home #client-brands { --section-content-height: 10rem; }
+.agency-home #agency-creative { --section-content-height: 48rem; }
+.agency-home #agency-process { --section-content-height: 42rem; }
+.agency-home #agency-testimonials { --section-content-height: 64rem; }
+.agency-home #agency-faq { --section-content-height: 22rem; }
+
+@media (min-width: 768px) {
+  .agency-home #agency-testimonials { --section-content-height: 32rem; }
+}
+
+@media (min-width: 1024px) {
+  .agency-home #agency-process { --section-content-height: 19rem; }
 }
 
 @keyframes drift-a {

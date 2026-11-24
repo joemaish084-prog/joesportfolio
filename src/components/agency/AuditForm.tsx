@@ -5,6 +5,7 @@ export function AuditForm() {
   const placeholder = useRef<HTMLDivElement>(null);
   const [Controller, setController] = useState<ComponentType>();
   const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     if (!placeholder.current) return;
@@ -17,7 +18,7 @@ export function AuditForm() {
       });
     };
 
-    if (window.location.hash === "#audit" || !("IntersectionObserver" in window)) {
+    if (attempt > 0 || window.location.hash === "#audit" || !("IntersectionObserver" in window)) {
       load();
       return () => { active = false; };
     }
@@ -28,8 +29,11 @@ export function AuditForm() {
     }, { rootMargin: "650px" });
     observer.observe(placeholder.current);
     return () => { active = false; observer.disconnect(); };
-  }, []);
+  }, [attempt]);
 
   if (Controller) return <Controller />;
-  return <div ref={placeholder}><AuditFormView status={failed ? "error" : "loading"} /></div>;
+  return <div ref={placeholder}><AuditFormView status={failed ? "unavailable" : "loading"} onRetry={() => {
+    setFailed(false);
+    setAttempt(value => value + 1);
+  }} /></div>;
 }

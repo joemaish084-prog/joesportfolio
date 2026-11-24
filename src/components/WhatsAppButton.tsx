@@ -20,7 +20,7 @@ export function WhatsAppButton() {
   const { pathname } = useLocation();
   if (pathname === "/admin") return null;
   // The services page has its own bottom bar with WhatsApp on phones, so the floating button steps aside there.
-  const hasMobileBar = pathname.replace(/\/$/, "") === "/agency/services";
+  const hasMobileBar = pathname === "/" || pathname.replace(/\/$/, "") === "/agency/services";
   return (
     <a
       href={whatsappUrl(pathname)}

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { MotionConfig } from "framer-motion";
 import { Loader2, LockKeyhole, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PrivateQueryProvider } from "@/integrations/PrivateQueryProvider";
 import "./portal.css";
 import { PortalAuthProvider, usePortalAuth } from "./auth/PortalAuthProvider";
 import { PortalDataProvider, usePortal } from "./auth/PortalData";
@@ -152,7 +153,7 @@ export default function PortalApp() {
   return (
     <MotionConfig reducedMotion="user">
       <PortalHead />
-      <PortalAuthProvider>
+      <PrivateQueryProvider><PortalAuthProvider>
         <Routes>
           <Route path="login" element={<LoginPage />} />
           <Route element={<Gate theme={theme} onThemeChange={setTheme} />}>
@@ -169,7 +170,7 @@ export default function PortalApp() {
           </Route>
         </Routes>
         <Outlet />
-      </PortalAuthProvider>
+      </PortalAuthProvider></PrivateQueryProvider>
     </MotionConfig>
   );
 }

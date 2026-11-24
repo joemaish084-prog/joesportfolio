@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Cookie, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { grantAnalyticsConsent } from "@/lib/analytics";
 
@@ -40,73 +39,28 @@ export function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div
-      role="dialog"
-      aria-live="polite"
-      aria-label="Cookie consent"
-      className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:bottom-6 sm:max-w-md z-[90] animate-fade-in"
+    <section
+      data-cookie-consent
+      aria-label="Cookie preferences"
+      className="fixed inset-x-2.5 bottom-[max(.625rem,env(safe-area-inset-bottom))] z-[90] max-h-[70dvh] overflow-y-auto overscroll-contain rounded-xl border border-border bg-card p-3 shadow-elegant sm:left-auto sm:right-6 sm:max-w-sm sm:p-4"
     >
-      <div className="relative bg-card border border-border rounded-xl shadow-[var(--shadow-elegant)] p-5 backdrop-blur">
-        <button
-          onClick={() => save("essential")}
-          aria-label="Dismiss cookie banner"
-          className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <X className="w-4 h-4" />
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-sm font-semibold">Cookie preferences</p>
+        <button type="button" aria-expanded={showPrefs} aria-controls="cookie-preference-details"
+          className="min-h-11 min-w-11 rounded-md px-2 text-sm font-medium text-primary underline"
+          onClick={() => setShowPrefs(value => !value)}>
+          {showPrefs ? "Hide details" : "Details"}
         </button>
-
-        <div className="flex items-start gap-3">
-          <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-            <Cookie className="w-4 h-4 text-primary" aria-hidden="true" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm text-foreground leading-relaxed">
-              We use cookies to improve your experience, analyze site traffic and measure our ads.{" "}
-              <Link to="/cookie-policy" className="text-primary underline underline-offset-4">
-                Read our cookie policy
-              </Link>
-              .
-            </p>
-
-            {showPrefs && (
-              <div className="mt-3 space-y-2 text-xs text-muted-foreground border-t border-border pt-3">
-                <p><strong className="text-foreground">Essential:</strong> Required for the site to work.</p>
-                <p><strong className="text-foreground">Analytics:</strong> Google Analytics — anonymized traffic data.</p>
-                <p><strong className="text-foreground">Marketing:</strong> Meta Pixel — measures our Facebook and Instagram ads. Only loads if you accept.</p>
-                <p><strong className="text-foreground">Functional:</strong> Remembers your theme preference.</p>
-              </div>
-            )}
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Button
-                size="sm"
-                onClick={() => save("accepted")}
-                className="text-xs h-9"
-              >
-                Accept All
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => save("essential")}
-                className="text-xs h-9"
-              >
-                Essential Only
-              </Button>
-              {!showPrefs && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setShowPrefs(true)}
-                  className="text-xs h-9"
-                >
-                  What's included
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
+      <p className="text-sm leading-snug text-muted-foreground">Allow optional cookies for analytics and ad measurement?</p>
+      <div id="cookie-preference-details" hidden={!showPrefs} className="mt-3 space-y-2 border-t border-border pt-3 text-sm text-muted-foreground">
+        <p>Essential cookies help the site work and remember your theme. Accepting also enables Google Analytics and Meta Pixel.</p>
+        <Link to="/cookie-policy" className="inline-flex min-h-11 items-center text-primary underline underline-offset-4">Read our cookie policy</Link>
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <Button size="sm" variant="outline" onClick={() => save("essential")} className="h-11">Essential Only</Button>
+        <Button size="sm" onClick={() => save("accepted")} className="h-11 bg-primary text-primary-foreground">Accept All</Button>
+      </div>
+    </section>
   );
 }

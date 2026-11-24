@@ -1,8 +1,5 @@
 import { Suspense, lazy, startTransition, useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Routes, Route, useLocation, useNavigationType } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
@@ -38,6 +35,8 @@ const WorkBrand = lazy(() => import("./pages/WorkBrand"));
 const HubApp = lazy(() => import("./hub/HubApp"));
 // Client portal for signed-in clients. Lazy, unlinked and noindexed; see src/portal.
 const PortalApp = lazy(() => import("./portal/PortalApp"));
+const Toaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
+const Sonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
 const WhatsAppButton = lazy(() => import("@/components/WhatsAppButton").then((m) => ({ default: m.WhatsAppButton })));
 // Retain the trusted build-generated page while its route chunk loads. The
 // initial createRoot render would otherwise replace visible HTML with a blank.
@@ -71,15 +70,6 @@ function PrimaryViewScroll() {
   const { pathname, hash } = useLocation();
   const navigationType = useNavigationType();
   const previous = useRef(pathname);
-  useEffect(() => {
-    if (![PORTFOLIO_PATH, "/agency/overview", "/agency/services", "/work/case-studies"].includes(pathname) ||
-        document.getElementById("legacy-serif-font")) return;
-    const stylesheet = document.createElement("link");
-    stylesheet.id = "legacy-serif-font";
-    stylesheet.rel = "stylesheet";
-    stylesheet.href = "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap";
-    document.head.append(stylesheet);
-  }, [pathname]);
   useLayoutEffect(() => {
     const primary = (path: string) => path === "/" || path === PORTFOLIO_PATH;
     const switching = previous.current !== pathname && primary(previous.current) && primary(pathname);
@@ -112,7 +102,6 @@ const skipHubEvents = <T extends { url: string }>(event: T) =>
   isHubPath(new URL(event.url, window.location.origin).pathname) ? null : event;
 
 
-const queryClient = new QueryClient();
 const isLocalPreview = ["localhost", "127.0.0.1", "::1", "[::1]"].includes(window.location.hostname);
 
 function ViewReady({ onReady }: { onReady: () => void }) {
@@ -126,11 +115,9 @@ const App = ({ hydratePrimary = false }: { hydratePrimary?: boolean }) => {
   const [widgetsReady, setWidgetsReady] = useState(!hydratePrimary);
   const showWidgets = useCallback(() => startTransition(() => setWidgetsReady(true)), []);
   return (
-  <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <TooltipProvider>
-        {widgetsReady && <Toaster />}
-        {widgetsReady && <Sonner />}
+        {widgetsReady && <Suspense fallback={null}><Toaster /><Sonner /></Suspense>}
         <BrowserRouter>
           <PublicOnly>
             <MetaPixelRouteTracker />
@@ -188,7 +175,6 @@ const App = ({ hydratePrimary = false }: { hydratePrimary?: boolean }) => {
         {!isLocalPreview && <SpeedInsights beforeSend={skipHubEvents} />}
       </TooltipProvider>
     </ThemeProvider>
-  </QueryClientProvider>
   );
 };
 

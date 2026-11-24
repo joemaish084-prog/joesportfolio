@@ -20,6 +20,13 @@ import logoTechmindsetSmall from "@/assets/marquee/techmindset-240.webp";
 import logoJoanSmall from "@/assets/marquee/joan-240.webp";
 import logoIclearSmall from "@/assets/marquee/iclear-240.webp";
 import logoDuaraSmall from "@/assets/marquee/duara-240.webp";
+import logoNorthgateSmall from "@/assets/marquee/northgate-crest-96.webp";
+import logoPowwaterSmall from "@/assets/marquee/powwater-240.webp";
+import logoGlowskinSmall from "@/assets/marquee/glowskin-240.webp";
+import logoBeautysquareSmall from "@/assets/marquee/beautysquare-240.webp";
+import logoDansarSmall from "@/assets/marquee/dansar-240.webp";
+import logoBeulahSmall from "@/assets/marquee/beulah-240.webp";
+import logoSurbubiaSmall from "@/assets/marquee/surbubia-240.webp";
 
 const brands = [
   { name: "iClear Wellife Service", industry: "Water Purification Company", logo: logoIclear },
@@ -37,6 +44,8 @@ const brands = [
 ];
 
 const compactLogos = [logoIclearSmall, logoConveySmall, logoJoanSmall, logoTechmindsetSmall, logoNorthgate, logoDuaraSmall];
+const smallLogos = [logoIclearSmall, logoConveySmall, logoJoanSmall, logoTechmindsetSmall, logoNorthgateSmall,
+  logoDuaraSmall, logoPowwaterSmall, logoGlowskinSmall, logoBeautysquareSmall, logoDansarSmall, logoBeulahSmall, logoSurbubiaSmall];
 
 function StudioLogos() {
   const [paused, setPaused] = useState(false);
@@ -65,35 +74,39 @@ function StudioLogos() {
 export function BrandsLogoMarquee({ compact = false }: { compact?: boolean }) {
   if (compact) return <StudioLogos />;
   return (
-    <section className="py-12 sm:py-16 overflow-hidden">
+    <section id="client-brands" className="container mx-auto max-w-6xl px-4 py-12 sm:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-6">
         <p className="text-center text-sm uppercase tracking-wider text-muted-foreground">
           Brands & Clients
         </p>
       </div>
-      <div className="relative [--duration:70s]">
-        <Marquee pauseOnHover>
-          {brands.map((brand) => (
-            <div key={brand.name} className="mx-8 sm:mx-12 flex flex-col items-center gap-2">
+      <div role="region" tabIndex={0} aria-label="Client logos"
+        className="overflow-x-auto overscroll-x-contain rounded-lg pb-3">
+        <ul className="flex w-max gap-4">
+          {brands.map((brand, index) => {
+            const crest = brand.logo === logoNorthgate;
+            return (
+            <li key={brand.name} className="flex w-[7.5rem] shrink-0 flex-col items-center gap-2 text-center sm:w-36">
               <div className="flex h-20 w-[7.5rem] sm:h-24 sm:w-36 items-center justify-center rounded-2xl bg-white p-2 ring-1 ring-black/5 shadow-sm">
                 <img
-                  src={brand.logo}
-                  alt={`${brand.name} logo - ${brand.industry}`}
-                  width={480}
-                  height={320}
+                  src={smallLogos[index]}
+                  srcSet={crest ? `${logoNorthgateSmall} 96w, ${logoNorthgate} 160w` : `${smallLogos[index]} 240w, ${brand.logo} 480w`}
+                  sizes={crest ? "(min-width: 640px) 50px, 40px" : "(min-width: 640px) 128px, 104px"}
+                  alt=""
+                  width={crest ? 160 : 240}
+                  height={crest ? 256 : 160}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-contain"
-                  title={brand.name}
                 />
               </div>
-              <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+              <span className="text-xs font-medium leading-snug text-muted-foreground">
                 {brand.name}
               </span>
-            </div>
-          ))}
-        </Marquee>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-background to-transparent" />
+            </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

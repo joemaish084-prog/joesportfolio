@@ -1,6 +1,4 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { MotionConfig } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { AgencyNavigation, AgencySectionLinks } from "@/components/agency/AgencyNavigation";
 import { AgencyHero } from "@/components/agency/AgencyHero";
@@ -10,7 +8,6 @@ import { CreativeShowcase } from "@/components/agency/AgencyVisuals";
 import { MeetBadge } from "@/components/agency/MeetBadge";
 import { SubHeading } from "@/components/agency/AgencyPageSections";
 import { AuditForm } from "@/components/agency/AuditForm";
-import { useStudioMotion } from "@/components/agency/useStudioMotion";
 import { BrandsLogoMarquee } from "@/components/BrandsLogoMarquee";
 import { Footer } from "@/components/Footer";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -18,29 +15,23 @@ import { Testimonials } from "@/components/Testimonials";
 import { Seo } from "@/components/Seo";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Highlighter } from "@/components/ui/highlighter";
 import { agencyHomeHead } from "@/seo/agencyHomeHead";
 import { AUDIT_WHATSAPP, homeFaqs, homeResults, homeServices } from "@/data/agencyHome";
 import { trackSpotlight } from "@/lib/spotlight";
-import "@/components/agency/studio.css";
 
 export default function AgencyHome() {
-  const root = useRef<HTMLDivElement>(null);
-  useStudioMotion(root);
-
   return (
-    <MotionConfig reducedMotion="user">
-      <div ref={root} data-agency-home className="agency-page agency-home min-h-screen bg-background">
+      <div data-agency-home className="agency-page agency-home min-h-screen bg-background">
         <Seo {...agencyHomeHead} />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-md focus:bg-background focus:px-4 focus:py-2">Skip to content</a>
-        <AgencyNavigation />
+        <AgencyNavigation home />
         <main id="main-content" tabIndex={-1}>
           <AgencyHero whatsappUrl={AUDIT_WHATSAPP} showAuditLink />
 
           <section id="agency-results" data-track-location="home_proof" className="container mx-auto scroll-mt-24 px-4 pt-8 sm:pt-16">
             <div className="mx-auto max-w-6xl">
               <SubHeading eyebrow="Campaign proof" title="Tracked campaigns, real numbers"
-                aside={<Link className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline" to="/agency/results">All campaign results <ArrowRight className="h-4 w-4" aria-hidden /></Link>} />
+                aside={<Link className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline" to="/agency/results">All campaign results <ArrowRight className="h-4 w-4" aria-hidden /></Link>} />
               <div className="grid gap-4 md:grid-cols-3">
                 {homeResults.map(project => (
                   <Link key={project.id} to={`/work/case-studies#${project.id}`} onMouseMove={trackSpotlight}
@@ -62,36 +53,30 @@ export default function AgencyHome() {
           <BrandsLogoMarquee />
 
           <section className="container mx-auto overflow-x-clip px-4 py-20" aria-labelledby="agency-meet-title">
-            <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-              <MeetBadge />
-              <div className="space-y-4">
+            <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+              <div className="space-y-4 lg:col-start-2 lg:row-start-1">
                 <SectionLabel>Founder &amp; CEO · JM Marketing · Nairobi, Kenya</SectionLabel>
                 <h2 id="agency-meet-title" className="font-display text-3xl font-bold md:text-4xl">
                   Meet{" "}
-                  <Highlighter action="underline" color="#F97316" strokeWidth={2.5} padding={1} isView>
-                    <span className="font-serif font-normal italic text-primary">Joseph</span>
-                  </Highlighter>
+                  <span className="font-serif font-normal italic text-primary">Joseph</span>
                 </h2>
                 <p className="leading-relaxed text-muted-foreground">
                   I’m the founder and CEO of JM Marketing, a digital marketing agency in Nairobi. I help businesses get{" "}
-                  <Highlighter action="highlight" color="rgba(249, 115, 22, 0.28)" isView delay={300}>
-                    <span className="font-medium text-foreground">more customers and more sales</span>
-                  </Highlighter>
+                  <strong className="font-medium text-foreground">more customers and more sales</strong>
                   , and I judge my work on that. I don’t judge it on{" "}
-                  <Highlighter action="strike-through" color="#F97316" strokeWidth={2} isView delay={900}>
-                    likes or reach
-                  </Highlighter>
+                  likes or reach
                   .
                 </p>
-                <Button asChild className="rounded-full"><a href="#audit">Book a Free Audit <ArrowUpRight className="h-4 w-4" aria-hidden /></a></Button>
+                <Button size="lg" asChild className="rounded-full"><a href="#audit">Book a Free Audit <ArrowUpRight className="h-4 w-4" aria-hidden /></a></Button>
               </div>
+              <div className="lg:col-start-1 lg:row-start-1"><MeetBadge /></div>
             </div>
           </section>
 
           <section id="agency-services" className="container mx-auto scroll-mt-24 px-4 pb-16">
             <div className="mx-auto max-w-6xl">
               <SubHeading eyebrow="Services" title="Find the right channel"
-                aside={<Link to="/agency/services" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">Full service directory <ArrowRight className="h-4 w-4" aria-hidden /></Link>} />
+                aside={<Link to="/agency/services" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">Full service directory <ArrowRight className="h-4 w-4" aria-hidden /></Link>} />
               <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {homeServices.map(({ name, path, copy }) => (
                   <li key={name}>
@@ -123,7 +108,7 @@ export default function AgencyHome() {
               <Accordion type="single" collapsible>
                 {homeFaqs.map(({ question, answer }) => (
                   <AccordionItem key={question} value={question}>
-                    <AccordionTrigger className="text-left">{question}</AccordionTrigger>
+                    <AccordionTrigger className="min-h-11 text-left">{question}</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground"><p>{answer}</p></AccordionContent>
                   </AccordionItem>
                 ))}
@@ -138,7 +123,7 @@ export default function AgencyHome() {
                   <SectionLabel>Free marketing audit</SectionLabel>
                   <h2 id="audit-title" className="font-display text-3xl font-bold tracking-tight md:text-4xl">Where could your next customers come from?</h2>
                   <p className="leading-relaxed text-muted-foreground">Tell me a little about your business. I’ll get in touch to discuss where your ads, website, or tracking could do more for you.</p>
-                  <Link className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline" to="/agency/contact">Prefer to book a strategy call? <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+                  <Link className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary hover:underline" to="/agency/contact">Prefer to book a strategy call? <ArrowRight className="h-4 w-4" aria-hidden /></Link>
                 </div>
                 <AuditForm />
               </div>
@@ -149,10 +134,6 @@ export default function AgencyHome() {
           <AgencySectionLinks className="justify-center" />
         </div>
         <Footer />
-        <div className="studio-mobile-audit" data-mobile-audit hidden>
-          <Button asChild className="w-full rounded-full"><a href="#audit">Book a Free Audit <ArrowUpRight className="h-4 w-4" aria-hidden /></a></Button>
-        </div>
       </div>
-    </MotionConfig>
   );
 }

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Pause, Play, Quote } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 
 const testimonials = [
@@ -27,7 +26,6 @@ export function Testimonials({ compact = false }: { compact?: boolean }) {
   return (
     <section id="testimonials" className="scroll-mt-20 lg:scroll-mt-24 dot-grid section-divider py-20 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
           <div className="text-center mb-16 space-y-4">
             <SectionLabel>TESTIMONIALS</SectionLabel>
             <h2 className="text-title-1 sm:text-large-title font-display">
@@ -37,12 +35,10 @@ export function Testimonials({ compact = false }: { compact?: boolean }) {
               Trusted by brands across Kenya to deliver creative campaigns that drive real results.
             </p>
           </div>
-        </ScrollReveal>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <ScrollReveal key={index} direction="up" delay={index * 0.15}>
-              <Card className="glass hover:border-primary/40 hover-lift">
+          {testimonials.map((testimonial) => (
+              <Card key={testimonial.name} className="glass hover:border-primary/40">
                 <CardContent className="pt-6 space-y-4">
                   <Quote className="h-8 w-8 text-primary/30" />
                   <blockquote className="text-muted-foreground leading-relaxed italic">
@@ -54,7 +50,6 @@ export function Testimonials({ compact = false }: { compact?: boolean }) {
                   </div>
                 </CardContent>
               </Card>
-            </ScrollReveal>
           ))}
         </div>
       </div>

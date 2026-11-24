@@ -1,0 +1,34 @@
+.studio-audit-panel {
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  padding: clamp(1rem, 3.5vw, 2.25rem);
+}
+
+.studio-fields { display: grid; gap: 1rem; margin-bottom: 1.2rem; min-width: 0; }
+.studio-field { display: grid; align-content: start; gap: .4rem; min-width: 0; }
+.studio-fields label { font-size: .875rem; font-weight: 600; }
+.studio-fields :is(input, select) {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--input));
+  border-radius: .45rem;
+  min-height: 3rem;
+  width: 100%;
+  padding-inline: .65rem;
+  font-size: 1rem;
+}
+.studio-form-note { font-size: .875rem; margin-top: .85rem; color: hsl(var(--muted-foreground)); }
+.studio-form-note a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: .2em; }
+.studio-form-error, .studio-field-error { color: hsl(var(--primary)); }
+.studio-form-error { margin-bottom: .85rem; }
+.studio-field-error { font-size: .875rem; }
+.studio-fields [aria-invalid="true"] { border-color: hsl(var(--primary)); }
+.studio-success { display: flex; align-items: center; gap: .5rem; font-weight: 600; }
+.studio-success svg { flex-shrink: 0; color: hsl(var(--primary)); }
+.studio-whatsapp { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-top: .7rem; font-weight: 600; }
+.studio-whatsapp:hover, .studio-form-note a:hover { color: hsl(var(--foreground)); }
+
+@media (min-width: 39rem) {
+  .studio-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

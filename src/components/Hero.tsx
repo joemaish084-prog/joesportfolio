@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { HeroBackground } from "@/components/HeroBackground";
 import { ChevronDown } from "lucide-react";
-import { HeroCollage, HeroCollageMobile, type CollageItem } from "@/components/HeroCollage";
+import { AnimatedHeroCollage } from "@/components/AnimatedHeroCollage";
+import { HeroCollageMobile, type CollageItem } from "@/components/HeroCollage";
 import josephPortrait from "@/assets/joseph-maina-portrait.webp";
 import asdspDocumentary from "@/assets/longform-asdsp.webp";
 import majiNiUhaiShort from "@/assets/short-maji-ni-uhai.webp";
@@ -202,9 +203,9 @@ export function Hero({ archive = false }: { archive?: boolean }) {
         </div>
 
         <div className="hidden lg:block">
-          <HeroCollage mouseX={mouseX} mouseY={mouseY} items={collageItems} loading={archive ? "lazy" : undefined} panelClassName="left-[10%] top-[44%] w-[19rem]">
+          <AnimatedHeroCollage mouseX={mouseX} mouseY={mouseY} items={collageItems} loading={archive ? "lazy" : undefined} panelClassName="left-[10%] top-[44%] w-[19rem]">
             <ProofPanel mouseX={mouseX} mouseY={mouseY} />
-          </HeroCollage>
+          </AnimatedHeroCollage>
         </div>
       </div>
 

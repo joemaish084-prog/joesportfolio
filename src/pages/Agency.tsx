@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AgencyPageCta, AgencyPageFooter, AgencyPageHeader, SubHeading } from "@/components/agency/AgencyPageSections";
 import { PricingOverview } from "@/components/agency/PricingOverview";
@@ -7,10 +7,8 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useToast } from "@/hooks/use-toast";
-import { motion, useInView, AnimatePresence, MotionConfig } from "framer-motion";
+import { motion, useInView, MotionConfig } from "framer-motion";
 import { Stepper } from "@/components/ui/stepper";
 import {
   Calendar, Phone, MessageCircle, Loader2, Check, Target, ShieldCheck, MapPin, Zap,
@@ -44,7 +42,8 @@ import {
 } from "@/data/services";
 import { migrationReasons } from "@/data/shopify";
 import { ShopifyAgencyFeature } from "@/components/shopify/ShopifyAgencyFeature";
-import { FieldworkVisual, CreativeShowcase } from "@/components/agency/AgencyVisuals";
+import { CreativeShowcase } from "@/components/agency/AgencyVisuals";
+import { FieldworkVisual } from "@/components/agency/FieldworkVisual";
 import iclearFacebookBanner from "@/assets/design-iclear-facebook.webp";
 import iclearFilterPromo from "@/assets/design-iclear-filter-promo.webp";
 import iclearDishwashShort from "@/assets/short-iclear-dishwash.webp";
@@ -56,7 +55,6 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 // These parameters are what make Calendly report a booking back to this page.
 const CALENDLY_EMBED_URL = `${CALENDLY_URL}?embed_domain=www.josephmaina.co.ke&embed_type=Inline`;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const whyCards = [
   { icon: Target, title: "Results You Can Measure", desc: "Every campaign tracked with clear KPIs — reach, leads, conversions and ROI. No vanity metrics." },
@@ -196,13 +194,33 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const page = agencyPages[pageKey];
   const typeSetting = pageTypePair(pageKey);
   const location = useLocation();
-  const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
   const isShopifyBrief = form.service.startsWith("Shopify");
   const [spamTrap, setSpamTrap] = useState("");
   const [briefSent, setBriefSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [briefStep, setBriefStep] = useState(0);
+  const [briefError, setBriefError] = useState("");
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [calendarReady, setCalendarReady] = useState(false);
+  const nextBriefField = useRef<string>();
+  const calendar = useRef<HTMLIFrameElement>(null);
+
+  function goToBriefStep(step: number) {
+    nextBriefField.current = ["b-name", "b-brand", "b-goals"][step];
+    setBriefStep(step);
+    setBriefError("");
+  }
+
+  useEffect(() => {
+    if (!nextBriefField.current) return;
+    document.getElementById(nextBriefField.current)?.focus();
+    nextBriefField.current = undefined;
+  }, [briefStep]);
+
+  useEffect(() => {
+    if (calendarOpen) calendar.current?.focus({ preventScroll: true });
+  }, [calendarOpen]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -222,12 +240,14 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
   const submitBrief = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.brand.trim() || !form.service || !form.budget || !form.goals.trim()) {
-      toast({ title: "Please complete all fields", variant: "destructive" });
+      setBriefError("Describe what you’d like to achieve before sending your brief.");
+      document.getElementById("b-goals")?.focus();
       return;
     }
     // Only bots fill the hidden field. They see success, and nothing is saved.
     if (spamTrap) { setBriefSent(true); return; }
     setSending(true);
+    setBriefError("");
     try {
       await saveAgencyLead({
         name: form.name,
@@ -241,9 +261,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
       setForm({ name: "", email: "", phone: "", brand: "", service: "", budget: "", goals: "" });
       setBriefStep(0);
       setBriefSent(true);
-    } catch (err) {
-      console.error(err);
-      toast({ title: "Couldn't send", description: "Please WhatsApp me directly.", variant: "destructive" });
+    } catch {
+      setBriefError("Your brief couldn’t be sent. Try again or message me on WhatsApp.");
     } finally {
       setSending(false);
     }
@@ -253,9 +272,10 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
     <MotionConfig reducedMotion="user">
     <div className="agency-page min-h-screen bg-background">
       <Seo {...(pageKey === "home" ? agencyOverviewHead : agencyHead(pageKey))} />
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-md focus:bg-background focus:px-4 focus:py-2">Skip to content</a>
       <AgencyNavigation />
 
-      <TypePairScope as="main" pair={typeSetting?.pair}>
+      <TypePairScope as="main" id="main-content" tabIndex={-1} pair={typeSetting?.pair}>
         {/* The services page brings its own hero (ServicesHero). */}
         {pageKey !== "home" && pageKey !== "services" && <AgencyPageHeader page={page} pairMain={typeSetting?.main}
           visual={pageKey === "pricing" ? <PricingOverview market={market} /> : undefined}>
@@ -264,8 +284,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                 <MarketToggle className="items-start" />
               </div>}
               {pageKey === "contact" && <p className="mt-8 flex flex-wrap gap-2.5 text-sm">
-                <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="mailto:joemaish084@gmail.com"><Mail className="h-4 w-4 text-primary" aria-hidden />joemaish084@gmail.com</a>
-                <a className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="tel:+254704700160"><Phone className="h-4 w-4 text-primary" aria-hidden />+254 704 700 160</a>
+                <a className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="mailto:joemaish084@gmail.com"><Mail className="h-4 w-4 text-primary" aria-hidden />joemaish084@gmail.com</a>
+                <a className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card/60 px-4 hover:border-primary/50 hover:text-primary transition-colors" href="tel:+254704700160"><Phone className="h-4 w-4 text-primary" aria-hidden />+254 704 700 160</a>
                 <span className="inline-flex min-h-10 items-center gap-2 rounded-full px-2 text-muted-foreground"><MapPin className="h-4 w-4" aria-hidden />Nairobi, Kenya</span>
               </p>}
         </AgencyPageHeader>}
@@ -514,11 +534,11 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
 </>}
 {pageKey === "contact" && <>
         {/* BOOKING */}
-        <section id="booking" className="container mx-auto px-4 py-20 scroll-mt-20">
+        <section id="booking" className="container mx-auto scroll-mt-20 px-4 py-12 sm:py-20">
           <div className="max-w-6xl mx-auto">
           <SubHeading eyebrow="Get in touch" title="Ready to Grow Your Brand?">Book a free 30-minute strategy call — no commitment, just a conversation.</SubHeading>
 
-          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-6">
+          <div className="grid items-start gap-6 lg:grid-cols-[1.1fr_1fr]">
             {/* Calendly */}
             <Card className="p-5 sm:p-6 rounded-2xl border-primary/30">
               <div className="flex items-center gap-3 mb-4">
@@ -528,18 +548,21 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                   <p className="text-xs text-muted-foreground">Free · 30 minutes · Pick a time that suits you</p>
                 </div>
               </div>
-              <div className="rounded-lg overflow-hidden border border-border/60 bg-muted/30" style={{ minHeight: 480 }}>
+              {calendarOpen ? <div className="rounded-lg border border-border/60 bg-muted/30">
+                <p role="status" className={calendarReady ? "sr-only" : "p-3 text-sm text-muted-foreground"}>
+                  {calendarReady ? "Booking calendar loaded." : "Loading the booking calendar…"}
+                </p>
                 <iframe
+                  ref={calendar}
                   src={CALENDLY_EMBED_URL}
                   title="Book a free strategy call with Joseph Maina"
-                  className="w-full"
-                  style={{ minHeight: 480, border: 0 }}
+                  width="520"
+                  height="550"
+                  className="block w-full rounded-lg border-0"
+                  onLoad={() => setCalendarReady(true)}
                 />
-              </div>
-              <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-                Widget not loading?
-                <a href={CALENDLY_URL} data-calendly-direct target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-medium text-primary hover:underline">Open Calendly in a new tab <ExternalLink className="h-3 w-3" aria-hidden /></a>
-              </p>
+              </div> : <Button type="button" size="lg" className="w-full rounded-full px-4" onClick={() => setCalendarOpen(true)}>Show booking calendar</Button>}
+              <a href={CALENDLY_URL} data-calendly-direct target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-medium text-primary hover:underline">Open Calendly in a new tab <ExternalLink className="h-3.5 w-3.5" aria-hidden /></a>
             </Card>
 
             {/* WhatsApp + Brief */}
@@ -553,7 +576,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                       <p className="text-sm text-muted-foreground">Prefer WhatsApp? Let's talk there.</p>
                     </div>
                   </div>
-                  <Button asChild className="rounded-full shrink-0">
+                  <Button asChild size="lg" className="rounded-full shrink-0">
                     <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                       <Phone className="h-4 w-4" /> Message me
                     </a>
@@ -579,96 +602,94 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
                     </div>
                   </div>
                 ) : <>
-                <Stepper steps={["Contact", "Business", "Goals"]} currentStep={briefStep} onStepClick={(i) => i < briefStep && setBriefStep(i)} className="mb-6" />
+                <Stepper steps={["Contact", "Business", "Goals"]} currentStep={briefStep} onStepClick={goToBriefStep} className="mb-6" />
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
                     if (briefStep === 0) {
-                      if (!form.name.trim() || !form.email.trim()) {
-                        toast({ title: "Please fill in your name and email", variant: "destructive" });
+                      if (!form.name.trim()) {
+                        setBriefError("Enter your name to continue.");
+                        document.getElementById("b-name")?.focus();
                         return;
                       }
-                      if (!EMAIL_PATTERN.test(form.email.trim())) {
-                        toast({ title: "Please enter a valid email address", variant: "destructive" });
-                        return;
-                      }
-                      setBriefStep(1);
+                      goToBriefStep(1);
                     } else if (briefStep === 1) {
                       if (!form.brand.trim() || !form.service || !form.budget) {
-                        toast({ title: "Please complete these fields", variant: "destructive" });
+                        setBriefError("Enter your brand name and choose a service and budget.");
+                        document.getElementById(!form.brand.trim() ? "b-brand" : !form.service ? "b-service" : "b-budget")?.focus();
                         return;
                       }
-                      setBriefStep(2);
+                      goToBriefStep(2);
                     } else {
                       submitBrief(e);
                     }
                   }}
                   className="space-y-3"
+                  aria-label="Send a project brief"
+                  aria-busy={sending}
                 >
-                  <input type="text" name="company_website" value={spamTrap} onChange={(e) => setSpamTrap(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute left-[-9999px] h-px w-px opacity-0" />
-                  <AnimatePresence mode="wait">
+                  <div hidden><input type="text" name="company_website" value={spamTrap} onChange={(e) => setSpamTrap(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
                     {briefStep === 0 && (
-                      <motion.div key="step-0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
+                      <div className="space-y-3">
                         <div>
                           <Label htmlFor="b-name">Name</Label>
-                          <Input id="b-name" autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                          <Input id="b-name" className="h-11" required autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                         </div>
                         <div>
                           <Label htmlFor="b-email">Email</Label>
-                          <Input id="b-email" type="email" autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                          <Input id="b-email" className="h-11" type="email" pattern={String.raw`[^\s@]+@[^\s@]+\.[^\s@]+`} required autoComplete="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                         </div>
                         <div>
                           <Label htmlFor="b-phone">WhatsApp or phone (optional)</Label>
-                          <Input id="b-phone" type="tel" autoComplete="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                          <Input id="b-phone" className="h-11" type="tel" autoComplete="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
                         </div>
-                      </motion.div>
+                      </div>
                     )}
                     {briefStep === 1 && (
-                      <motion.div key="step-1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
+                      <div className="space-y-3">
                         <div>
                           <Label htmlFor="b-brand">Brand name</Label>
-                          <Input id="b-brand" autoComplete="organization" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
+                          <Input id="b-brand" className="h-11" required autoComplete="organization" value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} />
                         </div>
                         <div>
                           <Label htmlFor="b-service">Service interested in</Label>
-                          <Select value={form.service} onValueChange={(v) => setForm({ ...form, service: v })}>
-                            <SelectTrigger id="b-service"><SelectValue placeholder="Select a service" /></SelectTrigger>
-                            <SelectContent>
-                              {serviceOptions.map((name) => <SelectItem key={name} value={name}>{name}</SelectItem>)}
-                            </SelectContent>
-                          </Select>
+                          <select id="b-service" required value={form.service} onChange={(event) => setForm({ ...form, service: event.target.value })}
+                            className="h-11 w-full min-w-0 rounded-md border border-input bg-background px-3 text-base">
+                            <option value="" disabled>Select a service</option>
+                            {serviceOptions.map((name) => <option key={name}>{name}</option>)}
+                          </select>
                         </div>
                         <div>
                           <Label htmlFor="b-budget">{isShopifyBrief ? "Project or monthly support budget" : "Monthly ad budget"}</Label>
-                          <p className="mb-1.5 text-xs text-muted-foreground">{isShopifyBrief ? "Share an estimate and currency, or write 'Not sure yet' if you would like help defining the scope." : "Ad spend only, paid separately from my fees. A rough figure is fine."}</p>
-                          {isShopifyBrief ? <Input id="b-budget" value={form.budget} onChange={(event) => setForm({ ...form, budget: event.target.value })} placeholder="Budget and currency, or Not sure yet" /> : <Select value={form.budget} onValueChange={(v) => setForm({ ...form, budget: v })}>
-                            <SelectTrigger id="b-budget"><SelectValue placeholder="Select budget" /></SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="<KES 30,000">Below KES 30,000</SelectItem>
-                              <SelectItem value="KES 30,000 - 50,000">KES 30,000 – 50,000</SelectItem>
-                              <SelectItem value="KES 50,000 - 200,000">KES 50,000 – 200,000</SelectItem>
-                              <SelectItem value="KES 200,000+">KES 200,000+</SelectItem>
-                              <SelectItem value="Not sure yet">Not sure yet</SelectItem>
-                            </SelectContent>
-                          </Select>}
+                          <p id="b-budget-hint" className="mb-1.5 text-sm text-muted-foreground">{isShopifyBrief ? "Share an estimate and currency, or write 'Not sure yet' if you would like help defining the scope." : "Ad spend only, paid separately from my fees. A rough figure is fine."}</p>
+                          {isShopifyBrief ? <Input className="h-11" id="b-budget" required aria-describedby="b-budget-hint" value={form.budget} onChange={(event) => setForm({ ...form, budget: event.target.value })} placeholder="Budget and currency, or Not sure yet" /> :
+                            <select id="b-budget" required value={form.budget} onChange={(event) => setForm({ ...form, budget: event.target.value })}
+                              aria-describedby="b-budget-hint" className="h-11 w-full min-w-0 rounded-md border border-input bg-background px-3 text-base">
+                              <option value="" disabled>Select budget</option>
+                              <option value="<KES 30,000">Below KES 30,000</option>
+                              <option value="KES 30,000 - 50,000">KES 30,000 – 50,000</option>
+                              <option value="KES 50,000 - 200,000">KES 50,000 – 200,000</option>
+                              <option value="KES 200,000+">KES 200,000+</option>
+                              <option>Not sure yet</option>
+                            </select>}
                         </div>
-                      </motion.div>
+                      </div>
                     )}
                     {briefStep === 2 && (
-                      <motion.div key="step-2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-3">
+                      <div className="space-y-3">
                         <div>
                           <Label htmlFor="b-goals">{isShopifyBrief ? "Tell me about your store" : "What should your marketing achieve?"}</Label>
-                          <Textarea id="b-goals" rows={3} placeholder={isShopifyBrief ? "Current store link, product count, what you need, target market, and intended launch date." : undefined} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
+                          <Textarea id="b-goals" required rows={3} placeholder={isShopifyBrief ? "Current store link, product count, what you need, target market, and intended launch date." : undefined} value={form.goals} onChange={(e) => setForm({ ...form, goals: e.target.value })} />
                         </div>
-                      </motion.div>
+                      </div>
                     )}
-                  </AnimatePresence>
+                  {briefError && <p role="alert" className="text-sm text-primary">{briefError}</p>}
                   <div className="flex gap-3 pt-1">
                     {briefStep > 0 && (
-                      <Button type="button" variant="outline" className="flex-1" onClick={() => setBriefStep((s) => s - 1)}>Back</Button>
+                      <Button type="button" size="lg" variant="outline" className="flex-1 px-4" disabled={sending} onClick={() => goToBriefStep(briefStep - 1)}>Back</Button>
                     )}
-                    <Button type="submit" className="flex-1" disabled={sending}>
-                      {briefStep < 2 ? "Next" : sending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending…</> : "Send Brief"}
+                    <Button type="submit" size="lg" className="flex-1 px-4" disabled={sending}>
+                      {briefStep < 2 ? "Next" : sending ? <><Loader2 aria-hidden className="h-4 w-4 motion-safe:animate-spin" /> Sending…</> : "Send Brief"}
                     </Button>
                   </div>
                 </form>

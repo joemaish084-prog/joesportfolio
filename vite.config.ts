@@ -6,7 +6,20 @@ import { mcpPlugin } from "@lovable.dev/mcp-js/stacks/supabase/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  build: { manifest: true },
+  build: {
+    manifest: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Group shared raster URL modules. The images themselves still load
+          // independently through srcset and native lazy loading.
+          if (/\/src\/assets\/(?:responsive\/|marquee\/|showcase\/|design-)[^?]+\.webp$/.test(id)) {
+            return "creative-image-urls";
+          }
+        },
+      },
+    },
+  },
   server: {
     host: "::",
     port: 8080,

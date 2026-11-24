@@ -1,4 +1,4 @@
-import { useEffect, useState, type ElementType, type ReactNode } from "react";
+import { useEffect, useState, type ElementType, type HTMLAttributes, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -36,7 +36,7 @@ export function TypePairScope({
   as?: ElementType;
   className?: string;
   children: ReactNode;
-} & Record<`data-${string}`, string | boolean | undefined>) {
+} & Pick<HTMLAttributes<HTMLElement>, "id" | "tabIndex"> & Record<`data-${string}`, string | boolean | undefined>) {
   const { pathname, search } = useLocation();
   const [labOpen, setLabOpen] = useState(false);
   const [override, setOverride] = useState<TypePairId | null>(null);

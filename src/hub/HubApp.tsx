@@ -2,6 +2,7 @@ import { Suspense, lazy, useCallback, type ReactNode } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { MotionConfig } from "framer-motion";
+import { PrivateQueryProvider } from "@/integrations/PrivateQueryProvider";
 import "./hub.css";
 import { HubAuthProvider, useHubAuth } from "./auth/HubAuthProvider";
 import { useIdleSignOut } from "./auth/useIdleSignOut";
@@ -86,7 +87,7 @@ export default function HubApp() {
     // reducedMotion="user" drops transform and layout animation app-wide for
     // people who ask the OS for less motion; components handle the rest.
     <MotionConfig reducedMotion="user">
-      <HubAuthProvider>
+      <PrivateQueryProvider><HubAuthProvider>
         <PrivacyProvider>
           <HubNoIndex />
           <Routes>
@@ -121,7 +122,7 @@ export default function HubApp() {
             </Route>
           </Routes>
         </PrivacyProvider>
-      </HubAuthProvider>
+      </HubAuthProvider></PrivateQueryProvider>
     </MotionConfig>
   );
 }

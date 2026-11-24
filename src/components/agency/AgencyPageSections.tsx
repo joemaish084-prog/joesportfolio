@@ -38,7 +38,7 @@ export function AgencyPageHeader({ page, visual, children, pairMain }: {
         <div className="mx-auto max-w-6xl">
           <nav aria-label="Breadcrumb" className="mb-8 text-sm text-muted-foreground">
             <ol className="flex flex-wrap items-center gap-1.5">
-              <li><Link to="/" className="hover:text-primary transition-colors">Agency</Link></li>
+              <li><Link to="/" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-primary">Agency</Link></li>
               <li aria-hidden="true"><ChevronRight className="h-3.5 w-3.5" /></li>
               <li><span aria-current="page" className="text-foreground">{page.label}</span></li>
             </ol>

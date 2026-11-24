@@ -13,7 +13,7 @@ const scripts = [...html.matchAll(/<script\b[^>]*type="module"[^>]*src="([^"]+)"
 const preloads = [...html.matchAll(/<link\b[^>]*rel="modulepreload"[^>]*href="([^"]+)"/g)].map((match) => match[1]);
 const initialJs = [...new Set([...scripts, ...preloads])];
 const bytes = initialJs.reduce((total, src) => total + gzipSync(fs.readFileSync(`dist${src}`)).length, 0);
-assert(bytes < 220 * 1024, `Initial JavaScript exceeds the 220 KiB gzip budget: ${bytes} bytes`);
+assert(bytes < 190 * 1024, `Initial JavaScript exceeds the 190 KiB gzip budget: ${bytes} bytes`);
 let variants = 0;
 for (const match of root.matchAll(/<img\b[^>]*srcSet="([^"]+)"/gi)) {
   for (const candidate of match[1].split(",")) {
@@ -32,11 +32,12 @@ assert.match(root, /id="customer-journey"/, "The roadmap section must render in 
 assert(variants >= 18, "Agency images must expose responsive variants");
 const blog = fs.readFileSync("dist/agency/blog.html", "utf8");
 const blogRoot = blog.slice(blog.indexOf('<div id="root">'));
-assert.match(blogRoot, /<h1\b[^>]*>Digital marketing, written plainly\.<\/h1>/, "The actual blog heading must be in the initial HTML");
+const blogHeading = blogRoot.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+assert.equal(blogHeading, "Digital marketing, written plainly.", "The actual blog heading must be in the initial HTML");
 assert(!blogRoot.includes('data-prerender="'), "The blog must not hide its content until JavaScript loads");
 for (const page of [html, blog]) {
   assert.match(page, /rel="modulepreload"[^>]*href="\/assets\/(?:AgencyHome|AgencyBlog)-/, "The initial route must be preloaded");
-  for (const font of ["space-grotesk-latin-700-normal.woff2", "inter-latin-400-normal.woff2"]) {
+  for (const font of ["space-grotesk-latin-v22-variable.woff2", "inter-latin-v20-variable.woff2"]) {
     assert(page.includes(`href="/fonts/${font}"`), `Missing critical font preload: ${font}`);
     assert(fs.existsSync(`dist/fonts/${font}`), `Missing local font: ${font}`);
   }
