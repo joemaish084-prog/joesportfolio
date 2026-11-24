@@ -26,7 +26,16 @@ export default function AgencyHome() {
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-md focus:bg-background focus:px-4 focus:py-2">Skip to content</a>
         <AgencyNavigation home />
         <main id="main-content" tabIndex={-1}>
-          <AgencyHero whatsappUrl={AUDIT_WHATSAPP} showAuditLink />
+          <AgencyHero
+            whatsappUrl={AUDIT_WHATSAPP}
+            showAuditLink
+            tagline={(
+              <>
+                <Link to="/agency/shopify-services" className="text-primary underline underline-offset-4">Shopify websites</Link>
+                {" built to bring in sales."}
+              </>
+            )}
+          />
 
           <section id="agency-results" data-track-location="home_proof" className="container mx-auto scroll-mt-24 px-4 pt-8 sm:pt-16">
             <div className="mx-auto max-w-6xl">

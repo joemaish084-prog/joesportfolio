@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -35,7 +36,11 @@ function HeroProofPanel() {
   );
 }
 
-export function AgencyHero({ whatsappUrl, showAuditLink = false }: { whatsappUrl: string; showAuditLink?: boolean }) {
+export function AgencyHero({ whatsappUrl, showAuditLink = false, tagline }: {
+  whatsappUrl: string;
+  showAuditLink?: boolean;
+  tagline?: ReactNode;
+}) {
   return (
     <section
       data-track-location="hero"
@@ -62,6 +67,8 @@ export function AgencyHero({ whatsappUrl, showAuditLink = false }: { whatsappUrl
             More leads and sales for{" "}
             <span className="font-serif italic font-normal text-primary">Kenyan businesses</span>
           </h1>
+
+          {tagline && <p className="mt-4 text-base font-semibold text-foreground sm:text-lg">{tagline}</p>}
 
           <p
             className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
