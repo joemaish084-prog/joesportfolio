@@ -83,7 +83,7 @@ export function headTags(head: PageHead): HeadTag[] {
             meta("property", "og:image:height", String(head.imageHeight)),
           ]
         : []
-      : [meta("property", "og:image:width", "1216"), meta("property", "og:image:height", "640")]),
+      : [meta("property", "og:image:width", "1200"), meta("property", "og:image:height", "630")]),
     ...(head.imageAlt ? [meta("property", "og:image:alt", head.imageAlt)] : []),
     meta("name", "twitter:card", "summary_large_image"),
     meta("name", "twitter:title", ogTitle),
