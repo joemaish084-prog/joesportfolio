@@ -9534,6 +9534,1238 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "ugc-isnt-a-strategy-media-buyer-saves-money-kenya-2026",
+    category: "Paid Ads",
+    title: "UGC Isn't a Strategy: Why a Media Buyer Saves You More Than Another Creator Video",
+    excerpt: "Creator videos are creative. A media buyer decides who sees them and what the money does next. Skipping the second is how budgets disappear.",
+    date: "2026-11-22",
+    dateLabel: "November 2026",
+    readTime: "6 min read",
+    metaTitle: "UGC Isn't a Strategy: Why a Media Buyer Saves You Money",
+    metaDescription: "Why paying for more UGC videos before you have media buying fixes the wrong problem, how an ad specialist saves a Kenyan business money, and when UGC is the right call.",
+    intro: "A business owner tells me they are going to fix their ads with UGC. They will pay five creators to make videos, post them, boost the best one and see what happens. Some of those videos will be good. Most of the money will still be wasted, because nobody has decided who should see them, what a sale is worth, or when to stop. I run ads for a living, so weigh my bias, but I would rather say this plainly than let you learn it at KES 100,000 a lesson.",
+    thumbnail: "https://images.unsplash.com/photo-1746014601017-4e515ef51722?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Laptop on a wooden table showing bar charts, with a cup of coffee beside it",
+
+    sections: [
+      {
+        id: "two-different-jobs",
+        heading: "UGC and media buying do two different jobs",
+        paragraphs: [
+          "UGC, user-generated-style content, is creative. A creator films a video that looks and sounds like a real person talking about your product, and you run it as an ad. That is a useful thing to own. But a video is not a campaign. It does not choose an audience, set a budget, install tracking or notice at 9 a.m. on day three that the ad is spending and not selling.",
+          "A media buyer, which is what an ad specialist or digital marketer who runs your ads actually is, does that second set of jobs. Without them, the best creator video in Nairobi is a good clip in a badly run account.",
+        ],
+        infographic: {"kind":"compare","title":"Who does what","columns":[{"heading":"UGC creator","tone":"neutral","points":["Films the video","Brings a real face and a real voice","Gives you hooks and angles to test","Cannot see your ad account or your sales"]},{"heading":"Media buyer","tone":"good","points":["Installs and checks conversion tracking","Chooses objective, audience and budget","Tests creative and cuts the losers early","Reports spend against orders and leads"]}],"note":"You need both eventually. The question is which one you pay for first."},
+      },
+      {
+        id: "where-money-goes",
+        heading: "Where the money goes when you buy creative first",
+        paragraphs: [
+          "The creator-first plan usually looks like this: spend most of the budget on videos, boost the ones that look good, and judge them by likes and comments. Nobody has checked that purchases and enquiries are being recorded, so when sales stay flat there is no way to say which video, audience or offer was the problem.",
+          "The table below is an example, not a client result. It shows how the same KES 100,000 can be split when you buy creative first, against when you set up the system first and buy creative to feed it.",
+        ],
+        table: {
+          headers: ["Example KES 100,000","Creative first","System first"],
+          rows: [
+            ["Creator videos","About 70%","About 25%"],
+            ["Ad spend that reaches buyers","About 30%","About 60%"],
+            ["Tracking and ad management","Nothing set aside","About 15%"],
+            ["Can you tell what worked?","Mostly guessing","Yes, in shillings per order"],
+          ],
+          note: "Illustrative split for explanation only. Real creator fees and management fees vary widely, so get quotes for both.",
+        },
+      },
+      {
+        id: "what-real-accounts-show",
+        heading: "What a real account showed",
+        paragraphs: [
+          "In one Nairobi beauty retailer's Meta account, eight types of sales campaign ran side by side over three months, with the same products and the same business behind them. They returned anywhere from 15.4x to 70.2x on ad spend as Meta reported it. The weakest was the longer video-led campaign, and the strongest were always-on sales and restock announcements.",
+          "That is not an argument against video. A 15.4x return would delight many businesses. It is an argument that the offer, the timing and the structure of the account separated winners from losers, which are exactly the things a media buyer controls. The same account also started from a more basic fix: before anything else, the first change was making sure purchases were being recorded properly.",
+        ],
+        callout: "Figures are Meta-reported on a 7-day click and 1-day view window, from one established retailer. They are not a promise of what your account will return.",
+      },
+      {
+        id: "how-a-media-buyer-saves-money",
+        heading: "Seven ways a media buyer saves you money",
+        paragraphs: [
+          "None of these is glamorous. Together they are why a well-run account makes the same creative work harder.",
+        ],
+        list: [
+          "Sets up tracking first, so you know what a sale costs instead of what a click costs.",
+          "Picks the right campaign objective, rather than boosting posts and hoping.",
+          "Tests several angles at once and cuts weak ones in days, not months.",
+          "Keeps spend off audiences who were never going to buy, such as people far outside your delivery area.",
+          "Spots creative fatigue before frequency eats the budget.",
+          "Tells you how many creator videos you actually need, which is often fewer than you planned to buy.",
+          "Reports in KES against orders and enquiries, so you can decide with numbers.",
+        ],
+      },
+      {
+        id: "when-ugc-is-right",
+        heading: "When UGC is exactly the right move",
+        paragraphs: [
+          "UGC is not the villain. It is a strong choice once the system exists. If your tracking works, you have an offer that sells and an account that is running steadily, then fresh creator content is often what keeps results from fading as audiences tire of the same ads.",
+          "It also suits products where trust matters, such as skincare, where a believable real person using the product does more than a studio shot. And when your media buyer tells you the creative is now the bottleneck, believe them, and brief creators with their test results in hand.",
+        ],
+      },
+      {
+        id: "order-of-operations",
+        heading: "The order I would do it in",
+        paragraphs: [
+          "If you have a limited budget, sequence matters more than any single purchase.",
+        ],
+        infographic: {"kind":"steps","title":"Spend in this order","items":[{"label":"Measure","detail":"Pixel, conversions and a way to count WhatsApp orders."},{"label":"Fix the offer","detail":"A clear price, delivery and a reason to buy now."},{"label":"Test three creator videos","detail":"Three different angles, not ten similar ones."},{"label":"Let a media buyer run the test","detail":"Same budget per video, judged on cost per sale."},{"label":"Scale the winner","detail":"Brief the next creators from what actually worked."}]},
+        callout: "Buy the system first and the creative second. Creative bought without a system is an expensive way to find out you needed the system.",
+      },
+    ],
+  },
+  {
+    slug: "digital-marketing-for-skincare-brands-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "Digital Marketing for Skincare Brands in Kenya: What Actually Sells",
+    excerpt: "Skincare is bought on trust, advice and repeat purchase. Marketing that ignores those three things pays for clicks that never come back.",
+    date: "2026-11-22",
+    dateLabel: "November 2026",
+    readTime: "6 min read",
+    metaTitle: "Digital Marketing for Skincare Brands in Kenya: What Sells",
+    metaDescription: "A practical marketing guide for Kenyan skincare brands: building trust, selling through WhatsApp, repeat purchase and what a real beauty retailer's ad account returned.",
+    intro: "A skincare buyer is putting something on their face, so they want to be sure about who made it, whether it is real and whether it suits them. That makes skincare marketing different from selling a T-shirt. The brands that grow in Kenya are not the ones with the prettiest feeds. They are the ones that answer worries quickly, make buying easy and give customers a reason to come back.",
+    thumbnail: "https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hands holding a glass dropper bottle of skincare serum",
+
+    sections: [
+      {
+        id: "why-different",
+        heading: "Why skincare is a different kind of sale",
+        paragraphs: [
+          "There are four things that set skincare apart. Trust comes first, because fake and diluted products are a real fear and buyers know it. Advice comes second, since many buyers are not sure what suits their skin. Repeat purchase is third: a serum or cleanser runs out, which makes the first sale the start of the relationship. And claims are limited, because what you can say in an ad is tighter than most owners expect.",
+          "Plan for all four from day one. A brand that sells well once and loses the customer has paid for one click and earned one order.",
+        ],
+      },
+      {
+        id: "the-funnel",
+        heading: "The route that works: learn, ask, buy, reorder",
+        paragraphs: [
+          "Attention usually starts on Instagram or TikTok with something educational or visual. It then moves to a conversation, most often on WhatsApp, where the buyer asks what to use. The order is placed through M-Pesa or cash on delivery, and a follow-up message brings them back when the product is running low.",
+          "Most brands I audit have the first step and not the last three. Posts are made, but replies are slow, checkout is awkward and nobody follows up after delivery.",
+        ],
+        infographic: {"kind":"steps","title":"A skincare customer journey","items":[{"label":"Notice","detail":"A short video or post that teaches or shows the product in use."},{"label":"Ask","detail":"A WhatsApp or DM conversation about what suits them."},{"label":"Buy","detail":"M-Pesa or cash on delivery, with clear delivery time."},{"label":"Use","detail":"A check-in a couple of weeks later."},{"label":"Reorder","detail":"A reminder before the bottle runs out."}]},
+      },
+      {
+        id: "what-an-account-showed",
+        heading: "What one beauty retailer's ad account showed",
+        paragraphs: [
+          "From 3 July to 8 October 2026, a Nairobi beauty and skincare retailer's Meta account spent KES 129,150 and Meta attributed KES 5,328,094 in revenue to it, across 953 purchases. Before the account was restructured, attributable monthly revenue from Meta had been under KES 10,000. The client stays unnamed, and the numbers are real.",
+          "What changed first was measurement and structure. Purchases were recorded properly, and campaigns were built around specific offers such as restocks and product days. The work after that was checking the numbers weekly and cutting what did not earn its budget.",
+        ],
+        infographic: {"kind":"stats","title":"One retailer, 3 July to 8 October 2026","items":[{"value":"KES 129,150","label":"Meta ad spend"},{"value":"KES 5,328,094","label":"revenue Meta attributed to it"},{"value":"953","label":"purchases"},{"value":"41.3x","label":"return on ad spend"}],"note":"Platform-reported on a 7-day click and 1-day view window, so it usually runs higher than banked sales. From one established retailer, not a benchmark."},
+      },
+      {
+        id: "where-to-start",
+        heading: "Where I would start with a small budget",
+        paragraphs: [
+          "Do the unglamorous things before spending much on ads. Make sure a test order through M-Pesa works from start to finish, set up conversion tracking, and write down the answers to the five questions customers ask most. Then run a small Meta test around one product and one clear offer, and judge it on cost per order rather than likes.",
+        ],
+        list: [
+          "A WhatsApp Business number with saved replies for price, skin type, delivery and returns.",
+          "Clear delivery times and costs for Nairobi and upcountry.",
+          "Visible proof the products are genuine: batch details, supplier information and real customer photos with permission.",
+          "Claims that match what you can back up, as covered in my guide to skincare ad rules.",
+          "A plan for the second order, not only the first.",
+        ],
+      },
+      {
+        id: "what-not-to-do",
+        heading: "What I would avoid",
+        paragraphs: [
+          "Do not buy followers, as they never buy. Do not lead with dramatic before-and-after claims, which platforms restrict and customers increasingly distrust. And do not judge success by reach alone: a post seen by 100,000 people who never message you has not done a job.",
+        ],
+        callout: "In skincare, the first sale is earned with trust and the second with follow-up. Most brands only plan for the first.",
+      },
+    ],
+  },
+  {
+    slug: "what-you-can-and-cant-say-in-skincare-ads-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "What You Can and Can't Say in Skincare Ads in Kenya",
+    excerpt: "The wrong sentence in a skincare ad can get it rejected, your account restricted or your customers worried. Here is how to write ads that stay safe and still sell.",
+    date: "2026-11-22",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "What You Can and Can't Say in Skincare Ads in Kenya",
+    metaDescription: "A plain guide to skincare ad claims for Kenyan brands: Meta's personal-attribute and before-and-after rules, medical claims, regulator checks and safer wording.",
+    intro: "Skincare sits close to health, and ad platforms treat anything near health with extra care. Many Kenyan skincare ads fail for the same few reasons: they talk to the viewer's skin problem directly, promise a result, or show a dramatic before and after. This is a general guide, not legal advice, and platform rules change, so read the current policies before you launch.",
+    thumbnail: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Amber glass dropper bottle on a wooden stand beside a shadow of a palm leaf",
+
+    sections: [
+      {
+        id: "personal-attributes",
+        heading: "Do not tell the viewer what is wrong with them",
+        paragraphs: [
+          "Meta's advertising standards do not allow ads that assert or imply that you know personal things about the viewer, such as a health condition or a physical feature they have. In practice, a headline like 'Are you struggling with acne scars?' can be rejected, because it implies you know something about the person looking at it.",
+          "The safer version talks about the product or the situation, not the viewer: 'Our gentle cleanser is made for daily use.' Describe what the product is and who it is made for, and let people recognise themselves.",
+        ],
+      },
+      {
+        id: "before-after",
+        heading: "Before-and-after photos and unrealistic results",
+        paragraphs: [
+          "Meta's rules for health and wellness ads restrict before-and-after images and do not allow claims of unrealistic or unlikely results, and a skincare ad that reads as a health claim can be caught by them. Even where a platform lets a particular image through, a dramatic transformation photo invites doubt from the very people you want to convince, because many Kenyan buyers have seen edited ones.",
+          "Show the routine, the texture and real customers talking about their experience, with permission. Results vary between people, so avoid promising any timeline.",
+        ],
+      },
+      {
+        id: "medical-claims",
+        heading: "Medical claims are a different category",
+        paragraphs: [
+          "Words such as cure, treat, heal or remove, used about a skin condition, turn a cosmetic into a medical claim. Claims about lightening or whitening skin are especially sensitive, and some ingredients used in that category are restricted in Kenya.",
+          "Cosmetics sold here are expected to meet KEBS requirements, and products that make medicinal claims can fall under the Pharmacy and Poisons Board. Kenya's Consumer Protection Act also prohibits false or misleading claims. Confirm your product's status with the relevant authorities before you advertise it, and keep records that back up what you say.",
+        ],
+      },
+      {
+        id: "safer-wording",
+        heading: "Risky wording and safer alternatives",
+        paragraphs: [
+          "You can usually keep the meaning and lose the risk. Here are common examples.",
+        ],
+        table: {
+          headers: ["Risky","Safer"],
+          rows: [
+            ["Are you tired of your pimples?","Meet our gentle daily cleanser."],
+            ["Cures dark spots in 7 days","Part of a daily routine for even-looking skin."],
+            ["Before and after: 2 weeks","A real customer shares her routine."],
+            ["Treats eczema","Moisturiser made for dry, sensitive skin."],
+            ["Guaranteed results","Results vary. Tell us your skin type and we will advise."],
+          ],
+          note: "Examples to show the idea. Always check the current ad policy for the platform you are using.",
+        },
+      },
+      {
+        id: "customer-content",
+        heading: "Customer photos and reviews need consent",
+        paragraphs: [
+          "Using a customer's face or words in an ad needs their clear permission, and a face can be personal data under Kenya's Data Protection Act. Ask in writing, keep the reply, and let people say no. Do not edit a review to say something stronger than the customer did.",
+          "If you work with creators, the same care applies: paid content should be labelled as paid, and a creator should only say things you can both stand behind.",
+        ],
+        sources: [
+          { label: "Meta Advertising Standards", href: "https://transparency.meta.com/policies/ad-standards/" },
+        ],
+      },
+      {
+        id: "before-you-launch",
+        heading: "A five-minute check before you launch",
+        paragraphs: [
+          "Run every skincare ad through these questions before you press publish.",
+        ],
+        list: [
+          "Does it say or imply something about the viewer's skin?",
+          "Does it promise a result, a timeline or a cure?",
+          "Could a reasonable person read it as a medical claim?",
+          "Can I show where each claim comes from?",
+          "Do I have written permission for every face and review?",
+        ],
+        callout: "Safe skincare ads describe the product and the routine. The more an ad talks about the viewer's problem, the more likely it is to be rejected.",
+      },
+    ],
+  },
+  {
+    slug: "selling-skincare-on-whatsapp-consultations-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "Selling Skincare on WhatsApp: Turn Questions Into Consultations",
+    excerpt: "'How much?' is the start of a skincare sale, not the end of one. A short, structured chat turns it into an order and, later, a reorder.",
+    date: "2026-11-22",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Selling Skincare on WhatsApp: Turn Questions Into Consultations",
+    metaDescription: "How Kenyan skincare brands can sell on WhatsApp: a simple chat flow, what to ask, how to recommend without diagnosing, M-Pesa checkout and follow-up.",
+    intro: "Most skincare enquiries in Kenya arrive as a single line: 'price?' or 'how much is the serum?' A reply with a number ends most of those chats. A reply that asks one useful question about what the person wants keeps them talking, and a customer who has talked to you is far more likely to buy and to trust what they bought.",
+    thumbnail: "https://images.unsplash.com/photo-1758520388212-04b4d36e1364?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two women laughing while looking at a smartphone, with shopping bags beside them",
+
+    sections: [
+      {
+        id: "the-price-question",
+        heading: "Answer the price, then ask one question",
+        paragraphs: [
+          "Give the price straight away, because hiding it irritates people. Then add one easy question, such as 'Is this for dry or oily skin?' It shows you care about fit, and it moves the chat from a price check to a conversation.",
+          "This is the same lesson I wrote about in why 'DM for price' costs sales: friction at the first message is where most interest quietly leaves.",
+        ],
+      },
+      {
+        id: "chat-flow",
+        heading: "A simple consultation flow",
+        paragraphs: [
+          "You do not need a script that sounds robotic. You need an order of questions so nothing gets missed. Save each message as a quick reply in WhatsApp Business so you can send it in seconds and adjust the wording.",
+        ],
+        infographic: {"kind":"steps","title":"A five-message skincare chat","items":[{"label":"Greet and give the price","detail":"Answer what they asked first."},{"label":"Ask about their skin","detail":"Dry, oily or sensitive, and what they currently use."},{"label":"Suggest a simple routine","detail":"Two or three products, with how to use them."},{"label":"Make buying easy","detail":"M-Pesa details, delivery time and cost, in one message."},{"label":"Follow up","detail":"Check in a couple of weeks after delivery."}]},
+      },
+      {
+        id: "advise-dont-diagnose",
+        heading: "Advise on products, do not diagnose skin conditions",
+        paragraphs: [
+          "Recommending a gentle cleanser for dry skin is advice. Telling someone they have eczema or what is causing their breakouts is a medical judgement you are not placed to make. If a customer describes a painful rash, an infection or a reaction, suggest they see a doctor or pharmacist.",
+          "Suggest a patch test for new products on sensitive skin, and be clear about ingredients. Honest limits make buyers trust the rest of what you say.",
+        ],
+      },
+      {
+        id: "the-same-leak",
+        heading: "Slow replies lose skincare sales too",
+        paragraphs: [
+          "In a different industry, a residential developer's Meta ads produced 126 enquiries in a month for KES 40,101, and 60 of those people tapped a quick question and never replied, partly because many first replies arrived the next day. Skincare buyers behave the same way: they ask three brands at once, and the first useful answer usually gets the order.",
+          "Aim to reply within the hour during business hours, and set an away message for the rest. If you cannot keep up, fewer ads with faster replies will earn more than more ads with slower ones.",
+        ],
+      },
+      {
+        id: "close-and-keep",
+        heading: "Close the sale, then keep the customer",
+        paragraphs: [
+          "Put the whole checkout in one message: the products, the total, the M-Pesa number or till, and when it will arrive. After delivery, send a short check-in asking how they are finding it. That one message gives you feedback, a possible review and an early sign if something went wrong.",
+          "Only add customers to a broadcast list if they agree to it, and let them leave easily. My piece on Kenya's Data Protection Act and marketing covers the basics.",
+        ],
+        callout: "A reply that ends in a question keeps the chat alive. A reply that ends in a price usually ends it.",
+      },
+    ],
+  },
+  {
+    slug: "skincare-ad-creative-what-to-show-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "What to Show in a Skincare Ad When You Can't Use Before-and-Afters",
+    excerpt: "Texture, routine, ingredients and real customers do more honest work than a dramatic transformation photo. Here is what to film and how to test it.",
+    date: "2026-11-23",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "What to Show in a Skincare Ad Without Before-and-Afters",
+    metaDescription: "Skincare ad creative ideas for Kenyan brands: texture shots, routines, ingredient explainers, real customers and offers, plus how to test them on Meta.",
+    intro: "Once you accept that dramatic before-and-after photos are risky, the question is what to show instead. The good news is that the formats which work are also cheaper to make: a phone, a window with daylight and a clear idea. The aim is to help someone picture using the product, and to feel safe buying it.",
+    thumbnail: "https://images.unsplash.com/photo-1670201203208-055d6d79db4a?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Close-up of a woman holding a frosted bottle of skin essence beside her face",
+
+    sections: [
+      {
+        id: "texture-and-use",
+        heading: "Texture and the product in use",
+        paragraphs: [
+          "Close shots of the product being squeezed, spread or absorbed answer a question many buyers have: what is it actually like? A cream that looks rich, a serum that feels light, a cleanser that foams, these are visible things you can show honestly without making any claim about results.",
+        ],
+      },
+      {
+        id: "routine",
+        heading: "A three-step routine, shown simply",
+        paragraphs: [
+          "A short video showing a morning or evening routine, with each product named and the order explained, gives buyers a reason to buy two or three items rather than one. It also reduces the 'what do I use first?' questions that clog your WhatsApp.",
+          "Keep the claims modest and the steps clear. The viewer should finish the video knowing exactly what to do with the products.",
+        ],
+      },
+      {
+        id: "ingredients-and-honesty",
+        heading: "Explain what is in it, without overselling it",
+        paragraphs: [
+          "Ingredient explainers do well because they teach. Say what an ingredient is, what it is commonly used for in skincare and who may want to be careful with it. Avoid saying it will fix a condition. People who feel informed are more likely to trust you than people who feel sold to.",
+        ],
+      },
+      {
+        id: "real-customers",
+        heading: "Real customers, with permission",
+        paragraphs: [
+          "A real customer describing her routine in her own words is one of the most trusted formats in this category, and it is the heart of UGC-style creative. Get written consent, do not script her opinions, and use the same standard for any review you quote.",
+          "A creator video can still be a poor investment if nobody runs it properly, which is why I wrote that UGC is not a strategy by itself. Test creators and then back the winners.",
+        ],
+      },
+      {
+        id: "offers-beat-polish",
+        heading: "A real reason to buy now beats a polished video",
+        paragraphs: [
+          "In one Nairobi beauty retailer's account, a product-day promotion returned 76.8x, spending KES 4,607 to bring in KES 354,050, while a longer video-led sales campaign returned 15.4x on KES 18,077. The difference was not production quality. It was a specific, true reason to act today.",
+          "Restock announcements worked too, returning 63.4x across three one-week runs. 'Back in stock' is a message that needs almost no creative at all.",
+        ],
+        callout: "Figures are Meta-reported for one retailer and not a benchmark. They show that a clear offer can beat expensive creative, not that video does not work.",
+      },
+      {
+        id: "test-plan",
+        heading: "A simple way to test your creative",
+        paragraphs: [
+          "Make three different angles, not ten versions of one. For example: texture in use, a three-step routine and a customer talking. Give each the same budget for several days, and compare cost per order. Keep the winner, brief the next round from what it did right, and retire any ad whose results are sliding.",
+        ],
+        infographic: {"kind":"steps","title":"A four-step creative test","items":[{"label":"Pick three angles","detail":"Texture, routine, customer."},{"label":"Same budget each","detail":"Run them side by side for several days."},{"label":"Judge on cost per order","detail":"Not likes, not reach."},{"label":"Brief the next batch","detail":"Copy what the winner did right."}]},
+      },
+    ],
+  },
+  {
+    slug: "launching-a-new-skincare-product-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "Launching a New Skincare Product in Kenya: A Six-Week Plan",
+    excerpt: "A launch is not one post. It is six weeks of getting the product, the proof and the first buyers ready so the first day is not an empty room.",
+    date: "2026-11-23",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Launching a New Skincare Product in Kenya: A Six-Week Plan",
+    metaDescription: "A practical six-week launch plan for a new skincare product in Kenya: compliance checks, waitlist, sampling, content, launch offer and the first restock.",
+    intro: "Many skincare launches in Kenya are an announcement post, a flash sale and then silence. The product might be excellent, but nobody was waiting for it, there were no reviews, and the stock is gone or unsold before anyone can say whether it works. A six-week plan fixes that by building the audience and the proof before launch day.",
+    thumbnail: "/media/blog-covers/beauty-campaign-800.webp",
+    thumbnailAlt: "Lipstick, brushes and makeup compacts laid out on a beige surface",
+
+    sections: [
+      {
+        id: "the-plan",
+        heading: "The six-week plan at a glance",
+        paragraphs: [
+          "The dates matter less than the order. Each step makes the next one easier, and none of it needs a large budget.",
+        ],
+        infographic: {"kind":"steps","title":"Six weeks to launch","items":[{"label":"Week 1: Get the basics right","detail":"Confirm the product's status, write safe claims and set up M-Pesa checkout and tracking."},{"label":"Week 2: Build a waitlist","detail":"Collect WhatsApp numbers with clear consent from people who want to know first."},{"label":"Week 3: Seed to real users","detail":"Give the product to a small group, with honest disclosure, and collect feedback."},{"label":"Week 4: Show the product","detail":"Short videos of texture, routine and the story behind it."},{"label":"Week 5: Launch with a reason","detail":"A limited first batch, a launch price or a bundle, with a clear end date."},{"label":"Week 6: Learn and restock","detail":"Read the numbers, reply to every review and announce the restock."}]},
+      },
+      {
+        id: "week-one",
+        heading: "Week one: the unexciting work that protects the launch",
+        paragraphs: [
+          "Check that you are allowed to sell and advertise the product as you plan to, and write down the claims you will make and what supports each one. Do a test order through M-Pesa and cash on delivery from start to finish, and install conversion tracking so you can count launch orders. Skipping this is how brands pay for ads that send people to a broken checkout.",
+        ],
+      },
+      {
+        id: "waitlist-and-sampling",
+        heading: "Weeks two and three: a waitlist and a few honest testers",
+        paragraphs: [
+          "A waitlist is a WhatsApp or email list of people who asked to hear first. Ask for consent plainly, say what you will send and make it easy to leave. These people are your first buyers and your cheapest ones, because they are already interested.",
+          "Give the product to five to ten real users who match your customer, and tell them you want honest feedback, good or bad. If a creator or customer is given the product for free and then posts about it, it should be disclosed as such. Their feedback is useful before you launch, and the best of it becomes proof afterwards, with their permission.",
+        ],
+      },
+      {
+        id: "launch-week",
+        heading: "Weeks four and five: show it, then give a reason to act",
+        paragraphs: [
+          "In week four, post short, honest videos of the product in use, the routine it fits in and the story behind it. Avoid dramatic before-and-after claims, as covered in my guide to skincare ad rules.",
+          "In week five, launch with something real: a limited first batch, a launch price that ends on a date, or a bundle. In one beauty retailer's Meta account, restock announcements returned 63.4x across three one-week runs, because they gave an audience that already knew the product a specific reason to buy now. That is Meta-reported and from one established retailer, so treat it as direction, not a promise.",
+        ],
+      },
+      {
+        id: "week-six",
+        heading: "Week six: read the numbers and plan the restock",
+        paragraphs: [
+          "Look at how many launch orders came from the waitlist, from ads and from organic posts, and what each cost. Reply to every review, thank the buyers and ask the first customers how they are getting on. Then announce the restock to the people who missed out, which is often the strongest second launch you will get.",
+        ],
+        callout: "A launch is judged by the second order, not the first. Plan the restock and the follow-up before you announce the product.",
+      },
+    ],
+  },
+  {
+    slug: "skincare-repeat-customers-replenishment-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "Skincare Repeat Customers: Bring Them Back Before the Bottle Runs Out",
+    excerpt: "Skincare is a consumable. The brands that grow plan the reorder from the day of the first sale, not the day a customer disappears.",
+    date: "2026-11-23",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Skincare Repeat Customers: Bring Them Back Before It Runs Out",
+    metaDescription: "How Kenyan skincare brands can win repeat purchases: working out replenishment timing, WhatsApp reminders, consent, bundles and measuring your repeat rate.",
+    intro: "A bottle of cleanser or a jar of cream runs out. That is the great advantage of skincare as a business, and it is wasted on brands that treat every sale as a one-off. A customer who reorders costs a message, not an ad. The trick is to reach them while the product is nearly finished, not three months after they have switched to something else.",
+    thumbnail: "https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hands holding a glass dropper bottle of skincare serum",
+
+    sections: [
+      {
+        id: "work-out-the-window",
+        heading: "Work out when each product runs out",
+        paragraphs: [
+          "For every product, estimate how long a normal customer takes to finish it. This depends on the size and how it is used. As an example, if a bottle is used morning and evening and typically lasts about six weeks, the reorder message should go out around week five. Check your own products and adjust using what customers tell you.",
+          "Put these windows in a simple sheet, one row per product, so anyone helping you can see them. This is the whole system. It does not need software to start.",
+        ],
+        table: {
+          headers: ["Product","Typical use","Message the customer at"],
+          rows: [
+            ["Daily cleanser","Twice a day","Example: week 5 of 6"],
+            ["Serum","Once or twice a day","Example: week 4 of 6"],
+            ["Body butter","Daily","Example: week 7 of 8"],
+          ],
+          note: "Illustrative timings only. Measure your own products before you rely on them.",
+        },
+      },
+      {
+        id: "the-reminder",
+        heading: "The reminder message",
+        paragraphs: [
+          "Keep it short, personal and useful. Something like: 'Hi Amina, it has been about five weeks since you got your cleanser. Would you like me to send another before it runs out? Same delivery as last time.' Make replying a single word. Mention a new product only if it genuinely fits what they bought.",
+          "Only message customers who agreed to hear from you, and make it easy to stop. My guide to Kenya's Data Protection Act and marketing covers what consent means in practice.",
+        ],
+      },
+      {
+        id: "bundles",
+        heading: "Make the second order a little easier than the first",
+        paragraphs: [
+          "A routine bundle, a small discount for reordering within a window, or free delivery above a set order value all give a reason to restock early. Check the margin before you offer anything, because a discount on a product you already sold once can cost more than it brings back.",
+        ],
+      },
+      {
+        id: "ads-to-existing-customers",
+        heading: "Ads work better on people who already know you",
+        paragraphs: [
+          "In one beauty retailer's Meta account, short restock campaigns re-announcing a product to an audience already familiar with the brand became one of the most reliable formats, returning between 50x and 98x on three one-week runs. That is Meta-reported for one retailer and not a benchmark, but it shows why warm audiences are worth planning for.",
+          "If you have a customer list and permission to use it, Meta lets you build an audience from it. My piece on retargeting on a small budget explains how that works.",
+        ],
+      },
+      {
+        id: "measure-it",
+        heading: "Measure your repeat rate",
+        paragraphs: [
+          "The number to watch is the share of customers who order a second time within a set period, such as ninety days. Track it monthly. If it is low, ask five lapsed customers why. The answer is often delivery trouble, a product that did not suit them or simply that nobody reminded them.",
+        ],
+        callout: "A reorder costs one message. A new customer costs an ad. Plan the message first.",
+      },
+    ],
+  },
+  {
+    slug: "skincare-trust-fake-products-reviews-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "Skincare Trust in Kenya: Fakes, Reviews and Proof Buyers Believe",
+    excerpt: "Customers worry about counterfeit products and bad reactions. Brands that answer those fears openly win the sale the others lose.",
+    date: "2026-11-24",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Skincare Trust in Kenya: Fakes, Reviews and Real Proof",
+    metaDescription: "How Kenyan skincare sellers build trust: showing products are genuine, collecting honest reviews, handling reactions and complaints, and answering fear of fakes.",
+    intro: "Ask a Kenyan skincare buyer what worries them and many will say the same thing: is this the real product? Counterfeit and diluted skincare is a known problem, so even honest sellers start with doubt. You cannot argue that away in a caption. You have to show it, in ways a nervous buyer can check.",
+    thumbnail: "https://images.unsplash.com/photo-1741896136288-b04426b65558?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Several skincare serum dropper bottles lined up against a pink background",
+
+    sections: [
+      {
+        id: "show-where-it-comes-from",
+        heading: "Show where your products come from",
+        paragraphs: [
+          "If you stock other brands, say who your supplier is and how you buy. If you make your own, show where and how it is made and what is in it. Post the batch number and expiry date handling, unboxing videos and the packaging a customer will receive. Specific detail is believable in a way that 'one hundred percent genuine' is not.",
+          "Where it applies, be ready to show the product meets KEBS requirements. A buyer who can ask and get a clear answer is far more likely to order.",
+        ],
+      },
+      {
+        id: "honest-reviews",
+        heading: "Collect honest reviews and keep the bad ones",
+        paragraphs: [
+          "A page with only five-star reviews looks suspicious. Ask every customer for feedback after delivery, make it a single tap, and post the mixed ones too with a calm, specific reply. Never write reviews yourself or pay for positive ones, which platforms and buyers both punish.",
+          "A few dozen genuine reviews, including some that mention a small problem and how you fixed it, will usually outsell a long list of perfect ones. My guide on looking trustworthy online in a scam-wary market goes through the wider checklist.",
+        ],
+      },
+      {
+        id: "proof-ladder",
+        heading: "Proof, from cheapest to strongest",
+        paragraphs: [
+          "Start with what costs nothing and add more as you grow.",
+        ],
+        infographic: {"kind":"steps","title":"Building proof for a skincare brand","items":[{"label":"Clear product pages","detail":"Full ingredient lists, sizes, expiry and how to use."},{"label":"Real packaging and unboxing","detail":"Show exactly what arrives."},{"label":"Customer photos and replies","detail":"With written permission."},{"label":"Google reviews","detail":"A profile with recent, honest reviews."},{"label":"A named person","detail":"A founder or advisor customers can talk to."}]},
+      },
+      {
+        id: "reactions",
+        heading: "When someone has a reaction",
+        paragraphs: [
+          "Sooner or later a customer will say a product did not agree with them. Treat it seriously. Tell them to stop using it, suggest they see a doctor or pharmacist if it is more than mild, and offer a refund or exchange without argument. Do not tell them it cannot be your product.",
+          "Handled well, this is where trust is built. Handled badly in public, it is a screenshot that follows your brand for years. Keep a short record of what happened, which batch it was and what you did.",
+        ],
+      },
+      {
+        id: "claims-you-can-keep",
+        heading: "Keep the promises you can keep",
+        paragraphs: [
+          "Trust is also about what you leave out. Skip miracle claims, countdown timers that reset and fake stock warnings. Honest delivery times, a clear return policy and prices that do not change at checkout do more for a nervous buyer than any slogan.",
+        ],
+        callout: "Buyers do not trust the word 'genuine'. They trust things they can check: packaging, batch details, real reviews and a reply from a real person.",
+      },
+    ],
+  },
+  {
+    slug: "skincare-offers-bundles-restocks-product-days-kenya-2026",
+    category: "Skincare & Beauty",
+    title: "Skincare Offers That Sell: Restocks, Product Days and Bundles",
+    excerpt: "Eight kinds of sales campaign from one real beauty account, ranked by what they returned, and what that suggests about the offers worth running.",
+    date: "2026-11-24",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Skincare Offers That Sell: Restocks, Product Days, Bundles",
+    metaDescription: "Which offers worked for a real Nairobi beauty retailer's Meta account, from restocks to clearance sales, with the real numbers and what to copy for your skincare brand.",
+    intro: "What you offer matters as much as how you advertise it. In one Nairobi beauty retailer's Meta account, eight types of sales campaign ran for three months between July and October 2026, and they returned between 15.4x and 70.2x on ad spend. Same products, same business. Here is what that suggests about the offers a skincare brand should plan, with the client unnamed and the numbers real.",
+    thumbnail: "https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shopping bags and gift boxes arranged on a table",
+
+    sections: [
+      {
+        id: "the-ranking",
+        heading: "What each offer returned",
+        paragraphs: [
+          "These are the account's main sales campaign types, with return on ad spend as Meta reported it. Every campaign was a different length and size, so this is not a controlled test.",
+        ],
+        infographic: {"kind":"bars","title":"Meta-reported return on ad spend by offer type","items":[{"label":"Always-on sales","value":70.2,"display":"70.2x","note":"KES 88 per purchase","highlight":true},{"label":"Restock announcements","value":63.4,"display":"63.4x","note":"Three one-week runs"},{"label":"Product-day promotions","value":59.8,"display":"59.8x","note":"KES 82 per purchase"},{"label":"End-month sales","value":50.8,"display":"50.8x"},{"label":"Mid-year clearance","value":34.1,"display":"34.1x","note":"Most purchases, 256"},{"label":"Longer video sales campaign","value":15.4,"display":"15.4x","note":"KES 292 per purchase"}],"note":"One beauty retailer, July to October 2026, as reported by Meta on a 7-day click and 1-day view window. Not a benchmark."},
+      },
+      {
+        id: "restocks-and-product-days",
+        heading: "The offers with a real reason to buy today",
+        paragraphs: [
+          "Restocks and product days sit near the top. 'Back in stock' tells an audience who already knows the product that the thing they wanted is available, and a product day gives one product a short, clear spotlight. The best single run in the account was a product-day promotion at 76.8x, spending KES 4,607 for KES 354,050 in revenue.",
+          "For a skincare brand, this means keeping a calendar: a restock message every time a popular product returns, and a product day for each bestseller, instead of one general sale.",
+        ],
+      },
+      {
+        id: "volume-vs-return",
+        heading: "A lower return can still be the biggest earner",
+        paragraphs: [
+          "The mid-year clearance returned 34.1x, in the lower half, yet it brought in KES 1,331,405 and 256 purchases on KES 39,079, the most purchases of any type. A high multiple on a small campaign has limited room to grow. A lower multiple on a bigger one can still add more money, as long as the margin holds.",
+          "Margin is the catch. A clearance discount gives away profit before the ad runs, so work out whether you are still making money on each order after the discount, delivery and any returns.",
+        ],
+      },
+      {
+        id: "bundles",
+        heading: "Where bundles fit",
+        paragraphs: [
+          "This account's figures do not isolate bundles, so I will not claim a number for them. In principle a bundle helps a skincare brand because a routine of two or three products raises the order value, which makes each customer cost less to win. It also matches how people use skincare. Test it by running a bundle against single products for the same period and comparing cost per order and order value.",
+        ],
+      },
+      {
+        id: "what-to-copy",
+        heading: "What to copy, and what not to",
+        paragraphs: [
+          "Copy the principle: give people a true, specific reason to buy now, and keep a mix of offers running. Do not copy the numbers. This retailer had an established brand and loyal customers, and your first campaigns will probably return less. Treat the figures as a way to compare your own campaigns, not as a promise.",
+        ],
+        callout: "The offers that worked best all had a true reason to act today. None of them depended on a clever trick.",
+      },
+    ],
+  },
+  {
+    slug: "meta-ads-for-property-developers-kenya-2026",
+    category: "Real Estate",
+    title: "Meta Ads for Property Developers in Kenya: What the Dashboard Won't Tell You",
+    excerpt: "A cost per enquiry of KES 318 looked healthy. The real story was in the chats. Here is how to run property ads and judge them properly.",
+    date: "2026-11-22",
+    dateLabel: "November 2026",
+    readTime: "6 min read",
+    metaTitle: "Meta Ads for Property Developers in Kenya: Judge Them Properly",
+    metaDescription: "How Kenyan property developers should run Meta ads: choosing forms or chats, targeting by price band, creative that qualifies buyers and why cost per enquiry misleads.",
+    intro: "In October 2026, a residential developer spent KES 40,101 on Meta ads and received 126 enquiries, or KES 318 each. On the dashboard that looks fine. After we read every chat, only 14 were serious buyers and just 6 had given a phone number. The client and the unit stay unnamed, and the figures are real. The lesson is not that the ads failed. It is that property ads must be judged on something other than the cost of a message.",
+    thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Modern residential apartment buildings against a clear sky in Kenya",
+
+    sections: [
+      {
+        id: "the-real-numbers",
+        heading: "Cost per enquiry is only the first number",
+        paragraphs: [
+          "Property is a considered purchase. Many people who message a developer are browsing, comparing or asking about payment plans out of curiosity. In that month, 106 of the 126 enquiries were real buyers or renters, yet 37 showed real interest and 14 were hot buyers.",
+        ],
+        infographic: {"kind":"funnel","title":"From enquiry to phone number, October 2026","stages":[{"label":"Messaged the page","value":126,"display":"126"},{"label":"Real buyer or renter","value":106,"display":"106"},{"label":"Showed real interest","value":37,"display":"37"},{"label":"Hot buyers","value":14,"display":"14"},{"label":"Gave a phone number","value":6,"display":"6"}],"note":"One residential developer, KES 40,101 spend, 1 to 31 October 2026. Site visits and sales were not tracked yet."},
+      },
+      {
+        id: "forms-or-chats",
+        heading: "Lead forms or Instagram chats?",
+        paragraphs: [
+          "Lead forms capture details with less effort from the buyer, but they also collect more casual interest. Click-to-message ads start a conversation, which suits property because buyers ask questions before committing. This account used both, and the figures I have do not separate them, so I will not claim one is better.",
+          "My suggestion is to test both against the same offer for a few weeks, and compare not the cost per enquiry but the cost per hot buyer. Add qualifying questions to a form, such as budget range and when they plan to buy, to cut the browsers out early.",
+        ],
+      },
+      {
+        id: "target-by-price-band",
+        heading: "Match the audience to the price band",
+        paragraphs: [
+          "A one-bedroom in Kitengela and a penthouse in Kilimani should not share an audience. State the price range or starting price in the ad, so people who cannot afford it scroll past instead of messaging you. A few fewer enquiries that are all in your range are worth more than a crowd that is not.",
+        ],
+      },
+      {
+        id: "creative",
+        heading: "Creative that qualifies buyers",
+        paragraphs: [
+          "Walkthrough videos, progress updates for off-plan units and a clear statement of payment plan and location help a serious buyer decide to ask. Make the next step obvious: 'Message us to book a site visit this Saturday.' An ad that ends in a clear action produces better chats than one that ends in a lifestyle photo.",
+        ],
+      },
+      {
+        id: "ads-were-improving",
+        heading: "The ads were not the problem",
+        paragraphs: [
+          "Over the month, the cost per Instagram chat fell from KES 478 in the first week to KES 140 in the last three days, against a month average of KES 309. The ads were improving. What cost the developer buyers was what happened after the chat started, which I cover in my piece on turning property enquiries into site visits.",
+        ],
+        callout: "Judge property ads by hot buyers and site visits, not by messages. A cheap enquiry that nobody follows up is the most expensive kind.",
+      },
+    ],
+  },
+  {
+    slug: "property-enquiry-to-site-visit-whatsapp-kenya-2026",
+    category: "Real Estate",
+    title: "From Property Enquiry to Site Visit: The WhatsApp Reply That Books It",
+    excerpt: "Most property buyers who message you are asking three brands at once. The one that replies fast and ends with a question books the visit.",
+    date: "2026-11-22",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "From Property Enquiry to Site Visit: The WhatsApp Reply",
+    metaDescription: "How Kenyan developers and agents turn property enquiries into booked site visits on WhatsApp: reply speed, qualifying questions, a booking prompt and reminders.",
+    intro: "A buyer sees your ad, taps a quick question and waits. If your reply takes a day, they have probably messaged two other developments by then. In the October developer account I wrote about, 60 people tapped a quick question on an ad and never replied, partly because the answers did not end with a next step and many first replies arrived the next day. The leak was in the inbox, not the ads.",
+    thumbnail: "https://images.unsplash.com/photo-1722487631997-cf1e0f92c2c4?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding up a bunch of keys",
+
+    sections: [
+      {
+        id: "reply-in-an-hour",
+        heading: "Reply within the hour, and end on a question",
+        paragraphs: [
+          "Speed is the cheapest improvement you can make. During working hours, aim to reply within an hour, and use a clear away message outside them. Then make sure every reply ends with one question that moves things forward, not a block of brochure text.",
+          "A good closing question is simple: 'Which day this week can you come for a site visit?' It asks for a decision the buyer can easily make.",
+        ],
+      },
+      {
+        id: "qualify-quickly",
+        heading: "Qualify before you send anyone to the site",
+        paragraphs: [
+          "Three questions sort most enquiries: what budget range they have in mind, how they plan to pay (cash, mortgage or Sacco) and when they hope to move or buy. Ask them conversationally, one at a time. My guide to WhatsApp lead qualification questions has wording you can adapt.",
+          "This is not about being picky. A site visit costs an agent an afternoon, and spending it on someone who is only browsing is one of the quiet costs of property marketing.",
+        ],
+        infographic: {"kind":"steps","title":"An enquiry-to-visit conversation","items":[{"label":"Reply fast","detail":"Answer the question they asked, within the hour."},{"label":"Ask about budget and timing","detail":"One question at a time."},{"label":"Offer two visit slots","detail":"A choice is easier than an open question."},{"label":"Confirm in writing","detail":"Day, time, location pin and a contact name."},{"label":"Remind them","detail":"A message the day before and the morning of."}]},
+      },
+      {
+        id: "score-the-chats",
+        heading: "Score every conversation hot, warm or cold",
+        paragraphs: [
+          "Mark each chat as hot, warm or cold, and write down why. Hot means a real budget, a timeline and a willingness to visit. Warm means interested but unsure. Cold means browsing. It takes seconds and lets you chase hot buyers first and nurture the rest with occasional updates.",
+        ],
+      },
+      {
+        id: "reduce-no-shows",
+        heading: "Protect the visit once it is booked",
+        paragraphs: [
+          "Send a reminder the day before and a location pin on the morning, and say who will meet them. If a buyer cancels, offer another slot in the same message. My piece on reducing appointment no-shows covers this in more detail.",
+        ],
+      },
+      {
+        id: "keep-count",
+        heading: "Keep one sheet from chat to deposit",
+        paragraphs: [
+          "Track each lead from first chat to visit to deposit in one simple sheet. In the October account, site visits and sales were not tracked yet, so the case study could only show the cost per hot buyer. The November changes include replies within an hour, a booking question on every reply, and this sheet, and I will add the results to the case study when they exist.",
+        ],
+        callout: "A property enquiry is a visit waiting to be booked. Your reply should always propose the day.",
+      },
+    ],
+  },
+  {
+    slug: "off-plan-property-marketing-trust-kenya-2026",
+    category: "Real Estate",
+    title: "Marketing Off-Plan Property in Kenya: How to Earn Trust Before the Building Exists",
+    excerpt: "Off-plan buyers are paying for something they cannot walk into yet. The marketing job is to make the promise checkable.",
+    date: "2026-11-23",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Marketing Off-Plan Property in Kenya: Earn Trust Early",
+    metaDescription: "How Kenyan developers can market off-plan property: showing progress, making documents and payment plans clear, handling delays honestly and answering buyers' fear of fraud.",
+    intro: "Anyone buying off-plan in Kenya has heard a story about a project that stalled or a plot sold twice. Their caution is rational, so ads that lead with lifestyle photos and a countdown to the launch fall flat with serious buyers. The developers who sell well treat marketing as a way of showing their homework, early and repeatedly.",
+    thumbnail: "/media/blog-covers/nairobi-skyline-800.webp",
+    thumbnailAlt: "Nairobi skyline with high-rise buildings under a bright sky",
+
+    sections: [
+      {
+        id: "show-progress",
+        heading: "Show the work as it happens",
+        paragraphs: [
+          "Regular, dated progress videos and photos from the site are among the strongest proof a developer has. Post them on a schedule, say what stage the build is at and show the same angle over time so buyers can see the change. A short monthly update to existing buyers also shows new prospects that you keep your people informed.",
+        ],
+      },
+      {
+        id: "make-documents-clear",
+        heading: "Make the paperwork easy to understand",
+        paragraphs: [
+          "Be ready to explain the status of the land title, the approvals you hold and what the sale agreement says, in plain words. Publish your company details and the names of the people buyers will deal with. Encourage buyers to do their own checks, such as an official search and having a lawyer review the agreement. A developer who invites scrutiny looks more trustworthy than one who rushes people.",
+          "I am not a lawyer, and this is not legal advice. The point for marketing is that clarity sells, and vagueness is read as a warning.",
+        ],
+      },
+      {
+        id: "payment-plan",
+        heading: "Spell out the payment plan and what is included",
+        paragraphs: [
+          "State the deposit, the instalments, the dates and what happens if a payment is late. List what is included in the price and what is not, such as fees, service charges or finishes. Hidden extras discovered after the deposit are what turn an enquiry into a complaint.",
+        ],
+        infographic: {"kind":"compare","title":"Two ways to market the same off-plan project","columns":[{"heading":"Lifestyle and urgency","tone":"bad","points":["Glossy renders only","'Only 3 units left' with no detail","Vague price and payment terms","Pressure to pay a deposit quickly"]},{"heading":"Proof and clarity","tone":"good","points":["Dated site progress videos","Clear title and approval status","Written payment plan and inclusions","Invitation to visit and check everything"]}]},
+      },
+      {
+        id: "social-proof",
+        heading: "Let existing buyers speak, with permission",
+        paragraphs: [
+          "A short video from a buyer who is already paying instalments, or one who has received their keys, is worth more than any brochure. Ask for permission in writing, do not script it and avoid paying for praise. If a buyer has had a problem that you fixed, that story can be more believable than a perfect one.",
+        ],
+      },
+      {
+        id: "handle-delays",
+        heading: "Tell buyers about delays before they find out",
+        paragraphs: [
+          "Delays happen on construction sites. What damages trust is silence. If a handover date is moving, say so early, explain why and give a new date you can meet. Your marketing then reaches the next buyers with a record of honest communication, which is hard for a competitor to fake.",
+        ],
+        callout: "Off-plan buyers are buying your reliability. Every update, document and honest answer is marketing.",
+      },
+    ],
+  },
+  {
+    slug: "property-seo-neighbourhood-pages-nairobi-2026",
+    category: "Real Estate",
+    title: "Property SEO in Nairobi: Neighbourhood Pages That Actually Rank",
+    excerpt: "Buyers search by area, price and size. A page for each neighbourhood you sell in gives them the answer and gives you free enquiries.",
+    date: "2026-11-23",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Property SEO in Nairobi: Neighbourhood Pages That Rank",
+    metaDescription: "How Nairobi estate agents and developers can use neighbourhood pages for SEO: what to include, how to avoid thin duplicate pages, listings, schema and keeping pages fresh.",
+    intro: "People searching for property in Nairobi rarely type 'houses for sale'. They type an area, a size and a budget: a two-bedroom in Kilimani, land in Kitengela, an apartment near Syokimau. A page built around each place you sell gives you a way to appear for those searches, and it gives buyers the practical detail they were looking for.",
+    thumbnail: "https://images.unsplash.com/photo-1611144727915-ef30a08aaeb3?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "High-rise buildings above a busy Nairobi city street",
+
+    sections: [
+      {
+        id: "one-page-per-area",
+        heading: "One useful page for each area you really sell in",
+        paragraphs: [
+          "Choose the neighbourhoods where you actually have stock or deep knowledge, and make each one a proper page. Do not create fifty near-identical pages by swapping the place name. Search engines treat that as thin content, and buyers see through it in seconds.",
+        ],
+      },
+      {
+        id: "what-goes-on-the-page",
+        heading: "What a good neighbourhood page contains",
+        paragraphs: [
+          "Think of the questions a buyer asks about an area, and answer them with facts you can stand behind.",
+        ],
+        list: [
+          "The kinds of property available and a realistic price range, kept up to date.",
+          "Getting around: main roads, matatu routes and typical commute times.",
+          "Schools, hospitals, shops and other things nearby, named properly.",
+          "What the area is like to live in, written by someone who knows it.",
+          "Your current listings in the area, with photos and a clear enquiry button.",
+          "A WhatsApp link and a contact for questions about the area.",
+        ],
+      },
+      {
+        id: "match-search-language",
+        heading: "Use the words buyers actually search",
+        paragraphs: [
+          "Use phrases like '2 bedroom apartment for rent in Kilimani' or '40 by 80 plot for sale in Kitengela' in headings and text where they fit naturally. My guide to local keyword research for Nairobi shows how to find the wording people really use. Write for the buyer first and the search engine second.",
+        ],
+      },
+      {
+        id: "keep-it-fresh",
+        heading: "Keep prices and listings current",
+        paragraphs: [
+          "A page that shows a sold unit or an old price loses trust and wastes enquiries. Remove or mark sold listings quickly, update price ranges when they change and note the date you last checked. If you cannot maintain a page, it is better not to publish it.",
+        ],
+      },
+      {
+        id: "link-it-together",
+        heading: "Link your pages and your Google profile together",
+        paragraphs: [
+          "Link neighbourhood pages to relevant listings and to each other where it helps a reader, such as from Kilimani to nearby Kileleshwa. Make sure your Google Business Profile uses the same name, address and phone as your website. My guide to location pages for SEO in Nairobi covers the structure in more detail.",
+        ],
+        callout: "A neighbourhood page earns its place only if it answers a real buyer question. Thin pages for every suburb do more harm than good.",
+      },
+    ],
+  },
+  {
+    slug: "selling-property-to-kenyan-diaspora-marketing-2026",
+    category: "Real Estate",
+    title: "Selling Property to the Kenyan Diaspora: Marketing That Builds Trust From Abroad",
+    excerpt: "A buyer in another country cannot walk the plot or knock on your office door. Your marketing has to do that job for them.",
+    date: "2026-11-24",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Selling Property to the Kenyan Diaspora: Build Trust From Abroad",
+    metaDescription: "How Kenyan developers and agents can market to the diaspora: time zones, virtual tours, trusted local contacts, clear payments and answering fear of land fraud.",
+    intro: "Many Kenyans abroad want to buy at home, for a family house, a retirement plan or an investment. They are also some of the most cautious buyers, because they cannot visit easily and have heard the horror stories about land fraud. Marketing to them is less about persuading and more about removing every reason to worry.",
+    thumbnail: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Modern residential apartment buildings against a clear sky in Kenya",
+
+    sections: [
+      {
+        id: "show-it-remotely",
+        heading: "Let them see it without flying home",
+        paragraphs: [
+          "Walkthrough videos, drone footage and live video calls from the site let a buyer see the property in real time. Offer scheduled video tours at times that suit their time zone, and record a good one to send afterwards. A buyer who has seen the plot or unit move, rather than only a render, is much more comfortable.",
+        ],
+      },
+      {
+        id: "a-person-on-the-ground",
+        heading: "Give them a named person they can trust",
+        paragraphs: [
+          "Someone abroad wants a person to call, not a form to fill. Put a real name, a photo and a WhatsApp number on the page, and make that person available during the buyer's evening. Introduce a lawyer or representative who can act for them locally, and encourage them to appoint their own if they prefer.",
+        ],
+      },
+      {
+        id: "clear-money",
+        heading: "Make the money side simple and transparent",
+        paragraphs: [
+          "Show prices in Kenya shillings, and if you also quote another currency, say which exchange rate and date you used. Explain the payment channels clearly, what receipts the buyer will get and how they can confirm that the account belongs to the company. Confusing payment instructions are a red flag for anyone worried about fraud.",
+        ],
+        infographic: {"kind":"steps","title":"A buying journey for someone abroad","items":[{"label":"See it","detail":"Video tour at a convenient time."},{"label":"Check it","detail":"Documents, title status and an independent legal review."},{"label":"Understand the payments","detail":"Prices, plan, channels and receipts in writing."},{"label":"Speak to a person","detail":"A named contact on WhatsApp."},{"label":"Stay updated","detail":"Regular progress messages after purchase."}]},
+      },
+      {
+        id: "reaching-them",
+        heading: "Reaching diaspora buyers with ads",
+        paragraphs: [
+          "Meta lets you choose locations for your ads, so you can test countries where many Kenyans live, such as the UK, the US, the UAE and others. Test small budgets in a few places, use ads that speak to the particular goals of someone abroad and judge them on enquiries that turn into video tours. Run ads at times that make sense for the audience's evening, not yours.",
+          "Do not assume results from one country will carry to another. I do not have a number for how this performs, so treat it as a test, not a promise.",
+        ],
+      },
+      {
+        id: "after-the-sale",
+        heading: "Keep them informed after they pay",
+        paragraphs: [
+          "The diaspora buyer's biggest fear continues after the deposit. A monthly message with dated photos and a short note on progress costs almost nothing, and it is the best reference you can earn. Their friends and family back home and abroad will ask them about you.",
+        ],
+        callout: "For buyers abroad, trust is the product. Make everything checkable, and communicate more than you think you need to.",
+      },
+    ],
+  },
+  {
+    slug: "property-cost-per-site-visit-not-cost-per-lead-kenya-2026",
+    category: "Real Estate",
+    title: "Cost Per Lead Is the Wrong Number for Property: Track Cost Per Site Visit",
+    excerpt: "KES 318 per enquiry and KES 2,864 per hot buyer came from the same ad spend. Only one of those numbers tells you whether the ads work.",
+    date: "2026-11-24",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Property Ads: Track Cost Per Site Visit, Not Cost Per Lead",
+    metaDescription: "Why Kenyan property marketers should measure cost per hot buyer and per site visit instead of cost per lead, with real figures from a developer's Meta account and a tracking sheet.",
+    intro: "One month of a developer's Meta ads gave two very different answers depending on which step you divided by. Divided by enquiries, the cost was KES 318. Divided by hot buyers, it was KES 2,864. Divided by buyers who gave a phone number, it was about KES 6,684. All three are true, and only the later ones say much about whether the ads are bringing buyers.",
+    thumbnail: "https://images.unsplash.com/photo-1722487631997-cf1e0f92c2c4?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Hand holding up a bunch of keys",
+
+    sections: [
+      {
+        id: "one-spend-three-prices",
+        heading: "One spend, three prices",
+        paragraphs: [
+          "From 1 to 31 October 2026, the developer spent KES 40,101. Each cost here is simply that spend divided by the people at that step. The client stays unnamed and the figures come from the case study.",
+        ],
+        table: {
+          headers: ["Step","People","Cost per person"],
+          rows: [
+            ["Enquiries","126","KES 318"],
+            ["Hot buyers","14","KES 2,864"],
+            ["Gave a phone number","6","About KES 6,684"],
+          ],
+          note: "KES 40,101 divided by each step. The last figure is calculated from the case study numbers. Site visits and sales were not tracked in October.",
+        },
+      },
+      {
+        id: "why-cheap-leads-mislead",
+        heading: "Why the cheapest lead is not the cheapest buyer",
+        paragraphs: [
+          "An ad that attracts browsers will always show a low cost per lead. An ad that attracts serious buyers may cost more per enquiry and far less per site visit. If you pick winners by cost per lead, you will keep the browser-friendly ad and cut the one that brought buyers.",
+        ],
+      },
+      {
+        id: "tracking-sheet",
+        heading: "A tracking sheet that takes ten minutes a week",
+        paragraphs: [
+          "You do not need a CRM to start. One sheet with a row per lead is enough, as long as someone fills it in every week.",
+        ],
+        list: [
+          "Date and source: which ad or campaign, and form or chat.",
+          "Name or chat label, and a phone number if given.",
+          "Hot, warm or cold, with a one-line reason.",
+          "Site visit booked, and whether they attended.",
+          "Deposit paid, and the amount.",
+          "Notes: budget range, financing and timing.",
+        ],
+      },
+      {
+        id: "what-to-compare",
+        heading: "What to compare each month",
+        paragraphs: [
+          "At the end of each month, work out the cost per hot buyer, per site visit attended and per deposit for each campaign. Move budget toward the campaigns with the lowest cost at the later steps, even when their cost per enquiry is higher. As more data builds up, the picture will get clearer.",
+        ],
+      },
+      {
+        id: "what-i-still-dont-know",
+        heading: "What this case does not yet show",
+        paragraphs: [
+          "October's figures stop at the phone number, because visits and sales were not tracked yet, and hot buyers were counted by reading the chats by hand, which involves judgement. November's results will be added to the full case study when they exist. Until then, treat the figures as a demonstration of the method rather than a benchmark for your project.",
+        ],
+        callout: "Pick the number that sits closest to a sale. For property, that is the site visit, not the enquiry.",
+      },
+    ],
+  },
+  {
+    slug: "roas-is-not-profit-kenyan-online-stores-track-2026",
+    category: "E-commerce",
+    title: "ROAS Isn't Profit: What Kenyan Online Stores Should Actually Track",
+    excerpt: "A 4x return on ad spend sounds great until delivery, returns and product cost are taken out. Here is how to find your real break-even.",
+    date: "2026-11-22",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "ROAS Isn't Profit: What Kenyan Online Stores Should Track",
+    metaDescription: "How Kenyan e-commerce stores can work out break-even ROAS from their margins, why platform-reported revenue overstates real sales, and which numbers to track instead.",
+    intro: "Return on ad spend, or ROAS, is revenue divided by ad spend. It is easy to read and easy to misread. A store can show 4x in Ads Manager and still lose money once the product, delivery, returns and refused orders are taken off. Before you scale any ad, you need to know your break-even ROAS, and that depends entirely on your margin.",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
+
+    sections: [
+      {
+        id: "what-roas-says",
+        heading: "What ROAS says, and what it leaves out",
+        paragraphs: [
+          "If you spend KES 10,000 on ads and the platform reports KES 40,000 in sales, that is 4x. It says nothing about what the goods cost you, the delivery you paid for, the orders that came back or the sales that would have happened anyway. It is a useful way to compare campaigns against each other, but it is not your profit.",
+        ],
+      },
+      {
+        id: "break-even",
+        heading: "Break-even ROAS is one divided by your margin",
+        paragraphs: [
+          "Your break-even ROAS is 1 divided by your gross margin after product costs. If you keep 40 cents of every shilling after the product costs, you need a ROAS of 2.5x just to break even on the ads. A lower margin raises the bar sharply.",
+        ],
+        table: {
+          headers: ["Margin after product cost","Break-even ROAS"],
+          rows: [
+            ["20%","5.0x"],
+            ["30%","3.3x"],
+            ["40%","2.5x"],
+            ["50%","2.0x"],
+          ],
+          note: "The simple formula: 1 divided by margin. Take delivery, packaging and payment fees off your margin first for a more honest answer.",
+        },
+      },
+      {
+        id: "costs-that-hide",
+        heading: "The costs that quietly eat your margin",
+        paragraphs: [
+          "Work out your real margin per order, after everything that comes with selling online in Kenya.",
+        ],
+        list: [
+          "Delivery and packaging, including what you pay when a delivery fails.",
+          "Returns and refused cash-on-delivery orders.",
+          "Payment fees and M-Pesa charges.",
+          "Discounts and free-delivery offers.",
+          "The cost of customer support and WhatsApp follow-up time.",
+        ],
+      },
+      {
+        id: "platform-revenue",
+        heading: "Platform-reported revenue runs high",
+        paragraphs: [
+          "Meta and Google each count the orders they touched, so across both the total can overstate real sales. In one Kenyan retailer's account, Meta reported 42.6x and Google 14.6x between 1 August and 8 October 2026, and I treat both as a consistent yardstick for comparing campaigns, not as audited sales. Check them against what actually reached the bank every month.",
+        ],
+        infographic: {"kind":"bars","title":"Platform-reported return on ad spend, one retailer","items":[{"label":"Meta Ads","value":42.6,"display":"42.6x","note":"KES 136 per order","highlight":true},{"label":"Google Ads","value":14.6,"display":"14.6x","note":"KES 393 per order"}],"note":"1 August to 8 October 2026. Platform-reported, from one established retailer. Not a benchmark."},
+      },
+      {
+        id: "track-instead",
+        heading: "The numbers I would track",
+        paragraphs: [
+          "Look at cost per order, delivered orders rather than placed orders, average order value and your profit per order after delivery. Then compare ad cost per delivered order with your profit per order. That is the comparison that tells you whether to spend more.",
+        ],
+        callout: "Work out break-even before you read the ROAS. A number only means something next to your margin.",
+      },
+    ],
+  },
+  {
+    slug: "cash-on-delivery-vs-pay-first-fake-orders-kenya-2026",
+    category: "E-commerce",
+    title: "Cash on Delivery vs Pay First: Handling Fake Orders and No-Shows in Kenya",
+    excerpt: "COD gets first-time buyers over the line, and it also brings refused parcels and prank orders. Here is how to keep the sales without the losses.",
+    date: "2026-11-23",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Cash on Delivery vs Pay First: Fake Orders in Kenya",
+    metaDescription: "How Kenyan online stores can use cash on delivery without losing money to fake orders: confirmation calls, deposits, M-Pesa on delivery and tracking delivered orders.",
+    intro: "Cash on delivery is how many Kenyans prefer to buy from a store they do not know yet, and it removes a big trust barrier. It also invites orders that are never collected, wrong numbers and the occasional prank. The answer is not to ban it. It is to add a few cheap checks and to measure what happens after the order is placed.",
+    thumbnail: "https://images.unsplash.com/photo-1753161024820-a10728a1eb80?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Woman on a phone call browsing a clothes rail in a shop",
+
+    sections: [
+      {
+        id: "why-cod-matters",
+        heading: "Why COD is worth keeping",
+        paragraphs: [
+          "When buyers are nervous about online shopping fraud, paying on delivery lets them see the product first. For new stores, this can be the difference between a sale and an abandoned cart. It is also common among first-time buyers who do not yet have a reason to trust you.",
+        ],
+      },
+      {
+        id: "confirm-before-dispatch",
+        heading: "Confirm every order before it leaves",
+        paragraphs: [
+          "A WhatsApp message or short call before dispatch confirms the buyer's name, location and that they are expecting the order. Orders that never reply are the ones most likely to be refused, so hold them. This one step removes many fake orders, because pranksters do not usually bother to answer.",
+        ],
+        infographic: {"kind":"steps","title":"A cheap order-check routine","items":[{"label":"Order placed","detail":"Capture name, phone, exact location and landmark."},{"label":"Confirm on WhatsApp","detail":"Ask them to reply with a yes and a delivery time."},{"label":"Hold unconfirmed orders","detail":"Do not dispatch until they reply."},{"label":"Dispatch with clear terms","detail":"Tell them the total and how to pay."},{"label":"Record the outcome","detail":"Delivered, refused or unreachable."}]},
+      },
+      {
+        id: "other-options",
+        heading: "Options for higher-risk orders",
+        paragraphs: [
+          "For expensive items or areas with a history of refused parcels, ask for a small M-Pesa deposit, with the balance on delivery. Or offer a discount for paying first. Explain it honestly: the deposit covers your delivery cost if the order is not collected. My Shopify M-Pesa payments guide covers how to set up the payment side.",
+        ],
+      },
+      {
+        id: "count-delivered",
+        heading: "Count delivered orders, not placed orders",
+        paragraphs: [
+          "If 100 orders come in and 70 are delivered, your ad cost per delivered order is higher than your dashboard shows. Track the delivery rate by campaign and by area. Some audiences or products may bring more refused orders than others, and that changes which ads deserve more budget.",
+        ],
+      },
+      {
+        id: "courier-terms",
+        heading: "Agree failed-delivery terms with your courier",
+        paragraphs: [
+          "Know what you are charged when a delivery fails, and ask for the reason. A clear arrangement with a few reliable couriers, plus customers who have confirmed, brings the cost of refused parcels down. My guide to Shopify shipping and delivery in Kenya has more on setting this up.",
+        ],
+        callout: "Keep COD, but only dispatch orders someone has confirmed. Measure delivered orders, not just placed ones.",
+      },
+    ],
+  },
+  {
+    slug: "customer-reviews-photos-free-ugc-online-store-kenya-2026",
+    category: "E-commerce",
+    title: "Customer Reviews and Photos: The UGC You Don't Have to Pay For",
+    excerpt: "Your own customers already make the content that builds trust. Most stores just never ask for it.",
+    date: "2026-11-23",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Customer Reviews and Photos: Free UGC for Your Online Store",
+    metaDescription: "How Kenyan online stores can collect real customer reviews and photos, ask for permission, show them on product pages and use them in ads, without paying for UGC first.",
+    intro: "Paid UGC has its place, but your own customers have already made the most convincing content you could ask for: a delivered parcel, a photo of the product in use and a message saying it arrived. In a market where many shoppers fear scams, that kind of proof does a lot of selling. It costs a message to ask for, and a little organisation to use well.",
+    thumbnail: "https://images.unsplash.com/photo-1753161021289-1373415244b1?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Two women with shopping bags looking at their phones in a clothing shop",
+
+    sections: [
+      {
+        id: "ask-at-the-right-time",
+        heading: "Ask when they are happiest, a few days after delivery",
+        paragraphs: [
+          "The best moment is after the product has arrived and been used, not the same afternoon. A short WhatsApp message works well: 'Hi Brian, how are you finding the sneakers? If you are happy, would you share a photo and a line or two? It really helps other buyers.' Make it easy to reply with one tap or one photo.",
+        ],
+      },
+      {
+        id: "be-fair-about-incentives",
+        heading: "Reward feedback, not good feedback",
+        paragraphs: [
+          "A small thank-you, such as a discount on the next order, is fine when it is offered for sharing an honest opinion, whatever it is. Tying a reward to a five-star rating pushes reviews towards the fake and will cost you credibility if people notice. Do not write reviews yourself or ask friends to post them.",
+        ],
+      },
+      {
+        id: "get-permission",
+        heading: "Get permission before you reuse a photo or a face",
+        paragraphs: [
+          "A customer's photo, face or name belongs to them. Ask in writing before you use it on your site or in ads, say where it will appear, and keep their reply. Under Kenya's Data Protection Act, personal data needs a proper basis for use, and consent is the clearest one for marketing. My guide to the Data Protection Act and marketing covers the basics.",
+        ],
+      },
+      {
+        id: "where-to-use-it",
+        heading: "Put it where buyers are deciding",
+        paragraphs: [
+          "Show reviews and photos on the product page, close to the price and the buy button. Use the best in ads and in your WhatsApp catalogue. A store with a few dozen genuine, recent reviews will often outsell a better-designed store with none, because the reviews answer the buyer's unspoken question: is this real?",
+        ],
+        infographic: {"kind":"steps","title":"A simple review routine","items":[{"label":"Deliver","detail":"Confirm the parcel arrived."},{"label":"Wait a few days","detail":"Let them use it."},{"label":"Ask on WhatsApp","detail":"One easy message, one easy reply."},{"label":"Request permission","detail":"Say where you may use it."},{"label":"Publish and reply","detail":"Show it, and answer every review."}]},
+      },
+      {
+        id: "paid-ugc-later",
+        heading: "Then add paid UGC when you have a system",
+        paragraphs: [
+          "Customer content builds the proof. Paid creators add fresh angles for ads once your tracking and account are working, which is the order I recommend in my piece on why UGC is not a strategy by itself. Use what customers say to brief those creators, because it tells you what matters to buyers in their own words.",
+        ],
+        callout: "Your best UGC is already in your WhatsApp inbox. Ask for it, get permission and put it on the page where people decide.",
+      },
+    ],
+  },
+  {
+    slug: "where-to-send-ad-traffic-product-page-collection-whatsapp-kenya-2026",
+    category: "E-commerce",
+    title: "Where Should Your Ads Send People: Product Page, Collection or WhatsApp?",
+    excerpt: "The ad is only half the journey. Choosing the wrong landing spot quietly wastes the click you paid for.",
+    date: "2026-11-24",
+    dateLabel: "November 2026",
+    readTime: "5 min read",
+    metaTitle: "Where to Send Ad Traffic: Product Page, Collection or WhatsApp",
+    metaDescription: "How Kenyan online stores can choose where ads should land: a product page, a collection page or a WhatsApp chat, with a simple way to decide and test.",
+    intro: "A shopper clicks your ad and lands somewhere. Where that somewhere is changes how many of them buy. A single product ad that drops people on a busy homepage makes them hunt, while a high-trust product sent to a page with no way to ask a question loses the buyers who needed a person to talk to. There is no single right answer, but there is a good way to decide.",
+    thumbnail: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Person holding a smartphone while shopping online, with packages nearby",
+
+    sections: [
+      {
+        id: "three-options",
+        heading: "Three places an ad can send someone",
+        paragraphs: [
+          "Each fits a different kind of product and buyer.",
+        ],
+        infographic: {"kind":"compare","title":"Choosing a landing spot","columns":[{"heading":"Product page","tone":"good","points":["One product, one clear offer","Lower price, easy to decide","Needs good photos, price, delivery and reviews"]},{"heading":"Collection page","tone":"neutral","points":["Several similar products","Buyer wants to compare","Needs easy filters and fast loading on mobile"]},{"heading":"WhatsApp chat","tone":"neutral","points":["Higher price or needs advice","Buyer wants to ask first","Needs fast replies and a clear flow"]}]},
+      },
+      {
+        id: "product-page",
+        heading: "Send single-product ads to that product",
+        paragraphs: [
+          "If the ad shows one item, the next screen should show the same item, with the same photo and price. Mismatch creates doubt. Check that the page loads quickly on a phone, shows the price and delivery cost without scrolling too far, and offers M-Pesa clearly. My piece on why Shopify traffic arrives and does not sell goes through what a product page needs.",
+        ],
+      },
+      {
+        id: "collection-page",
+        heading: "Use a collection page when the choice is the point",
+        paragraphs: [
+          "A promotion such as a sale on a category suits a collection page, as long as it is tidy. Sort it so the best sellers are at the top, keep the images consistent and avoid dumping the whole catalogue on the shopper.",
+        ],
+      },
+      {
+        id: "whatsapp",
+        heading: "Use WhatsApp when the buyer needs a person",
+        paragraphs: [
+          "For items where a buyer wants advice, like skincare, furniture or electronics, a click-to-WhatsApp ad can beat a page, because it starts the conversation they were going to want anyway. The price is that every chat needs a quick reply. My click-to-WhatsApp ads guide explains how to set one up and what to track.",
+        ],
+      },
+      {
+        id: "test-it",
+        heading: "Test, do not guess",
+        paragraphs: [
+          "Run the same ad to two destinations for the same budget and period, and compare cost per delivered order, not clicks. I do not have a general rule for which wins in Kenya, because it depends on the product, the price and how fast you reply. Your own numbers are the answer.",
+        ],
+        callout: "Send the click to the place where the shopper can decide fastest. For some products that is a page, and for others it is a person.",
+      },
+    ],
+  },
+  {
+    slug: "first-100-orders-new-online-store-kenya-2026",
+    category: "E-commerce",
+    title: "Getting Your First 100 Orders: A Plan for a New Kenyan Online Store",
+    excerpt: "A new store has no reviews, no audience and little money. Here is the order of work that gets to the first hundred orders without wasting the budget.",
+    date: "2026-11-24",
+    dateLabel: "November 2026",
+    readTime: "6 min read",
+    metaTitle: "Your First 100 Orders: A Plan for a New Kenyan Online Store",
+    metaDescription: "A step-by-step plan for a new Kenyan online store to reach its first 100 orders: checkout testing, tracking, your own network, a small ads test, reviews and retargeting.",
+    intro: "A brand-new store has the hardest job: strangers must trust it with their money. The temptation is to pour cash into ads on day one. A better path is to make buying work, win a few trusted orders from people close to you, and only then spend on ads to find more of the same. This plan is general, so adjust it to your product, and treat the order of steps as more important than the dates.",
+    thumbnail: "https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1600&auto=format&fit=crop",
+    thumbnailAlt: "Shopping bags and gift boxes arranged on a table",
+
+    sections: [
+      {
+        id: "the-plan",
+        heading: "The plan at a glance",
+        paragraphs: [
+          "Each stage prepares the next. Skipping ahead to ads usually just pays for traffic to a store that is not ready.",
+        ],
+        infographic: {"kind":"steps","title":"From zero to 100 orders","items":[{"label":"Make buying work","detail":"Test M-Pesa, cash on delivery and the full order process yourself."},{"label":"Set up tracking","detail":"So every order is counted against its source."},{"label":"Win the first orders from your network","detail":"Friends, family, WhatsApp status and groups, with real photos."},{"label":"Collect proof","detail":"Ask for honest reviews and photos, with permission."},{"label":"Run a small ads test","detail":"One product, one offer, a fixed small budget."},{"label":"Retarget and reorder","detail":"Bring back visitors and first buyers."}]},
+      },
+      {
+        id: "before-ads",
+        heading: "Before any ads: make buying painless",
+        paragraphs: [
+          "Place a real order yourself on a phone. Is M-Pesa clear? Is the delivery cost and time visible before checkout? How many steps does it take? Fix whatever slows you down, because a leaky checkout wastes every shilling you spend later. My Shopify store launch checklist covers the details if that is your platform.",
+        ],
+      },
+      {
+        id: "first-orders",
+        heading: "Win the first orders the cheap way",
+        paragraphs: [
+          "Tell people you know, post on WhatsApp status, and share in groups where it is welcome, with clear photos and prices. Aim for 10 to 20 genuine orders. Treat them as practice for delivery, packaging and customer service, and as your first reviews. Reply quickly and deliver on time, because those first customers become your proof.",
+        ],
+      },
+      {
+        id: "small-test",
+        heading: "Then run a small, honest ad test",
+        paragraphs: [
+          "Pick one product and one offer, and put a modest, fixed budget behind it. My guide to a first Meta ads test of KES 10,000 shows how to run it and what to look for. Judge it by cost per delivered order. If it does not work, you have lost a small amount and learned something, and you can change the product page, the offer or the creative before spending more.",
+        ],
+      },
+      {
+        id: "retarget-and-reorder",
+        heading: "Bring people back",
+        paragraphs: [
+          "Most visitors do not buy the first time. A small retargeting campaign aimed at people who viewed a product or started checkout, and a WhatsApp message to past buyers, usually costs less per order than finding new people. Use what you learn to decide what to scale.",
+          "There is no guarantee of 100 orders in a set time. It depends on your product, price, trust and budget. The plan simply puts the work in the order that wastes the least.",
+        ],
+        callout: "Get buying to work, win trusted orders, then buy traffic. In that order, the ads have something to amplify.",
+      },
+    ],
+  },
 ];
 
 export const getPostBySlug = (slug?: string) =>

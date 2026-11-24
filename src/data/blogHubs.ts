@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, Magnet, MapPin, Share2, ShoppingBag, Tag, Target, Video } from "lucide-react";
+import { BarChart3, Building2, ClipboardList, Magnet, MapPin, Share2, ShoppingBag, ShoppingCart, Sparkles, Tag, Target, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { blogSummaries as blogPosts, type BlogSummary as BlogPost } from "@/data/blogSummaries";
 import { getServicePageBySlug } from "@/data/servicePages";
@@ -79,6 +79,7 @@ export const blogHubs: BlogHub[] = [
       "These are the pieces I point clients to most often before we launch anything on Meta — what to spend, what to test, and what to stop doing.",
     ],
     postSlugs: [
+      "ugc-isnt-a-strategy-media-buyer-saves-money-kenya-2026",
       "meta-ad-library-competitor-ads-kenya-2026",
       "first-meta-ads-test-kes-10000-kenya-2026",
       "when-to-increase-meta-ads-budget-kenya",
@@ -323,6 +324,7 @@ export const blogHubs: BlogHub[] = [
       "Here is how I think about platform choice, what a campaign that reached four million views actually looked like, and where the sale eventually closes.",
     ],
     postSlugs: [
+      "ugc-isnt-a-strategy-media-buyer-saves-money-kenya-2026",
       "why-instagram-followers-dont-buy-kenya-2026",
       "fake-followers-bought-likes-cost-kenya-2026",
       "repeatable-short-video-series-business-kenya",
@@ -410,6 +412,139 @@ export const blogHubs: BlogHub[] = [
     metaTitle: "Digital Marketing Case Studies — Kenyan Campaigns and Results",
     metaDescription:
       "Campaign breakdowns from Kenyan brands: 10x qualified leads, 4 million TikTok views, hyper-local county campaigns and national press coverage.",
+  },
+  {
+    slug: "skincare-and-beauty",
+    name: "Skincare & Beauty",
+    icon: Sparkles,
+    tagline: "Trust, claims, WhatsApp consultations and repeat purchase for skincare brands.",
+    intro: [
+      "Skincare is bought on trust. Buyers worry about fake products, they want advice before they pay, and the brands that grow are the ones that bring customers back when the bottle runs out. Clicks alone do not do any of that.",
+      "These guides cover what you can say in ads, how to sell on WhatsApp, which offers earned their budget in a real beauty retailer's account, and how to build proof buyers believe.",
+    ],
+    postSlugs: [
+      "digital-marketing-for-skincare-brands-kenya-2026",
+      "what-you-can-and-cant-say-in-skincare-ads-kenya-2026",
+      "selling-skincare-on-whatsapp-consultations-kenya-2026",
+      "skincare-ad-creative-what-to-show-kenya-2026",
+      "launching-a-new-skincare-product-kenya-2026",
+      "skincare-repeat-customers-replenishment-kenya-2026",
+      "skincare-trust-fake-products-reviews-kenya-2026",
+      "skincare-offers-bundles-restocks-product-days-kenya-2026",
+      "meta-ads-turnaround-case-study-kenya-2026",
+      "meta-sales-campaign-types-ranked-case-study-2026",
+      "seven-lessons-two-platforms-one-retailer-case-study-2026",
+      "ugc-isnt-a-strategy-media-buyer-saves-money-kenya-2026",
+      "working-with-creators-influencers-kenya-2026",
+      "look-trustworthy-online-scam-fears-kenya-2026",
+      "digital-marketing-for-salons-and-spas-kenya-2026",
+    ],
+    service: {
+      name: "Meta Ads Management",
+      price: "From KES 40,000/month",
+      blurb:
+        "Campaign strategy and setup, audience research, creative direction, weekly optimization and monthly reporting.",
+      href: "/agency/meta-ads-management",
+      pageSlug: "meta-ads-management",
+    },
+    cta: {
+      heading: "Selling skincare and not sure where the money is going?",
+      body:
+        "Book a free 30-minute call. Bring your ad account and your WhatsApp chats, and I'll tell you plainly where the leaks are.",
+      label: "Book a Skincare Strategy Call",
+      href: CALENDLY_URL,
+      external: true,
+    },
+    metaTitle: "Skincare Marketing in Kenya: Ads, WhatsApp, Trust and Repeat Sales",
+    metaDescription:
+      "Marketing guides for Kenyan skincare and beauty brands: safe ad claims, WhatsApp consultations, offers that sold, repeat purchase and building trust with buyers.",
+  },
+  {
+    slug: "real-estate",
+    name: "Real Estate",
+    icon: Building2,
+    tagline: "Property ads, site visits and trust for developers and agents.",
+    intro: [
+      "Property is a considered purchase, and most of the money is lost between the enquiry and the site visit. A cheap message on the dashboard says very little about whether a buyer is coming.",
+      "These guides cover running Meta ads for property, replying fast on WhatsApp, marketing off-plan projects, local search and reaching buyers abroad.",
+    ],
+    postSlugs: [
+      "digital-marketing-for-real-estate-kenya-2027",
+      "meta-ads-for-property-developers-kenya-2026",
+      "property-enquiry-to-site-visit-whatsapp-kenya-2026",
+      "property-cost-per-site-visit-not-cost-per-lead-kenya-2026",
+      "property-leads-lost-in-the-inbox-case-study-2026",
+      "off-plan-property-marketing-trust-kenya-2026",
+      "selling-property-to-kenyan-diaspora-marketing-2026",
+      "property-seo-neighbourhood-pages-nairobi-2026",
+      "lead-qualification-questions-whatsapp-kenya-2026",
+      "whatsapp-lead-follow-up-system-kenya-2026",
+      "reduce-appointment-no-shows-leads-kenya",
+      "location-pages-seo-nairobi-2026",
+    ],
+    service: {
+      name: "GROWTH Retainer — Lead Generation",
+      price: "From KES 50,000/month",
+      blurb:
+        "Two platforms managed end to end: full campaign management, creative direction, weekly optimization, bi-weekly reporting and WhatsApp support.",
+      href: "/agency/services",
+      pageSlug: "lead-generation",
+    },
+    cta: {
+      heading: "Getting enquiries but few site visits?",
+      body:
+        "Bring your ad numbers and a few real chats. We'll find where the buyers are dropping out.",
+      label: "Book a Property Marketing Call",
+      href: CALENDLY_URL,
+      external: true,
+    },
+    metaTitle: "Real Estate Marketing in Kenya: Property Ads, Site Visits and Trust",
+    metaDescription:
+      "Marketing guides for Kenyan developers and agents: Meta ads for property, WhatsApp site-visit booking, off-plan trust, neighbourhood SEO and diaspora buyers.",
+  },
+  {
+    slug: "ecommerce-growth",
+    name: "E-commerce Growth",
+    icon: ShoppingCart,
+    tagline: "Profit, delivery, reviews and where to send your ad traffic.",
+    intro: [
+      "Most online stores in Kenya do not have a traffic problem. They have a gap between the click and the delivered, paid order, and the cost of closing it is mostly in checkout, trust and delivery.",
+      "These guides cover working out profit rather than ROAS, handling cash on delivery, collecting reviews, choosing a landing page and getting a new store to its first 100 orders.",
+    ],
+    postSlugs: [
+      "digital-marketing-for-ecommerce-kenya-2027",
+      "roas-is-not-profit-kenyan-online-stores-track-2026",
+      "cash-on-delivery-vs-pay-first-fake-orders-kenya-2026",
+      "customer-reviews-photos-free-ugc-online-store-kenya-2026",
+      "where-to-send-ad-traffic-product-page-collection-whatsapp-kenya-2026",
+      "first-100-orders-new-online-store-kenya-2026",
+      "ugc-isnt-a-strategy-media-buyer-saves-money-kenya-2026",
+      "shopify-traffic-no-sales-kenya",
+      "shopify-mpesa-payments-kenya",
+      "shopify-abandoned-checkout-recovery",
+      "meta-retargeting-small-budget-kenya-2026",
+      "google-shopping-ads-merchant-center-kenya-2026",
+      "seven-lessons-two-platforms-one-retailer-case-study-2026",
+    ],
+    service: {
+      name: "Meta Ads Management",
+      price: "From KES 40,000/month",
+      blurb:
+        "Campaign strategy and setup, audience research, creative direction, weekly optimization and monthly reporting.",
+      href: "/agency/meta-ads-management",
+      pageSlug: "meta-ads-management",
+    },
+    cta: {
+      heading: "Orders coming in, but not much profit?",
+      body:
+        "Book a free call with your ad numbers and your delivery figures. We'll work out your break-even and where the money is leaking.",
+      label: "Book an E-commerce Strategy Call",
+      href: CALENDLY_URL,
+      external: true,
+    },
+    metaTitle: "E-commerce Marketing in Kenya: Profit, Delivery, Reviews and Ads",
+    metaDescription:
+      "E-commerce guides for Kenyan online stores: break-even ROAS, cash on delivery, customer reviews, landing pages for ads and a plan for your first 100 orders.",
   },
 ];
 

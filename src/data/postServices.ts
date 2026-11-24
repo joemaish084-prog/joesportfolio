@@ -12,6 +12,16 @@ import { shopifyGuideSlugs } from "@/data/shopify";
 const SERVICE_POSTS: Record<string, string[]> = {
   "shopify-services": shopifyGuideSlugs,
   "meta-ads-management": [
+    "ugc-isnt-a-strategy-media-buyer-saves-money-kenya-2026",
+    "digital-marketing-for-skincare-brands-kenya-2026",
+    "what-you-can-and-cant-say-in-skincare-ads-kenya-2026",
+    "skincare-ad-creative-what-to-show-kenya-2026",
+    "launching-a-new-skincare-product-kenya-2026",
+    "skincare-trust-fake-products-reviews-kenya-2026",
+    "skincare-offers-bundles-restocks-product-days-kenya-2026",
+    "meta-ads-for-property-developers-kenya-2026",
+    "roas-is-not-profit-kenyan-online-stores-track-2026",
+    "where-to-send-ad-traffic-product-page-collection-whatsapp-kenya-2026",
     "first-meta-ads-test-kes-10000-kenya-2026",
     "meta-ad-library-competitor-ads-kenya-2026",
     "when-to-increase-meta-ads-budget-kenya",
@@ -54,6 +64,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "youtube-ads-for-kenyan-businesses-2026",
   ],
   "seo-services-nairobi": [
+    "property-seo-neighbourhood-pages-nairobi-2026",
     "keyword-stuffed-business-name-google-profile-kenya-2026",
     "google-your-business-name-what-customers-see-kenya-2026",
     "google-business-profile-service-area-nairobi",
@@ -69,6 +80,7 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "location-pages-seo-nairobi-2026",
   ],
   "social-media-management": [
+    "customer-reviews-photos-free-ugc-online-store-kenya-2026",
     "fake-followers-bought-likes-cost-kenya-2026",
     "why-instagram-followers-dont-buy-kenya-2026",
     "repeatable-short-video-series-business-kenya",
@@ -94,6 +106,12 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "video-hooks-first-three-seconds-kenya-2026",
   ],
   "lead-generation": [
+    "selling-skincare-on-whatsapp-consultations-kenya-2026",
+    "skincare-repeat-customers-replenishment-kenya-2026",
+    "property-enquiry-to-site-visit-whatsapp-kenya-2026",
+    "property-cost-per-site-visit-not-cost-per-lead-kenya-2026",
+    "off-plan-property-marketing-trust-kenya-2026",
+    "selling-property-to-kenyan-diaspora-marketing-2026",
     "look-trustworthy-online-scam-fears-kenya-2026",
     "reduce-appointment-no-shows-leads-kenya",
     "why-tech-builders-struggle-to-market-and-sell-kenya-2026",
@@ -133,6 +151,8 @@ const SERVICE_POSTS: Record<string, string[]> = {
     "brand-strategy-before-running-ads-kenya-2026",
   ],
   "digital-marketing-kenya": [
+    "cash-on-delivery-vs-pay-first-fake-orders-kenya-2026",
+    "first-100-orders-new-online-store-kenya-2026",
     "what-mama-mboga-teaches-about-marketing-kenya-2026",
     "google-ads-case-study-weakest-campaign-kenya",
     "seven-lessons-two-platforms-one-retailer-case-study-2026",
