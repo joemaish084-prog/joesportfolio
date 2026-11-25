@@ -7,7 +7,7 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { ShineBorder } from "@/components/ui/shine-border";
 
 const proofPoints = [
-  { value: 500, prefix: "KES ", suffix: "K+", label: "Ad budgets managed" },
+  { value: 2, prefix: "KES ", suffix: "M+", label: "Ad budgets managed" },
   { value: 20, suffix: "+", label: "Campaigns launched" },
   { value: 3, suffix: "+", label: "Years experience" },
 ];

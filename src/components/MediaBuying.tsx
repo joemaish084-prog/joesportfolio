@@ -7,7 +7,7 @@ import { ScrollReveal } from "./ScrollReveal";
 import { SectionLabel } from "@/components/SectionLabel";
 
 const stats = [
-  { value: 500, suffix: "K+", prefix: "KES ", label: "Monthly Ad Budget Managed" },
+  { value: 2, suffix: "M+", prefix: "KES ", label: "Monthly Ad Budget Managed" },
   { value: 4, suffix: "+", label: "Platforms Managed Simultaneously" },
   { value: 3, suffix: "x+", label: "Average ROAS Delivered" },
   { value: 20, suffix: "+", label: "Campaigns Launched" },
@@ -111,7 +111,7 @@ export function MediaBuying() {
               Media Buying & <span className="text-gradient">Paid Advertising</span>
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground">
-              I manage <strong className="text-foreground">KES 500,000+ in monthly ad spend</strong> across Meta, Google, TikTok and other platforms. From audience research and creative testing to tracking and reporting, I help Kenyan brands turn their advertising budget into leads and sales.
+              I manage <strong className="text-foreground">KES 2M+ in monthly ad spend</strong> across Meta, Google, TikTok and other platforms. From audience research and creative testing to tracking and reporting, I help Kenyan brands turn their advertising budget into leads and sales.
             </p>
           </div>
         </ScrollReveal>

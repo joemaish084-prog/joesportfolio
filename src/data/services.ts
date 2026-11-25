@@ -436,13 +436,8 @@ export interface TrustNumber {
   label: string;
 }
 
-/**
- * Hero numbers. Note for Joseph: the iClear line (see `proofItems`) says
- * "KES 1.2M+ ad spend managed", which does not match "KES 500K+ ad budgets
- * managed" here. Both are published today. Confirm which is right (brief Q3).
- */
 export const trustNumbers: TrustNumber[] = [
-  { value: 500, prefix: "KES ", suffix: "K+", label: "Ad budgets managed" },
+  { value: 2, prefix: "KES ", suffix: "M+", label: "Ad budgets managed" },
   { value: 20, prefix: "", suffix: "+", label: "Campaigns launched" },
   { value: 3, prefix: "", suffix: "+", label: "Years experience" },
 ];

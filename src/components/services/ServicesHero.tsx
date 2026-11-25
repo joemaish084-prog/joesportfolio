@@ -130,7 +130,7 @@ export function ServicesHero() {
                 <ArrowUpRight className="absolute right-4 top-4 h-5 w-5 transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5" aria-hidden />
                 <p className="font-display text-5xl font-bold leading-none tracking-tight tabular-nums sm:text-6xl">20+</p>
                 <p className="mt-2 text-base font-semibold sm:text-lg">Campaigns launched</p>
-                <p className="mt-1 text-xs font-medium opacity-80">KES 500K+ ad budgets managed</p>
+                <p className="mt-1 text-xs font-medium opacity-80">KES 2M+ ad budgets managed</p>
               </Link>
             </li>
           </ul>

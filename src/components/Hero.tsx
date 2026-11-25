@@ -13,7 +13,7 @@ const appleEase = [0.22, 1, 0.36, 1] as const;
 
 const proofStats = [
   { value: "4M+", label: "TikTok views on a single campaign" },
-  { value: "KES 500K+", label: "Monthly ad budgets managed" },
+  { value: "KES 2M+", label: "Monthly ad budgets managed" },
   { value: "120+", label: "Units sold in one campaign window" },
   { value: "3+", label: "Years in digital marketing" },
 ];
@@ -188,7 +188,7 @@ export function Hero({ archive = false }: { archive?: boolean }) {
             className="mt-10 sm:mt-14 grid grid-cols-[1.2fr_1fr_1fr] gap-x-4 sm:flex sm:flex-wrap sm:gap-x-8 gap-y-3 border-t border-border/60 pt-6"
           >
             {[
-              ["KES 500K+", "Ad budgets managed"],
+              ["KES 2M+", "Ad budgets managed"],
               ["4M+", "TikTok views"],
               ["3+", "Years experience"],
             ].map(([value, label]) => (
