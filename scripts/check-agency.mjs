@@ -35,6 +35,13 @@ const pricing = read("/agency/pricing");
 const results = read("/agency/results");
 const contact = read("/agency/contact");
 const home = read("/");
+const websiteAdsPath = "/agency/website-and-ads";
+assert(links(services).includes(websiteAdsPath), "Services links to the website and ads offer");
+assert(links(pricing).includes(websiteAdsPath), "Pricing links to the website and ads offer");
+assert(sitemap.includes(`<loc>${origin}${websiteAdsPath}</loc>`), "The website and ads offer is in the sitemap");
+const websiteAds = read(websiteAdsPath);
+assert(websiteAds.includes("KSh 480,000") && websiteAds.includes("KSh 260,000"), "Both website and ads packages are prerendered");
+assert(links(websiteAds).includes("/agency/contact?service=website-and-ads#brief"), "The website and ads offer links to the contact brief");
 for (const [key, html] of [["services", services], ["pricing", pricing], ["results", results]]) {
   assert(html.includes(`property="og:image" content="${origin}/og/agency/${key}.png"`), `${key}: unique prerendered share image`);
 }

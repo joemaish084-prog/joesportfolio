@@ -14,6 +14,7 @@ import { ServicesBento } from "./ServicesBento";
 import { ServicesCTA } from "./ServicesCTA";
 import { ServicesFaq } from "./ServicesFaq";
 import { ServicesHero } from "./ServicesHero";
+import { WebsiteAdsOfferLink } from "./WebsiteAdsOfferLink";
 
 /** The /agency/services page: hero, core services and additional services. */
 export function ServicesSection() {
@@ -30,6 +31,7 @@ export function ServicesSection() {
             <p className="max-w-md text-sm text-muted-foreground lg:text-right">{packageFeeNote}</p>
           </div>
 
+          <div className="mb-6"><WebsiteAdsOfferLink /></div>
           <ServicesBento services={bentoServices} />
           <MoreServicesRow items={alsoAvailableServices} />
 

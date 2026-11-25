@@ -17,6 +17,7 @@ import pressDailyNation from "@/assets/press-daily-nation.webp";
 import portrait from "@/assets/joseph-maina-portrait.webp";
 import metaTurnaround from "@/assets/case-covers/meta-ads-turnaround.webp";
 import type { ProofImageSlot } from "./services";
+import { websiteAdsHero, websiteAdsSlug } from "./websiteAds";
 
 /**
  * Real work shown on each service page. Every image is already published
@@ -101,6 +102,7 @@ const stock = {
 export const PROCESS_VISUAL = stock.meeting;
 
 export const serviceVisuals: Record<string, ServiceVisuals> = {
+  [websiteAdsSlug]: { hero: websiteAdsHero, heroLabel: websiteAdsHero.caption },
   "meta-ads-management": {
     included: stock.facebookApp,
     hero: img.filterPromo,

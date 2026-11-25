@@ -20,6 +20,8 @@ import { ServiceGallery, ServiceHeroVisual, ServiceSideImage } from "@/component
 import { PROCESS_VISUAL, getServiceVisuals } from "@/data/serviceVisuals";
 import { localizePrice, useMarket } from "@/lib/market";
 import { ShopifyServiceContent } from "@/components/shopify/ShopifyServiceContent";
+import { WebsiteAdsOffer } from "@/components/services/WebsiteAdsOffer";
+import { websiteAdsSlug } from "@/data/websiteAds";
 import { PairedTitle, TypePairScope } from "@/components/type/TypePair";
 import { SERVICE_TYPE_PAIRS, splitHeadline } from "@/lib/typePairs";
 
@@ -75,6 +77,7 @@ const AgencyService = () => {
 /** Shared by the client route and build-time rendering, so search engines get
  * the same service scope, proof, FAQs and links that visitors see. */
 export function AgencyServiceContent({ page }: { page: ServicePage }) {
+  if (page.slug === websiteAdsSlug) return <WebsiteAdsOffer page={page} />;
   return page.slug === "shopify-services" ? <ShopifyServiceContent page={page} /> : <StandardAgencyServiceContent page={page} />;
 }
 

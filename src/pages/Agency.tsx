@@ -21,6 +21,7 @@ import { AgencyHero } from "@/components/agency/AgencyHero";
 import { AgencyProcess } from "@/components/agency/AgencyProcess";
 import { CustomerJourney } from "@/components/agency/CustomerJourney";
 import { ServicesSection } from "@/components/services/ServicesSection";
+import { WebsiteAdsOfferLink } from "@/components/services/WebsiteAdsOfferLink";
 import { MarketToggle } from "@/components/MarketToggle";
 import { TypePairScope } from "@/components/type/TypePair";
 import { pageTypePair } from "@/lib/typePairs";
@@ -32,6 +33,7 @@ import { agencyPages, type AgencyPageKey } from "@/data/agencyPages";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { caseStudies } from "@/data/caseStudies";
 import { getLiveServicePages } from "@/data/servicePages";
+import { websiteAdsLabel, websiteAdsSlug } from "@/data/websiteAds";
 import {
   CALENDLY_URL, agencyFaqs as faqs, formatKes, getService, packageComparison,
   priceLabel, retainerPackages as retainerPackageData, serviceFeeKes, servicePrice,
@@ -138,6 +140,7 @@ const supportingServices = Object.keys(supportingMeta).map((slug) => {
 // Services linked from pricing and service pages into the WhatsApp contact card.
 const serviceFromLink: Record<string, string> = {
   "shopify-services": "Shopify Store Services",
+  [websiteAdsSlug]: websiteAdsLabel,
   "shopify-create": "Shopify Store Creation",
   "shopify-migrate": "Shopify Migration",
   "shopify-manage": "Shopify Store Management",
@@ -396,6 +399,8 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               ))}
             </div>
           </div>
+
+          <div className="mb-12"><WebsiteAdsOfferLink /></div>
 
           {/* Side-by-side comparison of the packages above */}
           <div className="mb-20">

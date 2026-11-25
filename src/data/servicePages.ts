@@ -1,7 +1,8 @@
-import { BarChart3, ClipboardList, Magnet, MapPin, Share2, Target, TrendingUp } from "lucide-react";
+import { BarChart3, ClipboardList, Magnet, MapPin, PanelsTopLeft, Share2, Target, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { shopifyServicePage } from "@/data/shopify";
 import { CALENDLY_URL, getPackage, onboardingSteps, priceLabel, servicePrice } from "@/data/services";
+import { websiteAdsDescription, websiteAdsLabel, websiteAdsSlug } from "@/data/websiteAds";
 
 /**
  * "Money pages" — one focused page per search intent, so the agency section does
@@ -111,6 +112,34 @@ const SHARED_FAQS: ServiceFaq[] = [
 
 export const servicePages: ServicePage[] = [
   shopifyServicePage,
+  {
+    slug: websiteAdsSlug,
+    icon: PanelsTopLeft,
+    name: "Website + 90-Day Ads for Kenyan Businesses",
+    navLabel: websiteAdsLabel,
+    topic: "website and ads packages",
+    updated: "2026-11-25",
+    metaTitle: "Website + 90-Day Ads in Kenya | Nuvana × Joseph Maina Marketing",
+    metaDescription: websiteAdsDescription,
+    standfirst: websiteAdsDescription,
+    price: { amount: "Custom quote", note: "Website build and three months of ad management. Advertising spend is paid to the platforms." },
+    whoFor: ["Kenyan retailers and service businesses"],
+    included: [
+      { title: "Website build", desc: "Nuvana builds your website or online shop." },
+      { title: "Three months of ads", desc: "Joseph Maina Marketing runs and tracks your campaigns." },
+    ],
+    faqs: [],
+    hubSlug: "lead-generation",
+    relatedPosts: [],
+    cta: {
+      heading: "Get a custom quote",
+      body: "Tell us what you sell and how customers place orders or enquire.",
+      label: "Get a custom quote",
+      href: `/agency/contact?service=${websiteAdsSlug}#brief`,
+    },
+    draft: false,
+    reviewNotes: [],
+  },
   {
     slug: "digital-marketing-kenya",
     icon: TrendingUp,
