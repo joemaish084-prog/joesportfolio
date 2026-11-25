@@ -67,6 +67,12 @@ export interface Service {
   categories: ServiceCategory[];
   /** Outcome line. Restates copy already on the site. */
   outcome: string;
+  /**
+   * Bento headline in the buyer's own words: the problem they arrive with.
+   * Wrap the stinger in *asterisks*; it renders in the accent colour.
+   * Wording came from a simulated buyer panel (founder/panel), not real quotes.
+   */
+  hook?: string;
   /** Who it is for. `null` = TODO(joseph): no published line exists. */
   whoFor: string | null;
   price: Price;
@@ -94,12 +100,13 @@ export const services: Service[] = [
     tileName: "Meta Ads",
     categories: ["paid"],
     outcome: "Create demand with better creative, sharper targeting, and continuous testing.",
+    hook: "Boosting posts, getting likes, *still no orders?*",
     whoFor: "Consumer brands, beauty and aesthetics, restaurants, e-commerce and local businesses",
     price: { kes: 40000, unit: "month", from: true },
     scope: "Campaign strategy and setup, Audience research, Creative direction, Weekly optimization, Monthly reporting",
     pagePath: "/agency/meta-ads-management",
     // Published case study. Client not named. Brief question Q1: show it on the tile.
-    proof: { line: "KES 5.33M attributed revenue at 41.3x ROAS (client not named)", source: "meta-ads-turnaround" },
+    proof: { line: "KES 5.33M in sales tracked to the ads: KES 41 back for every KES 1 spent (client kept private)", source: "meta-ads-turnaround" },
     imageAlt: "Laptop showing a bar chart and a rising trend line beside printed reports", // Pexels 5466250
     fallbackPath: "/agency/meta-ads-management",
     cta: "Explore Meta Ads",
@@ -112,11 +119,12 @@ export const services: Service[] = [
     tileName: "Google Ads",
     categories: ["paid"],
     outcome: "Capture demand when people are already searching for what you sell.",
+    hook: "People are searching for you *right now.* Do they find you?",
     whoFor: "Service businesses, professional practices, repairs and local services, and B2B companies",
     price: { kes: 45000, unit: "month", from: true },
     scope: "Search, Display and YouTube campaigns, Keyword research and strategy, Bid management, Conversion tracking, Monthly reporting",
     pagePath: "/agency/google-ads-management",
-    proof: { line: "KES 1.94M attributed revenue at 15.5x ROAS (client not named)", source: "google-ads-launch" },
+    proof: { line: "KES 1.94M in sales tracked to the ads: KES 15 back for every KES 1 spent (client kept private)", source: "google-ads-launch" },
     imageAlt: "Person using Google Search on a laptop", // Pexels 7350921
     fallbackPath: "/agency/google-ads-management",
     cta: "Explore Google Ads",
@@ -130,6 +138,7 @@ export const services: Service[] = [
     categories: ["paid", "social"],
     // TikTok has no outcome line of its own on the site; this restates its feature list.
     outcome: "Short-form video campaigns with creative direction, audience targeting and weekly optimization.",
+    hook: "Your customers are on TikTok. *Your ads aren't.*",
     whoFor: null, // TODO(joseph): who is TikTok Ads for? Nothing published.
     price: { kes: 40000, unit: "month", from: true },
     scope: "Campaign strategy, Creative direction, Audience targeting, Weekly optimization, Performance reporting",
@@ -147,6 +156,7 @@ export const services: Service[] = [
     tileName: "SEO",
     categories: ["seo"],
     outcome: "Build long-term visibility for the searches your customers make.",
+    hook: "Show up when they Google it, *without paying per click.*",
     whoFor: "Businesses that want leads that do not stop when the ad budget does",
     price: { kes: 45000, unit: "month", from: true },
     scope: "On-page, technical and local SEO.",
@@ -164,6 +174,7 @@ export const services: Service[] = [
     tileName: "Social Media",
     categories: ["social"],
     outcome: "Create a consistent presence with content people actually stop to notice.",
+    hook: "Posting every day, but *nobody DMs to buy?*",
     whoFor: "Brands getting reach but few enquiries from social",
     price: { kes: 40000, unit: "month", from: true },
     scope: "Content, scheduling and community management.",
@@ -181,6 +192,7 @@ export const services: Service[] = [
     tileName: "Lead Generation",
     categories: ["paid"],
     outcome: "Campaigns, landing pages and lead tracking that turn clicks into enquiries.",
+    hook: "Plenty of clicks, *hardly any enquiries?*",
     whoFor: "Businesses getting clicks and impressions but few real enquiries",
     price: { kes: 50000, unit: "month", from: true },
     scope: "Landing pages and campaign management across two platforms. Your team follows up with the leads.",
@@ -199,6 +211,7 @@ export const services: Service[] = [
     tileName: "Shopify Stores",
     categories: ["stores"],
     outcome: "Store creation and migration per project; management scoped monthly.",
+    hook: "Selling in the DMs? *Give them a checkout.*",
     whoFor: "Businesses launching a first online store, moving from WooCommerce, or improving an existing Shopify store",
     price: { label: "Quoted for your scope" },
     scope: "Store creation and migration per project; management scoped monthly. Shopify and third-party costs are separate.",
@@ -215,7 +228,8 @@ export const services: Service[] = [
     name: "Digital Marketing Audit",
     tileName: "Free Audit",
     categories: ["seo"],
-    outcome: "Find what is wasting time or budget before you spend more.",
+    outcome: "I go through your ads and pages myself and show you what is wasting money. Written findings in 1-2 days, nothing to sign up for.",
+    hook: "Paying for marketing and *not sure it's working?*",
     whoFor: "Businesses paying for marketing and unsure what they are getting",
     price: { label: "Free for now" },
     scope: "Performance review, with findings in a written report or call within 1-2 days.",

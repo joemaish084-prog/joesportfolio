@@ -68,6 +68,39 @@
   text-transform: uppercase;
 }
 
+/* Services grid: section title and tiles speak in the same two voices as the hero.
+   The serif carries the buyer's problem; Inter Tight Black names the service. */
+.services-grid-title { width: 100%; max-width: 46rem; }
+/* The pair scope's h2 rule would otherwise set the grotesk on the serif half. */
+.type-pair .services-grid-title .pair-main {
+  font-family: var(--tp-display), "Instrument Serif", Georgia, serif;
+}
+[data-type-pair="sync"] .services-grid-title .pair-main {
+  font-size: clamp(2.2rem, 8cqi, 3.6rem);
+}
+[data-type-pair="sync"] .services-grid-title .pair-accent {
+  font-size: clamp(2.6rem, 10.5cqi, 4.8rem);
+}
+.svc-kicker {
+  font-family: var(--tp-accent, "Space Grotesk"), "Space Grotesk", system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+/* h3 rules in the pair scope set a lighter weight; the kicker keeps its black. */
+.type-pair h3.svc-kicker { font-family: var(--tp-accent), "Space Grotesk", system-ui, sans-serif; font-weight: 900; }
+.svc-hook {
+  font-family: var(--tp-display, "Instrument Serif"), "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.svc-hook em { font-style: italic; color: hsl(var(--primary)); }
+.light .services-page .svc-hook em { color: hsl(25 100% 33%); }
+.svc-hook-accent em { color: inherit; text-decoration: underline; text-decoration-thickness: 0.06em; text-underline-offset: 0.12em; }
+
 /* Services hero: the closing word takes the brand orange and a drawn underline. */
 .services-hero-swoosh {
   position: relative;

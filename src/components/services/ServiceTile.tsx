@@ -47,6 +47,11 @@ function Price({ service, accent }: { service: Service; accent: boolean }) {
   );
 }
 
+/** "Plain *stinger* plain" -> the starred words in <em>. */
+function Hook({ text }: { text: string }) {
+  return <>{text.split("*").map((part, i) => (i % 2 ? <em key={i}>{part}</em> : part))}</>;
+}
+
 interface ServiceTileProps {
   service: Service;
   size: ServiceTileSize;
@@ -98,16 +103,23 @@ export const ServiceTile = forwardRef<HTMLLIElement, ServiceTileProps>(function 
       <div className={`flex min-w-0 flex-1 flex-col p-4 sm:p-5 ${large ? "lg:p-7" : ""}`}>
         <div className="flex items-center gap-3">
           {accent && <ClipboardList className="h-6 w-6 shrink-0" aria-hidden />}
-          <div className="min-w-0">
-            <p className={`mono-accent text-[11px] font-semibold uppercase tracking-[0.16em] ${accent ? quiet : "text-primary"}`}>
-              {categoryLabel(service)}
-            </p>
-            <h3 className={`mt-1 font-display font-semibold tracking-tight ${large ? "text-2xl sm:text-3xl" : accent ? "text-xl lg:text-2xl" : "text-xl"}`}>
+          <div className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1">
+            {/* The service name, in the pairing's black grotesk. */}
+            <h3 className={`svc-kicker ${large ? "text-xl sm:text-2xl" : "text-lg"} ${accent ? "" : "text-primary"}`}>
               {service.tileName}
             </h3>
+            <span className={`mono-accent text-[11px] font-semibold uppercase tracking-[0.16em] ${quiet}`}>
+              {categoryLabel(service)}
+            </span>
           </div>
         </div>
-        <p className={`mt-3 leading-relaxed ${large ? "max-w-xl text-base" : accent ? "text-sm lg:text-base" : "text-sm"} ${accent ? "" : "text-foreground/90"}`}>
+        {service.hook && (
+          // The buyer's problem, in the pairing's serif. Decorative restatement, so it is a paragraph, not a heading.
+          <p className={`svc-hook mt-3 ${accent ? "svc-hook-accent" : ""} ${large ? "max-w-xl text-[2rem] sm:text-[2.6rem]" : "text-[1.7rem] sm:text-3xl"}`}>
+            <Hook text={service.hook} />
+          </p>
+        )}
+        <p className={`mt-3 leading-relaxed ${large ? "max-w-xl text-base" : "text-sm"} ${accent ? "" : "text-foreground/85"}`}>
           {service.outcome}
         </p>
         {service.whoFor && (

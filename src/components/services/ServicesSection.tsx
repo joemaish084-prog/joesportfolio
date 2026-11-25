@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Calculator } from "lucide-react";
+import { ArrowRight, Calculator, MessageCircle } from "lucide-react";
+import { PairedTitle } from "@/components/type/TypePair";
+import { AUDIT_WHATSAPP } from "@/data/agencyHome";
 import { trackSpotlight } from "@/lib/spotlight";
 import { getLiveServicePages } from "@/data/servicePages";
 import { alsoAvailableServices, bentoServices, packageFeeNote } from "@/data/services";
@@ -26,9 +28,23 @@ export function ServicesSection() {
 
       <section id="services" className="container mx-auto scroll-mt-20 px-4 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-8 flex flex-col gap-3 sm:mb-10 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-            <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">What I can run for you</h2>
-            <p className="max-w-md text-sm text-muted-foreground lg:text-right">{packageFeeNote}</p>
+          <div className="mb-8 flex flex-col gap-5 sm:mb-10 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+            {/* Same two voices as the hero: serif question, black grotesk answer. */}
+            <PairedTitle as="h2" className="services-grid-title lg:flex-1" main="Find the problem you're paying for." accent="I'll fix it myself." />
+            <div className="max-w-md space-y-3 text-sm text-muted-foreground lg:text-right">
+              <p>
+                <span className="font-medium text-foreground">You work directly with me, Joseph.</span>{" "}
+                {packageFeeNote}
+              </p>
+              <a
+                href={AUDIT_WHATSAPP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 font-semibold text-primary hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden /> Not sure which one? WhatsApp me
+              </a>
+            </div>
           </div>
 
           <div className="mb-6"><WebsiteAdsOfferLink /></div>
