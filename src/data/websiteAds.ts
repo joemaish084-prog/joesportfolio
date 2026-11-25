@@ -69,6 +69,26 @@ export const websiteAdsPlans = [
   },
 ] as const;
 
+/** Problems owners describe before they hire us, each paired with what the package changes. */
+export const websiteAdsProblems = [
+  {
+    problem: "Your ads send people to an Instagram page or an old website.",
+    fix: "Ads land on a site built around the offer, with one clear next step: order, book or ask for a quote.",
+  },
+  {
+    problem: "Your web designer and your ads person blame each other.",
+    fix: "Nuvana builds the site and JM runs the ads on one plan, with one goal agreed before anything goes live.",
+  },
+  {
+    problem: "You can’t tell whether the ads bring in customers.",
+    fix: "Tracking is tested before launch. Your report shows enquiries, orders and what each one cost.",
+  },
+  {
+    problem: "Enquiries arrive, then go cold.",
+    fix: "Forms and WhatsApp links reach the right person on your team, and we review which ones became sales.",
+  },
+] as const;
+
 export const websiteAdsExamples = [
   {
     title: "For retailers",
