@@ -42,6 +42,11 @@ assert(sitemap.includes(`<loc>${origin}${websiteAdsPath}</loc>`), "The website a
 const websiteAds = read(websiteAdsPath);
 assert(websiteAds.includes("KSh 480,000") && websiteAds.includes("KSh 260,000"), "Both website and ads packages are prerendered");
 assert(links(websiteAds).includes("/agency/contact?service=website-and-ads#brief"), "The website and ads offer links to the contact brief");
+for (const section of ["payments", "examples", "timeline", "faqs"]) {
+  const id = `website-ads-${section}`;
+  assert(websiteAds.includes(`id="${id}"`) && links(websiteAds).includes(`#${id}`), `The website and ads ${section} section has a working in-page link`);
+}
+assert(websiteAds.includes("KSh 180,000") && websiteAds.includes("KSh 95,000"), "The payment schedule shows each plan’s launch costs");
 for (const [key, html] of [["services", services], ["pricing", pricing], ["results", results]]) {
   assert(html.includes(`property="og:image" content="${origin}/og/agency/${key}.png"`), `${key}: unique prerendered share image`);
 }

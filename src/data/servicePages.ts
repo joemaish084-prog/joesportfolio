@@ -2,7 +2,7 @@ import { BarChart3, ClipboardList, Magnet, MapPin, PanelsTopLeft, Share2, Target
 import type { LucideIcon } from "lucide-react";
 import { shopifyServicePage } from "@/data/shopify";
 import { CALENDLY_URL, getPackage, onboardingSteps, priceLabel, servicePrice } from "@/data/services";
-import { websiteAdsDescription, websiteAdsLabel, websiteAdsSlug } from "@/data/websiteAds";
+import { websiteAdsDescription, websiteAdsFaqs, websiteAdsLabel, websiteAdsSlug } from "@/data/websiteAds";
 
 /**
  * "Money pages" — one focused page per search intent, so the agency section does
@@ -128,7 +128,7 @@ export const servicePages: ServicePage[] = [
       { title: "Website build", desc: "Nuvana builds your website or online shop." },
       { title: "Three months of ads", desc: "Joseph Maina Marketing runs and tracks your campaigns." },
     ],
-    faqs: [],
+    faqs: websiteAdsFaqs,
     hubSlug: "lead-generation",
     relatedPosts: [],
     cta: {
