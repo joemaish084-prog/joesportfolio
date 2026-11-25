@@ -68,6 +68,26 @@ export const shopifyOffers = [
   },
 ] as const;
 
+export const shopifyProof = [
+  { value: "24h", label: "Proposal after your brief" },
+  { value: "1", label: "Person from brief to launch" },
+  { value: "KE + global", label: "Payments and shipping planned for your market" },
+] as const;
+
+export const shopifyProcess = [
+  { step: "01", title: "Brief", body: "You share your store link or idea, product count, the changes you need, and a launch date." },
+  { step: "02", title: "Proposal", body: "You receive the deliverables, costs, and timeline in writing before any work begins." },
+  { step: "03", title: "Build", body: "Design, products, payments, and shipping are set up, with check-ins at agreed milestones." },
+  { step: "04", title: "Launch", body: "Test orders, final checks, and a handover, then ongoing support if you want it." },
+] as const;
+
+export const shopifyCostSplit = {
+  fee: ["Store design and setup", "Product, collection, and navigation work", "Migration mapping and redirects", "Launch checks and handover"],
+  separate: ["Shopify subscription", "Paid themes", "Paid apps", "Transaction fees"],
+} as const;
+
+export const shopifyQuoteChecklist = ["Your store link or idea", "Roughly how many products", "The changes you need", "Your intended launch date"] as const;
+
 export const migrationReasons = [
   "Maintenance takes too much time",
   "Updating the store is difficult",

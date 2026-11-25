@@ -70,7 +70,44 @@
 .shopify-premium .shopify-faq-button svg { flex:0 0 18px; transition:transform 250ms; }
 .shopify-premium .shopify-faq-button[aria-expanded="true"] svg { transform:rotate(45deg); }
 html:not(.js) .shopify-premium [id^="shopify-faq-"][hidden] { display:block; }
-.shopify-premium .shopify-closing { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); align-items:end; gap:2rem; padding-block:clamp(2rem,5vw,4rem); border-top:1px solid var(--commerce-line); }
+.shopify-premium .shopify-closing { position:relative; overflow:hidden; isolation:isolate; display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); align-items:end; gap:2rem; margin-top:clamp(1rem,3vw,2rem); padding:clamp(1.75rem,5vw,4.5rem); border-radius:1.75rem; background:#141412; color:#f3f1e9; }
+.shopify-premium .shopify-closing::before { content:""; position:absolute; z-index:-1; right:-10%; bottom:-60%; width:70%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,hsl(var(--gradient-orange-start)/.45),hsl(var(--gradient-orange-end)/.12) 45%,transparent 70%); filter:blur(10px); }
+.shopify-premium .shopify-closing .text-muted-foreground,.shopify-premium .shopify-closing .shopify-kicker { color:#bdbcb0; }
+/* Featured build */
+.shopify-premium .shopify-work { margin-top:clamp(4rem,7vw,7rem); }
+.shopify-premium .shopify-work-head { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:1.5rem 3rem; margin-bottom:2.5rem; }
+.shopify-premium .shopify-work-details { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:1.5rem; border-block:1px solid var(--commerce-line); }
+.shopify-premium .shopify-work-details > div { padding:1.25rem 1.25rem 1.25rem 0; }
+.shopify-premium .shopify-work-details > div + div { padding-left:1.25rem; border-left:1px solid var(--commerce-line); }
+.shopify-premium .shopify-work-details dt { font-size:.625rem; letter-spacing:.15em; text-transform:uppercase; color:hsl(var(--primary)); }
+.shopify-premium .shopify-work-details dd { margin-top:.4rem; font-family:"Space Grotesk",sans-serif; font-size:1.125rem; letter-spacing:-.03em; }
+/* Hero proof strip */
+.shopify-premium .shopify-proof { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:2.25rem; max-width:31rem; border-top:1px solid var(--commerce-line); }
+.shopify-premium .shopify-proof > div { padding:1rem 1rem 0 0; }
+.shopify-premium .shopify-proof > div + div { padding-left:1rem; border-left:1px solid var(--commerce-line); }
+.shopify-premium .shopify-proof dt { font-family:"Space Grotesk",sans-serif; font-size:1.5rem; font-weight:500; letter-spacing:-.04em; line-height:1.1; }
+.shopify-premium .shopify-proof dd { margin-top:.35rem; font-size:.6875rem; line-height:1.45; color:hsl(var(--muted-foreground)); }
+/* Process */
+.shopify-premium .shopify-process { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1.5rem; margin-top:3rem; }
+.shopify-premium .shopify-process::before { content:""; position:absolute; top:5px; left:0; right:0; height:1px; background:linear-gradient(90deg,hsl(var(--gradient-orange-start)),hsl(var(--gradient-orange-end)) 40%,var(--commerce-line) 100%); }
+.shopify-premium .shopify-process li { position:relative; padding-top:2.25rem; }
+.shopify-premium .shopify-process-dot { position:absolute; top:0; left:0; width:11px; height:11px; border-radius:50%; background:hsl(var(--background)); border:2px solid hsl(var(--primary)); }
+.shopify-premium .shopify-process li:first-child .shopify-process-dot { background:hsl(var(--primary)); }
+.shopify-premium .shopify-process-step { font-size:.625rem; letter-spacing:.15em; color:hsl(var(--primary)); }
+.shopify-premium .shopify-process h3 { margin-top:.6rem; font-family:"Space Grotesk",sans-serif; font-size:clamp(1.5rem,2.2vw,2rem); font-weight:500; letter-spacing:-.05em; }
+.shopify-premium .shopify-process p { margin-top:.6rem; max-width:16rem; font-size:.8125rem; line-height:1.65; color:hsl(var(--muted-foreground)); }
+/* Scope & pricing */
+.shopify-premium .shopify-price { display:inline-block; margin-top:1.5rem; padding:.45rem .9rem; border:1px solid hsl(var(--primary)/.5); border-radius:100px; font-size:.8125rem; font-weight:500; }
+.shopify-premium .shopify-cost-split { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.shopify-premium .shopify-cost-card { padding:clamp(1.25rem,2.5vw,2rem); border:1px solid var(--commerce-line); border-radius:1rem; background:var(--commerce-paper); }
+.shopify-premium .shopify-cost-card ul { display:grid; gap:.85rem; margin-top:1.25rem; }
+.shopify-premium .shopify-cost-card li { display:flex; align-items:flex-start; gap:.65rem; font-size:.875rem; line-height:1.4; }
+.shopify-premium .shopify-cost-card-fee { border-color:transparent; background:linear-gradient(145deg,hsl(var(--gradient-orange-start)),hsl(var(--gradient-orange-end))); color:#1c1209; }
+.shopify-premium .shopify-cost-label { font-size:.625rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; opacity:.75; }
+/* Guides */
+.shopify-premium .shopify-guide { display:block; padding-block:1.5rem; border-top:1px solid var(--commerce-line); transition:border-color 200ms; }
+.shopify-premium .shopify-guide:hover { border-top-color:hsl(var(--primary)); }
+.shopify-premium .shopify-guide-index { font-family:"Space Grotesk",sans-serif; font-size:.75rem; color:hsl(var(--primary)); }
 @keyframes shopify-project-enter { from { transform:translateY(18px); } to { transform:translateY(0); } }
 @keyframes shopify-detail-enter { from { opacity:.5; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
 @media (hover:hover) and (pointer:fine) {
@@ -84,6 +121,10 @@ html:not(.js) .shopify-premium [id^="shopify-faq-"][hidden] { display:block; }
   .shopify-premium .shopify-hero-grid .shopify-intro { max-width:34rem; }
   .shopify-project { padding:5.5rem 3rem 4.5rem 2rem; }
   .shopify-project .shopify-phone { width:23%; max-width:190px; }
+  .shopify-premium .shopify-process { grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:2.5rem; }
+  .shopify-premium .shopify-process::before { display:none; }
+  .shopify-premium .shopify-process li { border-top:1px solid var(--commerce-line); }
+  .shopify-premium .shopify-process-dot { top:-6px; }
 }
 @media (max-width:639px) {
   .shopify-premium .shopify-display { font-size:clamp(2.65rem,12vw,4.8rem); }
@@ -105,7 +146,12 @@ html:not(.js) .shopify-premium [id^="shopify-faq-"][hidden] { display:block; }
   .shopify-premium .shopify-service-links { grid-template-columns:minmax(0,1fr); }
   .shopify-premium .shopify-service-link { min-height:110px; padding:1.25rem .25rem; }
   .shopify-premium .shopify-service-link+.shopify-service-link { border-left:0; border-top:1px solid var(--commerce-line); }
-  .shopify-premium .shopify-closing { grid-template-columns:minmax(0,1fr); align-items:start; }
+  .shopify-premium .shopify-closing { grid-template-columns:minmax(0,1fr); align-items:start; border-radius:1.25rem; }
+  .shopify-premium .shopify-proof dt { font-size:1.2rem; }
+  .shopify-premium .shopify-process { grid-template-columns:minmax(0,1fr); row-gap:2rem; }
+  .shopify-premium .shopify-cost-split { grid-template-columns:minmax(0,1fr); }
+  .shopify-premium .shopify-work-details { grid-template-columns:minmax(0,1fr); }
+  .shopify-premium .shopify-work-details > div + div { padding-left:0; border-left:0; border-top:1px solid var(--commerce-line); }
   .shopify-premium .shopify-faq-button { min-height:76px; font-size:.875rem; }
 }
 @media (prefers-reduced-motion:reduce) {

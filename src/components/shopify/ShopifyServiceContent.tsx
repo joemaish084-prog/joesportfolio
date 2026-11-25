@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Asterisk, Check, ChevronRight, MessageCircle, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Asterisk, Check, ChevronRight, MessageCircle, Minus, Plus } from "lucide-react";
 import { Seo } from "@/components/Seo";
 import { Footer } from "@/components/Footer";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { serviceHead } from "@/seo/pageHeads";
 import type { ServicePage } from "@/data/servicePages";
 import { blogSummaries } from "@/data/blogSummaries";
-import { SHOPIFY_BRIEF, SHOPIFY_PATH, migrationReasons, shopifyOffers, shopifyProject } from "@/data/shopify";
+import { SHOPIFY_BRIEF, SHOPIFY_PATH, migrationReasons, shopifyCostSplit, shopifyOffers, shopifyProcess, shopifyProject, shopifyProof, shopifyQuoteChecklist } from "@/data/shopify";
 import { track } from "@/lib/track";
 import { ShopifyProjectVisual } from "./ShopifyProjectVisual";
 
@@ -16,7 +16,7 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
   const guides = page.relatedPosts.flatMap(slug => {
     const post = blogSummaries.find(item => item.slug === slug);
     return post ? [post] : [];
-  });
+  }).slice(0, 6);
   const location = useLocation();
   const [selected, setSelected] = useState<string>("create");
   const [reason, setReason] = useState<string>("");
@@ -58,12 +58,14 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
                 <Button asChild size="lg" className="shopify-action"><Link to={SHOPIFY_BRIEF}>Discuss your store<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link></Button>
                 <a href="#shopify-options" className="shopify-text-link">Find your service<ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
               </div>
-              <p className="mt-7 text-[11px] text-muted-foreground">One person to work with. From the first brief to what comes next.</p>
+              <dl className="shopify-proof">
+                {shopifyProof.map(item => <div key={item.label}><dt>{item.value}</dt><dd>{item.label}</dd></div>)}
+              </dl>
             </div>
             <div className="min-w-0">
               <ShopifyProjectVisual priority />
               <div className="shopify-project-meta">
-                <span>Featured work / {shopifyProject.name}</span>
+                <span>Built by Joseph / {shopifyProject.name}</span>
                 <a href={shopifyProject.url} target="_blank" rel="noopener noreferrer" data-track="shopify_store_visit" className="inline-flex min-h-9 items-center gap-1 underline underline-offset-4 hover:text-foreground">Visit live store<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></a>
               </div>
             </div>
@@ -102,6 +104,24 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
           </div>
         </section>
 
+        <section aria-labelledby="shopify-work-title" className="shopify-work">
+          <div className="shopify-work-head">
+            <div>
+              <p className="shopify-kicker">Featured build</p>
+              <h2 id="shopify-work-title" className="shopify-heading mt-5">{shopifyProject.name}.<br /><span className="shopify-serif">Built on Shopify.</span></h2>
+            </div>
+            <div className="max-w-sm">
+              <p className="text-sm leading-relaxed text-muted-foreground">I built {shopifyProject.name}: {shopifyProject.description.charAt(0).toLowerCase() + shopifyProject.description.slice(1)}</p>
+              <a href={shopifyProject.url} target="_blank" rel="noopener noreferrer" data-track="shopify_store_visit" className="shopify-text-link mt-3">Visit babyshopdansar.com<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
+            </div>
+          </div>
+          <ShopifyProjectVisual showcase />
+          <dl className="shopify-work-details">
+            {shopifyProject.details.map(item => <div key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></div>)}
+          </dl>
+          <p className="mt-4 text-[11px] text-muted-foreground">{shopifyProject.captured}</p>
+        </section>
+
         <section aria-labelledby="shopify-migration-title" className="shopify-migration">
           <div className="mb-8 flex flex-wrap items-center justify-between gap-5 border-b border-white/15 pb-6">
             <p className="shopify-kicker">Moving from WooCommerce?</p>
@@ -126,16 +146,55 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
           </div>
         </section>
 
-        <section aria-labelledby="shopify-scope-title" className="border-b border-foreground/15 pb-12 sm:pb-20">
-          <p className="shopify-section-number"><span>02</span> / Scope & pricing</p>
-          <div className="mt-7 grid gap-8 md:grid-cols-2 md:gap-16">
-            <div><h2 id="shopify-scope-title" className="shopify-heading">Your project.<br /><span className="shopify-serif">Your scope.</span></h2><p className="mt-5 text-sm font-medium">{page.price.amount}</p><p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">{page.price.note}</p></div>
-            <div className="md:pt-2"><h3 className="font-display text-xl font-medium tracking-tight">A practical next step</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">Share your store link, product count, the changes you need, and your intended launch date. You will receive a proposal with deliverables, costs, and a timeline.</p><p className="mt-5 text-sm leading-relaxed text-muted-foreground">Need help bringing visitors to your store too? <Link to="/agency/seo-services-nairobi" className="font-medium text-foreground underline underline-offset-4 hover:text-primary">SEO</Link> and <Link to="/agency/google-ads-management" className="font-medium text-foreground underline underline-offset-4 hover:text-primary">paid advertising</Link> can be scoped alongside the store work.</p></div>
+        <section aria-labelledby="shopify-process-title" className="pb-12 sm:pb-20">
+          <p className="shopify-section-number"><span>02</span> / How it works</p>
+          <div className="mt-6 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <h2 id="shopify-process-title" className="shopify-heading">Four steps.<br /><span className="shopify-serif">No surprises.</span></h2>
+            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">You know what is being built, what it costs, and when it launches before any work starts.</p>
+          </div>
+          <ol className="shopify-process">
+            {shopifyProcess.map(item => (
+              <li key={item.step}>
+                <span className="shopify-process-dot" aria-hidden="true" />
+                <span className="shopify-process-step">{item.step}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section aria-labelledby="shopify-scope-title" className="border-t border-foreground/15 pb-12 pt-9 sm:pb-20 sm:pt-12">
+          <p className="shopify-section-number"><span>03</span> / Scope & pricing</p>
+          <div className="mt-6 grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+            <div>
+              <h2 id="shopify-scope-title" className="shopify-heading">Your project.<br /><span className="shopify-serif">Your scope.</span></h2>
+              <p className="shopify-price">{page.price.amount}</p>
+              <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">Builds and migrations are quoted per project. Management is scoped monthly.</p>
+              <div className="mt-8">
+                <p className="mb-3 text-xs font-medium">For a faster quote, send:</p>
+                <ul className="space-y-2">{shopifyQuoteChecklist.map(item => <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />{item}</li>)}</ul>
+              </div>
+            </div>
+            <div>
+              <div className="shopify-cost-split">
+                <div className="shopify-cost-card shopify-cost-card-fee">
+                  <p className="shopify-cost-label">Covered by my fee</p>
+                  <ul>{shopifyCostSplit.fee.map(item => <li key={item}><Check className="h-4 w-4 shrink-0" aria-hidden="true" />{item}</li>)}</ul>
+                </div>
+                <div className="shopify-cost-card">
+                  <p className="shopify-cost-label">Paid separately</p>
+                  <ul>{shopifyCostSplit.separate.map(item => <li key={item}><Minus className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />{item}</li>)}</ul>
+                  <p className="mt-5 text-xs leading-relaxed text-muted-foreground">Billed by Shopify and app developers, separate from my fee.</p>
+                </div>
+              </div>
+              <p className="mt-6 text-sm leading-relaxed text-muted-foreground">Need help bringing visitors to your store too? <Link to="/agency/seo-services-nairobi" className="font-medium text-foreground underline underline-offset-4 hover:text-primary">SEO</Link> and <Link to="/agency/google-ads-management" className="font-medium text-foreground underline underline-offset-4 hover:text-primary">paid advertising</Link> can be scoped alongside the store work.</p>
+            </div>
           </div>
         </section>
 
-        <section aria-labelledby="service-faqs" className="grid gap-8 py-14 sm:py-20 lg:grid-cols-[.75fr_1.25fr] lg:gap-16">
-          <div><p className="shopify-section-number"><span>03</span> / The details</p><h2 id="service-faqs" className="shopify-heading mt-6">Good questions.<br /><span className="shopify-serif">Clear answers.</span></h2></div>
+        <section aria-labelledby="service-faqs" className="grid gap-8 border-t border-foreground/15 py-14 sm:py-20 lg:grid-cols-[.75fr_1.25fr] lg:gap-16">
+          <div><p className="shopify-section-number"><span>04</span> / The details</p><h2 id="service-faqs" className="shopify-heading mt-6">Good questions.<br /><span className="shopify-serif">Clear answers.</span></h2></div>
           <dl className="divide-y divide-foreground/15 border-y border-foreground/15">
             {page.faqs.map((faq, index) => (
               <div key={faq.q}>
@@ -156,9 +215,9 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
               <Link to={`/agency/blog/topics/${page.hubSlug}`} className="shopify-text-link">Explore all Shopify guides<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>
             <div className="mt-8 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
-              {guides.map(post => (
-                <Link key={post.slug} to={`/agency/blog/${post.slug}`} className="group border-t border-foreground/15 py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                  <p className="text-xs text-muted-foreground">{post.readTime}</p>
+              {guides.map((post, index) => (
+                <Link key={post.slug} to={`/agency/blog/${post.slug}`} className="shopify-guide group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <p className="flex items-center justify-between text-xs text-muted-foreground"><span>{post.readTime}</span><span className="shopify-guide-index">{String(index + 1).padStart(2, "0")}</span></p>
                   <h3 className="mt-3 font-display text-xl font-medium leading-snug tracking-tight group-hover:text-primary">{post.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
                   <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold">Read guide<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></span>
@@ -169,7 +228,7 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
         )}
 
         <section data-track-location="shopify_contact" aria-labelledby="shopify-contact-title" className="shopify-closing">
-          <h2 id="shopify-contact-title" className="shopify-heading">Let’s talk<br /><span className="shopify-serif">about your store.</span></h2>
+          <div><p className="shopify-kicker mb-6">Proposal within 24 hours</p><h2 id="shopify-contact-title" className="shopify-heading">Let’s talk<br /><span className="shopify-serif">about your store.</span></h2></div>
           <div><p className="mb-6 max-w-md text-sm leading-relaxed text-muted-foreground">{page.cta.body}</p><div className="flex flex-wrap items-center gap-x-5 gap-y-3"><Button asChild size="lg" className="shopify-action"><Link to={SHOPIFY_BRIEF}>{page.cta.label}<ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link></Button><a href="https://wa.me/254704700160?text=Hi%20Joseph%2C%20I%27d%20like%20to%20discuss%20my%20Shopify%20store." target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-xs font-medium hover:text-primary"><MessageCircle className="h-4 w-4" aria-hidden="true" />WhatsApp</a></div></div>
         </section>
       </main>
