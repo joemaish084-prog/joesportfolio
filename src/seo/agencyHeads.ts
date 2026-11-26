@@ -21,7 +21,7 @@ export function agencyHead(key: AgencyPageKey): PageHead {
   const crumbs = [{ name: "Agency", path: "/" }, { name: page.label, path: page.path }];
   return {
     title: page.title, description: page.description, path: page.path,
-    ...(card && ogCardImage(page.path, `Joseph Maina Marketing · ${card.title}`)),
+    ...(card && ogCardImage(page.path, `JM Marketing · ${card.title}`)),
     jsonLd: [agencyOrganization, {
       "@context": "https://schema.org",
       "@type": key === "contact" ? "ContactPage" : key === "pricing" ? "WebPage" : "CollectionPage",
@@ -96,7 +96,7 @@ export function agencyHead(key: AgencyPageKey): PageHead {
 }
 
 export const agencyOverviewHead: PageHead = {
-  title: "Agency Overview | Joseph Maina Marketing",
-  description: "Meet Joseph Maina Marketing, see the team’s campaign work, and explore services, pricing, and ways to get in touch.",
+  title: "Agency Overview | JM Marketing",
+  description: "Meet JM Marketing, see the team’s campaign work, and explore services, pricing, and ways to get in touch.",
   path: "/agency/overview",
 };

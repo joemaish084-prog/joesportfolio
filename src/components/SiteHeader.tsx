@@ -138,7 +138,7 @@ function NavAnchor({
 
 function Logo() {
   return (
-    <PublicViewLink to="/" aria-label="Joseph Maina Marketing home" className="flex items-center shrink-0">
+    <PublicViewLink to="/" aria-label="JM Marketing home" className="flex items-center shrink-0">
       <img
         src="/logo/jm-lockup.png" {...localImageProps("/logo/jm-lockup.png", "(min-width: 640px) 116px, 105px")}
         alt="JM Creative"

@@ -8,8 +8,8 @@ export const agencyOrganization = {
   "@context": "https://schema.org",
   "@type": ["Organization", "LocalBusiness"],
   "@id": `${SITE_URL}/agency#organization`,
-  name: "Joseph Maina Marketing",
-  description: "Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi, led by Joseph Maina, a digital marketing specialist.",
+  name: "JM Marketing",
+  description: "JM Marketing is a founder-led digital marketing agency in Nairobi, led by Joseph Maina, a digital marketing specialist.",
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/icon-512.png`,
   email: "joemaish084@gmail.com",
@@ -28,9 +28,9 @@ export const agencyOrganization = {
 const { title, description, path } = agencyPages.home;
 export const agencyHomeHead: PageHead = {
   title, description, path,
-  ogTitle: "Make your marketing bring in more sales | Joseph Maina Marketing",
+  ogTitle: "Make your marketing bring in more sales | JM Marketing",
   ogDescription: "Nairobi-based digital marketing agency for Kenyan and African businesses. Explore tracked campaign results and book a free marketing audit.",
-  ...ogCardImage("/", "Joseph Maina Marketing · Make your marketing bring in more sales"),
+  ...ogCardImage("/", "JM Marketing · Make your marketing bring in more sales"),
   jsonLd: [
     agencyOrganization,
     {

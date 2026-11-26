@@ -318,7 +318,7 @@ const Agency = ({ pageKey = "home" }: { pageKey?: AgencyPageKey }) => {
               >
                 <SectionLabel>WHY WORK WITH ME</SectionLabel>
                 <h2 className="text-3xl md:text-4xl font-display font-bold">
-                  Why Brands Choose <span className="text-gradient">Joseph Maina Marketing</span>
+                  Why Brands Choose <span className="text-gradient">JM Marketing</span>
                 </h2>
               </motion.div>
               <div className="grid sm:grid-cols-2 gap-4">

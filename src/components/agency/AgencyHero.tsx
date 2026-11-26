@@ -58,7 +58,7 @@ export function AgencyHero({ whatsappUrl, showAuditLink = false, tagline }: {
         <div className="text-left">
           <div className="mb-5 flex items-center gap-3 sm:mb-7">
             <span aria-hidden className="h-px w-6 shrink-0 bg-primary" />
-            <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-medium">Joseph Maina Marketing · Nairobi, Kenya</span>
+            <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground font-medium">JM Marketing · Nairobi, Kenya</span>
           </div>
 
           <h1
@@ -73,7 +73,7 @@ export function AgencyHero({ whatsappUrl, showAuditLink = false, tagline }: {
           <p
             className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
           >
-            Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi. You work directly with me, Joseph Maina, on paid ads, SEO and content.
+            JM Marketing is a founder-led digital marketing agency in Nairobi. You work directly with me, Joseph Maina, on paid ads, SEO and content.
           </p>
 
           <div

@@ -5,9 +5,9 @@ const starterFee = formatKes(packageFeeKes("STARTER"));
 export const agencyPages = {
   home: {
     path: "/", label: "Agency Home",
-    title: "Digital Marketing Agency Nairobi | Joseph Maina Marketing",
+    title: "Digital Marketing Agency Nairobi | JM Marketing",
     heading: "Digital marketing for Kenyan businesses",
-    description: "Book a free marketing audit with Joseph Maina Marketing, a Nairobi agency helping Kenyan and African businesses increase sales with paid ads, SEO and social media.",
+    description: "Book a free marketing audit with JM Marketing, a Nairobi agency helping Kenyan and African businesses increase sales with paid ads, SEO and social media.",
     intro: "A direct partnership for paid media, SEO and content, built around your business goals.",
     teaser: "",
   },
@@ -37,9 +37,9 @@ export const agencyPages = {
   },
   contact: {
     path: "/agency/contact", label: "Contact",
-    title: "Contact Joseph Maina Marketing | Nairobi",
+    title: "Contact JM Marketing | Nairobi",
     heading: "Let's talk about your business",
-    description: "Contact Joseph Maina Marketing in Nairobi for digital marketing support. Book a free 30-minute strategy call or discuss your project on WhatsApp.",
+    description: "Contact JM Marketing in Nairobi for digital marketing support. Book a free 30-minute strategy call or discuss your project on WhatsApp.",
     intro: "Tell me what you sell, who you want to reach and what is getting in the way. Book a free strategy call or message me on WhatsApp.",
     teaser: "Book a free 30-minute call or message me on WhatsApp.",
   },

@@ -65,7 +65,7 @@ export const faqs = [
       "Yes. I work with early-stage startups and SMEs across Kenya to build their digital presence from scratch — brand strategy, social media, SEO and paid ads all in one package.",
   },
   {
-    question: "What makes Joseph Maina Marketing different from other digital marketing agencies in Nairobi?",
+    question: "What makes JM Marketing different from other digital marketing agencies in Nairobi?",
     answer:
       "It is founder-led. Unlike large agencies where your account is managed by juniors, you work directly with me — a senior specialist with 3+ years of proven results. Faster decisions, personal attention and better ROI.",
   },

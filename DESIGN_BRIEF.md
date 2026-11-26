@@ -104,7 +104,7 @@ Must survive the rebuild:
 
 HERO --------------------------------------------------------------
  Agency > Services
- JOSEPH MAINA MARKETING · NAIROBI
+ JM MARKETING · NAIROBI
  Digital marketing services in Nairobi          +---------------------+
  that pay back in KES.                          | RESULT CARD (HTML)  |
  One line subhead.                              | Tag · period        |

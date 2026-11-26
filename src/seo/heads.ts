@@ -11,7 +11,7 @@ export const STATIC_HEADS = {
     description:
       "Explore Joseph Maina’s digital marketing portfolio, including paid media case studies, Shopify storefronts, video production and brand identity work.",
     path: "/portfolio",
-    ...ogCardImage("/portfolio", "Joseph Maina Marketing · Selected work"),
+    ...ogCardImage("/portfolio", "JM Marketing · Selected work"),
     jsonLd: [{
       "@context": "https://schema.org",
       "@type": "FAQPage",

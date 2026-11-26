@@ -62,7 +62,7 @@ export function AgencyNavigation({ solid = false, home = false }: { solid?: bool
     <header className={`sticky top-0 z-50 border-b ${solid ? "border-border/60 bg-background" : scrolled ? "border-border/60 bg-background lg:bg-background/85 lg:backdrop-blur-md" : "border-border/60 bg-background lg:border-transparent lg:bg-background/60 lg:backdrop-blur-md"}`}>
       <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-1.5 sm:gap-4">
         <div className="flex items-center gap-3 shrink-0">
-          <Link to="/" aria-label="Joseph Maina Marketing home" className="group flex items-center gap-2 min-h-11">
+          <Link to="/" aria-label="JM Marketing home" className="group flex items-center gap-2 min-h-11">
             <img src="/logo/jm-lockup.png" {...localImageProps("/logo/jm-lockup.png", "105px")} alt="" width={352} height={134} className="h-7 w-auto brightness-75 dark:brightness-100 sm:h-9" />
           </Link>
         </div>

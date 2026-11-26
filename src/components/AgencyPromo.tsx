@@ -41,10 +41,10 @@ export function AgencyPromo() {
             <ShineBorder shineColor="hsl(var(--primary))" borderWidth={1} duration={14} />
             <SectionLabel>THE AGENCY</SectionLabel>
             <h2 id="agency-promo-heading" className="text-title-1 sm:text-large-title font-display mt-4 mb-4">
-              Joseph Maina Marketing
+              JM Marketing
             </h2>
             <p className="text-body sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-              Need more than a portfolio? Joseph Maina Marketing is my founder-led digital marketing agency in Nairobi. It runs the campaigns, and you work directly with me.
+              Need more than a portfolio? JM Marketing is my founder-led digital marketing agency in Nairobi. It runs the campaigns, and you work directly with me.
             </p>
 
             <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-lg mx-auto mb-10">

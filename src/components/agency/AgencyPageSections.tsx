@@ -45,7 +45,7 @@ export function AgencyPageHeader({ page, visual, children, pairMain }: {
           </nav>
           <div className={visual ? "grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-16" : undefined}>
             <div className="min-w-0">
-              <SectionLabel>JOSEPH MAINA MARKETING</SectionLabel>
+              <SectionLabel>JM MARKETING</SectionLabel>
               {pairMain
                 ? <PairedTitle className="mt-5 max-w-4xl" main={main} accent={accent} />
                 : <h1 className="mt-4 max-w-4xl text-balance text-4xl font-display font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{page.heading}</h1>}

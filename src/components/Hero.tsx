@@ -164,7 +164,7 @@ export function Hero({ archive = false }: { archive?: boolean }) {
             transition={{ delay: 0.22, duration: 0.5, ease: appleEase }}
             className="mt-6 text-lg text-muted-foreground max-w-md"
           >
-            I'm Joseph Maina, founder of Joseph Maina Marketing. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content — not just reach.
+            I'm Joseph Maina, founder of JM Marketing. I help Kenyan brands generate more leads, sales and visibility through paid media, SEO and content — not just reach.
           </motion.p>
 
           <motion.div

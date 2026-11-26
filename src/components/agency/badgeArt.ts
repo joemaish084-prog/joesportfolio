@@ -74,7 +74,7 @@ const drawFront = (portrait: HTMLImageElement | null) => {
   ctx.textAlign = "center";
   ctx.fillStyle = "rgba(255,255,255,0.6)";
   ctx.font = `600 30px ${SANS}`;
-  spaced(ctx, "JOSEPH MAINA MARKETING", W / 2, 205, 6);
+  spaced(ctx, "JM MARKETING", W / 2, 205, 6);
 
   // Portrait
   const size = 500;

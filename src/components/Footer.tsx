@@ -179,13 +179,13 @@ export function Footer() {
             <a href="https://www.josephmaina.co.ke" className="hover:text-primary transition-colors">
               josephmaina.co.ke
             </a>{" "}
-            | Joseph Maina Marketing, Nairobi, Kenya
+            | JM Marketing, Nairobi, Kenya
           </p>
           <p>Built &amp; maintained by Joseph Isaac Maina</p>
         </div>
 
         <div className="mt-6 text-xs text-muted-foreground text-center max-w-3xl mx-auto leading-relaxed">
-          Joseph Maina Marketing is a founder-led digital marketing agency in Nairobi, led by Joseph Maina, a digital marketing specialist. Offering Meta Ads, Google Ads, TikTok Ads, SEO, Social Media Management and Media Buying services across Kenya and Africa.
+          JM Marketing is a founder-led digital marketing agency in Nairobi, led by Joseph Maina, a digital marketing specialist. Offering Meta Ads, Google Ads, TikTok Ads, SEO, Social Media Management and Media Buying services across Kenya and Africa.
         </div>
       </div>
     </footer>
