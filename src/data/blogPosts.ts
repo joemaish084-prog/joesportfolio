@@ -103,8 +103,8 @@ export const blogPosts: BlogPost[] = [
     metaTitle: "Website and Ads Launch Checklist for Kenyan Businesses",
     metaDescription: "Plan your website and first ad campaign around one customer action. See how Nuvana and JM Marketing divide the work and what to test before launch.",
     intro: "Picture your first customer coming from an ad. They tap because the offer looks right. Where do they land? Can they see the price or service area? Who gets the message when they ask to buy? Those answers belong in the same brief, even if different people build the site and manage the ads.",
-    thumbnail: "/media/partnership/nairobi-market-960.webp",
-    thumbnailAlt: "Roadside fruit stalls in a Nairobi market",
+    thumbnail: "/media/blog-covers/planning-session-800.webp",
+    thumbnailAlt: "Colleagues reviewing work on laptops in a meeting room",
     sections: [
       {
         id: "write-the-sale-down-before-you-brief-the-website",
@@ -146,8 +146,8 @@ export const blogPosts: BlogPost[] = [
     metaTitle: "Should You Rebuild Your Website Before Running Ads?",
     metaDescription: "Run a simple audit of your existing website before spending on ads. Check offer fit, mobile usability, lead delivery and tracking before deciding to rebuild.",
     intro: "Before you commission a new website, give the current one a job. Open it on your phone as if you’d just clicked an ad for one specific service. Give yourself a minute to find out what’s included, where it’s available and how to enquire. Write down where you hesitate. Those notes are a better starting point for a rebuild decision than the age of the design.",
-    thumbnail: "/media/partnership/nairobi-market-960.webp",
-    thumbnailAlt: "Roadside fruit stalls in a Nairobi market",
+    thumbnail: "/media/blog-covers/audit-notes-800.webp",
+    thumbnailAlt: "Person writing notes on a printed document with a pen",
     sections: [
       {
         id: "look-at-the-page-you-would-actually-advertise",
@@ -181,8 +181,8 @@ export const blogPosts: BlogPost[] = [
     metaTitle: "First 90 Days of Paid Ads: What to Measure Each Month",
     metaDescription: "Track what your ads bring in during the first 90 days. Build a baseline, use enquiry quality to improve the campaign, and decide what to fund next.",
     intro: "At the end of a campaign, an owner should be able to answer three questions. What did we spend? What did it bring in? What should we do next? Getting there takes one small decision before launch. Write down what a useful outcome looks like, and decide who can confirm it happened.",
-    thumbnail: "/media/partnership/nairobi-market-960.webp",
-    thumbnailAlt: "Roadside fruit stalls in a Nairobi market",
+    thumbnail: "/media/blog-covers/website-analytics-800.webp",
+    thumbnailAlt: "Laptop screen showing website charts and statistics",
     sections: [
       {
         id: "month-one-gives-you-a-baseline",
@@ -216,8 +216,8 @@ export const blogPosts: BlogPost[] = [
     metaTitle: "WhatsApp Catalogue vs Online Checkout in Kenya",
     metaDescription: "Choose how shoppers should order from your website. Compare a WhatsApp catalogue with online checkout based on stock, delivery, staffing and reporting.",
     intro: "A shopper taps on a skincare ad during lunch. She likes the cleanser and wants to know if it can reach her tomorrow. A WhatsApp catalogue gives her someone to ask. An online checkout can show delivery choices and let her place the order while she still has her phone out. Which one makes buying easier depends on what your shop can reliably handle.",
-    thumbnail: "/media/partnership/nairobi-market-960.webp",
-    thumbnailAlt: "Roadside fruit stalls in a Nairobi market",
+    thumbnail: "/media/blog-covers/beauty-campaign-800.webp",
+    thumbnailAlt: "Lipstick, brushes and makeup compacts laid out on a beige surface",
     sections: [
       {
         id: "use-whatsapp-when-a-conversation-helps-close-the-sale",
@@ -251,8 +251,8 @@ export const blogPosts: BlogPost[] = [
     metaTitle: "Website Lead Handoff Checklist for Service Businesses",
     metaDescription: "Give every paid enquiry an owner. Test quote forms, assign backup coverage and record which leads became quotes or bookings.",
     intro: "Imagine a customer putting in a quote request at 10 in the morning. The campaign sees a submission. The website shows a thank-you message. At 4 in the afternoon, the customer still hasn’t heard anything. Find out who was supposed to pick up that request and what they needed to do next. That’s the part of the campaign a dashboard can’t answer on its own.",
-    thumbnail: "/media/partnership/nairobi-market-960.webp",
-    thumbnailAlt: "Roadside fruit stalls in a Nairobi market",
+    thumbnail: "/media/blog-covers/message-followup-800.webp",
+    thumbnailAlt: "Smartphone displaying a folder of messaging apps",
     sections: [
       {
         id: "follow-a-test-enquiry-to-a-real-person",
