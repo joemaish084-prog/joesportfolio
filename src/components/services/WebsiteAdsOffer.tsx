@@ -297,6 +297,11 @@ export function WebsiteAdsOffer({ page }: { page: ServicePage }) {
           </section>
           <WebsiteAdsPaymentSchedule />
           <WebsiteAdsDetails page={page} />
+          <p className="mt-8 text-sm">
+            <Link to="/agency/blog/website-and-ads-launch-checklist-kenya" className="underline underline-offset-4">
+              Read the website and ads launch checklist
+            </Link>
+          </p>
         </div>
       </main>
       <Footer />
