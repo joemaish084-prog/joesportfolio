@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Asterisk, Check, ChevronRight, MessageCircle, Minus, Plus } from "lucide-react";
 import { Seo } from "@/components/Seo";
+import { TrustBar } from "@/components/TrustBar";
 import { Footer } from "@/components/Footer";
 import { AgencyNavigation } from "@/components/agency/AgencyNavigation";
 import { Button } from "@/components/ui/button";
@@ -74,6 +75,11 @@ export function ShopifyServiceContent({ page }: { page: ServicePage }) {
             {shopifyOffers.map(item => <Link key={item.id} to={`${SHOPIFY_PATH}#${item.id}`} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="shopify-ribbon-index">{item.number}</span><span>{item.title}</span><Asterisk className="h-6 w-6" aria-hidden="true" /></Link>)}
           </nav>
         </header>
+
+        <TrustBar stats={[
+          { value: "50%", heading: "deposit to start", description: "pay the balance when your store is ready" },
+          { value: "KES 0", heading: "Shopify fees while we build", description: "you only start your Shopify plan at launch" },
+        ]} />
 
         <section id="shopify-options" aria-labelledby="shopify-options-title" className="scroll-mt-24 border-t border-foreground/15 pt-9 sm:pt-12">
           <p className="shopify-section-number"><span>01</span> / Available services</p>

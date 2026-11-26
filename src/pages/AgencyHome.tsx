@@ -13,6 +13,7 @@ import { Footer } from "@/components/Footer";
 import { SectionLabel } from "@/components/SectionLabel";
 import { Testimonials } from "@/components/Testimonials";
 import { Seo } from "@/components/Seo";
+import { TrustBar } from "@/components/TrustBar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { agencyHomeHead } from "@/seo/agencyHomeHead";
@@ -36,6 +37,11 @@ export default function AgencyHome() {
               </>
             )}
           />
+
+          <TrustBar stats={[
+            { value: "KES 2M+", heading: "ad budgets", description: "managed for Kenyan businesses" },
+            { value: "Every", heading: "week", description: "WhatsApp updates on your leads and sales" },
+          ]} />
 
           <section id="agency-results" data-track-location="home_proof" className="container mx-auto scroll-mt-24 px-4 pt-8 sm:pt-16">
             <div className="mx-auto max-w-6xl">
