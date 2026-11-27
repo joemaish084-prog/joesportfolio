@@ -38,7 +38,7 @@ export default function AgencyHome() {
             )}
           />
 
-          <TrustBar stats={[
+          <TrustBar className="w-[calc(100%-2rem)] max-w-6xl" stats={[
             { value: "KES 2M+", heading: "ad budgets", description: "managed for Kenyan businesses" },
             { value: "Every", heading: "week", description: "WhatsApp updates on your leads and sales" },
           ]} />
